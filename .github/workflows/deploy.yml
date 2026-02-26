@@ -1,0 +1,113 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Crystal
+        uses: crystal-lang/install-crystal@v1
+        with:
+          crystal: latest
+
+      - name: Install Hwaro
+        run: |
+          git clone https://github.com/hahwul/hwaro /tmp/hwaro
+          cd /tmp/hwaro
+          shards install
+          shards build --release
+          sudo mv bin/hwaro /usr/local/bin/
+
+      - name: Build all sites
+        run: |
+          REPO_NAME="${GITHUB_REPOSITORY#*/}"
+          BASE_URL="https://${GITHUB_REPOSITORY_OWNER}.github.io/${REPO_NAME}"
+          OUTPUT_DIR="${GITHUB_WORKSPACE}/_site"
+          mkdir -p "${OUTPUT_DIR}"
+
+          for dir in */; do
+            dir_name="${dir%/}"
+            if [ -f "${dir_name}/config.toml" ]; then
+              echo "Building ${dir_name}..."
+              hwaro build \
+                -i "${dir_name}" \
+                -o "${OUTPUT_DIR}/${dir_name}" \
+                --base-url "${BASE_URL}/${dir_name}"
+              echo "Done: ${dir_name}"
+            fi
+          done
+
+      - name: Generate index page
+        run: |
+          REPO_NAME="${GITHUB_REPOSITORY#*/}"
+          BASE_URL="https://${GITHUB_REPOSITORY_OWNER}.github.io/${REPO_NAME}"
+          OUTPUT_DIR="${GITHUB_WORKSPACE}/_site"
+
+          SITE_LINKS=""
+          for dir in */; do
+            dir_name="${dir%/}"
+            if [ -f "${dir_name}/config.toml" ]; then
+              TITLE=$(grep '^title' "${dir_name}/config.toml" | head -1 | sed 's/title *= *"//;s/"//')
+              DESCRIPTION=$(grep '^description' "${dir_name}/config.toml" | head -1 | sed 's/description *= *"//;s/"//')
+              SITE_LINKS="${SITE_LINKS}<a href=\"${BASE_URL}/${dir_name}/\" class=\"card\"><strong>${dir_name}</strong><span class=\"title\">${TITLE}</span><span class=\"desc\">${DESCRIPTION}</span></a>"
+            fi
+          done
+
+          cat > "${OUTPUT_DIR}/index.html" << HTMLEOF
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Hwaro Examples</title>
+            <style>
+              * { margin: 0; padding: 0; box-sizing: border-box; }
+              body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0a; color: #e0e0e0; min-height: 100vh; padding: 3rem 1.5rem; }
+              h1 { text-align: center; font-size: 2rem; margin-bottom: 0.5rem; color: #fff; }
+              p.sub { text-align: center; color: #888; margin-bottom: 2.5rem; }
+              .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; max-width: 960px; margin: 0 auto; }
+              .card { display: flex; flex-direction: column; gap: 0.25rem; padding: 1.25rem; border: 1px solid #222; border-radius: 8px; text-decoration: none; color: #e0e0e0; transition: border-color 0.2s, background 0.2s; }
+              .card:hover { border-color: #555; background: #111; }
+              .card strong { font-size: 1.1rem; color: #fff; }
+              .card .title { font-size: 0.85rem; color: #aaa; }
+              .card .desc { font-size: 0.8rem; color: #666; margin-top: 0.25rem; }
+            </style>
+          </head>
+          <body>
+            <h1>Hwaro Examples</h1>
+            <p class="sub">A collection of example sites built with Hwaro</p>
+            <div class="grid">${SITE_LINKS}</div>
+          </body>
+          </html>
+          HTMLEOF
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
