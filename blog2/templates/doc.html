@@ -1,35 +1,105 @@
 {% include "header.html" %}
-  <main class="min-h-[calc(100vh-200px)] pt-8 grid grid-cols-1 md:grid-cols-[220px_1fr] gap-8">
-    <aside class="md:border-r md:border-border md:pr-6 border-b md:border-b-0 border-border pb-4 md:pb-0">
+  <main class="min-h-[calc(100vh-200px)] pt-12 grid grid-cols-1 md:grid-cols-[250px_1fr] gap-12">
+    <!-- Mobile Sidebar Toggle -->
+    <div class="md:hidden">
+      <details class="group border border-white/5 rounded-lg bg-surface-alt/50">
+        <summary class="flex items-center justify-between p-4 cursor-pointer list-none text-white font-medium focus:outline-none select-none">
+          <span>{{ section.title }} Navigation</span>
+          <svg class="w-5 h-5 text-muted transition-transform duration-300 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </summary>
+        <div class="p-4 border-t border-white/5 bg-background/50">
+           {% if section.pages %}
+           <ul class="space-y-1">
+             {% for doc in section.pages %}
+             <li>
+               <a href="{{ doc.url }}" class="block py-2 px-3 rounded-lg text-sm transition-all duration-200 border-l-2 {% if doc.url == page.url %}text-primary bg-primary/5 border-l-primary font-medium shadow-[inset_10px_0_20px_-10px_rgba(139,92,246,0.1)]{% else %}text-muted border-l-transparent hover:text-white hover:bg-white/5 hover:border-l-white/20{% endif %}">
+                 {{ doc.title }}
+               </a>
+             </li>
+             {% endfor %}
+           </ul>
+           {% endif %}
+        </div>
+      </details>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="hidden md:block sticky top-24 h-[calc(100vh-120px)] overflow-y-auto pr-6 border-r border-white/5 scrollbar-thin">
       {% if section.pages %}
-      <nav>
-        <h3 class="text-xs uppercase tracking-wider text-muted mb-3 font-semibold">{{ section.title }}</h3>
-        <ul class="list-none p-0 m-0 space-y-0.5">
-          {% for doc in section.pages %}
-          <li>
-            <a href="{{ doc.url }}" class="block py-1.5 px-3 rounded text-sm no-underline border-l-2 transition-all {% if doc.url == page.url %}text-primary bg-primary/10 font-medium border-l-primary{% else %}text-muted border-l-transparent hover:text-primary hover:bg-surface-alt{% endif %}">{{ doc.title }}</a>
-          </li>
-          {% endfor %}
-        </ul>
+      <nav class="space-y-8">
+        <div>
+          <h3 class="text-xs uppercase tracking-widest text-white/40 font-bold mb-4 px-3">{{ section.title }}</h3>
+          <ul class="space-y-1">
+            {% for doc in section.pages %}
+            <li>
+              <a href="{{ doc.url }}" class="block py-2 px-3 rounded-lg text-sm transition-all duration-200 border-l-2 {% if doc.url == page.url %}text-primary bg-primary/5 border-l-primary font-medium shadow-[inset_10px_0_20px_-10px_rgba(139,92,246,0.1)]{% else %}text-muted border-l-transparent hover:text-white hover:bg-white/5 hover:border-l-white/20{% endif %}">
+                {{ doc.title }}
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
       </nav>
       {% endif %}
     </aside>
-    <article class="min-w-0">
-      <div class="text-sm text-muted mb-2">
-        <a href="{{ base_url }}/" class="text-muted no-underline hover:text-primary">Home</a><span class="mx-1.5">/</span><a href="{{ section.url }}" class="text-muted no-underline hover:text-primary">{{ section.title }}</a><span class="mx-1.5">/</span><span>{{ page.title }}</span>
+
+    <article class="min-w-0 pb-16">
+      <!-- Breadcrumbs -->
+      <div class="flex items-center text-sm text-muted mb-6 overflow-x-auto whitespace-nowrap">
+        <a href="{{ base_url }}/" class="hover:text-white transition-colors">Home</a>
+        <svg class="w-4 h-4 mx-2 text-white/10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        <a href="{{ section.url }}" class="hover:text-white transition-colors">{{ section.title }}</a>
+        <svg class="w-4 h-4 mx-2 text-white/10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        <span class="text-primary font-medium">{{ page.title }}</span>
       </div>
-      <h1 class="text-2xl font-semibold mb-2">{{ page.title }}</h1>
-      {% if page.description %}<p class="text-muted text-lg -mt-1 mb-6">{{ page.description }}</p>{% endif %}
-      {% if page.toc %}
-      <nav class="border-l-[3px] border-l-primary pl-5 py-3 mb-8 bg-surface-alt rounded-r-lg">
-        <h4 class="m-0 mb-2 text-xs uppercase tracking-wider text-muted font-semibold">On this page</h4>
-        {{ page.toc }}
-      </nav>
-      {% endif %}
-      <div class="prose">{{ content }}</div>
-      <nav class="flex justify-between mt-12 pt-6 border-t border-border">
-        {% if page.lower %}<a href="{{ page.lower.url }}" class="text-primary no-underline hover:underline max-w-[45%]">&larr; {{ page.lower.title }}</a>{% endif %}
-        {% if page.higher %}<a href="{{ page.higher.url }}" class="text-primary no-underline hover:underline max-w-[45%] ml-auto text-right">{{ page.higher.title }} &rarr;</a>{% endif %}
+
+      <header class="mb-10 border-b border-white/5 pb-10">
+        <h1 class="text-4xl font-bold text-white tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-br from-white via-white to-white/50">{{ page.title }}</h1>
+        {% if page.description %}
+          <p class="text-xl text-muted leading-relaxed max-w-3xl">{{ page.description }}</p>
+        {% endif %}
+      </header>
+
+      <div class="grid grid-cols-1 {% if page.toc %}lg:grid-cols-[1fr_200px]{% endif %} gap-10 items-start">
+        <!-- Content -->
+        <div class="prose prose-invert prose-lg max-w-none">
+          {{ content }}
+        </div>
+
+        <!-- TOC (Desktop) -->
+        {% if page.toc %}
+        <aside class="hidden lg:block sticky top-24">
+          <div class="border-l border-white/10 pl-4 py-1">
+            <h4 class="text-xs uppercase tracking-widest text-white/40 font-bold mb-3">On this page</h4>
+            <div class="toc text-sm text-muted">
+              {{ page.toc }}
+            </div>
+          </div>
+        </aside>
+        {% endif %}
+      </div>
+
+      <!-- Navigation -->
+      <nav class="grid grid-cols-2 gap-6 mt-16 pt-8 border-t border-white/5">
+        {% if page.lower %}
+        <a href="{{ page.lower.url }}" class="group flex flex-col p-4 rounded-xl border border-white/5 hover:border-primary/30 hover:bg-surface-alt transition-all">
+          <span class="text-xs text-muted mb-1 group-hover:text-primary transition-colors">Previous</span>
+          <span class="text-lg font-semibold text-white group-hover:text-primary-light transition-colors">
+            &larr; {{ page.lower.title }}
+          </span>
+        </a>
+        {% else %}<div></div>{% endif %}
+
+        {% if page.higher %}
+        <a href="{{ page.higher.url }}" class="group flex flex-col items-end text-right p-4 rounded-xl border border-white/5 hover:border-primary/30 hover:bg-surface-alt transition-all">
+          <span class="text-xs text-muted mb-1 group-hover:text-primary transition-colors">Next</span>
+          <span class="text-lg font-semibold text-white group-hover:text-primary-light transition-colors">
+            {{ page.higher.title }} &rarr;
+          </span>
+        </a>
+        {% endif %}
       </nav>
     </article>
   </main>
