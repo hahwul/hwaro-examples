@@ -20,19 +20,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Crystal
-        uses: crystal-lang/install-crystal@v1
-        with:
-          crystal: latest
-
-      - name: Install Hwaro
-        run: |
-          git clone https://github.com/hahwul/hwaro /tmp/hwaro
-          cd /tmp/hwaro
-          shards install
-          shards build --release
-          sudo mv bin/hwaro /usr/local/bin/
-
       - name: Build all sites
         run: |
           REPO_NAME="${GITHUB_REPOSITORY#*/}"
@@ -44,10 +31,13 @@ jobs:
             dir_name="${dir%/}"
             if [ -f "${dir_name}/config.toml" ]; then
               echo "Building ${dir_name}..."
-              hwaro build \
-                -i "${dir_name}" \
-                -o "${OUTPUT_DIR}/${dir_name}" \
-                --base-url "${BASE_URL}/${dir_name}"
+              docker run --rm \
+                -v "${GITHUB_WORKSPACE}/${dir_name}:/src" \
+                -v "${OUTPUT_DIR}/${dir_name}:/output" \
+                ghcr.io/hahwul/hwaro build \
+                  -i /src \
+                  -o /output \
+                  --base-url "${BASE_URL}/${dir_name}"
               echo "Done: ${dir_name}"
             fi
           done
