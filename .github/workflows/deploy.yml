@@ -64,7 +64,8 @@ jobs:
             if [ -f "${dir_name}/config.toml" ]; then
               TITLE=$(grep '^title' "${dir_name}/config.toml" | head -1 | sed 's/title *= *"//;s/"//')
               DESCRIPTION=$(grep '^description' "${dir_name}/config.toml" | head -1 | sed 's/description *= *"//;s/"//')
-              SITE_LINKS="${SITE_LINKS}<a href=\"${BASE_URL}/${dir_name}/\" class=\"card\"><strong>${dir_name}</strong><span class=\"title\">${TITLE}</span><span class=\"desc\">${DESCRIPTION}</span></a>"
+              REPO_URL="https://github.com/${GITHUB_REPOSITORY}/tree/main/${dir_name}"
+              SITE_LINKS="${SITE_LINKS}<div class=\"card\"><a href=\"${BASE_URL}/${dir_name}/\" class=\"main-link\"><strong>${dir_name}</strong><span class=\"title\">${TITLE}</span><span class=\"desc\">${DESCRIPTION}</span></a><a href=\"${REPO_URL}\" class=\"code-link\"><svg viewBox=\"0 0 16 16\"><path d=\"M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z\"></path></svg>Source Code</a></div>"
             fi
           done
           echo "examples.hwaro.hahwul.com" > "${OUTPUT_DIR}/CNAME"
@@ -80,195 +81,199 @@ jobs:
               body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0a; color: #e0e0e0; min-height: 100vh; padding: 3rem 1.5rem; }
               h1 { text-align: center; font-size: 2rem; margin-bottom: 0.5rem; color: #fff; }
               p.sub { text-align: center; color: #888; margin-bottom: 2.5rem; }
-              .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; max-width: 960px; margin: 0 auto; }
-              .card { display: flex; flex-direction: column; gap: 0.25rem; padding: 1.25rem; border: 1px solid #222; border-radius: 8px; text-decoration: none; color: #e0e0e0; transition: border-color 0.2s, background 0.2s; }
-              .card:hover { border-color: #555; background: #111; }
-              .card strong { font-size: 1.1rem; color: #fff; }
-              .card .title { font-size: 0.85rem; color: #aaa; }
-              .card .desc { font-size: 0.8rem; color: #666; margin-top: 0.25rem; }
-            </style>
-          </head>
-          <body>
-            <h1>Hwaro Examples</h1>
-            <p class="sub">A collection of example sites built with Hwaro</p>
-            <p><svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 200 200"
-                width="400px"
-                height="100%"
-                style="display: block; margin: 0 auto"
-            >
-                <defs>
-                    <filter
-                        id="fire-wobble"
-                        x="-20%"
-                        y="-20%"
-                        width="140%"
-                        height="140%"
-                    >
-                        <feTurbulence
-                            type="fractalNoise"
-                            baseFrequency="0.04 0.08"
-                            numOctaves="2"
-                            result="noise"
-                        >
-                            <animate
-                                attributeName="baseFrequency"
-                                values="0.04 0.08; 0.05 0.12; 0.04 0.08"
-                                dur="2.5s"
-                                repeatCount="indefinite"
-                            />
-                        </feTurbulence>
-                        <feDisplacementMap
-                            in="SourceGraphic"
-                            in2="noise"
-                            scale="2.5"
-                            xChannelSelector="R"
-                            yChannelSelector="G"
-                        />
-                    </filter>
-                    <style>
-                        /* 붉은 영역이 숨을 쉬듯 커졌다 작아지는 펄스 애니메이션 */
-                        .fire-pulse {
-                            transform-origin: center 144px; /* 화살창 바닥을 기준으로 스케일링 */
-                            animation: pulse 1.5s infinite alternate ease-in-out;
-                        }
-                        @keyframes pulse {
-                            0% {
-                                transform: scaleY(1);
-                                opacity: 0.92;
-                            }
-                            100% {
-                                transform: scaleY(1.03);
-                                opacity: 1;
-                            }
-                        }
+            .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; max-width: 960px; margin: 0 auto; }
+            .card { display: flex; flex-direction: column; border: 1px solid #222; border-radius: 8px; transition: border-color 0.2s, background 0.2s; overflow: hidden; background: #0d0d0d; }
+            .card:hover { border-color: #555; background: #111; }
+            .main-link { display: flex; flex-direction: column; gap: 0.25rem; padding: 1.25rem; text-decoration: none; color: #e0e0e0; flex-grow: 1; }
+            .main-link strong { font-size: 1.1rem; color: #fff; }
+            .main-link .title { font-size: 0.85rem; color: #aaa; }
+            .main-link .desc { font-size: 0.8rem; color: #666; margin-top: 0.25rem; }
+            .code-link { padding: 0.6rem 1.25rem; border-top: 1px solid #222; font-size: 0.75rem; color: #888; text-decoration: none; background: #080808; display: flex; align-items: center; gap: 0.4rem; }
+            .code-link:hover { color: #fff; background: #1a1a1a; }
+            .code-link svg { width: 14px; height: 14px; fill: currentColor; }
+          </style>
+        </head>
+        <body>
+          <h1>Hwaro Examples</h1>
+          <p class="sub">A collection of example sites built with Hwaro</p>
+          <p><svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 200 200"
+              width="400px"
+              height="100%"
+              style="display: block; margin: 0 auto"
+          >
+              <defs>
+                  <filter
+                      id="fire-wobble"
+                      x="-20%"
+                      y="-20%"
+                      width="140%"
+                      height="140%"
+                  >
+                      <feTurbulence
+                          type="fractalNoise"
+                          baseFrequency="0.04 0.08"
+                          numOctaves="2"
+                          result="noise"
+                      >
+                          <animate
+                              attributeName="baseFrequency"
+                              values="0.04 0.08; 0.05 0.12; 0.04 0.08"
+                              dur="2.5s"
+                              repeatCount="indefinite"
+                          />
+                      </feTurbulence>
+                      <feDisplacementMap
+                          in="SourceGraphic"
+                          in2="noise"
+                          scale="2.5"
+                          xChannelSelector="R"
+                          yChannelSelector="G"
+                      />
+                  </filter>
+                  <style>
+                      /* 붉은 영역이 숨을 쉬듯 커졌다 작아지는 펄스 애니메이션 */
+                      .fire-pulse {
+                          transform-origin: center 144px; /* 화살창 바닥을 기준으로 스케일링 */
+                          animation: pulse 1.5s infinite alternate ease-in-out;
+                      }
+                      @keyframes pulse {
+                          0% {
+                              transform: scaleY(1);
+                              opacity: 0.92;
+                          }
+                          100% {
+                              transform: scaleY(1.03);
+                              opacity: 1;
+                          }
+                      }
 
-                        /* 불티(Sparks) 애니메이션 */
-                        .spark {
-                            animation-timing-function: ease-in;
-                            animation-iteration-count: infinite;
-                        }
-                        .spark-1 {
-                            animation-name: flyUp1;
-                            animation-duration: 2s;
-                        }
-                        .spark-2 {
-                            animation-name: flyUp2;
-                            animation-duration: 2.5s;
-                            animation-delay: 0.5s;
-                        }
-                        .spark-3 {
-                            animation-name: flyUp3;
-                            animation-duration: 1.8s;
-                            animation-delay: 1.2s;
-                        }
+                      /* 불티(Sparks) 애니메이션 */
+                      .spark {
+                          animation-timing-function: ease-in;
+                          animation-iteration-count: infinite;
+                      }
+                      .spark-1 {
+                          animation-name: flyUp1;
+                          animation-duration: 2s;
+                      }
+                      .spark-2 {
+                          animation-name: flyUp2;
+                          animation-duration: 2.5s;
+                          animation-delay: 0.5s;
+                      }
+                      .spark-3 {
+                          animation-name: flyUp3;
+                          animation-duration: 1.8s;
+                          animation-delay: 1.2s;
+                      }
 
-                        @keyframes flyUp1 {
-                            0% {
-                                transform: translateY(0);
-                                opacity: 0;
-                            }
-                            50% {
-                                opacity: 0.8;
-                            }
-                            100% {
-                                transform: translateY(-40px);
-                                opacity: 0;
-                            }
-                        }
-                        @keyframes flyUp2 {
-                            0% {
-                                transform: translateY(0);
-                                opacity: 0;
-                            }
-                            50% {
-                                opacity: 1;
-                            }
-                            100% {
-                                transform: translateY(-50px);
-                                opacity: 0;
-                            }
-                        }
-                        @keyframes flyUp3 {
-                            0% {
-                                transform: translateY(0);
-                                opacity: 0;
-                            }
-                            50% {
-                                opacity: 0.9;
-                            }
-                            100% {
-                                transform: translateY(-45px);
-                                opacity: 0;
-                            }
-                        }
-                    </style>
-                </defs>
+                      @keyframes flyUp1 {
+                          0% {
+                              transform: translateY(0);
+                              opacity: 0;
+                          }
+                          50% {
+                              opacity: 0.8;
+                          }
+                          100% {
+                              transform: translateY(-40px);
+                              opacity: 0;
+                          }
+                      }
+                      @keyframes flyUp2 {
+                          0% {
+                              transform: translateY(0);
+                              opacity: 0;
+                          }
+                          50% {
+                              opacity: 1;
+                          }
+                          100% {
+                              transform: translateY(-50px);
+                              opacity: 0;
+                          }
+                      }
+                      @keyframes flyUp3 {
+                          0% {
+                              transform: translateY(0);
+                              opacity: 0;
+                          }
+                          50% {
+                              opacity: 0.9;
+                          }
+                          100% {
+                              transform: translateY(-45px);
+                              opacity: 0;
+                          }
+                      }
+                  </style>
+              </defs>
 
-                <rect x="48" y="34" width="104" height="10" fill="#7A7B7E" />
-                <path
-                    d="M 28 150 L 28 54 L 172 54 L 172 150 L 154 150 L 154 72 L 46 72 L 46 150 Z"
-                    fill="#7A7B7E"
-                />
-                <rect x="28" y="160" width="144" height="10" fill="#7A7B7E" />
+              <rect x="48" y="34" width="104" height="10" fill="#7A7B7E" />
+              <path
+                  d="M 28 150 L 28 54 L 172 54 L 172 150 L 154 150 L 154 72 L 46 72 L 46 150 Z"
+                  fill="#7A7B7E"
+              />
+              <rect x="28" y="160" width="144" height="10" fill="#7A7B7E" />
 
-                <g class="fire-pulse" filter="url(#fire-wobble)">
-                    <rect
-                        x="50"
-                        y="76"
-                        width="100"
-                        height="68"
-                        fill="#ED1C24"
-                    />
-                    <path
-                        d="M 50 76 L 150 76 L 150 84 L 58 84 L 58 144 L 50 144 Z"
-                        fill="#BE1622"
-                    />
-                </g>
+              <g class="fire-pulse" filter="url(#fire-wobble)">
+                  <rect
+                      x="50"
+                      y="76"
+                      width="100"
+                      height="68"
+                      fill="#ED1C24"
+                  />
+                  <path
+                      d="M 50 76 L 150 76 L 150 84 L 58 84 L 58 144 L 50 144 Z"
+                      fill="#BE1622"
+                  />
+              </g>
 
-                <g>
-                    <circle
-                        cx="70"
-                        cy="130"
-                        r="1.5"
-                        fill="#FFD54F"
-                        class="spark spark-1"
-                        opacity="0"
-                    />
-                    <circle
-                        cx="100"
-                        cy="135"
-                        r="2"
-                        fill="#FFA000"
-                        class="spark spark-2"
-                        opacity="0"
-                    />
-                    <circle
-                        cx="130"
-                        cy="125"
-                        r="1.5"
-                        fill="#FFD54F"
-                        class="spark spark-3"
-                        opacity="0"
-                    />
-                </g>
-                <rect x="50" y="124" width="100" height="8" fill="#FFFFFF" />
-                <path
-                    d="M50 124 v-12 h6 v12 h5.75 v-12 h6 v12 h5.75 v-12 h6 v12 h5.75 v-12 h6 v12 h5.75 v-12 h6 v12 h5.75 v-12 h6 v12 h5.75 v-12 h6 v12 h5.75 v-12 h6 v12 h5.75 v-12 h6 v12"
-                    fill="#FFFFFF"
-                />
-                <path
-                    d="M56 132 v12 h5.75 v-12 h6 v12 h5.75 v-12 h6 v12 h5.75 v-12 h6 v12 h5.75 v-12 h6 v12 h5.75 v-12 h6 v12 h5.75 v-12 h6 v12 h5.75 v-12 h6 v12 h5.75 v-12"
-                    fill="#FFFFFF"
-                />
-            </svg></p>
-            <div class="grid">${SITE_LINKS}</div>
-          </body>
-          </html>
-          HTMLEOF
+              <g>
+                  <circle
+                      cx="70"
+                      cy="130"
+                      r="1.5"
+                      fill="#FFD54F"
+                      class="spark spark-1"
+                      opacity="0"
+                  />
+                  <circle
+                      cx="100"
+                      cy="135"
+                      r="2"
+                      fill="#FFA000"
+                      class="spark spark-2"
+                      opacity="0"
+                  />
+                  <circle
+                      cx="130"
+                      cy="125"
+                      r="1.5"
+                      fill="#FFD54F"
+                      class="spark spark-3"
+                      opacity="0"
+                  />
+              </g>
+              <rect x="50" y="124" width="100" height="8" fill="#FFFFFF" />
+              <path
+                  d="M50 124 v-12 h6 v12 h5.75 v-12 h6 v12 h5.75 v-12 h6 v12 h5.75 v-12 h6 v12 h5.75 v-12 h6 v12 h5.75 v-12 h6 v12 h5.75 v-12 h6 v12 h5.75 v-12 h6 v12 h5.75 v-12 h6 v12"
+                  fill="#FFFFFF"
+              />
+              <path
+                  d="M56 132 v12 h5.75 v-12 h6 v12 h5.75 v-12 h6 v12 h5.75 v-12 h6 v12 h5.75 v-12 h6 v12 h5.75 v-12 h6 v12 h5.75 v-12 h6 v12 h5.75 v-12 h6 v12 h5.75 v-12"
+                  fill="#FFFFFF"
+              />
+          </svg></p>
+          <div class="grid">${SITE_LINKS}</div>
+        </body>
+        </html>
+        HTMLEOF
 
-      - name: Upload artifact
+    - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: _site
