@@ -7,10 +7,10 @@
   {% if page.description %}<meta name="description" content="{{ page.description }}">{% endif %}
   {{ og_all_tags }}
 
-  <!-- Google Fonts: Inter -->
+  <!-- Google Fonts: Inter & Space Grotesk -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -19,16 +19,22 @@
       theme: {
         extend: {
           colors: {
-            primary: '#4f46e5',
-            'primary-dark': '#4338ca',
-            'primary-light': '#818cf8',
-            surface: '#fafafe',
-            'surface-alt': '#f0f0ff',
-            border: '#e0e0f0',
-            muted: '#6b7280',
+            primary: '#8b5cf6', // Violet 500
+            'primary-dark': '#7c3aed', // Violet 600
+            'primary-light': '#a78bfa', // Violet 400
+            surface: '#0f172a', // Slate 900
+            'surface-alt': '#1e293b', // Slate 800
+            border: 'rgba(255, 255, 255, 0.1)', // Glass border
+            muted: '#94a3b8', // Slate 400
+            accent: '#38bdf8', // Sky 400
           },
           fontFamily: {
             sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['Space Grotesk', 'Inter', 'system-ui', 'sans-serif'],
+          },
+          backgroundImage: {
+            'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+            'hero-glow': 'conic-gradient(from 180deg at 50% 50%, #2a8af6 0deg, #a855f7 55deg, #ec4899 120deg, #8b5cf6 160deg, transparent 360deg)',
           },
         },
       },
@@ -36,108 +42,139 @@
   </script>
 
   <style type="text/tailwindcss">
+    @layer utilities {
+      .text-balance { text-wrap: balance; }
+      .glass {
+        @apply bg-white/5 backdrop-blur-lg border border-white/10 shadow-xl;
+      }
+    }
+
+    /* Base styles */
+    body {
+      @apply bg-surface text-gray-300 font-sans antialiased;
+      background-image:
+        radial-gradient(at 0% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(56, 189, 248, 0.15) 0px, transparent 50%);
+      background-attachment: fixed;
+    }
+
     /* Prose: markdown rendered content */
-    .prose h1, .prose h2, .prose h3 { @apply font-bold leading-tight; }
-    .prose h1 { @apply text-3xl mt-0 mb-4 tracking-tight font-extrabold; }
-    .prose h2 { @apply text-xl mt-8 mb-3 font-bold; }
-    .prose h3 { @apply text-lg mt-6 mb-2 font-semibold; }
-    .prose p { @apply mb-4 leading-relaxed; }
-    .prose a { @apply text-primary hover:underline; }
+    .prose h1, .prose h2, .prose h3 { @apply font-display text-white tracking-tight; }
+    .prose h1 { @apply text-4xl md:text-5xl font-bold mb-6 mt-0; }
+    .prose h2 { @apply text-2xl md:text-3xl font-bold mt-12 mb-6; }
+    .prose h3 { @apply text-xl font-bold mt-8 mb-4; }
+    .prose p { @apply mb-6 leading-relaxed text-lg text-gray-300; }
+    .prose a { @apply text-primary-light hover:text-white transition-colors underline decoration-primary/30 underline-offset-4 hover:decoration-white; }
+    .prose strong { @apply text-white font-semibold; }
     .prose code {
-      @apply text-[0.88em] bg-surface-alt px-1.5 py-0.5 rounded;
+      @apply text-[0.9em] bg-surface-alt/50 text-accent px-1.5 py-0.5 rounded border border-white/5;
     }
     .prose pre {
-      @apply bg-surface-alt px-5 py-4 overflow-x-auto my-4 rounded-lg border border-border leading-relaxed;
+      @apply bg-[#111] px-5 py-4 overflow-x-auto my-6 rounded-xl border border-white/10 text-gray-300;
     }
-    .prose pre code { @apply bg-transparent p-0; }
     .prose blockquote {
-      @apply border-l-[3px] border-l-primary py-2 px-4 my-4 text-muted italic;
+      @apply border-l-4 border-primary pl-6 py-2 my-8 text-xl italic text-gray-400 font-serif;
     }
-    .prose blockquote p:last-child { @apply mb-0; }
-    .prose ul, .prose ol { @apply mb-4 ml-6; }
-    .prose li { @apply my-1; }
-    .prose img { @apply max-w-full rounded-lg; }
-    .prose table { @apply w-full border-collapse my-6; }
-    .prose th, .prose td { @apply px-3 py-2 border border-border text-left text-sm; }
-    .prose thead { @apply bg-surface-alt; }
+    .prose ul, .prose ol { @apply mb-6 ml-6 space-y-2; }
+    .prose li::marker { @apply text-muted; }
+    .prose img { @apply max-w-full rounded-2xl border border-white/10 shadow-2xl; }
+    .prose table { @apply w-full border-collapse my-8 text-left; }
+    .prose th { @apply px-4 py-3 border-b border-white/10 text-white font-semibold; }
+    .prose td { @apply px-4 py-3 border-b border-white/5 text-gray-400; }
 
     /* Feature card */
     .feature-card {
-      @apply p-6 bg-white rounded-xl border border-border text-center;
+      @apply p-8 rounded-2xl glass hover:bg-white/10 transition-all duration-300 group;
     }
     .feature-card .feature-icon {
-      @apply text-3xl mb-3;
+      @apply text-4xl mb-4 text-transparent bg-clip-text bg-gradient-to-br from-primary-light to-accent inline-block transition-transform duration-300 group-hover:scale-110;
     }
-    .feature-card h3 { @apply text-lg font-bold mb-2 mt-0; }
-    .feature-card p { @apply text-sm text-muted m-0 leading-relaxed; }
+    .feature-card h3 { @apply text-xl font-bold text-white mb-3 font-display; }
+    .feature-card p { @apply text-base text-gray-400 leading-relaxed; }
 
     /* Pricing card */
     .pricing-card {
-      @apply p-6 bg-white rounded-xl border border-border text-center;
+      @apply p-8 rounded-2xl glass flex flex-col h-full hover:-translate-y-1 transition-transform duration-300;
     }
     .pricing-card.featured {
-      @apply border-primary shadow-lg ring-2 ring-primary/20 relative scale-105;
+      @apply border-primary/50 relative overflow-hidden;
+      box-shadow: 0 0 40px -10px rgba(139, 92, 246, 0.3);
     }
-    .pricing-card h3 { @apply text-lg font-bold mb-1 mt-0; }
-    .pricing-card .price { @apply text-4xl font-extrabold text-primary my-3; }
-    .pricing-card .price span { @apply text-sm font-normal text-muted; }
-    .pricing-card ul { @apply list-none p-0 m-0 space-y-2 text-sm text-muted mb-6; }
-    .pricing-card li::before { content: "✓ "; @apply text-primary font-bold; }
+    .pricing-card.featured::before {
+      content: '';
+      @apply absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-primary-light to-transparent opacity-50;
+    }
+    .pricing-card h3 { @apply text-lg font-bold text-gray-400 mb-2 font-display uppercase tracking-wider text-sm; }
+    .pricing-card .price { @apply text-5xl font-bold text-white my-4 font-display tracking-tight; }
+    .pricing-card .price span { @apply text-lg font-normal text-gray-500 ml-1; }
+    .pricing-card ul { @apply list-none p-0 m-0 space-y-3 text-sm text-gray-300 mb-8 flex-grow; }
+    .pricing-card li { @apply flex items-start gap-3; }
+    .pricing-card li::before {
+      content: "✓";
+      @apply text-accent font-bold mt-0.5;
+    }
 
     /* CTA banner */
     .cta-banner {
-      @apply py-12 px-6 text-center rounded-2xl my-12;
-      background: linear-gradient(135deg, #4f46e5, #818cf8);
+      @apply py-16 px-8 text-center rounded-3xl my-16 relative overflow-hidden;
+      background: linear-gradient(135deg, #4c1d95, #7c3aed);
     }
-    .cta-banner h2 { @apply text-2xl font-bold text-white mb-3 mt-0; }
-    .cta-banner p { @apply text-indigo-100 mb-6; }
+    .cta-banner::before {
+      content: '';
+      @apply absolute inset-0 opacity-30;
+      background-image: radial-gradient(circle at top right, #38bdf8, transparent 40%),
+                        radial-gradient(circle at bottom left, #ec4899, transparent 40%);
+    }
+    .cta-banner > * { @apply relative z-10; }
+    .cta-banner h2 { @apply text-3xl md:text-4xl font-bold text-white mb-4 font-display; }
+    .cta-banner p { @apply text-indigo-100 text-lg mb-8 max-w-2xl mx-auto; }
 
     /* Blog card */
     .blog-card {
-      @apply block p-6 bg-white rounded-xl border border-border transition-all duration-200;
+      @apply block p-0 bg-surface-alt/30 rounded-2xl border border-white/5 overflow-hidden transition-all duration-300 hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/10 group;
     }
-    .blog-card:hover {
-      @apply shadow-lg no-underline;
-      box-shadow: 0 4px 20px rgba(79, 70, 229, 0.12);
+    .blog-card-image {
+      @apply h-48 bg-surface-alt w-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500;
     }
-    .blog-card h2 { @apply text-lg font-bold mb-2 mt-0; }
+    .blog-card-content { @apply p-6; }
+    .blog-card h2 { @apply text-xl font-bold text-white mb-2 group-hover:text-primary-light transition-colors font-display; }
+    .blog-card p { @apply text-gray-400 text-sm line-clamp-3; }
 
     /* Pagination */
-    nav.pagination { @apply my-8; }
+    nav.pagination { @apply my-12; }
     nav.pagination .pagination-list {
       @apply list-none p-0 m-0 flex gap-2 flex-wrap items-center justify-center;
     }
     nav.pagination a {
-      @apply inline-block px-3 py-1.5 rounded border border-border text-sm no-underline text-muted
-             hover:text-primary hover:border-primary transition-colors;
+      @apply inline-flex items-center justify-center h-10 min-w-[2.5rem] px-3 rounded-lg border border-white/10 text-sm text-gray-400 hover:text-white hover:border-primary/50 hover:bg-white/5 transition-all;
     }
     .pagination-current span {
-      @apply inline-block px-3 py-1.5 rounded border border-primary bg-primary text-white text-sm font-medium;
+      @apply inline-flex items-center justify-center h-10 min-w-[2.5rem] px-3 rounded-lg bg-primary text-white text-sm font-medium shadow-lg shadow-primary/25;
     }
     .pagination-disabled span {
-      @apply inline-block px-3 py-1.5 rounded border border-border text-muted opacity-50 text-sm;
+      @apply inline-flex items-center justify-center h-10 min-w-[2.5rem] px-3 rounded-lg border border-white/5 text-gray-600 opacity-50 text-sm;
     }
-
-    /* Section list (taxonomy content) */
-    ul.section-list { @apply list-none p-0 my-6 space-y-2; }
-    ul.section-list li {
-      @apply p-3 bg-surface-alt rounded-lg border border-border;
-    }
-    ul.section-list li a { @apply font-medium text-primary; }
   </style>
 
   {{ highlight_css }}
   {{ auto_includes_css }}
 </head>
-<body class="font-sans text-gray-900 bg-surface leading-relaxed">
-  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-border">
-    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-      <a href="{{ base_url }}/" class="text-xl font-extrabold text-primary no-underline">FlowSync</a>
-      <nav class="flex items-center gap-6">
-        <a href="{{ base_url }}/#features" class="text-muted text-sm font-medium no-underline hover:text-primary transition-colors">Features</a>
-        <a href="{{ base_url }}/#pricing" class="text-muted text-sm font-medium no-underline hover:text-primary transition-colors">Pricing</a>
-        <a href="{{ base_url }}/blog/" class="text-muted text-sm font-medium no-underline hover:text-primary transition-colors">Blog</a>
-        <a href="#" class="inline-block px-5 py-2 bg-primary text-white rounded-full text-sm font-semibold no-underline hover:bg-primary-dark transition-colors">Get Started</a>
+<body class="font-sans text-gray-300 bg-surface min-h-screen flex flex-col">
+  <header class="fixed top-0 inset-x-0 z-50 bg-surface/80 backdrop-blur-md border-b border-white/5 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <a href="{{ base_url }}/" class="text-2xl font-bold text-white no-underline font-display tracking-tight flex items-center gap-2">
+        <span class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white text-lg">✦</span>
+        FlowSync
+      </a>
+      <nav class="hidden md:flex items-center gap-8">
+        <a href="{{ base_url }}/#features" class="text-gray-400 text-sm font-medium no-underline hover:text-white transition-colors">Features</a>
+        <a href="{{ base_url }}/#pricing" class="text-gray-400 text-sm font-medium no-underline hover:text-white transition-colors">Pricing</a>
+        <a href="{{ base_url }}/blog/" class="text-gray-400 text-sm font-medium no-underline hover:text-white transition-colors">Blog</a>
+        <a href="#" class="inline-flex items-center px-6 py-2.5 bg-white text-surface rounded-full text-sm font-bold no-underline hover:bg-gray-100 transition-transform hover:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.3)]">Get Started</a>
       </nav>
+      <!-- Mobile menu button placeholder -->
+      <button class="md:hidden text-white">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+      </button>
     </div>
   </header>
