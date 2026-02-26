@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,28 +7,46 @@
   <title>{{ page.title }} - {{ site.title }}</title>
   {{ og_all_tags }}
 
-  <!-- Google Fonts: Inter -->
+  <!-- Google Fonts: Inter & Space Grotesk -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
           colors: {
-            primary: '#e8590c',
-            surface: '#faf8f5',
-            'surface-alt': '#f0ece6',
-            border: '#ddd5c8',
-            muted: '#6b5e50',
+            primary: '#8b5cf6', // Violet 500
+            secondary: '#06b6d4', // Cyan 500
+            bg: '#020617', // Slate 950
+            surface: '#0f172a', // Slate 900
+            'surface-alt': '#1e293b', // Slate 800
+            border: '#334155', // Slate 700
+            text: '#f8fafc', // Slate 50
+            muted: '#94a3b8', // Slate 400
           },
           fontFamily: {
-            serif: ['Georgia', '"Times New Roman"', 'serif'],
-            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+            body: ['Inter', 'sans-serif'],
           },
+          animation: {
+            'fade-in': 'fadeIn 0.5s ease-out',
+            'slide-up': 'slideUp 0.5s ease-out',
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            slideUp: {
+              '0%': { transform: 'translateY(20px)', opacity: '0' },
+              '100%': { transform: 'translateY(0)', opacity: '1' },
+            }
+          }
         },
       },
     }
@@ -36,79 +54,120 @@
 
   <style type="text/tailwindcss">
     /* Prose: markdown rendered content */
-    .prose h1, .prose h2, .prose h3 {
-      @apply font-serif font-bold leading-tight;
+    .prose { @apply max-w-none; }
+    .prose h1, .prose h2, .prose h3, .prose h4 {
+      @apply font-display font-bold text-text mt-12 mb-6 tracking-tight scroll-mt-24;
     }
-    .prose h1 { @apply text-3xl mt-0 mb-4 tracking-tight; }
-    .prose h2 { @apply text-xl mt-8 mb-3; }
-    .prose h3 { @apply text-lg mt-6 mb-2; }
-    .prose p { @apply my-4 leading-relaxed; }
-    .prose a { @apply text-primary hover:underline; }
+    .prose h1 { @apply text-4xl lg:text-5xl mt-0 mb-8 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400 leading-tight; }
+    .prose h2 { @apply text-2xl lg:text-3xl border-b border-border pb-4; }
+    .prose h3 { @apply text-xl lg:text-2xl text-secondary; }
+
+    .prose p { @apply my-6 leading-loose text-gray-300 text-lg; }
+    .prose a {
+      @apply text-primary font-medium border-b border-primary/30 hover:border-primary transition-all no-underline pb-0.5;
+    }
+    .prose a:hover { @apply text-secondary border-secondary; }
+
     .prose code {
-      @apply bg-surface-alt px-1.5 py-0.5 rounded text-sm font-mono;
+      @apply bg-surface-alt text-secondary px-1.5 py-0.5 rounded text-sm font-mono border border-border/50;
     }
     .prose pre {
-      @apply bg-surface-alt p-4 rounded-lg overflow-x-auto border border-border my-4;
+      @apply bg-surface-alt/50 p-6 rounded-2xl overflow-x-auto border border-border/50 my-8 shadow-2xl;
     }
-    .prose pre code { @apply bg-transparent p-0; }
+    .prose pre code { @apply bg-transparent p-0 text-gray-200 border-none; }
+
     .prose blockquote {
-      @apply my-6 py-3 px-5 border-l-4 border-primary bg-surface-alt italic text-muted;
+      @apply my-10 py-4 px-8 border-l-4 border-primary bg-surface-alt/30 italic text-gray-300 rounded-r-xl;
     }
-    .prose blockquote p { @apply my-2; }
-    .prose ul, .prose ol { @apply my-4 ml-6; }
-    .prose li { @apply my-1; }
-    .prose img { @apply max-w-full rounded-lg; }
+
+    .prose ul, .prose ol { @apply my-6 ml-6 text-gray-300; }
+    .prose li { @apply my-2 pl-2 marker:text-primary; }
+
+    .prose img { @apply max-w-full rounded-2xl shadow-xl border border-border/30 my-10 w-full object-cover aspect-video; }
+
     .prose hr {
-      @apply border-none text-center my-10;
+      @apply border-border/50 my-16;
     }
     .prose hr::after {
-      content: "\2022  \2022  \2022";
-      @apply text-primary tracking-widest text-sm;
+      content: "✦";
+      @apply absolute left-1/2 -translate-x-1/2 -mt-3 bg-bg px-4 text-primary text-xl;
     }
-    .prose table { @apply w-full border-collapse my-6; }
-    .prose th, .prose td { @apply px-3 py-2 border border-border text-left text-sm; }
-    .prose thead { @apply bg-surface-alt; }
-    .prose th { @apply font-semibold; }
+
+    .prose table { @apply w-full border-collapse my-8 text-left; }
+    .prose th, .prose td { @apply px-4 py-3 border border-border/50; }
+    .prose th { @apply bg-surface-alt font-display font-semibold text-white; }
+    .prose td { @apply text-gray-300; }
 
     /* Pagination */
-    nav.pagination { @apply my-6; }
+    nav.pagination { @apply my-16 flex justify-center; }
     nav.pagination .pagination-list {
-      @apply list-none p-0 m-0 flex gap-2 flex-wrap items-center;
+      @apply list-none p-0 m-0 flex gap-3 flex-wrap items-center;
     }
     nav.pagination a {
-      @apply inline-block px-2.5 py-1 rounded-md border border-border text-muted no-underline text-sm
-             hover:text-primary hover:border-primary transition-colors;
+      @apply inline-flex items-center justify-center min-w-[2.5rem] h-10 px-3 rounded-lg border border-border
+             text-muted no-underline text-sm font-medium bg-surface/50 backdrop-blur hover:bg-surface-alt
+             hover:text-white hover:border-primary transition-all duration-300;
     }
     .pagination-current span {
-      @apply inline-block px-2.5 py-1 rounded-md border border-primary bg-primary/10 text-sm font-medium;
+      @apply inline-flex items-center justify-center min-w-[2.5rem] h-10 px-3 rounded-lg
+             bg-primary text-white text-sm font-bold shadow-lg shadow-primary/25;
     }
     .pagination-disabled span {
-      @apply inline-block px-2.5 py-1 rounded-md border border-border text-muted opacity-50 text-sm;
+      @apply hidden;
     }
 
-    /* Section list (taxonomy content) */
-    ul.section-list { @apply list-none p-0 my-6 space-y-2; }
-    ul.section-list li {
-      @apply p-3 bg-surface-alt rounded-lg border border-border shadow-sm;
-    }
-    ul.section-list li a { @apply font-medium text-primary; }
-
-    /* Alert shortcode */
+    /* Shortcodes */
     .alert {
-      @apply p-4 rounded-lg border-l-4 border-l-primary bg-surface-alt my-4;
+      @apply p-4 rounded-xl border-l-4 my-6 bg-surface-alt/50 backdrop-blur-sm shadow-lg;
     }
+    /* Default alert styles assuming class names might be appended dynamically or manually */
+    .alert[data-type="tip"], .alert-tip { @apply border-l-green-500 bg-green-950/20 text-green-100; }
+    .alert[data-type="warning"], .alert-warning { @apply border-l-yellow-500 bg-yellow-950/20 text-yellow-100; }
+    .alert[data-type="note"], .alert-note { @apply border-l-blue-500 bg-blue-950/20 text-blue-100; }
+
   </style>
 
   {{ highlight_css }}
   {{ auto_includes_css }}
 </head>
-<body class="font-serif text-gray-800 bg-surface leading-relaxed" data-section="{{ page.section }}">
-  <div class="max-w-2xl mx-auto px-6">
-    <header class="text-center py-10 border-b border-border mb-10">
-      <a href="{{ base_url }}/" class="text-2xl font-bold text-gray-800 no-underline tracking-tight hover:text-primary transition-colors block mb-3">{{ site.title }}</a>
-      <nav class="flex gap-6 justify-center">
-        <a href="{{ base_url }}/" class="font-sans text-muted text-sm uppercase tracking-wider no-underline hover:text-primary transition-colors">Home</a>
-        <a href="{{ base_url }}/posts/" class="font-sans text-muted text-sm uppercase tracking-wider no-underline hover:text-primary transition-colors">Posts</a>
-        <a href="{{ base_url }}/about/" class="font-sans text-muted text-sm uppercase tracking-wider no-underline hover:text-primary transition-colors">About</a>
+<body class="font-body text-text bg-bg antialiased selection:bg-primary/30 selection:text-white min-h-screen flex flex-col relative overflow-x-hidden" data-section="{{ page.section }}">
+
+  <!-- Ambient Background Glow -->
+  <div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+    <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/10 rounded-full blur-[120px] animate-pulse"></div>
+    <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-secondary/10 rounded-full blur-[120px] animate-pulse" style="animation-delay: 2s;"></div>
+  </div>
+
+  <!-- Modern Navbar -->
+  <header class="sticky top-0 z-50 w-full backdrop-blur-xl bg-bg/70 border-b border-white/5 transition-all duration-300">
+    <div class="max-w-5xl mx-auto px-6 h-20 flex items-center justify-between">
+      <a href="{{ base_url }}/" class="group flex items-center gap-3 no-underline">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold font-display text-xl shadow-lg shadow-primary/20 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">B</div>
+        <span class="text-xl font-bold font-display text-white tracking-tight group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-400 transition-all duration-300">{{ site.title }}</span>
+      </a>
+
+      <nav class="hidden md:flex gap-10 items-center">
+        <a href="{{ base_url }}/" class="text-sm font-medium text-muted hover:text-white transition-colors py-2 relative group">
+          Home
+          <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary transition-all duration-300 group-hover:w-full"></span>
+        </a>
+        <a href="{{ base_url }}/posts/" class="text-sm font-medium text-muted hover:text-white transition-colors py-2 relative group">
+          Posts
+          <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary transition-all duration-300 group-hover:w-full"></span>
+        </a>
+        <a href="{{ base_url }}/about/" class="text-sm font-medium text-muted hover:text-white transition-colors py-2 relative group">
+          About
+          <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary transition-all duration-300 group-hover:w-full"></span>
+        </a>
       </nav>
-    </header>
+
+      <!-- Mobile menu button placeholder -->
+      <button class="md:hidden text-muted hover:text-white p-2">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="flex-grow w-full max-w-5xl mx-auto px-6 py-12 animate-fade-in relative z-10">
