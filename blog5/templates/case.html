@@ -1,33 +1,68 @@
 {% include "header.html" %}
-  <main class="max-w-5xl mx-auto px-6 py-10">
+  <main class="max-w-4xl mx-auto px-6 py-10 md:py-20 min-h-screen">
     <article>
-      <h1 class="text-4xl font-extrabold tracking-tight mb-2">{{ page.title }}</h1>
-      {% if page.description %}<p class="text-lg text-muted mb-6">{{ page.description }}</p>{% endif %}
+      <header class="mb-12">
+        <h1 class="text-5xl md:text-7xl font-black tracking-tighter mb-6 text-white leading-[0.9] text-transparent bg-clip-text bg-gradient-to-br from-white via-white to-gray-500">{{ page.title }}</h1>
+        {% if page.description %}<p class="text-xl md:text-2xl text-gray-400 font-medium leading-relaxed mb-10">{{ page.description }}</p>{% endif %}
 
-      {% if page.extra.year or page.extra.client or page.extra.status %}
-      <dl class="grid grid-cols-2 md:grid-cols-4 gap-4 p-5 bg-surface-alt rounded-lg mb-8 text-sm">
-        {% if page.extra.year %}<div><dt class="text-muted text-xs uppercase tracking-wider">Year</dt><dd class="font-semibold mt-1">{{ page.extra.year }}</dd></div>{% endif %}
-        {% if page.extra.client %}<div><dt class="text-muted text-xs uppercase tracking-wider">Client</dt><dd class="font-semibold mt-1">{{ page.extra.client }}</dd></div>{% endif %}
-        {% if page.extra.status %}<div><dt class="text-muted text-xs uppercase tracking-wider">Status</dt><dd class="font-semibold mt-1">{{ page.extra.status }}</dd></div>{% endif %}
-        {% if page.extra.services %}<div><dt class="text-muted text-xs uppercase tracking-wider">Services</dt><dd class="font-semibold mt-1">{{ page.extra.services }}</dd></div>{% endif %}
-      </dl>
-      {% endif %}
+        {% if page.extra.year or page.extra.client or page.extra.status or page.extra.services %}
+        <dl class="grid grid-cols-2 md:grid-cols-4 gap-6 p-6 bg-surface-alt/30 backdrop-blur rounded-2xl border border-white/5 mb-10 text-sm shadow-lg">
+          {% if page.extra.year %}
+          <div>
+            <dt class="text-primary font-bold text-xs uppercase tracking-widest mb-1">Year</dt>
+            <dd class="font-bold text-white text-lg">{{ page.extra.year }}</dd>
+          </div>
+          {% endif %}
+          {% if page.extra.client %}
+          <div>
+            <dt class="text-primary font-bold text-xs uppercase tracking-widest mb-1">Client</dt>
+            <dd class="font-bold text-white text-lg">{{ page.extra.client }}</dd>
+          </div>
+          {% endif %}
+          {% if page.extra.status %}
+          <div>
+            <dt class="text-primary font-bold text-xs uppercase tracking-widest mb-1">Status</dt>
+            <dd class="font-bold text-white text-lg">{{ page.extra.status }}</dd>
+          </div>
+          {% endif %}
+          {% if page.extra.services %}
+          <div>
+            <dt class="text-primary font-bold text-xs uppercase tracking-widest mb-1">Services</dt>
+            <dd class="font-bold text-white text-lg">{{ page.extra.services }}</dd>
+          </div>
+          {% endif %}
+        </dl>
+        {% endif %}
 
-      {% if page.tags %}
-      <div class="flex flex-wrap gap-1.5 mb-6">
-        {% for tag in page.tags %}
-          <a href="{{ base_url }}/tags/{{ tag | slugify }}/" class="inline-block text-xs px-3 py-0.5 border border-primary rounded-full text-primary no-underline hover:bg-primary hover:text-white transition-colors">{{ tag }}</a>
-        {% endfor %}
-      </div>
-      {% endif %}
+        {% if page.tags %}
+        <div class="flex flex-wrap gap-2 mb-10">
+          {% for tag in page.tags %}
+            <a href="{{ base_url }}/tags/{{ tag | slugify }}/" class="inline-block text-xs font-bold px-4 py-1.5 border border-white/10 rounded-full text-gray-300 no-underline hover:bg-white/10 hover:text-white hover:border-white/20 transition-all uppercase tracking-wider">{{ tag }}</a>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </header>
 
-      <div class="prose">
+      <div class="prose mx-auto">
         {{ content }}
       </div>
 
-      <nav class="flex justify-between mt-12 pt-6 border-t border-border text-sm">
-        {% if page.lower %}<a href="{{ page.lower.url }}" class="text-primary no-underline hover:underline">&larr; {{ page.lower.title }}</a>{% endif %}
-        {% if page.higher %}<a href="{{ page.higher.url }}" class="text-primary no-underline hover:underline ml-auto text-right">{{ page.higher.title }} &rarr;</a>{% endif %}
+      <nav class="flex justify-between mt-20 pt-10 border-t border-white/10 text-sm font-bold tracking-wide">
+        {% if page.lower %}
+        <a href="{{ page.lower.url }}" class="text-gray-400 no-underline hover:text-white transition-colors flex items-center gap-2 group">
+          <span class="group-hover:-translate-x-1 transition-transform">&larr;</span>
+          <span class="hidden md:inline">{{ page.lower.title }}</span>
+          <span class="md:hidden">Prev</span>
+        </a>
+        {% else %}<div></div>{% endif %}
+
+        {% if page.higher %}
+        <a href="{{ page.higher.url }}" class="text-gray-400 no-underline hover:text-white transition-colors ml-auto text-right flex items-center gap-2 group">
+          <span class="hidden md:inline">{{ page.higher.title }}</span>
+          <span class="md:hidden">Next</span>
+          <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+        </a>
+        {% endif %}
       </nav>
     </article>
   </main>
