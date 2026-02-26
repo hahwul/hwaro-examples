@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,116 +7,129 @@
   {% if page.description %}<meta name="description" content="{{ page.description }}">{% endif %}
   {{ og_all_tags }}
 
-  <!-- Google Fonts: Inter -->
+  <!-- Google Fonts: Inter & JetBrains Mono for that cyber feel -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
           colors: {
-            primary: '#059669',
-            'primary-light': '#34d399',
-            surface: '#f0fdf4',
-            'surface-alt': '#e6f7ed',
-            border: '#c6e9d3',
-            muted: '#4a6a4a',
+            primary: '#34d399',      /* Emerald 400 */
+            'primary-light': '#6ee7b7', /* Emerald 300 */
+            'primary-dark': '#059669',  /* Emerald 600 */
+            surface: '#0f172a',      /* Slate 900 */
+            'surface-alt': '#1e293b', /* Slate 800 */
+            border: '#334155',       /* Slate 700 */
+            muted: '#94a3b8',        /* Slate 400 */
+            text: '#e2e8f0',         /* Slate 200 */
           },
           fontFamily: {
-            mono: ['ui-monospace', '"SFMono-Regular"', 'Consolas', '"Liberation Mono"', 'Menlo', 'monospace'],
+            mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
             sans: ['Inter', 'system-ui', 'sans-serif'],
           },
+          backgroundImage: {
+            'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+          }
         },
       },
     }
   </script>
 
   <style type="text/tailwindcss">
-    /* Prose: markdown rendered content */
+    /* Prose: markdown rendered content (Dark Mode Optimized) */
     .prose h1, .prose h2, .prose h3, .prose h4 {
-      @apply font-mono font-bold leading-tight;
+      @apply font-sans font-bold leading-tight text-white tracking-tight;
     }
-    .prose h1 { @apply text-2xl mb-4 mt-0; }
-    .prose h2 { @apply text-xl mt-8 mb-3; }
-    .prose h3 { @apply text-base mt-6 mb-2; }
-    .prose p { @apply mb-4 leading-relaxed; }
-    .prose a { @apply text-primary hover:underline; }
+    .prose h1 { @apply text-3xl mb-6 mt-0 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-light; }
+    .prose h2 { @apply text-2xl mt-10 mb-4 border-b border-border pb-2; }
+    .prose h3 { @apply text-lg mt-8 mb-3 text-primary-light; }
+    .prose p { @apply mb-5 leading-7 text-gray-300; }
+    .prose a { @apply text-primary hover:text-primary-light hover:underline transition-colors; }
     .prose code {
-      @apply font-mono text-[0.88em] bg-surface-alt px-1.5 py-0.5 rounded;
+      @apply font-mono text-[0.9em] bg-surface-alt text-primary-light px-1.5 py-0.5 rounded border border-border;
     }
     .prose pre {
-      @apply bg-surface-alt border-l-[3px] border-l-primary px-5 py-4 overflow-x-auto my-4 rounded-r leading-relaxed;
+      @apply bg-[#111827] border border-border px-5 py-4 overflow-x-auto my-6 rounded-lg leading-relaxed shadow-lg;
     }
-    .prose pre code { @apply bg-transparent p-0; }
+    .prose pre code { @apply bg-transparent p-0 border-none text-gray-300; }
     .prose blockquote {
-      @apply border-l-[3px] border-dashed border-l-primary py-2 px-4 my-4 text-muted bg-surface-alt rounded-r;
+      @apply border-l-4 border-primary pl-4 py-1 my-6 text-muted italic bg-surface-alt/50 rounded-r-lg;
     }
     .prose blockquote p:last-child { @apply mb-0; }
-    .prose ul, .prose ol { @apply mb-4 ml-6; }
-    .prose li { @apply my-1; }
-    .prose img { @apply max-w-full rounded; }
-    .prose table { @apply w-full border-collapse my-6; }
-    .prose th, .prose td { @apply px-3 py-2 border border-border text-left text-sm; }
-    .prose thead { @apply bg-surface-alt; }
+    .prose ul, .prose ol { @apply mb-6 ml-6 text-gray-300; }
+    .prose li { @apply my-2 pl-1 marker:text-primary; }
+    .prose img { @apply max-w-full rounded-lg shadow-md border border-border; }
+    .prose table { @apply w-full border-collapse my-8 text-left; }
+    .prose th { @apply px-4 py-3 border-b border-border bg-surface-alt font-semibold text-white; }
+    .prose td { @apply px-4 py-3 border-b border-border/50 text-sm text-gray-300; }
 
-    /* Timeline */
+    /* Timeline / Post List */
     .timeline-item {
-      @apply flex gap-5 py-5 border-l-2 border-border ml-2 pl-6 relative;
+      @apply flex flex-col sm:flex-row gap-4 p-5 rounded-xl border border-transparent transition-all duration-300 hover:bg-surface-alt hover:border-border hover:shadow-lg hover:shadow-primary/5 group;
     }
-    .timeline-item::before {
-      content: "";
-      @apply absolute -left-[5px] top-7 w-2 h-2 bg-primary rounded-full;
-    }
+    /* We remove the dot timeline style for a cleaner card/list look */
 
     /* Pagination */
-    nav.pagination { @apply my-6; }
+    nav.pagination { @apply my-10; }
     nav.pagination .pagination-list {
       @apply list-none p-0 m-0 flex gap-2 flex-wrap items-center justify-center;
     }
     nav.pagination a {
-      @apply inline-block px-3 py-1.5 rounded border border-border text-sm no-underline text-muted
-             hover:text-primary hover:border-primary transition-colors;
+      @apply inline-flex items-center justify-center h-10 px-4 rounded-lg border border-border text-sm font-medium text-muted
+             hover:text-white hover:border-primary hover:bg-primary/10 transition-all;
     }
     .pagination-current span {
-      @apply inline-block px-3 py-1.5 rounded border border-primary bg-primary text-white text-sm font-medium;
+      @apply inline-flex items-center justify-center h-10 px-4 rounded-lg border border-primary bg-primary text-surface text-sm font-bold shadow-[0_0_15px_rgba(52,211,153,0.3)];
     }
     .pagination-disabled span {
-      @apply inline-block px-3 py-1.5 rounded border border-border text-muted opacity-50 text-sm;
+      @apply inline-flex items-center justify-center h-10 px-4 rounded-lg border border-border/50 text-muted/30 text-sm;
     }
 
     /* Section list (taxonomy content) */
-    ul.section-list { @apply list-none p-0 my-6 space-y-2; }
+    ul.section-list { @apply list-none p-0 my-8 space-y-3; }
     ul.section-list li {
-      @apply p-3 bg-surface-alt rounded border border-border;
+      @apply p-4 bg-surface-alt/50 rounded-lg border border-border hover:border-primary/50 transition-colors;
     }
-    ul.section-list li a { @apply font-medium text-primary; }
+    ul.section-list li a { @apply font-medium text-primary hover:text-white transition-colors; }
 
     /* Alert shortcode */
     .alert {
-      @apply py-3 px-4 border border-border border-l-4 border-l-primary bg-surface-alt rounded-r my-4 text-sm;
+      @apply py-3 px-4 border border-l-4 border-l-primary bg-surface-alt/80 rounded-r-lg my-6 text-sm text-gray-200 shadow-sm;
     }
 
     /* Version badge */
     .version-badge {
-      @apply inline-block font-mono text-xs font-semibold px-3 py-0.5 bg-primary text-white rounded-full;
+      @apply inline-block font-mono text-[10px] uppercase tracking-wider font-bold px-2 py-0.5 bg-primary/20 text-primary border border-primary/30 rounded-full;
     }
   </style>
 
   {{ highlight_css }}
   {{ auto_includes_css }}
 </head>
-<body class="font-sans text-gray-900 bg-surface leading-relaxed">
-  <header class="border-b-2 border-primary bg-surface py-4">
-    <div class="max-w-3xl mx-auto px-6 flex items-center justify-between">
-      <a href="{{ base_url }}/" class="font-mono text-xl font-bold text-gray-900 no-underline hover:text-primary transition-colors"><span class="text-primary">&gt;_</span> {{ site.title }}</a>
+<body class="font-sans text-text bg-surface antialiased min-h-screen flex flex-col selection:bg-primary selection:text-surface">
+
+  <!-- Gradient Blob Background Effect -->
+  <div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
+    <div class="absolute -top-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-primary/5 blur-[120px]"></div>
+    <div class="absolute top-[40%] -right-[10%] w-[40%] h-[40%] rounded-full bg-blue-500/5 blur-[120px]"></div>
+  </div>
+
+  <header class="sticky top-0 z-50 border-b border-border/50 bg-surface/80 backdrop-blur-md transition-all duration-300">
+    <div class="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="{{ base_url }}/" class="group flex items-center gap-2 font-mono text-lg font-bold text-white no-underline transition-colors">
+        <span class="text-primary group-hover:text-white transition-colors">&gt;_</span>
+        <span class="group-hover:text-primary transition-colors">{{ site.title }}</span>
+      </a>
       <nav class="flex gap-6">
-        <a href="{{ base_url }}/log/" class="font-mono text-sm text-muted no-underline hover:text-primary transition-colors">Log</a>
-        <a href="{{ base_url }}/tags/" class="font-mono text-sm text-muted no-underline hover:text-primary transition-colors">Tags</a>
-        <a href="{{ base_url }}/about/" class="font-mono text-sm text-muted no-underline hover:text-primary transition-colors">About</a>
+        <a href="{{ base_url }}/log/" class="text-sm font-medium text-muted hover:text-primary hover:scale-105 transition-all">Log</a>
+        <a href="{{ base_url }}/tags/" class="text-sm font-medium text-muted hover:text-primary hover:scale-105 transition-all">Tags</a>
+        <a href="{{ base_url }}/about/" class="text-sm font-medium text-muted hover:text-primary hover:scale-105 transition-all">About</a>
       </nav>
     </div>
   </header>

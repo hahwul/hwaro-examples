@@ -1,28 +1,62 @@
 {% include "header.html" %}
-  <main class="max-w-3xl mx-auto px-6 py-8">
-    <article>
-      <header class="mb-8">
-        <h1 class="font-mono text-2xl font-bold mb-2">{{ page.title }}</h1>
-        <div class="text-sm text-muted font-mono mb-3">
-          {% if page.date %}<time>{{ page.date | date("%Y-%m-%d") }}</time>{% endif %}
-          {% if page.reading_time %}<span class="ml-1">&middot; {{ page.reading_time }} min read</span>{% endif %}
+  <main class="max-w-4xl mx-auto px-6 py-12">
+    <article class="bg-surface/50 backdrop-blur-sm rounded-2xl p-6 sm:p-10 border border-border/50 shadow-xl">
+      <header class="mb-10 text-center border-b border-border/50 pb-10">
+        <h1 class="text-3xl sm:text-5xl font-extrabold mb-6 tracking-tight bg-clip-text text-transparent bg-gradient-to-br from-white via-gray-200 to-gray-400">
+          {{ page.title }}
+        </h1>
+
+        <div class="flex flex-wrap items-center justify-center gap-4 text-sm font-mono text-muted mb-6">
+          {% if page.date %}
+            <div class="flex items-center gap-1.5 px-3 py-1 bg-surface-alt rounded-full border border-border/50">
+              <svg class="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              <time>{{ page.date | date("%Y-%m-%d") }}</time>
+            </div>
+          {% endif %}
+
+          {% if page.reading_time %}
+            <div class="flex items-center gap-1.5 px-3 py-1 bg-surface-alt rounded-full border border-border/50">
+              <svg class="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span>{{ page.reading_time }} min read</span>
+            </div>
+          {% endif %}
         </div>
+
         {% if page.tags %}
-        <div class="flex flex-wrap gap-1.5">
+        <div class="flex flex-wrap justify-center gap-2">
           {% for tag in page.tags %}
-            <a href="{{ base_url }}/tags/{{ tag | slugify }}/" class="inline-block text-xs font-mono px-2.5 py-0.5 border border-primary rounded-full text-primary no-underline hover:bg-primary hover:text-white transition-colors">{{ tag }}</a>
+            <a href="{{ base_url }}/tags/{{ tag | slugify }}/" class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-primary/10 text-primary border border-primary/20 hover:bg-primary hover:text-surface transition-all duration-300 transform hover:scale-105 no-underline">
+              #{{ tag }}
+            </a>
           {% endfor %}
         </div>
         {% endif %}
       </header>
 
-      <div class="prose">
+      <div class="prose max-w-none prose-lg">
         {{ content }}
       </div>
 
-      <nav class="flex justify-between mt-12 pt-6 border-t border-border text-sm">
-        {% if page.lower %}<a href="{{ page.lower.url }}" class="text-primary no-underline hover:underline">&larr; {{ page.lower.title }}</a>{% endif %}
-        {% if page.higher %}<a href="{{ page.higher.url }}" class="text-primary no-underline hover:underline ml-auto text-right">{{ page.higher.title }} &rarr;</a>{% endif %}
+      <nav class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-16 pt-8 border-t border-border/50">
+        {% if page.lower %}
+        <a href="{{ page.lower.url }}" class="group flex flex-col items-start p-4 rounded-xl border border-border/50 bg-surface-alt/30 hover:bg-surface-alt hover:border-primary/30 transition-all no-underline">
+          <span class="text-xs font-mono text-muted mb-1 group-hover:text-primary transition-colors">&larr; Previous Post</span>
+          <span class="font-bold text-white group-hover:text-primary-light transition-colors line-clamp-2">{{ page.lower.title }}</span>
+        </a>
+        {% else %}
+        <div></div>
+        {% endif %}
+
+        {% if page.higher %}
+        <a href="{{ page.higher.url }}" class="group flex flex-col items-end text-right p-4 rounded-xl border border-border/50 bg-surface-alt/30 hover:bg-surface-alt hover:border-primary/30 transition-all no-underline">
+          <span class="text-xs font-mono text-muted mb-1 group-hover:text-primary transition-colors">Next Post &rarr;</span>
+          <span class="font-bold text-white group-hover:text-primary-light transition-colors line-clamp-2">{{ page.higher.title }}</span>
+        </a>
+        {% endif %}
       </nav>
     </article>
   </main>

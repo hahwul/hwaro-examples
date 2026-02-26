@@ -1,27 +1,56 @@
 {% include "header.html" %}
-  <main class="max-w-3xl mx-auto px-6 py-8">
-    <h1 class="font-mono text-2xl font-bold mb-4">{{ page.title }}</h1>
-    <div class="prose">{{ content }}</div>
-    <div class="mt-6">
+  <main class="max-w-4xl mx-auto px-6 py-12 flex-grow w-full">
+    <header class="mb-12 text-center">
+      <h1 class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary-light to-white mb-4 tracking-tight">
+        {{ page.title }}
+      </h1>
+      {% if page.description %}
+      <p class="text-lg text-muted max-w-2xl mx-auto">{{ page.description }}</p>
+      {% endif %}
+    </header>
+
+    <div class="space-y-4">
       {% for post in section.pages %}
-      <div class="timeline-item">
-        <div class="font-mono tabular-nums text-xs text-muted whitespace-nowrap min-w-[5.5rem] pt-0.5">
-          {% if post.date %}{{ post.date | date("%Y-%m-%d") }}{% endif %}
+      <article class="timeline-item relative group">
+        <div class="flex-shrink-0 pt-1">
+           <div class="font-mono text-xs font-semibold text-primary/80 border border-primary/20 bg-primary/5 px-2.5 py-1 rounded-md shadow-sm group-hover:bg-primary/10 transition-colors">
+              {% if post.date %}{{ post.date | date("%Y-%m-%d") }}{% endif %}
+           </div>
         </div>
-        <div class="flex-1">
-          <h2 class="font-mono text-lg font-bold mb-1 mt-0"><a href="{{ post.url }}" class="text-gray-900 no-underline hover:text-primary transition-colors">{{ post.title }}</a></h2>
-          {% if post.summary %}<p class="text-muted text-sm mb-2">{{ post.summary }}</p>{% endif %}
-          {% if post.tags %}
-          <div class="flex flex-wrap gap-1.5">
-            {% for tag in post.tags %}
-              <a href="{{ base_url }}/tags/{{ tag | slugify }}/" class="inline-block text-xs font-mono px-2.5 py-0.5 border border-primary rounded-full text-primary no-underline hover:bg-primary hover:text-white transition-colors">{{ tag }}</a>
-            {% endfor %}
-          </div>
-          {% endif %}
+        <div class="flex-1 min-w-0">
+           <h2 class="text-xl font-bold text-white mb-2 leading-tight group-hover:text-primary transition-colors">
+              <a href="{{ post.url }}" class="focus:outline-none">
+                 <span class="absolute inset-0 z-10" aria-hidden="true"></span>
+                 {{ post.title }}
+              </a>
+           </h2>
+           {% if post.summary %}
+             <p class="text-muted text-sm mb-3 line-clamp-2 group-hover:text-gray-300 transition-colors">{{ post.summary }}</p>
+           {% endif %}
+
+           {% if post.tags %}
+           <div class="flex flex-wrap gap-2 mt-2 relative z-20 pointer-events-none"> <!-- z-20 so tags are visible but click goes to post if needed, or make them clickable links -->
+              {% for tag in post.tags %}
+                 <!-- Wait, if the whole card is clickable via absolute inset, individual links might be tricky.
+                      Let's make the card clickable but allow tag clicking if we position them above.
+                      Actually, simpler to just not wrap the whole card or accept the whole card is the link.
+                      I'll just make the whole card the link for UX simplicity. -->
+                 <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium uppercase tracking-wider bg-surface-alt text-muted border border-border group-hover:text-primary-light group-hover:border-primary/30 transition-colors">
+                    #{{ tag }}
+                 </span>
+              {% endfor %}
+           </div>
+           {% endif %}
         </div>
-      </div>
+        <div class="flex-shrink-0 self-center hidden sm:block">
+            <svg class="h-5 w-5 text-muted/50 group-hover:text-primary group-hover:translate-x-1 transition-all duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+        </div>
+      </article>
       {% endfor %}
     </div>
+
     {{ pagination }}
   </main>
 {% include "footer.html" %}
