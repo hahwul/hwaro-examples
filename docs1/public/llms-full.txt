@@ -1,0 +1,664 @@
+# Pulse API
+API reference and developer guides for Pulse
+
+Base URL: http://localhost:3000
+
+This is the API documentation for Pulse, a project management platform. All endpoints require authentication via Bearer token.
+
+---
+
+Title: Pulse API Documentation
+URL: http://localhost:3000/
+Source: content/index.md
+
+<div class="max-w-4xl mx-auto py-10">
+
+# Pulse API
+
+Welcome to the Pulse API documentation. Pulse is a project management platform for modern teams, and our API lets you build powerful integrations and automations.
+
+## Quick Start
+
+### 1. Get your API key
+
+Sign in to your Pulse dashboard and navigate to **Settings > API Keys** to generate a new key.
+
+### 2. Make your first request
+
+```bash
+curl -H "Authorization: Bearer YOUR_API_KEY" \
+  https://api.pulse.dev/v1/users/me
+```
+
+### 3. Explore the API
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-6 not-prose">
+  <a href="/guides/" class="doc-card">
+    <h3>Guides</h3>
+    <p>Learn authentication, rate limiting, and error handling</p>
+  </a>
+  <a href="/reference/" class="doc-card">
+    <h3>API Reference</h3>
+    <p>Explore all endpoints with request and response examples</p>
+  </a>
+</div>
+
+## Base URL
+
+All API requests should be made to:
+
+```
+https://api.pulse.dev/v1
+```
+
+## Authentication
+
+Include your API key in the `Authorization` header:
+
+```
+Authorization: Bearer YOUR_API_KEY
+```
+
+## Response Format
+
+All responses are returned as JSON with consistent structure:
+
+```json
+{
+  "data": { ... },
+  "meta": {
+    "request_id": "req_abc123",
+    "timestamp": "2026-01-15T10:30:00Z"
+  }
+}
+```
+
+</div>
+
+---
+
+Title: Changelog
+URL: http://localhost:3000/changelog/
+Source: content/changelog.md
+
+<div class="max-w-4xl mx-auto py-10">
+
+# Changelog
+
+## v2.1 — February 2026
+
+- Added webhook signature verification with `secret` parameter
+- New `user.invited` and `user.removed` webhook events
+- Increased rate limit for Pro plans from 200 to 300 requests/minute
+- Added `last_active_at` field to User objects
+
+## v2.0 — December 2025
+
+- **Breaking**: Pagination now uses `page` and `per_page` instead of `offset` and `limit`
+- Added Projects API (`/v1/projects`)
+- Added Webhooks API (`/v1/webhooks`)
+- New `read-only` API key type
+- Response envelope now includes `meta.request_id`
+
+## v1.2 — October 2025
+
+- Added `role` filter to List Users endpoint
+- Improved error messages with `request_id` in all error responses
+- Added rate limit headers to all responses
+
+## v1.1 — August 2025
+
+- Added User update endpoint (`PATCH /v1/users/:id`)
+- Added `avatar_url` field to User objects
+- Bug fix: pagination `total` count now excludes deleted records
+
+## v1.0 — June 2025
+
+- Initial API release
+- Users API: list, get, create
+- Bearer token authentication
+- Rate limiting (60 req/min for free tier)
+
+</div>
+
+---
+
+Title: Authentication
+URL: http://localhost:3000/guides/authentication/
+Source: content/guides/authentication.md
+
+## Overview
+
+The Pulse API uses **Bearer token authentication**. Every request must include a valid API key in the `Authorization` header.
+
+## Getting an API Key
+
+1. Sign in to your [Pulse Dashboard](https://app.pulse.dev)
+2. Navigate to **Settings > API Keys**
+3. Click **Generate New Key**
+4. Copy the key immediately — it won't be shown again
+
+## Using Your API Key
+
+Include the key in the `Authorization` header of every request:
+
+```bash
+curl -H "Authorization: Bearer pk_live_abc123def456" \
+  https://api.pulse.dev/v1/users/me
+```
+
+## Key Types
+
+| Type | Prefix | Permissions |
+|------|--------|-------------|
+| Live | `pk_live_` | Full access to production data |
+| Test | `pk_test_` | Access to sandbox environment only |
+| Read-only | `pk_read_` | GET requests only |
+
+## Security Best Practices
+
+- **Never expose keys in client-side code** — always make API calls from your server
+- **Rotate keys regularly** — you can have up to 5 active keys per account
+- **Use test keys for development** — avoid using live keys in staging environments
+- **Set IP allowlists** — restrict key usage to known IP addresses in Settings
+
+## Revoking Keys
+
+To revoke a key, go to **Settings > API Keys** and click **Revoke** next to the key. Revoked keys stop working immediately.
+
+---
+
+Title: Error Handling
+URL: http://localhost:3000/guides/error-handling/
+Source: content/guides/error-handling.md
+
+## Overview
+
+The Pulse API uses standard HTTP status codes and returns consistent error objects to help you handle failures gracefully.
+
+## Error Response Format
+
+All errors follow this structure:
+
+```json
+{
+  "error": {
+    "code": "not_found",
+    "message": "The requested user was not found.",
+    "request_id": "req_abc123"
+  }
+}
+```
+
+## Status Codes
+
+| Code | Meaning |
+|------|---------|
+| `200` | Success |
+| `201` | Created |
+| `400` | Bad Request — invalid parameters |
+| `401` | Unauthorized — invalid or missing API key |
+| `403` | Forbidden — insufficient permissions |
+| `404` | Not Found — resource doesn't exist |
+| `409` | Conflict — resource already exists |
+| `422` | Unprocessable — validation failed |
+| `429` | Too Many Requests — rate limit exceeded |
+| `500` | Internal Error — something went wrong on our end |
+
+## Error Codes
+
+| Code | Description |
+|------|-------------|
+| `invalid_request` | The request body is malformed |
+| `missing_field` | A required field is missing |
+| `invalid_field` | A field value is invalid |
+| `not_found` | The requested resource doesn't exist |
+| `already_exists` | A resource with this identifier already exists |
+| `rate_limit_exceeded` | You've exceeded the rate limit |
+| `internal_error` | An unexpected error occurred |
+
+## Retry Strategy
+
+- **4xx errors**: Fix the request and retry (except 429 — wait and retry)
+- **5xx errors**: Retry with exponential backoff
+- **Network errors**: Retry with exponential backoff
+- Always include a maximum retry count (recommended: 3)
+
+---
+
+Title: Rate Limiting
+URL: http://localhost:3000/guides/rate-limiting/
+Source: content/guides/rate-limiting.md
+
+## Overview
+
+The Pulse API enforces rate limits to ensure fair usage and platform stability. Limits are applied per API key.
+
+## Default Limits
+
+| Plan | Requests/minute | Requests/day |
+|------|-----------------|--------------|
+| Free | 60 | 10,000 |
+| Pro | 300 | 100,000 |
+| Enterprise | 1,000 | Unlimited |
+
+## Rate Limit Headers
+
+Every response includes rate limit information:
+
+```
+X-RateLimit-Limit: 300
+X-RateLimit-Remaining: 297
+X-RateLimit-Reset: 1706234400
+```
+
+| Header | Description |
+|--------|-------------|
+| `X-RateLimit-Limit` | Maximum requests per window |
+| `X-RateLimit-Remaining` | Requests remaining in current window |
+| `X-RateLimit-Reset` | Unix timestamp when the window resets |
+
+## Handling 429 Responses
+
+When you exceed the rate limit, the API returns a `429 Too Many Requests` response:
+
+```json
+{
+  "error": {
+    "code": "rate_limit_exceeded",
+    "message": "Rate limit exceeded. Try again in 45 seconds.",
+    "retry_after": 45
+  }
+}
+```
+
+## Best Practices
+
+- **Implement exponential backoff** — wait 1s, 2s, 4s, etc. between retries
+- **Cache responses** — reduce unnecessary API calls
+- **Use webhooks** — subscribe to events instead of polling
+- **Batch requests** — use bulk endpoints where available
+
+---
+
+Title: API Reference
+URL: http://localhost:3000/reference/
+Source: content/reference/_index.md
+
+Browse all available API endpoints organized by resource.
+
+---
+
+Title: Create Project
+URL: http://localhost:3000/reference/projects/create-project/
+Source: content/reference/projects/create-project.md
+
+Creates a new project in the workspace.
+
+## Request Body
+
+{{ param(name="name", type="string", required="true", description="Project name (max 100 characters)") }}
+{{ param(name="description", type="string", required="false", description="Project description") }}
+{{ param(name="owner_id", type="string", required="false", description="User ID of the project owner (defaults to authenticated user)") }}
+
+## Example Request
+
+```bash
+curl -X POST \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"name": "Mobile App v2", "description": "React Native rewrite"}' \
+  https://api.pulse.dev/v1/projects
+```
+
+## Responses
+
+{% response(status="201 Created", description="Project created") %}
+{
+  "data": {
+    "id": "prj_new456",
+    "name": "Mobile App v2",
+    "description": "React Native rewrite",
+    "status": "active",
+    "owner_id": "usr_abc123",
+    "created_at": "2026-02-15T09:00:00Z"
+  }
+}
+{% end %}
+
+{% response(status="400 Bad Request", description="Invalid request body") %}
+{
+  "error": {
+    "code": "missing_field",
+    "message": "Field 'name' is required"
+  }
+}
+{% end %}
+
+---
+
+Title: List Projects
+URL: http://localhost:3000/reference/projects/list-projects/
+Source: content/reference/projects/list-projects.md
+
+Returns a paginated list of all projects.
+
+## Parameters
+
+{{ param(name="page", type="integer", required="false", description="Page number (default: 1)") }}
+{{ param(name="per_page", type="integer", required="false", description="Items per page, max 100 (default: 20)") }}
+{{ param(name="status", type="string", required="false", description="Filter by status: active, archived") }}
+
+## Example Request
+
+```bash
+curl -H "Authorization: Bearer YOUR_API_KEY" \
+  "https://api.pulse.dev/v1/projects?status=active"
+```
+
+## Responses
+
+{% response(status="200 OK", description="Returns a list of projects") %}
+{
+  "data": [
+    {
+      "id": "prj_xyz789",
+      "name": "Website Redesign",
+      "description": "Q1 website overhaul",
+      "status": "active",
+      "owner_id": "usr_abc123",
+      "created_at": "2025-12-01T10:00:00Z"
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "per_page": 20,
+    "total": 8
+  }
+}
+{% end %}
+
+---
+
+Title: Create User
+URL: http://localhost:3000/reference/users/create-user/
+Source: content/reference/users/create-user.md
+
+Creates a new user and sends an invitation email.
+
+## Request Body
+
+{{ param(name="name", type="string", required="true", description="Full name of the user") }}
+{{ param(name="email", type="string", required="true", description="Email address (must be unique in workspace)") }}
+{{ param(name="role", type="string", required="false", description="User role: admin, member, viewer (default: member)") }}
+
+## Example Request
+
+```bash
+curl -X POST \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"name": "Bob Smith", "email": "bob@example.com", "role": "member"}' \
+  https://api.pulse.dev/v1/users
+```
+
+## Responses
+
+{% response(status="201 Created", description="User created successfully") %}
+{
+  "data": {
+    "id": "usr_def456",
+    "name": "Bob Smith",
+    "email": "bob@example.com",
+    "role": "member",
+    "created_at": "2026-02-01T09:00:00Z"
+  }
+}
+{% end %}
+
+{% response(status="409 Conflict", description="Email already exists") %}
+{
+  "error": {
+    "code": "already_exists",
+    "message": "A user with this email already exists"
+  }
+}
+{% end %}
+
+---
+
+Title: Get User
+URL: http://localhost:3000/reference/users/get-user/
+Source: content/reference/users/get-user.md
+
+Returns the details of a specific user.
+
+## Path Parameters
+
+{{ param(name="id", type="string", required="true", description="The user ID (e.g., usr_abc123)") }}
+
+## Example Request
+
+```bash
+curl -H "Authorization: Bearer YOUR_API_KEY" \
+  https://api.pulse.dev/v1/users/usr_abc123
+```
+
+## Responses
+
+{% response(status="200 OK", description="Returns the user object") %}
+{
+  "data": {
+    "id": "usr_abc123",
+    "name": "Alice Chen",
+    "email": "alice@example.com",
+    "role": "admin",
+    "avatar_url": "https://avatars.pulse.dev/usr_abc123.jpg",
+    "created_at": "2025-06-15T10:00:00Z",
+    "last_active_at": "2026-01-20T14:30:00Z"
+  }
+}
+{% end %}
+
+{% response(status="404 Not Found", description="User does not exist") %}
+{
+  "error": {
+    "code": "not_found",
+    "message": "User not found"
+  }
+}
+{% end %}
+
+---
+
+Title: List Users
+URL: http://localhost:3000/reference/users/list-users/
+Source: content/reference/users/list-users.md
+
+Returns a paginated list of all users in the authenticated workspace.
+
+## Parameters
+
+{{ param(name="page", type="integer", required="false", description="Page number (default: 1)") }}
+{{ param(name="per_page", type="integer", required="false", description="Items per page, max 100 (default: 20)") }}
+{{ param(name="role", type="string", required="false", description="Filter by role: admin, member, viewer") }}
+
+## Example Request
+
+```bash
+curl -H "Authorization: Bearer YOUR_API_KEY" \
+  "https://api.pulse.dev/v1/users?page=1&per_page=10"
+```
+
+## Responses
+
+{% response(status="200 OK", description="Returns a list of users") %}
+{
+  "data": [
+    {
+      "id": "usr_abc123",
+      "name": "Alice Chen",
+      "email": "alice@example.com",
+      "role": "admin",
+      "created_at": "2025-06-15T10:00:00Z"
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "per_page": 10,
+    "total": 42
+  }
+}
+{% end %}
+
+{% response(status="401 Unauthorized", description="Invalid or missing API key") %}
+{
+  "error": {
+    "code": "unauthorized",
+    "message": "Invalid API key"
+  }
+}
+{% end %}
+
+---
+
+Title: Update User
+URL: http://localhost:3000/reference/users/update-user/
+Source: content/reference/users/update-user.md
+
+Updates the specified user's information. Only provided fields are updated.
+
+## Path Parameters
+
+{{ param(name="id", type="string", required="true", description="The user ID to update") }}
+
+## Request Body
+
+{{ param(name="name", type="string", required="false", description="Updated full name") }}
+{{ param(name="role", type="string", required="false", description="Updated role: admin, member, viewer") }}
+
+## Example Request
+
+```bash
+curl -X PATCH \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"role": "admin"}' \
+  https://api.pulse.dev/v1/users/usr_abc123
+```
+
+## Responses
+
+{% response(status="200 OK", description="User updated successfully") %}
+{
+  "data": {
+    "id": "usr_abc123",
+    "name": "Alice Chen",
+    "email": "alice@example.com",
+    "role": "admin",
+    "created_at": "2025-06-15T10:00:00Z"
+  }
+}
+{% end %}
+
+{% response(status="404 Not Found", description="User does not exist") %}
+{
+  "error": {
+    "code": "not_found",
+    "message": "User not found"
+  }
+}
+{% end %}
+
+---
+
+Title: Create Webhook
+URL: http://localhost:3000/reference/webhooks/create-webhook/
+Source: content/reference/webhooks/create-webhook.md
+
+Creates a new webhook subscription. Pulse will send POST requests to the specified URL when matching events occur.
+
+## Request Body
+
+{{ param(name="url", type="string", required="true", description="HTTPS endpoint URL to receive webhook events") }}
+{{ param(name="events", type="array", required="true", description="Event types to subscribe to (comma-separated)") }}
+{{ param(name="secret", type="string", required="false", description="Secret for webhook signature verification") }}
+
+## Available Events
+
+| Event | Description |
+|-------|-------------|
+| `project.created` | A new project was created |
+| `project.archived` | A project was archived |
+| `task.created` | A new task was created |
+| `task.completed` | A task was marked complete |
+| `user.invited` | A new user was invited |
+| `user.removed` | A user was removed |
+
+## Example Request
+
+```bash
+curl -X POST \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"url": "https://example.com/webhooks", "events": ["task.completed", "project.created"], "secret": "whsec_abc123"}' \
+  https://api.pulse.dev/v1/webhooks
+```
+
+## Responses
+
+{% response(status="201 Created", description="Webhook created") %}
+{
+  "data": {
+    "id": "wh_new789",
+    "url": "https://example.com/webhooks",
+    "events": ["task.completed", "project.created"],
+    "active": true,
+    "created_at": "2026-02-20T09:00:00Z"
+  }
+}
+{% end %}
+
+{% response(status="400 Bad Request", description="Invalid URL or events") %}
+{
+  "error": {
+    "code": "invalid_field",
+    "message": "URL must use HTTPS"
+  }
+}
+{% end %}
+
+---
+
+Title: List Webhooks
+URL: http://localhost:3000/reference/webhooks/list-webhooks/
+Source: content/reference/webhooks/list-webhooks.md
+
+Returns all webhook subscriptions for the workspace.
+
+## Parameters
+
+{{ param(name="active", type="boolean", required="false", description="Filter by active status (default: all)") }}
+
+## Example Request
+
+```bash
+curl -H "Authorization: Bearer YOUR_API_KEY" \
+  https://api.pulse.dev/v1/webhooks
+```
+
+## Responses
+
+{% response(status="200 OK", description="Returns a list of webhooks") %}
+{
+  "data": [
+    {
+      "id": "wh_hook123",
+      "url": "https://example.com/webhooks/pulse",
+      "events": ["project.created", "task.completed"],
+      "active": true,
+      "created_at": "2025-11-01T10:00:00Z"
+    }
+  ]
+}
+{% end %}

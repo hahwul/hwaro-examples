@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+  {% if page.description %}<meta name="description" content="{{ page.description }}">{% endif %}
+  {{ og_all_tags }}
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#0d9488',
+            'primary-dark': '#0f766e',
+            'primary-light': '#5eead4',
+            surface: '#f8fffe',
+            'surface-alt': '#f0fdfa',
+            border: '#ccfbf1',
+            muted: '#6b7280',
+            'method-get': '#16a34a',
+            'method-post': '#2563eb',
+            'method-patch': '#d97706',
+            'method-delete': '#dc2626',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <style type="text/tailwindcss">
+    /* Prose: markdown rendered content */
+    .prose h1, .prose h2, .prose h3 { @apply font-bold leading-tight; }
+    .prose h1 { @apply text-2xl mt-0 mb-4 tracking-tight font-bold; }
+    .prose h2 { @apply text-xl mt-8 mb-3 font-bold; }
+    .prose h3 { @apply text-lg mt-6 mb-2 font-semibold; }
+    .prose p { @apply mb-4 leading-relaxed; }
+    .prose a { @apply text-primary hover:underline; }
+    .prose code {
+      @apply text-[0.88em] bg-surface-alt px-1.5 py-0.5 rounded font-mono;
+    }
+    .prose pre {
+      @apply bg-gray-900 text-gray-100 px-5 py-4 overflow-x-auto my-4 rounded-lg leading-relaxed;
+    }
+    .prose pre code { @apply bg-transparent p-0 text-inherit; }
+    .prose blockquote {
+      @apply border-l-[3px] border-l-primary py-2 px-4 my-4 text-muted italic;
+    }
+    .prose blockquote p:last-child { @apply mb-0; }
+    .prose ul, .prose ol { @apply mb-4 ml-6; }
+    .prose li { @apply my-1; }
+    .prose img { @apply max-w-full rounded-lg; }
+    .prose table { @apply w-full border-collapse my-6; }
+    .prose th, .prose td { @apply px-3 py-2 border border-border text-left text-sm; }
+    .prose thead { @apply bg-surface-alt; }
+    .prose tbody tr:nth-child(even) { @apply bg-surface-alt/50; }
+
+    /* Method badge */
+    .method-badge {
+      @apply inline-block text-xs font-bold px-2 py-0.5 rounded font-mono uppercase;
+    }
+    .method-get { @apply bg-green-100 text-method-get; }
+    .method-post { @apply bg-blue-100 text-method-post; }
+    .method-patch { @apply bg-amber-100 text-method-patch; }
+    .method-delete { @apply bg-red-100 text-method-delete; }
+
+    /* Param row */
+    .param-row {
+      @apply flex flex-col sm:flex-row gap-1 sm:gap-4 py-3 border-b border-border text-sm;
+    }
+    .param-row:last-child { @apply border-b-0; }
+    .param-name { @apply font-mono font-semibold text-gray-900 sm:w-36 shrink-0; }
+    .param-type { @apply text-xs text-muted font-mono sm:w-20 shrink-0; }
+    .param-required { @apply text-xs font-semibold text-red-500; }
+    .param-desc { @apply text-muted flex-1; }
+
+    /* Response block */
+    .response-block {
+      @apply my-4 rounded-lg border border-border overflow-hidden;
+    }
+    .response-header {
+      @apply px-4 py-2 text-sm font-bold flex items-center gap-2;
+    }
+    .response-2xx { @apply bg-green-50 text-green-700; }
+    .response-4xx { @apply bg-red-50 text-red-700; }
+    .response-5xx { @apply bg-gray-100 text-gray-700; }
+    .response-body {
+      @apply px-4 py-3 bg-gray-900 text-gray-100 text-sm font-mono overflow-x-auto;
+    }
+
+    /* Sidebar nav */
+    .sidebar-link {
+      @apply block py-1.5 px-3 rounded text-sm no-underline border-l-2 transition-all;
+    }
+    .sidebar-link.active {
+      @apply text-primary bg-primary/10 font-medium border-l-primary;
+    }
+    .sidebar-link:not(.active) {
+      @apply text-muted border-l-transparent hover:text-primary hover:bg-surface-alt;
+    }
+
+    /* Section card grid */
+    .doc-card {
+      @apply block p-5 bg-white rounded-lg border border-border transition-all duration-200 no-underline;
+    }
+    .doc-card:hover {
+      @apply shadow-md border-primary/30;
+    }
+    .doc-card h3 { @apply text-base font-bold mb-1 mt-0 text-gray-900; }
+    .doc-card p { @apply text-sm text-muted m-0; }
+
+    /* Pagination */
+    nav.pagination { @apply my-6; }
+    nav.pagination .pagination-list {
+      @apply list-none p-0 m-0 flex gap-2 flex-wrap items-center;
+    }
+    nav.pagination a {
+      @apply inline-block px-3 py-1.5 rounded border border-border text-sm no-underline text-muted
+             hover:text-primary hover:border-primary transition-colors;
+    }
+    .pagination-current span {
+      @apply inline-block px-3 py-1.5 rounded border border-primary bg-primary text-white text-sm font-medium;
+    }
+    .pagination-disabled span {
+      @apply inline-block px-3 py-1.5 rounded border border-border text-muted opacity-50 text-sm;
+    }
+
+    /* Section list (taxonomy content) */
+    ul.section-list { @apply list-none p-0 my-6 space-y-2; }
+    ul.section-list li {
+      @apply p-3 bg-surface-alt rounded-lg border border-border;
+    }
+    ul.section-list li a { @apply font-medium text-primary; }
+
+    /* TOC */
+    .toc-container ul { @apply list-none p-0 m-0 space-y-1; }
+    .toc-container li { @apply text-sm; }
+    .toc-container a { @apply text-muted no-underline hover:text-primary transition-colors; }
+    .toc-container ul ul { @apply ml-4 mt-1; }
+  </style>
+
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+</head>
+<body class="font-sans text-gray-900 bg-surface leading-relaxed">
+  <header class="bg-gray-900 text-white">
+    <div class="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="{{ base_url }}/" class="text-lg font-bold text-white no-underline">Pulse <span class="text-primary-light">API</span></a>
+        <span class="text-xs bg-primary/20 text-primary-light px-2 py-0.5 rounded-full font-medium">v2.1</span>
+      </div>
+      <nav class="flex items-center gap-6">
+        <a href="{{ base_url }}/guides/" class="text-gray-300 text-sm font-medium no-underline hover:text-white transition-colors">Guides</a>
+        <a href="{{ base_url }}/reference/" class="text-gray-300 text-sm font-medium no-underline hover:text-white transition-colors">Reference</a>
+        <a href="{{ base_url }}/changelog/" class="text-gray-300 text-sm font-medium no-underline hover:text-white transition-colors">Changelog</a>
+      </nav>
+    </div>
+  </header>

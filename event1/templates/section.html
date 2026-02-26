@@ -1,0 +1,40 @@
+{% include "header.html" %}
+  <main class="max-w-5xl mx-auto px-6 py-10">
+    <h1 class="text-3xl font-extrabold tracking-tight mb-2">{{ page.title }}</h1>
+    {% if page.description %}<p class="text-muted text-lg mb-8">{{ page.description }}</p>{% endif %}
+    <div class="prose">{{ content }}</div>
+
+    {% if page.url is containing("/speakers") %}
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+      {% for item in section.pages %}
+      <a href="{{ item.url }}" class="speaker-card">
+        <div class="w-16 h-16 rounded-full bg-primary/10 text-primary text-xl font-bold flex items-center justify-center mx-auto mb-3">{{ item.title | truncate(1, end="") }}</div>
+        <h2 class="text-base font-bold mb-1 mt-0">{{ item.title }}</h2>
+        {% if item.description %}<p class="text-muted text-sm m-0">{{ item.description }}</p>{% endif %}
+      </a>
+      {% endfor %}
+    </div>
+
+    {% elif page.url is containing("/news") %}
+    {% for item in section.pages %}
+    <article class="py-5 border-b border-border">
+      <h2 class="text-lg font-bold mb-1"><a href="{{ item.url }}" class="text-gray-900 no-underline hover:text-primary transition-colors">{{ item.title }}</a></h2>
+      {% if item.date %}<time class="text-sm text-muted">{{ item.date | date("%B %d, %Y") }}</time>{% endif %}
+      {% if item.description %}<p class="text-muted text-sm mt-2 mb-0">{{ item.description }}</p>{% endif %}
+    </article>
+    {% endfor %}
+
+    {% else %}
+    <div class="space-y-4 mt-6">
+      {% for item in section.pages %}
+      <a href="{{ item.url }}" class="block p-5 rounded-lg border border-border bg-white hover:shadow-md transition-all no-underline">
+        <h2 class="text-lg font-bold mb-1 mt-0">{{ item.title }}</h2>
+        {% if item.description %}<p class="text-muted text-sm m-0">{{ item.description }}</p>{% endif %}
+      </a>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {{ pagination }}
+  </main>
+{% include "footer.html" %}

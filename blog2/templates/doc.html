@@ -1,0 +1,36 @@
+{% include "header.html" %}
+  <main class="min-h-[calc(100vh-200px)] pt-8 grid grid-cols-1 md:grid-cols-[220px_1fr] gap-8">
+    <aside class="md:border-r md:border-border md:pr-6 border-b md:border-b-0 border-border pb-4 md:pb-0">
+      {% if section.pages %}
+      <nav>
+        <h3 class="text-xs uppercase tracking-wider text-muted mb-3 font-semibold">{{ section.title }}</h3>
+        <ul class="list-none p-0 m-0 space-y-0.5">
+          {% for doc in section.pages %}
+          <li>
+            <a href="{{ doc.url }}" class="block py-1.5 px-3 rounded text-sm no-underline border-l-2 transition-all {% if doc.url == page.url %}text-primary bg-primary/10 font-medium border-l-primary{% else %}text-muted border-l-transparent hover:text-primary hover:bg-surface-alt{% endif %}">{{ doc.title }}</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </nav>
+      {% endif %}
+    </aside>
+    <article class="min-w-0">
+      <div class="text-sm text-muted mb-2">
+        <a href="{{ base_url }}/" class="text-muted no-underline hover:text-primary">Home</a><span class="mx-1.5">/</span><a href="{{ section.url }}" class="text-muted no-underline hover:text-primary">{{ section.title }}</a><span class="mx-1.5">/</span><span>{{ page.title }}</span>
+      </div>
+      <h1 class="text-2xl font-semibold mb-2">{{ page.title }}</h1>
+      {% if page.description %}<p class="text-muted text-lg -mt-1 mb-6">{{ page.description }}</p>{% endif %}
+      {% if page.toc %}
+      <nav class="border-l-[3px] border-l-primary pl-5 py-3 mb-8 bg-surface-alt rounded-r-lg">
+        <h4 class="m-0 mb-2 text-xs uppercase tracking-wider text-muted font-semibold">On this page</h4>
+        {{ page.toc }}
+      </nav>
+      {% endif %}
+      <div class="prose">{{ content }}</div>
+      <nav class="flex justify-between mt-12 pt-6 border-t border-border">
+        {% if page.lower %}<a href="{{ page.lower.url }}" class="text-primary no-underline hover:underline max-w-[45%]">&larr; {{ page.lower.title }}</a>{% endif %}
+        {% if page.higher %}<a href="{{ page.higher.url }}" class="text-primary no-underline hover:underline max-w-[45%] ml-auto text-right">{{ page.higher.title }} &rarr;</a>{% endif %}
+      </nav>
+    </article>
+  </main>
+{% include "footer.html" %}
