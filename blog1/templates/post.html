@@ -1,28 +1,55 @@
 {% include "header.html" %}
-  <main class="min-h-[calc(100vh-200px)]">
-    <article>
-      <header class="mb-8">
-        <h1 class="font-serif text-3xl font-bold tracking-tight mb-2">{{ page.title }}</h1>
-        <div class="text-muted text-sm font-sans">
-          {% if page.date %}<time>{{ page.date | date("%B %d, %Y") }}</time>{% endif %}
-          {% if page.reading_time %}<span>&middot; {{ page.reading_time }} min read</span>{% endif %}
+  <main class="min-h-[calc(100vh-200px)] px-4 md:px-0">
+    <article class="max-w-4xl mx-auto">
+      <header class="mb-16 text-center relative">
+        <!-- Header Glow -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 bg-primary/20 blur-[100px] -z-10 rounded-full"></div>
+
+        <div class="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-surface-alt/40 border border-white/10 backdrop-blur-md mb-8">
+          <span class="text-xs font-bold tracking-widest uppercase text-secondary">
+            {% if page.date %}{{ page.date | date("%B %d, %Y") }}{% endif %}
+          </span>
+          {% if page.reading_time %}
+          <span class="w-1 h-1 rounded-full bg-white/30"></span>
+          <span class="text-xs font-medium text-gray-400">{{ page.reading_time }} min read</span>
+          {% endif %}
         </div>
+
+        <h1 class="font-display text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter mb-8 text-white leading-[1.1] drop-shadow-2xl">
+          {{ page.title }}
+        </h1>
+
         {% if page.tags %}
-        <div class="flex gap-2 flex-wrap mt-3">
+        <div class="flex gap-2 justify-center flex-wrap relative z-10">
           {% for tag in page.tags %}
-            <a href="{{ base_url }}/tags/{{ tag | slugify }}/" class="inline-block px-3 py-0.5 bg-primary/10 rounded-full text-xs text-primary no-underline font-sans hover:bg-primary/20 transition-colors">{{ tag }}</a>
+            <a href="{{ base_url }}/tags/{{ tag | slugify }}/" class="inline-block px-4 py-1.5 bg-surface/50 rounded-full text-xs text-primary font-bold tracking-wide uppercase border border-primary/20 hover:bg-primary hover:text-white hover:border-primary hover:shadow-[0_0_20px_rgba(139,92,246,0.5)] transition-all duration-300 no-underline">{{ tag }}</a>
           {% endfor %}
         </div>
         {% endif %}
       </header>
 
-      <div class="prose">
+      <div class="prose prose-invert prose-lg mx-auto relative z-10">
         {{ content }}
       </div>
 
-      <nav class="flex justify-between mt-12 pt-6 border-t border-border">
-        {% if page.lower %}<a href="{{ page.lower.url }}" class="text-primary no-underline hover:underline max-w-[45%]">&larr; {{ page.lower.title }}</a>{% endif %}
-        {% if page.higher %}<a href="{{ page.higher.url }}" class="text-primary no-underline hover:underline max-w-[45%] ml-auto text-right">{{ page.higher.title }} &rarr;</a>{% endif %}
+      <nav class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-24 pt-12 border-t border-white/10">
+        {% if page.lower %}
+        <a href="{{ page.lower.url }}" class="group flex flex-col items-start gap-3 p-6 rounded-2xl bg-surface-alt/10 border border-white/5 hover:border-primary/50 hover:bg-surface-alt/20 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 no-underline relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <span class="text-xs text-muted font-bold uppercase tracking-widest group-hover:text-primary transition-colors">&larr; Previous Post</span>
+          <span class="text-xl font-display font-bold text-white leading-tight group-hover:text-white transition-colors">{{ page.lower.title }}</span>
+        </a>
+        {% else %}
+        <div class="hidden md:block"></div>
+        {% endif %}
+
+        {% if page.higher %}
+        <a href="{{ page.higher.url }}" class="group flex flex-col items-end gap-3 p-6 rounded-2xl bg-surface-alt/10 border border-white/5 hover:border-primary/50 hover:bg-surface-alt/20 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 no-underline text-right relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-l from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <span class="text-xs text-muted font-bold uppercase tracking-widest group-hover:text-primary transition-colors">Next Post &rarr;</span>
+          <span class="text-xl font-display font-bold text-white leading-tight group-hover:text-white transition-colors">{{ page.higher.title }}</span>
+        </a>
+        {% endif %}
       </nav>
     </article>
   </main>
