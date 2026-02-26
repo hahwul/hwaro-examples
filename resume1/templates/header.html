@@ -16,19 +16,27 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
           colors: {
-            primary: '#334155',
-            accent: '#f59e0b',
-            'accent-light': '#fbbf24',
-            surface: '#fafaf9',
-            'surface-alt': '#f5f5f4',
-            border: '#e7e5e4',
-            muted: '#78716c',
+            primary: '#0f172a',    // Slate 900 (Background)
+            surface: '#1e293b',    // Slate 800 (Cards)
+            'surface-alt': '#334155', // Slate 700 (Hover/Highlight)
+            border: '#334155',     // Slate 700 (Borders)
+
+            accent: '#8b5cf6',     // Violet 500 (Primary Action)
+            'accent-light': '#a78bfa', // Violet 400 (Secondary/Hover)
+
+            'text-primary': '#f8fafc', // Slate 50 (Headings)
+            muted: '#94a3b8',      // Slate 400 (Body text)
           },
           fontFamily: {
             sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          backgroundImage: {
+            'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+            'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
           },
         },
       },
@@ -36,83 +44,109 @@
   </script>
 
   <style type="text/tailwindcss">
+    @layer base {
+      body {
+        @apply bg-primary text-muted font-sans antialiased selection:bg-accent selection:text-white;
+        background-image:
+          radial-gradient(circle at 15% 50%, rgba(139, 92, 246, 0.08), transparent 25%),
+          radial-gradient(circle at 85% 30%, rgba(56, 189, 248, 0.08), transparent 25%);
+        background-attachment: fixed;
+      }
+    }
+
     /* Prose: markdown rendered content */
-    .prose h1, .prose h2, .prose h3 { @apply font-bold leading-tight; }
-    .prose h1 { @apply text-3xl mt-0 mb-4 tracking-tight font-extrabold; }
-    .prose h2 { @apply text-xl mt-8 mb-3 font-bold; }
-    .prose h3 { @apply text-lg mt-6 mb-2 font-semibold; }
-    .prose p { @apply mb-4 leading-relaxed; }
-    .prose a { @apply text-accent hover:underline; }
+    .prose h1, .prose h2, .prose h3 { @apply text-text-primary font-bold leading-tight tracking-tight; }
+    .prose h1 { @apply text-4xl mt-0 mb-6 font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-200 to-slate-400; }
+    .prose h2 { @apply text-2xl mt-10 mb-4 border-b border-border pb-2; }
+    .prose h3 { @apply text-xl mt-8 mb-3 font-semibold text-white; }
+    .prose p { @apply mb-4 leading-relaxed text-slate-300; }
+    .prose a { @apply text-accent hover:text-accent-light transition-colors duration-200 decoration-2 decoration-accent/30 underline-offset-4 hover:decoration-accent; }
     .prose code {
-      @apply text-[0.88em] bg-surface-alt px-1.5 py-0.5 rounded;
+      @apply text-[0.9em] bg-surface-alt/50 text-accent-light px-1.5 py-0.5 rounded border border-border/50 font-mono;
     }
     .prose pre {
-      @apply bg-gray-900 text-gray-100 px-5 py-4 overflow-x-auto my-4 rounded-lg leading-relaxed;
+      @apply bg-slate-950/80 border border-border/50 text-slate-200 px-5 py-4 overflow-x-auto my-6 rounded-xl shadow-lg backdrop-blur-sm;
     }
     .prose pre code { @apply bg-transparent p-0 text-inherit; }
     .prose blockquote {
-      @apply border-l-[3px] border-l-accent py-2 px-4 my-4 text-muted italic;
+      @apply border-l-[3px] border-l-accent bg-surface/30 py-3 px-5 my-6 text-slate-300 italic rounded-r-lg;
     }
-    .prose blockquote p:last-child { @apply mb-0; }
-    .prose ul, .prose ol { @apply mb-4 ml-6; }
-    .prose li { @apply my-1; }
-    .prose img { @apply max-w-full rounded-lg; }
-    .prose table { @apply w-full border-collapse my-6; }
-    .prose th, .prose td { @apply px-3 py-2 border border-border text-left text-sm; }
-    .prose thead { @apply bg-surface-alt; }
+    .prose ul, .prose ol { @apply mb-6 ml-6 space-y-1 text-slate-300; }
+    .prose li::marker { @apply text-accent; }
+    .prose img { @apply max-w-full rounded-xl shadow-lg border border-white/5 my-8; }
 
     /* Timeline */
     .timeline-item {
-      @apply relative pl-8 pb-8 border-l-2 border-gray-300;
+      @apply relative pl-8 pb-10 border-l border-border;
     }
-    .timeline-item:last-child { @apply pb-0; }
+    .timeline-item:last-child { @apply pb-2 border-l-transparent; }
     .timeline-item::before {
       content: "";
-      @apply absolute -left-[7px] top-1 w-3 h-3 rounded-full bg-accent border-2 border-white;
-      box-shadow: 0 0 0 2px #d4d4d4;
+      @apply absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-accent shadow-[0_0_10px_rgba(139,92,246,0.5)];
+      transition: all 0.3s ease;
+    }
+    .timeline-item:hover::before {
+      @apply bg-accent-light scale-125 shadow-[0_0_15px_rgba(167,139,250,0.6)];
     }
 
     /* Skill bar */
     .skill-bar-track {
-      @apply w-full bg-gray-200 rounded-full h-2.5 overflow-hidden;
+      @apply w-full bg-surface-alt/50 rounded-full h-2 overflow-hidden backdrop-blur-sm;
     }
     .skill-bar-fill {
-      @apply h-full rounded-full;
-      background: linear-gradient(90deg, #f59e0b, #fbbf24);
+      @apply h-full rounded-full relative;
+      background: linear-gradient(90deg, #8b5cf6, #c084fc);
+      box-shadow: 0 0 10px rgba(139, 92, 246, 0.3);
+    }
+    .skill-bar-fill::after {
+      content: "";
+      @apply absolute top-0 right-0 bottom-0 w-full h-full bg-white/20 animate-pulse;
     }
 
     /* Project card */
     .project-card {
-      @apply block p-5 border border-border rounded-lg bg-surface transition-all duration-200 border-l-4 border-l-transparent;
+      @apply block p-6 rounded-xl bg-surface/40 border border-white/5 backdrop-blur-md transition-all duration-300 group relative overflow-hidden;
+    }
+    .project-card::before {
+      content: "";
+      @apply absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 transition-opacity duration-300;
     }
     .project-card:hover {
-      @apply border-l-accent shadow-md no-underline;
+      @apply border-accent/30 -translate-y-1 shadow-[0_10px_30px_-10px_rgba(139,92,246,0.15)];
     }
-
-    /* Section list (taxonomy content) */
-    ul.section-list { @apply list-none p-0 my-6 space-y-2; }
-    ul.section-list li {
-      @apply p-3 bg-surface-alt rounded-lg border border-border;
-    }
-    ul.section-list li a { @apply font-medium text-accent; }
+    .project-card:hover::before { @apply opacity-100; }
+    .project-card h2 { @apply text-white group-hover:text-accent-light transition-colors; }
+    .project-card p { @apply text-slate-400 group-hover:text-slate-300 transition-colors; }
 
     /* Alert shortcode */
     .alert {
-      @apply py-3 px-4 border border-border border-l-4 border-l-accent bg-surface-alt rounded-r my-4 text-sm;
+      @apply py-3 px-4 border border-accent/20 border-l-4 border-l-accent bg-accent/5 rounded-r my-4 text-sm text-slate-200;
     }
   </style>
 
   {{ highlight_css }}
   {{ auto_includes_css }}
 </head>
-<body class="font-sans text-gray-900 bg-surface leading-relaxed">
-  <header class="border-b border-border bg-surface py-4">
-    <div class="max-w-3xl mx-auto px-6 flex items-center justify-between">
-      <a href="{{ base_url }}/" class="text-lg font-bold text-primary no-underline hover:text-accent transition-colors">Jane Doe</a>
+<body class="font-sans leading-relaxed">
+  <header class="sticky top-0 z-50 border-b border-white/5 bg-primary/80 backdrop-blur-xl transition-all duration-300">
+    <div class="max-w-3xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="{{ base_url }}/" class="text-lg font-bold text-white tracking-tight no-underline hover:text-accent-light transition-colors flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-accent shadow-[0_0_8px_rgba(139,92,246,0.8)]"></span>
+        Jane Doe
+      </a>
       <nav class="flex gap-6">
-        <a href="{{ base_url }}/" class="text-muted text-sm font-medium no-underline hover:text-accent transition-colors">About</a>
-        <a href="{{ base_url }}/projects/" class="text-muted text-sm font-medium no-underline hover:text-accent transition-colors">Projects</a>
-        <a href="{{ base_url }}/contact/" class="text-muted text-sm font-medium no-underline hover:text-accent transition-colors">Contact</a>
+        <a href="{{ base_url }}/" class="text-sm font-medium text-slate-400 hover:text-white transition-colors no-underline relative group">
+          About
+          <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+        </a>
+        <a href="{{ base_url }}/projects/" class="text-sm font-medium text-slate-400 hover:text-white transition-colors no-underline relative group">
+          Projects
+          <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+        </a>
+        <a href="{{ base_url }}/contact/" class="text-sm font-medium text-slate-400 hover:text-white transition-colors no-underline relative group">
+          Contact
+          <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+        </a>
       </nav>
     </div>
   </header>
