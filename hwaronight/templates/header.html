@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description }}">
+  <title>{{ page.title }} - {{ site.title }}</title>
+  {{ og_all_tags }}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* === Tokyo Night Color Palette === */
+    :root {
+      --bg: #1a1b26;
+      --bg-dark: #16161e;
+      --bg-highlight: #292e42;
+      --fg: #a9b1d6;
+      --comment: #565f89;
+      --blue: #7aa2f7;
+      --cyan: #7dcfff;
+      --green: #9ece6a;
+      --orange: #ff9e64;
+      --red: #f7768e;
+      --yellow: #e0af68;
+      --magenta: #bb9af7;
+    }
+
+    /* === Reset & Base === */
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      font-family: "Source Code Pro", ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      line-height: 1.7;
+      margin: 0;
+      color: var(--fg);
+      background: var(--bg);
+      font-size: 15px;
+    }
+
+    /* === Layout === */
+    .site-wrapper {
+      max-width: 1024px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 0;
+      margin-bottom: 0.5rem;
+    }
+
+    .site-logo {
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--cyan);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+    .site-logo:hover { color: var(--blue); }
+
+    .site-header nav {
+      display: flex;
+      gap: 0.25rem;
+    }
+    .site-header nav a {
+      color: var(--comment);
+      text-decoration: none;
+      font-size: 0.9rem;
+      padding: 0.2rem 0.1rem;
+      transition: color 0.2s;
+    }
+    .site-header nav a:hover { color: var(--orange); }
+    .site-header nav a::before { content: "/"; color: var(--comment); }
+
+    hr.header-rule {
+      border: none;
+      border-top: 1px solid var(--cyan);
+      margin: 0 0 2rem 0;
+      opacity: 0.5;
+    }
+
+    .site-main {
+      min-height: calc(100vh - 220px);
+      padding-bottom: 2rem;
+    }
+
+    /* === Typography === */
+    h1, h2, h3, h4, h5, h6 {
+      line-height: 1.3;
+      margin-top: 1.8em;
+      margin-bottom: 0.5em;
+      font-weight: 700;
+      color: var(--fg);
+    }
+    h1 { font-size: 1.6rem; margin-top: 0; }
+    h2 { font-size: 1.3rem; }
+    h3 { font-size: 1.1rem; }
+    h4 { font-size: 1rem; }
+
+    /* Markdown-style heading prefixes */
+    h1::before { content: "# "; color: var(--cyan); font-weight: 400; }
+    h2::before { content: "## "; color: var(--cyan); font-weight: 400; }
+    h3::before { content: "### "; color: var(--cyan); font-weight: 400; }
+    h4::before { content: "#### "; color: var(--cyan); font-weight: 400; }
+
+    p { margin: 1em 0; }
+
+    a { color: var(--orange); text-decoration: none; transition: color 0.2s; }
+    a:hover { text-decoration: underline; color: var(--yellow); }
+
+    strong { color: var(--fg); font-weight: 700; }
+    em { color: var(--magenta); font-style: italic; }
+
+    hr {
+      border: none;
+      border-top: 1px solid var(--cyan);
+      margin: 2rem 0;
+      opacity: 0.4;
+    }
+
+    /* === Code === */
+    code {
+      background: var(--bg-highlight);
+      color: var(--green);
+      padding: 0.15rem 0.4rem;
+      border-radius: 3px;
+      font-size: 0.9em;
+      font-family: "Source Code Pro", ui-monospace, "SFMono-Regular", Consolas, monospace;
+    }
+    pre {
+      background: var(--bg-dark);
+      padding: 1.2rem;
+      border-radius: 6px;
+      overflow-x: auto;
+      border: 1px solid var(--bg-highlight);
+      margin: 1.5rem 0;
+    }
+    pre code {
+      background: none;
+      padding: 0;
+      color: var(--fg);
+      font-size: 0.88em;
+      line-height: 1.6;
+    }
+
+    /* === Blockquote === */
+    blockquote {
+      border-left: 3px solid var(--magenta);
+      margin: 1.5rem 0;
+      padding: 0.5rem 1rem;
+      background: var(--bg-dark);
+      border-radius: 0 6px 6px 0;
+      color: var(--comment);
+    }
+    blockquote p { margin: 0.5em 0; }
+
+    /* === Images === */
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 6px;
+      border: 1px solid var(--bg-highlight);
+    }
+
+    /* === Lists === */
+    ul, ol { padding-left: 1.5rem; }
+    li { margin-bottom: 0.3rem; }
+    li::marker { color: var(--cyan); }
+
+    /* === Tables === */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+    }
+    th, td {
+      padding: 0.6rem 0.8rem;
+      border: 1px solid var(--bg-highlight);
+      text-align: left;
+    }
+    th {
+      background: var(--bg-dark);
+      color: var(--cyan);
+      font-weight: 600;
+    }
+    tr:nth-child(even) { background: var(--bg-dark); }
+
+    /* === Blog List === */
+    ul.blog-list {
+      list-style: none;
+      padding: 0;
+      margin: 1.5rem 0;
+    }
+    ul.blog-list li {
+      margin-bottom: 0.6rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--bg-highlight);
+    }
+    ul.blog-list li:last-child { border-bottom: none; }
+    ul.blog-list li a {
+      color: var(--orange);
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    ul.blog-list li a:hover { color: var(--yellow); }
+    ul.blog-list .post-date {
+      color: var(--comment);
+      font-size: 0.85rem;
+      margin-left: 0.75rem;
+    }
+    ul.blog-list .post-summary {
+      color: var(--comment);
+      font-size: 0.88rem;
+      margin-top: 0.25rem;
+    }
+
+    /* === Section List (default) === */
+    ul.section-list {
+      list-style: none;
+      padding: 0;
+      margin: 1.5rem 0;
+    }
+    ul.section-list li {
+      margin-bottom: 0.4rem;
+      padding: 0.6rem 0.75rem;
+      background: var(--bg-dark);
+      border-radius: 4px;
+      border: 1px solid var(--bg-highlight);
+    }
+    ul.section-list li a {
+      font-weight: 500;
+      color: var(--orange);
+    }
+
+    /* === Tags === */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      list-style: none;
+      padding: 0;
+      margin: 0.5rem 0;
+    }
+    .tags a, .tags span {
+      color: var(--green);
+      font-size: 0.88rem;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tags a:hover { color: var(--cyan); text-decoration: underline; }
+    .tags a::before { content: "#"; }
+
+    /* === Post Meta === */
+    .post-meta {
+      color: var(--comment);
+      font-size: 0.88rem;
+      margin-bottom: 1.5rem;
+    }
+    .post-meta time { color: var(--yellow); }
+    .post-meta .tags { display: inline-flex; margin-left: 0.5rem; }
+
+    /* === Pagination === */
+    nav.pagination { margin: 2rem 0; }
+    nav.pagination .pagination-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    nav.pagination a {
+      display: inline-block;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      border: 1px solid var(--bg-highlight);
+      color: var(--comment);
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    nav.pagination a:hover {
+      color: var(--cyan);
+      border-color: var(--cyan);
+    }
+    .pagination-current span {
+      display: inline-block;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      border: 1px solid var(--cyan);
+      background: rgba(125, 207, 255, 0.1);
+      color: var(--cyan);
+    }
+    .pagination-disabled span {
+      display: inline-block;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      border: 1px solid var(--bg-highlight);
+      color: var(--comment);
+      opacity: 0.4;
+    }
+
+    /* === Taxonomy Page === */
+    .taxonomy-desc { color: var(--comment); margin-bottom: 1.5rem; }
+    ul.taxonomy-list {
+      list-style: none;
+      padding: 0;
+    }
+    ul.taxonomy-list li {
+      display: inline-block;
+      margin: 0.25rem 0.5rem 0.25rem 0;
+    }
+    ul.taxonomy-list li a {
+      color: var(--green);
+      font-size: 1rem;
+    }
+    ul.taxonomy-list li a::before { content: "#"; }
+    ul.taxonomy-list li a:hover { color: var(--cyan); }
+
+    /* === 404 === */
+    .error-page { text-align: center; padding: 4rem 0; }
+    .error-code { font-size: 4rem; color: var(--red); font-weight: 700; margin: 0; }
+    .error-code::before { content: none; }
+
+    /* === Alert Shortcode === */
+    .alert {
+      padding: 1rem 1.25rem;
+      border-radius: 6px;
+      margin: 1.5rem 0;
+      border: 1px solid var(--bg-highlight);
+      background: var(--bg-dark);
+    }
+    .alert strong { display: block; margin-bottom: 0.25rem; font-size: 0.8rem; letter-spacing: 0.05em; }
+    .alert-tip { border-left: 3px solid var(--green); }
+    .alert-tip strong { color: var(--green); }
+    .alert-warning { border-left: 3px solid var(--yellow); }
+    .alert-warning strong { color: var(--yellow); }
+    .alert-info { border-left: 3px solid var(--blue); }
+    .alert-info strong { color: var(--blue); }
+    .alert-danger { border-left: 3px solid var(--red); }
+    .alert-danger strong { color: var(--red); }
+
+    /* === Footer === */
+    .site-footer {
+      padding: 1.5rem 0;
+      color: var(--comment);
+      font-size: 0.85rem;
+      text-align: center;
+    }
+    .site-footer hr {
+      border: none;
+      border-top: 1px solid var(--cyan);
+      margin: 0 0 1rem 0;
+      opacity: 0.3;
+    }
+    .site-footer a { color: var(--cyan); }
+
+    /* === Selection === */
+    ::selection {
+      background: rgba(122, 162, 247, 0.3);
+      color: var(--fg);
+    }
+
+    /* === Scrollbar === */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-dark); }
+    ::-webkit-scrollbar-thumb { background: var(--bg-highlight); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--comment); }
+
+    /* === Responsive === */
+    @media (max-width: 640px) {
+      body { font-size: 14px; }
+      .site-header { flex-direction: column; gap: 0.75rem; align-items: flex-start; }
+      .site-wrapper { padding: 0 1.25rem; }
+      h1 { font-size: 1.35rem; }
+      h2 { font-size: 1.15rem; }
+    }
+  </style>
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+</head>
+<body data-section="{{ page.section }}">
+  <div class="site-wrapper">
+    <header class="site-header">
+      <a href="{{ base_url }}/" class="site-logo">{{ site.title }}</a>
+      <nav>
+        <a href="{{ base_url }}/">home</a>
+        <a href="{{ base_url }}/blog/">blog</a>
+        <a href="{{ base_url }}/about/">about</a>
+      </nav>
+    </header>
+    <hr class="header-rule">
