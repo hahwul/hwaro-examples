@@ -42,6 +42,45 @@ jobs:
             fi
           done
 
+      - name: Capture screenshots
+        run: |
+          npm init -y
+          npx playwright install --with-deps chromium
+          OUTPUT_DIR="${GITHUB_WORKSPACE}/_site"
+          mkdir -p "${OUTPUT_DIR}/screenshots"
+
+          # Serve _site locally
+          cd "${OUTPUT_DIR}"
+          python3 -m http.server 8000 &
+          SERVER_PID=$!
+          sleep 2
+          cd "${GITHUB_WORKSPACE}"
+
+          # Capture screenshots with Playwright
+          node -e "
+          const { chromium } = require('playwright');
+          (async () => {
+            const browser = await chromium.launch();
+            const page = await browser.newPage();
+            await page.setViewportSize({ width: 1280, height: 720 });
+            const fs = require('fs');
+            const dirs = fs.readdirSync('.')
+              .filter(d => fs.existsSync(d + '/config.toml'));
+            for (const dir of dirs) {
+              try {
+                await page.goto('http://localhost:8000/' + dir + '/', { waitUntil: 'networkidle', timeout: 30000 });
+                await page.screenshot({ path: '${OUTPUT_DIR}/screenshots/' + dir + '.png' });
+                console.log('Screenshot: ' + dir);
+              } catch (e) {
+                console.error('Failed: ' + dir, e.message);
+              }
+            }
+            await browser.close();
+          })();
+          "
+
+          kill $SERVER_PID || true
+
       - name: Generate index page
         run: |
           REPO_NAME="${GITHUB_REPOSITORY#*/}"
@@ -55,7 +94,7 @@ jobs:
               TITLE=$(grep '^title' "${dir_name}/config.toml" | head -1 | sed 's/title *= *"//;s/"//')
               DESCRIPTION=$(grep '^description' "${dir_name}/config.toml" | head -1 | sed 's/description *= *"//;s/"//')
               REPO_URL="https://github.com/${GITHUB_REPOSITORY}/tree/main/${dir_name}"
-              SITE_LINKS="${SITE_LINKS}<div class=\"card\"><a href=\"${BASE_URL}/${dir_name}/\" class=\"main-link\"><strong>${dir_name}</strong><span class=\"title\">${TITLE}</span><span class=\"desc\">${DESCRIPTION}</span></a><a href=\"${REPO_URL}\" class=\"code-link\"><svg viewBox=\"0 0 16 16\"><path d=\"M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z\"></path></svg>Source Code</a></div>"
+              SITE_LINKS="${SITE_LINKS}<div class=\"card\"><a href=\"${BASE_URL}/${dir_name}/\" class=\"main-link\"><img src=\"screenshots/${dir_name}.png\" alt=\"${dir_name}\" class=\"preview\" loading=\"lazy\"><strong>${dir_name}</strong><span class=\"title\">${TITLE}</span><span class=\"desc\">${DESCRIPTION}</span></a><a href=\"${REPO_URL}\" class=\"code-link\"><svg viewBox=\"0 0 16 16\"><path d=\"M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z\"></path></svg>Source Code</a></div>"
             fi
           done
           echo "examples.hwaro.hahwul.com" > "${OUTPUT_DIR}/CNAME"
@@ -78,6 +117,7 @@ jobs:
             .main-link strong { font-size: 1.1rem; color: #fff; }
             .main-link .title { font-size: 0.85rem; color: #aaa; }
             .main-link .desc { font-size: 0.8rem; color: #666; margin-top: 0.25rem; }
+            .preview { width: 100%; height: auto; border-bottom: 1px solid #222; }
             .code-link { padding: 0.6rem 1.25rem; border-top: 1px solid #222; font-size: 0.75rem; color: #888; text-decoration: none; background: #080808; display: flex; align-items: center; gap: 0.4rem; }
             .code-link:hover { color: #fff; background: #1a1a1a; }
             .code-link svg { width: 14px; height: 14px; fill: currentColor; }
