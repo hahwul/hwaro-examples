@@ -95,7 +95,9 @@ jobs:
               TITLE=$(grep '^title' "${dir_name}/config.toml" | head -1 | sed 's/title *= *"//;s/"//')
               DESCRIPTION=$(grep '^description' "${dir_name}/config.toml" | head -1 | sed 's/description *= *"//;s/"//')
               REPO_URL="https://github.com/${GITHUB_REPOSITORY}/tree/main/${dir_name}"
-              SITE_LINKS="${SITE_LINKS}<div class=\"card\"><a href=\"${BASE_URL}/${dir_name}/\" class=\"main-link\"><img src=\"screenshots/${dir_name}.png\" alt=\"${dir_name}\" class=\"preview\" loading=\"lazy\"><strong>${dir_name}</strong><span class=\"title\">${TITLE}</span><span class=\"desc\">${DESCRIPTION}</span></a><a href=\"${REPO_URL}\" class=\"code-link\"><svg viewBox=\"0 0 16 16\"><path d=\"M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z\"></path></svg>Source Code</a></div>"
+              SCAFFOLD_URL="https://github.com/${GITHUB_REPOSITORY}/tree/main/${dir_name}"
+              SCAFFOLD_CMD="hwaro init my-site --scaffold ${SCAFFOLD_URL}"
+              SITE_LINKS="${SITE_LINKS}<div class=\"card\"><a href=\"${BASE_URL}/${dir_name}/\" class=\"main-link\"><img src=\"screenshots/${dir_name}.png\" alt=\"${dir_name}\" class=\"preview\" loading=\"lazy\"><strong>${dir_name}</strong><span class=\"title\">${TITLE}</span><span class=\"desc\">${DESCRIPTION}</span></a><div class=\"card-footer\"><a href=\"${REPO_URL}\" class=\"card-footer-row\"><svg viewBox=\"0 0 16 16\"><path d=\"M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z\"></path></svg>Source Code</a><div class=\"card-footer-row scaffold-row\" onclick=\"copyScaffold(this)\" data-cmd=\"${SCAFFOLD_CMD}\"><svg viewBox=\"0 0 16 16\"><path d=\"M4.72 3.22a.75.75 0 011.06 1.06L2.06 8l3.72 3.72a.75.75 0 11-1.06 1.06L.47 8.53a.75.75 0 010-1.06l4.25-4.25zm6.56 0a.75.75 0 10-1.06 1.06L13.94 8l-3.72 3.72a.75.75 0 101.06 1.06l4.25-4.25a.75.75 0 000-1.06l-4.25-4.25z\"></path></svg><span class=\"scaffold-cmd\">${SCAFFOLD_CMD}</span><svg class=\"copy-icon\" viewBox=\"0 0 16 16\"><path d=\"M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z\"></path><path d=\"M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z\"></path></svg></div></div></div>"
             fi
           done
           echo "examples.hwaro.hahwul.com" > "${OUTPUT_DIR}/CNAME"
@@ -119,9 +121,18 @@ jobs:
             .main-link .title { font-size: 0.85rem; color: #aaa; }
             .main-link .desc { font-size: 0.8rem; color: #666; margin-top: 0.25rem; }
             .preview { width: 100%; height: auto; border-bottom: 1px solid #222; }
-            .code-link { padding: 0.6rem 1.25rem; border-top: 1px solid #222; font-size: 0.75rem; color: #888; text-decoration: none; background: #080808; display: flex; align-items: center; gap: 0.4rem; }
-            .code-link:hover { color: #fff; background: #1a1a1a; }
-            .code-link svg { width: 14px; height: 14px; fill: currentColor; }
+            .card-footer { border-top: 1px solid #222; background: #080808; }
+            .card-footer-row { padding: 0.6rem 1.25rem; font-size: 0.75rem; color: #888; text-decoration: none; display: flex; align-items: center; gap: 0.4rem; }
+            .card-footer-row + .card-footer-row { border-top: 1px solid #1a1a1a; }
+            a.card-footer-row:hover { color: #fff; background: #1a1a1a; }
+            .card-footer-row svg { width: 14px; height: 14px; fill: currentColor; flex-shrink: 0; }
+            .scaffold-row { cursor: pointer; position: relative; font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; }
+            .scaffold-row:hover { color: #fff; background: #1a1a1a; }
+            .scaffold-cmd { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; min-width: 0; }
+            .scaffold-row .copy-icon { margin-left: auto; flex-shrink: 0; opacity: 0.5; transition: opacity 0.2s; }
+            .scaffold-row:hover .copy-icon { opacity: 1; }
+            .scaffold-row.copied { color: #4ade80; }
+            .scaffold-row.copied .copy-icon { opacity: 1; }
           </style>
           </head>
           <body>
@@ -300,6 +311,20 @@ jobs:
               />
           </svg></p>
           <div class="grid">${SITE_LINKS}</div>
+          <script>
+          function copyScaffold(el) {
+            var cmd = el.getAttribute('data-cmd');
+            navigator.clipboard.writeText(cmd).then(function() {
+              el.classList.add('copied');
+              var orig = el.querySelector('.scaffold-cmd').textContent;
+              el.querySelector('.scaffold-cmd').textContent = 'Copied!';
+              setTimeout(function() {
+                el.classList.remove('copied');
+                el.querySelector('.scaffold-cmd').textContent = orig;
+              }, 1500);
+            });
+          }
+          </script>
           </body>
           </html>
           HTMLEOF
