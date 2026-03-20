@@ -7,26 +7,52 @@ This repository is a collection of example sites built with [Hwaro](https://hwar
 ```
 hwaro-examples/
 ├── .github/workflows/deploy.yml   # Builds all sites and deploys to GitHub Pages
-├── blog1/                          # Blog example
-├── blog2/                          # Blog + docs example
-├── docs1/                          # Documentation site
-├── event1/                         # Event listing site
-├── folio/                          # Portfolio site
-├── hermit/                         # Dark blog theme
-├── landing1/                       # SaaS landing page
-├── resume1/                        # Resume/CV site
-├── ...                             # More examples
+├── tags.json                       # Tag definitions for index page filtering
+├── acme-docs/                      # Documentation site (light, docs)
+├── beautiful-hwaro/                # Beautiful Jekyll-inspired blog (light, blog)
+├── console/                        # Terminal-style theme (dark, blog, minimal)
+├── devconf/                        # Conference event site (dark, event, landing)
+├── devlog/                         # TIL & changelog blog (dark, blog, minimal)
+├── emerald/                        # Minimal blog theme (light, blog, minimal)
+├── even/                           # Clean responsive theme (light, blog)
+├── flowsync/                       # SaaS landing page (dark, landing)
+├── folio/                          # Portfolio site (light, portfolio)
+├── forty/                          # Gallery/portfolio theme (dark, portfolio, gallery)
+├── hacker/                         # Dark hacker theme (dark, blog)
+├── hermit/                         # Dark minimal blog (dark, blog, minimal)
+├── hwaro.386/                      # Retro DOS theme (dark, blog, retro)
+├── hwaronight/                     # Tokyo Night theme (dark, blog)
+├── modern-blog/                    # Modern personal blog (dark, blog)
+├── no-style-please/                # No-CSS minimal theme (light, blog, minimal)
+├── portfolio-blog/                 # Multilingual portfolio blog (dark, blog, portfolio)
+├── pulse-api/                      # API documentation (dark, docs)
+├── resume/                         # Resume/CV site (light, resume)
+├── studio/                         # Design studio site (dark, landing, portfolio)
 └── AGENTS.md                       # This file
 ```
 
 Each subdirectory with a `config.toml` is automatically detected, built, and deployed by the CI workflow.
 
-## Creating a New Sample Site
+## Creating a New Example Site
 
-### Step 1: Create the directory structure
+### Step 0: Scaffold with `hwaro init`
+
+```bash
+# Run from the repo root
+hwaro init <site-name>
+
+# With scaffold option
+hwaro init <site-name> --scaffold blog
+hwaro init <site-name> --scaffold docs
+
+# Remote scaffold from an existing example
+hwaro init <site-name> --scaffold https://github.com/user/repo/tree/main/some-example
+```
+
+Then work inside the generated `<site-name>/` directory. The default structure looks like this:
 
 ```
-new-site/
+<site-name>/
 ├── config.toml
 ├── content/
 │   ├── index.md              # Homepage (front matter + markdown)
@@ -49,7 +75,7 @@ new-site/
     └── images/
 ```
 
-### Step 2: Write `config.toml`
+### Step 1: Write `config.toml`
 
 ```toml
 title = "Site Title"
@@ -97,7 +123,7 @@ lazy_loading = true
 
 `base_url` is overridden at build time by CI (`--base-url`), so `http://localhost:3000` is fine for local development.
 
-### Step 3: Write content files
+### Step 2: Write content files
 
 **Front Matter (TOML between `+++`):**
 
@@ -137,7 +163,7 @@ transparent = false       # If true, pages merge into parent section
 +++
 ```
 
-### Step 4: Write templates (Jinja2/Crinja)
+### Step 3: Write templates (Jinja2/Crinja)
 
 #### Template Variables
 
@@ -241,15 +267,52 @@ git clone https://github.com/hahwul/hwaro.git && cd hwaro
 shards install && shards build --release --no-debug --production
 ```
 
+### Step 4: Add tags to `tags.json`
+
+Add your new example's tags to `tags.json` at the repo root. Tags are used for filtering on the index page.
+
+```json
+{
+  "my-new-site": ["dark", "blog", "minimal"]
+}
+```
+
+Available tags: `dark`, `light`, `blog`, `docs`, `landing`, `portfolio`, `event`, `resume`, `gallery`, `minimal`, `retro`
+
+You may add new tags if needed.
+
+### Step 5: Validate and update config
+
+```bash
+cd <site-name>
+hwaro tool doctor --fix
+```
+
+Automatically adds any missing config sections. Always run this when creating a new example.
+
+### Step 6: Local preview
+
+```bash
+cd <site-name>
+hwaro serve --open
+```
+
+Opens the site in your browser at `http://localhost:3000`.
+
 ## CI/CD Pipeline
 
 The deploy workflow (`.github/workflows/deploy.yml`):
 1. Iterates all directories containing `config.toml`
-2. Builds each with Docker: `ghcr.io/hahwul/hwaro build --base-url "https://.../<dir_name>"`
-3. Generates an index page at `_site/index.html` (extracts `title`/`description` from each `config.toml`)
-4. Deploys to GitHub Pages at `examples.hwaro.hahwul.com`
+2. Reads tags from `tags.json` (via `jq`)
+3. Builds each with Docker: `ghcr.io/hahwul/hwaro build --base-url "https://.../<dir_name>"`
+4. Captures screenshots of each site with Playwright
+5. Generates an index page at `_site/index.html` with:
+   - Search bar and grid size slider
+   - Tag filter buttons (from `tags.json`)
+   - Card per example: screenshot, title, description, tag badges, source code link, scaffold command (copy-to-clipboard)
+6. Deploys to GitHub Pages at `examples.hwaro.hahwul.com`
 
-Adding a new subdirectory with a valid `config.toml` is all that's needed to include it in the deployment.
+Adding a new subdirectory with a valid `config.toml` + `tags.json` entry is all that's needed to include it in the deployment.
 
 ## Rules for AI Agents
 
@@ -263,3 +326,7 @@ Adding a new subdirectory with a valid `config.toml` is all that's needed to inc
 8. **Keep sites minimal and focused.** Each example should demonstrate a specific use case or design pattern clearly.
 9. **Use `hwaro serve` for local preview.** Default port is 3000. Use `-p` to change.
 10. **Title and description matter.** They appear on the index page at `examples.hwaro.hahwul.com`.
+11. **Always update `tags.json`** when adding a new example. Tags power the filter buttons on the index page.
+12. **Always run `hwaro tool doctor --fix`** after creating or modifying a site to keep config up to date.
+13. **Use `hwaro init` to scaffold.** Always create new examples with `hwaro init <name>` and work inside the generated directory.
+14. **Directory name = example name.** Use descriptive English names (e.g., `blog1` ✗ → `modern-blog` ✓).
