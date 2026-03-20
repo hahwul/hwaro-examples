@@ -89,6 +89,7 @@ jobs:
           OUTPUT_DIR="${GITHUB_WORKSPACE}/_site"
 
           SITE_LINKS=""
+          ALL_TAGS=""
           for dir in */; do
             dir_name="${dir%/}"
             if [ -f "${dir_name}/config.toml" ]; then
@@ -97,9 +98,22 @@ jobs:
               REPO_URL="https://github.com/${GITHUB_REPOSITORY}/tree/main/${dir_name}"
               SCAFFOLD_URL="https://github.com/${GITHUB_REPOSITORY}/tree/main/${dir_name}"
               SCAFFOLD_CMD="hwaro init my-site --scaffold ${SCAFFOLD_URL}"
-              SITE_LINKS="${SITE_LINKS}<div class=\"card\" data-name=\"${dir_name}\" data-title=\"${TITLE}\" data-desc=\"${DESCRIPTION}\"><a href=\"${BASE_URL}/${dir_name}/\" class=\"main-link\"><img src=\"screenshots/${dir_name}.png\" alt=\"${dir_name}\" class=\"preview\" loading=\"lazy\"><div class=\"card-info\"><strong>${dir_name}</strong><span class=\"title\">${TITLE}</span><span class=\"desc\">${DESCRIPTION}</span></div></a><div class=\"card-footer\"><a href=\"${REPO_URL}\" class=\"card-footer-row\"><svg viewBox=\"0 0 16 16\"><path d=\"M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z\"></path></svg>Source Code</a><div class=\"card-footer-row scaffold-row\" onclick=\"copyScaffold(this)\" data-cmd=\"${SCAFFOLD_CMD}\"><svg viewBox=\"0 0 16 16\"><path d=\"M4.72 3.22a.75.75 0 011.06 1.06L2.06 8l3.72 3.72a.75.75 0 11-1.06 1.06L.47 8.53a.75.75 0 010-1.06l4.25-4.25zm6.56 0a.75.75 0 10-1.06 1.06L13.94 8l-3.72 3.72a.75.75 0 101.06 1.06l4.25-4.25a.75.75 0 000-1.06l-4.25-4.25z\"></path></svg><span class=\"scaffold-cmd\">${SCAFFOLD_CMD}</span><svg class=\"copy-icon\" viewBox=\"0 0 16 16\"><path d=\"M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z\"></path><path d=\"M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z\"></path></svg></div></div></div>"
+              TAGS=$(jq -r --arg d "${dir_name}" '.[$d] // [] | join(" ")' tags.json)
+              TAGS_DISPLAY=""
+              for tag in ${TAGS}; do
+                TAGS_DISPLAY="${TAGS_DISPLAY}<span class=\"tag\">${tag}</span>"
+                if ! echo "${ALL_TAGS}" | grep -qw "${tag}"; then
+                  ALL_TAGS="${ALL_TAGS} ${tag}"
+                fi
+              done
+              SITE_LINKS="${SITE_LINKS}<div class=\"card\" data-name=\"${dir_name}\" data-title=\"${TITLE}\" data-desc=\"${DESCRIPTION}\" data-tags=\"${TAGS}\"><a href=\"${BASE_URL}/${dir_name}/\" class=\"main-link\"><img src=\"screenshots/${dir_name}.png\" alt=\"${dir_name}\" class=\"preview\" loading=\"lazy\"><div class=\"card-info\"><strong>${dir_name}</strong><span class=\"title\">${TITLE}</span><span class=\"desc\">${DESCRIPTION}</span><div class=\"card-tags\">${TAGS_DISPLAY}</div></div></a><div class=\"card-footer\"><a href=\"${REPO_URL}\" class=\"card-footer-row\"><svg viewBox=\"0 0 16 16\"><path d=\"M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z\"></path></svg>Source Code</a><div class=\"card-footer-row scaffold-row\" onclick=\"copyScaffold(this)\" data-cmd=\"${SCAFFOLD_CMD}\"><svg viewBox=\"0 0 16 16\"><path d=\"M4.72 3.22a.75.75 0 011.06 1.06L2.06 8l3.72 3.72a.75.75 0 11-1.06 1.06L.47 8.53a.75.75 0 010-1.06l4.25-4.25zm6.56 0a.75.75 0 10-1.06 1.06L13.94 8l-3.72 3.72a.75.75 0 101.06 1.06l4.25-4.25a.75.75 0 000-1.06l-4.25-4.25z\"></path></svg><span class=\"scaffold-cmd\">${SCAFFOLD_CMD}</span><svg class=\"copy-icon\" viewBox=\"0 0 16 16\"><path d=\"M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z\"></path><path d=\"M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z\"></path></svg></div></div></div>"
             fi
           done
+          TAG_BUTTONS=""
+          for tag in $(echo ${ALL_TAGS} | tr ' ' '\n' | sort); do
+            TAG_BUTTONS="${TAG_BUTTONS}<button class=\"tag-btn\" data-tag=\"${tag}\">${tag}</button>"
+          done
+
           echo "examples.hwaro.hahwul.com" > "${OUTPUT_DIR}/CNAME"
           cat > "${OUTPUT_DIR}/index.html" << HTMLEOF
           <!DOCTYPE html>
@@ -147,6 +161,12 @@ jobs:
             .scaffold-row:hover .copy-icon { opacity: 1; }
             .scaffold-row.copied { color: #4ade80; }
             .scaffold-row.copied .copy-icon { opacity: 1; }
+            .tag-bar { display: flex; flex-wrap: wrap; gap: 0.5rem; max-width: 1400px; margin: 0 auto 1rem; align-items: center; }
+            .tag-btn { background: #151515; border: 1px solid #282828; color: #888; padding: 0.3rem 0.7rem; border-radius: 6px; font-size: 0.7rem; cursor: pointer; transition: all 0.2s; }
+            .tag-btn:hover { border-color: #444; color: #ccc; }
+            .tag-btn.active { background: #fff; color: #0a0a0a; border-color: #fff; }
+            .card-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.15rem; }
+            .tag { background: #1a1a1a; color: #666; padding: 0.15rem 0.45rem; border-radius: 4px; font-size: 0.6rem; }
             .no-results { text-align: center; color: #555; padding: 3rem 1rem; font-size: 0.9rem; display: none; }
           </style>
           </head>
@@ -336,6 +356,7 @@ jobs:
               <svg viewBox="0 0 16 16"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v12.5A1.75 1.75 0 0114.25 16H1.75A1.75 1.75 0 010 14.25V1.75zm1.75-.25a.25.25 0 00-.25.25v12.5c0 .138.112.25.25.25h12.5a.25.25 0 00.25-.25V1.75a.25.25 0 00-.25-.25H1.75z"></path></svg>
             </div>
           </div>
+          <div class="tag-bar" id="tagBar">${TAG_BUTTONS}</div>
           <div class="grid" id="grid">${SITE_LINKS}</div>
           <div class="no-results" id="noResults">No examples found.</div>
           <script>
@@ -351,19 +372,32 @@ jobs:
               }, 1500);
             });
           }
-          document.getElementById('search').addEventListener('input', function() {
-            var q = this.value.toLowerCase();
+          var activeTags = new Set();
+          function filterCards() {
+            var q = document.getElementById('search').value.toLowerCase();
             var cards = document.querySelectorAll('.card');
             var visible = 0;
             cards.forEach(function(card) {
               var name = (card.dataset.name || '').toLowerCase();
               var title = (card.dataset.title || '').toLowerCase();
               var desc = (card.dataset.desc || '').toLowerCase();
-              var match = !q || name.indexOf(q) !== -1 || title.indexOf(q) !== -1 || desc.indexOf(q) !== -1;
-              card.classList.toggle('hidden', !match);
-              if (match) visible++;
+              var tags = (card.dataset.tags || '').split(' ');
+              var textMatch = !q || name.indexOf(q) !== -1 || title.indexOf(q) !== -1 || desc.indexOf(q) !== -1;
+              var tagMatch = activeTags.size === 0 || tags.some(function(t) { return activeTags.has(t); });
+              var show = textMatch && tagMatch;
+              card.classList.toggle('hidden', !show);
+              if (show) visible++;
             });
             document.getElementById('noResults').style.display = visible === 0 ? 'block' : 'none';
+          }
+          document.getElementById('search').addEventListener('input', filterCards);
+          document.querySelectorAll('.tag-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+              var tag = this.dataset.tag;
+              if (activeTags.has(tag)) { activeTags.delete(tag); this.classList.remove('active'); }
+              else { activeTags.add(tag); this.classList.add('active'); }
+              filterCards();
+            });
           });
           document.getElementById('gridSize').addEventListener('input', function() {
             document.getElementById('grid').style.setProperty('--card-size', this.value + 'px');
