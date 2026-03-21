@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description }}">
+  <title>{% if page.title %}{{ page.title }} - {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
+  {{ og_all_tags }}
+
+  <!-- Fonts: Playfair Display + Lora -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- RSS -->
+  <link href="{{ base_url }}/atom.xml" type="application/atom+xml" rel="alternate" title="ATOM Feed">
+
+  <style>
+    /* ========================================
+       Gazette Theme - Hwaro
+       A classic newspaper/editorial style
+       ======================================== */
+
+    /* -- Reset -- */
+    * { box-sizing: border-box; }
+    html, body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, figure { margin: 0; padding: 0; border: 0; }
+
+    /* -- Base -- */
+    html {
+      background-color: #faf8f2;
+      font-size: 17px;
+      color: #1a1a1a;
+    }
+    body {
+      font-family: 'Lora', Georgia, 'Times New Roman', serif;
+      line-height: 1.8;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* -- Links -- */
+    a { color: #8b0000; text-decoration: none; }
+    a:hover { color: #a50000; text-decoration: underline; }
+
+    /* ========================================
+       Typography
+       ======================================== */
+    p { margin-bottom: 1.4em; }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    h1 { font-size: 2.4em; margin-bottom: 0.3em; }
+    h2 { font-size: 1.8em; margin: 1.2em 0 0.4em; }
+    h3 { font-size: 1.4em; margin: 1em 0 0.3em; }
+    h4, h5, h6 { font-size: 1.1em; margin: 0.8em 0 0.3em; }
+
+    blockquote {
+      border-left: 3px solid #8b0000;
+      margin: 1.5em 0;
+      padding: 0.5em 1.5em;
+      font-style: italic;
+      color: #444;
+    }
+
+    /* ========================================
+       Masthead (Newspaper Header)
+       ======================================== */
+    .masthead {
+      text-align: center;
+      padding: 2rem 1rem 0;
+      border-bottom: 4px double #1a1a1a;
+      margin-bottom: 2rem;
+    }
+    .masthead-rule-top {
+      border-top: 2px solid #1a1a1a;
+      margin: 0 auto;
+      max-width: 860px;
+    }
+    .masthead h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 3.2em;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin: 0.3em 0 0.1em;
+      line-height: 1;
+    }
+    @media (min-width: 768px) {
+      .masthead h1 { font-size: 4em; }
+    }
+    .masthead-meta {
+      font-variant: small-caps;
+      letter-spacing: 0.15em;
+      font-size: 0.85em;
+      color: #555;
+      margin-bottom: 0.8em;
+    }
+
+    /* -- Navigation -- */
+    .gazette-nav {
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+      padding: 0.5em 0;
+      margin-top: 0.5em;
+      margin-bottom: 0;
+      text-align: center;
+    }
+    .gazette-nav a {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-variant: small-caps;
+      letter-spacing: 0.1em;
+      font-size: 0.95em;
+      color: #1a1a1a;
+      margin: 0 1em;
+      font-weight: 700;
+    }
+    .gazette-nav a:hover {
+      color: #8b0000;
+      text-decoration: none;
+    }
+
+    /* ========================================
+       Main Container
+       ======================================== */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      flex: 1;
+    }
+
+    /* ========================================
+       Newspaper Column Layout (Section)
+       ======================================== */
+    .gazette-columns {
+      column-count: 1;
+      column-gap: 2.5em;
+      column-rule: 1px solid #ccc;
+    }
+    @media (min-width: 600px) {
+      .gazette-columns { column-count: 2; }
+    }
+    @media (min-width: 900px) {
+      .gazette-columns { column-count: 2; }
+    }
+
+    .gazette-article {
+      break-inside: avoid;
+      margin-bottom: 2em;
+      padding-bottom: 1.5em;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .gazette-article h2 {
+      font-size: 1.5em;
+      margin: 0 0 0.2em;
+      line-height: 1.2;
+    }
+    .gazette-article h2 a {
+      color: #1a1a1a;
+    }
+    .gazette-article h2 a:hover {
+      color: #8b0000;
+      text-decoration: none;
+    }
+
+    .gazette-article .byline {
+      font-variant: small-caps;
+      letter-spacing: 0.1em;
+      font-size: 0.8em;
+      color: #777;
+      margin-bottom: 0.8em;
+      display: block;
+    }
+
+    .gazette-article .excerpt {
+      font-size: 0.95em;
+      color: #333;
+    }
+    .gazette-article .excerpt p { margin-bottom: 0.5em; }
+
+    /* -- Lead article (first post) -- */
+    .gazette-lead {
+      column-span: all;
+      text-align: center;
+      margin-bottom: 2em;
+      padding-bottom: 2em;
+      border-bottom: 2px solid #1a1a1a;
+    }
+    .gazette-lead h2 {
+      font-size: 2.4em;
+      margin-bottom: 0.2em;
+    }
+    @media (min-width: 768px) {
+      .gazette-lead h2 { font-size: 3em; }
+    }
+    .gazette-lead .excerpt {
+      max-width: 640px;
+      margin: 0 auto;
+      font-size: 1.1em;
+    }
+
+    /* ========================================
+       Single Post / Page
+       ======================================== */
+    .post-header {
+      text-align: center;
+      margin-bottom: 2em;
+      padding-bottom: 1.5em;
+      border-bottom: 2px solid #1a1a1a;
+    }
+    .post-header h1 {
+      font-size: 2.6em;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+    @media (min-width: 768px) {
+      .post-header h1 { font-size: 3.2em; }
+    }
+    .post-header .byline {
+      font-variant: small-caps;
+      letter-spacing: 0.12em;
+      font-size: 0.9em;
+      color: #777;
+      margin-top: 0.5em;
+    }
+
+    .post-content {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    /* Drop cap on first paragraph */
+    .post-content > p:first-of-type::first-letter {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 4em;
+      float: left;
+      line-height: 0.8;
+      margin: 0.05em 0.12em 0 0;
+      color: #8b0000;
+      font-weight: 900;
+    }
+
+    .post-content ul, .post-content ol {
+      padding-left: 1.5em;
+      margin-bottom: 1.4em;
+    }
+    .post-content li { margin-bottom: 0.3em; }
+
+    .post-content img {
+      max-width: 100%;
+      display: block;
+      margin: 1.5em auto;
+    }
+
+    /* -- Tags on post -- */
+    .post-tags {
+      margin-top: 2em;
+      padding-top: 1em;
+      border-top: 1px solid #ddd;
+    }
+    .post-tags span {
+      font-variant: small-caps;
+      letter-spacing: 0.1em;
+      font-size: 0.85em;
+      color: #555;
+    }
+    .post-tags a {
+      display: inline-block;
+      padding: 0.2em 0.6em;
+      margin: 0.2em;
+      border: 1px solid #8b0000;
+      font-size: 0.8em;
+      color: #8b0000;
+    }
+    .post-tags a:hover {
+      background-color: #8b0000;
+      color: #faf8f2;
+      text-decoration: none;
+    }
+
+    /* ========================================
+       Pagination
+       ======================================== */
+    .pagination {
+      text-align: center;
+      margin: 2em 0;
+      padding-top: 1.5em;
+      border-top: 1px solid #ddd;
+    }
+    .page-item {
+      display: inline-block;
+      padding: 0.4em 0.9em;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 0.9em;
+      border: 1px solid #1a1a1a;
+      color: #1a1a1a;
+    }
+    a.page-item:hover {
+      background-color: #1a1a1a;
+      color: #faf8f2;
+      text-decoration: none;
+    }
+    span.page-item {
+      background-color: #eee;
+      color: #999;
+    }
+
+    /* ========================================
+       Section List (fallback)
+       ======================================== */
+    ul.section-list { list-style: none; padding: 0; }
+    ul.section-list li { margin-bottom: 0; }
+    ul.section-list li + li {
+      border-top: 1px solid #ddd;
+      padding-top: 1em;
+      margin-top: 1em;
+    }
+
+    /* ========================================
+       Taxonomy
+       ======================================== */
+    .taxonomy-list { list-style: none; padding: 0; }
+    .taxonomy-list li { display: inline-block; margin: 0.3em; }
+    .taxonomy-list li a {
+      display: inline-block;
+      padding: 0.3em 0.8em;
+      border: 1px solid #8b0000;
+      color: #8b0000;
+      font-size: 0.85em;
+      font-variant: small-caps;
+      letter-spacing: 0.08em;
+    }
+    .taxonomy-list li a:hover {
+      background-color: #8b0000;
+      color: #faf8f2;
+      text-decoration: none;
+    }
+
+    /* ========================================
+       Footer
+       ======================================== */
+    .gazette-footer {
+      text-align: center;
+      margin-top: 3em;
+      padding: 1.5em 0;
+      border-top: 4px double #1a1a1a;
+      font-variant: small-caps;
+      letter-spacing: 0.12em;
+      font-size: 0.85em;
+      color: #777;
+    }
+    .gazette-footer .end-mark {
+      display: block;
+      margin-bottom: 0.8em;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.1em;
+      color: #1a1a1a;
+      letter-spacing: 0.2em;
+    }
+    .gazette-footer a { color: #8b0000; }
+
+    /* ========================================
+       Code
+       ======================================== */
+    code {
+      font-size: 0.9em;
+      background-color: #f0ede4;
+      padding: 0.1em 0.3em;
+      border-radius: 2px;
+    }
+    pre {
+      background-color: #f0ede4;
+      padding: 1em;
+      overflow-x: auto;
+      margin-bottom: 1.5em;
+      border: 1px solid #ddd;
+    }
+    pre code { background: none; padding: 0; }
+
+    /* ========================================
+       Page (about, etc.)
+       ======================================== */
+    .page-content {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .page-content h1 {
+      text-align: center;
+      margin-bottom: 0.5em;
+      padding-bottom: 0.5em;
+      border-bottom: 2px solid #1a1a1a;
+    }
+  </style>
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+</head>
+<body>
+
+  <!-- Masthead -->
+  <header class="masthead">
+    <div class="masthead-rule-top">
+      <h1><a href="{{ base_url }}/" style="color: #1a1a1a; text-decoration: none;">{{ site.title }}</a></h1>
+      <p class="masthead-meta">Vol. 1 · Est. 2026 · {{ site.description }}</p>
+      <nav class="gazette-nav">
+        <a href="{{ base_url }}/">Front Page</a>
+        <a href="{{ base_url }}/posts/">Archives</a>
+        <a href="{{ base_url }}/tags/">Topics</a>
+        <a href="{{ base_url }}/about/">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <div class="container">
+    <main>
