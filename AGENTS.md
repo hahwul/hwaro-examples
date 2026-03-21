@@ -24,6 +24,7 @@ hwaro-examples/
 ├── hwaronight/                     # Tokyo Night theme (dark, blog)
 ├── modern-blog/                    # Modern personal blog (dark, blog)
 ├── no-style-please/                # No-CSS minimal theme (light, blog, minimal)
+├── papermod/                       # PaperMod-inspired profile blog (light, blog)
 ├── portfolio-blog/                 # Multilingual portfolio blog (dark, blog, portfolio)
 ├── pulse-api/                      # API documentation (dark, docs)
 ├── resume/                         # Resume/CV site (light, resume)

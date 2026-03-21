@@ -1,0 +1,51 @@
+{% include "header.html" %}
+
+  <main class="wrapper">
+    <h1>{{ page.title }}</h1>
+
+    <div class="search-container">
+      <input class="search-input" id="search-input" type="text" placeholder="Search posts..." autofocus>
+      <ul class="search-results" id="search-results"></ul>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
+  <script>
+    (function() {
+      var input = document.getElementById('search-input');
+      var results = document.getElementById('search-results');
+      var fuse;
+
+      function escapeHtml(str) {
+        var div = document.createElement('div');
+        div.appendChild(document.createTextNode(str));
+        return div.innerHTML;
+      }
+
+      fetch('{{ base_url }}/search.json')
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          fuse = new Fuse(data, {
+            keys: ['title', 'content'],
+            threshold: 0.3,
+            includeMatches: true
+          });
+        });
+
+      input.addEventListener('input', function() {
+        var query = this.value.trim();
+        if (!query || !fuse) {
+          results.innerHTML = '';
+          return;
+        }
+        var matches = fuse.search(query).slice(0, 10);
+        results.innerHTML = matches.map(function(m) {
+          var item = m.item;
+          return '<li><a href="' + escapeHtml(item.permalink) + '">' + escapeHtml(item.title) + '</a>' +
+            (item.description ? '<p>' + escapeHtml(item.description) + '</p>' : '') + '</li>';
+        }).join('');
+      });
+    })();
+  </script>
+
+{% include "footer.html" %}
