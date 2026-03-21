@@ -39,16 +39,21 @@ Each subdirectory with a `config.toml` is automatically detected, built, and dep
 ### Step 0: Scaffold with `hwaro init`
 
 ```bash
-# Run from the repo root
+# Run from the repo root — creates a minimal skeleton (config.toml + empty dirs)
 hwaro init <site-name>
 
-# With scaffold option
+# Equivalent to the above (explicit minimal skeleton)
+hwaro init <site-name> --scaffold simple
+
+# With pre-built scaffold for common layouts
 hwaro init <site-name> --scaffold blog
 hwaro init <site-name> --scaffold docs
 
 # Remote scaffold from an existing example
 hwaro init <site-name> --scaffold https://github.com/user/repo/tree/main/some-example
 ```
+
+**Always start with `hwaro init`**, even for custom layouts. Running without `--scaffold` (or with `--scaffold simple`) gives you a bare skeleton with `config.toml` and empty directories — just fill in your own templates and content from there.
 
 Then work inside the generated `<site-name>/` directory. The default structure looks like this:
 
@@ -329,5 +334,5 @@ Adding a new subdirectory with a valid `config.toml` + `tags.json` entry is all 
 10. **Title and description matter.** They appear on the index page at `examples.hwaro.hahwul.com`.
 11. **Always update `tags.json`** when adding a new example. Tags power the filter buttons on the index page.
 12. **Always run `hwaro tool doctor --fix`** after creating or modifying a site to keep config up to date.
-13. **Use `hwaro init` to scaffold.** Always create new examples with `hwaro init <name>` and work inside the generated directory.
+13. **Always start with `hwaro init`.** Use `hwaro init <name>` (no scaffold flag or `--scaffold simple`) for custom layouts, or `--scaffold blog`/`docs` for pre-built ones. Never create the directory manually.
 14. **Directory name = example name.** Use descriptive English names (e.g., `blog1` ✗ → `modern-blog` ✓).
