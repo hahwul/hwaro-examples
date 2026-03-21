@@ -25,6 +25,7 @@ hwaro-examples/
 ├── modern-blog/                    # Modern personal blog (dark, blog)
 ├── no-style-please/                # No-CSS minimal theme (light, blog, minimal)
 ├── portfolio-blog/                 # Multilingual portfolio blog (dark, blog, portfolio)
+├── poison/                         # Sidebar navigation blog (dark, blog, sidebar)
 ├── pulse-api/                      # API documentation (dark, docs)
 ├── resume/                         # Resume/CV site (light, resume)
 ├── studio/                         # Design studio site (dark, landing, portfolio)
