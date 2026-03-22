@@ -1,0 +1,36 @@
+{% include "header.html" %}
+
+    <div class="letter-body">
+      <h1 class="section-title">Search</h1>
+      <input class="search-input" type="text" id="search-input" placeholder="Search issues..." autofocus>
+      <ul id="search-results" class="archive-list"></ul>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
+    <script>
+      fetch('{{ base_url }}/search.json')
+        .then(r => r.json())
+        .then(data => {
+          const fuse = new Fuse(data, {
+            keys: ['title', 'content'],
+            threshold: 0.3,
+            ignoreLocation: true
+          });
+          document.getElementById('search-input').addEventListener('input', function() {
+            const results = this.value ? fuse.search(this.value) : [];
+            const container = document.getElementById('search-results');
+            container.replaceChildren();
+            results.forEach(r => {
+              const li = document.createElement('li');
+              li.className = 'archive-item';
+              const a = document.createElement('a');
+              a.href = r.item.url;
+              a.textContent = r.item.title;
+              li.appendChild(a);
+              container.appendChild(li);
+            });
+          });
+        });
+    </script>
+
+{% include "footer.html" %}
