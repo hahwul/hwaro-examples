@@ -1,0 +1,81 @@
+{% include "header.html" %}
+  <div class="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-16 items-start">
+    <!-- Sidebar -->
+    <aside class="hidden lg:block sticky top-32 overflow-y-auto max-h-[calc(100vh-160px)] pr-8 border-r border-border/50">
+      <div class="space-y-12">
+        <div>
+          <h3 class="font-display text-xs tracking-widest text-accent mb-6 flex items-center gap-2">
+            <span class="w-2 h-2 bg-accent-gold rotate-45"></span>
+            Chapters
+          </h3>
+          {% if section.pages %}
+          <ul class="space-y-4 font-display text-sm tracking-wide">
+            {% for doc in section.pages %}
+            <li>
+              <a href="{{ doc.url }}" class="block py-1 hover:text-accent transition-all {% if doc.url == page.url %}text-accent font-bold pl-4 border-l-2 border-accent{% else %}text-ink/60 hover:pl-2{% endif %}">
+                {{ doc.title }}
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </div>
+        
+        <div>
+          <h3 class="font-display text-xs tracking-widest text-accent mb-6 flex items-center gap-2">
+            <span class="w-2 h-2 bg-accent-gold rotate-45"></span>
+            Ancient Scrolls
+          </h3>
+          <ul class="space-y-4 font-display text-sm tracking-wide text-ink/60">
+             <li><a href="#" class="hover:text-accent transition-all">The First Age</a></li>
+             <li><a href="#" class="hover:text-accent transition-all">The Sundering</a></li>
+             <li><a href="#" class="hover:text-accent transition-all">The Dragon Wars</a></li>
+          </ul>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <article class="min-w-0">
+      <!-- Breadcrumbs -->
+      <nav class="flex items-center gap-2 font-display text-[10px] tracking-[0.2em] text-accent-gold mb-12 uppercase">
+        <a href="{{ base_url }}/" class="hover:text-accent">Codex</a>
+        <span>/</span>
+        <a href="{{ section.url }}" class="hover:text-accent">{{ section.title }}</a>
+        <span>/</span>
+        <span class="text-ink">{{ page.title }}</span>
+      </nav>
+
+      <div class="prose">
+        {{ content }}
+      </div>
+
+      <!-- TOC (Floating or Bottom on Mobile) -->
+      {% if page.toc %}
+      <div class="mt-20 p-8 border border-border bg-parchment-light/30">
+        <h4 class="font-display text-sm tracking-widest text-accent mb-6 border-b border-accent-gold/30 pb-2">Contents of this Scroll</h4>
+        <div class="font-display text-xs tracking-widest leading-loose text-ink/70">
+          {{ page.toc }}
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Page Navigation -->
+      <div class="mt-20 pt-12 border-t border-accent-gold/30 flex justify-between items-center font-display text-xs tracking-widest">
+        {% if page.lower %}
+        <a href="{{ page.lower.url }}" class="group flex flex-col gap-2 hover:text-accent transition-all">
+          <span class="text-accent-gold group-hover:text-accent">Previous Chronicle</span>
+          <span class="text-lg normal-case font-serif italic">&laquo; {{ page.lower.title }}</span>
+        </a>
+        {% else %}<div></div>{% endif %}
+
+        {% if page.higher %}
+        <a href="{{ page.higher.url }}" class="group flex flex-col gap-2 text-right hover:text-accent transition-all">
+          <span class="text-accent-gold group-hover:text-accent">Next Chronicle</span>
+          <span class="text-lg normal-case font-serif italic">{{ page.higher.title }} &raquo;</span>
+        </a>
+        {% endif %}
+      </div>
+    </article>
+  </div>
+{% include "footer.html" %}
