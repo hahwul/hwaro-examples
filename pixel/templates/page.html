@@ -1,0 +1,53 @@
+{% include "header.html" %}
+
+<article class="page-window">
+  <div class="window-titlebar">
+    <span class="window-controls">[-][O][X]</span>
+    <span class="window-title">{{ page.title }}</span>
+  </div>
+  <div class="window-body">
+    {% if page.date %}
+    <div class="page-meta">
+      <span class="meta-date">DATE: {{ page.date | date("%Y.%m.%d") }}</span>
+      {% if page.reading_time %}
+      <span class="meta-reading">TIME: {{ page.reading_time }} min</span>
+      {% endif %}
+      {% if page.word_count %}
+      <span class="meta-words">WORDS: {{ page.word_count }}</span>
+      {% endif %}
+    </div>
+    {% endif %}
+
+    {% if page.tags %}
+    <div class="page-tags">
+      <span class="tags-label">TAGS:</span>
+      {% for tag in page.tags %}
+      <a href="{{ base_url }}/tags/{{ tag | slugify }}/" class="tag-badge">{{ tag }}</a>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="page-content">
+      {{ content | safe }}
+    </div>
+
+    {% if page.higher or page.lower %}
+    <nav class="page-nav">
+      <div class="nav-prev">
+        {% if page.higher %}
+        <span class="nav-label">PREV QUEST</span>
+        <a href="{{ base_url }}{{ page.higher.url }}">{{ page.higher.title }}</a>
+        {% endif %}
+      </div>
+      <div class="nav-next">
+        {% if page.lower %}
+        <span class="nav-label">NEXT QUEST</span>
+        <a href="{{ base_url }}{{ page.lower.url }}">{{ page.lower.title }}</a>
+        {% endif %}
+      </div>
+    </nav>
+    {% endif %}
+  </div>
+</article>
+
+{% include "footer.html" %}
