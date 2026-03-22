@@ -1,0 +1,49 @@
+{% include "header.html" %}
+  <main class="site-main">
+    <section class="hero">
+      <h1>Cinema</h1>
+      <p>Honest reviews, sharp criticism, and a deep love for the art of film.</p>
+    </section>
+
+    <h2 class="section-heading">Latest Reviews</h2>
+    <div class="reviews-grid">
+      {% for item in site.pages %}
+        {% if item.section == "reviews" %}
+        <article class="review-card">
+          <a href="{{ item.url }}">
+            {% if item.image %}
+            <img class="review-card-poster" src="{{ item.image }}" alt="{{ item.title }}">
+            {% endif %}
+            <div class="review-card-body">
+              {% if item.extra.genre %}
+              <div class="review-card-genre">{{ item.extra.genre }}</div>
+              {% endif %}
+              <h3 class="review-card-title">{{ item.title }}</h3>
+              <div class="review-card-meta">
+                {% if item.extra.rating %}
+                <span class="stars">
+                  {% for i in range(1, 6) %}
+                    {% if i <= item.extra.rating %}
+                      <span class="star filled"></span>
+                    {% else %}
+                      <span class="star"></span>
+                    {% endif %}
+                  {% endfor %}
+                </span>
+                <span>{{ item.extra.rating }}/5</span>
+                {% endif %}
+                {% if item.extra.year %}
+                <span>{{ item.extra.year }}</span>
+                {% endif %}
+              </div>
+              {% if item.summary %}
+              <p class="review-card-summary">{{ item.summary | striptags }}</p>
+              {% endif %}
+            </div>
+          </a>
+        </article>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </main>
+{% include "footer.html" %}

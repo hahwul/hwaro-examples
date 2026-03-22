@@ -1,0 +1,4 @@
++++
+title = "Cinema"
+template = "home"
++++
