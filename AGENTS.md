@@ -9,7 +9,10 @@ hwaro-examples/
 ├── .github/workflows/deploy.yml   # Builds all sites and deploys to GitHub Pages
 ├── tags.json                       # Tag definitions for index page filtering
 ├── acme-docs/                      # Documentation site (light, docs)
+├── anubis/                         # Minimal Egyptian theme (light, blog, minimal)
 ├── beautiful-hwaro/                # Beautiful Jekyll-inspired blog (light, blog)
+├── book/                           # Book/documentation theme (light, docs)
+├── cactus/                         # Dark minimal blog (dark, blog, minimal)
 ├── console/                        # Terminal-style theme (dark, blog, minimal)
 ├── devconf/                        # Conference event site (dark, event, landing)
 ├── devlog/                         # TIL & changelog blog (dark, blog, minimal)
@@ -18,18 +21,24 @@ hwaro-examples/
 ├── flowsync/                       # SaaS landing page (dark, landing)
 ├── folio/                          # Portfolio site (light, portfolio)
 ├── forty/                          # Gallery/portfolio theme (dark, portfolio, gallery)
+├── gazette/                        # Editorial blog theme (light, blog, editorial)
 ├── hacker/                         # Dark hacker theme (dark, blog)
 ├── hermit/                         # Dark minimal blog (dark, blog, minimal)
 ├── hwaro.386/                      # Retro DOS theme (dark, blog, retro)
 ├── hwaronight/                     # Tokyo Night theme (dark, blog)
 ├── modern-blog/                    # Modern personal blog (dark, blog)
+├── neon/                           # Cyberpunk neon theme (dark, blog, cyberpunk)
 ├── no-style-please/                # No-CSS minimal theme (light, blog, minimal)
-├── papermod/                       # PaperMod-inspired profile blog (light, blog)
-├── portfolio-blog/                 # Multilingual portfolio blog (dark, blog, portfolio)
+├── paper/                          # Clean paper-style blog (light, blog, minimal)
+├── papermod/                       # PaperMod-inspired profile blog (light, blog, minimal)
 ├── poison/                         # Sidebar navigation blog (dark, blog, sidebar)
+├── polaroid/                       # Photo gallery blog (light, blog, gallery)
+├── portfolio-blog/                 # Multilingual portfolio blog (dark, blog, portfolio)
 ├── pulse-api/                      # API documentation (dark, docs)
 ├── resume/                         # Resume/CV site (light, resume)
 ├── studio/                         # Design studio site (dark, landing, portfolio)
+├── tale/                           # Traditional blog theme (light, blog, traditional)
+├── terminal/                       # Terminal dark blog (dark, blog)
 └── AGENTS.md                       # This file
 ```
 
@@ -46,12 +55,18 @@ hwaro init <site-name>
 # Equivalent to the above (explicit minimal skeleton)
 hwaro init <site-name> --scaffold simple
 
+# Bare scaffold — absolute minimum for advanced users
+hwaro init <site-name> --scaffold bare
+
 # With pre-built scaffold for common layouts
 hwaro init <site-name> --scaffold blog
 hwaro init <site-name> --scaffold docs
 
 # Remote scaffold from an existing example
 hwaro init <site-name> --scaffold https://github.com/user/repo/tree/main/some-example
+
+# Minimal config with dark theme support
+hwaro init <site-name> --minimal-config
 ```
 
 **Always start with `hwaro init`**, even for custom layouts. Running without `--scaffold` (or with `--scaffold simple`) gives you a bare skeleton with `config.toml` and empty directories — just fill in your own templates and content from there.
@@ -177,10 +192,13 @@ transparent = false       # If true, pages merge into parent section
 | Object | Key Properties |
 |--------|---------------|
 | `site` | `title`, `description`, `base_url`, `pages`, `sections`, `taxonomies`, `data` |
-| `page` | `title`, `content`, `date`, `url`, `permalink`, `section`, `summary`, `word_count`, `reading_time`, `extra`, `toc`, `lower`, `higher`, `ancestors`, `assets` |
+| `page` | `title`, `date`, `url`, `permalink`, `section`, `summary`, `word_count`, `reading_time`, `extra`, `toc`, `lower`, `higher`, `ancestors`, `assets`, `description`, `image` |
 | `section` | `title`, `description`, `pages`, `pages_count`, `subsections`, `assets` |
-| Global | `current_year`, `current_date`, `base_url`, `og_tags`, `twitter_tags`, `highlight_css`, `highlight_js`, `toc` |
+| Global | `current_year`, `current_date`, `base_url`, `toc` |
+| SEO | `og_all_tags`, `canonical_tag`, `jsonld`, `highlight_tags`, `auto_includes` |
 | Taxonomy | `taxonomy_name`, `taxonomy_term`, `taxonomy_terms`, `taxonomy_pages` |
+
+Rendered content is `{{ content | safe }}` (not `{{ page.content }}`). Custom metadata is `page.extra.field` (not `page.params.field`).
 
 Flat aliases: `site_title`, `site_description`, `page_title`, `page_url`, `page_section`, `page_date`, `page_image`, `content` (rendered HTML).
 
@@ -249,14 +267,17 @@ Shortcode templates have access to all passed arguments plus `site` and `page` o
 
 | Command | Description |
 |---------|-------------|
-| `hwaro init <dir>` | Create new site (`--scaffold simple\|blog\|docs`) |
-| `hwaro new <path>` | Create content file with front matter (`-t "Title"`, `-a archetype`) |
-| `hwaro build` | Build to `public/` (`--minify`, `--drafts`, `--base-url URL`, `--cache`) |
-| `hwaro serve` | Dev server with live reload (`-p PORT`, `--open`, `--drafts`) |
+| `hwaro init <dir>` | Create new site (`--scaffold simple\|bare\|blog\|docs`, `--minimal-config`) |
+| `hwaro new <path>` | Create content file with front matter (`-t "Title"`, `-a archetype`, `--date`, `--draft`, `--tags`, `--section`) |
+| `hwaro build` | Build to `public/` (`--minify`, `--drafts`, `--base-url URL`, `--cache`, `--skip-og-image`, `--skip-image-processing`) |
+| `hwaro serve` | Dev server with live reload (`-p PORT`, `--open`, `--drafts`, `--cache`, `--stream`, `--memory-limit`) |
 | `hwaro deploy` | Deploy to configured targets (`--dry-run`, `--confirm`) |
+| `hwaro doctor` | Check site health and fix common issues (`--fix`) |
 | `hwaro tool list all\|drafts\|published` | List content files |
-| `hwaro tool check` | Check for dead external links |
+| `hwaro tool check-links` | Check for dead links (`--timeout`, `--concurrency`, `--external-only`, `--internal-only`) |
+| `hwaro tool platform` | Generate CI configs (`github-pages`, `gitlab-ci`) |
 | `hwaro tool convert toTOML\|toYAML` | Convert front matter format |
+| `hwaro tool agents-md` | Generate AGENTS.md (`--remote`, `--local`, `--write`, `--force`) |
 
 ### Installation
 
@@ -284,7 +305,7 @@ Add your new example's tags to `tags.json` at the repo root. Tags are used for f
 }
 ```
 
-Available tags: `dark`, `light`, `blog`, `docs`, `landing`, `portfolio`, `event`, `resume`, `gallery`, `minimal`, `retro`
+Available tags: `dark`, `light`, `blog`, `docs`, `landing`, `portfolio`, `event`, `resume`, `gallery`, `minimal`, `retro`, `editorial`, `cyberpunk`, `traditional`, `sidebar`
 
 You may add new tags if needed.
 
@@ -334,6 +355,8 @@ Adding a new subdirectory with a valid `config.toml` + `tags.json` entry is all 
 9. **Use `hwaro serve` for local preview.** Default port is 3000. Use `-p` to change.
 10. **Title and description matter.** They appear on the index page at `examples.hwaro.hahwul.com`.
 11. **Always update `tags.json`** when adding a new example. Tags power the filter buttons on the index page.
-12. **Always run `hwaro tool doctor --fix`** after creating or modifying a site to keep config up to date.
-13. **Always start with `hwaro init`.** Use `hwaro init <name>` (no scaffold flag or `--scaffold simple`) for custom layouts, or `--scaffold blog`/`docs` for pre-built ones. Never create the directory manually.
+12. **Always run `hwaro doctor --fix`** after creating or modifying a site to keep config up to date.
+13. **Always start with `hwaro init`.** Use `hwaro init <name>` (no scaffold flag, `--scaffold simple`, or `--scaffold bare`) for custom layouts, or `--scaffold blog`/`docs` for pre-built ones. Never create the directory manually.
+14. **Rendered content** is `{{ content | safe }}`, not `{{ page.content }}`. Custom metadata is `page.extra.field`, not `page.params.field`.
+15. **Generate AGENTS.md** with `hwaro tool agents-md --local --write` for new sites. Use `--remote` for a lightweight version linking to online docs.
 14. **Directory name = example name.** Use descriptive English names (e.g., `blog1` ✗ → `modern-blog` ✓).
