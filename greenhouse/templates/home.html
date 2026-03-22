@@ -1,0 +1,67 @@
+{% include "header.html" %}
+
+<section class="hero">
+  <h2>Welcome to the Greenhouse</h2>
+  <p>Your digital companion for a thriving indoor jungle.</p>
+</section>
+
+<section>
+  <div class="section-header">
+    <h3><a href="{{ base_url }}/plants/">Our Greenhouse</a></h3>
+    <p>Featured botanical species and their care requirements.</p>
+  </div>
+  
+  <div class="plant-grid">
+    {% set count = 0 %}
+    {% for post in site.pages | sort_by("date", reverse=true) %}
+      {% if post.section == "plants" and count < 3 %}
+      {% set count = count + 1 %}
+      <div class="plant-card">
+        <div class="plant-image">
+          {{ post.extra.image_alt | default(value="Plant Illustration") }}
+        </div>
+        <div class="plant-content">
+          <h4><a href="{{ post.url }}">{{ post.title }}</a></h4>
+          <p>{{ post.description }}</p>
+          <div class="plant-meta">
+            {% if post.extra and post.extra.water %}
+            <div class="meta-item">
+              <svg viewBox="0 0 24 24"><path d="M12 21c-4.418 0-8-3.582-8-8s8-12 8-12 8 7.582 8 12-3.582 8-8 8z"/></svg>
+              {{ post.extra.water }}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+  <p style="text-align: center;"><a href="{{ base_url }}/plants/" class="tag">View All Plants</a></p>
+</section>
+
+<section>
+  <div class="section-header">
+    <h3><a href="{{ base_url }}/log/">Recent Logs</a></h3>
+    <p>Latest updates from the garden.</p>
+  </div>
+  
+  <div class="timeline">
+    {% set log_count = 0 %}
+    {% for post in site.pages | sort_by("date", reverse=true) %}
+      {% if post.section == "log" and log_count < 2 %}
+      {% set log_count = log_count + 1 %}
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">{{ post.date | date(format="%B %e, %Y") }}</div>
+        <div class="timeline-content">
+          <h4><a href="{{ post.url }}">{{ post.title }}</a></h4>
+          <p><strong>Plant:</strong> {{ post.extra.plant | default(value="Unknown") }}</p>
+        </div>
+      </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+  <p style="text-align: center;"><a href="{{ base_url }}/log/" class="tag">View Growth Log</a></p>
+</section>
+
+{% include "footer.html" %}
