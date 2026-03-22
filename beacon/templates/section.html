@@ -1,0 +1,33 @@
+{% include "header.html" %}
+
+<section class="alert-feed">
+  <h1>{{ page.title }}</h1>
+  {{ content | safe }}
+  
+  {% for item in section.pages | sort(attribute="date") | reverse %}
+  <article class="alert-item {% if item.level %}{{ item.level | lower }}{% else %}info{% endif %}">
+    <div class="alert-meta">
+      <span class="alert-level">[{% if item.level %}{{ item.level }}{% else %}INFO{% endif %}]</span>
+      <span class="alert-timestamp">{% if item.date %}{{ item.date | date(format="%Y-%m-%d %H:%M") }}{% endif %}</span>
+    </div>
+    <details>
+      <summary>
+        <h2 class="alert-title">{{ item.title }}</h2>
+        {% if item.description %}
+        <p class="alert-summary">{{ item.description }}</p>
+        {% endif %}
+      </summary>
+      <div class="alert-content">
+        {{ item.content | safe }}
+        <div style="margin-top: 1.5rem; text-align: right;">
+          <a href="{{ item.url }}" class="alert-permalink" style="font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; color: var(--text-muted);">View Full Report</a>
+        </div>
+      </div>
+    </details>
+  </article>
+  {% endfor %}
+</section>
+
+{{ pagination }}
+
+{% include "footer.html" %}
