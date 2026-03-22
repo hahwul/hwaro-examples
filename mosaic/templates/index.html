@@ -1,0 +1,55 @@
+{% include "header.html" %}
+
+  {# --- Hero: First Article --- #}
+  {% for item in site.pages %}
+    {% if loop.first and item.url is startswith("/posts/") %}
+    <section class="hero">
+      <a href="{{ item.url }}" class="hero-article">
+        {% if item.tags %}
+          {% set cat = item.tags | first %}
+          <span class="hero-label">{{ cat }}</span>
+        {% endif %}
+        <h2 class="hero-title">{{ item.title }}</h2>
+        {% if item.description %}
+          <p class="hero-description">{{ item.description }}</p>
+        {% endif %}
+        <span class="hero-meta">
+          {% if item.date %}{{ item.date }}{% endif %}
+          {% if item.reading_time %} · {{ item.reading_time }} min read{% endif %}
+        </span>
+      </a>
+    </section>
+    {% endif %}
+  {% endfor %}
+
+  {# --- Mosaic Grid: Remaining Articles --- #}
+  <section class="mosaic-section">
+    <div class="section-header">
+      <h2 class="section-title">Latest</h2>
+      <a href="{{ base_url }}/posts/" class="section-link">View All</a>
+    </div>
+    <ul class="mosaic-grid">
+      {% for item in site.pages %}
+        {% if not loop.first and item.url is startswith("/posts/") %}
+        <li>
+          <a href="{{ item.url }}" class="card">
+            {% if item.tags %}
+              {% set cat = item.tags | first %}
+              <span class="card-category">{{ cat }}</span>
+            {% endif %}
+            <h3 class="card-title">{{ item.title }}</h3>
+            {% if item.description %}
+              <p class="card-description">{{ item.description }}</p>
+            {% endif %}
+            <span class="card-meta">
+              {{ item.date }}
+              {% if item.reading_time %} · {{ item.reading_time }} min read{% endif %}
+            </span>
+          </a>
+        </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </section>
+
+{% include "footer.html" %}
