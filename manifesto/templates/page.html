@@ -1,0 +1,59 @@
+{% include "header.html" %}
+
+<header class="post-header">
+  <div class="container container--wide">
+    <div class="post-meta">
+      {% if page.date %}
+      <time>{{ page.date | date("%B %d, %Y") }}</time>
+      {% endif %}
+      {% if page.reading_time %}
+      <span class="separator">/</span>
+      <span>{{ page.reading_time }} min read</span>
+      {% endif %}
+    </div>
+    <h1 class="post-title">{{ page.title }}</h1>
+    {% if page.description %}
+    <p class="post-description">{{ page.description }}</p>
+    {% endif %}
+  </div>
+</header>
+
+<article class="post-content">
+  <div class="container">
+    {{ content | safe }}
+  </div>
+</article>
+
+{% if page.tags and page.tags | length > 0 %}
+<div class="post-tags">
+  <div class="container">
+    <div class="post-tags-label">Tagged</div>
+    <ul class="tag-list">
+      {% for tag in page.tags %}
+      <li><a href="{{ base_url }}/tags/{{ tag | slugify }}/" class="tag-link">{{ tag }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endif %}
+
+{% if page.lower or page.higher %}
+<nav class="post-nav">
+  <div class="container container--wide" style="display:flex;justify-content:space-between;">
+    {% if page.higher %}
+    <div class="post-nav-item">
+      <div class="post-nav-label">Previous</div>
+      <div class="post-nav-title"><a href="{{ page.higher.url }}">{{ page.higher.title }}</a></div>
+    </div>
+    {% endif %}
+    {% if page.lower %}
+    <div class="post-nav-item post-nav-item--next">
+      <div class="post-nav-label">Next</div>
+      <div class="post-nav-title"><a href="{{ page.lower.url }}">{{ page.lower.title }}</a></div>
+    </div>
+    {% endif %}
+  </div>
+</nav>
+{% endif %}
+
+{% include "footer.html" %}
