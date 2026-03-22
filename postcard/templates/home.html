@@ -1,0 +1,77 @@
+{% include "header.html" %}
+
+<div class="site-wrapper">
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="{{ base_url }}/" class="site-logo">{{ site.title }}</a>
+      <nav class="site-nav">
+        <a href="{{ base_url }}/posts/">Postcards</a>
+        <a href="{{ base_url }}/about/">About</a>
+        <button class="search-trigger" onclick="openSearch()" title="Search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <div class="search-overlay" id="searchOverlay" onclick="if(event.target===this)closeSearch()">
+    <div class="search-modal">
+      <div class="search-input-wrap">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="searchInput" placeholder="Search postcards..." autocomplete="off">
+        <kbd onclick="closeSearch()">ESC</kbd>
+      </div>
+      <div class="search-results" id="searchResults"></div>
+    </div>
+  </div>
+
+  <main class="site-main">
+    <section class="hero">
+      <div class="hero-postcard">
+        <div class="postcard-decoration">
+          <div class="stamp">
+            <span class="stamp-value">POST</span>
+            <span class="stamp-label">CARD</span>
+          </div>
+        </div>
+        <div class="hero-content">
+          <h1 class="hero-title">{{ page.title }}</h1>
+          <p class="hero-subtitle handwritten">{{ content | striptags }}</p>
+        </div>
+        <div class="postmark">
+          <div class="postmark-circle">
+            <span class="postmark-text">{{ current_year }}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="postcards-grid">
+      <h2 class="section-title">Recent Postcards</h2>
+      <div class="card-grid">
+        {% for post in site.pages %}
+          {% if post.section == "posts" %}
+          <a href="{{ base_url }}{{ post.url }}" class="postcard-card">
+            <div class="card-front">
+              <div class="card-location">{{ post.extra.location | default(value="Somewhere") }}</div>
+              <div class="card-stamp-small">
+                <span>{{ post.extra.stamp_text | default(value="MAIL") }}</span>
+              </div>
+            </div>
+            <div class="card-back">
+              <div class="card-lines">
+                <h3 class="card-title handwritten">{{ post.title }}</h3>
+                <p class="card-excerpt">{{ post.description }}</p>
+              </div>
+              <div class="card-meta">
+                <time>{{ post.date }}</time>
+              </div>
+            </div>
+          </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+
+{% include "footer.html" %}

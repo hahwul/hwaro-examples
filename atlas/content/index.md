@@ -1,0 +1,4 @@
++++
+title = "Atlas"
+template = "home"
++++

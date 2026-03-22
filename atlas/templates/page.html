@@ -1,0 +1,65 @@
+{% include "header.html" %}
+
+<article class="post">
+  <header class="post-header">
+    {% if page.extra.region %}
+    <span class="post-region">{{ page.extra.region }}</span>
+    {% endif %}
+    <h1 class="post-title">{{ page.title }}</h1>
+    {% if page.description %}
+    <p class="post-description">{{ page.description }}</p>
+    {% endif %}
+    <div class="post-meta">
+      <time datetime="{{ page.date }}">{{ page.date | date("%d %B %Y") }}</time>
+      {% if page.extra.coordinates %}
+      <span class="meta-separator">|</span>
+      <span class="meta-coordinates">{{ page.extra.coordinates }}</span>
+      {% endif %}
+      <span class="meta-separator">|</span>
+      <span class="meta-reading-time">{{ page.reading_time }} min read</span>
+    </div>
+    {% if page.extra.terrain or page.extra.elevation %}
+    <div class="post-field-data">
+      {% if page.extra.terrain %}
+      <span class="field-item">Terrain: {{ page.extra.terrain }}</span>
+      {% endif %}
+      {% if page.extra.elevation %}
+      <span class="field-item">Elevation: {{ page.extra.elevation }}</span>
+      {% endif %}
+    </div>
+    {% endif %}
+  </header>
+
+  <div class="post-content">
+    {{ content | safe }}
+  </div>
+
+  {% if page.tags %}
+  <footer class="post-footer">
+    <div class="post-tags">
+      {% for tag in page.tags %}
+      <a href="{{ base_url }}/tags/{{ tag | slugify }}/" class="tag">{{ tag }}</a>
+      {% endfor %}
+    </div>
+  </footer>
+  {% endif %}
+
+  <nav class="post-nav">
+    {% if page.lower %}
+    <a href="{{ page.lower.url }}" class="nav-prev">
+      <span class="nav-label">Previous Expedition</span>
+      <span class="nav-title">{{ page.lower.title }}</span>
+    </a>
+    {% else %}
+    <span></span>
+    {% endif %}
+    {% if page.higher %}
+    <a href="{{ page.higher.url }}" class="nav-next">
+      <span class="nav-label">Next Expedition</span>
+      <span class="nav-title">{{ page.higher.title }}</span>
+    </a>
+    {% endif %}
+  </nav>
+</article>
+
+{% include "footer.html" %}
