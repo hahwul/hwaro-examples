@@ -20,6 +20,7 @@ hwaro-examples/
 ├── even/                           # Clean responsive theme (light, blog)
 ├── flowsync/                       # SaaS landing page (dark, landing)
 ├── folio/                          # Portfolio site (light, portfolio)
+├── garden/                         # Digital garden theme (light, blog, garden)
 ├── forty/                          # Gallery/portfolio theme (dark, portfolio, gallery)
 ├── gazette/                        # Editorial blog theme (light, blog, editorial)
 ├── hacker/                         # Dark hacker theme (dark, blog)

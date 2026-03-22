@@ -1,0 +1,48 @@
+{% include "header.html" %}
+  <main class="site-main">
+    <article>
+      <div class="note-header">
+        <h1>{{ page.title }}</h1>
+        <div class="note-meta">
+          {% for tag in page.tags %}
+          {% if tag == "seedling" %}<span class="growth-stage stage-seedling">seedling</span>{% endif %}
+          {% if tag == "budding" %}<span class="growth-stage stage-budding">budding</span>{% endif %}
+          {% if tag == "evergreen" %}<span class="growth-stage stage-evergreen">evergreen</span>{% endif %}
+          {% endfor %}
+          {% if page.date %}<span>{{ page.date | date("%b %d, %Y") }}</span>{% endif %}
+          {% if page.reading_time %}<span>{{ page.reading_time }} min read</span>{% endif %}
+        </div>
+        {% if page.tags %}
+        <div class="note-tags">
+          {% for tag in page.tags %}
+          {% if tag != "seedling" and tag != "budding" and tag != "evergreen" %}
+          <a href="{{ base_url }}/tags/{{ tag | slugify }}/">{{ tag }}</a>
+          {% endif %}
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+
+      <div class="note-content">
+        {{ content | safe }}
+      </div>
+
+      {% if page.higher or page.lower %}
+      <nav class="note-nav">
+        <div class="prev">
+          {% if page.lower %}
+          <span class="label">Previous</span>
+          <a href="{{ page.lower.url }}">{{ page.lower.title }}</a>
+          {% endif %}
+        </div>
+        <div class="next">
+          {% if page.higher %}
+          <span class="label">Next</span>
+          <a href="{{ page.higher.url }}">{{ page.higher.title }}</a>
+          {% endif %}
+        </div>
+      </nav>
+      {% endif %}
+    </article>
+  </main>
+{% include "footer.html" %}
