@@ -1,0 +1,71 @@
+{% extends "page.html" %}
+
+{% block content %}
+<div class="section-header">
+  <h1>{{ section.title }}</h1>
+  {% if section.description %}
+    <p class="taxonomy-desc">{{ section.description }}</p>
+  {% endif %}
+</div>
+
+<div class="board-actions" style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
+  <a href="#" class="tag" style="padding: 0.6rem 1.2rem; border-radius: 50px; font-weight: 600; background: var(--primary); color: white; border: none;">Write Post</a>
+</div>
+
+<table class="board-table">
+  <thead>
+    <tr>
+      <th style="width: 100px;">Type</th>
+      <th>Title</th>
+      <th style="width: 120px;">Author</th>
+      <th style="width: 120px;">Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for page in section.pages %}
+      <tr>
+        <td>
+          {% set badge_class = "" %}
+          {% if section.title == "Notice" %} {% set badge_class = "badge-notice" %}
+          {% elif section.title == "Daily" %} {% set badge_class = "badge-daily" %}
+          {% elif section.title == "Photos" %} {% set badge_class = "badge-photo" %}
+          {% elif section.title == "Q&A" %} {% set badge_class = "badge-qa" %}
+          {% endif %}
+          <span class="board-badge {{ badge_class }}">{{ section.title }}</span>
+        </td>
+        <td class="board-title">
+          <a href="{{ page.url }}">{{ page.title }}</a>
+        </td>
+        <td class="board-meta">
+          {% if page.taxonomies and page.taxonomies.authors %}
+            {{ page.taxonomies.authors[0] }}
+          {% else %}
+            Admin
+          {% endif %}
+        </td>
+        <td class="board-meta">
+          {{ page.date | date(format="%Y-%m-%d") }}
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% if paginator %}
+  <nav class="pagination">
+    <div class="pagination-list">
+      {% if paginator.has_prev %}
+        <a href="{{ paginator.prev_link }}">Previous</a>
+      {% endif %}
+
+      <div class="pagination-current">
+        <span>Page {{ paginator.current_index }} of {{ paginator.total_pages }}</span>
+      </div>
+
+      {% if paginator.has_next %}
+        <a href="{{ paginator.next_link }}">Next</a>
+      {% endif %}
+    </div>
+  </nav>
+{% endif %}
+{% endblock content %}
