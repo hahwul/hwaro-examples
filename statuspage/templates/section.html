@@ -1,0 +1,29 @@
+{% include "header.html" %}
+    <main class="site-main">
+      <h1>{{ page.title }}</h1>
+      <div class="incident-list">
+        {% for post in section.pages %}
+        <div class="incident-card">
+          <div class="incident-header">
+            <span class="incident-badge badge-{{ post.extra.severity | default('minor') }}">{{ post.extra.severity | default("minor") }}</span>
+            <span class="incident-badge badge-{{ post.extra.status | default('resolved') }}">{{ post.extra.status | default("resolved") }}</span>
+          </div>
+          <h2 class="incident-title"><a href="{{ post.url }}">{{ post.title }}</a></h2>
+          <div class="incident-meta">
+            <span>{{ post.date | date("%B %d, %Y") }}</span>
+            {% if post.extra.duration %}
+            <span>Duration: {{ post.extra.duration }}</span>
+            {% endif %}
+            {% if post.extra.affected %}
+            <span>Affected: {{ post.extra.affected }}</span>
+            {% endif %}
+          </div>
+          {% if post.summary %}
+          <p class="incident-summary">{{ post.summary | strip_html | truncate_words(30) }}</p>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+      {{ pagination }}
+    </main>
+{% include "footer.html" %}
