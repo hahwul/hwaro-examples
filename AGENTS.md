@@ -27,6 +27,7 @@ hwaro-examples/
 ├── hermit/                         # Dark minimal blog (dark, blog, minimal)
 ├── hwaro.386/                      # Retro DOS theme (dark, blog, retro)
 ├── hwaronight/                     # Tokyo Night theme (dark, blog)
+├── ledger/                         # Financial ledger theme (light, docs, finance)
 ├── modern-blog/                    # Modern personal blog (dark, blog)
 ├── neon/                           # Cyberpunk neon theme (dark, blog, cyberpunk)
 ├── no-style-please/                # No-CSS minimal theme (light, blog, minimal)
