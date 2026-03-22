@@ -1,7 +1,7 @@
 {% include "header.html" %}
 
 <article class="single-post">
-    <div class="post-meta">{{ page.date | date: "%Y.%m.%d" }} | {{ page.extra.constellation | default("Deep Space") }}</div>
+    <div class="post-meta">{{ page.date | date("%Y.%m.%d") }} | {{ page.extra.constellation | default(value="Deep Space") }}</div>
     <h1>{{ page.title }}</h1>
 
     <div class="observation-data">
@@ -11,27 +11,29 @@
         </div>
         <div class="observation-data-row">
             <span class="data-label">Coordinates:</span>
-            <span class="data-value">{{ page.extra.coords | default("00h 00m 00s, +00° 00' 00\"") }}</span>
+            <span class="data-value">{{ page.extra.coords | default(value="00h 00m 00s, +00° 00' 00\"") }}</span>
         </div>
         <div class="observation-data-row">
             <span class="data-label">Magnitude:</span>
-            <span class="data-value">{{ page.extra.magnitude | default("N/A") }}</span>
+            <span class="data-value">{{ page.extra.magnitude | default(value="N/A") }}</span>
         </div>
         <div class="observation-data-row">
             <span class="data-label">Distance:</span>
-            <span class="data-value">{{ page.extra.distance | default("Unknown") }}</span>
+            <span class="data-value">{{ page.extra.distance | default(value="Unknown") }}</span>
         </div>
     </div>
 
     <div class="post-content">
-        {{ page.content }}
+        {{ content | safe }}
     </div>
 
+    {% if page.tags %}
     <div class="tags">
-        {% for tag in page.taxonomies.tags %}
-        <a href="{{ base_url }}/tags/{{ tag }}/" class="tag">#{{ tag }}</a>
+        {% for tag in page.tags %}
+        <a href="{{ base_url }}/tags/{{ tag | slugify }}/" class="tag">#{{ tag }}</a>
         {% endfor %}
     </div>
+    {% endif %}
 </article>
 
 {% include "footer.html" %}

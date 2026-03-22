@@ -1,15 +1,16 @@
----
-title: "M42: Orion Nebula"
-date: 2026-03-21
-summary: "Observation of the star-forming region in the Orion constellation."
-taxonomies:
-    tags: ["nebula", "emission-nebula", "m42"]
-    constellations: ["Orion"]
-extra:
-    coords: "05h 35m 17s, -05° 23' 28\""
-    magnitude: "4.00"
-    distance: "1,344 light years"
----
++++
+title = "M42: Orion Nebula"
+date = "2026-03-21"
+description = "Observation of the star-forming region in the Orion constellation."
+tags = ["nebula", "emission-nebula", "m42"]
+constellations = ["Orion"]
+
+[extra]
+constellation = "Orion"
+coords = "05h 35m 17s, -05° 23' 28\""
+magnitude = "4.00"
+distance = "1,344 light years"
++++
 
 The Orion Nebula (M42) is one of the most studied and photographed celestial objects in the sky. It is a diffuse emission nebula situated in the Milky Way, south of Orion's Belt.
 

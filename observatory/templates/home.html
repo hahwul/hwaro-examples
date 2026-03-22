@@ -6,23 +6,25 @@
 </section>
 
 <div class="posts-list">
-    {% for post in section.pages %}
+    {% for post in site.pages %}
+    {% if post.section == "posts" %}
     <article class="post-item">
-        <div class="post-meta">{{ post.date | date: "%Y.%m.%d" }} | {{ post.extra.constellation | default("Deep Space") }}</div>
-        <h3 class="post-title"><a href="{{ post.permalink }}">{{ post.title }}</a></h3>
-        <p class="post-excerpt">{{ post.summary | default(post.content | truncate: 200) }}</p>
+        <div class="post-meta">{{ post.date | date("%Y.%m.%d") }} | {{ post.extra.constellation | default(value="Deep Space") }}</div>
+        <h3 class="post-title"><a href="{{ base_url }}{{ post.url }}">{{ post.title }}</a></h3>
+        <p class="post-excerpt">{{ post.description | default(value=post.summary) | truncate(length=200) }}</p>
         <div class="observation-data">
             <div class="observation-data-row">
                 <span class="data-label">Coordinates:</span>
-                <span class="data-value">{{ post.extra.coords | default("00h 00m 00s, +00° 00' 00\"") }}</span>
+                <span class="data-value">{{ post.extra.coords | default(value="00h 00m 00s, +00° 00' 00\"") }}</span>
             </div>
             <div class="observation-data-row">
                 <span class="data-label">Magnitude:</span>
-                <span class="data-value">{{ post.extra.magnitude | default("N/A") }}</span>
+                <span class="data-value">{{ post.extra.magnitude | default(value="N/A") }}</span>
             </div>
         </div>
-        <a href="{{ post.permalink }}" class="read-more">View Log Details</a>
+        <a href="{{ base_url }}{{ post.url }}" class="read-more">View Log Details</a>
     </article>
+    {% endif %}
     {% endfor %}
 </div>
 

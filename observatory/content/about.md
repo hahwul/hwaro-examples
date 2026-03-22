@@ -1,8 +1,8 @@
----
-title: "About the Observatory"
-date: 2026-03-01
-template: "page.html"
----
++++
+title = "About the Observatory"
+date = "2026-03-01"
+template = "page"
++++
 
 The Observatory is a dedicated station for recording and documenting deep space celestial observations. Our primary mission is to catalog galaxies, nebulae, and clusters with precision and scientific rigor.
 

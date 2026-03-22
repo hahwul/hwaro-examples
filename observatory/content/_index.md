@@ -1,4 +1,4 @@
----
-title: "Observatory"
-template: "home.html"
----
++++
+title = "Observatory"
+template = "home"
++++
