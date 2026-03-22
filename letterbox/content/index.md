@@ -1,5 +1,4 @@
 +++
-title = "Timeline"
+title = "Home"
 template = "home"
 +++
-
