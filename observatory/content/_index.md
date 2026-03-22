@@ -1,0 +1,4 @@
++++
+title = "Observatory"
+template = "home"
++++
