@@ -1,0 +1,65 @@
+{% include "header.html" %}
+
+<section class="hero-section">
+  <div class="hero-inner">
+    <div class="hero-decoration">
+      <svg class="hero-compass" viewBox="0 0 120 120" width="120" height="120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="60" cy="60" r="56" stroke="currentColor" stroke-width="1" stroke-dasharray="4 3"/>
+        <circle cx="60" cy="60" r="44" stroke="currentColor" stroke-width="0.5"/>
+        <circle cx="60" cy="60" r="4" fill="currentColor"/>
+        <line x1="60" y1="8" x2="60" y2="30" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="60" y1="90" x2="60" y2="112" stroke="currentColor" stroke-width="0.75"/>
+        <line x1="8" y1="60" x2="30" y2="60" stroke="currentColor" stroke-width="0.75"/>
+        <line x1="90" y1="60" x2="112" y2="60" stroke="currentColor" stroke-width="0.75"/>
+        <polygon points="60,10 55,30 60,26 65,30" fill="currentColor"/>
+        <text x="60" y="7" text-anchor="middle" font-size="8" fill="currentColor" font-weight="600">N</text>
+        <text x="113" y="63" text-anchor="start" font-size="7" fill="currentColor">E</text>
+        <text x="60" y="119" text-anchor="middle" font-size="7" fill="currentColor">S</text>
+        <text x="7" y="63" text-anchor="end" font-size="7" fill="currentColor">W</text>
+      </svg>
+    </div>
+    <h1 class="hero-title">Atlas</h1>
+    <p class="hero-subtitle">A cartographic journal of exploration and discovery</p>
+    <div class="hero-rule">
+      <span class="rule-line"></span>
+      <span class="rule-diamond"></span>
+      <span class="rule-line"></span>
+    </div>
+  </div>
+</section>
+
+<section class="expeditions-section">
+  <div class="section-header">
+    <h2>Recent Expeditions</h2>
+    <div class="contour-line"></div>
+  </div>
+  <div class="expedition-grid">
+    {% for post in site.pages | sort_by("date", reverse=true) %}
+    {% if post.section == "expeditions" %}
+    <article class="expedition-card {% if loop.first %}featured{% endif %}">
+      <div class="card-header">
+        {% if post.extra.region %}
+        <span class="region-badge">{{ post.extra.region }}</span>
+        {% endif %}
+        <time class="card-date" datetime="{{ post.date }}">{{ post.date | date("%d %b %Y") }}</time>
+      </div>
+      <h3 class="card-title"><a href="{{ post.url }}">{{ post.title }}</a></h3>
+      {% if post.extra.coordinates %}
+      <div class="card-coordinates">{{ post.extra.coordinates }}</div>
+      {% endif %}
+      {% if post.summary %}
+      <p class="card-excerpt">{{ post.summary | strip_html | truncate_words(30) }}</p>
+      {% endif %}
+      <div class="card-footer">
+        {% if post.extra.terrain %}
+        <span class="terrain-tag">{{ post.extra.terrain }}</span>
+        {% endif %}
+        <span class="reading-time">{{ post.reading_time }} min read</span>
+      </div>
+    </article>
+    {% endif %}
+    {% endfor %}
+  </div>
+</section>
+
+{% include "footer.html" %}

@@ -1,0 +1,51 @@
+{% include "header.html" %}
+
+<section class="archive">
+  <header class="archive-header">
+    <h1>{{ section.title }}</h1>
+    {% if section.description %}
+    <p class="archive-description">{{ section.description }}</p>
+    {% endif %}
+    <div class="contour-line"></div>
+  </header>
+
+  <div class="expedition-grid">
+    {% for post in section.pages %}
+    <article class="expedition-card">
+      <div class="card-header">
+        {% if post.extra.region %}
+        <span class="region-badge">{{ post.extra.region }}</span>
+        {% endif %}
+        <time class="card-date" datetime="{{ post.date }}">{{ post.date | date("%d %b %Y") }}</time>
+      </div>
+      <h3 class="card-title"><a href="{{ post.url }}">{{ post.title }}</a></h3>
+      {% if post.extra.coordinates %}
+      <div class="card-coordinates">{{ post.extra.coordinates }}</div>
+      {% endif %}
+      {% if post.summary %}
+      <p class="card-excerpt">{{ post.summary | strip_html | truncate_words(30) }}</p>
+      {% endif %}
+      <div class="card-footer">
+        {% if post.extra.terrain %}
+        <span class="terrain-tag">{{ post.extra.terrain }}</span>
+        {% endif %}
+        <span class="reading-time">{{ post.reading_time }} min read</span>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+
+  {% if paginator %}
+  <nav class="pagination">
+    {% if paginator.previous_page %}
+    <a href="{{ paginator.previous_page }}" class="page-link prev">Previous</a>
+    {% endif %}
+    <span class="page-info">Page {{ paginator.current_page }} of {{ paginator.total_pages }}</span>
+    {% if paginator.next_page %}
+    <a href="{{ paginator.next_page }}" class="page-link next">Next</a>
+    {% endif %}
+  </nav>
+  {% endif %}
+</section>
+
+{% include "footer.html" %}
