@@ -1,7 +1,8 @@
 +++
 title = "SCHEDULED FIRMWARE PATCH DEPLOYED"
 description = "Node clusters 101-125 successfully updated to version 8.2.1."
-date = "2026-03-20T22:00:00Z"
+date = "2026-03-20"
+timestamp = "2026-03-20 22:00:00"
 level = "Info"
 tags = ["maintenance", "firmware", "success"]
 +++

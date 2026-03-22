@@ -1,7 +1,8 @@
 +++
 title = "CORE SYSTEM BREACH DETECTED"
 description = "Unauthorized access attempt detected in Sector 7G. Perimeter containment protocols initiated."
-date = "2026-03-22T14:30:00Z"
+date = "2026-03-22"
+timestamp = "2026-03-22 14:30:00"
 level = "Critical"
 tags = ["security", "breach", "sector7"]
 +++

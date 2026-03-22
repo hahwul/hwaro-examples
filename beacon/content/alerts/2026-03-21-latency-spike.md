@@ -1,7 +1,8 @@
 +++
 title = "LATENCY SPIKE IN NEURAL LINK 4"
 description = "Intermittent data loss reported in transatlantic fiber cables. Redundancy active."
-date = "2026-03-21T09:15:00Z"
+date = "2026-03-21"
+timestamp = "2026-03-21 09:15:00"
 level = "Warning"
 tags = ["network", "latency", "hardware"]
 +++
