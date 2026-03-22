@@ -1,0 +1,41 @@
+{% include "header.html" %}
+  <main>
+    <div class="hero">
+      <h1>{{ site.title }}</h1>
+      <p>{{ site.description }}</p>
+    </div>
+
+    <div class="section-header">
+      <h2 class="section-title" style="font-size: 1.5rem;">Recent Posts</h2>
+    </div>
+
+    <div class="post-grid">
+      {% for post in site.pages %}
+      {% if post.section == "posts" %}
+      <article class="post-card glass">
+        <div class="post-card-meta">
+          {% if post.date %}<time>{{ post.date | date("%B %d, %Y") }}</time>{% endif %}
+          {% if post.reading_time %}<span>&middot; {{ post.reading_time }} min read</span>{% endif %}
+        </div>
+
+        <h2 class="post-card-title">
+          <a href="{{ base_url }}{{ post.url }}">{{ post.title }}</a>
+        </h2>
+
+        {% if post.summary %}
+        <p class="post-card-summary">{{ post.summary | strip_html | truncate_words(30) }}</p>
+        {% endif %}
+
+        {% if post.tags %}
+        <div class="post-card-tags">
+          {% for tag in post.tags %}
+            <a href="{{ base_url }}/tags/{{ tag | slugify }}/" class="tag">{{ tag }}</a>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </article>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </main>
+{% include "footer.html" %}
