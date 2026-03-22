@@ -1,0 +1,45 @@
+{% include "header.html" %}
+
+  <main class="wrapper wrapper--wide">
+    <header class="section-header">
+      <h1 class="section-title">{{ section.title }}</h1>
+      {% if section.description %}<p class="section-description">{{ section.description }}</p>{% endif %}
+    </header>
+
+    <div class="review-list">
+      {% for post in paginator.pages %}
+      <a href="{{ post.url }}" class="review-list-entry">
+        <div class="review-list-sleeve">
+          <span class="sleeve-letter">{{ post.extra.artist | truncate(length=1, end="") }}</span>
+        </div>
+        <div class="review-list-body">
+          <div class="review-list-meta">
+            <span class="date">{{ post.date | date("%B %d, %Y") }}</span>
+            {% if post.extra.genre %} / <span class="genre">{{ post.extra.genre }}</span>{% endif %}
+          </div>
+          <h2 class="review-list-title">{{ post.title }}</h2>
+          {% if post.description %}<p class="review-list-summary">{{ post.description }}</p>{% endif %}
+          {% if post.extra.rating %}
+          <div class="review-list-rating">
+            {% for i in range(end=post.extra.rating) %}<span class="star star--filled">*</span>{% endfor %}{% for i in range(end=5 - post.extra.rating) %}<span class="star star--empty">*</span>{% endfor %}
+          </div>
+          {% endif %}
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+
+    {% if paginator.total_pages > 1 %}
+    <div class="pagination">
+      {% if paginator.previous_url %}
+      <a href="{{ paginator.previous_url }}">Prev</a>
+      {% endif %}
+      <span class="current">{{ paginator.current_page }} / {{ paginator.total_pages }}</span>
+      {% if paginator.next_url %}
+      <a href="{{ paginator.next_url }}">Next</a>
+      {% endif %}
+    </div>
+    {% endif %}
+  </main>
+
+{% include "footer.html" %}
