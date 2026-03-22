@@ -1,5 +1,25 @@
 {% include "header.html" %}
     <main class="site-main">
-      {{ content | safe }}
+      {% for item in site.pages %}
+        {% if item.url is startswith("/posts/") and item.url != "/posts/" %}
+        <article class="post-entry">
+          <div class="post-meta">
+            <span class="post-timestamp">
+              <a href="{{ item.url }}">{{ item.date }}</a>
+            </span>
+          </div>
+          <div class="post-body">
+            <p>{{ item.description }}</p>
+          </div>
+          {% if item.tags %}
+          <div class="post-tags">
+            {% for tag in item.tags %}
+            <a href="{{ base_url }}/tags/{{ tag | slugify }}/" class="post-tag">#{{ tag }}</a>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </article>
+        {% endif %}
+      {% endfor %}
     </main>
 {% include "footer.html" %}
