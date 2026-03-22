@@ -359,4 +359,5 @@ Adding a new subdirectory with a valid `config.toml` + `tags.json` entry is all 
 13. **Always start with `hwaro init`.** Use `hwaro init <name>` (no scaffold flag, `--scaffold simple`, or `--scaffold bare`) for custom layouts, or `--scaffold blog`/`docs` for pre-built ones. Never create the directory manually.
 14. **Rendered content** is `{{ content | safe }}`, not `{{ page.content }}`. Custom metadata is `page.extra.field`, not `page.params.field`.
 15. **Generate AGENTS.md** with `hwaro tool agents-md --local --write` for new sites. Use `--remote` for a lightweight version linking to online docs.
-14. **Directory name = example name.** Use descriptive English names (e.g., `blog1` ✗ → `modern-blog` ✓).
+16. **CSS placement convention:** If a theme's CSS is under ~200 lines, inline `<style>` in `header.html` is fine. If 200 lines or more, extract to `static/css/style.css` and link with `<link rel="stylesheet" href="{{ base_url }}/css/style.css">`.
+17. **Directory name = example name.** Use descriptive English names (e.g., `blog1` ✗ → `modern-blog` ✓).
