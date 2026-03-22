@@ -1,7 +1,7 @@
 ---
 title: The Sun-Drenched Plains
 description: A vast sea of amber grass where the first great empires were born.
-template: doc.html
+template: doc
 ---
 
 The **Sun-Drenched Plains** represent the heart of our world's agriculture and the cradle of several major civilizations.

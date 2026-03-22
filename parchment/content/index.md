@@ -1,7 +1,7 @@
 ---
 title: The Ancient Chronicles
 description: A collection of lore, history, and atlas from the world of Parchment.
-template: page.html
+template: page
 ---
 
 Welcome, traveler, to the **Ancient Chronicles**. Within these digital scrolls, you shall find the accumulated knowledge of ages past—the lineages that shape our world, the regions that define our borders, and the history that binds us all.

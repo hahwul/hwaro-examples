@@ -1,7 +1,7 @@
 ---
 title: The Human Lineage
 description: Versatile, ambitious, and spread across all corners of the world.
-template: doc.html
+template: doc
 ---
 
 Humans are the most diverse and widespread of the common races. They are known for their short lives compared to elves or dwarves, which fuels an intense ambition and a drive to leave a lasting legacy.
