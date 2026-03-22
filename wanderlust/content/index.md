@@ -1,0 +1,4 @@
++++
+title = "Wanderlust"
+template = "home"
++++
