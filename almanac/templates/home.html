@@ -1,0 +1,138 @@
+{% include "header.html" %}
+
+  <main class="wrapper">
+    <section class="calendar-section">
+      <div class="calendar-header">
+        <h2>
+          <span class="season-badge">Spring</span>
+          <span id="calendar-month-label"></span>
+        </h2>
+        <div class="view-toggle">
+          <button class="active" id="btn-grid" onclick="switchView('grid')">Grid</button>
+          <button id="btn-list" onclick="switchView('list')">List</button>
+        </div>
+      </div>
+
+      <div class="calendar-grid-wrapper" id="grid-view">
+        <div class="calendar-weekdays">
+          <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+        </div>
+        <div class="calendar-grid" id="calendar-grid"></div>
+      </div>
+
+      <div class="list-view" id="list-view">
+        <div class="list-month" id="list-content"></div>
+      </div>
+    </section>
+
+    <section class="calendar-section">
+      <h2 style="font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem;">Recent Posts</h2>
+      <div class="post-grid">
+        {% for item in site.pages %}
+        <article class="post-card">
+          <div class="post-date">
+            {% if item.date %}{{ item.date }}{% endif %}
+          </div>
+          <h3><a href="{{ item.url }}">{{ item.title }}</a></h3>
+          {% if item.description %}
+          <p class="post-excerpt">{{ item.description }}</p>
+          {% endif %}
+          {% if item.tags %}
+          <div class="post-tags">
+            {% for tag in item.tags %}
+            <a href="{{ base_url }}/tags/{{ tag | slugify }}/">{{ tag }}</a>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function() {
+      var events = {
+        '01-01': 'New Year',
+        '02-14': 'Valentine\'s Day',
+        '03-20': 'Vernal Equinox',
+        '04-22': 'Earth Day',
+        '05-01': 'May Day',
+        '06-21': 'Summer Solstice',
+        '07-04': 'Independence Day',
+        '09-22': 'Autumnal Equinox',
+        '10-31': 'Halloween',
+        '11-28': 'Thanksgiving',
+        '12-21': 'Winter Solstice',
+        '12-25': 'Christmas'
+      };
+
+      var now = new Date();
+      var year = now.getFullYear();
+      var month = now.getMonth();
+      var today = now.getDate();
+
+      var monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'];
+
+      document.getElementById('calendar-month-label').textContent = monthNames[month] + ' ' + year;
+
+      var firstDay = new Date(year, month, 1).getDay();
+      var daysInMonth = new Date(year, month + 1, 0).getDate();
+      var grid = document.getElementById('calendar-grid');
+      var listContent = document.getElementById('list-content');
+
+      var html = '';
+      var listHtml = '<h3>' + monthNames[month] + ' ' + year + '</h3>';
+
+      for (var i = 0; i < firstDay; i++) {
+        html += '<div class="calendar-day empty"></div>';
+      }
+
+      for (var d = 1; d <= daysInMonth; d++) {
+        var mm = String(month + 1).padStart(2, '0');
+        var dd = String(d).padStart(2, '0');
+        var key = mm + '-' + dd;
+        var isToday = d === today;
+        var evt = events[key] || '';
+
+        html += '<div class="calendar-day' + (isToday ? ' today' : '') + '">';
+        html += '<span class="day-number">' + d + '</span>';
+        if (evt) {
+          html += '<span class="day-event">' + evt + '</span>';
+        }
+        html += '</div>';
+
+        if (evt) {
+          listHtml += '<div class="list-item">';
+          listHtml += '<span class="list-date">' + mm + '/' + dd + '</span>';
+          listHtml += '<span class="list-title">' + evt + '</span>';
+          listHtml += '</div>';
+        }
+      }
+
+      grid.innerHTML = html;
+      listContent.innerHTML = listHtml;
+
+      window.switchView = function(view) {
+        var gridEl = document.getElementById('grid-view');
+        var listEl = document.getElementById('list-view');
+        var btnGrid = document.getElementById('btn-grid');
+        var btnList = document.getElementById('btn-list');
+
+        if (view === 'list') {
+          gridEl.classList.add('hidden');
+          listEl.classList.add('active');
+          btnGrid.classList.remove('active');
+          btnList.classList.add('active');
+        } else {
+          gridEl.classList.remove('hidden');
+          listEl.classList.remove('active');
+          btnGrid.classList.add('active');
+          btnList.classList.remove('active');
+        }
+      };
+    })();
+  </script>
+
+{% include "footer.html" %}

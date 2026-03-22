@@ -1,0 +1,79 @@
+{% include "header.html" %}
+
+  <nav class="border-b border-parchment-300">
+    <div class="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="{{ base_url }}/" class="text-2xl font-bold tracking-tight text-ink hover:text-ink-light transition-colors">{{ site.title }}</a>
+      <div class="flex items-center gap-6 font-sans text-sm">
+        <a href="{{ base_url }}/events/" class="text-ink-muted hover:text-ink transition-colors">Timeline</a>
+        <a href="{{ base_url }}/tags/" class="text-ink-muted hover:text-ink transition-colors">Tags</a>
+        <a href="{{ base_url }}/about/" class="text-ink-muted hover:text-ink transition-colors">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="max-w-3xl mx-auto px-6 py-14">
+    <article>
+      <header class="mb-10">
+        <div class="font-sans text-xs tracking-wide uppercase text-ink-muted mb-4 flex items-center gap-3">
+          {% if page.extra.era %}
+            {% if page.extra.era == "Ancient" %}
+              <span class="text-era-ancient font-semibold">{{ page.extra.era }}</span>
+            {% elif page.extra.era == "Medieval" %}
+              <span class="text-era-medieval font-semibold">{{ page.extra.era }}</span>
+            {% elif page.extra.era == "Renaissance" %}
+              <span class="text-era-renaissance font-semibold">{{ page.extra.era }}</span>
+            {% else %}
+              <span class="text-era-modern font-semibold">{{ page.extra.era }}</span>
+            {% endif %}
+            <span class="text-parchment-400">--</span>
+          {% endif %}
+          {% if page.extra.year %}
+            <span>{{ page.extra.year }}</span>
+          {% endif %}
+          {% if page.extra.location %}
+            <span class="text-parchment-400">--</span>
+            <span>{{ page.extra.location }}</span>
+          {% endif %}
+        </div>
+        <h1 class="text-4xl font-bold tracking-tight mb-4">{{ page.title }}</h1>
+        {% if page.description %}
+          <p class="text-xl text-ink-muted leading-relaxed">{{ page.description }}</p>
+        {% endif %}
+      </header>
+
+      <div class="prose-tapestry">
+        {{ content }}
+      </div>
+
+      {% if page.tags %}
+        <div class="mt-10 pt-6 border-t border-parchment-300">
+          <div class="flex flex-wrap gap-2">
+            {% for tag in page.tags %}
+              <a href="{{ base_url }}/tags/{{ tag | slugify }}/" class="font-sans text-xs tracking-wide px-3 py-1.5 bg-parchment-200 text-ink-muted rounded hover:bg-parchment-300 hover:text-ink transition-colors">{{ tag }}</a>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+
+      <nav class="mt-10 pt-6 border-t border-parchment-300 flex justify-between font-sans text-sm">
+        {% if page.lower %}
+          <a href="{{ page.lower.url }}" class="text-ink-muted hover:text-ink transition-colors">
+            <span class="block text-xs text-parchment-500 mb-1">Previous</span>
+            {{ page.lower.title }}
+          </a>
+        {% else %}
+          <span></span>
+        {% endif %}
+        {% if page.higher %}
+          <a href="{{ page.higher.url }}" class="text-ink-muted hover:text-ink transition-colors text-right">
+            <span class="block text-xs text-parchment-500 mb-1">Next</span>
+            {{ page.higher.title }}
+          </a>
+        {% else %}
+          <span></span>
+        {% endif %}
+      </nav>
+    </article>
+  </main>
+
+{% include "footer.html" %}

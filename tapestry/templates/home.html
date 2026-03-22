@@ -1,0 +1,76 @@
+{% include "header.html" %}
+
+  <nav class="border-b border-parchment-300">
+    <div class="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="{{ base_url }}/" class="text-2xl font-bold tracking-tight text-ink hover:text-ink-light transition-colors">{{ site.title }}</a>
+      <div class="flex items-center gap-6 font-sans text-sm">
+        <a href="{{ base_url }}/events/" class="text-ink-muted hover:text-ink transition-colors">Timeline</a>
+        <a href="{{ base_url }}/tags/" class="text-ink-muted hover:text-ink transition-colors">Tags</a>
+        <a href="{{ base_url }}/about/" class="text-ink-muted hover:text-ink transition-colors">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="max-w-4xl mx-auto px-6 pt-16 pb-12 text-center">
+    <h1 class="text-5xl font-bold tracking-tight mb-4">{{ page.title }}</h1>
+    <p class="text-xl text-ink-muted leading-relaxed max-w-2xl mx-auto">{{ content | strip_html }}</p>
+  </header>
+
+  <div class="max-w-xl mx-auto px-6 mb-12">
+    <div class="flex flex-wrap justify-center gap-6 font-sans text-xs tracking-wide uppercase">
+      <span class="flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-era-ancient inline-block"></span>
+        Ancient
+      </span>
+      <span class="flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-era-medieval inline-block"></span>
+        Medieval
+      </span>
+      <span class="flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-era-renaissance inline-block"></span>
+        Renaissance
+      </span>
+      <span class="flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-era-modern inline-block"></span>
+        Modern
+      </span>
+    </div>
+  </div>
+
+  <section class="max-w-5xl mx-auto px-6 pb-16">
+    <div class="relative">
+      <div class="timeline-line"></div>
+
+      {% for item in site.pages | sort(attribute="weight") %}
+      {% if item.url is startswith("/events/") %}
+      {% set era_class = "era-modern" %}
+      {% if item.extra.era == "Ancient" %}
+        {% set era_class = "era-ancient" %}
+      {% elif item.extra.era == "Medieval" %}
+        {% set era_class = "era-medieval" %}
+      {% elif item.extra.era == "Renaissance" %}
+        {% set era_class = "era-renaissance" %}
+      {% endif %}
+
+      <div class="timeline-item relative pb-12 {{ era_class }}">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <a href="{{ item.url }}" class="block group">
+            <div class="bg-parchment-100 border border-parchment-300 rounded p-6 hover:border-parchment-400 hover:shadow-sm transition-all">
+              <div class="flex items-center gap-3 mb-3 font-sans text-xs tracking-wide uppercase">
+                <span class="era-label font-semibold">{{ item.extra.year }}</span>
+                <span class="text-parchment-500">--</span>
+                <span class="text-ink-muted">{{ item.extra.location }}</span>
+              </div>
+              <h3 class="text-xl font-bold mb-2 group-hover:text-ink-light transition-colors">{{ item.title }}</h3>
+              <p class="text-ink-muted leading-relaxed">{{ item.description }}</p>
+            </div>
+          </a>
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </section>
+
+{% include "footer.html" %}

@@ -1,0 +1,58 @@
+{% include "header.html" %}
+
+  <main class="wrapper">
+    <article>
+      <header class="review-header">
+        <div class="review-header-top">
+          {% if page.categories %}<span class="review-category">{{ page.categories | first }}</span>{% endif %}
+          <span class="review-date">{{ page.date | date("%B %d, %Y") }}</span>
+        </div>
+        <h1 class="review-title">{{ page.title }}</h1>
+        {% if page.extra %}
+        <div class="review-meta-bar">
+          {% if page.extra.genre %}<span class="meta-item"><span class="meta-label">Genre</span> {{ page.extra.genre }}</span>{% endif %}
+          {% if page.extra.label %}<span class="meta-item"><span class="meta-label">Label</span> {{ page.extra.label }}</span>{% endif %}
+          {% if page.extra.year %}<span class="meta-item"><span class="meta-label">Year</span> {{ page.extra.year }}</span>{% endif %}
+          {% if page.extra.rating %}
+          <span class="meta-item">
+            <span class="meta-label">Rating</span>
+            <span class="rating-stars">
+              {% for i in range(end=page.extra.rating) %}<span class="star star--filled">*</span>{% endfor %}{% for i in range(end=5 - page.extra.rating) %}<span class="star star--empty">*</span>{% endfor %}
+            </span>
+          </span>
+          {% endif %}
+        </div>
+        {% endif %}
+        <p class="review-reading-time">{{ page.reading_time }} min read</p>
+      </header>
+
+      <div class="post-content">
+        {{ content | safe }}
+      </div>
+
+      {% if page.tags %}
+      <div class="post-tags">
+        {% for tag in page.tags %}
+        <a href="{{ base_url }}/tags/{{ tag | slugify }}/">{{ tag }}</a>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <nav class="post-nav">
+        {% if page.higher %}
+        <a href="{{ page.higher.url }}" class="nav-prev">
+          <span class="label">Previous Review</span>
+          {{ page.higher.title }}
+        </a>
+        {% endif %}
+        {% if page.lower %}
+        <a href="{{ page.lower.url }}" class="nav-next">
+          <span class="label">Next Review</span>
+          {{ page.lower.title }}
+        </a>
+        {% endif %}
+      </nav>
+    </article>
+  </main>
+
+{% include "footer.html" %}
