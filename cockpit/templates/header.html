@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{{ page.description | default(value=site.description) }}">
+  {{ og_all_tags | safe }}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            mono: ['"Share Tech Mono"', '"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            telemetry: {
+              green: '#39ff14',
+              darkgreen: '#0b3303',
+              amber: '#ffb000',
+              red: '#ff003c',
+              bg: '#050a05',
+              panel: '#0a140a',
+              border: '#142914',
+              muted: '#1e3d1e',
+            }
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #050a05;
+      color: #39ff14;
+      font-family: 'Share Tech Mono', 'JetBrains Mono', monospace;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      /* Scanline effect */
+      background-color: #050a05;
+      background-size: 100% 4px, 6px 100%;
+    }
+
+    ::selection {
+      background: #39ff14;
+      color: #050a05;
+    }
+
+    .cockpit-panel {
+      background-color: rgba(10, 20, 10, 0.8);
+      border: 1px solid #1e3d1e;
+      box-shadow: inset 0 0 20px rgba(57, 255, 20, 0.05);
+      position: relative;
+    }
+
+    .cockpit-panel::before, .cockpit-panel::after {
+      content: '';
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border: 2px solid #39ff14;
+    }
+
+    .cockpit-panel::before {
+      top: -1px; left: -1px;
+      border-right: none; border-bottom: none;
+    }
+
+    .cockpit-panel::after {
+      bottom: -1px; right: -1px;
+      border-left: none; border-top: none;
+    }
+
+    .hud-title {
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border-bottom: 1px solid #1e3d1e;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .hud-value {
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1;
+      text-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
+    }
+
+    .hud-value.amber {
+      color: #ffb000;
+      text-shadow: 0 0 10px rgba(255, 176, 0, 0.5);
+    }
+
+    .hud-value.red {
+      color: #ff003c;
+      text-shadow: 0 0 10px rgba(255, 0, 60, 0.5);
+    }
+
+    .blink {
+      animation: blink 1.5s infinite;
+    }
+
+    @keyframes blink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+
+    .gauge-bar {
+      height: 8px;
+      background: #0b3303;
+      margin-top: 4px;
+      position: relative;
+    }
+
+    .gauge-fill {
+      height: 100%;
+      background: #39ff14;
+      box-shadow: 0 0 8px #39ff14;
+    }
+
+    .gauge-fill.amber {
+      background: #ffb000;
+      box-shadow: 0 0 8px #ffb000;
+    }
+
+    .gauge-fill.red {
+      background: #ff003c;
+      box-shadow: 0 0 8px #ff003c;
+    }
+
+    /* Radar sweep animation */
+    .radar {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 1px solid #1e3d1e;
+      background-color: #0a140a;
+      overflow: hidden;
+    }
+
+    .radar-sweep {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 50px;
+      height: 50px;
+      background-color: transparent; border-right: 2px solid #39ff14;
+      transform-origin: 0% 0%;
+      animation: sweep 4s linear infinite;
+    }
+
+    @keyframes sweep {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .crt-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      z-index: 100;
+      background-color: transparent;
+    }
+
+    .nav-link {
+      color: #1e3d1e;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: 0.875rem;
+      padding: 0.25rem 0.5rem;
+      border: 1px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: #39ff14;
+      border-color: #39ff14;
+      background: rgba(57, 255, 20, 0.1);
+      box-shadow: 0 0 10px rgba(57, 255, 20, 0.2);
+    }
+  </style>
+  {{ highlight_css | safe }}
+</head>
+<body class="antialiased text-telemetry-green selection:bg-telemetry-green selection:text-telemetry-bg">
+<div class="crt-overlay"></div>
+
+<div class="min-h-screen flex flex-col p-4 md:p-8 max-w-7xl mx-auto">
+  <header class="flex flex-col md:flex-row justify-between items-start md:items-end border-b-2 border-telemetry-green pb-4 mb-8">
+    <div>
+      <div class="text-xs text-telemetry-muted mb-1 tracking-widest uppercase">SYS.INIT.SEQ // {{ site.title }}</div>
+      <h1 class="text-4xl md:text-5xl font-bold tracking-tight uppercase"><a href="{{ base_url }}/">{{ site.title }}</a></h1>
+    </div>
+    <div class="mt-4 md:mt-0 flex gap-4 text-sm">
+      <div class="flex flex-col items-end">
+        <span class="text-telemetry-muted uppercase text-xs">STATUS</span>
+        <span class="text-telemetry-green font-bold"><span class="inline-block w-2 h-2 bg-telemetry-green rounded-full mr-2 blink"></span>ONLINE</span>
+      </div>
+      <div class="flex flex-col items-end">
+        <span class="text-telemetry-muted uppercase text-xs">TIME (UTC)</span>
+        <span class="text-telemetry-green font-bold" id="clock">00:00:00</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="flex flex-wrap gap-4 mb-8 border-b border-telemetry-muted pb-4">
+    <a href="{{ base_url }}/" class="nav-link{% if not page and not section %} active{% endif %}">DASHBOARD</a>
+    <a href="{{ base_url }}/logs/" class="nav-link{% if (page and page.url is containing('/logs/')) or (section and section.title == 'Logs') %} active{% endif %}">SYS.LOGS</a>
+    <a href="{{ base_url }}/diagnostics/" class="nav-link{% if (page and page.url is containing('/diagnostics/')) or (section and section.title == 'Diagnostics') %} active{% endif %}">DIAGNOSTICS</a>
+  </nav>
+
+  <main class="flex-grow">

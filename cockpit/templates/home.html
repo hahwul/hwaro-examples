@@ -1,0 +1,86 @@
+{% include "header.html" %}
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+  <!-- Main Telemetry Panel -->
+  <div class="cockpit-panel col-span-1 md:col-span-2 p-6 flex flex-col justify-between">
+    <div class="hud-title">
+      <span>PRIMARY TELEMETRY</span>
+      <span class="text-xs text-telemetry-green blink">[ ACTIVE ]</span>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <div class="text-telemetry-muted text-sm uppercase">ALTITUDE (MSL)</div>
+        <div class="hud-value">84,392 <span class="text-sm font-normal">FT</span></div>
+        <div class="gauge-bar"><div class="gauge-fill w-3/4"></div></div>
+      </div>
+      <div>
+        <div class="text-telemetry-muted text-sm uppercase">AIRSPEED (TAS)</div>
+        <div class="hud-value">1,240 <span class="text-sm font-normal">KTS</span></div>
+        <div class="gauge-bar"><div class="gauge-fill w-5/6"></div></div>
+      </div>
+      <div class="mt-4">
+        <div class="text-telemetry-muted text-sm uppercase">CABIN PRESSURE</div>
+        <div class="hud-value amber">9.2 <span class="text-sm font-normal">PSI</span></div>
+        <div class="gauge-bar"><div class="gauge-fill amber w-1/2"></div></div>
+      </div>
+      <div class="mt-4">
+        <div class="text-telemetry-muted text-sm uppercase">G-FORCE</div>
+        <div class="hud-value red">4.2 <span class="text-sm font-normal">G</span></div>
+        <div class="gauge-bar"><div class="gauge-fill red w-full"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Radar / Targeting -->
+  <div class="cockpit-panel p-6 flex flex-col items-center">
+    <div class="hud-title w-full">
+      <span>SENSOR ARRAY</span>
+    </div>
+    <div class="relative w-48 h-48 border border-telemetry-green rounded-full bg-telemetry-panel overflow-hidden mt-4 flex justify-center items-center shadow-[0_0_15px_rgba(57,255,20,0.2)]">
+      <!-- Grid lines -->
+      <div class="absolute w-full h-px bg-telemetry-muted top-1/2 left-0"></div>
+      <div class="absolute h-full w-px bg-telemetry-muted top-0 left-1/2"></div>
+      <div class="absolute w-32 h-32 rounded-full border border-telemetry-muted"></div>
+      <div class="absolute w-16 h-16 rounded-full border border-telemetry-muted"></div>
+      <!-- Sweep -->
+      <div class="absolute top-1/2 left-1/2 w-24 h-24 origin-top-left animate-[sweep_4s_linear_infinite]" style="background-color: transparent; border-right: 2px solid rgba(57, 255, 20, 0.8);"></div>
+      <!-- Blips -->
+      <div class="absolute w-2 h-2 bg-telemetry-green rounded-full top-1/4 left-1/3 blink shadow-[0_0_5px_#39ff14]"></div>
+      <div class="absolute w-2 h-2 bg-telemetry-amber rounded-full bottom-1/3 right-1/4 shadow-[0_0_5px_#ffb000]"></div>
+    </div>
+    <div class="mt-4 text-xs text-telemetry-green uppercase w-full flex justify-between">
+      <span>RNG: 240NM</span>
+      <span>MODE: AIR</span>
+    </div>
+  </div>
+
+  <!-- Recent Logs -->
+  <div class="cockpit-panel col-span-1 md:col-span-3 p-6 mt-6">
+    <div class="hud-title">
+      <span>SYSTEM LOGS (LATEST)</span>
+      <a href="{{ base_url }}/logs/" class="text-xs hover:text-white transition-colors">[ VIEW ALL ]</a>
+    </div>
+    <div class="space-y-2 font-mono text-sm h-48 overflow-y-auto pr-2" id="log-container">
+      {% set logs_section = get_section(path="logs/_index.md") %}
+      {% for post in logs_section.pages | slice(end=5) %}
+        <div class="flex items-start border-b border-telemetry-border pb-2 group hover:bg-telemetry-muted/30 transition-colors p-1">
+          <div class="w-32 text-telemetry-muted shrink-0">{{ post.date | date("%H:%M:%S") }}</div>
+          <div class="flex-grow text-telemetry-green group-hover:text-white">
+            <a href="{{ post.url }}">{{ post.title }}</a>
+            {% if post.summary %}
+              <div class="text-xs text-telemetry-muted mt-1 truncate">{{ post.summary | strip_html }}</div>
+            {% endif %}
+          </div>
+          <div class="text-xs {% if post.extra.status == 'CRITICAL' %}text-telemetry-red blink{% elif post.extra.status == 'WARNING' %}text-telemetry-amber{% else %}text-telemetry-green{% endif %} uppercase w-20 text-right">
+            [{{ post.extra.status | default("OK") }}]
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+</div>
+
+{% include "footer.html" %}

@@ -1,0 +1,54 @@
+{% include "header.html" %}
+
+<div class="cockpit-panel p-6 md:p-10">
+  <header class="border-b border-telemetry-green pb-6 mb-8 flex justify-between items-end">
+    <div>
+      <h1 class="text-3xl md:text-5xl font-bold uppercase tracking-tight text-white mb-2 shadow-[0_0_10px_rgba(255,255,255,0.2)]">
+        {{ section.title | default("SYSTEM LOGS") }}
+      </h1>
+      <p class="text-xl text-telemetry-green mt-2 max-w-2xl">{{ section.description | default("All active logs and reports.") }}</p>
+    </div>
+    <div class="hidden md:block text-right">
+      <div class="text-xs text-telemetry-muted uppercase mb-1">RECORD COUNT</div>
+      <div class="text-3xl font-bold text-telemetry-green">{{ section.pages | length }}</div>
+    </div>
+  </header>
+
+  <div class="space-y-4 font-mono w-full text-sm md:text-base">
+    <div class="flex items-center justify-between border-b-2 border-telemetry-muted pb-2 text-xs text-telemetry-muted font-bold tracking-wider mb-4 px-2 uppercase">
+      <div class="w-1/6 md:w-32 hidden md:block">TIMESTAMP</div>
+      <div class="w-2/3 flex-grow">SUBJECT / DETAILS</div>
+      <div class="w-1/6 md:w-24 text-right">STATUS</div>
+    </div>
+
+    {% for post in section.pages %}
+      <div class="group relative flex flex-col md:flex-row md:items-start border-b border-telemetry-border pb-4 hover:bg-telemetry-muted/20 transition-colors p-2 rounded-sm border-l-2 hover:border-telemetry-green border-transparent overflow-hidden">
+        <!-- Scanline on hover -->
+        <div class="absolute inset-0 bg-telemetry-green/10 border-l-2 border-telemetry-green opacity-0 group-hover:opacity-100 group-hover:animate-[sweep_2s_linear_infinite] pointer-events-none"></div>
+
+        <div class="md:w-32 text-telemetry-muted shrink-0 text-xs mt-1 md:mt-0 mb-1 md:mb-0">{{ post.date | date("%Y-%m-%d %H:%M:%S") }}</div>
+        <div class="flex-grow md:pr-4 z-10">
+          <a href="{{ post.url }}" class="text-lg font-bold text-telemetry-green group-hover:text-white uppercase tracking-wide block mb-1">
+            <span class="inline-block w-2 h-2 bg-telemetry-muted group-hover:bg-telemetry-green rounded-full mr-2 mb-0.5 transition-colors"></span>{{ post.title }}
+          </a>
+          {% if post.summary %}
+            <div class="text-sm text-telemetry-muted mt-1 leading-relaxed">{{ post.summary | strip_html }}</div>
+          {% endif %}
+          {% if post.taxonomies.tags %}
+            <div class="flex gap-2 mt-2 text-xs">
+              {% for tag in post.taxonomies.tags %}
+                <span class="text-telemetry-muted bg-telemetry-panel border border-telemetry-muted px-1">#{{ tag }}</span>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+        <div class="w-24 mt-2 md:mt-0 text-xs md:text-sm {% if post.extra.status == 'CRITICAL' %}text-telemetry-red blink font-bold{% elif post.extra.status == 'WARNING' %}text-telemetry-amber font-bold{% else %}text-telemetry-green{% endif %} uppercase md:text-right shrink-0 z-10">
+          [{{ post.extra.status | default("OK") }}]
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+</div>
+
+{% include "footer.html" %}
