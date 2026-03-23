@@ -1,0 +1,37 @@
+{% include "header.html" %}
+  <main class="site-main">
+    <div class="container">
+      <div class="section-header">
+        <h1>{{ section.title }}</h1>
+        {% if section.description %}
+        <p>{{ section.description }}</p>
+        {% endif %}
+      </div>
+      {{ content | safe }}
+      {% if section.pages | length > 0 %}
+      <div class="gallery-grid">
+        {% for item in section.pages %}
+        <a href="{{ item.url }}" class="gallery-card">
+          <div class="gallery-card-image">
+            <span class="placeholder-icon">{{ item.title | truncate(length=1, end="") }}</span>
+            {% if item.extra.scale %}
+            <span class="scale-badge">{{ item.extra.scale }}</span>
+            {% endif %}
+          </div>
+          <div class="gallery-card-body">
+            <h3>{{ item.title }}</h3>
+            <div class="card-meta">
+              {% if item.extra.actual_size %}{{ item.extra.actual_size }}{% if item.date %} / {% endif %}{% endif %}{% if item.date %}{{ item.date | date("%b %Y") }}{% endif %}
+            </div>
+            {% if item.description %}
+            <div class="card-desc">{{ item.description }}</div>
+            {% endif %}
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+      {% endif %}
+      {{ pagination }}
+    </div>
+  </main>
+{% include "footer.html" %}
