@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description }}">
+  <title>{{ page.title }} - {{ site.title }}</title>
+  {{ og_all_tags }}
+
+  <!-- Google Fonts: Inter & Georgia -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#c2a578', // Gold/Brass color
+            secondary: '#a38d66', // Muted brass
+            bg: '#0f172a', // Deep Navy (Slate 900)
+            surface: '#1e293b', // Lighter Navy (Slate 800)
+            'surface-alt': '#334155', // Slate 700
+            border: '#475569', // Slate 600
+            text: '#fdfbf7', // Off-white/Cream
+            muted: '#cbd5e1', // Slate 300
+          },
+          fontFamily: {
+            display: ['Playfair Display', 'Georgia', 'serif'],
+            body: ['Inter', 'sans-serif'],
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.5s ease-out',
+            'slide-up': 'slideUp 0.5s ease-out',
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            slideUp: {
+              '0%': { transform: 'translateY(20px)', opacity: '0' },
+              '100%': { transform: 'translateY(0)', opacity: '1' },
+            }
+          }
+        },
+      },
+    }
+  </script>
+
+  <style type="text/tailwindcss">
+    /* Prose: markdown rendered content */
+    .prose { @apply max-w-none; }
+    .prose h1, .prose h2, .prose h3, .prose h4 {
+      @apply font-display font-bold text-text mt-12 mb-6 tracking-tight scroll-mt-24 text-primary;
+    }
+    .prose h1 { @apply text-4xl lg:text-5xl mt-0 mb-8 text-primary leading-tight font-display; }
+    .prose h2 { @apply text-2xl lg:text-3xl border-b border-border pb-4 font-display; }
+    .prose h3 { @apply text-xl lg:text-2xl text-primary font-display; }
+
+    .prose p { @apply my-6 leading-loose text-gray-300 text-lg; }
+    .prose a {
+      @apply text-primary font-medium border-b border-primary/30 hover:border-primary transition-all no-underline pb-0.5;
+    }
+    .prose a:hover { @apply text-secondary border-secondary; }
+
+    .prose code {
+      @apply bg-surface-alt text-secondary px-1.5 py-0.5 rounded text-sm font-mono border border-border/50;
+    }
+    .prose pre {
+      @apply bg-surface-alt/50 p-6 rounded-2xl overflow-x-auto border border-border/50 my-8 shadow-2xl;
+    }
+    .prose pre code { @apply bg-transparent p-0 text-gray-200 border-none; }
+
+    .prose blockquote {
+      @apply my-10 py-4 px-8 border-l-4 border-primary bg-surface-alt/30 italic text-gray-300 rounded-r-xl;
+    }
+
+    .prose ul, .prose ol { @apply my-6 ml-6 text-gray-300; }
+    .prose li { @apply my-2 pl-2 marker:text-primary; }
+
+    .prose img { @apply max-w-full rounded-2xl shadow-xl border border-border/30 my-10 w-full object-cover aspect-video; }
+
+    .prose hr {
+      @apply border-border/50 my-16;
+    }
+    .prose hr::after {
+      content: "---";
+      @apply absolute left-1/2 -translate-x-1/2 -mt-3 bg-bg px-4 text-primary text-xl tracking-[0.5em];
+    }
+
+    .prose table { @apply w-full border-collapse my-8 text-left; }
+    .prose th, .prose td { @apply px-4 py-3 border border-border/50; }
+    .prose th { @apply bg-surface-alt font-display font-semibold text-white; }
+    .prose td { @apply text-gray-300; }
+
+    /* Pagination */
+    nav.pagination { @apply my-16 flex justify-center; }
+    nav.pagination .pagination-list {
+      @apply list-none p-0 m-0 flex gap-3 flex-wrap items-center;
+    }
+    nav.pagination a {
+      @apply inline-flex items-center justify-center min-w-[2.5rem] h-10 px-3 rounded-lg border border-border
+             text-muted no-underline text-sm font-medium bg-surface/50 backdrop-blur hover:bg-surface-alt
+             hover:text-white hover:border-primary transition-all duration-300;
+    }
+    .pagination-current span {
+      @apply inline-flex items-center justify-center min-w-[2.5rem] h-10 px-3 rounded-lg
+             bg-primary text-bg text-sm font-bold shadow-lg shadow-primary/25;
+    }
+    .pagination-disabled span {
+      @apply hidden;
+    }
+
+    /* Shortcodes */
+    .alert {
+      @apply p-4 rounded border border-border my-6 bg-surface/50 shadow-md;
+    }
+    /* Default alert styles assuming class names might be appended dynamically or manually */
+    .alert[data-type="tip"], .alert-tip { @apply border-green-700 bg-green-950/20 text-green-100; }
+    .alert[data-type="warning"], .alert-warning { @apply border-yellow-700 bg-yellow-950/20 text-yellow-100; }
+    .alert[data-type="note"], .alert-note { @apply border-blue-700 bg-blue-950/20 text-blue-100; }
+
+  </style>
+
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+</head>
+<body class="font-body text-text bg-bg antialiased selection:bg-primary/30 selection:text-white min-h-screen flex flex-col relative overflow-x-hidden" data-section="{{ page.section }}">
+
+  <!-- Solid Background (No gradients) -->
+
+  <!-- Modern Navbar -->
+  <header class="sticky top-0 z-50 w-full bg-bg/90 border-b border-border transition-all duration-300">
+    <div class="max-w-5xl mx-auto px-6 h-20 flex items-center justify-between">
+      <a href="{{ base_url }}/" class="group flex items-center gap-3 no-underline">
+        <!-- Anchor SVG -->
+        <div class="w-10 h-10 rounded-xl bg-surface border border-border flex items-center justify-center text-primary font-bold shadow-lg shadow-surface/20 group-hover:scale-110 transition-transform duration-300">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+            <path fill-rule="evenodd" d="M12 2.25a2.25 2.25 0 0 0-2.25 2.25c0 .762.38 1.433.957 1.838l-2.028 5.408A9.034 9.034 0 0 0 3 17.25c0 .285.029.565.084.84a.75.75 0 0 0 1.46-.316A7.53 7.53 0 0 1 12 10.5c3.21 0 6.05 1.956 7.456 4.774a.75.75 0 0 0 1.46.316 9.04 9.04 0 0 0-5.711-5.512l-2.028-5.408a2.25 2.25 0 1 0-1.177 0Z" clip-rule="evenodd" />
+            <path fill-rule="evenodd" d="M12 2.25a.75.75 0 0 1 .75.75v5.25a.75.75 0 0 1-1.5 0V3a.75.75 0 0 1 .75-.75Z" clip-rule="evenodd" />
+            <path fill-rule="evenodd" d="M3.75 21a.75.75 0 0 1 .75-.75h15a.75.75 0 0 1 0 1.5h-15a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd" />
+          </svg>
+        </div>
+        <span class="text-xl font-bold font-display text-white tracking-tight group-hover:text-primary transition-all duration-300">{{ site.title }}</span>
+      </a>
+
+      <nav class="hidden md:flex gap-10 items-center">
+        <a href="{{ base_url }}/" class="text-sm font-medium text-muted hover:text-white transition-colors py-2 relative group">
+          Home
+          <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+        </a>
+        <a href="{{ base_url }}/posts/" class="text-sm font-medium text-muted hover:text-white transition-colors py-2 relative group">
+          Posts
+          <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+        </a>
+        <a href="{{ base_url }}/about/" class="text-sm font-medium text-muted hover:text-white transition-colors py-2 relative group">
+          About
+          <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+        </a>
+      </nav>
+
+      <!-- Mobile menu button placeholder -->
+      <button class="md:hidden text-muted hover:text-white p-2">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="flex-grow w-full max-w-5xl mx-auto px-6 py-12 animate-fade-in relative z-10">
