@@ -1,0 +1,54 @@
+{% include "header.html" %}
+  <div class="site-wrapper">
+    <div class="hero">
+      <h1><span class="hero-accent">{{ site.title }}</span></h1>
+      <p>{{ site.description }}</p>
+    </div>
+    <div class="page-content">
+      {{ content | safe }}
+    </div>
+    <h2>Recent Tasting Notes</h2>
+    <div class="wine-grid">
+      {% for post in site.pages | sort(attribute="date") | reverse %}
+      {% if post.section == "posts" %}
+      <article class="wine-card">
+        <div class="wine-card-body">
+          {% if post.extra.vintage %}
+          <div class="wine-card-vintage">Vintage {{ post.extra.vintage }}</div>
+          {% endif %}
+          <h3 class="wine-card-title">
+            <a href="{{ post.url }}">{{ post.title }}</a>
+          </h3>
+          <div class="wine-card-meta">
+            {% if post.extra.region %}
+            <span><span class="meta-label">Region:</span> {{ post.extra.region }}</span>
+            {% endif %}
+            {% if post.extra.variety %}
+            <span><span class="meta-label">Variety:</span> {{ post.extra.variety }}</span>
+            {% endif %}
+          </div>
+          {% if post.summary %}
+          <div class="wine-card-summary">{{ post.summary | strip_html | truncate_words(25) }}</div>
+          {% endif %}
+          <div class="wine-card-footer">
+            {% if post.extra.score %}
+            <div class="wine-score">
+              <span class="score-badge">{{ post.extra.score }}</span>
+              <span class="score-label">Points</span>
+            </div>
+            {% endif %}
+            {% if post.tags %}
+            <div class="wine-card-tags">
+              {% for tag in post.tags %}
+              <a href="{{ base_url }}/tags/{{ tag | slugify }}/" class="tag">{{ tag }}</a>
+              {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </article>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+{% include "footer.html" %}
