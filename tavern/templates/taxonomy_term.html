@@ -1,0 +1,31 @@
+{% include "header.html" %}
+
+<h1 style="font-family: var(--font-heading); color: #cda434; text-align: center; margin-bottom: 30px;">
+  Quests tagged: {{ taxonomy_term.name }}
+</h1>
+
+<div class="quest-board">
+  {% for post in taxonomy_term.pages %}
+    <div class="quest-card">
+      <h2 class="quest-title"><a href="{{ post.url | absolute_url }}">{{ post.title }}</a></h2>
+      <div class="quest-meta">
+        <span>{{ post.date | date("%Y-%m-%d") }}</span>
+        {% if post.extra.class %}
+          <span class="badge badge-class">{{ post.extra.class }}</span>
+        {% endif %}
+        {% if post.extra.level %}
+          <span class="badge badge-level">Lv. {{ post.extra.level }}</span>
+        {% endif %}
+      </div>
+      <p class="quest-summary">
+        {% if post.summary %}
+          {{ post.summary | strip_html | truncate_words(30) }}
+        {% else %}
+          {{ post.description }}
+        {% endif %}
+      </p>
+    </div>
+  {% endfor %}
+</div>
+
+{% include "footer.html" %}
