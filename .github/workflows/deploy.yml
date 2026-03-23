@@ -180,6 +180,17 @@ jobs:
             TAG_BUTTONS="${TAG_BUTTONS}<button class=\"tag-btn\" data-tag=\"${tag}\">${tag}</button>"
           done
 
+          # Identify top 5 tags and generate dynamic CSS
+          TOP_TAGS_DATA=$(jq -r 'values[] | .[]' tags.json | sort | uniq -c | sort -rn | head -5 | awk '{print $2}')
+          DYNAMIC_TAG_CSS=""
+          COLORS=("#3b82f6" "#10b981" "#8b5cf6" "#f59e0b" "#ec4899")
+          IDX=0
+          for t in ${TOP_TAGS_DATA}; do
+            COLOR=${COLORS[$IDX]}
+            DYNAMIC_TAG_CSS="${DYNAMIC_TAG_CSS} .tag-btn[data-tag=\"${t}\"] { border-color: ${COLOR}; color: ${COLOR}; } .tag-btn[data-tag=\"${t}\"]:hover { background: ${COLOR}1a; } .tag-btn[data-tag=\"${t}\"].active { background: ${COLOR}; color: #fff; border-color: ${COLOR}; }"
+            IDX=$((IDX+1))
+          done
+
           echo "examples.hwaro.hahwul.com" > "${OUTPUT_DIR}/CNAME"
           cat > "${OUTPUT_DIR}/index.html" << HTMLEOF
           <!DOCTYPE html>
@@ -234,25 +245,8 @@ jobs:
             .tag-btn { background: #151515; border: 1px solid #282828; color: #888; padding: 0.3rem 0.7rem; border-radius: 6px; font-size: 0.7rem; cursor: pointer; transition: all 0.2s; }
             .tag-btn:hover { border-color: #444; color: #ccc; }
             .tag-btn.active { background: #fff; color: #0a0a0a; border-color: #fff; }
-            /* Category Colors */
-            .tag-btn[data-tag="blog"] { border-color: #3b82f6; color: #3b82f6; }
-            .tag-btn[data-tag="blog"]:hover { background: rgba(59, 130, 246, 0.1); }
-            .tag-btn[data-tag="blog"].active { background: #3b82f6; color: #fff; border-color: #3b82f6; }
-            .tag-btn[data-tag="docs"] { border-color: #10b981; color: #10b981; }
-            .tag-btn[data-tag="docs"]:hover { background: rgba(16, 185, 129, 0.1); }
-            .tag-btn[data-tag="docs"].active { background: #10b981; color: #fff; border-color: #10b981; }
-            .tag-btn[data-tag="landing"] { border-color: #8b5cf6; color: #8b5cf6; }
-            .tag-btn[data-tag="landing"]:hover { background: rgba(139, 92, 246, 0.1); }
-            .tag-btn[data-tag="landing"].active { background: #8b5cf6; color: #fff; border-color: #8b5cf6; }
-            .tag-btn[data-tag="portfolio"] { border-color: #f59e0b; color: #f59e0b; }
-            .tag-btn[data-tag="portfolio"]:hover { background: rgba(245, 158, 11, 0.1); }
-            .tag-btn[data-tag="portfolio"].active { background: #f59e0b; color: #fff; border-color: #f59e0b; }
-            .tag-btn[data-tag="event"] { border-color: #ec4899; color: #ec4899; }
-            .tag-btn[data-tag="event"]:hover { background: rgba(236, 72, 153, 0.1); }
-            .tag-btn[data-tag="event"].active { background: #ec4899; color: #fff; border-color: #ec4899; }
-            .tag-btn[data-tag="resume"] { border-color: #06b6d4; color: #06b6d4; }
-            .tag-btn[data-tag="resume"]:hover { background: rgba(6, 182, 212, 0.1); }
-            .tag-btn[data-tag="resume"].active { background: #06b6d4; color: #fff; border-color: #06b6d4; }
+            /* Dynamic Top Tags */
+            ${DYNAMIC_TAG_CSS}
             .card-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.15rem; }
             .tag { background: #1a1a1a; color: #666; padding: 0.15rem 0.45rem; border-radius: 4px; font-size: 0.6rem; }
             .no-results { text-align: center; color: #555; padding: 3rem 1rem; font-size: 0.9rem; display: none; }
