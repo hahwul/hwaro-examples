@@ -1,0 +1,51 @@
+{% include "header.html" %}
+
+<div class="section-container">
+    <header class="section-header">
+        <h1>{{ section.title }}</h1>
+        {% if section.description %}
+        <p class="section-description">{{ section.description }}</p>
+        {% endif %}
+    </header>
+
+    <div class="articles-grid">
+        {% for post in section.pages %}
+        <article class="grid-item">
+            {% if post.image %}
+            <a href="{{ post.url }}" class="grid-image-link">
+                <img src="{{ post.image }}" alt="{{ post.title }}" class="grid-image" loading="lazy">
+            </a>
+            {% endif %}
+            <div class="grid-content">
+                {% if post.categories %}
+                <span class="grid-category">
+                    {% for cat in post.categories %}
+                        <a href="{{ base_url }}/categories/{{ cat | slugify }}/">{{ cat }}</a>{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </span>
+                {% endif %}
+                <h2 class="grid-title"><a href="{{ post.url }}">{{ post.title }}</a></h2>
+                <p class="grid-excerpt">{{ post.summary | strip_html | truncate_words(25) }}</p>
+                <div class="grid-meta">
+                    <span class="grid-author">{{ post.extra.author | default("Editorial Board") }}</span>
+                    <span class="grid-date">{{ post.date | date("%b %d, %Y") }}</span>
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+
+    {% if paginator %}
+    <nav class="pagination">
+        {% if paginator.previous %}
+        <a href="{{ paginator.previous }}" class="prev">Previous</a>
+        {% endif %}
+        <span class="page-number">Page {{ paginator.current_index }} of {{ paginator.total_pages }}</span>
+        {% if paginator.next %}
+        <a href="{{ paginator.next }}" class="next">Next</a>
+        {% endif %}
+    </nav>
+    {% endif %}
+</div>
+
+{% include "footer.html" %}
