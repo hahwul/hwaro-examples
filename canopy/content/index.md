@@ -1,0 +1,4 @@
++++
+title = "Canopy"
+template = "home"
++++
