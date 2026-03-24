@@ -1,0 +1,76 @@
+{% include "header.html" %}
+  <main class="flex-1 max-w-4xl mx-auto w-full px-6 py-16">
+    <article class="bg-white p-8 md:p-12 rounded border border-clay-200 shadow-sm">
+      <header class="mb-12 text-center">
+        {% if page.date %}
+          <div class="text-clay-600 text-sm font-medium mb-3 uppercase tracking-wider">{{ page.date | date("%B %d, %Y") }}</div>
+        {% endif %}
+        <h1 class="text-4xl md:text-5xl font-serif text-stone-900 mb-6">{{ page.title }}</h1>
+        {% if page.description %}
+          <p class="text-lg text-stone-600 font-serif italic max-w-2xl mx-auto">{{ page.description }}</p>
+        {% endif %}
+      </header>
+
+      {% if page.images %}
+        <div class="mb-12">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {% for img in page.images %}
+              <div class="aspect-square bg-stone-100 rounded border border-stone-200 overflow-hidden flex items-center justify-center">
+                {% if img is starting_with("http") %}
+                <img src="{{ img }}" alt="View of {{ page.title }}" class="w-full h-full object-cover">
+                {% else %}
+                <img src="{{ base_url }}/{{ img }}" alt="View of {{ page.title }}" class="w-full h-full object-cover">
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+
+      {% if page.glaze or page.temperature or page.dimensions or page.material %}
+        <div class="bg-clay-50 border border-clay-200 rounded p-6 mb-12 flex flex-wrap gap-x-8 gap-y-4 justify-center text-sm">
+          {% if page.material %}
+            <div class="flex flex-col items-center">
+              <span class="text-stone-500 uppercase tracking-wider text-xs mb-1 font-semibold">Material</span>
+              <span class="text-stone-800 font-medium">{{ page.material }}</span>
+            </div>
+          {% endif %}
+          {% if page.glaze %}
+            <div class="flex flex-col items-center">
+              <span class="text-stone-500 uppercase tracking-wider text-xs mb-1 font-semibold">Glaze</span>
+              <span class="text-stone-800 font-medium">{{ page.glaze }}</span>
+            </div>
+          {% endif %}
+          {% if page.temperature %}
+            <div class="flex flex-col items-center">
+              <span class="text-stone-500 uppercase tracking-wider text-xs mb-1 font-semibold">Firing Temp</span>
+              <span class="text-stone-800 font-medium">{{ page.temperature }}</span>
+            </div>
+          {% endif %}
+          {% if page.dimensions %}
+            <div class="flex flex-col items-center">
+              <span class="text-stone-500 uppercase tracking-wider text-xs mb-1 font-semibold">Dimensions</span>
+              <span class="text-stone-800 font-medium">{{ page.dimensions }}</span>
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      <div class="prose prose-stone max-w-none prose-img:rounded-md prose-img:border prose-img:border-stone-200">
+        {{ content }}
+      </div>
+
+      {% if page.taxonomies %}
+        <div class="mt-16 pt-8 border-t border-clay-200 flex flex-wrap gap-2">
+          {% for taxonomy, terms in page.taxonomies %}
+            {% for term in terms %}
+              <a href="{{ base_url }}/{{ taxonomy }}/{{ term | urlencode }}/" class="meta-tag hover:bg-clay-200 transition-colors no-underline">
+                {{ term }}
+              </a>
+            {% endfor %}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </article>
+  </main>
+{% include "footer.html" %}
