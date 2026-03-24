@@ -1,0 +1,39 @@
+{% include "header.html" %}
+
+<section class="section-page">
+  <div class="section-header">
+    <h1 class="section-title">{{ section.title }}</h1>
+    {% if section.description %}
+    <p class="section-desc">{{ section.description }}</p>
+    {% endif %}
+    <div class="section-count">{{ section.pages | length }} entries</div>
+  </div>
+
+  <div class="board-columns">
+    <span>CALLSIGN</span>
+    <span>ROUTE</span>
+    <span>AIRCRAFT</span>
+    <span>DATE</span>
+    <span>STATUS</span>
+  </div>
+
+  <ul class="flight-list">
+    {% for post in section.pages %}
+    <li class="flight-row">
+      <a href="{{ post.url }}" class="flight-link">
+        <span class="flight-callsign">{{ post.extra.flight_no | default(value="---") }}</span>
+        <span class="flight-route">
+          <span class="iata">{{ post.extra.departure | default(value="---") }}</span>
+          <span class="route-line"></span>
+          <span class="iata">{{ post.extra.arrival | default(value="---") }}</span>
+        </span>
+        <span class="flight-aircraft">{{ post.extra.aircraft | default(value="---") }}</span>
+        <span class="flight-date">{{ post.date | date("%Y-%m-%d") }}</span>
+        <span class="flight-status {{ post.extra.status | default(value='completed') }}">{{ post.extra.status | default(value="completed") | upper }}</span>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+
+{% include "footer.html" %}
