@@ -1,0 +1,53 @@
+{% include "header.html" %}
+
+<div class="space-y-6 max-w-4xl mx-auto">
+    <div class="text-center py-12">
+        <h1 class="text-4xl font-bold tracking-tight text-text mb-4">{{ term.name }}</h1>
+        <p class="text-textMuted text-lg max-w-2xl mx-auto">Items categorized under "{{ term.name }}".</p>
+    </div>
+
+    <div class="card overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="inventory-table">
+                <thead>
+                    <tr>
+                        <th>Product / SKU</th>
+                        <th class="text-right">Price</th>
+                        <th class="text-right">Stock</th>
+                        <th class="text-center">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in term.pages %}
+                    <tr>
+                        <td>
+                            <a href="{{ item.url }}" class="font-medium text-text hover:text-brand transition-colors block">{{ item.title }}</a>
+                            <span class="text-xs text-textMuted font-mono mt-0.5 block">{{ item.extra.sku | default("N/A") }}</span>
+                        </td>
+                        <td class="text-right text-sm font-medium text-text">
+                            ${{ item.extra.price | default("0.00") }}
+                        </td>
+                        <td class="text-right text-sm font-medium text-text">
+                            {{ item.extra.stock | default(0) }}
+                        </td>
+                        <td class="text-center">
+                            {% set stock = item.extra.stock | default(0) %}
+                            {% set min_stock = item.extra.min_stock | default(10) %}
+
+                            {% if stock <= 0 %}
+                                <span class="status-badge out-of-stock">Out of Stock</span>
+                            {% elif stock <= min_stock %}
+                                <span class="status-badge low-stock">Low Stock</span>
+                            {% else %}
+                                <span class="status-badge in-stock">In Stock</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% include "footer.html" %}

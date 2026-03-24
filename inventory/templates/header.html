@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+    <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+
+    <!-- Use preconnect to improve performance for third-party resources -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        background: '#f8fafc',
+                        surface: '#ffffff',
+                        border: '#e2e8f0',
+                        text: '#0f172a',
+                        textMuted: '#64748b',
+                        brand: '#0ea5e9',
+                        success: '#10b981',
+                        warning: '#f59e0b',
+                        danger: '#ef4444'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Base styles */
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.text');
+            font-family: theme('fontFamily.sans');
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Prevent gradients entirely per rules */
+        * {
+            background-image: none !important;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Clean corp utility styling */
+        .card {
+            background-color: theme('colors.surface');
+            border: 1px solid theme('colors.border');
+            border-radius: 0.375rem;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.375rem 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            line-height: 1.25rem;
+            border-radius: 0.375rem;
+            border: 1px solid theme('colors.border');
+            background-color: theme('colors.surface');
+            color: theme('colors.text');
+            transition: all 0.15s ease-in-out;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: theme('colors.background');
+            border-color: #cbd5e1;
+        }
+
+        .btn-primary {
+            background-color: theme('colors.brand');
+            color: white;
+            border-color: theme('colors.brand');
+        }
+
+        .btn-primary:hover {
+            background-color: #0284c7;
+            border-color: #0284c7;
+            color: white;
+        }
+
+        /* Table specific styles for compact view */
+        .inventory-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+            text-align: left;
+        }
+
+        .inventory-table th {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid theme('colors.border');
+            background-color: theme('colors.background');
+            font-weight: 600;
+            color: theme('colors.textMuted');
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.75rem;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .inventory-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid theme('colors.border');
+            vertical-align: middle;
+        }
+
+        .inventory-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .inventory-table tr:hover td {
+            background-color: #f1f5f9;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.125rem 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border-radius: 9999px;
+            white-space: nowrap;
+        }
+
+        .status-badge.in-stock {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-badge.low-stock {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-badge.out-of-stock {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* Markdown Content */
+        .content {
+            font-size: 0.9375rem;
+            line-height: 1.6;
+        }
+
+        .content h1, .content h2, .content h3 {
+            color: theme('colors.text');
+            margin-top: 2em;
+            margin-bottom: 0.75em;
+            font-weight: 600;
+        }
+
+        .content h1 { font-size: 1.5rem; }
+        .content h2 { font-size: 1.25rem; }
+        .content h3 { font-size: 1.125rem; }
+
+        .content p {
+            margin-bottom: 1.25em;
+            color: theme('colors.textMuted');
+        }
+
+        .content a {
+            color: theme('colors.brand');
+            text-decoration: none;
+        }
+
+        .content a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    {% if auto_includes %}{{ auto_includes | safe }}{% endif %}
+</head>
+<body>
+    <header class="bg-surface border-b border-border sticky top-0 z-50">
+        <div class="container flex h-14 items-center justify-between">
+            <div class="flex items-center gap-6">
+                <a href="{{ base_url }}" class="font-semibold text-lg tracking-tight text-text flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path><path d="m3.3 7 8.7 5 8.7-5"></path><path d="M12 22V12"></path></svg>
+                    {{ site.title }}
+                </a>
+                <nav class="hidden md:flex gap-4">
+                    <a href="{{ base_url }}" class="text-sm font-medium text-text hover:text-brand transition-colors">Dashboard</a>
+                    <a href="{{ base_url }}/inventory" class="text-sm font-medium text-textMuted hover:text-text transition-colors">All Items</a>
+                    <a href="{{ base_url }}/categories" class="text-sm font-medium text-textMuted hover:text-text transition-colors">Categories</a>
+                </nav>
+            </div>
+            <div class="flex items-center gap-3">
+                <div class="relative hidden sm:block">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-2.5 top-2.5 text-textMuted"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+                    <input type="search" placeholder="Search inventory..." class="h-9 w-64 rounded-md border border-border bg-background pl-9 pr-4 text-sm outline-none focus:border-brand focus:ring-1 focus:ring-brand">
+                </div>
+                <button class="btn btn-primary" title="Add new item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
+                    Add Item
+                </button>
+            </div>
+        </div>
+    </header>
+    <main class="container py-6 min-h-[calc(100vh-3.5rem-4rem)]">

@@ -1,0 +1,138 @@
+{% include "header.html" %}
+
+<div class="space-y-6">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+            <h1 class="text-2xl font-bold tracking-tight text-text">{{ section.title | default("Dashboard") }}</h1>
+            <p class="text-textMuted mt-1">{{ section.description | default("Overview of your inventory") }}</p>
+        </div>
+        <div class="flex items-center gap-2">
+            <button class="btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Export
+            </button>
+            <button class="btn btn-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
+                New Item
+            </button>
+        </div>
+    </div>
+
+    <!-- Summary Stats -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {% set total_items = section.pages | length %}
+        {% set total_stock = 0 %}
+        {% set low_stock = 0 %}
+        {% set out_stock = 0 %}
+
+        {% for item in section.pages %}
+            {% set stock = item.extra.stock | default(0) %}
+            {% set min_stock = item.extra.min_stock | default(10) %}
+
+            {% set_global total_stock = total_stock + stock %}
+
+            {% if stock <= 0 %}
+                {% set_global out_stock = out_stock + 1 %}
+            {% elif stock <= min_stock %}
+                {% set_global low_stock = low_stock + 1 %}
+            {% endif %}
+        {% endfor %}
+
+        <div class="card p-4 flex flex-col">
+            <span class="text-sm font-medium text-textMuted uppercase tracking-wider mb-2">Total Items</span>
+            <span class="text-2xl font-bold text-text">{{ total_items }}</span>
+        </div>
+        <div class="card p-4 flex flex-col">
+            <span class="text-sm font-medium text-textMuted uppercase tracking-wider mb-2">Total Stock Count</span>
+            <span class="text-2xl font-bold text-text">{{ total_stock }}</span>
+        </div>
+        <div class="card p-4 flex flex-col border-l-4 border-l-warning">
+            <span class="text-sm font-medium text-textMuted uppercase tracking-wider mb-2">Low Stock Items</span>
+            <span class="text-2xl font-bold text-warning">{{ low_stock }}</span>
+        </div>
+        <div class="card p-4 flex flex-col border-l-4 border-l-danger">
+            <span class="text-sm font-medium text-textMuted uppercase tracking-wider mb-2">Out of Stock</span>
+            <span class="text-2xl font-bold text-danger">{{ out_stock }}</span>
+        </div>
+    </div>
+
+    <!-- Inventory Table -->
+    <div class="card overflow-hidden">
+        <div class="p-4 border-b border-border flex justify-between items-center bg-background">
+            <div class="text-sm font-medium text-text">Inventory List</div>
+            <div class="flex gap-2">
+                <button class="btn btn-sm">Filter</button>
+                <button class="btn btn-sm">Sort</button>
+            </div>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="inventory-table">
+                <thead>
+                    <tr>
+                        <th class="w-12"></th>
+                        <th>Product / SKU</th>
+                        <th>Category</th>
+                        <th class="text-right">Price</th>
+                        <th class="text-right">Stock</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in section.pages %}
+                    <tr>
+                        <td class="text-center">
+                            <input type="checkbox" class="rounded border-border text-brand focus:ring-brand h-4 w-4">
+                        </td>
+                        <td>
+                            <a href="{{ item.url }}" class="font-medium text-text hover:text-brand transition-colors block">{{ item.title }}</a>
+                            <span class="text-xs text-textMuted font-mono mt-0.5 block">{{ item.extra.sku | default("N/A") }}</span>
+                        </td>
+                        <td>
+                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800">
+                                {{ item.extra.category | default("Uncategorized") }}
+                            </span>
+                        </td>
+                        <td class="text-right text-sm font-medium text-text">
+                            ${{ item.extra.price | default("0.00") }}
+                        </td>
+                        <td class="text-right text-sm font-medium text-text">
+                            {{ item.extra.stock | default(0) }}
+                        </td>
+                        <td class="text-center">
+                            {% set stock = item.extra.stock | default(0) %}
+                            {% set min_stock = item.extra.min_stock | default(10) %}
+
+                            {% if stock <= 0 %}
+                                <span class="status-badge out-of-stock">Out of Stock</span>
+                            {% elif stock <= min_stock %}
+                                <span class="status-badge low-stock">Low Stock</span>
+                            {% else %}
+                                <span class="status-badge in-stock">In Stock</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-right">
+                            <button class="text-textMuted hover:text-brand transition-colors p-1" title="Edit">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
+                            </button>
+                            <button class="text-textMuted hover:text-danger transition-colors p-1" title="Delete">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path></svg>
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="p-4 border-t border-border flex items-center justify-between text-sm text-textMuted bg-background">
+            <div>Showing 1 to {{ section.pages | length }} of {{ section.pages | length }} results</div>
+            <div class="flex gap-1">
+                <button class="px-3 py-1 border border-border rounded bg-surface text-textMuted cursor-not-allowed">Previous</button>
+                <button class="px-3 py-1 border border-border rounded bg-surface text-textMuted cursor-not-allowed">Next</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include "footer.html" %}
