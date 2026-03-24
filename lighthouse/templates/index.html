@@ -1,0 +1,78 @@
+{% include "header.html" %}
+
+<main>
+  <div class="nav-groups">
+    <nav class="index-nav">
+      <strong>Categories:</strong>
+      {% for sub in section.subsections %}
+        <a href="#{{ sub.title | slugify }}">{{ sub.title }}</a>
+      {% endfor %}
+    </nav>
+
+    <nav class="index-nav alphabetical">
+      <strong>Index:</strong>
+      <a href="#A">A</a> <a href="#B">B</a> <a href="#C">C</a> <a href="#D">D</a>
+      <a href="#E">E</a> <a href="#F">F</a> <a href="#G">G</a> <a href="#H">H</a>
+      <a href="#I">I</a> <a href="#J">J</a> <a href="#K">K</a> <a href="#L">L</a>
+      <a href="#M">M</a> <a href="#N">N</a> <a href="#O">O</a> <a href="#P">P</a>
+      <a href="#Q">Q</a> <a href="#R">R</a> <a href="#S">S</a> <a href="#T">T</a>
+      <a href="#U">U</a> <a href="#V">V</a> <a href="#W">W</a> <a href="#X">X</a>
+      <a href="#Y">Y</a> <a href="#Z">Z</a>
+    </nav>
+  </div>
+
+  {% for sub in section.subsections %}
+  <section class="category-section" id="{{ sub.title | slugify }}">
+    <h2 class="category-title">{{ sub.title }}</h2>
+    <div class="resource-grid">
+      {% for page in sub.pages %}
+      <div class="resource-card" data-url="{{ page.url }}" data-title="{{ page.title }}">
+        <h3><a href="{{ page.extra.link | default(value=page.url) }}" target="_blank" rel="noopener">{{ page.title }}</a></h3>
+        <p>{{ page.description }}</p>
+        <div class="resource-meta">
+          <div class="tags">
+            {% if page.extra.tags %}
+              {% for tag in page.extra.tags %}
+              <span class="tag">{{ tag }}</span>
+              {% endfor %}
+            {% endif %}
+          </div>
+          {% if page.extra.recommended %}
+          <span class="badge recommended">Recommended</span>
+          {% endif %}
+          {% if page.extra.rating %}
+          <span class="badge">{{ page.extra.rating }}/5</span>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  {% endfor %}
+</main>
+
+<script>
+  // Simple alphabetical scrolling/filtering logic
+  document.querySelectorAll('.alphabetical a').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const letter = e.target.textContent;
+      const cards = document.querySelectorAll('.resource-card');
+      let found = false;
+      for (const card of cards) {
+        if (card.getAttribute('data-title').toUpperCase().startsWith(letter)) {
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          card.style.border = '2px solid var(--accent-color)';
+          setTimeout(() => card.style.border = '', 2000);
+          found = true;
+          break;
+        }
+      }
+      if (!found) {
+        alert('No resources starting with ' + letter);
+      }
+    });
+  });
+</script>
+
+{% include "footer.html" %}

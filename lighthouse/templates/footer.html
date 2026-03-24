@@ -1,0 +1,49 @@
+  <footer>
+    <p>&copy; 2026 {{ config.title }}. Built with Hwaro.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
+  <script>
+    let fuse;
+    const searchInput = document.getElementById('search-input');
+    const sections = document.querySelectorAll('.category-section');
+    const originalContent = Array.from(sections).map(s => s.innerHTML);
+
+    fetch('/search.json')
+      .then(response => response.json())
+      .then(data => {
+        fuse = new Fuse(data, {
+          keys: ['title', 'content', 'extra.tags'],
+          threshold: 0.3
+        });
+      });
+
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value;
+      if (!query) {
+        sections.forEach((s, i) => s.innerHTML = originalContent[i]);
+        sections.forEach(s => s.style.display = 'block');
+        return;
+      }
+
+      const results = fuse.search(query);
+      const matchedUrls = results.map(r => r.item.url);
+
+      sections.forEach(section => {
+        const cards = section.querySelectorAll('.resource-card');
+        let hasMatch = false;
+        cards.forEach(card => {
+          const cardUrl = card.getAttribute('data-url');
+          if (matchedUrls.includes(cardUrl)) {
+            card.style.display = 'flex';
+            hasMatch = true;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+        section.style.display = hasMatch ? 'block' : 'none';
+      });
+    });
+  </script>
+</body>
+</html>
