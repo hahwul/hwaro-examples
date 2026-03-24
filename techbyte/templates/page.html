@@ -1,0 +1,41 @@
+{% include "header.html" %}
+
+<article class="article-content">
+  <header class="article-header">
+    {% if page.extra.categories %}
+      <div class="card-category">
+        {% for category in page.extra.categories %}
+          <a href="{{ base_url }}/categories/{{ category | slugify }}/" style="color: white;">{{ category }}</a>{% if not loop.last %}, {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+    <h1 class="article-title">{{ page.title }}</h1>
+    <div class="article-meta">
+      {% if page.date %}
+        Published on {{ page.date | date("%B %d, %Y") }}
+      {% endif %}
+      {% if page.reading_time %}
+        &bull; {{ page.reading_time }} min read
+      {% endif %}
+    </div>
+  </header>
+
+  {% if page.image %}
+    <img src="{{ base_url }}{{ page.image }}" alt="{{ page.title }}" class="article-featured-img">
+  {% endif %}
+
+  <div class="content">
+    {{ content | safe }}
+  </div>
+
+  {% if page.extra.tags %}
+    <div class="tag-list" style="margin-top: 40px; border-top: 1px solid var(--border-color); padding-top: 20px;">
+      <span style="color: var(--text-muted); margin-right: 10px;">Tags:</span>
+      {% for tag in page.extra.tags %}
+        <a href="{{ base_url }}/tags/{{ tag | slugify }}/" class="tag-pill">{{ tag }}</a>
+      {% endfor %}
+    </div>
+  {% endif %}
+</article>
+
+{% include "footer.html" %}
