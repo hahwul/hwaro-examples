@@ -1,0 +1,65 @@
+{% include "header.html" %}
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">FLIGHT LOG</div>
+    <h1 class="hero-title">Hangar</h1>
+    <p class="hero-subtitle">{{ site.description }}</p>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-value">{{ site.sections | length }}</span>
+        <span class="stat-label">Sections</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value">{{ site.pages | length }}</span>
+        <span class="stat-label">Entries</span>
+      </div>
+    </div>
+  </div>
+  <div class="runway-lights">
+    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+  </div>
+</section>
+
+<section class="content-section">
+  {{ content | safe }}
+
+  {% if site.sections %}
+    {% for s in site.sections %}
+      {% if s.pages | length > 0 %}
+      <div class="flight-board">
+        <div class="board-header">
+          <h2 class="board-title">{{ s.title }}</h2>
+          <a href="{{ s.url }}" class="board-link">View All</a>
+        </div>
+        <div class="board-columns">
+          <span>CALLSIGN</span>
+          <span>ROUTE</span>
+          <span>AIRCRAFT</span>
+          <span>DATE</span>
+          <span>STATUS</span>
+        </div>
+        <ul class="flight-list">
+          {% for post in s.pages %}
+          <li class="flight-row">
+            <a href="{{ post.url }}" class="flight-link">
+              <span class="flight-callsign">{{ post.extra.flight_no | default(value="---") }}</span>
+              <span class="flight-route">
+                <span class="iata">{{ post.extra.departure | default(value="---") }}</span>
+                <span class="route-line"></span>
+                <span class="iata">{{ post.extra.arrival | default(value="---") }}</span>
+              </span>
+              <span class="flight-aircraft">{{ post.extra.aircraft | default(value="---") }}</span>
+              <span class="flight-date">{{ post.date | date("%Y-%m-%d") }}</span>
+              <span class="flight-status {{ post.extra.status | default(value='completed') }}">{{ post.extra.status | default(value="completed") | upper }}</span>
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+</section>
+
+{% include "footer.html" %}

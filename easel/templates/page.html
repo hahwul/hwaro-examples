@@ -1,0 +1,62 @@
+{% include "header.html" %}
+<header class="site-header">
+  <div class="header-inner">
+    <a href="{{ base_url }}/" class="site-logo">Easel</a>
+    <nav class="site-nav">
+      <a href="{{ base_url }}/tutorials/">Tutorials</a>
+      <a href="{{ base_url }}/techniques/">Techniques</a>
+    </nav>
+    <button class="search-trigger" onclick="openSearch()" title="Search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      Search
+    </button>
+  </div>
+</header>
+<div class="search-overlay" id="searchOverlay" onclick="if(event.target===this)closeSearch()">
+  <div class="search-modal">
+    <div class="search-input-wrap">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="searchInput" placeholder="Search tutorials and techniques..." autocomplete="off">
+      <kbd onclick="closeSearch()">ESC</kbd>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
+<main class="page-main">
+  <article class="lesson-article">
+    <header class="lesson-header">
+      <div class="lesson-meta">
+        {% if page.extra.difficulty %}
+        <span class="difficulty difficulty-{{ page.extra.difficulty | lower }}">{{ page.extra.difficulty }}</span>
+        {% endif %}
+        {% if page.extra.duration %}
+        <span class="duration">{{ page.extra.duration }}</span>
+        {% endif %}
+        {% if page.date %}
+        <time>{{ page.date | date("%B %d, %Y") }}</time>
+        {% endif %}
+      </div>
+      <h1>{{ page.title }}</h1>
+      {% if page.description %}
+      <p class="lesson-description">{{ page.description }}</p>
+      {% endif %}
+      {% if page.extra.tools %}
+      <div class="tools-required">
+        <strong>Tools Required</strong>
+        <div class="tool-tags">
+          {% for tool in page.extra.tools %}
+          <span class="tool-tag">{{ tool }}</span>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+    </header>
+    <div class="lesson-content">
+      {{ content | safe }}
+    </div>
+    <footer class="lesson-footer">
+      <a href="{{ base_url }}/{{ page.section }}/">&larr; Back to {{ page.section | capitalize }}</a>
+    </footer>
+  </article>
+</main>
+{% include "footer.html" %}
