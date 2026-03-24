@@ -1,0 +1,44 @@
+{% include "header.html" %}
+
+<header class="page-header text-center">
+    <h1 class="page-title">{{ section.title | default("Episodes") }}</h1>
+    {% if section.description %}
+    <p class="lead">{{ section.description }}</p>
+    {% endif %}
+</header>
+
+<div class="content page-content mb-4 text-center">
+    {{ content | safe }}
+</div>
+
+<div class="episode-list">
+    {% for episode in section.pages %}
+    <article class="episode-card">
+        {% if episode.extra.artwork %}
+        <div class="card-artwork">
+            <img src="{{ episode.extra.artwork }}" alt="Artwork for {{ episode.title }}" loading="lazy">
+        </div>
+        {% endif %}
+        <div class="card-content">
+            <h3><a href="{{ episode.url }}">{{ episode.title }}</a></h3>
+            <div class="episode-meta">
+                {% if episode.date %}
+                <time datetime="{{ episode.date | date("%Y-%m-%d") }}">{{ episode.date | date("%B %d, %Y") }}</time>
+                {% endif %}
+                {% if episode.extra.duration %}
+                <span class="duration">{{ episode.extra.duration }}</span>
+                {% endif %}
+            </div>
+            <p>{{ episode.description }}</p>
+            <a href="{{ episode.url }}" class="play-link" aria-label="Play {{ episode.title }}">
+                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="5 3 19 12 5 21 5 3" fill="currentColor"></polygon>
+                </svg>
+                Play Episode
+            </a>
+        </div>
+    </article>
+    {% endfor %}
+</div>
+
+{% include "footer.html" %}
