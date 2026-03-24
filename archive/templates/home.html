@@ -1,0 +1,47 @@
+{% include "header.html" %}
+
+        <section class="catalog-hero">
+          <h1>{{ page.title }}</h1>
+          <div class="hero-text">
+            {{ content }}
+          </div>
+        </section>
+
+        <section class="recent-acquisitions">
+          <div class="section-label">
+            <h2>Recent Acquisitions</h2>
+            <a href="{{ base_url }}/posts/" class="view-all">Browse full collection</a>
+          </div>
+          <div class="card-catalog">
+            {% set count = 0 %}
+            {% for item in site.pages | sort(attribute="date") | reverse %}
+              {% if item.section == "posts" and count < 6 %}
+                {% set count = count + 1 %}
+            <article class="catalog-card">
+              <div class="card-spine"></div>
+              <div class="card-body">
+                <h3 class="card-title"><a href="{{ item.url }}">{{ item.title }}</a></h3>
+                <div class="card-meta">
+                  {% if item.authors %}
+                    <span class="card-author">{{ item.authors | join(sep=", ") }}</span>
+                  {% endif %}
+                  <span class="card-date">{{ item.date | date(format="%B %d, %Y") }}</span>
+                </div>
+                {% if item.description %}
+                  <p class="card-description">{{ item.description }}</p>
+                {% endif %}
+                {% if item.tags %}
+                <div class="card-subjects">
+                  {% for tag in item.tags %}
+                    <a href="{{ base_url }}/tags/{{ tag }}/" class="subject-tag">{{ tag }}</a>
+                  {% endfor %}
+                </div>
+                {% endif %}
+              </div>
+            </article>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </section>
+
+{% include "footer.html" %}
