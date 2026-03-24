@@ -1,0 +1,53 @@
+{% include "header.html" %}
+
+<div class="index-layout">
+    <header class="page-header text-center">
+        <h1 class="page-title">{{ page.title }}</h1>
+        {% if page.description %}
+        <p class="lead">{{ page.description }}</p>
+        {% endif %}
+    </header>
+
+    <div class="content page-content intro-content">
+        {{ content | safe }}
+    </div>
+
+    <section class="latest-episodes">
+        <h2>Latest Episodes</h2>
+        {% set recent_episodes = site.pages | where("section", "episodes") | sort_by("date") | reverse %}
+        <div class="episode-list">
+            {% for episode in recent_episodes | slice(end=3) %}
+            <article class="episode-card">
+                {% if episode.extra.artwork %}
+                <div class="card-artwork">
+                    <img src="{{ episode.extra.artwork }}" alt="Artwork for {{ episode.title }}" loading="lazy">
+                </div>
+                {% endif %}
+                <div class="card-content">
+                    <h3><a href="{{ episode.url }}">{{ episode.title }}</a></h3>
+                    <div class="episode-meta">
+                        {% if episode.date %}
+                        <time datetime="{{ episode.date | date("%Y-%m-%d") }}">{{ episode.date | date("%B %d, %Y") }}</time>
+                        {% endif %}
+                        {% if episode.extra.duration %}
+                        <span class="duration">{{ episode.extra.duration }}</span>
+                        {% endif %}
+                    </div>
+                    <p>{{ episode.description }}</p>
+                    <a href="{{ episode.url }}" class="play-link" aria-label="Play {{ episode.title }}">
+                        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="5 3 19 12 5 21 5 3" fill="currentColor"></polygon>
+                        </svg>
+                        Play Episode
+                    </a>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-4">
+            <a href="{{ base_url }}/episodes/" class="btn">All Episodes</a>
+        </div>
+    </section>
+</div>
+
+{% include "footer.html" %}
