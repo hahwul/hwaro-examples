@@ -1,117 +1,86 @@
 {% include "header.html" %}
 
-<main class="dashboard-grid">
-  <!-- Top Panel: Stats -->
-  <div class="panel col-4">
-    <div class="panel-header">
-      <span>ALTITUDE</span>
-      <span>[FT]</span>
-    </div>
-    <div class="data-value">32,400</div>
-    <div class="meter">
-      <div class="meter-fill" style="width: 82%;"></div>
-      <div class="meter-marks"></div>
-    </div>
-    <div class="data-label text-right">+240 FT/MIN</div>
-  </div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-  <div class="panel col-4">
-    <div class="panel-header">
-      <span>AIRSPEED</span>
-      <span>[KTS]</span>
+  <!-- Main Telemetry Panel -->
+  <div class="cockpit-panel col-span-1 md:col-span-2 p-6 flex flex-col justify-between">
+    <div class="hud-title">
+      <span>PRIMARY TELEMETRY</span>
+      <span class="text-xs text-telemetry-green blink">[ ACTIVE ]</span>
     </div>
-    <div class="data-value color-accent">480</div>
-    <div class="meter">
-      <div class="meter-fill warning" style="width: 65%;"></div>
-      <div class="meter-marks"></div>
-    </div>
-    <div class="data-label text-right">MACH 0.82</div>
-  </div>
 
-  <div class="panel col-4">
-    <div class="panel-header">
-      <span>FUEL LVL</span>
-      <span>[%]</span>
-    </div>
-    <div class="data-value color-danger">18</div>
-    <div class="meter">
-      <div class="meter-fill danger" style="width: 18%;"></div>
-      <div class="meter-marks"></div>
-    </div>
-    <div class="data-label text-right color-danger">LOW FUEL WARN</div>
-  </div>
-
-  <!-- Main Center Panel: Target/Horizon -->
-  <div class="panel col-8">
-    <div class="panel-header">
-      <span>PRIMARY DISPLAY</span>
-      <span>NAV_ACTV</span>
-    </div>
-    <div class="crosshair-box">
-      <div class="target-circle"></div>
-      <div class="target-center"></div>
-
-      <!-- Faux Horizon Lines -->
-      <div style="position:absolute; width: 60%; border-bottom: 2px solid var(--text-main); top: 30%;"></div>
-      <div style="position:absolute; width: 40%; border-bottom: 2px dashed var(--text-main); top: 70%;"></div>
-
-      <!-- Faux Numbers -->
-      <div style="position:absolute; left: 10px; top: 10px;">PITCH +5</div>
-      <div style="position:absolute; right: 10px; top: 10px;">ROLL 0</div>
-      <div style="position:absolute; left: 10px; bottom: 10px;">HDG 274</div>
-    </div>
-  </div>
-
-  <!-- Right Panel: Log Feed -->
-  <div class="panel col-4">
-    <div class="panel-header">
-      <span>SYSTEM LOG</span>
-      <span>[TXT]</span>
-    </div>
-    <div class="log-feed">
-      <div class="log-line"><span class="log-time">14:02:11</span>INIT TELEMETRY</div>
-      <div class="log-line"><span class="log-time">14:02:15</span>SENSOR_ARRAY: OK</div>
-      <div class="log-line"><span class="log-time">14:03:01</span><span class="color-accent">WARN: TURBULENCE AHEAD</span></div>
-      <div class="log-line"><span class="log-time">14:04:22</span>AUTO-NAV ENGAGED</div>
-      <div class="log-line"><span class="log-time">14:05:00</span>PING FLIGHT_CTRL... 12MS</div>
-      <div class="log-line"><span class="log-time">14:08:45</span>AWAITING CMD_INPUT_</div>
-    </div>
-  </div>
-
-  <!-- Content area below (e.g., for markdown content if index.md is used) -->
-  {% if content %}
-  <div class="panel col-12 markdown-content">
-    <div class="panel-header">
-      <span>DATABANK</span>
-      <span>DOCS_</span>
-    </div>
-    {{ content }}
-  </div>
-  {% endif %}
-
-  <!-- Recent Posts (if any logs/posts exist) -->
-  {% if sections %}
-    {% for section in sections %}
-      {% if section.posts %}
-      <div class="panel col-12">
-        <div class="panel-header">
-          <span>{{ section.title | upper }}</span>
-          <span>ENTRIES: {{ section.posts | length }}</span>
-        </div>
-        <ul style="list-style: none;">
-        {% for post in section.posts | slice(0, 5) %}
-          <li style="margin-bottom: 10px;">
-            <span class="color-accent">>></span>
-            <a href="{{ base_url }}/{{ post.url }}">{{ post.title | upper }}</a>
-            <span class="text-dim" style="float: right;">[{{ post.date | date("%Y-%m-%d") }}]</span>
-          </li>
-        {% endfor %}
-        </ul>
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <div class="text-telemetry-muted text-sm uppercase">ALTITUDE (MSL)</div>
+        <div class="hud-value">84,392 <span class="text-sm font-normal">FT</span></div>
+        <div class="gauge-bar"><div class="gauge-fill w-3/4"></div></div>
       </div>
-      {% endif %}
-    {% endfor %}
-  {% endif %}
+      <div>
+        <div class="text-telemetry-muted text-sm uppercase">AIRSPEED (TAS)</div>
+        <div class="hud-value">1,240 <span class="text-sm font-normal">KTS</span></div>
+        <div class="gauge-bar"><div class="gauge-fill w-5/6"></div></div>
+      </div>
+      <div class="mt-4">
+        <div class="text-telemetry-muted text-sm uppercase">CABIN PRESSURE</div>
+        <div class="hud-value amber">9.2 <span class="text-sm font-normal">PSI</span></div>
+        <div class="gauge-bar"><div class="gauge-fill amber w-1/2"></div></div>
+      </div>
+      <div class="mt-4">
+        <div class="text-telemetry-muted text-sm uppercase">G-FORCE</div>
+        <div class="hud-value red">4.2 <span class="text-sm font-normal">G</span></div>
+        <div class="gauge-bar"><div class="gauge-fill red w-full"></div></div>
+      </div>
+    </div>
+  </div>
 
-</main>
+  <!-- Radar / Targeting -->
+  <div class="cockpit-panel p-6 flex flex-col items-center">
+    <div class="hud-title w-full">
+      <span>SENSOR ARRAY</span>
+    </div>
+    <div class="relative w-48 h-48 border border-telemetry-green rounded-full bg-telemetry-panel overflow-hidden mt-4 flex justify-center items-center shadow-[0_0_15px_rgba(57,255,20,0.2)]">
+      <!-- Grid lines -->
+      <div class="absolute w-full h-px bg-telemetry-muted top-1/2 left-0"></div>
+      <div class="absolute h-full w-px bg-telemetry-muted top-0 left-1/2"></div>
+      <div class="absolute w-32 h-32 rounded-full border border-telemetry-muted"></div>
+      <div class="absolute w-16 h-16 rounded-full border border-telemetry-muted"></div>
+      <!-- Sweep -->
+      <div class="absolute top-1/2 left-1/2 w-24 h-24 origin-top-left animate-[sweep_4s_linear_infinite]" style="background-color: transparent; border-right: 2px solid rgba(57, 255, 20, 0.8);"></div>
+      <!-- Blips -->
+      <div class="absolute w-2 h-2 bg-telemetry-green rounded-full top-1/4 left-1/3 blink shadow-[0_0_5px_#39ff14]"></div>
+      <div class="absolute w-2 h-2 bg-telemetry-amber rounded-full bottom-1/3 right-1/4 shadow-[0_0_5px_#ffb000]"></div>
+    </div>
+    <div class="mt-4 text-xs text-telemetry-green uppercase w-full flex justify-between">
+      <span>RNG: 240NM</span>
+      <span>MODE: AIR</span>
+    </div>
+  </div>
+
+  <!-- Recent Logs -->
+  <div class="cockpit-panel col-span-1 md:col-span-3 p-6 mt-6">
+    <div class="hud-title">
+      <span>SYSTEM LOGS (LATEST)</span>
+      <a href="{{ base_url }}/logs/" class="text-xs hover:text-white transition-colors">[ VIEW ALL ]</a>
+    </div>
+    <div class="space-y-2 font-mono text-sm h-48 overflow-y-auto pr-2" id="log-container">
+      {% set logs_section = get_section(path="logs/_index.md") %}
+      {% for post in logs_section.pages | slice(end=5) %}
+        <div class="flex items-start border-b border-telemetry-border pb-2 group hover:bg-telemetry-muted/30 transition-colors p-1">
+          <div class="w-32 text-telemetry-muted shrink-0">{{ post.date | date("%H:%M:%S") }}</div>
+          <div class="flex-grow text-telemetry-green group-hover:text-white">
+            <a href="{{ post.url }}">{{ post.title }}</a>
+            {% if post.summary %}
+              <div class="text-xs text-telemetry-muted mt-1 truncate">{{ post.summary | strip_html }}</div>
+            {% endif %}
+          </div>
+          <div class="text-xs {% if post.extra.status == 'CRITICAL' %}text-telemetry-red blink{% elif post.extra.status == 'WARNING' %}text-telemetry-amber{% else %}text-telemetry-green{% endif %} uppercase w-20 text-right">
+            [{{ post.extra.status | default("OK") }}]
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+</div>
 
 {% include "footer.html" %}

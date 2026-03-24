@@ -1,28 +1,49 @@
 {% include "header.html" %}
 
-<main class="dashboard-grid">
-  <div class="panel col-12 markdown-content">
-    <div class="panel-header">
-      <span>{{ page.title | upper }}</span>
-      <span>[FILE]</span>
+<article class="cockpit-panel p-6 md:p-10">
+  <header class="border-b border-telemetry-muted pb-6 mb-8">
+    <div class="flex justify-between items-center text-xs text-telemetry-muted mb-4 tracking-widest uppercase">
+      <div>LOG.ID: {{ page.slug | default("UNDEF") }}</div>
+      <div>DATE: {{ page.date | date("%Y-%m-%d %H:%M:%S") }}</div>
     </div>
+    <h1 class="text-3xl md:text-5xl font-bold uppercase tracking-tight text-white mb-2 shadow-[0_0_10px_rgba(255,255,255,0.2)]">
+      {{ page.title }}
+    </h1>
+    {% if page.description %}
+      <p class="text-xl text-telemetry-green mt-4 max-w-2xl border-l-4 border-telemetry-green pl-4">{{ page.description }}</p>
+    {% endif %}
+  </header>
 
-    <div style="font-size: 14px; color: var(--text-dim); margin-bottom: 20px;">
-      DATE: {{ page.date | date("%Y-%m-%d %H:%M:%S") }} |
+  <div class="prose prose-invert prose-telemetry max-w-none font-mono text-telemetry-green leading-relaxed text-sm md:text-base">
+    <style>
+      .prose-telemetry h2 { color: #fff; text-transform: uppercase; border-bottom: 1px dashed #1e3d1e; padding-bottom: 0.5rem; margin-top: 2rem; }
+      .prose-telemetry h3 { color: #fff; text-transform: uppercase; margin-top: 1.5rem; }
+      .prose-telemetry a { color: #39ff14; text-decoration: underline; text-decoration-style: dashed; }
+      .prose-telemetry a:hover { color: #fff; text-decoration-style: solid; background: rgba(57, 255, 20, 0.2); }
+      .prose-telemetry strong { color: #fff; }
+      .prose-telemetry code { background: #0a140a; padding: 0.2rem 0.4rem; border: 1px solid #1e3d1e; color: #39ff14; }
+      .prose-telemetry pre { background: #0a140a; padding: 1rem; border: 1px solid #1e3d1e; border-left: 4px solid #39ff14; overflow-x: auto; margin: 1.5rem 0; }
+      .prose-telemetry pre code { background: transparent; padding: 0; border: none; }
+      .prose-telemetry blockquote { border-left: 4px solid #ffb000; padding-left: 1rem; color: #ffb000; background: rgba(255, 176, 0, 0.05); margin: 1.5rem 0; }
+      .prose-telemetry ul { list-style-type: square; padding-left: 1.5rem; margin: 1rem 0; }
+      .prose-telemetry ul li::marker { color: #39ff14; }
+      .prose-telemetry img { border: 1px solid #1e3d1e; box-shadow: 0 0 15px rgba(57, 255, 20, 0.1); filter: sepia(100%) hue-rotate(80deg) saturate(300%) contrast(150%); max-width: 100%; height: auto; }
+    </style>
+
+    {{ content | safe }}
+  </div>
+
+  <footer class="mt-12 pt-6 border-t border-telemetry-muted flex justify-between items-center text-sm">
+    <div class="uppercase text-telemetry-muted">
       {% if page.taxonomies.tags %}
         TAGS:
         {% for tag in page.taxonomies.tags %}
-          <a href="{{ base_url }}/tags/{{ tag }}">{{ tag }}</a>
+          <a href="{{ base_url }}/tags/{{ tag | slugify }}/" class="text-telemetry-green hover:text-white mr-2">[{{ tag }}]</a>
         {% endfor %}
       {% endif %}
     </div>
-
-    {{ content }}
-
-    <div style="margin-top: 40px; border-top: 1px dashed var(--text-dim); padding-top: 10px;">
-      <a href="{{ base_url }}/">>> BACK TO MAIN</a>
-    </div>
-  </div>
-</main>
+    <a href="{{ base_url }}/" class="text-telemetry-green hover:text-white hover:bg-telemetry-green/20 px-2 py-1 transition-colors border border-transparent hover:border-telemetry-green">[ RETURN TO DASHBOARD ]</a>
+  </footer>
+</article>
 
 {% include "footer.html" %}
