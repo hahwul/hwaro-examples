@@ -1,0 +1,80 @@
+{% include "header.html" %}
+<header class="site-header">
+  <div class="header-inner">
+    <a href="{{ base_url }}/" class="site-logo">Easel</a>
+    <nav class="site-nav">
+      <a href="{{ base_url }}/tutorials/">Tutorials</a>
+      <a href="{{ base_url }}/techniques/">Techniques</a>
+    </nav>
+    <button class="search-trigger" onclick="openSearch()" title="Search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      Search
+    </button>
+  </div>
+</header>
+<div class="search-overlay" id="searchOverlay" onclick="if(event.target===this)closeSearch()">
+  <div class="search-modal">
+    <div class="search-input-wrap">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="searchInput" placeholder="Search tutorials and techniques..." autocomplete="off">
+      <kbd onclick="closeSearch()">ESC</kbd>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
+<main class="home-main">
+  <section class="hero">
+    <div class="hero-inner">
+      <h1>Learn to Draw and Paint</h1>
+      <p class="hero-subtitle">Step-by-step art tutorials for every skill level. From pencil sketches to watercolor paintings, build your skills with guided lessons.</p>
+      <div class="hero-actions">
+        <a href="{{ base_url }}/tutorials/" class="btn btn-primary">Browse Tutorials</a>
+        <a href="{{ base_url }}/techniques/" class="btn btn-secondary">Study Techniques</a>
+      </div>
+    </div>
+  </section>
+
+  {% set tutorials_section = get_section(path="tutorials/_index.md") %}
+  <section class="featured-section">
+    <div class="section-inner">
+      <h2>Latest Tutorials</h2>
+      <div class="card-grid">
+        {% for tutorial in tutorials_section.pages | sort(attribute="date") | reverse %}
+        <article class="tutorial-card">
+          <div class="card-header">
+            <span class="difficulty difficulty-{{ tutorial.extra.difficulty | lower }}">{{ tutorial.extra.difficulty }}</span>
+            <span class="duration">{{ tutorial.extra.duration }}</span>
+          </div>
+          <h3><a href="{{ tutorial.url }}">{{ tutorial.title }}</a></h3>
+          <p>{{ tutorial.description }}</p>
+          <div class="tool-tags">
+            {% for tool in tutorial.extra.tools %}
+            <span class="tool-tag">{{ tool }}</span>
+            {% endfor %}
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  {% set techniques_section = get_section(path="techniques/_index.md") %}
+  <section class="featured-section">
+    <div class="section-inner">
+      <h2>Technique References</h2>
+      <div class="card-grid">
+        {% for technique in techniques_section.pages | sort(attribute="date") | reverse %}
+        <article class="tutorial-card">
+          <div class="card-header">
+            <span class="difficulty difficulty-{{ technique.extra.difficulty | lower }}">{{ technique.extra.difficulty }}</span>
+            <span class="duration">{{ technique.extra.duration }}</span>
+          </div>
+          <h3><a href="{{ technique.url }}">{{ technique.title }}</a></h3>
+          <p>{{ technique.description }}</p>
+        </article>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+</main>
+{% include "footer.html" %}
