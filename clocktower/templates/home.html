@@ -1,0 +1,129 @@
+{% include "header.html" %}
+  <main class="site-main">
+    <section class="hero-countdown">
+      <p class="hero-label">Next Event</p>
+      <h2 class="hero-event-name" id="next-event-name">--</h2>
+      <div class="countdown-display" id="countdown">
+        <div class="countdown-unit">
+          <span class="countdown-value" id="cd-days">--</span>
+          <span class="countdown-label">Days</span>
+        </div>
+        <div class="countdown-sep">:</div>
+        <div class="countdown-unit">
+          <span class="countdown-value" id="cd-hours">--</span>
+          <span class="countdown-label">Hours</span>
+        </div>
+        <div class="countdown-sep">:</div>
+        <div class="countdown-unit">
+          <span class="countdown-value" id="cd-minutes">--</span>
+          <span class="countdown-label">Min</span>
+        </div>
+        <div class="countdown-sep">:</div>
+        <div class="countdown-unit">
+          <span class="countdown-value" id="cd-seconds">--</span>
+          <span class="countdown-label">Sec</span>
+        </div>
+      </div>
+      <p class="hero-date" id="next-event-date">--</p>
+    </section>
+
+    <section class="timeline-section">
+      <h2 class="section-title">Upcoming Events</h2>
+      <div class="timeline">
+        {% for item in site.pages %}
+          {% if item.extra.status == "upcoming" %}
+          <a href="{{ item.url }}" class="timeline-item" data-date="{{ item.date }}">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <time class="timeline-date">{{ item.date | date("%Y-%m-%d") }}</time>
+              <h3 class="timeline-title">{{ item.title }}</h3>
+              <p class="timeline-location">{{ item.extra.location }}</p>
+              {% if item.description %}<p class="timeline-desc">{{ item.description }}</p>{% endif %}
+            </div>
+          </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="archive-section">
+      <h2 class="section-title">Past Events</h2>
+      <div class="archive-list">
+        {% for item in site.pages %}
+          {% if item.extra.status == "past" %}
+          <a href="{{ item.url }}" class="archive-item">
+            <time class="archive-date">{{ item.date | date("%Y-%m-%d") }}</time>
+            <span class="archive-title">{{ item.title }}</span>
+            <span class="archive-badge">Completed</span>
+          </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+
+  <script>
+  (function() {
+    var events = [];
+    {% for item in site.pages %}
+      {% if item.extra.status == "upcoming" %}
+      events.push({
+        title: "{{ item.title }}",
+        date: "{{ item.date | date("%Y-%m-%d") }}",
+        url: "{{ item.url }}"
+      });
+      {% endif %}
+    {% endfor %}
+
+    events.sort(function(a, b) {
+      return new Date(a.date) - new Date(b.date);
+    });
+
+    var now = new Date();
+    var next = null;
+    for (var i = 0; i < events.length; i++) {
+      if (new Date(events[i].date) > now) {
+        next = events[i];
+        break;
+      }
+    }
+
+    if (!next && events.length > 0) {
+      next = events[0];
+    }
+
+    if (next) {
+      document.getElementById("next-event-name").textContent = next.title;
+      document.getElementById("next-event-date").textContent = next.date;
+
+      var target = new Date(next.date + "T00:00:00").getTime();
+
+      function pad(n) {
+        return n < 10 ? "0" + n : String(n);
+      }
+
+      function tick() {
+        var remaining = target - Date.now();
+        if (remaining <= 0) {
+          document.getElementById("cd-days").textContent = "00";
+          document.getElementById("cd-hours").textContent = "00";
+          document.getElementById("cd-minutes").textContent = "00";
+          document.getElementById("cd-seconds").textContent = "00";
+          return;
+        }
+        var d = Math.floor(remaining / 86400000);
+        var h = Math.floor((remaining % 86400000) / 3600000);
+        var m = Math.floor((remaining % 3600000) / 60000);
+        var s = Math.floor((remaining % 60000) / 1000);
+        document.getElementById("cd-days").textContent = pad(d);
+        document.getElementById("cd-hours").textContent = pad(h);
+        document.getElementById("cd-minutes").textContent = pad(m);
+        document.getElementById("cd-seconds").textContent = pad(s);
+      }
+
+      tick();
+      setInterval(tick, 1000);
+    }
+  })();
+  </script>
+{% include "footer.html" %}

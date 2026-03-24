@@ -1,0 +1,753 @@
+/* === Easel: Art Tutorial Theme === */
+/* Canvas-textured, light, art classroom aesthetic */
+
+:root {
+  --color-bg: #f5f0e8;
+  --color-bg-paper: #faf7f2;
+  --color-text: #2c2418;
+  --color-text-secondary: #6b5e4f;
+  --color-text-muted: #9a8d7e;
+  --color-border: #d4cbc0;
+  --color-border-light: #e8e0d5;
+  --color-accent: #8b4513;
+  --color-accent-hover: #6d360f;
+  --color-link: #5a3a1a;
+  --color-link-hover: #8b4513;
+  --color-beginner: #3a6b35;
+  --color-intermediate: #7a5c1f;
+  --color-advanced: #8b2500;
+  --color-tag-bg: #eee7db;
+  --color-tag-border: #d4cbc0;
+  --color-card-shadow: rgba(44, 36, 24, 0.06);
+  --font-body: "Georgia", "Times New Roman", serif;
+  --font-heading: "Georgia", "Times New Roman", serif;
+  --font-mono: "Menlo", "Consolas", monospace;
+  --font-ui: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --max-width: 1120px;
+  --content-width: 720px;
+}
+
+/* === Reset & Base === */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 17px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  background-image:
+    url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+a {
+  color: var(--color-link);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+a:hover {
+  color: var(--color-link-hover);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* === Header === */
+
+.site-header {
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-bg-paper);
+}
+
+.header-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0.9rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.site-logo {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: 0.02em;
+  text-decoration: none;
+}
+
+.site-logo:hover {
+  color: var(--color-accent);
+}
+
+.site-nav {
+  display: flex;
+  gap: 1.5rem;
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+}
+
+.site-nav a {
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  padding: 0.2rem 0;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.site-nav a:hover {
+  color: var(--color-text);
+  border-bottom-color: var(--color-accent);
+}
+
+.search-trigger {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 0.35rem 0.7rem;
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.search-trigger:hover {
+  border-color: var(--color-text-secondary);
+  color: var(--color-text-secondary);
+}
+
+/* === Search Overlay === */
+
+.search-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(44, 36, 24, 0.4);
+  z-index: 100;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 12vh;
+}
+
+.search-overlay.active {
+  display: flex;
+}
+
+.search-modal {
+  background: var(--color-bg-paper);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  width: 90%;
+  max-width: 560px;
+  box-shadow: 0 8px 32px rgba(44, 36, 24, 0.12);
+}
+
+.search-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.search-input-wrap svg {
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+}
+
+.search-input-wrap input {
+  flex: 1;
+  border: none;
+  background: none;
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+  color: var(--color-text);
+  outline: none;
+}
+
+.search-input-wrap input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.search-input-wrap kbd {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  padding: 0.15rem 0.4rem;
+  border: 1px solid var(--color-border);
+  border-radius: 3px;
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+.search-results {
+  max-height: 50vh;
+  overflow-y: auto;
+  padding: 0.5rem;
+}
+
+.search-result-item {
+  display: block;
+  padding: 0.6rem 0.75rem;
+  border-radius: 4px;
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+.search-result-item:hover {
+  background: var(--color-tag-bg);
+}
+
+.search-result-title {
+  font-weight: 600;
+  font-size: 0.9rem;
+  font-family: var(--font-ui);
+  margin-bottom: 0.15rem;
+}
+
+.search-result-snippet {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  font-family: var(--font-ui);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.search-result-snippet mark {
+  background: rgba(139, 69, 19, 0.12);
+  color: var(--color-accent);
+  border-radius: 2px;
+  padding: 0 1px;
+}
+
+.search-no-results {
+  padding: 2rem 1rem;
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  font-family: var(--font-ui);
+}
+
+/* === Hero === */
+
+.hero {
+  background-color: var(--color-bg-paper);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.hero-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 4.5rem 1.5rem;
+  text-align: center;
+}
+
+.hero h1 {
+  font-family: var(--font-heading);
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 1rem;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.hero-subtitle {
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+  max-width: 560px;
+  margin: 0 auto 2rem;
+  line-height: 1.6;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-block;
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.65rem 1.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.btn-primary {
+  background-color: var(--color-accent);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-accent-hover);
+  color: #fff;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-accent);
+  color: #fff;
+}
+
+/* === Featured Sections === */
+
+.featured-section {
+  padding: 3rem 0;
+}
+
+.featured-section + .featured-section {
+  border-top: 1px solid var(--color-border-light);
+}
+
+.section-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.featured-section h2 {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 1.5rem;
+}
+
+/* === Card Grid === */
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.25rem;
+}
+
+.tutorial-card {
+  background: var(--color-bg-paper);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 1.5rem;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.tutorial-card:hover {
+  box-shadow: 0 4px 16px var(--color-card-shadow);
+  border-color: var(--color-text-muted);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+}
+
+.tutorial-card h3 {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.tutorial-card h3 a {
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.tutorial-card h3 a:hover {
+  color: var(--color-accent);
+}
+
+.tutorial-card > p {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  line-height: 1.55;
+  margin-bottom: 1rem;
+}
+
+/* === Difficulty Badges === */
+
+.difficulty {
+  display: inline-block;
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.55rem;
+  border-radius: 3px;
+}
+
+.difficulty-beginner {
+  color: var(--color-beginner);
+  background: rgba(58, 107, 53, 0.1);
+  border: 1px solid rgba(58, 107, 53, 0.2);
+}
+
+.difficulty-intermediate {
+  color: var(--color-intermediate);
+  background: rgba(122, 92, 31, 0.1);
+  border: 1px solid rgba(122, 92, 31, 0.2);
+}
+
+.difficulty-advanced {
+  color: var(--color-advanced);
+  background: rgba(139, 37, 0, 0.1);
+  border: 1px solid rgba(139, 37, 0, 0.2);
+}
+
+/* === Duration === */
+
+.duration {
+  color: var(--color-text-muted);
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+}
+
+/* === Tool Tags === */
+
+.tool-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.tool-tag {
+  display: inline-block;
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  color: var(--color-text-secondary);
+  background: var(--color-tag-bg);
+  border: 1px solid var(--color-tag-border);
+  padding: 0.15rem 0.5rem;
+  border-radius: 3px;
+}
+
+/* === Section Page === */
+
+.section-main {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.5rem 4rem;
+}
+
+.section-hero {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 3rem 1.5rem 2rem;
+}
+
+.section-hero h1 {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.section-hero p {
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  max-width: 560px;
+}
+
+/* === Lesson Article === */
+
+.page-main {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+.lesson-article {
+  max-width: var(--content-width);
+  margin: 0 auto;
+}
+
+.lesson-header {
+  margin-bottom: 2.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.lesson-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
+}
+
+.lesson-meta time {
+  color: var(--color-text-muted);
+}
+
+.lesson-header h1 {
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.75rem;
+}
+
+.lesson-description {
+  font-size: 1.05rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.tools-required {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border-light);
+  border-radius: 6px;
+  padding: 1rem 1.25rem;
+}
+
+.tools-required strong {
+  display: block;
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+  margin-bottom: 0.6rem;
+}
+
+/* === Lesson Content (Prose) === */
+
+.lesson-content h2 {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 2.5rem 0 0.75rem;
+  color: var(--color-text);
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border-light);
+}
+
+.lesson-content h2:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+.lesson-content h3 {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 2rem 0 0.5rem;
+}
+
+.lesson-content p {
+  margin-bottom: 1rem;
+  line-height: 1.75;
+}
+
+.lesson-content strong {
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.lesson-content ul,
+.lesson-content ol {
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+}
+
+.lesson-content li {
+  margin-bottom: 0.35rem;
+  line-height: 1.65;
+}
+
+.lesson-content blockquote {
+  border-left: 3px solid var(--color-accent);
+  padding: 0.5rem 1rem;
+  margin: 1.5rem 0;
+  background: var(--color-bg);
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+.lesson-content code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--color-tag-bg);
+  padding: 0.15em 0.35em;
+  border-radius: 3px;
+}
+
+.lesson-content pre {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border-light);
+  border-radius: 6px;
+  padding: 1rem 1.25rem;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+
+.lesson-content pre code {
+  background: none;
+  padding: 0;
+}
+
+.lesson-content img {
+  border-radius: 6px;
+  border: 1px solid var(--color-border);
+  margin: 1.5rem 0;
+}
+
+/* === Lesson Footer === */
+
+.lesson-footer {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+}
+
+.lesson-footer a {
+  color: var(--color-text-secondary);
+  text-decoration: none;
+}
+
+.lesson-footer a:hover {
+  color: var(--color-accent);
+}
+
+/* === Error Page === */
+
+.error-main {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 6rem 1.5rem;
+  text-align: center;
+}
+
+.error-main h1 {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.error-main p {
+  color: var(--color-text-secondary);
+}
+
+/* === Footer === */
+
+.site-footer {
+  border-top: 1px solid var(--color-border);
+  background-color: var(--color-bg-paper);
+  margin-top: auto;
+}
+
+.footer-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 1.5rem;
+  text-align: center;
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.footer-inner a {
+  color: var(--color-text-secondary);
+}
+
+/* === Responsive === */
+
+@media (max-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+
+  .header-inner {
+    padding: 0.75rem 1rem;
+    gap: 1rem;
+  }
+
+  .site-nav {
+    gap: 1rem;
+    font-size: 0.8rem;
+  }
+
+  .hero-inner {
+    padding: 3rem 1rem;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-hero,
+  .section-inner,
+  .page-main {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .lesson-header h1 {
+    font-size: 1.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 1.7rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .search-trigger span {
+    display: none;
+  }
+}
