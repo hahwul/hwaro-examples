@@ -1,0 +1,35 @@
+{% include "header.html" %}
+
+<section class="intro" style="margin-bottom: 3rem;">
+    <h2 style="margin-top: 0; font-size: 2rem; border-bottom: none;"><span class="typing-text">hello_world()</span></h2>
+    <div style="margin-top: 1.5rem;">
+        {{ content | safe }}
+    </div>
+</section>
+
+{% set section = get_section(path="projects/_index.md") %}
+<section class="projects">
+    <h2>latest_projects</h2>
+    <div class="projects-list">
+        {% for post in section.pages | slice(end=3) %}
+        <div class="project-card">
+            <h3 class="project-title" style="margin-top: 0; border: none; font-size: 1.2rem;">
+                <a href="{{ post.url }}">{{ post.title }}</a>
+            </h3>
+            <p class="project-description">{{ post.description | default(post.summary | striptags | truncate(100)) }}</p>
+            {% if post.taxonomies.tags %}
+            <div class="tags">
+                {% for tag in post.taxonomies.tags %}
+                <span class="tag"><a href="{{ base_url }}/tags/{{ tag | slugify }}/">{{ tag }}</a></span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    <div style="margin-top: 1.5rem;">
+        <a href="{{ base_url }}/projects/">[View all projects...]</a>
+    </div>
+</section>
+
+{% include "footer.html" %}
