@@ -1,0 +1,85 @@
+{% include "header.html" %}
+  <main class="site-main">
+    <article class="event-detail">
+      <header class="event-header">
+        {% if page.date %}
+        <time class="event-date">{{ page.date | date("%Y-%m-%d") }}</time>
+        {% endif %}
+        <h1 class="event-title">{{ page.title }}</h1>
+        {% if page.extra.location %}
+        <p class="event-location">{{ page.extra.location }}</p>
+        {% endif %}
+        {% if page.extra.status %}
+        <span class="event-status event-status--{{ page.extra.status }}">{{ page.extra.status }}</span>
+        {% endif %}
+      </header>
+
+      {% if page.extra.status == "upcoming" and page.date %}
+      <div class="inline-countdown" data-target="{{ page.date | date("%Y-%m-%d") }}">
+        <div class="inline-cd-unit">
+          <span class="inline-cd-value" data-unit="days">--</span>
+          <span class="inline-cd-label">Days</span>
+        </div>
+        <div class="inline-cd-sep">:</div>
+        <div class="inline-cd-unit">
+          <span class="inline-cd-value" data-unit="hours">--</span>
+          <span class="inline-cd-label">Hours</span>
+        </div>
+        <div class="inline-cd-sep">:</div>
+        <div class="inline-cd-unit">
+          <span class="inline-cd-value" data-unit="minutes">--</span>
+          <span class="inline-cd-label">Min</span>
+        </div>
+        <div class="inline-cd-sep">:</div>
+        <div class="inline-cd-unit">
+          <span class="inline-cd-value" data-unit="seconds">--</span>
+          <span class="inline-cd-label">Sec</span>
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="event-content">
+        {{ content | safe }}
+      </div>
+
+      {% if page.tags %}
+      <div class="event-tags">
+        {% for tag in page.tags %}
+        <a href="{{ base_url }}/tags/{{ tag | slugify }}/" class="tag-badge">{{ tag }}</a>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <nav class="event-nav">
+        {% if page.higher %}<a href="{{ page.higher.url }}" class="nav-link nav-prev">Previous Event</a>{% endif %}
+        {% if page.lower %}<a href="{{ page.lower.url }}" class="nav-link nav-next">Next Event</a>{% endif %}
+      </nav>
+    </article>
+  </main>
+
+  <script>
+  (function() {
+    var el = document.querySelector(".inline-countdown");
+    if (!el) return;
+    var target = new Date(el.dataset.target + "T00:00:00").getTime();
+    function pad(n) { return n < 10 ? "0" + n : String(n); }
+    function tick() {
+      var remaining = target - Date.now();
+      if (remaining <= 0) {
+        el.querySelectorAll(".inline-cd-value").forEach(function(v) { v.textContent = "00"; });
+        return;
+      }
+      var d = Math.floor(remaining / 86400000);
+      var h = Math.floor((remaining % 86400000) / 3600000);
+      var m = Math.floor((remaining % 3600000) / 60000);
+      var s = Math.floor((remaining % 60000) / 1000);
+      el.querySelector('[data-unit="days"]').textContent = pad(d);
+      el.querySelector('[data-unit="hours"]').textContent = pad(h);
+      el.querySelector('[data-unit="minutes"]').textContent = pad(m);
+      el.querySelector('[data-unit="seconds"]').textContent = pad(s);
+    }
+    tick();
+    setInterval(tick, 1000);
+  })();
+  </script>
+{% include "footer.html" %}
