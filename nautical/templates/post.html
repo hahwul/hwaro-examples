@@ -1,0 +1,64 @@
+{% include "header.html" %}
+  <main class="min-h-[calc(100vh-200px)] px-4 md:px-0">
+    <article class="max-w-4xl mx-auto">
+      <header class="mb-16 text-center relative border-b-2 border-primary pb-8">
+
+        <div class="inline-flex flex-wrap justify-center items-center gap-4 px-6 py-3 rounded bg-surface/80 border border-border mb-8 shadow-md">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold tracking-widest uppercase text-primary">DATE:</span>
+            <span class="text-sm font-medium text-muted">{% if page.date %}{{ page.date | date("%Y-%m-%d") }}{% else %}UNKNOWN{% endif %}</span>
+          </div>
+          <span class="w-1 h-1 rounded-full bg-border"></span>
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold tracking-widest uppercase text-primary">POS:</span>
+            <span class="text-sm font-medium text-muted font-mono">{% if page.extra.coordinates %}{{ page.extra.coordinates }}{% else %}0°0'N 0°0'E{% endif %}</span>
+          </div>
+          <span class="w-1 h-1 rounded-full bg-border"></span>
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold tracking-widest uppercase text-primary">WIND:</span>
+            <span class="text-sm font-medium text-muted">{% if page.extra.wind %}{{ page.extra.wind }}{% else %}Calm{% endif %}</span>
+          </div>
+          <span class="w-1 h-1 rounded-full bg-border"></span>
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold tracking-widest uppercase text-primary">SEA:</span>
+            <span class="text-sm font-medium text-muted">{% if page.extra.waves %}{{ page.extra.waves }}{% else %}Smooth{% endif %}</span>
+          </div>
+        </div>
+
+        <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter mb-8 text-white leading-tight">
+          {{ page.title }}
+        </h1>
+
+        {% if page.tags %}
+        <div class="flex gap-2 justify-center flex-wrap relative z-10">
+          {% for tag in page.tags %}
+            <a href="{{ base_url }}/tags/{{ tag | slugify }}/" class="inline-block px-3 py-1 bg-surface-alt rounded text-xs text-primary font-bold tracking-wide uppercase border border-border hover:bg-primary hover:text-bg transition-colors duration-300 no-underline">{{ tag }}</a>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </header>
+
+      <div class="prose prose-invert prose-lg mx-auto relative z-10">
+        {{ content }}
+      </div>
+
+      <nav class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-24 pt-12 border-t-2 border-primary">
+        {% if page.lower %}
+        <a href="{{ page.lower.url }}" class="group flex flex-col items-start gap-3 p-6 rounded bg-surface border border-border hover:border-primary transition-colors duration-300 no-underline relative overflow-hidden">
+          <span class="text-xs text-muted font-bold uppercase tracking-widest group-hover:text-primary transition-colors">&larr; PREVIOUS ENTRY</span>
+          <span class="text-xl font-display font-bold text-white leading-tight group-hover:text-primary transition-colors">{{ page.lower.title }}</span>
+        </a>
+        {% else %}
+        <div class="hidden md:block"></div>
+        {% endif %}
+
+        {% if page.higher %}
+        <a href="{{ page.higher.url }}" class="group flex flex-col items-end gap-3 p-6 rounded bg-surface border border-border hover:border-primary transition-colors duration-300 no-underline text-right relative overflow-hidden">
+          <span class="text-xs text-muted font-bold uppercase tracking-widest group-hover:text-primary transition-colors">NEXT ENTRY &rarr;</span>
+          <span class="text-xl font-display font-bold text-white leading-tight group-hover:text-primary transition-colors">{{ page.higher.title }}</span>
+        </a>
+        {% endif %}
+      </nav>
+    </article>
+  </main>
+{% include "footer.html" %}
