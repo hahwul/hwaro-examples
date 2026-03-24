@@ -1,0 +1,117 @@
+{% include "header.html" %}
+
+<main class="dashboard-grid">
+  <!-- Top Panel: Stats -->
+  <div class="panel col-4">
+    <div class="panel-header">
+      <span>ALTITUDE</span>
+      <span>[FT]</span>
+    </div>
+    <div class="data-value">32,400</div>
+    <div class="meter">
+      <div class="meter-fill" style="width: 82%;"></div>
+      <div class="meter-marks"></div>
+    </div>
+    <div class="data-label text-right">+240 FT/MIN</div>
+  </div>
+
+  <div class="panel col-4">
+    <div class="panel-header">
+      <span>AIRSPEED</span>
+      <span>[KTS]</span>
+    </div>
+    <div class="data-value color-accent">480</div>
+    <div class="meter">
+      <div class="meter-fill warning" style="width: 65%;"></div>
+      <div class="meter-marks"></div>
+    </div>
+    <div class="data-label text-right">MACH 0.82</div>
+  </div>
+
+  <div class="panel col-4">
+    <div class="panel-header">
+      <span>FUEL LVL</span>
+      <span>[%]</span>
+    </div>
+    <div class="data-value color-danger">18</div>
+    <div class="meter">
+      <div class="meter-fill danger" style="width: 18%;"></div>
+      <div class="meter-marks"></div>
+    </div>
+    <div class="data-label text-right color-danger">LOW FUEL WARN</div>
+  </div>
+
+  <!-- Main Center Panel: Target/Horizon -->
+  <div class="panel col-8">
+    <div class="panel-header">
+      <span>PRIMARY DISPLAY</span>
+      <span>NAV_ACTV</span>
+    </div>
+    <div class="crosshair-box">
+      <div class="target-circle"></div>
+      <div class="target-center"></div>
+
+      <!-- Faux Horizon Lines -->
+      <div style="position:absolute; width: 60%; border-bottom: 2px solid var(--text-main); top: 30%;"></div>
+      <div style="position:absolute; width: 40%; border-bottom: 2px dashed var(--text-main); top: 70%;"></div>
+
+      <!-- Faux Numbers -->
+      <div style="position:absolute; left: 10px; top: 10px;">PITCH +5</div>
+      <div style="position:absolute; right: 10px; top: 10px;">ROLL 0</div>
+      <div style="position:absolute; left: 10px; bottom: 10px;">HDG 274</div>
+    </div>
+  </div>
+
+  <!-- Right Panel: Log Feed -->
+  <div class="panel col-4">
+    <div class="panel-header">
+      <span>SYSTEM LOG</span>
+      <span>[TXT]</span>
+    </div>
+    <div class="log-feed">
+      <div class="log-line"><span class="log-time">14:02:11</span>INIT TELEMETRY</div>
+      <div class="log-line"><span class="log-time">14:02:15</span>SENSOR_ARRAY: OK</div>
+      <div class="log-line"><span class="log-time">14:03:01</span><span class="color-accent">WARN: TURBULENCE AHEAD</span></div>
+      <div class="log-line"><span class="log-time">14:04:22</span>AUTO-NAV ENGAGED</div>
+      <div class="log-line"><span class="log-time">14:05:00</span>PING FLIGHT_CTRL... 12MS</div>
+      <div class="log-line"><span class="log-time">14:08:45</span>AWAITING CMD_INPUT_</div>
+    </div>
+  </div>
+
+  <!-- Content area below (e.g., for markdown content if index.md is used) -->
+  {% if content %}
+  <div class="panel col-12 markdown-content">
+    <div class="panel-header">
+      <span>DATABANK</span>
+      <span>DOCS_</span>
+    </div>
+    {{ content }}
+  </div>
+  {% endif %}
+
+  <!-- Recent Posts (if any logs/posts exist) -->
+  {% if sections %}
+    {% for section in sections %}
+      {% if section.posts %}
+      <div class="panel col-12">
+        <div class="panel-header">
+          <span>{{ section.title | upper }}</span>
+          <span>ENTRIES: {{ section.posts | length }}</span>
+        </div>
+        <ul style="list-style: none;">
+        {% for post in section.posts | slice(0, 5) %}
+          <li style="margin-bottom: 10px;">
+            <span class="color-accent">>></span>
+            <a href="{{ base_url }}/{{ post.url }}">{{ post.title | upper }}</a>
+            <span class="text-dim" style="float: right;">[{{ post.date | date("%Y-%m-%d") }}]</span>
+          </li>
+        {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+
+</main>
+
+{% include "footer.html" %}

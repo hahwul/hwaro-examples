@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ config.title }}{% if page.title %} - {{ page.title }}{% endif %}</title>
+  <meta name="description" content="{{ config.description }}">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-color: #050b05;
+      --text-main: #33ff00;
+      --text-dim: #1e8815;
+      --accent: #ffb000;
+      --danger: #ff3333;
+      --border-color: #1e8815;
+      --panel-bg: rgba(20, 40, 20, 0.4);
+      --font-mono: 'VT323', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: var(--font-mono);
+      line-height: 1.2;
+      font-size: 20px;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    a {
+      color: var(--text-main);
+      text-decoration: none;
+      border-bottom: 1px dashed var(--text-main);
+    }
+
+    a:hover {
+      background-color: var(--text-main);
+      color: var(--bg-color);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* HUD Lines Overlay */
+    .hud-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 100;
+      background-image: url("data:image/svg+xml,%3Csvg width='4' height='4' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='4' height='2' fill='rgba(51,255,0,0.05)' y='2'/%3E%3C/svg%3E");
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid var(--text-main);
+      position: relative;
+    }
+
+    header::before, header::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      width: 10px;
+      height: 6px;
+      background-color: var(--text-main);
+    }
+    header::before { left: 0; }
+    header::after { right: 0; }
+
+    .site-title {
+      font-size: 36px;
+      font-weight: bold;
+      text-shadow: 0 0 5px var(--text-main);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-links a {
+      border: 1px solid var(--text-main);
+      padding: 5px 15px;
+      text-decoration: none;
+    }
+
+    /* System Status Bar */
+    .system-status {
+      display: flex;
+      justify-content: space-between;
+      font-size: 16px;
+      color: var(--text-dim);
+      margin-bottom: 20px;
+    }
+
+    .status-indicator {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background-color: var(--text-main);
+      margin-right: 5px;
+      animation: blink 2s infinite;
+    }
+
+    @keyframes blink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+
+    .status-warning .status-indicator {
+      background-color: var(--accent);
+    }
+    .status-danger .status-indicator {
+      background-color: var(--danger);
+    }
+
+    /* Grid Layout for Dashboard */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 20px;
+      flex: 1;
+    }
+
+    .panel {
+      border: 1px solid var(--border-color);
+      background-color: var(--panel-bg);
+      padding: 15px;
+      position: relative;
+    }
+
+    /* Panel corners */
+    .panel::before, .panel::after {
+      content: '';
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border: 2px solid var(--text-main);
+    }
+    .panel::before { top: -2px; left: -2px; border-right: none; border-bottom: none; }
+    .panel::after { bottom: -2px; right: -2px; border-left: none; border-top: none; }
+
+    .panel-header {
+      font-size: 18px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 5px;
+      margin-bottom: 15px;
+      color: var(--text-dim);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Data Elements */
+    .data-value {
+      font-size: 48px;
+      line-height: 1;
+      margin-bottom: 5px;
+    }
+
+    .data-label {
+      font-size: 14px;
+      color: var(--text-dim);
+    }
+
+    /* Progress Bar */
+    .meter {
+      height: 20px;
+      background-color: transparent;
+      border: 1px solid var(--text-dim);
+      margin: 10px 0;
+      position: relative;
+    }
+    .meter-fill {
+      height: 100%;
+      background-color: var(--text-main);
+      width: 75%;
+    }
+    .meter-fill.warning { background-color: var(--accent); }
+    .meter-fill.danger { background-color: var(--danger); }
+
+    .meter-marks {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg width='10' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='1' height='20' fill='%23050b05' x='9'/%3E%3C/svg%3E");
+    }
+
+    /* Log Feed */
+    .log-feed {
+      font-size: 16px;
+      height: 200px;
+      overflow-y: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .log-line {
+      margin-bottom: 5px;
+      opacity: 0.8;
+    }
+    .log-line:last-child {
+      opacity: 1;
+      font-weight: bold;
+    }
+    .log-time { color: var(--text-dim); margin-right: 10px; }
+
+    /* Crosshair Target */
+    .crosshair-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 200px;
+      position: relative;
+    }
+
+    .target-circle {
+      width: 150px;
+      height: 150px;
+      border: 2px dashed var(--text-main);
+      border-radius: 50%;
+      position: relative;
+    }
+
+    .target-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 20px;
+      height: 20px;
+    }
+
+    .target-center::before, .target-center::after {
+      content: '';
+      position: absolute;
+      background-color: var(--text-main);
+    }
+    .target-center::before { top: 9px; left: -10px; width: 40px; height: 2px; }
+    .target-center::after { left: 9px; top: -10px; width: 2px; height: 40px; }
+
+    /* Markdown Content styling */
+    .markdown-content h1, .markdown-content h2, .markdown-content h3 {
+      color: var(--text-main);
+      margin: 20px 0 10px 0;
+    }
+    .markdown-content p {
+      margin-bottom: 15px;
+    }
+    .markdown-content ul {
+      margin-bottom: 15px;
+      padding-left: 20px;
+      list-style-type: square;
+    }
+
+    /* Utilities */
+    .col-4 { grid-column: span 4; }
+    .col-8 { grid-column: span 8; }
+    .col-12 { grid-column: span 12; }
+    .text-right { text-align: right; }
+    .text-center { text-align: center; }
+    .color-accent { color: var(--accent); }
+    .color-danger { color: var(--danger); }
+
+    /* Footer */
+    footer {
+      margin-top: 40px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--border-color);
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 14px;
+    }
+
+    @media (max-width: 768px) {
+      .col-4, .col-8 { grid-column: span 12; }
+      .site-title { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="hud-overlay"></div>
+
+  <div class="container">
+    <header>
+      <div class="site-title">{{ config.title }}</div>
+      <div class="nav-links">
+        <a href="{{ base_url }}/">MAIN</a>
+        <a href="{{ base_url }}/tags">SYS_TAGS</a>
+      </div>
+    </header>
+
+    <div class="system-status">
+      <div>SYS: <span class="status-indicator"></span> ONLINE</div>
+      <div>SEC: CLR</div>
+      <div>NET: UPLINK ESTABLISHED</div>
+      <div>TIME: <span id="clock">00:00:00</span></div>
+    </div>
+
+    <script>
+      function updateClock() {
+        const now = new Date();
+        const timeStr = now.toISOString().substr(11, 8) + 'Z';
+        document.getElementById('clock').innerText = timeStr;
+      }
+      setInterval(updateClock, 1000);
+      updateClock();
+    </script>
