@@ -1,0 +1,220 @@
+{% include "header.html" %}
+
+<div class="h-full flex space-x-6 items-start overflow-x-auto pb-4">
+
+  {% set tasks_section = get_section(path="tasks/_index.md") %}
+
+  {% set todo_tasks = [] %}
+  {% set inprogress_tasks = [] %}
+  {% set done_tasks = [] %}
+
+  {% for task in tasks_section.pages %}
+    {% if task.taxonomies.status %}
+      {% if task.taxonomies.status | first == "To Do" %}
+        {% set_global todo_tasks = todo_tasks | concat(with=task) %}
+      {% elif task.taxonomies.status | first == "In Progress" %}
+        {% set_global inprogress_tasks = inprogress_tasks | concat(with=task) %}
+      {% elif task.taxonomies.status | first == "Done" %}
+        {% set_global done_tasks = done_tasks | concat(with=task) %}
+      {% endif %}
+    {% else %}
+      {% set_global todo_tasks = todo_tasks | concat(with=task) %}
+    {% endif %}
+  {% endfor %}
+
+  <!-- To Do Column -->
+  <div class="w-80 shrink-0 bg-gray-100/50 rounded-xl p-3 flex flex-col h-full border border-gray-200 shadow-sm">
+    <div class="column-header px-1">
+      <div class="flex items-center space-x-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-gray-400"></span>
+        <h2 class="font-semibold text-gray-700">To Do</h2>
+        <span class="text-xs font-medium bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full">{{ todo_tasks | length }}</span>
+      </div>
+      <button class="text-gray-400 hover:text-gray-600">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+      </button>
+    </div>
+
+    <div class="flex-1 overflow-y-auto pr-1 space-y-3 custom-scrollbar">
+      {% for task in todo_tasks %}
+        <a href="{{ task.url }}" class="block">
+          <div class="card-container group">
+            <div class="flex justify-between items-start mb-2">
+              <div class="flex space-x-1">
+                {% if task.taxonomies.priority %}
+                  {% set p = task.taxonomies.priority | first %}
+                  {% if p == "High" %}
+                    <span class="badge badge-high text-[10px] px-1.5">{{ p }}</span>
+                  {% elif p == "Medium" %}
+                    <span class="badge badge-medium text-[10px] px-1.5">{{ p }}</span>
+                  {% else %}
+                    <span class="badge badge-low text-[10px] px-1.5">{{ p }}</span>
+                  {% endif %}
+                {% endif %}
+              </div>
+              <button class="text-gray-300 group-hover:text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg>
+              </button>
+            </div>
+            <h3 class="text-sm font-medium text-gray-900 mb-2 leading-snug">{{ task.title }}</h3>
+            <div class="flex justify-between items-center mt-3">
+              <span class="text-xs text-gray-400 font-medium flex items-center">
+                <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                {{ task.date | date(format="%b %d") }}
+              </span>
+              {% if task.taxonomies.assignee %}
+                <div class="flex -space-x-2">
+                  {% for a in task.taxonomies.assignee %}
+                    <div class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-800 flex items-center justify-center text-[10px] font-bold border border-white" title="{{ a }}">
+                      {{ a | truncate(length=1, end="") | upper }}
+                    </div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- In Progress Column -->
+  <div class="w-80 shrink-0 bg-blue-50/50 rounded-xl p-3 flex flex-col h-full border border-blue-100 shadow-sm">
+    <div class="column-header px-1">
+      <div class="flex items-center space-x-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
+        <h2 class="font-semibold text-blue-900">In Progress</h2>
+        <span class="text-xs font-medium bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">{{ inprogress_tasks | length }}</span>
+      </div>
+      <button class="text-blue-400 hover:text-blue-600">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+      </button>
+    </div>
+
+    <div class="flex-1 overflow-y-auto pr-1 space-y-3 custom-scrollbar">
+      {% for task in inprogress_tasks %}
+        <a href="{{ task.url }}" class="block">
+          <div class="card-container group border-blue-200 hover:border-blue-300">
+            <div class="flex justify-between items-start mb-2">
+              <div class="flex space-x-1">
+                {% if task.taxonomies.priority %}
+                  {% set p = task.taxonomies.priority | first %}
+                  {% if p == "High" %}
+                    <span class="badge badge-high text-[10px] px-1.5">{{ p }}</span>
+                  {% elif p == "Medium" %}
+                    <span class="badge badge-medium text-[10px] px-1.5">{{ p }}</span>
+                  {% else %}
+                    <span class="badge badge-low text-[10px] px-1.5">{{ p }}</span>
+                  {% endif %}
+                {% endif %}
+              </div>
+              <button class="text-gray-300 group-hover:text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg>
+              </button>
+            </div>
+            <h3 class="text-sm font-medium text-gray-900 mb-2 leading-snug">{{ task.title }}</h3>
+            <div class="flex justify-between items-center mt-3">
+              <span class="text-xs text-gray-400 font-medium flex items-center">
+                <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                {{ task.date | date(format="%b %d") }}
+              </span>
+              {% if task.taxonomies.assignee %}
+                <div class="flex -space-x-2">
+                  {% for a in task.taxonomies.assignee %}
+                    <div class="w-6 h-6 rounded-full bg-pink-100 text-pink-800 flex items-center justify-center text-[10px] font-bold border border-white" title="{{ a }}">
+                      {{ a | truncate(length=1, end="") | upper }}
+                    </div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Done Column -->
+  <div class="w-80 shrink-0 bg-green-50/50 rounded-xl p-3 flex flex-col h-full border border-green-100 shadow-sm">
+    <div class="column-header px-1">
+      <div class="flex items-center space-x-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-green-500"></span>
+        <h2 class="font-semibold text-green-900">Done</h2>
+        <span class="text-xs font-medium bg-green-100 text-green-700 px-2 py-0.5 rounded-full">{{ done_tasks | length }}</span>
+      </div>
+      <button class="text-green-400 hover:text-green-600">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+      </button>
+    </div>
+
+    <div class="flex-1 overflow-y-auto pr-1 space-y-3 custom-scrollbar opacity-75">
+      {% for task in done_tasks %}
+        <a href="{{ task.url }}" class="block">
+          <div class="card-container group border-green-200 hover:border-green-300">
+            <div class="flex justify-between items-start mb-2">
+              <div class="flex space-x-1">
+                {% if task.taxonomies.priority %}
+                  {% set p = task.taxonomies.priority | first %}
+                  {% if p == "High" %}
+                    <span class="badge badge-high text-[10px] px-1.5">{{ p }}</span>
+                  {% elif p == "Medium" %}
+                    <span class="badge badge-medium text-[10px] px-1.5">{{ p }}</span>
+                  {% else %}
+                    <span class="badge badge-low text-[10px] px-1.5">{{ p }}</span>
+                  {% endif %}
+                {% endif %}
+              </div>
+              <button class="text-gray-300 group-hover:text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg>
+              </button>
+            </div>
+            <h3 class="text-sm font-medium text-gray-500 line-through mb-2 leading-snug">{{ task.title }}</h3>
+            <div class="flex justify-between items-center mt-3">
+              <span class="text-xs text-green-600 font-medium flex items-center">
+                <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                Completed
+              </span>
+              {% if task.taxonomies.assignee %}
+                <div class="flex -space-x-2">
+                  {% for a in task.taxonomies.assignee %}
+                    <div class="w-6 h-6 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center text-[10px] font-bold border border-white" title="{{ a }}">
+                      {{ a | truncate(length=1, end="") | upper }}
+                    </div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Add Column Button -->
+  <div class="w-80 shrink-0 h-full flex items-start">
+    <button class="w-full flex items-center justify-center py-3 border-2 border-dashed border-gray-300 rounded-xl text-gray-500 hover:text-gray-700 hover:border-gray-400 hover:bg-gray-50 transition-colors font-medium text-sm">
+      <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+      Add Section
+    </button>
+  </div>
+
+</div>
+
+<style>
+  /* Custom scrollbar for columns */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(156, 163, 175, 0.5);
+    border-radius: 20px;
+  }
+  .custom-scrollbar:hover::-webkit-scrollbar-thumb {
+    background-color: rgba(156, 163, 175, 0.8);
+  }
+</style>
+
+{% include "footer.html" %}
