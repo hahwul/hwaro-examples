@@ -1,0 +1,58 @@
+{% include "header.html" %}
+
+        {% if page.extra.classification or page.authors or page.date %}
+        <article class="document">
+          <header class="document-header">
+            {% if page.extra.classification %}
+              <span class="call-number">{{ page.extra.classification }}</span>
+            {% endif %}
+            <h1>{{ page.title }}</h1>
+            <div class="document-meta">
+              {% if page.authors %}
+                <span class="meta-field"><span class="meta-label">Author</span> {{ page.authors | join(sep=", ") }}</span>
+              {% endif %}
+              {% if page.date %}
+                <span class="meta-field"><span class="meta-label">Date</span> {{ page.date | date(format="%B %d, %Y") }}</span>
+              {% endif %}
+              {% if page.extra.classification %}
+                <span class="meta-field"><span class="meta-label">Call No.</span> {{ page.extra.classification }}</span>
+              {% endif %}
+              {% if page.reading_time %}
+                <span class="meta-field"><span class="meta-label">Reading Time</span> {{ page.reading_time }} min</span>
+              {% endif %}
+            </div>
+            {% if page.tags %}
+            <div class="document-subjects">
+              <span class="meta-label">Subjects</span>
+              {% for tag in page.tags %}
+                <a href="{{ base_url }}/tags/{{ tag }}/">{{ tag }}</a>
+              {% endfor %}
+            </div>
+            {% endif %}
+          </header>
+
+          <div class="document-content">
+            {{ content }}
+          </div>
+
+          <footer class="document-footer">
+            <nav class="doc-nav">
+              {% if page.earlier %}
+                <a href="{{ page.earlier.url }}" class="nav-prev">Previous: {{ page.earlier.title }}</a>
+              {% endif %}
+              {% if page.later %}
+                <a href="{{ page.later.url }}" class="nav-next">Next: {{ page.later.title }}</a>
+              {% endif %}
+            </nav>
+          </footer>
+        </article>
+        {% else %}
+        <article class="page-content">
+          <h1>{{ page.title }}</h1>
+          <div class="page-body">
+            {{ content }}
+          </div>
+        </article>
+        {% endif %}
+
+{% include "footer.html" %}
