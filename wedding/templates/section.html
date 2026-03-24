@@ -1,0 +1,51 @@
+{% include "header.html" %}
+
+<section class="max-w-4xl mx-auto px-6 py-16">
+    <header class="text-center mb-16">
+        <h1 class="text-5xl font-script text-rosegold mb-6">{{ section.title | default(value="Events") }}</h1>
+        {% if section.description %}
+        <p class="text-slate font-serif italic max-w-2xl mx-auto">{{ section.description }}</p>
+        {% endif %}
+        <div class="w-24 h-px bg-rosegold mx-auto mt-8"></div>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+        {% for post in section.pages %}
+        <article class="p-8 border border-champagne bg-white shadow-sm hover:shadow-md transition-shadow">
+            <header class="text-center mb-6">
+                <a href="{{ post.url }}">
+                    <h2 class="text-3xl font-serif text-rosegold mb-2 hover:text-rosegold-light transition-colors">{{ post.title }}</h2>
+                </a>
+                {% if post.date %}
+                <time class="block text-slate uppercase tracking-widest text-xs font-serif">{{ post.date | date(format="%B %d, %Y") }}</time>
+                {% endif %}
+            </header>
+
+            <div class="text-slate text-center text-sm leading-relaxed mb-6 font-body">
+                {% if post.summary %}
+                {{ post.summary | safe }}
+                {% else %}
+                {{ post.content | striptags | truncate(length=120) | safe }}
+                {% endif %}
+            </div>
+
+            <div class="text-center">
+                <a href="{{ post.url }}" class="inline-block px-6 py-2 border border-rosegold text-rosegold hover:bg-rosegold hover:text-white transition-colors text-sm uppercase tracking-widest rounded-full font-serif">Read More</a>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+
+    {% if paginator %}
+    <nav class="mt-16 flex justify-center space-x-4 font-serif">
+        {% if paginator.previous %}
+        <a href="{{ paginator.previous }}" class="px-6 py-2 border border-champagne text-slate hover:bg-champagne transition-colors rounded-full">&larr; Previous</a>
+        {% endif %}
+        {% if paginator.next %}
+        <a href="{{ paginator.next }}" class="px-6 py-2 border border-champagne text-slate hover:bg-champagne transition-colors rounded-full">Next &rarr;</a>
+        {% endif %}
+    </nav>
+    {% endif %}
+</section>
+
+{% include "footer.html" %}

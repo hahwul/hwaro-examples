@@ -1,0 +1,124 @@
+{% include "header.html" %}
+
+<div class="space-y-6 max-w-4xl mx-auto">
+    <!-- Breadcrumbs -->
+    <nav class="flex items-center text-sm font-medium text-textMuted space-x-2">
+        <a href="{{ base_url }}" class="hover:text-text">Dashboard</a>
+        <span>/</span>
+        <a href="{{ base_url }}/inventory" class="hover:text-text">Inventory</a>
+        <span>/</span>
+        <span class="text-text font-semibold truncate">{{ page.title }}</span>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="flex flex-col md:flex-row md:items-start justify-between gap-4">
+        <div>
+            <h1 class="text-2xl font-bold tracking-tight text-text">{{ page.title }}</h1>
+            <p class="text-textMuted mt-1">{{ page.description | default("Product Details") }}</p>
+        </div>
+        <div class="flex items-center gap-2">
+            <button class="btn">Edit Item</button>
+            <button class="btn btn-primary">Receive Stock</button>
+        </div>
+    </div>
+
+    <!-- Product Details Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Main details -->
+        <div class="md:col-span-2 space-y-6">
+            <div class="card p-6">
+                <h2 class="text-lg font-semibold text-text mb-4">Item Information</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-6">
+                    <div>
+                        <div class="text-xs font-medium text-textMuted uppercase tracking-wider mb-1">SKU</div>
+                        <div class="text-sm font-medium text-text font-mono">{{ page.extra.sku | default("N/A") }}</div>
+                    </div>
+                    <div>
+                        <div class="text-xs font-medium text-textMuted uppercase tracking-wider mb-1">Category</div>
+                        <div class="text-sm font-medium text-text">{{ page.extra.category | default("Uncategorized") }}</div>
+                    </div>
+                    <div>
+                        <div class="text-xs font-medium text-textMuted uppercase tracking-wider mb-1">Unit Price</div>
+                        <div class="text-sm font-medium text-text">${{ page.extra.price | default("0.00") }}</div>
+                    </div>
+                    <div>
+                        <div class="text-xs font-medium text-textMuted uppercase tracking-wider mb-1">Cost Price</div>
+                        <div class="text-sm font-medium text-text">${{ page.extra.cost | default("0.00") }}</div>
+                    </div>
+                    <div>
+                        <div class="text-xs font-medium text-textMuted uppercase tracking-wider mb-1">Supplier</div>
+                        <div class="text-sm font-medium text-text">{{ page.extra.supplier | default("N/A") }}</div>
+                    </div>
+                    <div>
+                        <div class="text-xs font-medium text-textMuted uppercase tracking-wider mb-1">Last Received</div>
+                        <div class="text-sm font-medium text-text">{{ page.date | date("%b %d, %Y") }}</div>
+                    </div>
+                </div>
+
+                <hr class="my-6 border-border">
+
+                <h3 class="text-sm font-semibold text-text mb-2">Description</h3>
+                <div class="content prose prose-sm text-textMuted">
+                    {{ content | safe }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar stats -->
+        <div class="space-y-6">
+            <div class="card p-6">
+                <h2 class="text-lg font-semibold text-text mb-4">Stock Level</h2>
+                <div class="flex items-end justify-between mb-2">
+                    <div class="text-3xl font-bold tracking-tight text-text">{{ page.extra.stock | default(0) }}</div>
+                    {% set stock = page.extra.stock | default(0) %}
+                    {% set min_stock = page.extra.min_stock | default(10) %}
+
+                    {% if stock <= 0 %}
+                        <span class="status-badge out-of-stock">Out of Stock</span>
+                    {% elif stock <= min_stock %}
+                        <span class="status-badge low-stock">Low Stock</span>
+                    {% else %}
+                        <span class="status-badge in-stock">In Stock</span>
+                    {% endif %}
+                </div>
+                <div class="w-full bg-border rounded-full h-2 mb-4">
+                    {% set percent = (stock / (min_stock * 3)) * 100 %}
+                    {% if percent > 100 %}{% set percent = 100 %}{% endif %}
+
+                    {% if stock <= 0 %}
+                        <div class="bg-danger h-2 rounded-full" style="width: 0%"></div>
+                    {% elif stock <= min_stock %}
+                        <div class="bg-warning h-2 rounded-full" style="width: {{ percent }}%"></div>
+                    {% else %}
+                        <div class="bg-success h-2 rounded-full" style="width: {{ percent }}%"></div>
+                    {% endif %}
+                </div>
+
+                <div class="flex justify-between text-xs text-textMuted">
+                    <span>Minimum threshold: {{ min_stock }}</span>
+                    <span>Max capacity: {{ page.extra.max_stock | default(min_stock * 5) }}</span>
+                </div>
+            </div>
+
+            <div class="card p-6">
+                <h2 class="text-sm font-semibold text-text mb-4">Quick Actions</h2>
+                <div class="space-y-3">
+                    <button class="w-full btn justify-start">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-textMuted"><path d="M2 12h20"></path><path d="M12 2v20"></path></svg>
+                        Adjust Stock
+                    </button>
+                    <button class="w-full btn justify-start">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-textMuted"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        Download Barcode
+                    </button>
+                    <button class="w-full btn justify-start text-danger hover:bg-danger hover:text-white border-transparent hover:border-danger">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path></svg>
+                        Delete Item
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include "footer.html" %}
