@@ -1,0 +1,52 @@
+{% include "header.html" %}
+
+<article class="single-article">
+    <header class="article-header">
+        {% if page.categories %}
+        <div class="article-category">
+            {% for cat in page.categories %}
+                <a href="{{ base_url }}/categories/{{ cat | slugify }}/">{{ cat }}</a>{% if not loop.last %}, {% endif %}
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <h1 class="article-title">{{ page.title }}</h1>
+
+        {% if page.description %}
+        <h2 class="article-subtitle">{{ page.description }}</h2>
+        {% endif %}
+
+        <div class="article-meta">
+            <span class="byline">By <strong>{{ page.extra.author | default("Editorial Board") }}</strong></span>
+            <span class="pubdate">{{ page.date | date("%B %d, %Y") }}</span>
+        </div>
+    </header>
+
+    {% if page.image %}
+    <figure class="article-featured-image">
+        <img src="{{ page.image }}" alt="{{ page.title }}">
+        {% if page.extra.image_caption %}
+        <figcaption>{{ page.extra.image_caption }}</figcaption>
+        {% endif %}
+    </figure>
+    {% endif %}
+
+    <div class="article-content">
+        {{ content | safe }}
+    </div>
+
+    <footer class="article-footer">
+        {% if page.tags %}
+        <div class="article-tags">
+            <strong>Topics:</strong>
+            <ul>
+                {% for tag in page.tags %}
+                <li><a href="{{ base_url }}/tags/{{ tag | slugify }}/">{{ tag }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </footer>
+</article>
+
+{% include "footer.html" %}
