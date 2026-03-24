@@ -1,0 +1,79 @@
+{% include "header.html" %}
+
+{% if section.title == "Home" %}
+  <section class="hero-banner">
+    <div class="hero-content">
+      <h2 class="hero-title">Refined Elegance.</h2>
+      <p class="hero-subtitle">Discover our new collection of minimalist luxury.</p>
+      <a href="{{ base_url }}/products/" class="hero-button">Shop the Collection</a>
+    </div>
+  </section>
+
+  <section class="container featured-collection">
+    <header class="section-header">
+      <h3 class="section-title">New Arrivals</h3>
+    </header>
+
+    <div class="product-grid">
+      {% set products_section = get_section(path="products/_index.md") %}
+      {% if products_section and products_section.pages %}
+        {% for post in products_section.pages | slice(end=4) %}
+          <article class="product-card">
+            <a href="{{ post.url | absolute_url }}" class="product-link">
+              <div class="product-card-image">
+                {% if post.image %}
+                  <img src="{{ base_url }}{{ post.image }}" alt="{{ post.title }}" loading="lazy">
+                {% else %}
+                  <div class="placeholder-image"></div>
+                {% endif %}
+              </div>
+              <div class="product-card-info">
+                <h4 class="product-card-title">{{ post.title }}</h4>
+                <div class="product-card-price">{{ post.extra.price | default("$0.00") }}</div>
+              </div>
+            </a>
+          </article>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </section>
+
+  <div class="container content-area">
+    {{ content | safe }}
+  </div>
+{% else %}
+  <div class="container section-page">
+    <header class="section-header">
+      <h1 class="section-title">{{ section.title }}</h1>
+      {% if section.description %}
+        <p class="section-description">{{ section.description }}</p>
+      {% endif %}
+    </header>
+
+    <div class="product-grid">
+      {% for post in section.pages %}
+        <article class="product-card">
+          <a href="{{ post.url | absolute_url }}" class="product-link">
+            <div class="product-card-image">
+              {% if post.image %}
+                <img src="{{ base_url }}{{ post.image }}" alt="{{ post.title }}" loading="lazy">
+              {% else %}
+                <div class="placeholder-image"></div>
+              {% endif %}
+            </div>
+            <div class="product-card-info">
+              <h4 class="product-card-title">{{ post.title }}</h4>
+              <div class="product-card-price">{{ post.extra.price | default("$0.00") }}</div>
+            </div>
+          </a>
+        </article>
+      {% endfor %}
+    </div>
+
+    <div class="content-area">
+      {{ content | safe }}
+    </div>
+  </div>
+{% endif %}
+
+{% include "footer.html" %}
