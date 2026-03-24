@@ -1,0 +1,55 @@
+{% include "header.html" %}
+
+<div class="section-header">
+  <h1>{{ section.title }}</h1>
+  {% if section.description %}
+  <p class="section-desc">{{ section.description }}</p>
+  {% endif %}
+</div>
+
+<section class="trail-feed">
+  {% for post in section.pages %}
+  <article class="trail-card">
+    <div class="trail-card-header">
+      {% if post.extra.difficulty %}
+      <span class="difficulty-badge difficulty-{{ post.extra.difficulty | lower }}">{{ post.extra.difficulty }}</span>
+      {% endif %}
+      {% if post.extra.region %}
+      <span class="trail-region">{{ post.extra.region }}</span>
+      {% endif %}
+    </div>
+    <h2 class="trail-card-title"><a href="{{ post.url }}">{{ post.title }}</a></h2>
+    {% if post.description %}
+    <p class="trail-card-excerpt">{{ post.description }}</p>
+    {% endif %}
+    <div class="trail-meta">
+      {% if post.date %}
+      <time datetime="{{ post.date | date('%Y-%m-%d') }}">{{ post.date | date("%B %d, %Y") }}</time>
+      {% endif %}
+      {% if post.extra.distance %}
+      <span class="meta-item">{{ post.extra.distance }}</span>
+      {% endif %}
+      {% if post.extra.elevation %}
+      <span class="meta-item">{{ post.extra.elevation }} gain</span>
+      {% endif %}
+      {% if post.extra.duration %}
+      <span class="meta-item">{{ post.extra.duration }}</span>
+      {% endif %}
+    </div>
+  </article>
+  {% endfor %}
+</section>
+
+{% if paginator %}
+<nav class="pagination">
+  {% if paginator.previous_page %}
+  <a href="{{ paginator.previous_page }}" class="pagination-link">Newer</a>
+  {% endif %}
+  <span class="pagination-info">Page {{ paginator.current_page }} of {{ paginator.total_pages }}</span>
+  {% if paginator.next_page %}
+  <a href="{{ paginator.next_page }}" class="pagination-link">Older</a>
+  {% endif %}
+</nav>
+{% endif %}
+
+{% include "footer.html" %}
