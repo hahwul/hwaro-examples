@@ -1,0 +1,72 @@
+{% include "header.html" %}
+
+<article class="w-full bg-white rounded-lg border border-border overflow-hidden">
+  {% if page.image %}
+  <div class="w-full h-96 relative border-b border-border">
+    <img src="{{ page.image }}" alt="{{ page.title }}" class="absolute inset-0 w-full h-full object-cover">
+  </div>
+  {% endif %}
+  <div class="p-8">
+    <header class="mb-8">
+      <div class="flex items-center justify-between mb-4">
+        {% if page.extra.category %}
+        <span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-gray-100 text-gray-800">
+          {{ page.extra.category }}
+        </span>
+        {% endif %}
+        {% if page.extra.price %}
+        <span class="text-3xl font-bold text-gray-900">${{ page.extra.price }}</span>
+        {% endif %}
+      </div>
+      <h1 class="text-4xl font-extrabold text-gray-900 tracking-tight">{{ page.title }}</h1>
+      <p class="mt-4 text-xl text-gray-500">{{ page.description }}</p>
+
+      <div class="mt-6 flex items-center justify-between border-t border-border pt-6">
+        <div class="flex items-center gap-3">
+          {% if page.extra.seller_avatar %}
+          <img src="{{ page.extra.seller_avatar }}" alt="{{ page.extra.seller_name | default('Store Seller') }}" class="h-10 w-10 rounded-full bg-gray-200">
+          {% else %}
+          <div class="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 font-bold">
+            {% if page.extra.seller_name | default("S") %}
+              {{ page.extra.seller_name | default("S") | truncate(length=1, end="") | upper }}
+            {% else %}
+              S
+            {% endif %}
+          </div>
+          {% endif %}
+          <div>
+            <p class="text-sm font-medium text-gray-900">{{ page.extra.seller_name | default("Store Seller") }}</p>
+            {% if page.extra.rating %}
+            <div class="flex items-center text-sm text-yellow-500">
+              <svg class="h-4 w-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <span class="ml-1 text-gray-600 font-medium">{{ page.extra.rating }}</span>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        <button class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-900 hover:bg-gray-800 shadow-sm">
+          Add to Cart
+        </button>
+      </div>
+    </header>
+
+    <div class="prose prose-gray max-w-none">
+      {{ content | safe }}
+    </div>
+
+    {% if page.tags %}
+    <div class="mt-8 border-t border-border pt-6">
+      <h3 class="text-sm font-medium text-gray-900 mb-3">Tags</h3>
+      <div class="flex flex-wrap gap-2">
+        {% for tag in page.tags %}
+        <a href="{{ base_url }}/tags/{{ tag | slugify }}/" class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-gray-100 text-gray-800 hover:bg-gray-200">
+          {{ tag }}
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</article>
+
+{% include "footer.html" %}

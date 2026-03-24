@@ -1,0 +1,58 @@
+{% include "header.html" %}
+
+<div class="mb-8 flex justify-between items-center">
+    <div>
+        <h1 class="text-2xl font-bold text-gray-900 mb-1">{{ section.title }}</h1>
+        <p class="text-sm text-gray-500">{{ section.description }}</p>
+    </div>
+    <div>
+        <a href="#" class="btn btn-primary">Add New</a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <span>{{ section.title }} List</span>
+        <input type="text" placeholder="Search..." class="border border-gray-300 rounded-md px-3 py-1 text-sm focus:outline-none focus:border-blue-500">
+    </div>
+    <div class="overflow-x-auto">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th class="text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for post in section.pages %}
+                <tr>
+                    <td class="font-medium text-gray-900"><a href="{{ post.url }}" class="hover:text-blue-600">{{ post.title }}</a></td>
+                    <td>{{ post.date | date("%b %d, %Y") }}</td>
+                    <td>
+                        {% if post.draft %}
+                        <span class="status-badge status-inactive">Draft</span>
+                        {% else %}
+                        <span class="status-badge status-active">Published</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-right space-x-2">
+                        <a href="{{ post.url }}" class="text-blue-600 hover:text-blue-800 text-sm font-medium">Edit</a>
+                        <a href="#" class="text-red-600 hover:text-red-800 text-sm font-medium">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                {% if section.pages | length == 0 %}
+                <tr>
+                    <td colspan="4" class="text-center py-8 text-gray-500">No records found.</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{{ content | safe }}
+
+{% include "footer.html" %}
