@@ -1,0 +1,4 @@
++++
+title = "Diorama"
+template = "home"
++++
