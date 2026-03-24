@@ -31,7 +31,8 @@ lighthouse/
 ├── templates/
 │   ├── header.html
 │   ├── footer.html
-│   ├── index.html
+│   ├── section.html       # Main directory listing
+│   ├── page.html          # Individual resource page (redirects to link)
 │   └── shortcodes/
 └── AGENTS.md
 ```
@@ -50,4 +51,5 @@ lighthouse/
 2. Add new resources as `.md` files in the appropriate category directory.
 3. Use `extra` fields in front matter for `link`, `tags`, `recommended`, and `rating`.
 4. Ensure `transparent = true` in category `_index.md` files for proper grouping.
-5. The `index.html` template handles both categories and the alphabetical index.
+5. The `section.html` template handles both categories and the alphabetical index.
+6. Use `section_template = "section.html"` and `page_template = "page.html"` in `_index.md` front matter.

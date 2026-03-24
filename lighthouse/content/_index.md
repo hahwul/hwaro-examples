@@ -1,4 +1,5 @@
 +++
 title = "Home"
-template = "index.html"
+section_template = "section.html"
+page_template = "page.html"
 +++

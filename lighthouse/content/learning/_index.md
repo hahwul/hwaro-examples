@@ -1,6 +1,7 @@
 +++
 title = "Learning"
 sort_by = "title"
-template = "index.html"
+section_template = "section.html"
+page_template = "page.html"
 transparent = true
 +++
