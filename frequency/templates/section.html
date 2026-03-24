@@ -1,0 +1,35 @@
+{% include "header.html" %}
+  <main>
+    <div class="page-header">
+      <h1>{{ section.title }}</h1>
+      {% if section.description %}<p style="color: var(--text-muted);">{{ section.description }}</p>{% endif %}
+    </div>
+
+    <ul class="show-list">
+      {% for post in section.pages | sort(attribute="date") | reverse %}
+      <li class="show-card">
+        <div class="show-indicator">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <polygon points="10,8 16,12 10,16" fill="currentColor" stroke="none"/>
+          </svg>
+        </div>
+        <div class="show-body">
+          <div class="show-meta">
+            {% if post.date %}<span class="show-date">{{ post.date | date(format="%Y-%m-%d") }}</span>{% endif %}
+            {% if post.categories %}
+              {% for cat in post.categories %}
+                <span class="show-category">{{ cat }}</span>
+              {% endfor %}
+            {% endif %}
+          </div>
+          <h2 class="show-title"><a href="{{ base_url }}{{ post.url }}">{{ post.title }}</a></h2>
+          {% if post.description %}<p class="show-desc">{{ post.description }}</p>{% endif %}
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+
+    {{ pagination | safe }}
+  </main>
+{% include "footer.html" %}
