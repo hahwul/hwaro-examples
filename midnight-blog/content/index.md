@@ -1,0 +1,38 @@
++++
+title = "Midnight Blog"
+template = "section"
++++
+
+<div style="margin-bottom: 4rem;">
+  <p style="font-size: 1.4rem; color: var(--text-color); line-height: 1.6; font-family: 'Inter', sans-serif; font-weight: 400;">
+    A quiet space for reading long-form thoughts in the dark. Optimized for tired eyes and wandering minds.
+  </p>
+</div>
+
+<h2 style="font-size: 1.8rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">Recent Articles</h2>
+
+{% set posts = get_section(path="posts/_index.md") %}
+<div class="post-list">
+  {% for post in posts.pages | slice(end=5) %}
+  <article class="post-item">
+    <h3 class="post-title"><a href="{{ post.url }}">{{ post.title }}</a></h3>
+    <div class="post-meta">
+      {% if post.date %}
+      <time datetime="{{ post.date | date('%Y-%m-%d') }}">
+        {{ post.date | date('%B %d, %Y') }}
+      </time>
+      {% endif %}
+    </div>
+    {% if post.summary %}
+    <p class="post-summary">{{ post.summary | strip_html | truncate_words(30) }}</p>
+    {% else %}
+    <p class="post-summary">{{ post.content | strip_html | truncate_words(30) }}</p>
+    {% endif %}
+    <a href="{{ post.url }}" class="read-more">Read article &rarr;</a>
+  </article>
+  {% endfor %}
+</div>
+
+<div style="margin-top: 3rem; text-align: center;">
+  <a href="{{ base_url }}/posts/" class="read-more" style="font-size: 1rem; border-bottom: 1px solid currentColor; padding-bottom: 2px;">View all articles</a>
+</div>

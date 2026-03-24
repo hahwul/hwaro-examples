@@ -1,0 +1,45 @@
+{% include "header.html" %}
+
+<header class="article-header">
+  <h1 class="taxonomy-title">{{ taxonomy.name | capitalize }}: {{ term.name }}</h1>
+</header>
+
+<div class="card-grid">
+  {% for post in term.pages %}
+    <article class="card">
+      {% if post.image %}
+        <a href="{{ post.url }}" class="card-img-link">
+          <img src="{{ base_url }}{{ post.image }}" alt="{{ post.title }}" class="card-img" loading="lazy">
+        </a>
+      {% endif %}
+      <div class="card-content">
+        {% if post.extra.categories %}
+          <div class="card-category">
+            <a href="{{ base_url }}/categories/{{ post.extra.categories[0] | slugify }}/" style="color: white; text-decoration: none;">{{ post.extra.categories[0] }}</a>
+          </div>
+        {% endif %}
+        <h2 class="card-title">
+          <a href="{{ post.url }}">{{ post.title }}</a>
+        </h2>
+        <div class="card-meta">
+          {% if post.date %}
+            {{ post.date | date("%B %d, %Y") }}
+          {% endif %}
+          {% if post.reading_time %}
+            &bull; {{ post.reading_time }} min read
+          {% endif %}
+        </div>
+        <div class="card-excerpt">
+          {% if post.description %}
+            {{ post.description }}
+          {% else %}
+            {{ post.summary | strip_html | truncate_words(20) }}
+          {% endif %}
+        </div>
+        <a href="{{ post.url }}" class="card-read-more">Read More &rarr;</a>
+      </div>
+    </article>
+  {% endfor %}
+</div>
+
+{% include "footer.html" %}
