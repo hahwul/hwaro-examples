@@ -1,0 +1,45 @@
+{% include "header.html" %}
+  <main class="site-main">
+    <div class="home-hero">
+      <h1>{{ site.title }}</h1>
+      <p class="tagline">{{ site.description }}</p>
+    </div>
+
+    {{ content | safe }}
+
+    <h2 class="home-section-title">Recent Walks</h2>
+    {% for post in site.pages | sort_by("date", reverse=true) %}
+    {% if post.section == "walks" and loop.index <= 5 %}
+    <div class="walk-card">
+      <h3 class="walk-card-title">
+        <a href="{{ base_url }}{{ post.url }}">{{ post.title }}</a>
+      </h3>
+      <div class="walk-card-meta">
+        <span class="meta-item">
+          <span class="meta-label">Date</span> {{ post.date | date("%b %d, %Y") }}
+        </span>
+        {% if post.extra.distance %}
+        <span class="meta-item">
+          <span class="meta-label">Distance</span> {{ post.extra.distance }}
+        </span>
+        {% endif %}
+        {% if post.extra.duration %}
+        <span class="meta-item">
+          <span class="meta-label">Time</span> {{ post.extra.duration }}
+        </span>
+        {% endif %}
+        {% if post.extra.elevation %}
+        <span class="meta-item">
+          <span class="meta-label">Elevation</span> {{ post.extra.elevation }}
+        </span>
+        {% endif %}
+      </div>
+      {% if post.description %}
+      <p class="walk-card-excerpt">{{ post.description }}</p>
+      {% endif %}
+    </div>
+    {% endif %}
+    {% endfor %}
+    <p style="margin-top: 1.5rem;"><a href="{{ base_url }}/walks/">View all walks</a></p>
+  </main>
+{% include "footer.html" %}
