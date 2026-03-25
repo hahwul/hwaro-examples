@@ -26,5 +26,5 @@ Use the navigation sidebar to explore different sections. If you cannot find wha
 
 ### Quick Links
 
-*   [Onboarding Guide]({{ base_url }}/onboarding/)
-*   [Company Policies]({{ base_url }}/policies/)
+*   [Onboarding Guide](/onboarding/)
+*   [Company Policies](/policies/)
