@@ -1,4 +1,4 @@
 +++
-title = "Midnight Blog"
+title = "Archipelago"
 template = "index"
 +++

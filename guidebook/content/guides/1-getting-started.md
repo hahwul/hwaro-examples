@@ -4,7 +4,7 @@ description = "The foundational guide to setting up your workspace and taking yo
 date = "2025-01-01"
 weight = 1
 tags = ["beginner", "setup"]
-template = "page.html"
+template = "page"
 +++
 
 This guide will walk you through the absolute basics of getting your environment ready. By following these steps, you'll be prepared for more advanced tutorials later on.

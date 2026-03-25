@@ -1,11 +1,12 @@
 +++
 title = "Design New Landing Page"
 date = "2025-03-01"
-[taxonomies]
-status = ["To Do"]
-assignee = ["Alice", "Bob"]
-priority = ["High"]
 tags = ["design", "web"]
+
+[extra]
+status = "To Do"
+assignee = "Alice"
+priority = "High"
 +++
 
 We need a completely new landing page design that focuses on conversions.

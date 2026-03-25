@@ -1,6 +1,6 @@
 +++
 title = "Home"
-template = "index.html"
+template = "index"
 +++
 
 I'm a software engineer specializing in backend systems, performance optimization, and distributed architectures. When I'm not writing code, I'm thinking about systems design and reliable infrastructure.

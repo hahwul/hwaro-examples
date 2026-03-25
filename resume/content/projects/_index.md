@@ -2,7 +2,7 @@
 title = "Projects"
 description = "Selected open-source and side projects"
 sort_by = "weight"
-page_template = "project.html"
+page_template = "project"
 pagination_enabled = true
 paginate = 100
 +++

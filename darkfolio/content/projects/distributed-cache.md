@@ -3,7 +3,7 @@ title = "Distributed Memory Cache"
 date = "2023-11-15"
 description = "A high-performance distributed caching system built with Rust and gRPC."
 tags = ["rust", "grpc", "distributed-systems"]
-template = "page.html"
+template = "page"
 +++
 
 A distributed memory cache designed for low-latency retrieval and high throughput. The system utilizes a custom consensus protocol for node discovery and data replication.

@@ -1,5 +1,5 @@
 +++
 title = "Cloudnest"
-template = "index.html"
+template = "index"
 description = "Cloud hosting SaaS landing page"
 +++

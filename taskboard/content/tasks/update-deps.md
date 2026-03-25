@@ -1,11 +1,12 @@
 +++
 title = "Update Dependencies"
 date = "2025-02-28"
-[taxonomies]
-status = ["Done"]
-assignee = ["Bob"]
-priority = ["Low"]
 tags = ["maintenance"]
+
+[extra]
+status = "Done"
+assignee = "Bob"
+priority = "Low"
 +++
 
 Update all minor and patch versions of the node dependencies in the core project.

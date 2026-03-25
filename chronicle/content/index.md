@@ -1,7 +1,7 @@
 +++
 title = "The Chronicle"
 description = "A historical and longform writing blog"
-template = "page.html"
+template = "page"
 +++
 
 Welcome to the Chronicle. This space is dedicated to the preservation of historical narratives, deep-dive analyses, and scholarly musings. Here, the art of longform writing is cherished and the past is continuously uncovered.

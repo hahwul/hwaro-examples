@@ -1,7 +1,7 @@
 +++
 title = "Agent Profile"
 description = "Meet the team of elite luxury real estate brokers."
-template = "page.html"
+template = "page"
 +++
 
 Aura Real Estate is built on a foundation of integrity, discretion, and an unwavering commitment to excellence. Our team of elite brokers brings decades of experience navigating the world's most competitive and exclusive luxury real estate markets.

@@ -3,7 +3,7 @@ title = "Real-time Event Streamer"
 date = "2024-02-10"
 description = "A Kafka-backed event processing pipeline for high-volume telemetry data."
 tags = ["go", "kafka", "telemetry"]
-template = "page.html"
+template = "page"
 +++
 
 An event streaming platform built to process millions of telemetry events per minute. Written in Go, it leverages Goroutines for concurrent processing and Kafka for durable event storage.

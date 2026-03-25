@@ -1,10 +1,6 @@
 +++
 title = "Marketplace"
-sort_by = "weight"
-paginate = 12
-template = "section"
-generate_feeds = false
-transparent = false
+template = "index"
 +++
 
 Welcome to our multi-vendor digital marketplace.

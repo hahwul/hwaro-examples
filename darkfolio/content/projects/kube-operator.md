@@ -3,7 +3,7 @@ title = "Custom K8s Operator"
 date = "2024-05-22"
 description = "A Kubernetes operator for managing complex stateful database deployments."
 tags = ["kubernetes", "go", "infrastructure"]
-template = "page.html"
+template = "page"
 +++
 
 This project simplifies the deployment and management of complex stateful database clusters within Kubernetes. It automates tasks such as provisioning, backup, and scaling.

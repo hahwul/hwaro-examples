@@ -4,7 +4,7 @@ description = "Level up your skills with these advanced workflows and patterns."
 date = "2025-01-02"
 weight = 2
 tags = ["advanced", "workflow"]
-template = "page.html"
+template = "page"
 +++
 
 Now that you have a solid foundation, let's explore some advanced techniques that will greatly improve your productivity and output quality.

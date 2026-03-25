@@ -1,11 +1,12 @@
 +++
 title = "Fix Navigation Bug on Mobile"
 date = "2025-03-07"
-[taxonomies]
-status = ["To Do"]
-assignee = ["Jules"]
-priority = ["Medium"]
 tags = ["bug", "frontend"]
+
+[extra]
+status = "To Do"
+assignee = "Jules"
+priority = "Medium"
 +++
 
 The hamburger menu doesn't close when a link is clicked on iOS devices.

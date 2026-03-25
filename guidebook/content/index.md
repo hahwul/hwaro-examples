@@ -1,7 +1,7 @@
 +++
 title = "Welcome to Guidebook"
 description = "Your interactive, step-by-step tutorial and documentation site."
-template = "page.html"
+template = "page"
 +++
 
 <div style="text-align: center; margin: 4rem 0;">

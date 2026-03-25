@@ -3,7 +3,7 @@ title = "Projects"
 sort_by = "date"
 reverse = true
 paginate = 10
-template = "section.html"
+template = "section"
 generate_feeds = true
 transparent = true
 +++
