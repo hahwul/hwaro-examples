@@ -1,0 +1,62 @@
+{% include "header.html" %}
+
+<main class="container">
+  <div class="layout-with-sidebar">
+    <div class="main-content">
+      <h1>{{ section.title }}</h1>
+
+      {% for post in paginator.pages %}
+      <article class="post-card">
+        <h2><a href="{{ base_url }}/{{ post.path }}">{{ post.title }}</a></h2>
+        <div class="post-meta">
+          <span>{{ post.date }}</span>
+          {% if post.extra.reading_time %}
+          <span class="separator">|</span>
+          <span class="reading-time">{{ post.extra.reading_time }} min read</span>
+          {% endif %}
+        </div>
+        {% if post.summary %}
+        <p class="post-excerpt">{{ post.summary }}</p>
+        {% endif %}
+        {% if post.taxonomies.tags %}
+        <ul class="tag-list">
+          {% for tag in post.taxonomies.tags %}
+          <li><a href="{{ base_url }}/tags/{{ tag }}/" class="tag-pill">{{ tag }}</a></li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </article>
+      {% endfor %}
+
+      {% if paginator.number_pagers > 1 %}
+      <div class="pagination">
+        {% if paginator.previous %}
+        <a href="{{ base_url }}{{ paginator.previous }}">&larr; Newer</a>
+        {% endif %}
+        <span class="current">Page {{ paginator.current_index }} of {{ paginator.number_pagers }}</span>
+        {% if paginator.next %}
+        <a href="{{ base_url }}{{ paginator.next }}">Older &rarr;</a>
+        {% endif %}
+      </div>
+      {% endif %}
+    </div>
+
+    <aside class="sidebar">
+      <div class="sidebar-widget weather-widget">
+        <h3>Today's Weather</h3>
+        <div class="weather-info">
+          <div class="weather-temp">-4 C</div>
+          <div class="weather-desc">Light snow, overcast skies</div>
+          <div class="weather-details">
+            <span><strong>Wind:</strong> 12 km/h NW</span>
+            <span><strong>Humidity:</strong> 78%</span>
+            <span><strong>Sunrise:</strong> 6:42 AM</span>
+            <span><strong>Sunset:</strong> 6:18 PM</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</main>
+
+{% include "footer.html" %}
