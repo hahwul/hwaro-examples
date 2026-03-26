@@ -1,0 +1,76 @@
+{% include "header.html" %}
+  <main class="site-main">
+    <article class="page-article">
+      <header class="article-header">
+        <h1>{{ page.title }}</h1>
+        {% if page.extra.scientific_name %}
+        <div class="article-meta">
+          <time datetime="{{ page.date | date('%Y-%m-%d') }}">{{ page.date | date("%B %d, %Y") }}</time>
+          {% if page.reading_time %}<span class="meta-sep">&middot;</span> <span>{{ page.reading_time }} min read</span>{% endif %}
+        </div>
+        <p class="species-binomial"><em>{{ page.extra.scientific_name }}</em></p>
+        {% endif %}
+      </header>
+
+      {% if page.extra.scientific_name %}
+      <div class="species-info-bar">
+        {% if page.extra.habitat %}
+        <div class="info-item">
+          <span class="info-label">Habitat</span>
+          <span class="info-value">{{ page.extra.habitat }}</span>
+        </div>
+        {% endif %}
+        {% if page.extra.size %}
+        <div class="info-item">
+          <span class="info-label">Size</span>
+          <span class="info-value">{{ page.extra.size }}</span>
+        </div>
+        {% endif %}
+        {% if page.extra.depth_range %}
+        <div class="info-item">
+          <span class="info-label">Depth</span>
+          <span class="info-value">{{ page.extra.depth_range }}</span>
+        </div>
+        {% endif %}
+        {% if page.extra.conservation %}
+        <div class="info-item">
+          <span class="info-label">Status</span>
+          <span class="info-value conservation-{{ page.extra.conservation | lower | replace(' ', '-') }}">{{ page.extra.conservation }}</span>
+        </div>
+        {% endif %}
+      </div>
+      {% endif %}
+
+      <div class="article-content">
+        {{ content | safe }}
+      </div>
+
+      {% if page.tags and page.tags | length > 0 %}
+      <div class="article-tags">
+        {% for tag in page.tags %}
+        <a href="{{ base_url }}/tags/{{ tag | slugify }}/" class="tag">#{{ tag }}</a>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      {% if page.lower or page.higher %}
+      <nav class="post-nav">
+        {% if page.lower %}
+        <a href="{{ base_url }}{{ page.lower.url }}" class="post-nav-link nav-prev">
+          <span class="nav-direction">Previous</span>
+          <span class="nav-title">{{ page.lower.title }}</span>
+        </a>
+        {% else %}
+        <span></span>
+        {% endif %}
+        {% if page.higher %}
+        <a href="{{ base_url }}{{ page.higher.url }}" class="post-nav-link nav-next">
+          <span class="nav-direction">Next</span>
+          <span class="nav-title">{{ page.higher.title }}</span>
+        </a>
+        {% endif %}
+      </nav>
+      {% endif %}
+    </article>
+  </main>
+{% include "footer.html" %}
