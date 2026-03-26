@@ -1,0 +1,46 @@
+{% include "header.html" %}
+
+<div class="section-header">
+  <h1>{{ section.title }}</h1>
+  {% if section.description %}
+  <p class="section-desc">{{ section.description }}</p>
+  {% endif %}
+</div>
+
+<div class="card-grid">
+  {% for post in section.pages %}
+  <article class="card">
+    <a href="{{ post.url }}" class="card-link">
+      <div class="card-body">
+        {% if post.extra.location %}
+        <span class="card-location">{{ post.extra.location }}</span>
+        {% endif %}
+        <h2 class="card-title">{{ post.title }}</h2>
+        <div class="card-meta">
+          <time datetime="{{ post.date | date('%Y-%m-%d') }}">{{ post.date | date("%B %d, %Y") }}</time>
+          {% if post.reading_time %}
+          <span>&middot; {{ post.reading_time }} min read</span>
+          {% endif %}
+        </div>
+        {% if post.description %}
+        <p class="card-excerpt">{{ post.description }}</p>
+        {% endif %}
+      </div>
+    </a>
+  </article>
+  {% endfor %}
+</div>
+
+{% if paginator %}
+<nav class="pagination">
+  {% if paginator.previous_page %}
+  <a href="{{ paginator.previous_page }}" class="pagination-link pagination-prev">Newer</a>
+  {% endif %}
+  <span class="pagination-info">Page {{ paginator.current_page }} of {{ paginator.total_pages }}</span>
+  {% if paginator.next_page %}
+  <a href="{{ paginator.next_page }}" class="pagination-link pagination-next">Older</a>
+  {% endif %}
+</nav>
+{% endif %}
+
+{% include "footer.html" %}
