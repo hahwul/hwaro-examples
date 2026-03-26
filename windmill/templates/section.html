@@ -1,0 +1,53 @@
+{% include "header.html" %}
+
+  <main>
+    <div class="container">
+      <h1 class="section-title">{{ section.title }}</h1>
+
+      <div class="post-grid">
+        {% for post in paginator.pages %}
+          <article class="post-card">
+            <div class="card-date">{{ post.date | date(format="%B %d, %Y") }}</div>
+            <h3 class="card-title">
+              <a href="{{ base_url }}/{{ post.path | trim_end_matches(pat='.md') | trim_end_matches(pat='/index') }}/">{{ post.title }}</a>
+            </h3>
+            {% if post.description %}
+            <p class="card-summary">{{ post.description }}</p>
+            {% endif %}
+            {% if post.taxonomies.tags %}
+            <div class="card-tags">
+              {% for tag in post.taxonomies.tags %}
+                <a href="{{ base_url }}/tags/{{ tag | slugify }}/" class="tag-pill">{{ tag }}</a>
+              {% endfor %}
+            </div>
+            {% endif %}
+          </article>
+        {% endfor %}
+      </div>
+
+      {% if paginator.number_pagers > 1 %}
+      <div class="pagination">
+        {% if paginator.previous %}
+          <a href="{{ base_url }}{{ paginator.previous }}">Prev</a>
+        {% endif %}
+        {% for pager in range(end=paginator.number_pagers) %}
+          {% set page_num = pager + 1 %}
+          {% if page_num == paginator.current_index %}
+            <span class="current">{{ page_num }}</span>
+          {% else %}
+            {% if page_num == 1 %}
+              <a href="{{ base_url }}/{{ section.path }}">{{ page_num }}</a>
+            {% else %}
+              <a href="{{ base_url }}/{{ section.path }}page/{{ page_num }}/">{{ page_num }}</a>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+        {% if paginator.next %}
+          <a href="{{ base_url }}{{ paginator.next }}">Next</a>
+        {% endif %}
+      </div>
+      {% endif %}
+    </div>
+  </main>
+
+{% include "footer.html" %}

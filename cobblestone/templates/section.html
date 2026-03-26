@@ -1,0 +1,52 @@
+{% include "header.html" %}
+
+  <div class="section-header">
+    <h1>{{ section.title }}</h1>
+    {% if section.description %}
+    <p>{{ section.description }}</p>
+    {% endif %}
+  </div>
+
+  <div class="ornament"></div>
+
+  <main class="wide-container">
+    <section class="timeline">
+      {% for post in paginator.pages %}
+      <article class="timeline-item">
+        <div class="timeline-date">
+          <span class="day">{{ post.date | date(format="%d") }}</span>
+          <span class="month">{{ post.date | date(format="%b") }}</span>
+        </div>
+        <div class="timeline-dot"></div>
+        <div class="arch-card">
+          <h2><a href="{{ base_url }}/{{ post.path }}">{{ post.title }}</a></h2>
+          {% if post.description %}
+          <p class="excerpt">{{ post.description }}</p>
+          {% endif %}
+          {% if post.taxonomies.tags %}
+          <ul class="tag-list">
+            {% for tag in post.taxonomies.tags %}
+            <li><a href="{{ base_url }}/tags/{{ tag | slugify }}/" class="tag-pill">{{ tag }}</a></li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+          <a href="{{ base_url }}/{{ post.path }}" class="read-more">Continue Reading</a>
+        </div>
+      </article>
+      {% endfor %}
+    </section>
+
+    {% if paginator.number_pagers > 1 %}
+    <nav class="pagination">
+      {% if paginator.previous %}
+      <a href="{{ base_url }}/{{ paginator.previous }}">&larr; Newer</a>
+      {% endif %}
+      <span class="current">{{ paginator.current_index }} / {{ paginator.number_pagers }}</span>
+      {% if paginator.next %}
+      <a href="{{ base_url }}/{{ paginator.next }}">Older &rarr;</a>
+      {% endif %}
+    </nav>
+    {% endif %}
+  </main>
+
+{% include "footer.html" %}

@@ -1,0 +1,45 @@
+{% include "header.html" %}
+
+  <section class="hero">
+    <div class="container">
+      <h1>Welcome to Windmill</h1>
+      <p>Stories from the Dutch countryside -- tulip fields, canal rides, cheese markets, and the timeless charm of life among the windmills.</p>
+      <div class="tile-decoration">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <div class="container">
+      <h2 class="section-title">Recent Posts</h2>
+      <div class="post-grid">
+        {% for post in site.pages | sort(attribute="date") | reverse %}
+          {% if post.path is starting_with("posts/") and not post.path == "posts/_index.md" %}
+          <article class="post-card">
+            <div class="card-date">{{ post.date | date(format="%B %d, %Y") }}</div>
+            <h3 class="card-title">
+              <a href="{{ base_url }}/{{ post.path | trim_end_matches(pat='.md') | trim_end_matches(pat='/index') }}/">{{ post.title }}</a>
+            </h3>
+            {% if post.description %}
+            <p class="card-summary">{{ post.description }}</p>
+            {% endif %}
+            {% if post.taxonomies.tags %}
+            <div class="card-tags">
+              {% for tag in post.taxonomies.tags %}
+                <a href="{{ base_url }}/tags/{{ tag | slugify }}/" class="tag-pill">{{ tag }}</a>
+              {% endfor %}
+            </div>
+            {% endif %}
+          </article>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </main>
+
+{% include "footer.html" %}

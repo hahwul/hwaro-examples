@@ -1,0 +1,48 @@
+{% include "header.html" %}
+
+  <main class="container">
+    <div class="section-header">
+      <h2>{{ page.title }}</h2>
+    </div>
+
+    <div class="post-grid">
+      {% for post in paginator.pages %}
+      <article class="post-card">
+        <h3 class="post-card__title">
+          <a href="{{ base_url }}{{ post.permalink }}">{{ post.title }}</a>
+        </h3>
+        <div class="post-card__meta">{{ post.date | date(format="%B %d, %Y") }}</div>
+        {% if post.description %}
+        <p class="post-card__description">{{ post.description }}</p>
+        {% endif %}
+        {% if post.tags %}
+        <div class="post-card__tags">
+          {% for tag in post.tags %}
+          <a href="{{ base_url }}/tags/{{ tag | slugify }}/" class="tag">{{ tag }}</a>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </article>
+      {% endfor %}
+    </div>
+
+    {% if paginator.total_pages > 1 %}
+    <nav class="pagination">
+      {% if paginator.previous %}
+      <a href="{{ base_url }}{{ paginator.previous }}">Prev</a>
+      {% endif %}
+      {% for i in range(start=1, end=paginator.total_pages + 1) %}
+        {% if i == paginator.current_page %}
+        <span class="active">{{ i }}</span>
+        {% else %}
+        <a href="{{ base_url }}{% if i == 1 %}{{ paginator.base_url }}{% else %}{{ paginator.base_url }}page/{{ i }}/{% endif %}">{{ i }}</a>
+        {% endif %}
+      {% endfor %}
+      {% if paginator.next %}
+      <a href="{{ base_url }}{{ paginator.next }}">Next</a>
+      {% endif %}
+    </nav>
+    {% endif %}
+  </main>
+
+{% include "footer.html" %}
