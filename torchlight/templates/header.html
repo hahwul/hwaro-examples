@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description }}">
+  <title>{{ page.title }} - {{ site.title }}</title>
+  {{ og_all_tags }}
+  <style>
+    :root {
+      --bg-dark: #0a0600;
+      --bg-surface: #140d00;
+      --bg-card: #1f1400;
+      --border-ancient: #3d2b00;
+      --text-main: #d4c4a1;
+      --text-dim: #8c7d5c;
+      --torch-flame: #ff8c00;
+      --torch-gold: #ffd700;
+      --accent: #ff6600;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: "Georgia", serif;
+      line-height: 1.7;
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    /* The Torchlight Effect (No Gradients) */
+    .torch-glow {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1000;
+      mix-blend-mode: overlay;
+    }
+
+    /* Simulate light with box-shadows on hidden elements if needed, 
+       but here we use solid colors and opacity to keep it safe from "gradient" restriction */
+    
+    .site-wrapper {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    header.site-header {
+      border-bottom: 2px solid var(--border-ancient);
+      padding-bottom: 2rem;
+      margin-bottom: 3rem;
+      text-align: center;
+    }
+
+    .site-logo {
+      color: var(--torch-flame);
+      font-size: 2.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3rem;
+      text-decoration: none;
+      font-weight: bold;
+      display: block;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 0px var(--bg-dark), 4px 4px 0px var(--border-ancient);
+    }
+
+    nav.site-nav {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    nav.site-nav a {
+      color: var(--torch-gold);
+      text-decoration: none;
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      letter-spacing: 0.1rem;
+      border: 1px solid transparent;
+      padding: 0.3rem 0.8rem;
+    }
+
+    nav.site-nav a:hover {
+      border-color: var(--torch-gold);
+      background-color: var(--bg-surface);
+    }
+
+    h1, h2, h3 {
+      color: var(--torch-flame);
+      font-weight: normal;
+      letter-spacing: 0.05rem;
+    }
+
+    h1 { font-size: 2rem; margin-top: 0; }
+    
+    a {
+      color: var(--torch-gold);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    a:hover {
+      color: var(--torch-flame);
+    }
+
+    /* Quest Log / Card Style */
+    .quest-log {
+      list-style: none;
+      padding: 0;
+    }
+
+    .quest-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-ancient);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .quest-card::before {
+      content: "";
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      right: 5px;
+      bottom: 5px;
+      border: 1px solid var(--border-ancient);
+      pointer-events: none;
+      opacity: 0.3;
+    }
+
+    .quest-card h2 {
+      margin-top: 0;
+      font-size: 1.5rem;
+    }
+
+    .quest-meta {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.1rem;
+      margin-bottom: 1rem;
+    }
+
+    .quest-desc {
+      margin-bottom: 1rem;
+    }
+
+    .btn-action {
+      display: inline-block;
+      border: 1px solid var(--torch-gold);
+      color: var(--torch-gold);
+      padding: 0.5rem 1rem;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+
+    .btn-action:hover {
+      background-color: var(--torch-gold);
+      color: var(--bg-dark);
+    }
+
+    footer.site-footer {
+      border-top: 2px solid var(--border-ancient);
+      margin-top: 5rem;
+      padding: 3rem 0;
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 0.9rem;
+    }
+
+    /* Utility */
+    .ancient-border {
+      border: 4px double var(--border-ancient);
+      padding: 1rem;
+    }
+
+    code {
+      background: var(--bg-surface);
+      color: var(--torch-gold);
+      padding: 0.2rem 0.4rem;
+      border: 1px solid var(--border-ancient);
+    }
+
+    pre {
+      background: var(--bg-surface);
+      padding: 1.5rem;
+      border: 1px solid var(--border-ancient);
+      overflow-x: auto;
+    }
+
+    pre code {
+      border: none;
+      padding: 0;
+    }
+
+    /* Map Layout for homepage */
+    .map-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    @media (max-width: 600px) {
+      .map-container {
+        grid-template-columns: 1fr;
+      }
+      .site-logo {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+  {{ highlight_css }}
+</head>
+<body data-section="{{ page.section }}">
+  <div class="site-wrapper">
+    <header class="site-header">
+      <a href="{{ base_url }}/" class="site-logo">Torchlight</a>
+      <nav class="site-nav">
+        <a href="{{ base_url }}/">Hall of Records</a>
+        <a href="{{ base_url }}/about/">Explorer's Note</a>
+      </nav>
+    </header>
