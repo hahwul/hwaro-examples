@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{{ site.description }}">
+  {{ og_all_tags }}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg-deep: #1a2332;
+      --bg-card: #1f2b3d;
+      --ice-white: #f8fafb;
+      --pale-blue: #c4d7e0;
+      --dark-slate: #2c3e50;
+      --muted: #6b8299;
+      --border: #2c3e50;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-deep);
+      color: var(--pale-blue);
+      line-height: 1.7;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    a { color: var(--ice-white); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: var(--pale-blue); }
+    .site-header {
+      padding: 2.5rem 0 2rem;
+      border-bottom: 1px dotted var(--border);
+    }
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      width: 100%;
+    }
+    .site-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .site-title {
+      font-size: 1.1rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    .site-title a { color: var(--ice-white); }
+    .nav-links { display: flex; gap: 1.8rem; }
+    .nav-links a {
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .nav-links a:hover { color: var(--ice-white); }
+    main { flex: 1; padding: 3rem 0; }
+    .page-title {
+      font-size: 1.6rem;
+      font-weight: 300;
+      color: var(--ice-white);
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.02em;
+    }
+    .page-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+    .meta-item { display: flex; align-items: center; gap: 0.4rem; }
+    .meta-label {
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--dark-slate);
+    }
+    .content { color: var(--pale-blue); }
+    .content h1, .content h2, .content h3 {
+      color: var(--ice-white);
+      font-weight: 400;
+      margin: 2rem 0 1rem;
+    }
+    .content h1 { font-size: 1.5rem; }
+    .content h2 { font-size: 1.25rem; }
+    .content h3 { font-size: 1.1rem; }
+    .content p { margin-bottom: 1.2rem; }
+    .content ul, .content ol { margin: 0 0 1.2rem 1.5rem; }
+    .content li { margin-bottom: 0.4rem; }
+    .content blockquote {
+      border-left: 2px dotted var(--border);
+      padding-left: 1.2rem;
+      color: var(--muted);
+      margin: 1.5rem 0;
+    }
+    .content code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85em;
+      background: var(--bg-card);
+      padding: 0.15em 0.4em;
+      border-radius: 3px;
+    }
+    .content pre {
+      background: var(--bg-card);
+      padding: 1.2rem;
+      border-radius: 4px;
+      overflow-x: auto;
+      margin-bottom: 1.5rem;
+      border: 1px dotted var(--border);
+    }
+    .content pre code { background: none; padding: 0; }
+    .content hr {
+      border: none;
+      border-top: 1px dotted var(--border);
+      margin: 2.5rem 0;
+    }
+    .post-list { list-style: none; }
+    .post-item {
+      padding: 2rem 0;
+      border-bottom: 1px dotted var(--border);
+    }
+    .post-item:first-child { padding-top: 0; }
+    .post-item-title {
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--ice-white);
+      margin-bottom: 0.4rem;
+    }
+    .post-item-title a { color: var(--ice-white); }
+    .post-item-title a:hover { color: var(--pale-blue); }
+    .post-item-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      margin-bottom: 0.8rem;
+    }
+    .post-item-desc {
+      font-size: 0.9rem;
+      color: var(--pale-blue);
+      line-height: 1.6;
+    }
+    .tag-list { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem; }
+    .tag-item {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+      border: 1px dotted var(--border);
+      padding: 0.25rem 0.7rem;
+      letter-spacing: 0.05em;
+    }
+    .tag-item:hover { color: var(--ice-white); border-color: var(--pale-blue); }
+    .taxonomy-list { list-style: none; }
+    .taxonomy-list li {
+      padding: 0.8rem 0;
+      border-bottom: 1px dotted var(--border);
+    }
+    .taxonomy-list li a {
+      font-size: 0.95rem;
+      display: flex;
+      justify-content: space-between;
+    }
+    .taxonomy-count {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    .not-found {
+      text-align: center;
+      padding: 5rem 0;
+    }
+    .not-found h1 {
+      font-size: 4rem;
+      font-weight: 300;
+      color: var(--ice-white);
+      margin-bottom: 1rem;
+    }
+    .not-found p { color: var(--muted); }
+    .expedition-data {
+      background: var(--bg-card);
+      border: 1px dotted var(--border);
+      padding: 1rem 1.2rem;
+      margin-bottom: 2rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+    .data-point { display: flex; flex-direction: column; gap: 0.2rem; }
+    .data-label {
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      font-size: 0.65rem;
+    }
+    .data-value { color: var(--ice-white); }
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 3rem;
+      font-size: 0.85rem;
+    }
+    .pagination a {
+      color: var(--muted);
+      border: 1px dotted var(--border);
+      padding: 0.4rem 1rem;
+    }
+    .pagination a:hover { color: var(--ice-white); border-color: var(--pale-blue); }
+    @media (max-width: 600px) {
+      .page-title { font-size: 1.3rem; }
+      .expedition-data { gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <nav class="site-nav">
+        <div class="site-title"><a href="{{ base_url }}/">{{ site.title }}</a></div>
+        <div class="nav-links">
+          <a href="{{ base_url }}/posts/">Log</a>
+          <a href="{{ base_url }}/about/">About</a>
+          <a href="{{ base_url }}/tags/">Tags</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <div class="container">

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+  {{ og_all_tags | safe }}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --orange: #f4a460;
+      --mint: #98d4bb;
+      --cream: #fdf5e6;
+      --text: #4a3f35;
+      --text-light: #8a7e72;
+      --white: #ffffff;
+      --shadow: 0 4px 20px rgba(164, 130, 100, 0.1);
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background-color: var(--cream);
+      color: var(--text);
+      line-height: 1.85;
+      font-size: 1.05rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a {
+      color: var(--orange);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    a:hover {
+      color: #d48a40;
+    }
+
+    /* Site Header */
+    .site-header {
+      background-color: var(--white);
+      padding: 1.5rem 2rem;
+      box-shadow: var(--shadow);
+      border-radius: 0 0 24px 24px;
+    }
+    .header-inner {
+      max-width: 840px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .site-logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+    .site-logo:hover {
+      color: var(--orange);
+    }
+    .site-logo span {
+      color: var(--orange);
+    }
+    .site-nav {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+    .site-nav a {
+      color: var(--text-light);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      padding: 0.4rem 0.9rem;
+      border-radius: 20px;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+    .site-nav a:hover {
+      background-color: var(--cream);
+      color: var(--text);
+    }
+
+    /* Main Content */
+    .site-wrapper {
+      max-width: 840px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem;
+      width: 100%;
+      flex: 1;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4 {
+      font-weight: 700;
+      line-height: 1.35;
+      color: var(--text);
+    }
+    h1 { font-size: 2rem; margin-bottom: 1rem; }
+    h2 { font-size: 1.5rem; margin-top: 2rem; margin-bottom: 0.75rem; }
+    h3 { font-size: 1.2rem; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+    p { margin-bottom: 1.25rem; }
+
+    /* Cards */
+    .card {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 2rem 2.25rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 1.75rem;
+    }
+
+    /* Post Card */
+    .post-card {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 1.75rem 2rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 1.5rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .post-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(164, 130, 100, 0.15);
+    }
+    .post-card .post-title {
+      font-size: 1.3rem;
+      margin-bottom: 0.4rem;
+      font-weight: 700;
+    }
+    .post-card .post-title a {
+      color: var(--text);
+      text-decoration: none;
+    }
+    .post-card .post-title a:hover {
+      color: var(--orange);
+    }
+    .post-card .post-meta {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-bottom: 0.6rem;
+    }
+    .post-card .post-excerpt {
+      color: var(--text-light);
+      font-size: 0.95rem;
+      margin-bottom: 0.5rem;
+    }
+    .post-card .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+    .post-card .post-tags a {
+      display: inline-block;
+      background-color: var(--cream);
+      color: var(--text-light);
+      font-size: 0.8rem;
+      padding: 0.2rem 0.75rem;
+      border-radius: 20px;
+      font-weight: 500;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+    .post-card .post-tags a:hover {
+      background-color: var(--mint);
+      color: var(--text);
+    }
+
+    /* Page content styling */
+    .page-content {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 2.5rem 2.5rem;
+      box-shadow: var(--shadow);
+    }
+    .page-content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 20px;
+    }
+    .page-content blockquote {
+      border-left: 4px solid var(--mint);
+      padding: 0.75rem 1.25rem;
+      margin: 1.5rem 0;
+      background: var(--cream);
+      border-radius: 0 20px 20px 0;
+      color: var(--text-light);
+      font-style: italic;
+    }
+    .page-content ul, .page-content ol {
+      padding-left: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .page-content li {
+      margin-bottom: 0.4rem;
+    }
+    .page-content code {
+      background: var(--cream);
+      padding: 0.15rem 0.45rem;
+      border-radius: 8px;
+      font-size: 0.9em;
+    }
+    .page-content pre {
+      background: var(--cream);
+      padding: 1.25rem;
+      border-radius: 20px;
+      overflow-x: auto;
+      margin: 1.5rem 0;
+    }
+    .page-content pre code {
+      background: none;
+      padding: 0;
+    }
+    .page-content hr {
+      border: none;
+      border-top: 2px solid var(--cream);
+      margin: 2rem 0;
+    }
+
+    /* Section header */
+    .section-header {
+      margin-bottom: 2rem;
+    }
+    .section-header h1 {
+      font-size: 2rem;
+    }
+    .section-description {
+      color: var(--text-light);
+      font-size: 1.05rem;
+    }
+
+    /* Page header */
+    .page-header {
+      margin-bottom: 1.5rem;
+    }
+    .page-header .page-date {
+      color: var(--text-light);
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Taxonomy */
+    .taxonomy-desc {
+      color: var(--text-light);
+      margin-bottom: 1.5rem;
+      font-size: 1rem;
+    }
+    .taxonomy-list {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    .taxonomy-list li a {
+      display: inline-block;
+      background: var(--white);
+      color: var(--text);
+      padding: 0.5rem 1.25rem;
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+    .taxonomy-list li a:hover {
+      background-color: var(--mint);
+    }
+
+    /* Pagination */
+    .pagination-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .pagination-nav a {
+      display: inline-block;
+      background: var(--white);
+      color: var(--text);
+      padding: 0.5rem 1.25rem;
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+    .pagination-nav a:hover {
+      background-color: var(--mint);
+    }
+    .pagination-info {
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    /* Hero section */
+    .hero {
+      background: var(--white);
+      border-radius: 28px;
+      padding: 3rem 2.5rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 2.2rem;
+      margin-bottom: 0.75rem;
+      color: var(--text);
+    }
+    .hero p {
+      color: var(--text-light);
+      font-size: 1.1rem;
+      max-width: 520px;
+      margin: 0 auto 1.5rem;
+    }
+    .hero .hero-accent {
+      display: inline-block;
+      background: var(--mint);
+      color: var(--text);
+      padding: 0.5rem 1.5rem;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    /* 404 */
+    .not-found {
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+    .not-found h1 {
+      font-size: 4rem;
+      color: var(--orange);
+      margin-bottom: 0.5rem;
+    }
+    .not-found p {
+      color: var(--text-light);
+      font-size: 1.1rem;
+    }
+    .not-found .home-link {
+      display: inline-block;
+      background: var(--mint);
+      color: var(--text);
+      padding: 0.6rem 1.75rem;
+      border-radius: 20px;
+      font-weight: 600;
+      margin-top: 1.5rem;
+    }
+    .not-found .home-link:hover {
+      background: var(--orange);
+      color: var(--white);
+    }
+
+    /* Footer */
+    .site-footer {
+      background: var(--white);
+      border-radius: 24px 24px 0 0;
+      padding: 1.5rem 2rem;
+      text-align: center;
+      color: var(--text-light);
+      font-size: 0.85rem;
+      margin-top: auto;
+      box-shadow: 0 -2px 16px rgba(164, 130, 100, 0.06);
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .header-inner {
+        flex-direction: column;
+        gap: 0.75rem;
+        text-align: center;
+      }
+      .site-wrapper {
+        padding: 1.5rem 1rem;
+      }
+      .hero {
+        padding: 2rem 1.5rem;
+      }
+      .hero h1 {
+        font-size: 1.7rem;
+      }
+      .page-content {
+        padding: 1.75rem 1.5rem;
+      }
+      .post-card {
+        padding: 1.25rem 1.5rem;
+      }
+      h1 { font-size: 1.6rem; }
+    }
+  </style>
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="{{ base_url }}/" class="site-logo"><span>~</span> {{ site.title }}</a>
+      <nav class="site-nav">
+        <a href="{{ base_url }}/">Home</a>
+        <a href="{{ base_url }}/posts/">Journal</a>
+        <a href="{{ base_url }}/about/">About</a>
+        <a href="{{ base_url }}/tags/">Tags</a>
+      </nav>
+    </div>
+  </header>
+  <div class="site-wrapper">
