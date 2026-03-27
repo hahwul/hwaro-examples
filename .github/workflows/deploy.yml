@@ -213,6 +213,16 @@ jobs:
             .search-input { width: 100%; padding: 0.6rem 0.75rem 0.6rem 2.4rem; background: #111; border: 1px solid #222; border-radius: 8px; color: #e0e0e0; font-size: 0.85rem; outline: none; transition: border-color 0.2s; }
             .search-input::placeholder { color: #555; }
             .search-input:focus { border-color: #444; }
+            .sort-wrap { position: relative; flex-shrink: 0; }
+            .sort-btn { background: #111; border: 1px solid #222; border-radius: 8px; color: #e0e0e0; font-size: 0.85rem; padding: 0.6rem 0.75rem; cursor: pointer; display: flex; align-items: center; gap: 0.4rem; transition: border-color 0.2s; }
+            .sort-btn:hover { border-color: #444; }
+            .sort-btn svg { width: 14px; height: 14px; fill: currentColor; flex-shrink: 0; }
+            .sort-menu { display: none; position: absolute; top: calc(100% + 4px); right: 0; background: #151515; border: 1px solid #282828; border-radius: 8px; min-width: 180px; z-index: 100; overflow: hidden; }
+            .sort-menu.open { display: block; }
+            .sort-option { padding: 0.55rem 0.85rem; font-size: 0.8rem; color: #aaa; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: background 0.15s, color 0.15s; }
+            .sort-option:hover { background: #1a1a1a; color: #fff; }
+            .sort-option.active { color: #fff; background: #1a1a1a; }
+            .sort-option svg { width: 13px; height: 13px; fill: currentColor; flex-shrink: 0; }
             .slider-wrap { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
             .slider-wrap svg { width: 16px; height: 16px; fill: #555; flex-shrink: 0; }
             .slider-wrap input[type=range] { -webkit-appearance: none; width: 100px; height: 4px; background: #333; border-radius: 2px; outline: none; }
@@ -439,6 +449,18 @@ jobs:
               <svg viewBox="0 0 16 16"><path d="M11.5 7a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zm-.82 4.74a6 6 0 111.06-1.06l3.04 3.04a.75.75 0 11-1.06 1.06l-3.04-3.04z"></path></svg>
               <input type="text" class="search-input" id="search" placeholder="Search examples..." autocomplete="off">
             </div>
+            <div class="sort-wrap">
+              <button class="sort-btn" id="sortBtn" onclick="toggleSortMenu()">
+                <svg viewBox="0 0 16 16"><path d="M0 1h16v2H0zm0 5h10v2H0zm0 5h6v2H0z"/></svg>
+                <span id="sortLabel">Name (A-Z)</span>
+              </button>
+              <div class="sort-menu" id="sortMenu">
+                <div class="sort-option active" data-sort="name-asc" onclick="setSort(this)"><svg viewBox="0 0 16 16"><path d="M0 1h16v2H0zm0 5h10v2H0zm0 5h6v2H0z"/></svg>Name (A-Z)</div>
+                <div class="sort-option" data-sort="name-desc" onclick="setSort(this)"><svg viewBox="0 0 16 16"><path d="M0 1h6v2H0zm0 5h10v2H0zm0 5h16v2H0z"/></svg>Name (Z-A)</div>
+                <div class="sort-option" data-sort="random" onclick="setSort(this)"><svg viewBox="0 0 16 16"><path d="M12.93 2.65l-1.47 1.47a.75.75 0 001.06 1.06l2.83-2.83a.75.75 0 000-1.06L12.52.46a.75.75 0 00-1.06 1.06l1.47 1.47H10.5a3.75 3.75 0 00-3 1.5 3.75 3.75 0 00-3-1.5H1.75a.75.75 0 000 1.5H4.5a2.25 2.25 0 012.25 2.25v5.5A2.25 2.25 0 014.5 14.5H1.75a.75.75 0 000 1.5H4.5a3.75 3.75 0 003-1.5 3.75 3.75 0 003 1.5h2.43l-1.47 1.47a.75.75 0 001.06 1.06l2.83-2.83a.75.75 0 000-1.06l-2.83-2.83a.75.75 0 00-1.06 1.06l1.47 1.47H10.5a2.25 2.25 0 01-2.25-2.25v-5.5A2.25 2.25 0 0110.5 4.49h2.43z"/></svg>Random</div>
+                <div class="sort-option" data-sort="tags" onclick="setSort(this)"><svg viewBox="0 0 16 16"><path d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z"/></svg>Similar Tags</div>
+              </div>
+            </div>
             <div class="slider-wrap">
               <svg viewBox="0 0 16 16"><path d="M1 2.75A.75.75 0 011.75 2h12.5a.75.75 0 010 1.5H1.75A.75.75 0 011 2.75zm0 5A.75.75 0 011.75 7h12.5a.75.75 0 010 1.5H1.75A.75.75 0 011 7.75zm0 5a.75.75 0 01.75-.75h12.5a.75.75 0 010 1.5H1.75a.75.75 0 01-.75-.75z"></path></svg>
               <input type="range" id="gridSize" min="200" max="500" value="280" step="10">
@@ -491,6 +513,70 @@ jobs:
           document.getElementById('gridSize').addEventListener('input', function() {
             document.getElementById('grid').style.setProperty('--card-size', this.value + 'px');
           });
+          var currentSort = 'name-asc';
+          function toggleSortMenu() {
+            document.getElementById('sortMenu').classList.toggle('open');
+          }
+          document.addEventListener('click', function(e) {
+            if (!e.target.closest('.sort-wrap')) document.getElementById('sortMenu').classList.remove('open');
+          });
+          function setSort(el) {
+            currentSort = el.dataset.sort;
+            document.getElementById('sortLabel').textContent = el.textContent;
+            document.querySelectorAll('.sort-option').forEach(function(o) { o.classList.remove('active'); });
+            el.classList.add('active');
+            document.getElementById('sortMenu').classList.remove('open');
+            sortCards();
+          }
+          function sortCards() {
+            var grid = document.getElementById('grid');
+            var cards = Array.from(grid.querySelectorAll('.card'));
+            if (currentSort === 'name-asc') {
+              cards.sort(function(a, b) { return (a.dataset.name || '').localeCompare(b.dataset.name || ''); });
+            } else if (currentSort === 'name-desc') {
+              cards.sort(function(a, b) { return (b.dataset.name || '').localeCompare(a.dataset.name || ''); });
+            } else if (currentSort === 'random') {
+              for (var i = cards.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var tmp = cards[i]; cards[i] = cards[j]; cards[j] = tmp;
+              }
+            } else if (currentSort === 'tags') {
+              var tagGroups = {};
+              cards.forEach(function(card) {
+                var tags = (card.dataset.tags || '').split(' ').filter(Boolean);
+                tags.forEach(function(t) { if (!tagGroups[t]) tagGroups[t] = []; tagGroups[t].push(card); });
+              });
+              if (activeTags.size > 0) {
+                var seen = new Set();
+                var sorted = [];
+                activeTags.forEach(function(tag) {
+                  (tagGroups[tag] || []).sort(function(a, b) { return (a.dataset.name || '').localeCompare(b.dataset.name || ''); }).forEach(function(c) {
+                    if (!seen.has(c)) { seen.add(c); sorted.push(c); }
+                  });
+                });
+                cards.forEach(function(c) { if (!seen.has(c)) sorted.push(c); });
+                cards = sorted;
+              } else {
+                var tagCounts = {};
+                cards.forEach(function(card) {
+                  (card.dataset.tags || '').split(' ').filter(Boolean).forEach(function(t) {
+                    tagCounts[t] = (tagCounts[t] || 0) + 1;
+                  });
+                });
+                var sortedTags = Object.keys(tagCounts).sort(function(a, b) { return tagCounts[b] - tagCounts[a]; });
+                var seen = new Set();
+                var sorted = [];
+                sortedTags.forEach(function(tag) {
+                  (tagGroups[tag] || []).sort(function(a, b) { return (a.dataset.name || '').localeCompare(b.dataset.name || ''); }).forEach(function(c) {
+                    if (!seen.has(c)) { seen.add(c); sorted.push(c); }
+                  });
+                });
+                cards.forEach(function(c) { if (!seen.has(c)) sorted.push(c); });
+                cards = sorted;
+              }
+            }
+            cards.forEach(function(card) { grid.appendChild(card); });
+          }
           </script>
           </body>
           </html>
