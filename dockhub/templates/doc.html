@@ -1,0 +1,42 @@
+{% include "header.html" %}
+  <div class="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-10 items-start">
+    <aside class="hidden lg:block sticky top-16 overflow-y-auto max-h-[calc(100vh-100px)] pr-4 border-r border-dock-border">
+      <h3 class="text-xs font-bold text-dock-dim uppercase tracking-wider mb-3">{{ section.title }}</h3>
+      {% if section.pages %}
+      <ul class="space-y-1 text-sm">
+        {% for doc in section.pages %}
+        <li>
+          <a href="{{ doc.url }}" class="block py-1.5 px-2 rounded {% if doc.url == page.url %}bg-cyan/10 text-cyan font-medium border-l-2 border-cyan{% else %}text-dock-dim hover:text-dock-text hover:bg-dock-surface{% endif %} transition-all">
+            {{ doc.title }}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </aside>
+    <article class="min-w-0">
+      <nav class="flex items-center gap-2 text-xs text-dock-dim mb-6">
+        <a href="{{ base_url }}/" class="hover:text-dock-text">Home</a>
+        <span>/</span>
+        <a href="{{ section.url }}" class="hover:text-dock-text">{{ section.title }}</a>
+        <span>/</span>
+        <span class="text-dock-text">{{ page.title }}</span>
+      </nav>
+      <h1 class="text-2xl font-bold text-white mb-2">{{ page.title }}</h1>
+      {% if page.extra.category %}
+      <span class="inline-block mb-6 px-2 py-0.5 bg-cyan/10 border border-cyan/20 rounded text-xs text-cyan font-medium">{{ page.extra.category }}</span>
+      {% endif %}
+      <div class="prose">
+        {{ content }}
+      </div>
+      <div class="mt-10 pt-6 border-t border-dock-border flex justify-between text-sm">
+        {% if page.lower %}
+        <a href="{{ page.lower.url }}" class="text-dock-dim hover:text-dock-text">&larr; {{ page.lower.title }}</a>
+        {% else %}<div></div>{% endif %}
+        {% if page.higher %}
+        <a href="{{ page.higher.url }}" class="text-dock-dim hover:text-dock-text">{{ page.higher.title }} &rarr;</a>
+        {% endif %}
+      </div>
+    </article>
+  </div>
+{% include "footer.html" %}

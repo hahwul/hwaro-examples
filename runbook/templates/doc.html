@@ -1,0 +1,57 @@
+{% include "header.html" %}
+  <div class="grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-10 items-start">
+    <aside class="hidden lg:block sticky top-16 overflow-y-auto max-h-[calc(100vh-100px)] pr-4 border-r border-ops-border">
+      <div class="space-y-6">
+        <div>
+          <h3 class="text-xs font-bold text-ops-muted uppercase tracking-wider mb-3">{{ section.title }}</h3>
+          {% if section.pages %}
+          <ul class="space-y-1 text-sm">
+            {% for doc in section.pages %}
+            <li>
+              <a href="{{ doc.url }}" class="block py-1.5 px-2 rounded {% if doc.url == page.url %}bg-ops-surface text-ops-dark font-medium{% else %}text-ops-muted hover:text-ops-dark hover:bg-ops-surface{% endif %} transition-all">
+                {% if doc.extra.severity == "critical" %}<span class="inline-block w-2 h-2 bg-severity-critical rounded-full mr-1.5"></span>{% endif %}
+                {% if doc.extra.severity == "warning" %}<span class="inline-block w-2 h-2 bg-severity-warning rounded-full mr-1.5"></span>{% endif %}
+                {% if doc.extra.severity == "info" %}<span class="inline-block w-2 h-2 bg-severity-info rounded-full mr-1.5"></span>{% endif %}
+                {{ doc.title }}
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </div>
+      </div>
+    </aside>
+    <article class="min-w-0">
+      <nav class="flex items-center gap-2 text-xs text-ops-muted mb-6">
+        <a href="{{ base_url }}/" class="hover:text-ops-dark">Home</a>
+        <span>/</span>
+        <a href="{{ section.url }}" class="hover:text-ops-dark">{{ section.title }}</a>
+        <span>/</span>
+        <span class="text-ops-dark">{{ page.title }}</span>
+      </nav>
+      <div class="flex items-center gap-3 mb-6">
+        <h1 class="text-2xl font-bold text-ops-dark">{{ page.title }}</h1>
+        {% if page.extra.severity == "critical" %}<span class="badge-critical">Critical</span>{% endif %}
+        {% if page.extra.severity == "warning" %}<span class="badge-warning">Warning</span>{% endif %}
+        {% if page.extra.severity == "info" %}<span class="badge-info">Info</span>{% endif %}
+      </div>
+      {% if page.extra.estimated_time or page.extra.last_tested %}
+      <div class="flex items-center gap-4 text-xs text-ops-muted mb-8 pb-4 border-b border-ops-border">
+        {% if page.extra.estimated_time %}<span>Est. time: {{ page.extra.estimated_time }}</span>{% endif %}
+        {% if page.extra.last_tested %}<span>Last tested: {{ page.extra.last_tested }}</span>{% endif %}
+      </div>
+      {% endif %}
+      <div class="prose">
+        {{ content }}
+      </div>
+      <div class="mt-10 pt-6 border-t border-ops-border flex justify-between text-sm">
+        {% if page.lower %}
+        <a href="{{ page.lower.url }}" class="text-ops-muted hover:text-ops-dark">&larr; {{ page.lower.title }}</a>
+        {% else %}<div></div>{% endif %}
+        {% if page.higher %}
+        <a href="{{ page.higher.url }}" class="text-ops-muted hover:text-ops-dark">{{ page.higher.title }} &rarr;</a>
+        {% endif %}
+      </div>
+    </article>
+  </div>
+{% include "footer.html" %}
