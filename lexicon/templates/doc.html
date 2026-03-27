@@ -1,0 +1,47 @@
+{% include "header.html" %}
+  <div class="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-10 items-start">
+    <aside class="hidden lg:block sticky top-16 overflow-y-auto max-h-[calc(100vh-100px)] pr-4 border-r border-lex-border">
+      <h3 class="text-xs font-bold text-lex-muted uppercase tracking-wider mb-3">{{ section.title }}</h3>
+      {% if section.pages %}
+      <ul class="space-y-1 text-sm">
+        {% for doc in section.pages %}
+        <li>
+          <a href="{{ doc.url }}" class="block py-1.5 px-2 rounded {% if doc.url == page.url %}bg-navy/5 text-navy font-medium border-l-2 border-navy{% else %}text-lex-muted hover:text-navy hover:bg-lex-surface{% endif %} transition-all">
+            {{ doc.title }}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </aside>
+    <article class="min-w-0">
+      <nav class="flex items-center gap-2 text-xs text-lex-muted mb-6">
+        <a href="{{ base_url }}/" class="hover:text-navy">Home</a>
+        <span>/</span>
+        <a href="{{ section.url }}" class="hover:text-navy">{{ section.title }}</a>
+        <span>/</span>
+        <span class="text-navy">{{ page.title }}</span>
+      </nav>
+      <div class="mb-6">
+        <h1 class="text-2xl font-serif font-bold text-navy">{{ page.title }}</h1>
+        {% if page.extra.full_name %}
+        <p class="text-sm text-lex-muted mt-1 italic">{{ page.extra.full_name }}</p>
+        {% endif %}
+        {% if page.extra.category %}
+        <span class="inline-block mt-2 px-2 py-0.5 bg-gold/10 border border-gold/20 rounded text-xs text-gold-dark font-medium">{{ page.extra.category }}</span>
+        {% endif %}
+      </div>
+      <div class="prose">
+        {{ content }}
+      </div>
+      <div class="mt-10 pt-6 border-t border-lex-border flex justify-between text-sm">
+        {% if page.lower %}
+        <a href="{{ page.lower.url }}" class="text-lex-muted hover:text-navy">&larr; {{ page.lower.title }}</a>
+        {% else %}<div></div>{% endif %}
+        {% if page.higher %}
+        <a href="{{ page.higher.url }}" class="text-lex-muted hover:text-navy">{{ page.higher.title }} &rarr;</a>
+        {% endif %}
+      </div>
+    </article>
+  </div>
+{% include "footer.html" %}

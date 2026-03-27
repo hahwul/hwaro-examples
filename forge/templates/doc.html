@@ -1,0 +1,47 @@
+{% include "header.html" %}
+  <div class="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-10 items-start">
+    <aside class="hidden lg:block sticky top-16 overflow-y-auto max-h-[calc(100vh-100px)] pr-4 border-r border-forge-border">
+      <h3 class="text-xs font-bold text-forge-muted uppercase tracking-wider mb-3">{{ section.title }}</h3>
+      {% if section.pages %}
+      <ul class="space-y-1 text-sm">
+        {% for doc in section.pages %}
+        <li>
+          <a href="{{ doc.url }}" class="block py-1.5 px-2 rounded {% if doc.url == page.url %}bg-forge-light text-forge-orange font-medium border-l-2 border-forge-orange{% else %}text-forge-muted hover:text-forge-text hover:bg-forge-surface{% endif %} transition-all">
+            {{ doc.title }}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </aside>
+    <article class="min-w-0">
+      <nav class="flex items-center gap-2 text-xs text-forge-muted mb-6">
+        <a href="{{ base_url }}/" class="hover:text-forge-text">Home</a>
+        <span>/</span>
+        <a href="{{ section.url }}" class="hover:text-forge-text">{{ section.title }}</a>
+        <span>/</span>
+        <span class="text-forge-text">{{ page.title }}</span>
+      </nav>
+      <div class="flex items-center gap-3 mb-2">
+        <h1 class="text-2xl font-bold text-forge-text">{{ page.title }}</h1>
+        {% if page.extra.version %}
+        <span class="px-2 py-0.5 bg-forge-surface border border-forge-border rounded text-xs text-forge-muted font-medium">{{ page.extra.version }}</span>
+        {% endif %}
+      </div>
+      {% if page.extra.category %}
+      <span class="inline-block mb-6 px-2 py-0.5 bg-forge-light text-forge-orange text-xs font-medium rounded">{{ page.extra.category }}</span>
+      {% endif %}
+      <div class="prose">
+        {{ content }}
+      </div>
+      <div class="mt-10 pt-6 border-t border-forge-border flex justify-between text-sm">
+        {% if page.lower %}
+        <a href="{{ page.lower.url }}" class="text-forge-muted hover:text-forge-text">&larr; {{ page.lower.title }}</a>
+        {% else %}<div></div>{% endif %}
+        {% if page.higher %}
+        <a href="{{ page.higher.url }}" class="text-forge-muted hover:text-forge-text">{{ page.higher.title }} &rarr;</a>
+        {% endif %}
+      </div>
+    </article>
+  </div>
+{% include "footer.html" %}

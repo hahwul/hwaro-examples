@@ -1,0 +1,51 @@
+{% include "header.html" %}
+  <div class="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-10 items-start">
+    <aside class="hidden lg:block sticky top-16 overflow-y-auto max-h-[calc(100vh-100px)] pr-4 border-r border-compass-border">
+      <h3 class="text-xs font-bold text-compass-muted uppercase tracking-wider mb-3">{{ section.title }}</h3>
+      {% if section.pages %}
+      <ul class="space-y-1 text-sm">
+        {% for doc in section.pages %}
+        <li>
+          <a href="{{ doc.url }}" class="flex items-center gap-2 py-1.5 px-2 rounded {% if doc.url == page.url %}bg-compass-light text-compass-green font-medium{% else %}text-compass-muted hover:text-compass-text hover:bg-compass-surface{% endif %} transition-all">
+            <svg class="w-4 h-4 flex-shrink-0 {% if doc.weight < page.weight %}text-compass-green{% elif doc.url == page.url %}text-compass-green{% else %}text-compass-border{% endif %}" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            {{ doc.title }}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </aside>
+    <article class="min-w-0">
+      <nav class="flex items-center gap-2 text-xs text-compass-muted mb-6">
+        <a href="{{ base_url }}/" class="hover:text-compass-text">Home</a>
+        <span>/</span>
+        <a href="{{ section.url }}" class="hover:text-compass-text">{{ section.title }}</a>
+        <span>/</span>
+        <span class="text-compass-text">{{ page.title }}</span>
+      </nav>
+      {% if page.extra.step and page.extra.total_steps %}
+      <div class="mb-8">
+        <div class="flex items-center justify-between text-xs text-compass-muted mb-2">
+          <span>Step {{ page.extra.step }} of {{ page.extra.total_steps }}</span>
+          {% if page.extra.estimated_time %}<span>{{ page.extra.estimated_time }}</span>{% endif %}
+        </div>
+        <div class="w-full bg-compass-surface rounded-full h-2">
+          <div class="bg-compass-green h-2 rounded-full" style="width: {% if page.extra.step == 1 %}33{% elif page.extra.step == 2 %}66{% elif page.extra.step == 3 %}100{% else %}0{% endif %}%"></div>
+        </div>
+      </div>
+      {% endif %}
+      <h1 class="text-2xl font-bold text-compass-text mb-6">{{ page.title }}</h1>
+      <div class="prose">
+        {{ content }}
+      </div>
+      <div class="mt-10 pt-6 border-t border-compass-border flex justify-between text-sm">
+        {% if page.lower %}
+        <a href="{{ page.lower.url }}" class="text-compass-muted hover:text-compass-text">&larr; {{ page.lower.title }}</a>
+        {% else %}<div></div>{% endif %}
+        {% if page.higher %}
+        <a href="{{ page.higher.url }}" class="inline-flex items-center gap-1 px-4 py-2 bg-compass-green text-white rounded hover:bg-green-700 transition-colors text-sm font-medium">{{ page.higher.title }} &rarr;</a>
+        {% endif %}
+      </div>
+    </article>
+  </div>
+{% include "footer.html" %}
