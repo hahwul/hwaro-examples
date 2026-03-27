@@ -146,21 +146,6 @@ jobs:
               echo "Done: ${dir_name}"
             fi
           done
-
-      - name: Inject ribbon banner into built sites
-        run: |
-          OUTPUT_DIR="${GITHUB_WORKSPACE}/_site"
-          RIBBON='<!-- Hwaro GitHub Ribbon --><a href="https://github.com/hahwul/hwaro" target="_blank" rel="noopener" style="position:fixed;top:0;right:0;z-index:9999;display:block;width:150px;height:150px;overflow:hidden;text-decoration:none;" aria-label="Built with Hwaro - View on GitHub"><span style="display:block;position:absolute;top:28px;right:-40px;width:220px;padding:6px 0;background:#24292e;color:#fff;font-size:13px;font-weight:600;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;text-align:center;transform:rotate(45deg);box-shadow:0 2px 8px rgba(0,0,0,0.3);letter-spacing:0.5px;line-height:1.4;">Built with Hwaro</span></a>'
-
-          chmod -R u+w "${OUTPUT_DIR}"
-
-          find "${OUTPUT_DIR}" -name "*.html" -not -path "${OUTPUT_DIR}/index.html" | while read -r f; do
-            if grep -q '<body' "$f"; then
-              sed -i "s|<body\([^>]*\)>|<body\1>${RIBBON}|" "$f"
-            fi
-          done
-          echo "Ribbon injected into all built HTML files"
-
       - name: Generate index page
         run: |
           REPO_NAME="${GITHUB_REPOSITORY#*/}"
