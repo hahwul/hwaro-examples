@@ -1,32 +1,64 @@
 {% include "header.html" %}
-  <main class="site-main">
-    <div class="page-header">
-      <h1>{{ page.title }}</h1>
-      <div class="page-meta">
-        {% if page.date %}
-        <span class="meta-badge meta-badge--date">
-          <span class="meta-badge-label">Date</span> {{ page.date }}
-        </span>
+    <main class="site-main">
+      <article>
+        <div class="page-header">
+          <h1>{{ page.title }}</h1>
+          <div class="page-meta">
+            {% if page.date %}
+            <span class="meta-badge meta-badge--date">
+              <span class="meta-badge-label">Date</span> {{ page.date | date("%B %d, %Y") }}
+            </span>
+            {% endif %}
+            {% if page.extra.difficulty %}
+            <span class="meta-badge meta-badge--difficulty">
+              <span class="meta-badge-label">Difficulty</span> {{ page.extra.difficulty }}
+            </span>
+            {% endif %}
+            {% if page.extra.distance %}
+            <span class="meta-badge meta-badge--distance">
+              <span class="meta-badge-label">Distance</span> {{ page.extra.distance }}
+            </span>
+            {% endif %}
+            {% if page.extra.duration %}
+            <span class="meta-badge meta-badge--duration">
+              <span class="meta-badge-label">Time</span> {{ page.extra.duration }}
+            </span>
+            {% endif %}
+            {% if page.reading_time %}
+            <span class="meta-badge meta-badge--reading">
+              <span class="meta-badge-label">Read</span> {{ page.reading_time }} min
+            </span>
+            {% endif %}
+          </div>
+        </div>
+        <div class="content-body">
+          {{ content | safe }}
+        </div>
+        {% if page.tags %}
+        <div class="tag-list">
+          {% for tag in page.tags %}
+          <a class="tag-item" href="{{ base_url }}/tags/{{ tag | slugify }}/">{{ tag }}</a>
+          {% endfor %}
+        </div>
         {% endif %}
-        {% if page.extra.difficulty %}
-        <span class="meta-badge meta-badge--difficulty">
-          <span class="meta-badge-label">Difficulty</span> {{ page.extra.difficulty }}
-        </span>
-        {% endif %}
-        {% if page.extra.distance %}
-        <span class="meta-badge meta-badge--distance">
-          <span class="meta-badge-label">Distance</span> {{ page.extra.distance }}
-        </span>
-        {% endif %}
-        {% if page.extra.duration %}
-        <span class="meta-badge meta-badge--duration">
-          <span class="meta-badge-label">Time</span> {{ page.extra.duration }}
-        </span>
-        {% endif %}
-      </div>
-    </div>
-    <div class="content-body">
-      {{ content | safe }}
-    </div>
-  </main>
+        <nav class="post-nav">
+          {% if page.lower %}
+          <div class="post-nav-prev">
+            <span class="post-nav-label">Previous</span>
+            <a href="{{ page.lower.url }}">{{ page.lower.title }}</a>
+          </div>
+          {% else %}
+          <div></div>
+          {% endif %}
+          {% if page.higher %}
+          <div class="post-nav-next">
+            <span class="post-nav-label">Next</span>
+            <a href="{{ page.higher.url }}">{{ page.higher.title }}</a>
+          </div>
+          {% else %}
+          <div></div>
+          {% endif %}
+        </nav>
+      </article>
+    </main>
 {% include "footer.html" %}

@@ -1,36 +1,30 @@
 {% include "header.html" %}
 
-<h1 class="page-title">{{ page.title }}</h1>
+  <main>
+    <div class="container">
+      <h1 class="page-title">{{ page.title }}</h1>
 
-{% if page.description %}
-<p style="color: #6b8299; margin-bottom: 2.5rem; font-size: 0.9rem;">{{ page.description }}</p>
-{% endif %}
+      {{ content }}
 
-<div class="content">
-  {{ content | safe }}
-</div>
+      <div class="post-list">
+        {% for item in section.pages %}
+        <article class="post-item">
+          <a href="{{ item.url }}">
+            <h2 class="post-item-title">{{ item.title }}</h2>
+            <div class="post-item-meta">
+              {% if item.date %}{{ item.date }}{% endif %}
+              {% if item.extra.coordinates %} &middot; {{ item.extra.coordinates }}{% endif %}
+              {% if item.extra.temperature %} &middot; {{ item.extra.temperature }}{% endif %}
+              {% if item.reading_time %} &middot; {{ item.reading_time }} min read{% endif %}
+            </div>
+          </a>
+          {% if item.description %}<p class="post-item-desc">{{ item.description }}</p>{% endif %}
+        </article>
+        {% endfor %}
+      </div>
 
-<ul class="post-list">
-  {% for post in section.pages %}
-  <li class="post-item">
-    <h2 class="post-item-title"><a href="{{ post.url }}">{{ post.title }}</a></h2>
-    <div class="post-item-meta">
-      {% if post.date %}<span>{{ post.date }}</span>{% endif %}
-      {% if post.extra.coordinates %}<span>{{ post.extra.coordinates }}</span>{% endif %}
-      {% if post.extra.temperature %}<span>{{ post.extra.temperature }}</span>{% endif %}
+      {{ pagination }}
     </div>
-    {% if post.description %}
-    <p class="post-item-desc">{{ post.description }}</p>
-    {% endif %}
-  </li>
-  {% endfor %}
-</ul>
-
-{% if pagination %}
-<div class="pagination">
-  {% if pagination.previous %}<a href="{{ pagination.previous }}">Previous</a>{% endif %}
-  {% if pagination.next %}<a href="{{ pagination.next }}">Next</a>{% endif %}
-</div>
-{% endif %}
+  </main>
 
 {% include "footer.html" %}

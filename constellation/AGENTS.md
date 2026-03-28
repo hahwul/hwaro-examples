@@ -1,65 +1,47 @@
-# AGENTS.md - AI Agent Instructions for Hwaro Site
+# AGENTS.md - AI Agent Instructions for Constellation
 
-This document provides instructions for AI agents working on this Hwaro-generated website.
+This is a dark astronomy blog theme example for [Hwaro](https://github.com/hahwul/hwaro).
 
 ## Project Overview
 
-This is a static website built with [Hwaro](https://github.com/hahwul/hwaro), a fast and lightweight static site generator written in Crystal.
-
-## Essential Commands
-
-| Command | Description |
-|---------|-------------|
-| `hwaro build` | Build the site to `public/` directory |
-| `hwaro serve` | Start development server with live reload |
-| `hwaro new <path>` | Create new content from archetype |
-| `hwaro deploy` | Deploy the site (requires configuration) |
-| `hwaro build --drafts` | Include draft content |
-| `hwaro serve -p 8080` | Serve on custom port (default: 3000) |
-| `hwaro build --base-url "https://example.com"` | Set base URL for production |
+Constellation is a celestial-themed dark blog for astronomy and night sky observation. It uses a deep navy background (#0b1026) with white text (#e8ecf1) and gold accents (#d4a843). The design features a CSS star field rendered via box-shadow dots and celestial metadata cards showing magnitude, distance, and classification for each post.
 
 ## Directory Structure
 
 ```
-.
-├── config.toml          # Site configuration
-├── content/             # Markdown content files
-│   ├── _index.md        # Homepage content
-│   └── blog/            # Blog section
-│       ├── _index.md    # Section listing page
-│       └── *.md         # Individual pages
-├── templates/           # Jinja2 templates (Crinja)
-│   ├── base.html        # Base layout (optional)
-│   ├── page.html        # Page template
-│   ├── section.html     # Section listing template
-│   └── shortcodes/      # Shortcode templates
-├── static/              # Static assets (copied as-is)
-└── archetypes/          # Content templates for `hwaro new`
+constellation/
+├── config.toml
+├── content/
+│   ├── index.md              # Homepage (template = "home")
+│   ├── about.md              # About page
+│   ├── search.md             # Search page (template = "search")
+│   └── posts/                # Star catalog section
+│       ├── _index.md         # Section listing
+│       └── *.md              # Individual observation posts
+├── templates/
+│   ├── header.html           # Site header with nav
+│   ├── footer.html           # Site footer
+│   ├── home.html             # Homepage with hero and recent posts
+│   ├── page.html             # Post detail with celestial metadata
+│   ├── section.html          # Post listing with pagination
+│   ├── taxonomy.html
+│   ├── taxonomy_term.html
+│   └── 404.html
+└── static/
+    └── css/
+        └── style.css         # All styles (external file)
 ```
 
-## Notes for AI Agents
+## Content Conventions
 
-1. **Front matter is TOML** (`+++`), not YAML (`---`).
-2. **Rendered content** is `{{ content | safe }}`, not `{{ page.content }}`.
-3. **Custom metadata** is `page.extra.field`, not `page.params.field`.
-4. **Always preview** with `hwaro serve` before committing.
-5. **Validate TOML syntax** in config.toml and front matter after edits.
-6. **Use `{{ base_url }}` prefix** for URLs in templates.
-7. **Escape user content** with `{{ value | escape }}` in templates.
+- Post descriptions encode celestial metadata inline (magnitude / distance / classification)
+- Celestial metadata cards display structured observation data
+- Tags: `dark`, `blog`, `astronomy`
+- Google Fonts: Space Mono (headings/mono) + Inter (body)
 
-## Full Reference
+## Notes
 
-For detailed documentation on content, templates, configuration, and more:
-
-- [Hwaro Documentation](https://hwaro.hahwul.com)
-- [Configuration Guide](https://hwaro.hahwul.com/start/config/)
-- [Full LLM Reference](https://hwaro.hahwul.com/llms-full.txt) — comprehensive reference optimized for AI agents
-
-To generate the full embedded AGENTS.md locally, run:
-```
-hwaro tool agents-md --local --write
-```
-
-## Site-Specific Instructions
-
-<!-- Add your site-specific rules and conventions below -->
+1. `page.extra.*` fields are not reliably accessible in Hwaro templates for individual field access. Celestial metadata is encoded in the description field instead.
+2. CSS is in `static/css/style.css` (external file).
+3. Star field background uses box-shadow dots, not gradients.
+4. No gradients or emojis are used in this theme.

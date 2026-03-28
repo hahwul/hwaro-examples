@@ -1,8 +1,9 @@
 +++
 title = "Ross Ice Shelf Monitoring Station"
-date = "2026-03-18"
+date = "2026-03-20"
 description = "Seasonal instrument check at the automated monitoring station on the Ross Ice Shelf. Calving activity observed along the barrier face."
-tags = ["antarctic", "ross-ice-shelf", "monitoring", "calving"]
+tags = ["antarctic", "ross-ice-shelf", "monitoring"]
+categories = ["field-notes"]
 
 [extra]
 coordinates = "78.5500 S, 175.3900 W"
@@ -26,6 +27,17 @@ Data logger shows continuous recording with no gaps exceeding the programmed six
 During the instrument check we heard a sound like sustained thunder from the north. Through binoculars we observed a calving event along the barrier face approximately twelve kilometers from our position. A section of the shelf edge, estimated at eight hundred meters in length, separated and rotated into the sea over a period of roughly four minutes.
 
 The resulting wave reached our position as a barely perceptible vibration in the ice beneath our feet. The GPS station recorded a displacement of six millimeters. This is within normal parameters for a calving event of this magnitude at this distance, but it is a reminder that the surface we stand on is floating, and that it is not as permanent as it appears.
+
+```
+CALVING EVENT LOG
+-----------------
+Time:       1447 NZST
+Bearing:    358 magnetic
+Distance:   ~12 km
+Length:     ~800 m
+Duration:   ~4 min
+GPS shift:  6 mm lateral
+```
 
 ## Return
 

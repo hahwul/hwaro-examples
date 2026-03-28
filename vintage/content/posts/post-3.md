@@ -1,6 +1,6 @@
 +++
 title = "Saturday Morning at the Flea Market"
-date = "2026-02-14"
+date = "2026-03-20"
 description = "A field guide to the fine art of thrifting -- how to spot hidden treasures, negotiate with dealers, and build a home filled with objects that have stories to tell."
 tags = ["thrifting", "collecting", "vintage-finds", "mid-century"]
 categories = ["lifestyle"]

@@ -1,12 +1,9 @@
 +++
 title = "Breathing as a Bridge"
-date = "2026-03-15"
+date = "2026-03-10"
 description = "How conscious breathing serves as the simplest and most accessible bridge between body and mind."
 tags = ["breathwork", "meditation", "wellness", "mindfulness"]
 categories = ["practice"]
-
-[extra]
-category = "Practice"
 +++
 
 Of all the tools available for calming the mind and restoring the body, the breath is the most immediate. It requires no equipment, no subscription, no special location. It is always with you, and it responds to your attention the moment you offer it.
@@ -36,9 +33,5 @@ Simply watch the breath without changing it. Notice where you feel it most -- th
 The beauty of breathwork is that it fits into the smallest gaps in the day. Waiting for water to boil. Sitting in a parked car before entering a building. The first minute after waking. The last minute before sleep.
 
 These brief practices, repeated consistently, create a cumulative effect that is far greater than the sum of their individual moments.
-
-## A Note on Gentleness
-
-If any breathing exercise creates anxiety or discomfort, stop and return to your natural rhythm. The breath is not something to conquer. It is something to befriend. The best practice is always the one that brings you closer to ease, not further from it.
 
 > Between the breath in and the breath out, there is a still point. Rest there.

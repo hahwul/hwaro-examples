@@ -1,8 +1,6 @@
 +++
 title = "About"
 description = "About Hammock, a slow life blog."
-tags = ["about"]
-categories = ["pages"]
 +++
 
 # About Hammock

@@ -1,8 +1,9 @@
 +++
 title = "Landfall at Ny-Alesund"
-date = "2026-01-14"
+date = "2026-03-10"
 description = "Initial survey of the research station perimeter after forty-eight hours of transit through pack ice. Conditions stable but visibility deteriorating."
-tags = ["svalbard", "arctic", "survey"]
+tags = ["arctic", "svalbard", "survey"]
+categories = ["field-notes"]
 
 [extra]
 coordinates = "78.9243 N, 11.9312 E"
@@ -24,6 +25,17 @@ The primary research building remains structurally sound. Heating systems operat
 ## Ice Conditions
 
 Fjord ice is thicker than predicted for this date. Satellite imagery from last week showed open leads to the west, but these have since closed. We observed pressure ridging along the northern shore, some formations reaching two meters above the surface. This suggests active compression from wind-driven pack ice entering the fjord mouth.
+
+```
+ICE THICKNESS LOG
+-----------------
+Station Alpha:  1.42 m
+Station Bravo:  1.58 m
+Station Charlie: 1.31 m
+Mean:           1.44 m
+Predicted:      1.12 m
+Deviation:      +28.6%
+```
 
 ## Notes
 

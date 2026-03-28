@@ -1,15 +1,10 @@
 +++
 title = "The Pleiades: Observing the Seven Sisters"
-description = "An observational guide to the Pleiades open star cluster (M45) in Taurus, including visibility, structure, and associated nebulosity."
-date = "2026-02-08"
-tags = ["star-cluster", "taurus", "winter", "pleiades", "messier"]
+description = "Mag 1.6 (cluster) / 444 ly / Open Cluster in Taurus"
+date = "2026-03-15"
+tags = ["dark", "blog", "astronomy"]
 categories = ["deep-sky"]
 authors = ["observatory"]
-
-[extra]
-magnitude = "1.6 (cluster)"
-distance = "444 ly"
-constellation_type = "Open Cluster / Taurus"
 +++
 
 ## Overview

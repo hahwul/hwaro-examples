@@ -1,6 +1,6 @@
 +++
 title = "Cologne Cathedral: The Longest Construction in Christendom"
-date = "2026-03-08"
+date = "2026-03-15"
 description = "Six hundred years separated the laying of the foundation stone from the completion of the twin spires. Cologne Cathedral is a monument to persistence across centuries."
 tags = ["cathedrals", "German Gothic", "construction history"]
 categories = ["Cologne"]

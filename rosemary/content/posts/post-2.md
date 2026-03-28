@@ -1,6 +1,6 @@
 +++
 title = "Lavender and Honey Shortbread"
-date = "2026-03-20"
+date = "2026-03-15"
 description = "Delicate, buttery shortbread cookies infused with culinary lavender and a touch of honey. An elegant accompaniment to afternoon tea."
 tags = ["lavender", "baking", "dessert", "cookies"]
 
@@ -9,6 +9,7 @@ prep_time = "15 min"
 cook_time = "25 min"
 servings = "24 cookies"
 herbs = ["Lavender"]
+herb_category = "Floral Herbs"
 +++
 
 ## The Art of Restraint
@@ -43,8 +44,8 @@ Lavender in baking requires a gentle hand. Too much and the flavor veers toward 
 
 8. Let the cookies cool on the baking sheet for 5 minutes, then transfer to a wire rack.
 
-## A Note on Lavender
+## Herb Pairing Notes
 
 Use only culinary-grade lavender, never the ornamental variety sold for sachets and potpourri, which may have been treated with chemicals. English lavender (Lavandula angustifolia) has the sweetest, most balanced flavor for baking.
 
-Chop the buds finely so that no single bite delivers an overpowering burst of flavor. The lavender should be a suggestion, not a statement.
+Chop the buds finely so that no single bite delivers an overpowering burst of flavor. The lavender should be a suggestion, not a statement. For a lovely variation, add a teaspoon of lemon zest to the dough -- citrus and lavender are natural companions.

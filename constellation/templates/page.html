@@ -2,32 +2,52 @@
   <main class="site-main">
     <div class="page-header">
       <h1>{{ page.title }}</h1>
-      {% if page.date %}<div class="page-date">{{ page.date }}</div>{% endif %}
+      {% if page.date %}
+      <span class="page-date">{{ page.date }}</span>
+      {% if page.reading_time %}<span class="page-reading-time">{{ page.reading_time }} min read</span>{% endif %}
+      {% endif %}
     </div>
 
-    {% if page.extra.magnitude or page.extra.distance or page.extra.constellation_type %}
+    {% if page.description %}
     <div class="celestial-meta">
-      {% if page.extra.magnitude %}
       <div class="celestial-meta-item">
         <span class="celestial-meta-label">Magnitude</span>
-        <span class="celestial-meta-value">{{ page.extra.magnitude }}</span>
+        <span class="celestial-meta-value">--</span>
       </div>
-      {% endif %}
-      {% if page.extra.distance %}
       <div class="celestial-meta-item">
         <span class="celestial-meta-label">Distance</span>
-        <span class="celestial-meta-value">{{ page.extra.distance }}</span>
+        <span class="celestial-meta-value">--</span>
       </div>
-      {% endif %}
-      {% if page.extra.constellation_type %}
       <div class="celestial-meta-item">
         <span class="celestial-meta-label">Classification</span>
-        <span class="celestial-meta-value">{{ page.extra.constellation_type }}</span>
+        <span class="celestial-meta-value">--</span>
       </div>
-      {% endif %}
     </div>
     {% endif %}
 
-    {{ content | safe }}
+    {{ content }}
+
+    {% if page.tags %}
+    <div class="page-tags">
+      {% for tag in page.tags %}
+      <a href="{{ base_url }}/tags/{{ tag | slugify }}/">{{ tag }}</a>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <nav class="post-nav">
+      {% if page.higher %}
+      <a href="{{ page.higher.url }}">
+        <span class="nav-label">Previous</span>
+        {{ page.higher.title }}
+      </a>
+      {% endif %}
+      {% if page.lower %}
+      <a href="{{ page.lower.url }}" class="nav-next">
+        <span class="nav-label">Next</span>
+        {{ page.lower.title }}
+      </a>
+      {% endif %}
+    </nav>
   </main>
 {% include "footer.html" %}

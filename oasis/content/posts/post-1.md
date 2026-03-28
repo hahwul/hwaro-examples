@@ -1,12 +1,9 @@
 +++
-title = "The Practice of Morning Stillness"
-date = "2026-03-25"
-description = "On the value of beginning each day with a few minutes of deliberate silence before the world rushes in."
+title = "The Art of Morning Stillness"
+date = "2026-03-20"
+description = "On the value of beginning each day with a few minutes of deliberate silence before the world demands your attention."
 tags = ["meditation", "morning-rituals", "mindfulness"]
 categories = ["practice"]
-
-[extra]
-category = "Practice"
 +++
 
 There is a quality to the early morning that cannot be found at any other hour. The light is softer. The air carries a coolness that will burn away by midday. The sounds of the world have not yet gathered their full volume.

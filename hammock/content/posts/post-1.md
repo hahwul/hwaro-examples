@@ -1,6 +1,6 @@
 +++
 title = "The Art of Afternoon Tea"
-date = "2026-03-15"
+date = "2026-03-10"
 description = "There is something deeply calming about the ritual of making tea in the middle of the afternoon, when the world outside is still bright but beginning to soften."
 tags = ["tea", "rituals", "slow-living"]
 categories = ["reflections"]
