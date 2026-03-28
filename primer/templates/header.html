@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description }}">
+  <title>{{ page.title }} - {{ site.title }}</title>
+  {{ og_all_tags }}
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2563eb',
+            'primary-light': '#3b82f6',
+            'primary-dark': '#1d4ed8',
+            accent: '#eab308',
+            background: '#ffffff',
+            surface: '#f8fafc',
+            'surface-alt': '#f1f5f9',
+            border: '#e2e8f0',
+            muted: '#64748b',
+            text: '#1e293b',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <style type="text/tailwindcss">
+    /* Prose: markdown rendered content */
+    .prose { @apply text-text/90; }
+    .prose h1, .prose h2, .prose h3 { @apply font-semibold leading-tight text-text; }
+    .prose h1 { @apply text-3xl mt-0 mb-6; }
+    .prose h2 { @apply text-2xl mt-10 mb-4 border-b border-border pb-2; }
+    .prose h3 { @apply text-xl mt-8 mb-3 text-text/90; }
+    .prose p { @apply my-5 leading-relaxed text-muted; }
+    .prose a { @apply text-primary hover:text-primary-dark hover:underline underline-offset-4 decoration-2 decoration-primary/30 transition-all; }
+    .prose strong { @apply text-text font-semibold; }
+    .prose code {
+      @apply bg-surface-alt px-1.5 py-0.5 rounded text-sm font-mono text-primary-dark border border-border;
+    }
+    .prose pre {
+      @apply bg-surface p-5 rounded-xl overflow-x-auto border border-border shadow-sm my-6;
+    }
+    .prose pre code { @apply bg-transparent p-0 border-0 text-text; }
+    .prose blockquote {
+      @apply my-6 py-3 px-5 border-l-4 border-primary bg-primary/5 text-muted italic rounded-r-lg;
+    }
+    .prose blockquote p { @apply my-2; }
+    .prose ul, .prose ol { @apply my-4 ml-6 text-muted; }
+    .prose li { @apply my-1.5 pl-1; }
+    .prose ul li { @apply list-disc marker:text-primary; }
+    .prose ol li { @apply list-decimal marker:text-primary; }
+    .prose img { @apply max-w-full rounded-xl border border-border shadow-sm; }
+    .prose table { @apply w-full border-collapse my-8 rounded-lg overflow-hidden; }
+    .prose thead { @apply bg-surface-alt text-text; }
+    .prose th, .prose td { @apply px-4 py-3 border-b border-border text-left text-sm text-muted; }
+    .prose tbody tr:last-child td { @apply border-b-0; }
+    .prose tbody tr:hover { @apply bg-surface; }
+
+    /* Pagination */
+    nav.pagination { @apply my-8; }
+    nav.pagination .pagination-list {
+      @apply list-none p-0 m-0 flex gap-2 flex-wrap items-center;
+    }
+    nav.pagination a {
+      @apply inline-block px-3 py-1.5 rounded-md border border-border text-muted no-underline text-sm
+             hover:text-primary hover:border-primary hover:bg-primary/5 transition-all;
+    }
+    .pagination-current span {
+      @apply inline-block px-3 py-1.5 rounded-md border border-primary bg-primary/10 text-primary text-sm font-medium;
+    }
+    .pagination-disabled span {
+      @apply inline-block px-3 py-1.5 rounded-md border border-border text-muted opacity-30 text-sm;
+    }
+
+    /* Section list (taxonomy content) */
+    ul.section-list { @apply list-none p-0 my-6 space-y-3; }
+    ul.section-list li {
+      @apply p-4 bg-surface rounded-xl border border-border hover:border-primary/50 transition-colors;
+    }
+    ul.section-list li a { @apply font-medium text-primary hover:text-primary-dark; }
+
+    /* TOC */
+    .toc ul { @apply ml-4 my-0 space-y-1; }
+    .toc li { @apply relative; }
+    .toc a { @apply text-muted no-underline text-sm hover:text-primary transition-colors block py-0.5; }
+    .toc .active > a { @apply text-primary font-medium; }
+
+    /* Difficulty badges */
+    .badge-beginner { @apply inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200; }
+    .badge-intermediate { @apply inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200; }
+    .badge-advanced { @apply inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold bg-red-50 text-red-700 border border-red-200; }
+
+    /* Code editor-style practice blocks */
+    .practice-block {
+      @apply my-8 rounded-xl border border-border overflow-hidden;
+    }
+    .practice-block-header {
+      @apply flex items-center gap-2 px-4 py-2.5 bg-surface-alt border-b border-border text-sm font-semibold text-text;
+    }
+    .practice-block-header .dot { @apply w-3 h-3 rounded-full; }
+    .practice-block-body {
+      @apply p-5 bg-surface font-mono text-sm text-muted leading-relaxed;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f8fafc;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+</head>
+<body class="font-sans text-text bg-background leading-relaxed selection:bg-primary/20 selection:text-primary-dark" data-section="{{ page.section }}">
+  <div class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-border">
+    <header class="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto">
+      <div class="flex items-center gap-8">
+        <a href="{{ base_url }}/" class="group flex items-center gap-2.5 font-bold text-xl text-text no-underline transition-colors z-50 relative">
+          <div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
+            <span class="text-white text-sm font-bold">P</span>
+          </div>
+          <span>{{ site.title }}</span>
+        </a>
+        <nav class="hidden md:flex gap-1 items-center">
+          <a href="{{ base_url }}/" class="px-3 py-2 rounded-lg text-sm font-medium text-muted hover:text-text hover:bg-surface transition-all">Home</a>
+          <a href="{{ base_url }}/docs/basics/" class="px-3 py-2 rounded-lg text-sm font-medium text-muted hover:text-text hover:bg-surface transition-all">Basics</a>
+          <a href="{{ base_url }}/docs/patterns/" class="px-3 py-2 rounded-lg text-sm font-medium text-muted hover:text-text hover:bg-surface transition-all">Patterns</a>
+        </nav>
+      </div>
+
+      <div class="flex items-center gap-4 z-50 relative">
+        <div class="relative group hidden sm:block">
+          <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-muted group-hover:text-primary transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </span>
+          <input type="text" placeholder="Search tutorials..." class="bg-surface border border-border text-sm rounded-full py-1.5 pl-9 pr-4 w-48 md:w-64 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all text-text placeholder-muted hover:border-muted">
+          <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+            <span class="text-xs text-muted border border-border rounded px-1.5 py-0.5">Ctrl+K</span>
+          </div>
+        </div>
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-btn" class="md:hidden p-2 text-muted hover:text-text transition-colors focus:outline-none">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="hidden fixed inset-0 z-40 bg-white/98 backdrop-blur-sm pt-24 px-6 md:hidden transition-opacity duration-300 opacity-0 pointer-events-none">
+      <nav class="flex flex-col gap-4 text-lg font-medium">
+        <a href="{{ base_url }}/" class="text-muted hover:text-text py-2 border-b border-border">Home</a>
+        <a href="{{ base_url }}/docs/basics/" class="text-muted hover:text-text py-2 border-b border-border">Basics</a>
+        <a href="{{ base_url }}/docs/patterns/" class="text-muted hover:text-text py-2 border-b border-border">Patterns</a>
+        <!-- Mobile Search -->
+        <div class="relative mt-4">
+           <input type="text" placeholder="Search tutorials..." class="w-full bg-surface border border-border text-sm rounded-lg py-3 pl-4 pr-4 focus:outline-none focus:ring-2 focus:ring-primary/30 text-text placeholder-muted">
+        </div>
+      </nav>
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto px-6">
+
+  <script src="{{ base_url }}/js/mobile-menu.js"></script>

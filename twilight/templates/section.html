@@ -1,30 +1,31 @@
 {% include "header.html" %}
-<div class="container">
-  {% if section.title %}
-  <h1 class="page-title">{{ section.title }}</h1>
-  {% endif %}
-  {% if section.description %}
-  <p style="color: #9a93a8; margin-bottom: 2.5rem; font-size: 0.95rem;">{{ section.description }}</p>
-  {% endif %}
-  <div class="page-content">
-    {{ content | safe }}
-  </div>
-  <ul class="post-list">
-    {% for post in section.pages %}
-    <li class="post-item">
-      <h2 class="post-item-title"><a href="{{ post.url }}">{{ post.title }}</a></h2>
-      <div class="post-item-meta">{{ post.date }}</div>
-      {% if post.description %}
-      <p class="post-item-description">{{ post.description }}</p>
-      {% endif %}
-    </li>
-    {% endfor %}
-  </ul>
-  {% if pagination %}
-  <div class="pagination">
-    {% if pagination.previous %}<a href="{{ pagination.previous }}">Previous</a>{% else %}<span></span>{% endif %}
-    {% if pagination.next %}<a href="{{ pagination.next }}">Next</a>{% else %}<span></span>{% endif %}
-  </div>
-  {% endif %}
-</div>
+
+  <main class="container">
+    <h1 class="page-heading">{{ page.title }}</h1>
+
+    {{ content }}
+
+    <div class="essay-list">
+      {% for item in section.pages %}
+      <article class="essay-card">
+        <a href="{{ item.url }}" class="essay-card-link">
+          {% if item.extra.time_of_day %}
+          <span class="time-label time-{{ item.extra.time_of_day }}">{{ item.extra.time_of_day }}</span>
+          {% endif %}
+          <h3 class="essay-card-title">{{ item.title }}</h3>
+          <div class="essay-card-meta">
+            {% if item.date %}{{ item.date }}{% endif %}
+            {% if item.reading_time %} &middot; {{ item.reading_time }} min read{% endif %}
+          </div>
+          {% if item.description %}
+          <p class="essay-card-excerpt">{{ item.description }}</p>
+          {% endif %}
+        </a>
+      </article>
+      {% endfor %}
+    </div>
+
+    {{ pagination }}
+  </main>
+
 {% include "footer.html" %}

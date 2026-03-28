@@ -1,8 +1,6 @@
 +++
 title = "About"
 description = "About Sawmill and the craft of woodworking"
-tags = ["about"]
-categories = ["pages"]
 +++
 
 # About Sawmill
@@ -26,3 +24,15 @@ A good woodworking project is one that:
 ## The Workshop
 
 The projects documented here are built in a modest home workshop equipped with a mix of hand tools and power tools. Nothing here requires an industrial setup. The goal is always to show what is achievable with reasonable equipment and careful technique.
+
+## Project Stages
+
+Every project in this journal follows four stages:
+
+**Planning** -- Sketching the design, creating a cut list, and selecting materials. This is where the project takes shape on paper before any wood is touched.
+
+**Cutting** -- Breaking down rough lumber into dimensioned parts. Milling, ripping, crosscutting, and preparing stock for joinery.
+
+**Assembly** -- Bringing the parts together. Glue-ups, clamping, fastening, and fitting joints. This is where patience matters most.
+
+**Finish** -- Sanding, applying finish, and final details. The last step that brings out the beauty of the wood and protects the work for years to come.
