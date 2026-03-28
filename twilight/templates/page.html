@@ -1,18 +1,45 @@
 {% include "header.html" %}
-<div class="container">
-  <h1 class="page-title">{{ page.title }}</h1>
-  {% if page.date %}
-  <div class="page-meta">{{ page.date }}</div>
-  {% endif %}
-  <div class="page-content">
-    {{ content | safe }}
-  </div>
-  {% if page.tags %}
-  <ul class="tag-list" style="margin-top: 2rem;">
-    {% for tag in page.tags %}
-    <li><a href="{{ base_url }}/tags/{{ tag }}/">{{ tag }}</a></li>
-    {% endfor %}
-  </ul>
-  {% endif %}
-</div>
+
+  <main class="container">
+    <article class="essay">
+      <header class="essay-header">
+        <h1 class="essay-title">{{ page.title }}</h1>
+        {% if page.extra.time_of_day %}
+        <span class="time-label time-{{ page.extra.time_of_day }}">{{ page.extra.time_of_day }}</span>
+        {% endif %}
+        <div class="essay-meta">
+          {% if page.date %}{{ page.date }}{% endif %}
+          {% if page.reading_time %} &middot; {{ page.reading_time }} min read{% endif %}
+        </div>
+      </header>
+
+      <div class="essay-content">
+        {{ content }}
+      </div>
+
+      {% if page.tags %}
+      <div class="essay-tags">
+        {% for tag in page.tags %}
+        <a href="{{ base_url }}/tags/{{ tag | slugify }}/" class="tag">#{{ tag }}</a>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <nav class="essay-nav">
+        {% if page.higher %}
+        <a class="nav-link nav-prev" href="{{ page.higher.url }}">
+          <span class="nav-direction">&larr; Newer</span>
+          <span class="nav-title">{{ page.higher.title }}</span>
+        </a>
+        {% endif %}
+        {% if page.lower %}
+        <a class="nav-link nav-next" href="{{ page.lower.url }}">
+          <span class="nav-direction">Older &rarr;</span>
+          <span class="nav-title">{{ page.lower.title }}</span>
+        </a>
+        {% endif %}
+      </nav>
+    </article>
+  </main>
+
 {% include "footer.html" %}

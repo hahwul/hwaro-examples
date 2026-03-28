@@ -1,38 +1,64 @@
 {% include "header.html" %}
-  <main class="site-main">
-    <h1>{{ page.title }}</h1>
-    {% if page.date %}<p class="page-date">{{ page.date }}</p>{% endif %}
 
-    {% if page.extra.wood_type or page.extra.tools or page.extra.difficulty or page.extra.estimated_time %}
-    <div class="project-meta">
-      <h3>Project Details</h3>
-      {% if page.extra.wood_type %}
-      <div class="meta-row">
-        <span class="meta-label">Wood Type</span>
-        <span class="meta-value">{{ page.extra.wood_type }}</span>
-      </div>
-      {% endif %}
-      {% if page.extra.difficulty %}
-      <div class="meta-row">
-        <span class="meta-label">Difficulty</span>
-        <span class="meta-value">{{ page.extra.difficulty }}</span>
-      </div>
-      {% endif %}
-      {% if page.extra.tools %}
-      <div class="meta-row">
-        <span class="meta-label">Tools</span>
-        <span class="meta-value">{{ page.extra.tools }}</span>
-      </div>
-      {% endif %}
-      {% if page.extra.estimated_time %}
-      <div class="meta-row">
-        <span class="meta-label">Estimated Time</span>
-        <span class="meta-value">{{ page.extra.estimated_time }}</span>
-      </div>
-      {% endif %}
-    </div>
-    {% endif %}
+  <main class="wrapper">
+    <article class="post-single">
+      <header>
+        <h1 class="post-title">{{ page.title }}</h1>
+        <div class="post-meta">
+          {% if page.date %}{{ page.date }}{% endif %}
+          {% if page.reading_time %} &middot; {{ page.reading_time }} min read{% endif %}
+        </div>
+      </header>
 
-    {{ content | safe }}
+      {% if page.extra.wood_type or page.extra.difficulty %}
+      <div class="project-details">
+        <h3>Project Details</h3>
+        {% if page.extra.wood_type %}
+        <div class="detail-row">
+          <span class="detail-label">Wood Type</span>
+          <span class="detail-value">{{ page.extra.wood_type }}</span>
+        </div>
+        {% endif %}
+        {% if page.extra.difficulty %}
+        <div class="detail-row">
+          <span class="detail-label">Difficulty</span>
+          <span class="detail-value">{{ page.extra.difficulty }}</span>
+        </div>
+        {% endif %}
+      </div>
+      {% endif %}
+
+      {% if page.image %}
+      <img class="post-cover" src="{{ page.image }}" alt="{{ page.title }}" loading="lazy">
+      {% endif %}
+
+      <div class="post-content">
+        {{ content }}
+      </div>
+
+      {% if page.tags %}
+      <div class="post-tags">
+        {% for tag in page.tags %}
+        <a href="{{ base_url }}/tags/{{ tag | slugify }}/">#{{ tag }}</a>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <nav class="post-nav">
+        {% if page.higher %}
+        <a class="nav-prev" href="{{ page.higher.url }}">
+          <span class="nav-label">&larr; Newer</span>
+          <div class="nav-title">{{ page.higher.title }}</div>
+        </a>
+        {% endif %}
+        {% if page.lower %}
+        <a class="nav-next" href="{{ page.lower.url }}">
+          <span class="nav-label">Older &rarr;</span>
+          <div class="nav-title">{{ page.lower.title }}</div>
+        </a>
+        {% endif %}
+      </nav>
+    </article>
   </main>
+
 {% include "footer.html" %}
