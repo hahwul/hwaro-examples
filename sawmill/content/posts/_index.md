@@ -1,7 +1,5 @@
 +++
 title = "Projects"
-description = "Woodworking project archive"
 sort_by = "date"
+reverse = true
 +++
-
-All woodworking projects, from start to finish.
