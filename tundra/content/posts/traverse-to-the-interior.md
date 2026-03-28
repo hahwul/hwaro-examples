@@ -1,8 +1,9 @@
 +++
 title = "Traverse to the Interior Ice Sheet"
-date = "2026-02-03"
+date = "2026-03-15"
 description = "Three-day overland traverse from the coastal station to the interior monitoring site. GPS waypoints logged at two-kilometer intervals."
-tags = ["greenland", "arctic", "traverse", "ice-sheet"]
+tags = ["arctic", "greenland", "traverse", "ice-sheet"]
+categories = ["field-notes"]
 
 [extra]
 coordinates = "72.5794 N, 38.4597 W"
@@ -26,6 +27,18 @@ Temperature overnight reached negative forty-one. At this threshold, exposed ski
 ## Instrument Deployment
 
 Installed the first of three automated weather stations at waypoint GRL-INT-07. The station records temperature, pressure, wind speed, wind direction, and snow accumulation at fifteen-minute intervals. Data is transmitted via Iridium satellite modem every six hours.
+
+```
+STATION GRL-INT-07 CONFIGURATION
+---------------------------------
+Lat:        72.5794 N
+Lon:        38.4597 W
+Elevation:  2,412 m
+Sensors:    T, P, WS, WD, SD
+Interval:   15 min
+Uplink:     Iridium / 6 hr cycle
+Power:      Li-ion / solar hybrid
+```
 
 The installation required ninety minutes. Anchoring the mast in compacted firn at this temperature demanded pre-drilling with a hand auger, as the snow behaved more like rock than crystalline ice.
 

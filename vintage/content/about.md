@@ -1,5 +1,5 @@
 +++
-title = "About The Vintage Parlor"
+title = "About Vintage"
 description = "The story behind our love for all things vintage and retro"
 tags = ["about"]
 categories = ["pages"]
@@ -7,7 +7,7 @@ categories = ["pages"]
 
 ## Our Story
 
-The Vintage Parlor was born from a shared obsession with the textures, sounds, and flavors of decades past. We believe that the best things in life were often made before we were born -- and that rediscovering them is one of life's greatest pleasures.
+Vintage was born from a shared obsession with the textures, sounds, and flavors of decades past. We believe that the best things in life were often made before we were born -- and that rediscovering them is one of life's greatest pleasures.
 
 What started as weekend trips to flea markets and record fairs has grown into a full-fledged way of life. We shoot on film cameras from the 1970s, cook from handwritten recipe cards found in estate sales, and believe that a well-worn leather jacket tells a better story than anything fresh off the rack.
 

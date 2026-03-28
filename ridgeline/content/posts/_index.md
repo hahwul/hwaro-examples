@@ -1,7 +1,7 @@
 +++
-title = "Trail Reports"
-description = "All trail reports, gear reviews, and route guides."
+title = "Trail Log"
+description = "All trail reports, route guides, and dispatches from the ridgeline."
 sort_by = "date"
+reverse = true
+paginate = 5
 +++
-
-Browse our collection of trail reports from across the mountain west. Each post includes difficulty ratings, total distance, and estimated duration.

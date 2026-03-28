@@ -1,4 +1,5 @@
 +++
 title = "Expedition Log"
-description = "Chronological field dispatches from Arctic and Antarctic operations."
+sort_by = "date"
+reverse = true
 +++

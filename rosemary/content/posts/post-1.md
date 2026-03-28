@@ -1,6 +1,6 @@
 +++
 title = "Rosemary Roasted Chicken with Lemon and Garlic"
-date = "2026-03-15"
+date = "2026-03-10"
 description = "A classic roast chicken infused with fresh rosemary, whole garlic cloves, and bright lemon. The kind of dish that fills your kitchen with the most welcoming aroma."
 tags = ["rosemary", "chicken", "dinner", "roasting"]
 
@@ -9,6 +9,7 @@ prep_time = "20 min"
 cook_time = "1 hr 15 min"
 servings = "4"
 herbs = ["Rosemary", "Thyme"]
+herb_category = "Woody Herbs"
 +++
 
 ## A Simple Roast, Done Right
@@ -40,8 +41,8 @@ The key is patience. Let the chicken come to room temperature before it goes int
 
 5. Rest the chicken for 15 minutes before carving. This is not optional -- the resting period allows the juices to redistribute throughout the meat.
 
-## Notes on Herbs
+## Herb Pairing Notes
 
 Fresh rosemary is essential here. Dried rosemary has a dusty, almost medicinal quality that cannot substitute for the bright, piney fragrance of the fresh herb. If you grow your own, harvest it just before cooking for the best flavor.
 
-The thyme is a quieter companion, adding an earthy warmth that rounds out the rosemary without competing with it.
+The thyme is a quieter companion, adding an earthy warmth that rounds out the rosemary without competing with it. Together they form one of the most reliable herb pairings in the kitchen.

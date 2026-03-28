@@ -1,6 +1,6 @@
 +++
 title = "In Praise of Doing Nothing"
-date = "2026-03-25"
+date = "2026-03-20"
 description = "Somewhere along the way, we decided that every hour must be productive. That rest must be earned. That stillness is laziness wearing a different coat."
 tags = ["rest", "slow-living", "mindfulness"]
 categories = ["reflections"]

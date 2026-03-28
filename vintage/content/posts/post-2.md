@@ -1,6 +1,6 @@
 +++
 title = "The Quiet Art of Film Photography"
-date = "2026-03-01"
+date = "2026-03-15"
 description = "Why shooting on film in the digital age is not about nostalgia but about slowing down, seeing more carefully, and rediscovering the craft of making photographs."
 tags = ["photography", "film", "analog", "darkroom"]
 categories = ["photography"]

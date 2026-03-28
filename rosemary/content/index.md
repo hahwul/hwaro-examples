@@ -1,15 +1,8 @@
 +++
-title = "Rosemary"
-description = "A herb garden cooking blog - recipes rooted in fresh herbs and timeless flavors"
-template = "page.html"
+title = "Home"
+description = "A herb garden cooking blog with fresh, natural aesthetics"
+template = "home"
 +++
-
-<div class="home-hero">
-  <h1>Rosemary</h1>
-  <p class="tagline">Recipes rooted in fresh herbs and timeless flavors</p>
-</div>
-
-<div class="botanical-divider"><span>- - -</span></div>
 
 ## From the Garden to the Table
 

@@ -1,6 +1,6 @@
 +++
 title = "Notre-Dame de Paris and the Weight of Eight Centuries"
-date = "2026-03-15"
+date = "2026-03-10"
 description = "Standing before the western facade of Notre-Dame, one confronts not merely a building but a palimpsest of eight hundred years of Parisian life."
 tags = ["cathedrals", "French Gothic", "restoration"]
 categories = ["Paris"]

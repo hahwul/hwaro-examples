@@ -1,15 +1,41 @@
 {% include "header.html" %}
 
+  <main>
     <article>
       <div class="page-header">
         {% if page.date %}
-          <div class="page-date">{{ page.date | date("%B %d, %Y") }}</div>
+        <div class="page-date">{{ page.date }}</div>
         {% endif %}
         <h1>{{ page.title }}</h1>
       </div>
-      <div class="page-content">
-        {{ content | safe }}
+
+      {% if page.tags %}
+      <div class="page-tags">
+        {% for tag in page.tags %}
+        <a href="{{ base_url }}/tags/{{ tag | slugify }}/">{{ tag }}</a>
+        {% endfor %}
       </div>
+      {% endif %}
+
+      <div class="page-content">
+        {{ content }}
+      </div>
+
+      <nav class="post-nav">
+        {% if page.higher %}
+        <a class="nav-prev" href="{{ page.higher.url }}">
+          <span class="nav-label">Newer</span>
+          <div class="nav-title">{{ page.higher.title }}</div>
+        </a>
+        {% endif %}
+        {% if page.lower %}
+        <a class="nav-next" href="{{ page.lower.url }}">
+          <span class="nav-label">Older</span>
+          <div class="nav-title">{{ page.lower.title }}</div>
+        </a>
+        {% endif %}
+      </nav>
     </article>
+  </main>
 
 {% include "footer.html" %}

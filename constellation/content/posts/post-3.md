@@ -1,15 +1,10 @@
 +++
 title = "Spring Sky Guide: Leo and the Realm of Galaxies"
-description = "A seasonal observing guide for the spring night sky, focusing on the constellation Leo and the Virgo-Coma galaxy cluster region."
-date = "2026-03-22"
-tags = ["seasonal", "spring", "leo", "galaxies", "virgo-cluster"]
+description = "Mag 1.36 (Regulus) / 79 ly / Spring Zodiacal"
+date = "2026-03-20"
+tags = ["dark", "blog", "astronomy"]
 categories = ["seasonal-guides"]
 authors = ["observatory"]
-
-[extra]
-magnitude = "1.36 (Regulus)"
-distance = "79 ly (Regulus)"
-constellation_type = "Spring / Zodiacal"
 +++
 
 ## The Spring Transition

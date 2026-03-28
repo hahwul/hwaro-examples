@@ -1,24 +1,26 @@
 +++
 title = "About"
-description = "About the Oasis -- a space for mindful reflection and gentle living."
-tags = ["about"]
-categories = ["pages"]
 +++
 
-# About the Oasis
+## About This Site
 
-The Oasis was born from a simple desire: to create a quiet corner of the internet where the pace slows down and the noise fades away.
+The Oasis is a space dedicated to stillness and reflection. In a world that moves quickly, this blog offers a pause -- a place to explore mindfulness, wellness, and the quiet practices that restore balance.
 
-In a landscape of endless scrolling and constant stimulation, this space offers something different. Each piece published here is an invitation to pause, breathe, and reflect on the practices that nurture well-being.
+## About the Oasis Theme
 
-## What You Will Find Here
+This site is built with [Hwaro](https://github.com/hahwul/hwaro) using the **Oasis** theme, a desert-inspired design centered on calm and readability.
 
-Writings on meditation and mindfulness, explorations of natural healing traditions, reflections on seasonal living, and practical guidance for building a more intentional daily rhythm.
+Oasis is designed around the idea of breathing space:
 
-## The Philosophy
+- **Desert color palette** -- warm sand backgrounds with emerald and gold accents
+- **Serif typography** -- Libre Baskerville for elegant, unhurried reading
+- **Breathing layout** -- wide margins and generous whitespace throughout
+- **Content cards** -- each post presented as a moment of focused reflection
+- **RSS feed** -- subscribe and read at your own pace
+- **Search** -- find articles with client-side search
+- **SEO optimized** -- sitemap, OpenGraph, and Twitter cards
 
-We believe that wellness is not a destination but a practice. It lives in small, repeated acts of attention -- the way you begin your morning, the quality of your breath, the food you choose to nourish yourself with, the moments of silence you protect throughout the day.
+## Contact
 
-## Stay Connected
-
-Browse the [journal](/posts/) for the latest writings, or explore topics through the [tags](/tags/) page. New reflections are shared regularly, each one written with care and the hope that it may be of some use to you on your own path.
+- GitHub: [github.com/hahwul](https://github.com/hahwul)
+- Email: [hello@example.com](mailto:hello@example.com)

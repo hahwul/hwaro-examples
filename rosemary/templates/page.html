@@ -6,6 +6,9 @@
           {% if page.date %}
           <p class="subtitle">{{ page.date }}</p>
           {% endif %}
+          {% if page.reading_time %}
+          <p class="reading-time">{{ page.reading_time }} min read</p>
+          {% endif %}
           {% if page.extra %}
           <div class="recipe-meta">
             {% if page.extra.prep_time %}
@@ -23,6 +26,11 @@
               <span class="badge-label">Serves</span> {{ page.extra.servings }}
             </span>
             {% endif %}
+            {% if page.extra.herb_category %}
+            <span class="badge herb-badge">
+              <span class="badge-label">Category</span> {{ page.extra.herb_category }}
+            </span>
+            {% endif %}
             {% if page.extra.herbs %}
             {% for herb in page.extra.herbs %}
             <span class="badge herb-badge">{{ herb }}</span>
@@ -32,11 +40,38 @@
           {% endif %}
         </div>
 
-        <div class="botanical-divider"><span>- - -</span></div>
+        <div class="botanical-divider"><span>---</span></div>
 
         <div class="article-content">
           {{ content | safe }}
         </div>
+
+        {% if page.tags %}
+        <div class="post-tags">
+          {% for tag in page.tags %}
+          <a href="{{ base_url }}/tags/{{ tag | slugify }}/">{{ tag }}</a>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        <nav class="post-nav">
+          {% if page.higher %}
+          <a href="{{ page.higher.url }}">
+            <span class="nav-label">Previous</span>
+            {{ page.higher.title }}
+          </a>
+          {% else %}
+          <span></span>
+          {% endif %}
+          {% if page.lower %}
+          <a href="{{ page.lower.url }}" style="text-align: right;">
+            <span class="nav-label">Next</span>
+            {{ page.lower.title }}
+          </a>
+          {% else %}
+          <span></span>
+          {% endif %}
+        </nav>
       </article>
 
 {% include "footer.html" %}

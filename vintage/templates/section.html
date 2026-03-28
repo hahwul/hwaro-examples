@@ -1,28 +1,36 @@
 {% include "header.html" %}
   <main class="site-main">
     <div class="section-intro">
-      <div class="vintage-ornament">- * -</div>
-      <h1>{{ section.title }}</h1>
-      {% if section.description %}
-        <p>{{ section.description }}</p>
+      <div class="vintage-ornament">* * *</div>
+      <h1>{{ page.title }}</h1>
+      {% if page.description %}
+      <p>{{ page.description }}</p>
       {% endif %}
-      <div class="vintage-ornament">- * -</div>
+      <div class="vintage-ornament">* * *</div>
     </div>
     <div class="content-area">
-      {{ content | safe }}
+      {{ content }}
     </div>
     <div class="post-grid">
-      {% for post in section.pages %}
-        <article class="post-card{% if loop.first %} featured{% endif %}">
-          <h2 class="post-card-title"><a href="{{ post.url }}">{{ post.title }}</a></h2>
-          <div class="post-card-meta">
-            {% if post.date %}{{ post.date }}{% endif %}
-          </div>
-          {% if post.description %}
-            <p class="post-card-desc">{{ post.description }}</p>
-          {% endif %}
-          <a href="{{ post.url }}" class="read-more">Continue Reading</a>
-        </article>
+      {% for item in section.pages %}
+      <article class="post-card{% if loop.first %} featured{% endif %}">
+        <h2 class="post-card-title"><a href="{{ item.url }}">{{ item.title }}</a></h2>
+        <div class="post-card-meta">
+          {% if item.date %}{{ item.date }}{% endif %}
+          {% if item.reading_time %} -- {{ item.reading_time }} min read{% endif %}
+        </div>
+        {% if item.description %}
+        <p class="post-card-desc">{{ item.description }}</p>
+        {% endif %}
+        {% if item.tags %}
+        <div class="post-card-tags">
+          {% for tag in item.tags %}
+          <a href="{{ base_url }}/tags/{{ tag | slugify }}/" class="tag-link">{{ tag }}</a>
+          {% endfor %}
+        </div>
+        {% endif %}
+        <a href="{{ item.url }}" class="read-more">Continue Reading</a>
+      </article>
       {% endfor %}
     </div>
     {{ pagination }}

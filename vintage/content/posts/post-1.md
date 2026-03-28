@@ -1,6 +1,6 @@
 +++
 title = "A Guide to Starting Your Vinyl Collection"
-date = "2026-03-15"
+date = "2026-03-10"
 description = "Everything you need to know about diving into the world of record collecting, from choosing your first turntable to hunting for rare pressings at flea markets and estate sales."
 tags = ["vinyl", "records", "hi-fi", "collecting"]
 categories = ["music"]

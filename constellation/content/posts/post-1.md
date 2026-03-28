@@ -1,20 +1,15 @@
 +++
 title = "Orion: The Hunter in the Winter Sky"
-description = "A comprehensive guide to the constellation Orion, its principal stars, and the deep-sky objects within its boundaries."
-date = "2026-01-15"
-tags = ["constellation", "winter", "orion", "deep-sky"]
+description = "Mag 0.13 (Rigel) / 860 ly (Betelgeuse) / Winter Northern"
+date = "2026-03-10"
+tags = ["dark", "blog", "astronomy"]
 categories = ["constellation-guides"]
 authors = ["observatory"]
-
-[extra]
-magnitude = "0.13 (Rigel)"
-distance = "860 ly (Betelgeuse)"
-constellation_type = "Winter / Northern"
 +++
 
 ## Overview
 
-Orion is among the most conspicuous and recognizable constellations in the night sky. Straddling the celestial equator, it is visible from virtually every inhabited location on Earth at some point during the year. Its brightest stars form a distinctive hourglass or bow-tie pattern that has been noted by observers for millennia.
+Orion is among the most conspicuous and recognizable constellations in the night sky. Straddling the celestial equator, it is visible from virtually every inhabited location on Earth at some point during the year. Its brightest stars form a distinctive hourglass pattern that has been noted by observers for millennia.
 
 ## Principal Stars
 

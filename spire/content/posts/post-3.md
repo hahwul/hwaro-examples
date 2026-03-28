@@ -1,6 +1,6 @@
 +++
 title = "York Minster and the English Perpendicular"
-date = "2026-02-28"
+date = "2026-03-20"
 description = "York Minster stands at the crossroads of every major phase of English Gothic, from Early English austerity to the soaring ambition of the Perpendicular."
 tags = ["cathedrals", "English Gothic", "Perpendicular style"]
 categories = ["York"]

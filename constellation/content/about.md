@@ -1,8 +1,6 @@
 +++
 title = "About"
 description = "About the Constellation astronomy blog and observation project."
-tags = ["about"]
-categories = ["pages"]
 +++
 
 ## About This Project
@@ -11,7 +9,7 @@ Constellation is a field journal for amateur and professional astronomers. We do
 
 ## What We Cover
 
-- **Constellation guides** -- detailed maps and mythology for each of the 88 IAU-recognized constellations
+- **Constellation guides** -- detailed maps and descriptions for the 88 IAU-recognized constellations
 - **Deep-sky observations** -- nebulae, star clusters, and galaxies visible through modest equipment
 - **Seasonal sky reports** -- what to look for each season from mid-northern latitudes
 - **Observational technique** -- tips on dark adaptation, equipment selection, and astrophotography

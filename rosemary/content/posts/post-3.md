@@ -1,6 +1,6 @@
 +++
 title = "Classic Basil Pesto with Pine Nuts"
-date = "2026-03-25"
+date = "2026-03-20"
 description = "A vibrant, aromatic pesto made with generous handfuls of fresh basil, toasted pine nuts, sharp Parmigiano-Reggiano, and good olive oil. The taste of summer in a jar."
 tags = ["basil", "pesto", "pasta", "sauces", "summer"]
 
@@ -9,6 +9,7 @@ prep_time = "10 min"
 cook_time = "0 min"
 servings = "6"
 herbs = ["Basil"]
+herb_category = "Tender Herbs"
 +++
 
 ## No Cooking Required
@@ -43,8 +44,8 @@ Toss with freshly cooked pasta (reserve a splash of pasta water to help the pest
 
 Pesto also freezes beautifully. Pour it into ice cube trays for single-serving portions. Lay a thin film of olive oil over the top before freezing to prevent browning.
 
-## Growing Your Own Basil
-
-Basil thrives in warm weather and full sun. Pinch off the flower buds as they appear to keep the plant producing leaves. Harvest from the top of the plant, cutting just above a pair of leaves, and the plant will branch and grow bushier.
+## Herb Pairing Notes
 
 Genovese basil is the traditional choice for pesto, but experiment with other varieties. Thai basil adds an anise note, and lemon basil brings a citrus brightness that works beautifully with fish and seafood.
+
+Basil thrives in warm weather and full sun. Pinch off the flower buds as they appear to keep the plant producing leaves. Harvest from the top of the plant, cutting just above a pair of leaves, and the plant will branch and grow bushier.

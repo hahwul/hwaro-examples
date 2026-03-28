@@ -1,6 +1,6 @@
 +++
 title = "About"
-description = "About Ridgeline and the team behind the trail reports."
+description = "About Ridgeline and the people behind the trail reports."
 +++
 
 # About Ridgeline
@@ -10,6 +10,8 @@ Ridgeline is a journal of mountain travel. We document trails, test gear, and sh
 ## Our Philosophy
 
 We believe that good trail information saves lives and makes the backcountry accessible to more people. Every trail report on this site is based on firsthand experience. We walk the routes we write about, in conditions that range from bluebird mornings to whiteout storms.
+
+Accuracy matters more than speed. A single route description may go through multiple revisions as conditions change, trails are rerouted, or new hazards emerge. If we have not been on a trail recently, we say so.
 
 ## What We Cover
 
@@ -30,3 +32,7 @@ Our posts use a straightforward difficulty scale:
 ## Contact
 
 Have a trail to recommend or a correction to submit? Reach out through our social channels or open an issue on the site repository.
+
+> "The mountains are calling and I must go."
+>
+> -- John Muir

@@ -1,6 +1,6 @@
 +++
 title = "Walking Without a Destination"
-date = "2026-03-20"
+date = "2026-03-15"
 description = "The best walks are the ones where you do not know where you are going. You simply step outside and let your feet decide."
 tags = ["nature", "walking", "slow-living"]
 categories = ["reflections"]
