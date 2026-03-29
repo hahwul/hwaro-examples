@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description }}">
+  <title>{{ page.title }} - {{ site.title }}</title>
+  {{ og_all_tags }}
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#3b82f6',
+            'primary-light': '#60a5fa',
+            'primary-dark': '#2563eb',
+            accent: '#3b82f6',
+            released: '#16a34a',
+            'in-progress': '#3b82f6',
+            planned: '#64748b',
+            deferred: '#d97706',
+            background: '#ffffff',
+            surface: '#f8fafc',
+            'surface-alt': '#f1f5f9',
+            border: '#e2e8f0',
+            muted: '#64748b',
+            text: '#0f172a',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <style type="text/tailwindcss">
+    /* Prose: markdown rendered content */
+    .prose { @apply text-text/80; }
+    .prose h1, .prose h2, .prose h3 { @apply font-semibold leading-tight text-text; }
+    .prose h1 { @apply text-3xl mt-0 mb-6; }
+    .prose h2 { @apply text-2xl mt-10 mb-4 border-b border-border pb-2; }
+    .prose h3 { @apply text-xl mt-8 mb-3 text-text/90; }
+    .prose p { @apply my-5 leading-relaxed text-muted; }
+    .prose a { @apply text-accent hover:text-blue-700 hover:underline underline-offset-4 decoration-2 decoration-accent/30 transition-all; }
+    .prose strong { @apply text-text font-semibold; }
+    .prose code {
+      @apply bg-surface-alt px-1.5 py-0.5 rounded text-sm font-mono text-primary-dark border border-border;
+    }
+    .prose pre {
+      @apply bg-surface p-5 rounded-xl overflow-x-auto border border-border my-6;
+    }
+    .prose pre code { @apply bg-transparent p-0 border-0 text-text/80; }
+    .prose blockquote {
+      @apply my-6 py-3 px-5 border-l-4 border-accent bg-accent/5 text-muted italic rounded-r-lg;
+    }
+    .prose blockquote p { @apply my-2; }
+    .prose ul, .prose ol { @apply my-4 ml-6 text-muted; }
+    .prose li { @apply my-1.5 pl-1; }
+    .prose ul li { @apply list-disc marker:text-primary; }
+    .prose ol li { @apply list-decimal marker:text-primary; }
+    .prose img { @apply max-w-full rounded-xl border border-border shadow-sm; }
+    .prose table { @apply w-full border-collapse my-8 rounded-lg overflow-hidden; }
+    .prose thead { @apply bg-surface-alt text-text; }
+    .prose th, .prose td { @apply px-4 py-3 border-b border-border text-left text-sm text-muted; }
+    .prose tbody tr:last-child td { @apply border-b-0; }
+    .prose tbody tr:hover { @apply bg-surface; }
+
+    /* Pagination */
+    nav.pagination { @apply my-8; }
+    nav.pagination .pagination-list {
+      @apply list-none p-0 m-0 flex gap-2 flex-wrap items-center;
+    }
+    nav.pagination a {
+      @apply inline-block px-3 py-1.5 rounded-md border border-border text-muted no-underline text-sm
+             hover:text-text hover:border-primary hover:bg-surface transition-all;
+    }
+    .pagination-current span {
+      @apply inline-block px-3 py-1.5 rounded-md border border-primary bg-primary/10 text-text text-sm font-medium;
+    }
+    .pagination-disabled span {
+      @apply inline-block px-3 py-1.5 rounded-md border border-border text-muted opacity-30 text-sm;
+    }
+
+    /* Section list */
+    ul.section-list { @apply list-none p-0 my-6 space-y-3; }
+    ul.section-list li {
+      @apply p-4 bg-surface rounded-xl border border-border hover:border-primary/50 transition-colors;
+    }
+    ul.section-list li a { @apply font-medium text-accent hover:text-blue-700; }
+
+    /* TOC */
+    .toc ul { @apply ml-4 my-0 space-y-1; }
+    .toc li { @apply relative; }
+    .toc a { @apply text-muted no-underline text-sm hover:text-accent transition-colors block py-0.5; }
+    .toc .active > a { @apply text-accent font-medium; }
+
+    /* Status badges */
+    .badge-released { @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-released/10 text-released border border-released/20; }
+    .badge-in-progress { @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-in-progress/10 text-in-progress border border-in-progress/20; }
+    .badge-planned { @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-planned/10 text-planned border border-planned/20; }
+    .badge-deferred { @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-deferred/10 text-deferred border border-deferred/20; }
+  </style>
+
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+</head>
+<body class="font-sans text-text bg-background leading-relaxed selection:bg-accent/20 selection:text-text" data-section="{{ page.section }}">
+  <div class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-border">
+    <header class="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto">
+      <div class="flex items-center gap-8">
+        <a href="{{ base_url }}/" class="group flex items-center gap-2.5 font-bold text-xl text-text no-underline transition-colors z-50 relative">
+          <div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
+            <span class="text-white text-sm font-bold">A</span>
+          </div>
+          <span class="text-text">{{ site.title }}</span>
+        </a>
+        <nav class="hidden md:flex gap-1 items-center">
+          <a href="{{ base_url }}/" class="px-3 py-2 rounded-lg text-sm font-medium text-muted hover:text-text hover:bg-surface transition-all">Home</a>
+          <a href="{{ base_url }}/docs/releases/" class="px-3 py-2 rounded-lg text-sm font-medium text-muted hover:text-text hover:bg-surface transition-all">Releases</a>
+          <a href="{{ base_url }}/docs/roadmap/" class="px-3 py-2 rounded-lg text-sm font-medium text-muted hover:text-text hover:bg-surface transition-all">Roadmap</a>
+          <a href="{{ base_url }}/about/" class="px-3 py-2 rounded-lg text-sm font-medium text-muted hover:text-text hover:bg-surface transition-all">About</a>
+        </nav>
+      </div>
+
+      <div class="flex items-center gap-4 z-50 relative">
+        <div class="relative group hidden sm:block">
+          <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-muted group-hover:text-accent transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </span>
+          <input type="text" placeholder="Search releases..." class="bg-surface border border-border text-sm rounded-full py-1.5 pl-9 pr-4 w-48 md:w-64 focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent/50 transition-all text-text placeholder-muted hover:border-primary/30">
+        </div>
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-btn" class="md:hidden p-2 text-muted hover:text-text transition-colors focus:outline-none">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="hidden fixed inset-0 z-40 bg-white/95 backdrop-blur-xl pt-24 px-6 md:hidden transition-opacity duration-300 opacity-0 pointer-events-none">
+      <nav class="flex flex-col gap-4 text-lg font-medium">
+        <a href="{{ base_url }}/" class="text-muted hover:text-text py-2 border-b border-border">Home</a>
+        <a href="{{ base_url }}/docs/releases/" class="text-muted hover:text-text py-2 border-b border-border">Releases</a>
+        <a href="{{ base_url }}/docs/roadmap/" class="text-muted hover:text-text py-2 border-b border-border">Roadmap</a>
+        <a href="{{ base_url }}/about/" class="text-muted hover:text-text py-2 border-b border-border">About</a>
+        <!-- Mobile Search -->
+        <div class="relative mt-4">
+           <input type="text" placeholder="Search releases..." class="w-full bg-surface border border-border text-sm rounded-lg py-3 pl-4 pr-4 focus:outline-none focus:ring-2 focus:ring-accent/30 text-text placeholder-muted">
+        </div>
+      </nav>
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto px-6">
+
+  <script src="{{ base_url }}/js/mobile-menu.js"></script>
