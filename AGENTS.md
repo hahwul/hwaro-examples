@@ -17,6 +17,7 @@ hwaro-examples/
 ├── devconf/                        # Conference event site (dark, event, landing)
 ├── devlog/                         # TIL & changelog blog (dark, blog, minimal)
 ├── emerald/                        # Minimal blog theme (light, blog, minimal)
+├── ethos/                          # Engineering principles & culture (light, docs, culture)
 ├── even/                           # Clean responsive theme (light, blog)
 ├── flowsync/                       # SaaS landing page (dark, landing)
 ├── folio/                          # Portfolio site (light, portfolio)
