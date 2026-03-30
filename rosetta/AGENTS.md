@@ -25,9 +25,11 @@ This is a static website built with [Hwaro](https://github.com/hahwul/hwaro), a 
 ├── config.toml          # Site configuration
 ├── content/             # Markdown content files
 │   ├── _index.md        # Homepage content
-│   └── blog/            # Blog section
+│   └── docs/            # Documentation section
 │       ├── _index.md    # Section listing page
-│       └── *.md         # Individual pages
+│       ├── getting-started/  # Setup and quickstart guides
+│       ├── translation/      # Translation workflow and key management docs
+│       └── advanced/         # Advanced i18n topics and locale handling
 ├── templates/           # Jinja2 templates (Crinja)
 │   ├── base.html        # Base layout (optional)
 │   ├── page.html        # Page template
