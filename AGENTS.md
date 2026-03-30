@@ -41,6 +41,7 @@ hwaro-examples/
 ├── studio/                         # Design studio site (dark, landing, portfolio)
 ├── tale/                           # Traditional blog theme (light, blog, traditional)
 ├── terminal/                       # Terminal dark blog (dark, blog)
+├── turret/                         # WAF/DDoS defense documentation (dark, docs, waf)
 └── AGENTS.md                       # This file
 ```
 

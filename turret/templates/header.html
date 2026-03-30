@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description }}">
+  <title>{{ page.title }} | Turret WAF</title>
+  {{ og_all_tags }}
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --bg-surface: #141414;
+      --bg-code: #1e1e1e;
+      --primary: #cc0000; /* Dark Red */
+      --accent: #ffb300;  /* Amber */
+      --text: #e0e0e0;
+      --text-muted: #888888;
+      --border: #333333;
+      --border-accent: #cc0000;
+      --font-mono: "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-mono);
+      line-height: 1.6;
+      margin: 0;
+      color: var(--text);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Layout */
+    .site-wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .site-header {
+      padding: 2rem 0;
+      border-bottom: 2px solid var(--primary);
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .logo-container {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .site-logo {
+      font-weight: 900;
+      font-size: 2.5rem;
+      color: var(--primary);
+      text-decoration: none;
+      letter-spacing: -2px;
+      line-height: 1;
+    }
+
+    .site-tagline {
+      font-size: 0.8rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-top: 0.5rem;
+      letter-spacing: 2px;
+    }
+
+    .system-status {
+      font-size: 0.75rem;
+      display: flex;
+      gap: 1.5rem;
+      color: var(--text-muted);
+    }
+
+    .status-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .status-indicator {
+      width: 8px;
+      height: 8px;
+      background: var(--primary);
+    }
+
+    .site-nav {
+      margin-top: 2rem;
+      display: flex;
+      gap: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .site-nav a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      padding: 0.25rem 0.5rem;
+      border: 1px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .site-nav a:hover, .site-nav a.active {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    /* Main Content */
+    .site-main {
+      flex: 1;
+      padding: 2rem 0;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4 {
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    h1 { font-size: 2.5rem; border-left: 1rem solid var(--primary); padding-left: 1rem; }
+    h2 { font-size: 1.8rem; border-bottom: 1px solid var(--primary); padding-bottom: 0.5rem; }
+    h3 { font-size: 1.4rem; color: var(--accent); }
+
+    p { margin-bottom: 1.5rem; }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Code & Pre */
+    code {
+      background: var(--bg-code);
+      color: var(--accent);
+      padding: 0.2rem 0.4rem;
+      border: 1px solid var(--border);
+      font-size: 0.9em;
+    }
+
+    pre {
+      background: var(--bg-code);
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      overflow-x: auto;
+      margin: 1.5rem 0;
+      position: relative;
+    }
+
+    pre::before {
+      content: "CODE_BLOCK";
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: var(--border);
+      color: var(--bg);
+      font-size: 0.6rem;
+      padding: 2px 6px;
+    }
+
+    pre code {
+      background: transparent;
+      padding: 0;
+      border: none;
+      color: var(--text);
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 2rem 0;
+    }
+
+    th {
+      background: var(--primary);
+      color: var(--bg);
+      text-align: left;
+      padding: 0.75rem;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+    }
+
+    td {
+      padding: 0.75rem;
+      border: 1px solid var(--border);
+      font-size: 0.9rem;
+    }
+
+    tr:nth-child(even) {
+      background: var(--bg-surface);
+    }
+
+    /* Diagrams / Charts */
+    .diagram {
+      border: 1px solid var(--border);
+      background: var(--bg-surface);
+      padding: 2rem;
+      margin: 2rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .diagram-node {
+      border: 1px solid var(--accent);
+      padding: 1rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .diagram-arrow {
+      height: 40px;
+      width: 2px;
+      background: var(--primary);
+      align-self: center;
+      position: relative;
+    }
+
+    .diagram-arrow::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: -4px;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 5px solid var(--primary);
+    }
+
+    /* Footer */
+    .site-footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 0;
+      margin-top: 4rem;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .site-wrapper { padding: 0 1rem; border: none; }
+      .site-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .logo-container { width: 100%; }
+      .system-status { width: 100%; justify-content: space-between; }
+    }
+  </style>
+  {{ highlight_css }}
+</head>
+<body data-section="{{ page.section }}">
+  <div class="site-wrapper">
+    <header class="site-header">
+      <div class="logo-container">
+        <a href="{{ base_url }}/" class="site-logo">TURRET</a>
+        <div class="site-tagline">Advanced WAF & DDoS Mitigation</div>
+      </div>
+      <div class="system-status">
+        <div class="status-item">
+          <div class="status-indicator"></div>
+          SECURE_CHANNEL: ACTIVE
+        </div>
+        <div class="status-item">
+          <div class="status-indicator" style="background: var(--accent);"></div>
+          LOGGING: VERBOSE
+        </div>
+      </div>
+    </header>
+
+    <nav class="site-nav">
+      <a href="{{ base_url }}/" {% if page.url == "/" %}class="active"{% endif %}>Overview</a>
+      <a href="{{ base_url }}/docs/waf-rules/" {% if page.section == "docs" and page.title == "WAF Rules" %}class="active"{% endif %}>WAF Rules</a>
+      <a href="{{ base_url }}/docs/traffic-flow/" {% if page.section == "docs" and page.title == "Traffic Flow" %}class="active"{% endif %}>Traffic Flow</a>
+      <a href="{{ base_url }}/docs/configuration/" {% if page.section == "docs" and page.title == "Configuration" %}class="active"{% endif %}>Configuration</a>
+    </nav>
