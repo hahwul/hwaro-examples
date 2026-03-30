@@ -212,6 +212,8 @@ jobs:
             .search-input { width: 100%; padding: 0.6rem 0.75rem 0.6rem 2.4rem; background: #111; border: 1px solid #222; border-radius: 8px; color: #e0e0e0; font-size: 0.85rem; outline: none; transition: border-color 0.2s; }
             .search-input::placeholder { color: #555; }
             .search-input:focus { border-color: #444; }
+            .search-count { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-size: 0.7rem; color: #555; pointer-events: none; transition: color 0.2s, opacity 0.2s; opacity: 0; }
+            .search-count.visible { opacity: 1; }
             .sort-wrap { position: relative; flex-shrink: 0; }
             .sort-btn { background: #111; border: 1px solid #222; border-radius: 8px; color: #e0e0e0; font-size: 0.85rem; padding: 0.6rem 0.75rem; cursor: pointer; display: flex; align-items: center; gap: 0.4rem; transition: border-color 0.2s; }
             .sort-btn:hover { border-color: #444; }
@@ -447,6 +449,7 @@ jobs:
             <div class="search-wrap">
               <svg viewBox="0 0 16 16"><path d="M11.5 7a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zm-.82 4.74a6 6 0 111.06-1.06l3.04 3.04a.75.75 0 11-1.06 1.06l-3.04-3.04z"></path></svg>
               <input type="text" class="search-input" id="search" placeholder="Search examples..." autocomplete="off">
+              <span class="search-count" id="searchCount"></span>
             </div>
             <div class="sort-wrap">
               <button class="sort-btn" id="sortBtn" onclick="toggleSortMenu()">
@@ -499,6 +502,14 @@ jobs:
               if (show) visible++;
             });
             document.getElementById('noResults').style.display = visible === 0 ? 'block' : 'none';
+            var total = cards.length;
+            var countEl = document.getElementById('searchCount');
+            if (q || activeTags.size > 0) {
+              countEl.textContent = visible + ' / ' + total;
+              countEl.classList.add('visible');
+            } else {
+              countEl.classList.remove('visible');
+            }
           }
           document.getElementById('search').addEventListener('input', filterCards);
           document.querySelectorAll('.tag-btn').forEach(function(btn) {
