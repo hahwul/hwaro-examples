@@ -6,4 +6,4 @@ tags = ["tenants", "multi-tenant", "isolation"]
 
 This section covers tenant isolation models, automated provisioning workflows, and lifecycle state management.
 
-Start with [Isolation](/docs/tenants/isolation/) to understand data boundary strategies, then review [Provisioning](/docs/tenants/provisioning/) for onboarding workflows and [Lifecycle](/docs/tenants/lifecycle/) for state transitions.
+Start with [Isolation](isolation/) to understand data boundary strategies, then review [Provisioning](provisioning/) for onboarding workflows and [Lifecycle](lifecycle/) for state transitions.

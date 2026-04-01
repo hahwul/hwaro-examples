@@ -19,9 +19,9 @@ Manifold is a multi-tenant SaaS platform framework designed for building applica
 
 | Section | Description |
 |---------|-------------|
-| [Getting Started](/docs/getting-started/) | Install Manifold, configure your first tenant, and verify isolation |
-| [Tenants](/docs/tenants/) | Understand isolation models, provisioning workflows, and lifecycle states |
-| [API](/docs/api/) | Admin API, Tenant API, and authentication reference |
+| [Getting Started](docs/getting-started/) | Install Manifold, configure your first tenant, and verify isolation |
+| [Tenants](docs/tenants/) | Understand isolation models, provisioning workflows, and lifecycle states |
+| [API](docs/api/) | Admin API, Tenant API, and authentication reference |
 
 ## Platform Architecture
 

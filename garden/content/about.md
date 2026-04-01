@@ -19,8 +19,8 @@ Each note is marked with a growth stage to set expectations:
 
 There is no right way to explore a garden. You can:
 
-- Start with [recently updated notes](/notes/) on the homepage
-- Browse by [topic](/tags/) to find related ideas
+- Start with [recently updated notes](../notes/) on the homepage
+- Browse by [topic](../tags/) to find related ideas
 - Follow the links between notes to discover connections
 
 ## About Hwaro

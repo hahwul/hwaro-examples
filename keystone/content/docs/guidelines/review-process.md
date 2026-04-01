@@ -12,7 +12,7 @@ The ADR review process ensures that significant architectural decisions receive 
 
 Any engineer may propose an ADR. To submit a decision for review:
 
-1. Create the ADR document following the structure described in [How to Write ADRs](/docs/guidelines/writing-adrs/).
+1. Create the ADR document following the structure described in [How to Write ADRs](../writing-adrs/).
 2. Set the status to `proposed` and assign the next available ADR number.
 3. Open a pull request against the ADR repository with the new document.
 4. Notify the Architecture Board channel with a link to the pull request and a one-sentence summary of the decision.

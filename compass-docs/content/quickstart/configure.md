@@ -47,4 +47,4 @@ Configuration valid. 0 warnings.
 
 ## Next Step
 
-Proceed to [Deploy](/quickstart/deploy/) to publish your first build.
+Proceed to [Deploy](../deploy/) to publish your first build.

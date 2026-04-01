@@ -67,4 +67,4 @@ dispatch version
 # dispatch v0.9.2 (build 2026-03-15)
 ```
 
-Next, proceed to [Quickstart]({{ base_url }}/docs/getting-started/quickstart/) to launch the server and send your first event.
+Next, proceed to [Quickstart](../quickstart/) to launch the server and send your first event.

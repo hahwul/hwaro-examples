@@ -93,4 +93,4 @@ Events that fail validation are rejected with an HTTP 400 response including a s
 }
 ```
 
-For configuration options that control retention and delivery behavior, see [Configuration]({{ base_url }}/docs/reference/configuration/).
+For configuration options that control retention and delivery behavior, see [Configuration](../configuration/).

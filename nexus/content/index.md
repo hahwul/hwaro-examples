@@ -8,5 +8,5 @@ Welcome to the Nexus platform documentation. Nexus is a high-performance API gat
 
 ## Documentation
 
-- [Architecture](/docs/architecture/) -- Service mesh, gateway patterns, and event-driven design
-- [Endpoints](/docs/endpoints/) -- API endpoint reference and usage guides
+- [Architecture](docs/architecture/) -- Service mesh, gateway patterns, and event-driven design
+- [Endpoints](docs/endpoints/) -- API endpoint reference and usage guides

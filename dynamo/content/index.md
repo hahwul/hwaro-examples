@@ -19,9 +19,9 @@ Dynamo is a serverless functions-as-a-service platform that lets you deploy even
 
 | Section | Description |
 |---------|-------------|
-| [Getting Started](/docs/getting-started/) | Install the CLI, configure your project, and deploy your first function |
-| [Functions](/docs/functions/) | Define triggers, configure runtimes, and manage deployments |
-| [Operations](/docs/operations/) | Optimize cold starts, monitor execution, and configure scaling policies |
+| [Getting Started](docs/getting-started/) | Install the CLI, configure your project, and deploy your first function |
+| [Functions](docs/functions/) | Define triggers, configure runtimes, and manage deployments |
+| [Operations](docs/operations/) | Optimize cold starts, monitor execution, and configure scaling policies |
 
 ## Architecture Overview
 

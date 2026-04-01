@@ -87,4 +87,4 @@ A complete event as seen by a consumer.
 
 Every event carries a unique `id` field. Consumers should use this ID to detect and discard duplicate deliveries. Dispatch guarantees at-least-once delivery, which means the same event may be delivered more than once in failure scenarios.
 
-Next, learn about [Producers]({{ base_url }}/docs/concepts/producers/) to understand how events are published.
+Next, learn about [Producers](../producers/) to understand how events are published.

@@ -19,9 +19,9 @@ Logbook is an audit logging platform designed for enterprises that require tampe
 
 | Section | Description |
 |---------|-------------|
-| [Getting Started](/docs/getting-started/) | Install, configure, and emit your first audit event |
-| [Audit Events](/docs/audit-events/) | Event types, log format specification, and retention policies |
-| [Compliance](/docs/compliance/) | SOC 2, GDPR, and HIPAA compliance mapping and checklists |
+| [Getting Started](docs/getting-started/) | Install, configure, and emit your first audit event |
+| [Audit Events](docs/audit-events/) | Event types, log format specification, and retention policies |
+| [Compliance](docs/compliance/) | SOC 2, GDPR, and HIPAA compliance mapping and checklists |
 
 ## Supported Event Types
 

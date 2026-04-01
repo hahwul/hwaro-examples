@@ -7,4 +7,4 @@ description = "DevLog — Today I Learned & Changelog"
 
 A developer's notebook for things learned, bugs squashed, and versions shipped.
 
-Browse the [log](/log/) or filter by [tags](/tags/).
+Browse the [log](log/) or filter by [tags](tags/).

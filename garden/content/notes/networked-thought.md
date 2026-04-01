@@ -10,7 +10,7 @@ Networked thought is the practice of organizing ideas as nodes in a graph rather
 
 ## The Problem with Hierarchies
 
-Hierarchical systems force every piece of information into exactly one location. But ideas rarely belong to a single category. A note about [spaced repetition](/notes/spaced-repetition/) could fit under "learning science," "productivity," or "cognitive psychology." Choosing one means losing the others.
+Hierarchical systems force every piece of information into exactly one location. But ideas rarely belong to a single category. A note about [spaced repetition](../spaced-repetition/) could fit under "learning science," "productivity," or "cognitive psychology." Choosing one means losing the others.
 
 ## Thinking in Graphs
 
@@ -20,9 +20,9 @@ This mirrors how biological neural networks operate -- not through neat filing s
 
 ## Practical Applications
 
-- [Zettelkasten](/notes/zettelkasten-method/) as a personal knowledge graph
-- [Digital gardens](/notes/digital-gardens/) as a public expression of networked notes
-- [Bidirectional linking](/notes/bidirectional-linking/) as the mechanism that enables network navigation
+- [Zettelkasten](../zettelkasten-method/) as a personal knowledge graph
+- [Digital gardens](../digital-gardens/) as a public expression of networked notes
+- [Bidirectional linking](../bidirectional-linking/) as the mechanism that enables network navigation
 
 ## Where This Leads
 

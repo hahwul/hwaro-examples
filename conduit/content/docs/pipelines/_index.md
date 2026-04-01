@@ -29,6 +29,6 @@ Every pipeline consists of exactly one source, zero or more transforms, and exac
 
 Explore each stage type in detail:
 
-- [Sources](/docs/pipelines/sources/) -- Where data enters the pipeline
-- [Transforms](/docs/pipelines/transforms/) -- How data is processed
-- [Sinks](/docs/pipelines/sinks/) -- Where data is written
+- [Sources](sources/) -- Where data enters the pipeline
+- [Transforms](transforms/) -- How data is processed
+- [Sinks](sinks/) -- Where data is written

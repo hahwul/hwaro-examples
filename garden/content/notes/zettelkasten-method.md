@@ -12,7 +12,7 @@ The Zettelkasten (German for "slip box") is a knowledge management method develo
 
 **Atomicity.** Each note captures a single idea. This makes notes composable and reusable across different contexts.
 
-**Connectivity.** Notes derive their value from connections to other notes. Every new note should be linked to at least one existing note. See [Bidirectional Linking](/notes/bidirectional-linking/) for more on this.
+**Connectivity.** Notes derive their value from connections to other notes. Every new note should be linked to at least one existing note. See [Bidirectional Linking](../bidirectional-linking/) for more on this.
 
 **Personal Voice.** Write notes in your own words. Paraphrasing forces understanding and creates notes that are genuinely useful for future thinking.
 
@@ -27,7 +27,7 @@ The Zettelkasten (German for "slip box") is a knowledge management method develo
 
 The method works because it mirrors how our brains naturally form associations. Rather than filing information into rigid categories, you create a network that surfaces unexpected connections between ideas.
 
-This approach to knowledge management influenced the design of [Digital Gardens](/notes/digital-gardens/) and modern tools for thought.
+This approach to knowledge management influenced the design of [Digital Gardens](../digital-gardens/) and modern tools for thought.
 
 ## Further Reading
 

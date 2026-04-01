@@ -10,13 +10,13 @@ A comprehensive reference for mathematical and scientific formulas. This collect
 
 ## Subject Areas
 
-**[Getting Started]({{ base_url }}/docs/getting-started/)** -- Notation standards, conventions, and how to read this reference.
+**[Getting Started](docs/getting-started/)** -- Notation standards, conventions, and how to read this reference.
 
-**[Algebra]({{ base_url }}/docs/algebra/)** -- Linear algebra, matrix operations, vector spaces, and abstract algebraic structures.
+**[Algebra](docs/algebra/)** -- Linear algebra, matrix operations, vector spaces, and abstract algebraic structures.
 
-**[Calculus]({{ base_url }}/docs/calculus/)** -- Differentiation rules, integration formulas, Taylor series, and fundamental theorems.
+**[Calculus](docs/calculus/)** -- Differentiation rules, integration formulas, Taylor series, and fundamental theorems.
 
-**[Statistics]({{ base_url }}/docs/statistics/)** -- Probability distributions, hypothesis testing, and estimation theory.
+**[Statistics](docs/statistics/)** -- Probability distributions, hypothesis testing, and estimation theory.
 
 ## Quick Reference
 

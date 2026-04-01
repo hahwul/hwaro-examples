@@ -122,4 +122,4 @@ Expected output:
 
 ## Next Steps
 
-Proceed to [Configuration](/docs/getting-started/configuration/) to customize the test runner for your project.
+Proceed to [Configuration](../configuration/) to customize the test runner for your project.

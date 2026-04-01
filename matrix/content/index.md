@@ -23,9 +23,9 @@ Welcome to the compatibility and support matrix documentation. This resource pro
 
 ## How to Use This Documentation
 
-- **[Getting Started]({{ base_url }}/docs/getting-started/)** -- Learn how to read the matrix tables and understand version policies.
-- **[Platforms]({{ base_url }}/docs/platforms/)** -- Detailed compatibility tables for operating systems, browsers, and runtimes.
-- **[Reference]({{ base_url }}/docs/reference/)** -- Support tier definitions and end-of-life schedules.
+- **[Getting Started](docs/getting-started/)** -- Learn how to read the matrix tables and understand version policies.
+- **[Platforms](docs/platforms/)** -- Detailed compatibility tables for operating systems, browsers, and runtimes.
+- **[Reference](docs/reference/)** -- Support tier definitions and end-of-life schedules.
 
 ## Status Definitions
 

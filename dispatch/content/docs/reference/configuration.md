@@ -118,4 +118,4 @@ When metrics are enabled, the server exposes Prometheus-compatible metrics at th
 curl http://localhost:9090/metrics
 ```
 
-For details on the event format validated by the server, see [Message Schema]({{ base_url }}/docs/reference/message-schema/).
+For details on the event format validated by the server, see [Message Schema](../message-schema/).

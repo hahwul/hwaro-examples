@@ -10,8 +10,8 @@ Whether you are writing your first line of code or brushing up on fundamentals, 
 
 ## Tutorials
 
-- [Basics](/docs/basics/) -- Variables, control flow, and functions
-- [Patterns](/docs/patterns/) -- Error handling and collections
+- [Basics](docs/basics/) -- Variables, control flow, and functions
+- [Patterns](docs/patterns/) -- Error handling and collections
 
 ## How to Use This Site
 

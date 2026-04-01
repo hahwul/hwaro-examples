@@ -26,4 +26,4 @@ The Dispatch architecture consists of three primary components.
 - **Producers** -- Services or processes that publish events to topics
 - **Consumers** -- Services or processes that subscribe to topics and process events
 
-Each concept is covered in detail on its own page. Start with [Events]({{ base_url }}/docs/concepts/events/) to learn about the message format and lifecycle.
+Each concept is covered in detail on its own page. Start with [Events](events/) to learn about the message format and lifecycle.

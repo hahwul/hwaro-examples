@@ -31,4 +31,4 @@ Select your preferred integration method to see example code.
 All API requests should be made to:
 `https://api.gateway.local/v1`
 
-[Explore all API Endpoints ->](/api-reference/endpoints/)
+[Explore all API Endpoints ->](endpoints/)

@@ -20,6 +20,6 @@ Scaffold generates project directory trees from predefined or custom templates. 
 
 ## Quick Navigation
 
-Start with the [Installation](/docs/getting-started/installation/) guide, then follow the [Quickstart](/docs/getting-started/quickstart/) walkthrough to scaffold your first project.
+Start with the [Installation](docs/getting-started/installation/) guide, then follow the [Quickstart](docs/getting-started/quickstart/) walkthrough to scaffold your first project.
 
-Browse [Templates](/docs/templates/) to learn how scaffold packs are structured, or see the [CLI Reference](/docs/cli/) for the full command and flag listing.
+Browse [Templates](docs/templates/) to learn how scaffold packs are structured, or see the [CLI Reference](docs/cli/) for the full command and flag listing.

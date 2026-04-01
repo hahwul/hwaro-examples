@@ -19,9 +19,9 @@ Sentinel is a monitoring and alerting platform built for infrastructure observab
 
 | Section | Description |
 |---------|-------------|
-| [Getting Started](/docs/getting-started/) | Install, configure, and run your first health check |
-| [Alerts](/docs/alerts/) | Define rules, set thresholds, and configure escalation |
-| [Dashboards](/docs/dashboards/) | Build monitoring dashboards with widgets and layouts |
+| [Getting Started](docs/getting-started/) | Install, configure, and run your first health check |
+| [Alerts](docs/alerts/) | Define rules, set thresholds, and configure escalation |
+| [Dashboards](docs/dashboards/) | Build monitoring dashboards with widgets and layouts |
 
 ## Architecture Overview
 

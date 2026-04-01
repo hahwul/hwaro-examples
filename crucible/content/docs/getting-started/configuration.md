@@ -172,4 +172,4 @@ describe('User API', () => {
 
 ## Next Steps
 
-Now that your project is configured, learn about the different [Test Types](/docs/test-types/) supported by Crucible.
+Now that your project is configured, learn about the different [Test Types](../../test-types/) supported by Crucible.

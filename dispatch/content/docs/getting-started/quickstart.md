@@ -90,4 +90,4 @@ CLI / SDK                    Dispatch Server              Consumer
   |                               |<-- ack -----------------|
 ```
 
-Next, read about [Events]({{ base_url }}/docs/concepts/events/) to understand the data model in detail.
+Next, read about [Events](../../concepts/events/) to understand the data model in detail.

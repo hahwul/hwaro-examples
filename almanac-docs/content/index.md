@@ -8,8 +8,8 @@ Release planning and product roadmap documentation. Track upcoming features, mil
 
 ## Navigation
 
-- [Release History](/docs/releases/) -- Browse all release notes and changelogs
-- [Roadmap](/docs/roadmap/) -- View upcoming quarters and planned features
+- [Release History](docs/releases/) -- Browse all release notes and changelogs
+- [Roadmap](docs/roadmap/) -- View upcoming quarters and planned features
 
 ## Current Quarter Overview
 

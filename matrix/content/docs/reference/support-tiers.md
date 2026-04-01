@@ -56,4 +56,4 @@ Platforms in Tier 3 are not part of the test matrix:
 
 ## Promotion and Demotion
 
-Platforms move between tiers based on the criteria defined in the [Version Policy]({{ base_url }}/docs/getting-started/version-policy/). Tier changes are announced in release notes and take effect at the start of the next release cycle.
+Platforms move between tiers based on the criteria defined in the [Version Policy](../../getting-started/version-policy/). Tier changes are announced in release notes and take effect at the start of the next release cycle.

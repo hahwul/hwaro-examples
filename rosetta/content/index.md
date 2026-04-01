@@ -19,9 +19,9 @@ Rosetta is a comprehensive i18n (internationalization) and l10n (localization) f
 
 | Section | Description |
 |---------|-------------|
-| [Getting Started](/docs/getting-started/) | Install the library, configure locales, and render your first translated string |
-| [Translation](/docs/translation/) | Work with translation keys, plural forms, and string interpolation |
-| [Advanced](/docs/advanced/) | RTL layout, locale-aware date formatting, and automatic language detection |
+| [Getting Started](docs/getting-started/) | Install the library, configure locales, and render your first translated string |
+| [Translation](docs/translation/) | Work with translation keys, plural forms, and string interpolation |
+| [Advanced](docs/advanced/) | RTL layout, locale-aware date formatting, and automatic language detection |
 
 ## Supported Locales
 

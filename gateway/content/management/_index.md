@@ -41,8 +41,8 @@ The Management Console provides a real-time overview of the Gateway's performanc
 
 ## Navigation
 
-- **[Key Management](/management/keys/)** - Issue, revoke, and manage API keys and OAuth secrets.
-- **[System Configuration](/api-reference/endpoints/)** - Manage Gateway endpoints and routing policies.
+- **[Key Management](keys/)** - Issue, revoke, and manage API keys and OAuth secrets.
+- **[System Configuration](../api-reference/endpoints/)** - Manage Gateway endpoints and routing policies.
 
 <div class="info-box">
   <div class="info-box-title">System Update</div>

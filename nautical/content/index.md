@@ -6,4 +6,4 @@ title = "Voyage Log"
 
 I chart the daily progress of our vessel, tracking sea conditions, coordinates, and navigational challenges.
 
-Read my latest [entries](/posts/) or learn more [about the ship](/about/).
+Read my latest [entries](posts/) or learn more [about the ship](about/).

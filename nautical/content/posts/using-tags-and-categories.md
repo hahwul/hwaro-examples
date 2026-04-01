@@ -36,7 +36,7 @@ Categories work the same way:
 categories = ["tutorials"]
 ```
 
-Browse all categories at [/categories/](/categories/).
+Browse all categories at [/categories/](../../categories/).
 
 ## Custom Taxonomies
 

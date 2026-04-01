@@ -64,4 +64,4 @@ conduit 2.4.0 (build abc1234)
 | Disk | 100 MB | Depends on data volume |
 | OS | Linux, macOS, Windows | Linux (for production) |
 
-Once installed, proceed to [Configuration](/docs/getting-started/configuration/) to set up your first pipeline.
+Once installed, proceed to [Configuration](../configuration/) to set up your first pipeline.

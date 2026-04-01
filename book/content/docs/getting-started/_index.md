@@ -14,4 +14,4 @@ This section covers everything you need to set up and run your first Book site. 
 - How to create a new site using the Book layout
 - How to configure the site to match your needs
 
-Start with [Installation](/docs/getting-started/installation/) to get Hwaro set up on your machine.
+Start with [Installation](installation/) to get Hwaro set up on your machine.

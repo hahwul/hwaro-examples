@@ -17,6 +17,6 @@ NexusWire operates over TCP and provides structured framing, multiplexed streams
 
 ## Documentation
 
-- [Specification](/docs/specification/) -- Wire format, handshake, and error codes
-- [Implementation](/docs/implementation/) -- Client library and server setup guides
-- [About](/about/) -- Project background and contributors
+- [Specification](docs/specification/) -- Wire format, handshake, and error codes
+- [Implementation](docs/implementation/) -- Client library and server setup guides
+- [About](about/) -- Project background and contributors

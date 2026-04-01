@@ -17,8 +17,8 @@ Beautiful Hwaro demonstrates how to create a modern, clean blog with Hwaro's fas
 
 ### Getting Started
 
-Check out the [blog](/blog/) for sample posts, or learn more [about this site](/about/).
+Check out the [blog](blog/) for sample posts, or learn more [about this site](about/).
 
 ### Recent Highlights
 
-Explore our latest posts covering topics from web development to markdown tips. Visit the [tags page](/tags/) to browse content by topic.
+Explore our latest posts covering topics from web development to markdown tips. Visit the [tags page](tags/) to browse content by topic.

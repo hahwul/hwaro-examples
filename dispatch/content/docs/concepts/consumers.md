@@ -103,4 +103,4 @@ dispatch dlq replay user.events --all
 
 Dispatch provides **at-least-once** delivery. This means every event is guaranteed to be delivered at least one time, but may be delivered more than once in failure scenarios. Consumers must handle duplicate events using the event `id` field.
 
-For more details on the event format, see [Events]({{ base_url }}/docs/concepts/events/). For schema definitions, see the [Message Schema]({{ base_url }}/docs/reference/message-schema/) reference.
+For more details on the event format, see [Events](../events/). For schema definitions, see the [Message Schema](../../reference/message-schema/) reference.

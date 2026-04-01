@@ -16,4 +16,4 @@ Hi, I'm **Cactus** -- a minimal blog theme for [Hwaro](https://github.com/hahwul
 
 Clean, dark, whitespace-focused. No distractions, just your content.
 
-Browse the [latest posts](/posts/), check out [projects](/projects/), or learn more [about this site](/about/).
+Browse the [latest posts](posts/), check out [projects](projects/), or learn more [about this site](about/).

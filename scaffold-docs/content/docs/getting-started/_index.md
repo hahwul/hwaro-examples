@@ -14,4 +14,4 @@ This section covers everything you need to install Scaffold and generate your fi
 - How to scaffold a new project using a built-in template
 - How to inspect and verify the generated output
 
-Start with [Installation](/docs/getting-started/installation/) to get Scaffold set up on your machine.
+Start with [Installation](installation/) to get Scaffold set up on your machine.

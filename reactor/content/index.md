@@ -19,9 +19,9 @@ Reactor is a reactive streaming framework for building composable, event-driven 
 
 | Section | Description |
 |---------|-------------|
-| [Getting Started](/docs/getting-started/) | Install, configure, and run your first reactive stream |
-| [Operators](/docs/operators/) | Transform, filter, and combine data streams with composable operators |
-| [Patterns](/docs/patterns/) | Backpressure strategies, error handling, and scheduling patterns |
+| [Getting Started](docs/getting-started/) | Install, configure, and run your first reactive stream |
+| [Operators](docs/operators/) | Transform, filter, and combine data streams with composable operators |
+| [Patterns](docs/patterns/) | Backpressure strategies, error handling, and scheduling patterns |
 
 ## Reactive Pipeline Architecture
 

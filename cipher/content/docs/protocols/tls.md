@@ -100,4 +100,4 @@ nmap --script ssl-enum-ciphers -p 443 example.com
 # Use ssllabs.com/ssltest for comprehensive analysis
 ```
 
-Refer to the [Key Exchange]({{ base_url }}/docs/protocols/key-exchange/) page for details on the ECDHE mechanism used in TLS 1.3.
+Refer to the [Key Exchange](../key-exchange/) page for details on the ECDHE mechanism used in TLS 1.3.

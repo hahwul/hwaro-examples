@@ -57,4 +57,4 @@ scaffold 2.4.1 (darwin/arm64)
 | RAM | 32 MB |
 | Shell | bash, zsh, fish, PowerShell |
 
-Once installed, proceed to the [Quickstart](/docs/getting-started/quickstart/) guide.
+Once installed, proceed to the [Quickstart](../quickstart/) guide.

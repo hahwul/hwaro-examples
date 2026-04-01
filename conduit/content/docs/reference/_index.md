@@ -10,5 +10,5 @@ This section contains the complete technical reference for Conduit. It covers sc
 
 ## Contents
 
-- [Schema](/docs/reference/schema/) -- How to define and enforce data schemas
-- [Data Types](/docs/reference/data-types/) -- Complete list of supported data types
+- [Schema](schema/) -- How to define and enforce data schemas
+- [Data Types](data-types/) -- Complete list of supported data types

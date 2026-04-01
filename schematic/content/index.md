@@ -8,8 +8,8 @@ Welcome to the Schematic hardware design documentation portal. This resource pro
 
 ## Documentation Sections
 
-- [Components](/docs/components/) -- Detailed datasheets for microcontrollers, sensors, and power regulation modules
-- [Reference](/docs/reference/) -- Pinout diagrams, electrical specifications, and design guidelines
+- [Components](docs/components/) -- Detailed datasheets for microcontrollers, sensors, and power regulation modules
+- [Reference](docs/reference/) -- Pinout diagrams, electrical specifications, and design guidelines
 
 ## Quick Reference
 

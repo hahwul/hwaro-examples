@@ -17,4 +17,4 @@ A clean, GitBook-style documentation theme for Hwaro, inspired by [Hugo Book](ht
 
 ## Quick Start
 
-Get started by exploring the sidebar sections, or jump straight to the [Getting Started](/docs/getting-started/) guide.
+Get started by exploring the sidebar sections, or jump straight to the [Getting Started](docs/getting-started/) guide.

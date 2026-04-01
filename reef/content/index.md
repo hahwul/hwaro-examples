@@ -19,16 +19,16 @@ title = "Reef"
 
 Explore the latest entries from the field — each log records dive conditions, observations, and species encounters.
 
-- [Blue Corner Drift Dive](/logs/blue-corner-drift/) — Palau, 28m
-- [Manta Ray Cleaning Station](/logs/manta-cleaning-station/) — Palau, 14m
-- [Night Dive: House Reef](/logs/night-dive-house-reef/) — Bunaken, 16m
-- [USAT Liberty Wreck](/logs/wreck-dive-liberty/) — Bali, 30m
-- [Kelp Forest Patrol](/logs/kelp-forest-patrol/) — California, 21m
+- [Blue Corner Drift Dive](logs/blue-corner-drift/) — Palau, 28m
+- [Manta Ray Cleaning Station](logs/manta-cleaning-station/) — Palau, 14m
+- [Night Dive: House Reef](logs/night-dive-house-reef/) — Bunaken, 16m
+- [USAT Liberty Wreck](logs/wreck-dive-liberty/) — Bali, 30m
+- [Kelp Forest Patrol](logs/kelp-forest-patrol/) — California, 21m
 
 ## Field Guide
 
 A growing catalog of marine species observed during dives.
 
-- [Grey Reef Shark](/field-guide/grey-reef-shark/) — *Carcharhinus amblyrhynchos*
-- [Reef Manta Ray](/field-guide/reef-manta-ray/) — *Mobula alfredi*
-- [Spanish Dancer](/field-guide/spanish-dancer/) — *Hexabranchus sanguineus*
+- [Grey Reef Shark](field-guide/grey-reef-shark/) — *Carcharhinus amblyrhynchos*
+- [Reef Manta Ray](field-guide/reef-manta-ray/) — *Mobula alfredi*
+- [Spanish Dancer](field-guide/spanish-dancer/) — *Hexabranchus sanguineus*

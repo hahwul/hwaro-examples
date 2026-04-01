@@ -19,9 +19,9 @@ Garrison is a firewall management and network security policy platform designed 
 
 | Section | Description |
 |---------|-------------|
-| [Getting Started](/docs/getting-started/) | Install, configure, and deploy your first policy set |
-| [Firewall Rules](/docs/firewall-rules/) | Define inbound, outbound, and NAT translation rules |
-| [Network Zones](/docs/network-zones/) | Configure DMZ, internal, and external security zones |
+| [Getting Started](docs/getting-started/) | Install, configure, and deploy your first policy set |
+| [Firewall Rules](docs/firewall-rules/) | Define inbound, outbound, and NAT translation rules |
+| [Network Zones](docs/network-zones/) | Configure DMZ, internal, and external security zones |
 
 ## Architecture Overview
 

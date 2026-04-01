@@ -15,4 +15,4 @@ This section covers everything you need to install Conduit, configure your first
 - How to validate and run your first pipeline
 - How to monitor pipeline execution
 
-Start with [Installation](/docs/getting-started/installation/) to get Conduit set up on your machine.
+Start with [Installation](installation/) to get Conduit set up on your machine.

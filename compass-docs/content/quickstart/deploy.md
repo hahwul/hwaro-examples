@@ -33,4 +33,4 @@ Build time: 2.3s
 
 ## What Next?
 
-You have completed the Quick Start. For deeper configuration, environment management, and team workflows, see the [Full Guide](/guide/).
+You have completed the Quick Start. For deeper configuration, environment management, and team workflows, see the [Full Guide](../../guide/).

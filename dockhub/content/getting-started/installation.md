@@ -54,4 +54,4 @@ Docker Engine: 24.0.7
 
 ## Next Steps
 
-Proceed to [Your First Container](/getting-started/first-container/) to build and run your first image.
+Proceed to [Your First Container](../first-container/) to build and run your first image.

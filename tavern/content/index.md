@@ -15,7 +15,7 @@ The **Obsidian Hearth** is a sanctuary for those who walk the shadowed paths. Wh
 
 Our guild's lifeblood flows through the Notice Board. Here, patrons from across the realm post their pleas for aid, bounties, and expeditions.
 
-- **[View the Notice Board](/posts/)** to find your next contract.
+- **[View the Notice Board](posts/)** to find your next contract.
 - Seek out the Guild Master to post a new bounty.
 - Respect the sanctuary of the Hearth; blades drawn inside will be answered tenfold.
 

@@ -7,9 +7,9 @@ This is a comprehensive guide to coding conventions and style for our engineerin
 
 ## Sections
 
-- **[General Conventions](/conventions/)** - Naming, structure, and general principles
-- **[Formatting Rules](/formatting/)** - Linting, auto-formatting, and indentation
-- **[Best Practices](/best-practices/)** - Design patterns, error handling, and performance
+- **[General Conventions](conventions/)** - Naming, structure, and general principles
+- **[Formatting Rules](formatting/)** - Linting, auto-formatting, and indentation
+- **[Best Practices](best-practices/)** - Design patterns, error handling, and performance
 
 ## Goal
 

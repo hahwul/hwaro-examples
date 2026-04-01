@@ -5,7 +5,7 @@ template = "home"
 
 **TELEGRAPH WIRE** is a real-time news dispatch service. All stories are filed by correspondents in the field and transmitted as they develop.
 
-Browse the [latest dispatches](/posts/) or filter by [topic](/tags/).
+Browse the [latest dispatches](posts/) or filter by [topic](tags/).
 
 ---
 

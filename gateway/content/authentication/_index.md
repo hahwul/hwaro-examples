@@ -14,4 +14,4 @@ Authentication is the process of verifying the identity of a user or service. Th
 
 Access tokens issued by the Gateway have a configurable expiration time. Refresh tokens can be used to obtain new access tokens without re-authenticating.
 
-[Learn more about the Auth Flow ->](/authentication/flow/)
+[Learn more about the Auth Flow ->](flow/)

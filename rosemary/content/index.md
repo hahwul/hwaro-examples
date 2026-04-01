@@ -16,4 +16,4 @@ Our kitchen is guided by the seasons and by the herbs that thrive in them. Wheth
 - **Growing Notes** -- Tips for cultivating your own kitchen garden
 - **Seasonal Pairings** -- Which herbs shine in each season and how to use them
 
-Browse the [recipe collection](/posts/) or learn more [about this kitchen](/about/).
+Browse the [recipe collection](posts/) or learn more [about this kitchen](about/).

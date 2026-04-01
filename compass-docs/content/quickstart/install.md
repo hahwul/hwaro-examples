@@ -44,4 +44,4 @@ compass v2.4.1 (build 2024-09-01)
 
 ## Next Step
 
-Once installed, proceed to [Configure](/quickstart/configure/) to set up your project.
+Once installed, proceed to [Configure](../configure/) to set up your project.

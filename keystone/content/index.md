@@ -8,8 +8,8 @@ Architecture Decision Records for the Keystone platform. This site captures the 
 
 ## Decision Log
 
-- [Architecture Decisions](/docs/decisions/) -- Browse all recorded ADRs with status tracking
-- [Guidelines](/docs/guidelines/) -- Learn how to write and review ADRs
+- [Architecture Decisions](docs/decisions/) -- Browse all recorded ADRs with status tracking
+- [Guidelines](docs/guidelines/) -- Learn how to write and review ADRs
 
 ## What is an ADR?
 

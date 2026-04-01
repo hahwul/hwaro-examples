@@ -11,4 +11,4 @@ Welcome to the Chronicle. This space is dedicated to the preservation of histori
 
 Our archive contains extensive essays traversing various epochs. From the bustling streets of ancient empires to the quiet revolutions of the modern mind, we aim to provide context to the present by closely examining what has come before.
 
-We invite you to browse our [extensive archive](/posts/) or explore topics by [tags](/tags/).
+We invite you to browse our [extensive archive](posts/) or explore topics by [tags](tags/).

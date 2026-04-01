@@ -109,4 +109,4 @@ for attempt in range(5):
         time.sleep(2 ** attempt)
 ```
 
-Next, learn about [Consumers]({{ base_url }}/docs/concepts/consumers/) to understand how events are received and processed.
+Next, learn about [Consumers](../consumers/) to understand how events are received and processed.

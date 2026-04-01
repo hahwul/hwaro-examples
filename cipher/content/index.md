@@ -27,4 +27,4 @@ All recommendations in this guide follow these principles:
 4. Key management is harder than algorithm selection
 5. Defense in depth applies to cryptographic systems too
 
-Begin with the [Getting Started]({{ base_url }}/docs/getting-started/) section, or jump directly to a specific topic using the sidebar.
+Begin with the [Getting Started](docs/getting-started/) section, or jump directly to a specific topic using the sidebar.

@@ -19,9 +19,9 @@ Relay is a webhook delivery and integration platform for building event-driven w
 
 | Section | Description |
 |---------|-------------|
-| [Getting Started](/docs/getting-started/) | Install Relay, configure your first endpoint, and send a test event |
-| [Webhooks](/docs/webhooks/) | Event types, payload formats, signature verification, and delivery mechanics |
-| [Integrations](/docs/integrations/) | Connect Relay to Slack, GitHub, Jira, and other external services |
+| [Getting Started](docs/getting-started/) | Install Relay, configure your first endpoint, and send a test event |
+| [Webhooks](docs/webhooks/) | Event types, payload formats, signature verification, and delivery mechanics |
+| [Integrations](docs/integrations/) | Connect Relay to Slack, GitHub, Jira, and other external services |
 
 ## Architecture Overview
 

@@ -19,7 +19,7 @@ Instead of sitting down to write a complete essay from scratch, you:
 
 ## Why It Works for Gardens
 
-This approach aligns naturally with [digital gardens](/notes/digital-gardens/), where content is expected to evolve. A note begins as a seedling -- perhaps just a title and a few bullet points -- and grows through incremental additions into a budding or evergreen piece.
+This approach aligns naturally with [digital gardens](../digital-gardens/), where content is expected to evolve. A note begins as a seedling -- perhaps just a title and a few bullet points -- and grows through incremental additions into a budding or evergreen piece.
 
 ## Reducing Friction
 
@@ -29,4 +29,4 @@ The biggest advantage of incremental writing is reduced friction. Starting a bla
 
 - How do you decide when a piece is "done enough" to stop revising?
 - What is the right balance between creating new notes and deepening existing ones?
-- How does incremental writing interact with [spaced repetition](/notes/spaced-repetition/) as a review practice?
+- How does incremental writing interact with [spaced repetition](../spaced-repetition/) as a review practice?

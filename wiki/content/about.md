@@ -13,7 +13,7 @@ This wiki provides structured, searchable documentation for all team members. Wh
 
 ## Contributing
 
-All team members are encouraged to contribute. Documentation is written in Markdown and organized into logical categories. See the [Content Management](../docs/guides/content-management/) guide for details on how to add or edit articles.
+All team members are encouraged to contribute. Documentation is written in Markdown and organized into logical categories. See the [Content Management](docs/guides/content-management/) guide for details on how to add or edit articles.
 
 ## Contact
 

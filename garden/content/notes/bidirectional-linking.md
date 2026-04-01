@@ -16,9 +16,9 @@ Backlinks solve this by making every connection visible from both sides. When yo
 
 ## In Practice
 
-Consider a note about the [Zettelkasten Method](/notes/zettelkasten-method/). If several other notes link to it, those incoming links provide context about how the concept is applied across different domains.
+Consider a note about the [Zettelkasten Method](../zettelkasten-method/). If several other notes link to it, those incoming links provide context about how the concept is applied across different domains.
 
-This is particularly valuable in a [digital garden](/notes/digital-gardens/), where notes accumulate connections over time, gradually revealing clusters of related ideas.
+This is particularly valuable in a [digital garden](../digital-gardens/), where notes accumulate connections over time, gradually revealing clusters of related ideas.
 
 ## The Compound Effect
 

@@ -20,4 +20,4 @@ Glassmorphism is a design language defined by frosted-glass surfaces. Key charac
 
 ## Get in Touch
 
-Find me on [GitHub](https://github.com) or subscribe via [RSS](/rss.xml).
+Find me on [GitHub](https://github.com) or subscribe via [RSS](../rss.xml).

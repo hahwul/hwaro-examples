@@ -78,7 +78,7 @@ decrypted = private_key.decrypt(
 ## Recommendations
 
 - Use **Ed25519** for digital signatures in new systems
-- Use **X25519** for key exchange (see [Key Exchange]({{ base_url }}/docs/protocols/key-exchange/))
+- Use **X25519** for key exchange (see [Key Exchange](../../protocols/key-exchange/))
 - Use RSA only when interoperability with legacy systems requires it
 - Minimum RSA key size: 2048 bits; prefer 4096 for long-term keys
 - Never use PKCS#1 v1.5 padding for new encryption implementations

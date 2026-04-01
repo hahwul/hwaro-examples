@@ -109,4 +109,4 @@ url = "https://registry.scaffoldcli.dev"
 
 These values are injected automatically when creating new projects, so you do not need to enter them each time.
 
-Next, learn how templates are structured in the [Templates](/docs/templates/) section.
+Next, learn how templates are structured in the [Templates](../../templates/) section.

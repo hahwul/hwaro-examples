@@ -49,4 +49,4 @@ A glossary of terms used throughout this documentation. Familiarize yourself wit
 | Oracle Attack | Exploiting an encryption or decryption oracle to recover secrets |
 | Collision | Two distinct inputs that produce the same hash output |
 
-Refer back to this page as needed while reading the [Algorithms]({{ base_url }}/docs/algorithms/) and [Protocols]({{ base_url }}/docs/protocols/) sections.
+Refer back to this page as needed while reading the [Algorithms](../../algorithms/) and [Protocols](../../protocols/) sections.

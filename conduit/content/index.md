@@ -30,7 +30,7 @@ A data pipeline framework for building reliable ETL workflows. Conduit provides 
 
 ## Quick Start
 
-Get started by exploring the sidebar sections, or jump straight to the [Getting Started](/docs/getting-started/) guide.
+Get started by exploring the sidebar sections, or jump straight to the [Getting Started](docs/getting-started/) guide.
 
 ## Example Pipeline
 

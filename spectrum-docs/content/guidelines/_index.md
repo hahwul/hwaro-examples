@@ -19,6 +19,6 @@ The highest level of accessibility. Meeting these criteria makes the website acc
 
 ---
 
-[Explore Level A Guidelines](/guidelines/level-a/)
-[Explore Level AA Guidelines](/guidelines/level-aa/)
-[Explore Level AAA Guidelines](/guidelines/level-aaa/)
+[Explore Level A Guidelines](level-a/)
+[Explore Level AA Guidelines](level-aa/)
+[Explore Level AAA Guidelines](level-aaa/)

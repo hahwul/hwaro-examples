@@ -9,8 +9,8 @@ The torch in your hand is the only thing standing between you and the eternal da
 
 ## Recent Records
 
-You can browse all recorded entries in the [Chronicles](/posts/).
+You can browse all recorded entries in the [Chronicles](posts/).
 
-Or check our [Explorer's Notes](/about/) for more details on the expedition.
+Or check our [Explorer's Notes](about/) for more details on the expedition.
 
 Remember: *The darkness is only as deep as your fear.*

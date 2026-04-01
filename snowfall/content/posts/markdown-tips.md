@@ -38,7 +38,7 @@ Unordered lists:
 ## Links and Images
 
 - [Link text](https://example.com)
-- ![Alt text](/path/to/image.jpg)
+- `![Alt text](/path/to/image.jpg)`
 
 ## Blockquotes
 

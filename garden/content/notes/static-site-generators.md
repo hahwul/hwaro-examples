@@ -18,7 +18,7 @@ Static site generators (SSGs) transform source files -- typically Markdown and t
 
 ## For Digital Gardens
 
-SSGs are a natural fit for [digital gardens](/notes/digital-gardens/). The file-based content model maps well to the note-per-file approach of a [Zettelkasten](/notes/zettelkasten-method/). Taxonomies and cross-references can be modeled through front matter metadata and template logic.
+SSGs are a natural fit for [digital gardens](../digital-gardens/). The file-based content model maps well to the note-per-file approach of a [Zettelkasten](../zettelkasten-method/). Taxonomies and cross-references can be modeled through front matter metadata and template logic.
 
 Hwaro, the generator powering this garden, is written in Crystal and emphasizes fast builds, flexible taxonomies, and clean template syntax.
 

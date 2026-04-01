@@ -8,5 +8,5 @@ Welcome to the Acme platform documentation. Get up and running quickly with our 
 
 ## Sections
 
-- [Getting Started](/docs/getting-started/) — Installation and first steps
-- [Guides](/docs/guides/) — In-depth tutorials and how-tos
+- [Getting Started](docs/getting-started/) — Installation and first steps
+- [Guides](docs/guides/) — In-depth tutorials and how-tos

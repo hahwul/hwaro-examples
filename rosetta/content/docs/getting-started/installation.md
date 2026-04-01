@@ -86,4 +86,4 @@ console.log(i18n.locale); // "en"
 console.log(i18n.supportedLocales); // ["en", "fr", "de", "ja"]
 ```
 
-If you see the expected output, the installation is complete. Proceed to [Configuration](/docs/getting-started/configuration/) to set up your locale bundles.
+If you see the expected output, the installation is complete. Proceed to [Configuration](../configuration/) to set up your locale bundles.

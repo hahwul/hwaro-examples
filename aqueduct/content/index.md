@@ -16,4 +16,4 @@ Every great system begins with a foundation. Every reliable pipeline starts with
 - **Architecture Patterns** -- Event sourcing, CQRS, hexagonal design, and the trade-offs each one demands.
 - **Step-by-Step Tutorials** -- Diagrams first, implementation second. Always with a clear path forward.
 
-Browse the [Articles](/posts/) to begin, or read more [About](/about/) this site.
+Browse the [Articles](posts/) to begin, or read more [About](about/) this site.

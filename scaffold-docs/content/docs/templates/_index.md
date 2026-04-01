@@ -14,4 +14,4 @@ Templates are the core building blocks of Scaffold. Each template is a self-cont
 - **File Roles** -- What each file in a template pack does
 - **Custom Templates** -- How to author your own template packs
 
-Start with [Directory Structure](/docs/templates/directory-structure/) for an overview of the template layout.
+Start with [Directory Structure](directory-structure/) for an overview of the template layout.

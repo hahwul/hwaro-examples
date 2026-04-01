@@ -20,23 +20,23 @@ This documentation portal provides employees, contractors, and authorized stakeh
 
 Introductory materials for new employees and stakeholders. Includes guidance on how to navigate this portal, understand document structures, and locate relevant policies.
 
-- [How to Read These Documents]({{ base_url }}/docs/getting-started/how-to-read/)
-- [Document Types and Classifications]({{ base_url }}/docs/getting-started/document-types/)
+- [How to Read These Documents](docs/getting-started/how-to-read/)
+- [Document Types and Classifications](docs/getting-started/document-types/)
 
 ### Policies
 
 Binding organizational policies that govern day-to-day operations, security practices, and compliance requirements.
 
-- [Access Control Policy]({{ base_url }}/docs/policies/access-control/)
-- [Data Handling Policy]({{ base_url }}/docs/policies/data-handling/)
-- [Incident Response Policy]({{ base_url }}/docs/policies/incident-response/)
+- [Access Control Policy](docs/policies/access-control/)
+- [Data Handling Policy](docs/policies/data-handling/)
+- [Incident Response Policy](docs/policies/incident-response/)
 
 ### Governance
 
 Frameworks defining organizational structure, decision-making authority, and review processes.
 
-- [Roles and Responsibilities]({{ base_url }}/docs/governance/roles-responsibilities/)
-- [Review Process]({{ base_url }}/docs/governance/review-process/)
+- [Roles and Responsibilities](docs/governance/roles-responsibilities/)
+- [Review Process](docs/governance/review-process/)
 
 ---
 

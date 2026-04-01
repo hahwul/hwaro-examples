@@ -34,4 +34,4 @@ hwaro --version
 
 {{ hint(type="info", message="Make sure you have version 0.8.0 or later for full feature support.") }}
 
-Once installed, proceed to [Configuration](/docs/getting-started/configuration/) to set up your site.
+Once installed, proceed to [Configuration](../configuration/) to set up your site.

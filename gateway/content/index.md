@@ -10,9 +10,9 @@ The Security Gateway ensures that all incoming API requests are authenticated an
 
 ## Core Components
 
-- **[Authentication Flow](/authentication/)** - Learn how the Gateway handles identity verification and access tokens.
-- **[Management](/management/)** - Manage your API keys, tokens, and security policies.
-- **[API Reference](/api-reference/)** - Comprehensive guide to using the Gateway's internal and external APIs.
+- **[Authentication Flow](authentication/)** - Learn how the Gateway handles identity verification and access tokens.
+- **[Management](management/)** - Manage your API keys, tokens, and security policies.
+- **[API Reference](api-reference/)** - Comprehensive guide to using the Gateway's internal and external APIs.
 
 ## Security First
 

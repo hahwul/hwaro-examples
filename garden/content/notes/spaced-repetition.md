@@ -25,7 +25,7 @@ Modern implementations like SM-2 (used in Anki) and FSRS add sophistication, but
 
 ## Connection to Note-taking
 
-Spaced repetition and knowledge management are complementary practices. Writing notes in a [Zettelkasten](/notes/zettelkasten-method/) helps with initial understanding, while spaced repetition ensures that understanding persists over time.
+Spaced repetition and knowledge management are complementary practices. Writing notes in a [Zettelkasten](../zettelkasten-method/) helps with initial understanding, while spaced repetition ensures that understanding persists over time.
 
 Andy Matuschak has explored combining these approaches through "evergreen notes" that serve both as reference material and as prompts for periodic review.
 

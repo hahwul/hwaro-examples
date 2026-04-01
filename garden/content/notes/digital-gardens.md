@@ -18,7 +18,7 @@ The term gained traction in the early 2020s through writers like Maggie Appleton
 
 **Growth over perfection.** Notes are planted as seedlings and revised as understanding deepens. This stands in contrast to the "publish once" model of traditional blogging.
 
-**Topological navigation.** Rather than browsing by date, readers follow links between related notes. This mirrors the associative nature of human thought and the [Zettelkasten Method](/notes/zettelkasten-method/).
+**Topological navigation.** Rather than browsing by date, readers follow links between related notes. This mirrors the associative nature of human thought and the [Zettelkasten Method](../zettelkasten-method/).
 
 ## Growth Stages
 

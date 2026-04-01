@@ -24,7 +24,7 @@ dispatch topic create user.events
 dispatch publish user.events '{"action": "signup", "user_id": "u-100"}'
 ```
 
-Read the full [Getting Started]({{ base_url }}/docs/getting-started/) guide to begin building with Dispatch.
+Read the full [Getting Started](docs/getting-started/) guide to begin building with Dispatch.
 
 ## Event Flow
 
@@ -36,4 +36,4 @@ Producer --> [Topic: order.events] --> Consumer Group C
 
 ## Documentation
 
-Browse the sidebar to explore concepts, configuration, and API reference material. Start with the [Installation]({{ base_url }}/docs/getting-started/installation/) page or jump to [Events]({{ base_url }}/docs/concepts/events/) to understand the core data model.
+Browse the sidebar to explore concepts, configuration, and API reference material. Start with the [Installation](docs/getting-started/installation/) page or jump to [Events](docs/concepts/events/) to understand the core data model.

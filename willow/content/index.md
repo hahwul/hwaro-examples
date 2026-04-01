@@ -12,7 +12,7 @@ where words settle like leaves on still water.</p>
 
 ## Recent Writing
 
-Browse the latest pieces in the [writing archive](/posts/), or explore by [tags](/tags/).
+Browse the latest pieces in the [writing archive](posts/), or explore by [tags](tags/).
 
 ## About This Place
 

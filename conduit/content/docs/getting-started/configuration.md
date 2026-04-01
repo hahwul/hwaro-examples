@@ -118,4 +118,4 @@ my-project/
     orders.schema       # Schema definition
 ```
 
-Next, learn how to build pipelines with [Sources](/docs/pipelines/sources/), [Transforms](/docs/pipelines/transforms/), and [Sinks](/docs/pipelines/sinks/).
+Next, learn how to build pipelines with [Sources](../../pipelines/sources/), [Transforms](../../pipelines/transforms/), and [Sinks](../../pipelines/sinks/).

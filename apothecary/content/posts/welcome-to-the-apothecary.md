@@ -26,4 +26,4 @@ The preparations described here are rooted in traditional herbalism and are offe
 
 ## Getting Started
 
-Browse the [Remedies](/remedies/) section for specific preparations, or read through the [Journal](/posts/) for broader discussions on herbs and wellness. The search function will help you find entries by plant name, condition, or preparation method.
+Browse the [Remedies](../../remedies/) section for specific preparations, or read through the [Journal](..//) for broader discussions on herbs and wellness. The search function will help you find entries by plant name, condition, or preparation method.

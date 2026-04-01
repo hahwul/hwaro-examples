@@ -19,9 +19,9 @@ Migration is a database schema management platform that tracks, versions, and de
 
 | Section | Description |
 |---------|-------------|
-| [Getting Started](/docs/getting-started/) | Install, configure, and run your first migration |
-| [Migrations](/docs/migrations/) | Create, version, and roll back schema changes |
-| [Schemas](/docs/schemas/) | Diff schemas, validate structure, and follow best practices |
+| [Getting Started](docs/getting-started/) | Install, configure, and run your first migration |
+| [Migrations](docs/migrations/) | Create, version, and roll back schema changes |
+| [Schemas](docs/schemas/) | Diff schemas, validate structure, and follow best practices |
 
 ## Version Timeline
 

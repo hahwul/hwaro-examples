@@ -8,8 +8,8 @@ System map and infrastructure topology documentation. Monitor regions, services,
 
 ## Navigation
 
-- [Regions](/docs/regions/) -- Browse infrastructure by geographic region and availability zone
-- [Services](/docs/services/) -- View service catalog with dependencies and health status
+- [Regions](docs/regions/) -- Browse infrastructure by geographic region and availability zone
+- [Services](docs/services/) -- View service catalog with dependencies and health status
 
 ## Infrastructure Overview
 

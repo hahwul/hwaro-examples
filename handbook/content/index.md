@@ -26,5 +26,5 @@ Use the navigation sidebar to explore different sections. If you cannot find wha
 
 ### Quick Links
 
-*   [Onboarding Guide](/onboarding/)
-*   [Company Policies](/policies/)
+*   [Onboarding Guide](onboarding/)
+*   [Company Policies](policies/)

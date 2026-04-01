@@ -19,9 +19,9 @@ Explore the depth of our world through these primary volumes:
 
 ### Recent Discoveries
 
-*   [The Elven Woodlands](/regions/elven-woodlands/) - A new mapping of the ancient forest.
-*   [The Stone-Kin](/races/stone-kin/) - Detailed scrolls on the mountain dwellers.
-*   [The First Age](/history/first-age/) - Recovered manuscripts from the dawn of time.
+*   [The Elven Woodlands](regions/elven-woodlands/) - A new mapping of the ancient forest.
+*   [The Stone-Kin](races/stone-kin/) - Detailed scrolls on the mountain dwellers.
+*   [The First Age](history/first-age/) - Recovered manuscripts from the dawn of time.
 
 ---
 

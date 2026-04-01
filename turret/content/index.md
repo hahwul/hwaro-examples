@@ -16,9 +16,9 @@ This documentation provides technical specifications and configuration guides fo
 
 ## QUICK_NAVIGATION
 
-- [WAF_RULES](/docs/waf-rules/) - View active defense patterns and mapping.
-- [TRAFFIC_FLOW](/docs/traffic-flow/) - Understand the filtering pipeline.
-- [CONFIGURATION](/docs/configuration/) - Code blocks for system tuning.
+- [WAF_RULES](docs/waf-rules/) - View active defense patterns and mapping.
+- [TRAFFIC_FLOW](docs/traffic-flow/) - Understand the filtering pipeline.
+- [CONFIGURATION](docs/configuration/) - Code blocks for system tuning.
 
 ---
 

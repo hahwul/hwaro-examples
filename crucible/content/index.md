@@ -35,9 +35,9 @@ Unit tests form the foundation: they are fast, cheap, and isolate individual fun
 
 | Section | Description |
 |---------|-------------|
-| [Getting Started](/docs/getting-started/) | Install the test runner and configure your first project |
-| [Test Types](/docs/test-types/) | Understand unit, integration, and end-to-end testing strategies |
-| [Reporting](/docs/reporting/) | Generate coverage reports and integrate with CI pipelines |
+| [Getting Started](docs/getting-started/) | Install the test runner and configure your first project |
+| [Test Types](docs/test-types/) | Understand unit, integration, and end-to-end testing strategies |
+| [Reporting](docs/reporting/) | Generate coverage reports and integrate with CI pipelines |
 
 ## Current Test Suite Summary
 

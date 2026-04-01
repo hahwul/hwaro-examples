@@ -7,6 +7,6 @@ tags = ["archives"]
 
 Browse past entries by topic:
 
-- [All Tags](/tags/)
-- [All Categories](/categories/)
-- [Journal Entries](/posts/)
+- [All Tags](../tags/)
+- [All Categories](../categories/)
+- [Journal Entries](../posts/)

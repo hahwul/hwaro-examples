@@ -14,7 +14,7 @@ To ensure that every member of the organization has timely access to accurate, u
 
 ## Governing Authority
 
-The Governance Committee, chaired by the Chief Compliance Officer, holds ultimate authority over all documents published on this portal. Amendments require a formal review and approval process as described in the [Review Process]({{ base_url }}/docs/governance/review-process/) documentation.
+The Governance Committee, chaired by the Chief Compliance Officer, holds ultimate authority over all documents published on this portal. Amendments require a formal review and approval process as described in the [Review Process](../docs/governance/review-process/) documentation.
 
 ## Contact
 

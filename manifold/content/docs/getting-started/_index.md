@@ -6,4 +6,4 @@ tags = ["getting-started", "installation", "setup"]
 
 This section covers installing Manifold, configuring the platform, and provisioning your first tenant.
 
-Start with [Installation](/docs/getting-started/installation/) to set up the platform, then proceed to [Configuration](/docs/getting-started/configuration/) to define your tenant tiers and isolation model.
+Start with [Installation](installation/) to set up the platform, then proceed to [Configuration](configuration/) to define your tenant tiers and isolation model.

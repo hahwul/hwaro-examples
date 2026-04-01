@@ -51,4 +51,4 @@ These defaults are suitable for the vast majority of use cases. Deviate only whe
 
 ## Next Steps
 
-Review the [Terminology]({{ base_url }}/docs/getting-started/terminology/) page for definitions of key terms used throughout this documentation.
+Review the [Terminology](../terminology/) page for definitions of key terms used throughout this documentation.
