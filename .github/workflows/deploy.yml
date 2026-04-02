@@ -255,7 +255,7 @@ jobs:
             .scaffold-row.copied { color: #4ade80; }
             .scaffold-row.copied .copy-icon { opacity: 1; }
             .tag-bar-wrap { max-width: 1400px; margin: 0 auto 1rem; position: relative; }
-            .tag-bar { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; max-height: 2.2rem; overflow: hidden; transition: max-height 0.3s ease; }
+            .tag-bar { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; max-height: 6rem; overflow: hidden; transition: max-height 0.3s ease; }
             .tag-bar.expanded { max-height: 500px; }
             .tag-toggle { background: none; border: 1px solid #282828; color: #555; padding: 0.3rem 0.7rem; border-radius: 6px; font-size: 0.7rem; cursor: pointer; transition: all 0.2s; margin-top: 0.5rem; display: none; }
             .tag-toggle:hover { border-color: #444; color: #ccc; }
@@ -524,6 +524,7 @@ jobs:
               var tag = this.dataset.tag;
               if (activeTags.has(tag)) { activeTags.delete(tag); this.classList.remove('active'); }
               else { activeTags.add(tag); this.classList.add('active'); }
+              reorderTags();
               filterCards();
             });
           });
@@ -593,6 +594,16 @@ jobs:
               }
             }
             cards.forEach(function(card) { grid.appendChild(card); });
+          }
+          function reorderTags() {
+            var bar = document.getElementById('tagBar');
+            var btns = Array.from(bar.querySelectorAll('.tag-btn'));
+            btns.sort(function(a, b) {
+              var aActive = a.classList.contains('active') ? 0 : 1;
+              var bActive = b.classList.contains('active') ? 0 : 1;
+              return aActive - bActive;
+            });
+            btns.forEach(function(btn) { bar.appendChild(btn); });
           }
           function toggleTags() {
             var bar = document.getElementById('tagBar');
