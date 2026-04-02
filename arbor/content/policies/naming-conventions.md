@@ -1,5 +1,6 @@
 +++
 title = "Naming Conventions"
+description = "Branch naming prefixes and conventions for feature, bugfix, hotfix, and release branches"
 weight = 2
 date = "2025-06-01"
 +++

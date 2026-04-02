@@ -1,5 +1,6 @@
 +++
 title = "Merge vs Rebase"
+description = "When to use merge commits versus rebasing and their trade-offs"
 weight = 1
 date = "2025-06-01"
 +++

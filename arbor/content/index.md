@@ -1,5 +1,6 @@
 +++
 title = "Arbor"
+description = "Git branching strategies and workflow documentation"
 template = "home"
 date = "2025-06-01"
 +++

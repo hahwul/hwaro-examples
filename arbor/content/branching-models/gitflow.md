@@ -1,5 +1,6 @@
 +++
 title = "GitFlow"
+description = "A structured branching model with main, develop, feature, release, and hotfix branches"
 weight = 1
 date = "2025-06-01"
 +++

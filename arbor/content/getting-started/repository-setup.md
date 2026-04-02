@@ -1,5 +1,6 @@
 +++
 title = "Repository Setup"
+description = "Initialize a repository, configure remotes, and set up the initial branch structure"
 weight = 2
 date = "2025-06-01"
 +++

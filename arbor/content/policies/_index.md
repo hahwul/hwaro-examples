@@ -1,5 +1,6 @@
 +++
 title = "Policies"
+description = "Merge strategies, branch naming conventions, and code review guidelines"
 sort_by = "weight"
 date = "2025-06-01"
 +++

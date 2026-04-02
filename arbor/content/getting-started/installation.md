@@ -1,5 +1,6 @@
 +++
 title = "Installation"
+description = "Install Git on macOS, Linux, and Windows"
 weight = 1
 date = "2025-06-01"
 +++

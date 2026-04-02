@@ -1,5 +1,6 @@
 +++
 title = "Code Review"
+description = "Code review policies including required approvals, CI checks, and CODEOWNERS"
 weight = 3
 date = "2025-06-01"
 +++

@@ -1,5 +1,6 @@
 +++
 title = "GitHub Flow"
+description = "A lightweight branching model centered on main and short-lived feature branches"
 weight = 3
 date = "2025-06-01"
 +++

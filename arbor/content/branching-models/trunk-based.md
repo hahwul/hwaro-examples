@@ -1,5 +1,6 @@
 +++
 title = "Trunk-Based Development"
+description = "A development model using short-lived branches and feature flags for continuous integration"
 weight = 2
 date = "2025-06-01"
 +++

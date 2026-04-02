@@ -1,5 +1,6 @@
 +++
 title = "Branching Models"
+description = "Compare GitFlow, Trunk-Based, and GitHub Flow branching strategies"
 sort_by = "weight"
 date = "2025-06-01"
 +++

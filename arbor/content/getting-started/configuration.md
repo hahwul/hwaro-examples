@@ -1,5 +1,6 @@
 +++
 title = "Configuration"
+description = "Configure Git settings and branch protection rules for your workflow"
 weight = 3
 date = "2025-06-01"
 +++
