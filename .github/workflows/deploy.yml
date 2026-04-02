@@ -254,7 +254,12 @@ jobs:
             .scaffold-row:hover .copy-icon { opacity: 1; }
             .scaffold-row.copied { color: #4ade80; }
             .scaffold-row.copied .copy-icon { opacity: 1; }
-            .tag-bar { display: flex; flex-wrap: wrap; gap: 0.5rem; max-width: 1400px; margin: 0 auto 1rem; align-items: center; }
+            .tag-bar-wrap { max-width: 1400px; margin: 0 auto 1rem; position: relative; }
+            .tag-bar { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; max-height: 2.2rem; overflow: hidden; transition: max-height 0.3s ease; }
+            .tag-bar.expanded { max-height: 500px; }
+            .tag-toggle { background: none; border: 1px solid #282828; color: #555; padding: 0.3rem 0.7rem; border-radius: 6px; font-size: 0.7rem; cursor: pointer; transition: all 0.2s; margin-top: 0.5rem; display: none; }
+            .tag-toggle:hover { border-color: #444; color: #ccc; }
+            .tag-toggle.visible { display: inline-block; }
             .tag-btn { background: #151515; border: 1px solid #282828; color: #888; padding: 0.3rem 0.7rem; border-radius: 6px; font-size: 0.7rem; cursor: pointer; transition: all 0.2s; }
             .tag-btn:hover { border-color: #444; color: #ccc; }
             .tag-btn.active { background: #fff; color: #0a0a0a; border-color: #fff; }
@@ -471,7 +476,7 @@ jobs:
               <svg viewBox="0 0 16 16"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v12.5A1.75 1.75 0 0114.25 16H1.75A1.75 1.75 0 010 14.25V1.75zm1.75-.25a.25.25 0 00-.25.25v12.5c0 .138.112.25.25.25h12.5a.25.25 0 00.25-.25V1.75a.25.25 0 00-.25-.25H1.75z"></path></svg>
             </div>
           </div>
-          <div class="tag-bar" id="tagBar">${TAG_BUTTONS}</div>
+          <div class="tag-bar-wrap"><div class="tag-bar" id="tagBar">${TAG_BUTTONS}</div><button class="tag-toggle" id="tagToggle" onclick="toggleTags()">Show more</button></div>
           <div class="grid" id="grid">${SITE_LINKS}</div>
           <div class="no-results" id="noResults">No examples found.</div>
           <script>
@@ -589,6 +594,17 @@ jobs:
             }
             cards.forEach(function(card) { grid.appendChild(card); });
           }
+          function toggleTags() {
+            var bar = document.getElementById('tagBar');
+            var btn = document.getElementById('tagToggle');
+            bar.classList.toggle('expanded');
+            btn.textContent = bar.classList.contains('expanded') ? 'Show less' : 'Show more';
+          }
+          (function() {
+            var bar = document.getElementById('tagBar');
+            var btn = document.getElementById('tagToggle');
+            if (bar.scrollHeight > bar.clientHeight) btn.classList.add('visible');
+          })();
           </script>
           </body>
           </html>
