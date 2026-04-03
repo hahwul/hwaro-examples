@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{{ page.description | default(site.description) }}">
+  {{ og_all_tags }}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet">
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0a0a0a;
+      color: #b0b0b0;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 15px;
+      line-height: 1.7;
+      position: relative;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 2px,
+        rgba(0,0,0,0.12) 2px,
+        rgba(0,0,0,0.12) 4px
+      );
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    a { color: #00ffff; text-decoration: none; transition: all 0.1s; }
+    a:hover { color: #ff00ff; text-shadow: -2px 0 #00ffff, 2px 0 #ff00ff; }
+
+    .glitch-text {
+      color: #f0f0f0;
+      text-shadow: -2px 0 #00ffff, 2px 0 #ff00ff;
+    }
+    .glitch-text:hover {
+      animation: glitch-shift 0.3s steps(2) infinite;
+    }
+    @keyframes glitch-shift {
+      0% { text-shadow: -2px 0 #00ffff, 2px 0 #ff00ff; }
+      25% { text-shadow: 2px -1px #00ffff, -2px 1px #ff00ff; }
+      50% { text-shadow: -1px 2px #00ffff, 1px -2px #ff00ff; }
+      75% { text-shadow: 3px 0 #00ffff, -3px 0 #ff00ff; }
+      100% { text-shadow: -2px 0 #00ffff, 2px 0 #ff00ff; }
+    }
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.95; }
+      75% { opacity: 0.98; }
+    }
+
+    .site-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.25rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #0a0a0a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    .site-brand {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #f0f0f0;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-shadow: -2px 0 #00ffff, 2px 0 #ff00ff;
+    }
+    .site-brand:hover { animation: glitch-shift 0.2s steps(3) infinite; color: #f0f0f0; }
+    .site-nav-links a {
+      margin-left: 2rem;
+      color: #666;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .site-nav-links a:hover { color: #00ffff; }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+    }
+    .hero h1 {
+      font-size: 4.5rem;
+      font-weight: 700;
+      color: #f0f0f0;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      text-shadow: -3px 0 #00ffff, 3px 0 #ff00ff;
+      animation: flicker 4s infinite;
+    }
+    .hero-tagline {
+      font-size: 0.9rem;
+      color: #555;
+      margin-top: 1.5rem;
+      letter-spacing: 0.1em;
+    }
+    .hero-prompt {
+      margin-top: 3rem;
+      color: #333;
+      font-size: 0.8rem;
+    }
+    .hero-prompt span { color: #00ffff; }
+
+    .posts-section {
+      padding: 4rem 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-size: 0.75rem;
+      color: #ff00ff;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+      text-shadow: -1px 0 #00ffff, 1px 0 #ff00ff;
+    }
+    .post-card {
+      border: 1px solid #1a1a1a;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      transition: all 0.2s;
+    }
+    .post-card:nth-child(odd) { transform: rotate(-0.5deg); }
+    .post-card:nth-child(even) { transform: rotate(0.5deg); }
+    .post-card:hover {
+      border-color: #00ffff;
+      transform: rotate(0deg);
+      box-shadow: -3px 0 #00ffff, 3px 0 #ff00ff;
+    }
+    .post-card h3 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+    .post-card h3 a { color: #f0f0f0; }
+    .post-card h3 a:hover { text-shadow: -2px 0 #00ffff, 2px 0 #ff00ff; }
+    .post-card-meta {
+      font-size: 0.75rem;
+      color: #444;
+      margin-bottom: 0.75rem;
+    }
+    .post-card p { color: #777; font-size: 0.875rem; }
+
+    .site-main {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 8rem 2rem 4rem;
+    }
+    .site-main h1 {
+      font-size: 2rem;
+      color: #f0f0f0;
+      text-shadow: -2px 0 #00ffff, 2px 0 #ff00ff;
+      margin-bottom: 0.5rem;
+    }
+    .page-date { color: #444; font-size: 0.8rem; margin-bottom: 2rem; }
+    .site-main p { margin-bottom: 1.25rem; line-height: 1.8; }
+    .site-main h2 { color: #f0f0f0; font-size: 1.25rem; margin: 2rem 0 1rem; text-shadow: -1px 0 #00ffff, 1px 0 #ff00ff; }
+    .site-main h3 { color: #ccc; margin: 1.5rem 0 0.75rem; }
+    .site-main code { background: #111; color: #00ffff; padding: 0.15em 0.4em; font-size: 0.9em; }
+    .site-main pre { background: #111; border: 1px solid #1a1a1a; padding: 1.25rem; overflow-x: auto; margin-bottom: 1.5rem; }
+    .site-main pre code { background: none; padding: 0; }
+    .site-main blockquote { border-left: 3px solid #ff00ff; padding-left: 1rem; color: #888; margin: 1.5rem 0; }
+    .site-main ul, .site-main ol { padding-left: 1.5rem; margin-bottom: 1.25rem; }
+    .site-main li { margin-bottom: 0.25rem; }
+    .site-main img { max-width: 100%; height: auto; }
+    .site-main a { border-bottom: 1px solid #00ffff; }
+    .site-main a:hover { border-bottom-color: #ff00ff; }
+
+    .post-list { list-style: none; }
+    .post-list li {
+      padding: 1rem 0;
+      border-bottom: 1px solid #111;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .post-list a { color: #f0f0f0; border-bottom: none; }
+    .post-list a:hover { color: #00ffff; text-shadow: -1px 0 #00ffff, 1px 0 #ff00ff; }
+    .post-date { color: #333; font-size: 0.8rem; }
+
+    .taxonomy-desc { color: #444; margin-bottom: 2rem; }
+
+    .site-footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      color: #222;
+      font-size: 0.75rem;
+      border-top: 1px solid #111;
+      margin-top: 4rem;
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 2.5rem; }
+      .site-nav { padding: 1rem; }
+      .site-nav-links a { margin-left: 1rem; font-size: 0.7rem; }
+      .post-card { transform: none !important; }
+      .post-card:hover { transform: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="site-nav">
+    <a href="{{ base_url }}/" class="site-brand">Glitch</a>
+    <div class="site-nav-links">
+      <a href="{{ base_url }}/posts/">Archive</a>
+      <a href="{{ base_url }}/about/">About</a>
+    </div>
+  </nav>
