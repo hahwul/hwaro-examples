@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{{ page.description | default(site.description) }}">
+  {{ og_all_tags }}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #121212;
+      color: #a0908a;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    a { color: #e85a20; text-decoration: none; transition: color 0.3s; }
+    a:hover { color: #ff8c42; }
+
+    .site-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #0e0e0e;
+      border-bottom: 1px solid #2a1a10;
+    }
+    .site-brand {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #e85a20;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .nav-status {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: #555;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      background: #e85a20;
+      border-radius: 50%;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(232,90,32,0.4); }
+      50% { opacity: 0.7; box-shadow: 0 0 0 4px rgba(232,90,32,0); }
+    }
+    .site-nav-links a {
+      margin-left: 1.5rem;
+      color: #555;
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    .site-nav-links a:hover { color: #e85a20; }
+
+    .dashboard {
+      padding: 6rem 2rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .dash-header {
+      margin-bottom: 2.5rem;
+    }
+    .dash-header h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #f0e0d0;
+    }
+    .dash-header p {
+      color: #555;
+      font-size: 0.9rem;
+      margin-top: 0.25rem;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2.5rem;
+    }
+    .metric-card {
+      background: #1a1a1a;
+      border: 1px solid #2a1a10;
+      padding: 1.5rem;
+      transition: all 0.3s;
+    }
+    .metric-card:hover {
+      border-color: #e85a20;
+      box-shadow: 0 0 12px rgba(232, 90, 32, 0.15);
+    }
+    .metric-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: #555;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 0.75rem;
+    }
+    .metric-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #f0e0d0;
+    }
+    .metric-change {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      margin-top: 0.5rem;
+    }
+    .metric-change.up { color: #e85a20; }
+    .metric-change.down { color: #4a90a0; }
+
+    .lava-bar {
+      width: 100%;
+      height: 4px;
+      background: #2a1a10;
+      margin-top: 0.75rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .lava-bar-fill {
+      height: 100%;
+      background: #e85a20;
+      animation: lava-flow 3s ease-in-out infinite;
+    }
+    @keyframes lava-flow {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+
+    .panel-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+    .panel {
+      background: #1a1a1a;
+      border: 1px solid #2a1a10;
+      padding: 1.5rem;
+    }
+    .panel-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: #e85a20;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid #2a1a10;
+    }
+    .activity-item {
+      padding: 0.75rem 0;
+      border-bottom: 1px solid #1e1e1e;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 0.875rem;
+    }
+    .activity-item:last-child { border-bottom: none; }
+    .activity-name { color: #c0b0a0; }
+    .activity-value {
+      font-family: 'JetBrains Mono', monospace;
+      color: #e85a20;
+      font-size: 0.8rem;
+    }
+    .alert-item {
+      padding: 0.75rem;
+      margin-bottom: 0.5rem;
+      border-left: 3px solid #e85a20;
+      background: rgba(232, 90, 32, 0.05);
+      font-size: 0.85rem;
+      color: #c0a090;
+    }
+    .alert-item.critical { border-left-color: #cc2200; }
+
+    .site-main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 8rem 2rem 4rem;
+    }
+    .site-main h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #f0e0d0;
+      margin-bottom: 0.5rem;
+    }
+    .page-date { color: #555; font-size: 0.85rem; margin-bottom: 2rem; font-family: 'JetBrains Mono', monospace; }
+    .site-main p { margin-bottom: 1.25rem; line-height: 1.8; }
+    .site-main h2 { color: #f0e0d0; font-size: 1.35rem; margin: 2rem 0 1rem; }
+    .site-main h3 { color: #c0b0a0; font-size: 1.1rem; margin: 1.5rem 0 0.75rem; }
+    .site-main code { background: #1a1a1a; color: #e85a20; padding: 0.15em 0.4em; font-family: 'JetBrains Mono', monospace; font-size: 0.85em; }
+    .site-main pre { background: #1a1a1a; border: 1px solid #2a1a10; padding: 1.25rem; overflow-x: auto; margin-bottom: 1.5rem; }
+    .site-main pre code { background: none; padding: 0; }
+    .site-main blockquote { border-left: 3px solid #e85a20; padding-left: 1rem; color: #888; margin: 1.5rem 0; }
+    .site-main ul, .site-main ol { padding-left: 1.5rem; margin-bottom: 1.25rem; }
+    .site-main li { margin-bottom: 0.25rem; }
+    .site-main a { border-bottom: 1px solid #2a1a10; }
+    .site-main a:hover { border-bottom-color: #e85a20; }
+    .site-main img { max-width: 100%; height: auto; }
+
+    .post-list { list-style: none; }
+    .post-list li {
+      padding: 1rem 0;
+      border-bottom: 1px solid #1e1e1e;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .post-list a { color: #f0e0d0; border-bottom: none; }
+    .post-list a:hover { color: #e85a20; }
+    .post-date { color: #444; font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; }
+
+    .taxonomy-desc { color: #555; margin-bottom: 2rem; }
+
+    .site-footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      color: #2a2a2a;
+      font-size: 0.75rem;
+      border-top: 1px solid #1e1e1e;
+      margin-top: 4rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    @media (max-width: 768px) {
+      .metric-grid { grid-template-columns: 1fr 1fr; }
+      .panel-grid { grid-template-columns: 1fr; }
+      .site-nav { padding: 0.75rem 1rem; }
+      .nav-status { display: none; }
+    }
+    @media (max-width: 480px) {
+      .metric-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="site-nav">
+    <a href="{{ base_url }}/" class="site-brand">Magma</a>
+    <div class="nav-status">
+      <span class="status-dot"></span>
+      <span>Systems Active</span>
+    </div>
+    <div class="site-nav-links">
+      <a href="{{ base_url }}/about/">About</a>
+    </div>
+  </nav>

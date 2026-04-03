@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{{ page.description | default(site.description) }}">
+  {{ og_all_tags }}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #05051a;
+      color: #8a90b0;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    a { color: #d4a847; text-decoration: none; transition: color 0.3s; }
+    a:hover { color: #fff; }
+
+    .site-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.25rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(5, 5, 26, 0.9);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(212, 168, 71, 0.1);
+    }
+    .site-brand {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .site-nav-links a {
+      margin-left: 2rem;
+      color: #5a6080;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-weight: 400;
+    }
+    .site-nav-links a:hover { color: #d4a847; }
+    .nav-register {
+      color: #d4a847 !important;
+      border: 1px solid #d4a847;
+      padding: 0.5rem 1.25rem;
+      transition: all 0.3s;
+    }
+    .nav-register:hover { background: #d4a847; color: #05051a !important; }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-burst {
+      position: absolute;
+      width: 4px; height: 4px;
+      background: #d4a847;
+      border-radius: 50%;
+      animation: burst 4s ease-out infinite;
+    }
+    .hero-burst:nth-child(1) { animation-delay: 0s; top: 50%; left: 50%; }
+    .hero-burst:nth-child(2) { animation-delay: 0.5s; top: 48%; left: 52%; }
+    .hero-burst:nth-child(3) { animation-delay: 1s; top: 52%; left: 48%; }
+    .hero-burst:nth-child(4) { animation-delay: 1.5s; top: 50%; left: 50%; }
+    .hero-burst:nth-child(5) { animation-delay: 2s; top: 49%; left: 51%; }
+    .hero-burst:nth-child(6) { animation-delay: 2.5s; top: 51%; left: 49%; }
+    @keyframes burst {
+      0% { transform: translate(0, 0) scale(1); opacity: 1; }
+      100% { transform: translate(calc((var(--dx, 1)) * 300px), calc((var(--dy, 1)) * 300px)) scale(0); opacity: 0; }
+    }
+    .hero-burst:nth-child(1) { --dx: -1.2; --dy: -0.8; }
+    .hero-burst:nth-child(2) { --dx: 1.5; --dy: -1.1; }
+    .hero-burst:nth-child(3) { --dx: -0.9; --dy: 1.4; }
+    .hero-burst:nth-child(4) { --dx: 1.1; --dy: 0.7; }
+    .hero-burst:nth-child(5) { --dx: -1.4; --dy: 0.3; }
+    .hero-burst:nth-child(6) { --dx: 0.5; --dy: -1.5; }
+
+    .hero-content { position: relative; z-index: 2; }
+    .hero-date {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #d4a847;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+    .hero h1 {
+      font-size: 5rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+    .hero-tagline {
+      font-size: 1.15rem;
+      color: #5a6080;
+      margin-top: 1.5rem;
+      font-weight: 300;
+      max-width: 500px;
+    }
+    .hero-cta {
+      display: inline-block;
+      margin-top: 2.5rem;
+      padding: 1rem 3rem;
+      background: #d4a847;
+      color: #05051a;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all 0.3s;
+    }
+    .hero-cta:hover {
+      background: #fff;
+      color: #05051a;
+      box-shadow: 0 0 30px rgba(212, 168, 71, 0.3);
+    }
+
+    .countdown {
+      display: flex;
+      gap: 2rem;
+      margin-top: 4rem;
+      justify-content: center;
+    }
+    .countdown-unit {
+      text-align: center;
+    }
+    .countdown-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1;
+    }
+    .countdown-label {
+      font-size: 0.65rem;
+      color: #5a6080;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-top: 0.5rem;
+    }
+
+    .speakers {
+      padding: 6rem 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #d4a847;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+    }
+    .speaker-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .speaker-card {
+      border: 1px solid rgba(212, 168, 71, 0.1);
+      padding: 2rem;
+      text-align: center;
+      transition: all 0.3s;
+    }
+    .speaker-card:hover {
+      border-color: rgba(212, 168, 71, 0.4);
+      transform: translateY(-4px);
+    }
+    .speaker-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: rgba(212, 168, 71, 0.1);
+      border: 2px solid rgba(212, 168, 71, 0.2);
+      margin: 0 auto 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #d4a847;
+    }
+    .speaker-card h3 {
+      font-size: 1.1rem;
+      color: #fff;
+      margin-bottom: 0.25rem;
+    }
+    .speaker-role {
+      font-size: 0.8rem;
+      color: #5a6080;
+    }
+    .speaker-talk {
+      font-size: 0.85rem;
+      color: #8a90b0;
+      margin-top: 0.75rem;
+      font-style: italic;
+    }
+
+    .schedule {
+      padding: 6rem 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .schedule-item {
+      display: flex;
+      gap: 2rem;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid rgba(212, 168, 71, 0.08);
+    }
+    .schedule-time {
+      min-width: 80px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #d4a847;
+    }
+    .schedule-talk h4 {
+      color: #fff;
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+    .schedule-talk p {
+      color: #5a6080;
+      font-size: 0.85rem;
+    }
+
+    .site-main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 8rem 2rem 4rem;
+    }
+    .site-main h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+    .page-date { color: #5a6080; font-size: 0.85rem; margin-bottom: 2rem; }
+    .site-main p { margin-bottom: 1.25rem; line-height: 1.8; }
+    .site-main h2 { color: #fff; font-size: 1.5rem; margin: 2rem 0 1rem; }
+    .site-main h3 { color: #c0c8e0; font-size: 1.2rem; margin: 1.5rem 0 0.75rem; }
+    .site-main code { background: #0a0a2a; color: #d4a847; padding: 0.15em 0.4em; font-size: 0.9em; }
+    .site-main pre { background: #0a0a2a; border: 1px solid rgba(212,168,71,0.1); padding: 1.25rem; overflow-x: auto; margin-bottom: 1.5rem; }
+    .site-main pre code { background: none; padding: 0; }
+    .site-main blockquote { border-left: 2px solid #d4a847; padding-left: 1rem; color: #8a90b0; margin: 1.5rem 0; }
+    .site-main ul, .site-main ol { padding-left: 1.5rem; margin-bottom: 1.25rem; }
+    .site-main li { margin-bottom: 0.25rem; }
+    .site-main a { border-bottom: 1px solid rgba(212,168,71,0.3); }
+    .site-main a:hover { border-bottom-color: #d4a847; }
+    .site-main img { max-width: 100%; height: auto; }
+
+    .post-list { list-style: none; }
+    .post-list li {
+      padding: 1.25rem 0;
+      border-bottom: 1px solid rgba(212,168,71,0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .post-list a { color: #fff; border-bottom: none; font-weight: 600; }
+    .post-list a:hover { color: #d4a847; }
+    .post-date { color: #4a5068; font-size: 0.8rem; }
+
+    .taxonomy-desc { color: #5a6080; margin-bottom: 2rem; }
+
+    .site-footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      color: #1a1a3a;
+      font-size: 0.8rem;
+      border-top: 1px solid rgba(212,168,71,0.08);
+      margin-top: 4rem;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.75rem; }
+      .hero-burst { display: none; }
+      .countdown { gap: 1rem; }
+      .countdown-number { font-size: 1.75rem; }
+      .site-nav { padding: 1rem; }
+      .site-nav-links a { margin-left: 1rem; font-size: 0.75rem; }
+      .speaker-grid { grid-template-columns: 1fr; }
+      .schedule-item { flex-direction: column; gap: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="site-nav">
+    <a href="{{ base_url }}/" class="site-brand">Supernova</a>
+    <div class="site-nav-links">
+      <a href="#speakers">Speakers</a>
+      <a href="#schedule">Schedule</a>
+      <a href="{{ base_url }}/about/">About</a>
+      <a href="#" class="nav-register">Register</a>
+    </div>
+  </nav>
