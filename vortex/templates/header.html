@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{{ page.description | default(site.description) }}">
+  {{ og_all_tags }}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #0a0a0a; color: #c0b0d0; font-family: 'Inter', sans-serif; }
+    a { color: #e91e8c; text-decoration: none; }
+    a:hover { color: #fff; }
+    /* Navigation */
+    .site-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; background: #0a0a0a; border-bottom: 1px solid #2d0a4e; }
+    .site-brand { font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem; font-weight: 700; color: #e91e8c; letter-spacing: 0.1em; text-transform: uppercase; }
+    .site-nav-links a { margin-left: 2rem; color: #c0b0d0; font-size: 0.875rem; letter-spacing: 0.05em; text-transform: uppercase; transition: color 0.3s; }
+    .site-nav-links a:hover { color: #e91e8c; }
+    /* Hero */
+    .hero { position: relative; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .hero-content { text-align: center; z-index: 2; }
+    .hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: 5rem; color: #fff; letter-spacing: 0.1em; text-transform: uppercase; }
+    .hero-tagline { font-size: 1.125rem; margin-top: 1rem; color: #c0b0d0; }
+    .hero-cta { display: inline-block; margin-top: 2rem; padding: 0.875rem 2.5rem; border: 2px solid #e91e8c; color: #e91e8c; font-size: 0.875rem; letter-spacing: 0.15em; text-transform: uppercase; transition: all 0.3s; }
+    .hero-cta:hover { background: #e91e8c; color: #0a0a0a; transform: rotate(2deg) scale(1.05); }
+    /* Vortex Rings */
+    .vortex-ring { position: absolute; border: 1px solid #2d0a4e; border-radius: 50%; }
+    .vortex-ring-1 { width: 500px; height: 500px; animation: spin 20s linear infinite; border-color: #2d0a4e; }
+    .vortex-ring-2 { width: 350px; height: 350px; animation: spin 15s linear infinite reverse; border-color: #e91e8c; opacity: 0.3; }
+    .vortex-ring-3 { width: 200px; height: 200px; animation: spin 10s linear infinite; border-color: #2d0a4e; opacity: 0.5; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    /* Works */
+    .works-preview { padding: 6rem 2rem; max-width: 1100px; margin: 0 auto; }
+    .section-title { font-family: 'Space Grotesk', sans-serif; font-size: 0.875rem; letter-spacing: 0.2em; text-transform: uppercase; color: #e91e8c; margin-bottom: 3rem; }
+    .spiral-grid { display: grid; gap: 2rem; }
+    .work-card { border: 1px solid #1a0a2e; padding: 2.5rem; transition: all 0.5s ease; transform: rotate(calc(var(--i) * -1deg)); }
+    .work-card:hover { border-color: #e91e8c; transform: rotate(0deg); }
+    .work-number { font-family: 'Space Grotesk', sans-serif; font-size: 3rem; font-weight: 700; color: #2d0a4e; }
+    .work-card h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; margin: 0.5rem 0; }
+    .work-card h3 a { color: #fff; }
+    .work-card h3 a:hover { color: #e91e8c; }
+    .work-card p { color: #8a7a9a; line-height: 1.6; margin: 0.5rem 0; }
+    .work-meta { display: flex; gap: 2rem; margin-top: 1rem; font-size: 0.8rem; color: #5a4a6a; text-transform: uppercase; letter-spacing: 0.05em; }
+    /* Page */
+    .site-main { max-width: 720px; margin: 0 auto; padding: 8rem 2rem 4rem; }
+    .site-main h1 { font-family: 'Space Grotesk', sans-serif; font-size: 2.5rem; color: #fff; margin-bottom: 0.5rem; }
+    .page-date { color: #5a4a6a; font-size: 0.85rem; margin-bottom: 2rem; }
+    .site-main p { line-height: 1.8; margin-bottom: 1.25rem; }
+    .site-main h2, .site-main h3 { font-family: 'Space Grotesk', sans-serif; color: #fff; margin: 2rem 0 1rem; }
+    /* Post list */
+    .post-list { list-style: none; }
+    .post-list li { padding: 1.25rem 0; border-bottom: 1px solid #1a0a2e; display: flex; justify-content: space-between; align-items: baseline; }
+    .post-list a { color: #fff; font-size: 1.1rem; }
+    .post-list a:hover { color: #e91e8c; }
+    .post-date { color: #5a4a6a; font-size: 0.85rem; }
+    /* Taxonomy */
+    .taxonomy-desc { color: #5a4a6a; margin-bottom: 2rem; }
+    /* 404 */
+    .error-page { text-align: center; padding-top: 30vh; }
+    /* Footer */
+    .site-footer { text-align: center; padding: 3rem 2rem; color: #3a2a4a; font-size: 0.8rem; border-top: 1px solid #1a0a2e; margin-top: 4rem; }
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.5rem; }
+      .vortex-ring-1 { width: 300px; height: 300px; }
+      .vortex-ring-2 { width: 200px; height: 200px; }
+      .vortex-ring-3 { width: 120px; height: 120px; }
+      .site-nav { padding: 1rem; }
+      .site-nav-links a { margin-left: 1rem; }
+      .work-card { transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="site-nav">
+    <a href="{{ base_url }}/" class="site-brand">Vortex</a>
+    <div class="site-nav-links">
+      <a href="{{ base_url }}/works/">Works</a>
+      <a href="{{ base_url }}/about/">About</a>
+    </div>
+  </nav>

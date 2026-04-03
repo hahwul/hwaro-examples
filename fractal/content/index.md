@@ -1,8 +1,5 @@
 +++
-title = "Home"
+title = "Fractal"
 template = "home"
-tags = ["home"]
-description = "Fractal -- a generative art gallery exploring infinite mathematical beauty through Mandelbrot sets, Julia sets, and recursive geometry."
+description = "Infinite complexity from simple rules"
 +++
-
-Where mathematics meets art, infinity becomes visible. Explore the recursive depths of fractal geometry through our curated collection of generative works.

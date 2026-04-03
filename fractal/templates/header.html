@@ -3,14 +3,269 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="{{ page.description }}">
-  <title>{% if page.title == "Home" %}{{ site.title }} -- Generative Fractal Art Gallery{% else %}{{ page.title }} -- {{ site.title }}{% endif %}</title>
+  <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{{ page.description | default(site.description) }}">
   {{ og_all_tags }}
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{{ base_url }}/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;600;700&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
   {{ highlight_css }}
   {{ auto_includes_css }}
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0a0e1a;
+      color: #8090b0;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    a { color: #22d3ee; text-decoration: none; transition: color 0.3s; }
+    a:hover { color: #fff; }
+
+    .formula-decoration {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      color: rgba(34, 211, 238, 0.12);
+      writing-mode: vertical-rl;
+      letter-spacing: 0.1em;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .site-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.25rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(10, 14, 26, 0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(34, 211, 238, 0.08);
+    }
+    .site-brand {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .site-nav-links a {
+      margin-left: 2rem;
+      color: #4a5a7a;
+      font-size: 0.85rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-weight: 400;
+    }
+    .site-nav-links a:hover { color: #22d3ee; }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      position: relative;
+    }
+    .hero-pattern {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 500px;
+      height: 500px;
+      opacity: 0.06;
+    }
+    .hero-pattern .tri {
+      position: absolute;
+      border-left: solid transparent;
+      border-right: solid transparent;
+      border-bottom-style: solid;
+      border-bottom-color: #22d3ee;
+    }
+    .tri-1 { width: 0; height: 0; border-left-width: 250px; border-right-width: 250px; border-bottom-width: 433px; top: 0; left: 0; }
+    .tri-2 { width: 0; height: 0; border-left-width: 125px; border-right-width: 125px; border-bottom-width: 216px; top: 0; left: 125px; opacity: 0.5; }
+    .tri-3 { width: 0; height: 0; border-left-width: 62px; border-right-width: 62px; border-bottom-width: 108px; top: 0; left: 188px; opacity: 0.3; }
+
+    .hero-content { position: relative; z-index: 2; }
+    .hero-formula {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.8rem;
+      color: rgba(34, 211, 238, 0.4);
+      letter-spacing: 0.15em;
+      margin-bottom: 2rem;
+    }
+    .hero h1 {
+      font-size: 4.5rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+    }
+    .hero-desc {
+      font-size: 1.1rem;
+      color: #4a5a7a;
+      max-width: 480px;
+      margin: 1.5rem auto 0;
+      font-weight: 300;
+    }
+    .hero-cta {
+      display: inline-block;
+      margin-top: 2.5rem;
+      padding: 0.875rem 2.5rem;
+      border: 1px solid #22d3ee;
+      color: #22d3ee;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: all 0.3s;
+    }
+    .hero-cta:hover { background: #22d3ee; color: #0a0e1a; }
+
+    .gallery-section {
+      padding: 6rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .gallery-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #22d3ee;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+    .gallery-card {
+      background: rgba(34, 211, 238, 0.02);
+      border: 1px solid rgba(34, 211, 238, 0.08);
+      padding: 2rem;
+      transition: all 0.4s ease;
+      position: relative;
+    }
+    .gallery-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: #22d3ee;
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform 0.4s ease;
+    }
+    .gallery-card:hover::after { transform: scaleX(1); }
+    .gallery-card:hover {
+      border-color: rgba(34, 211, 238, 0.25);
+      transform: translateY(-4px);
+    }
+    .gallery-card-formula {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      color: rgba(34, 211, 238, 0.4);
+      letter-spacing: 0.08em;
+      margin-bottom: 0.75rem;
+    }
+    .gallery-card h3 {
+      font-size: 1.3rem;
+      color: #fff;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+    .gallery-card h3 a { color: #fff; }
+    .gallery-card h3 a:hover { color: #22d3ee; }
+    .gallery-card p { color: #5a6a8a; font-size: 0.9rem; line-height: 1.6; }
+    .gallery-meta {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 1rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      color: #3a4a6a;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .site-main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 8rem 2rem 4rem;
+    }
+    .site-main h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+    .page-date { color: #3a4a6a; font-size: 0.85rem; margin-bottom: 2rem; }
+    .site-main p { margin-bottom: 1.25rem; line-height: 1.8; }
+    .site-main h2 { color: #fff; font-size: 1.5rem; margin: 2rem 0 1rem; font-weight: 600; }
+    .site-main h3 { color: #a0b0d0; font-size: 1.2rem; margin: 1.5rem 0 0.75rem; }
+    .site-main code { background: #0f1328; color: #22d3ee; padding: 0.15em 0.4em; font-family: 'IBM Plex Mono', monospace; font-size: 0.85em; border: 1px solid rgba(34,211,238,0.1); }
+    .site-main pre { background: #0f1328; border: 1px solid rgba(34,211,238,0.08); padding: 1.25rem; overflow-x: auto; margin-bottom: 1.5rem; }
+    .site-main pre code { background: none; border: none; padding: 0; }
+    .site-main blockquote { border-left: 2px solid #22d3ee; padding-left: 1rem; color: #6070a0; margin: 1.5rem 0; font-style: italic; }
+    .site-main ul, .site-main ol { padding-left: 1.5rem; margin-bottom: 1.25rem; }
+    .site-main li { margin-bottom: 0.25rem; }
+    .site-main a { border-bottom: 1px solid rgba(34,211,238,0.3); }
+    .site-main a:hover { border-bottom-color: #22d3ee; }
+    .site-main img { max-width: 100%; height: auto; }
+
+    .post-list { list-style: none; }
+    .post-list li {
+      padding: 1.25rem 0;
+      border-bottom: 1px solid rgba(34,211,238,0.06);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .post-list a { color: #fff; border-bottom: none; font-weight: 600; }
+    .post-list a:hover { color: #22d3ee; }
+    .post-date { color: #3a4a6a; font-size: 0.8rem; }
+
+    .taxonomy-desc { color: #4a5a7a; margin-bottom: 2rem; }
+
+    .site-footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      color: #1a2040;
+      font-size: 0.8rem;
+      border-top: 1px solid rgba(34,211,238,0.06);
+      margin-top: 4rem;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.5rem; }
+      .hero-pattern { width: 300px; height: 300px; }
+      .site-nav { padding: 1rem; }
+      .site-nav-links a { margin-left: 1rem; font-size: 0.75rem; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .formula-decoration { display: none; }
+    }
+  </style>
 </head>
 <body>
+  <div class="formula-decoration">z(n+1) = z(n)^2 + c</div>
+  <nav class="site-nav">
+    <a href="{{ base_url }}/" class="site-brand">Fractal</a>
+    <div class="site-nav-links">
+      <a href="{{ base_url }}/gallery/">Gallery</a>
+      <a href="{{ base_url }}/about/">About</a>
+    </div>
+  </nav>
