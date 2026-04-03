@@ -1,0 +1,4 @@
++++
+title = "Parallax"
+template = "home"
++++
