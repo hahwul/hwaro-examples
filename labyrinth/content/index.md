@@ -1,0 +1,4 @@
++++
+title = "Labyrinth"
+template = "home"
++++
