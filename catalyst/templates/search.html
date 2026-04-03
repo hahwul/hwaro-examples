@@ -1,0 +1,48 @@
+{% include "header.html" %}
+
+    <main class="search-page">
+        <div class="search-container">
+            <header class="section-header">
+                <h1 class="section-title">Search</h1>
+                <p class="section-description">Scan the compound library.</p>
+            </header>
+
+            <div class="search-input-wrapper">
+                <input type="text" id="search-input" class="search-input" placeholder="Enter a formula..." autocomplete="off" autofocus>
+            </div>
+
+            <ul id="search-results" class="search-results posts-list"></ul>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
+    <script>
+        (function() {
+            var input = document.getElementById('search-input');
+            var resultsEl = document.getElementById('search-results');
+            var fuse;
+
+            function escapeHtml(str) {
+                var div = document.createElement('div');
+                div.appendChild(document.createTextNode(str));
+                return div.innerHTML;
+            }
+
+            fetch('{{ base_url }}/search.json')
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                    fuse = new Fuse(data, { keys: ['title', 'content'], threshold: 0.3 });
+                });
+
+            input.addEventListener('input', function() {
+                var query = input.value.trim();
+                if (!query || !fuse) { resultsEl.innerHTML = ''; return; }
+                var results = fuse.search(query).slice(0, 10);
+                resultsEl.innerHTML = results.map(function(r) {
+                    return '<li class="search-result-item"><a href="' + escapeHtml(r.item.url) + '">' + escapeHtml(r.item.title) + '</a></li>';
+                }).join('');
+            });
+        })();
+    </script>
+
+{% include "footer.html" %}

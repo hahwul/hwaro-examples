@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{{ page.description | default(site.description) }}">
+  {{ og_all_tags }}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #fffef0;
+      color: #1a1a1a;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    a { color: #1a1a1a; text-decoration: none; }
+
+    .site-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fffef0;
+      border-bottom: 4px solid #1a1a1a;
+    }
+    .site-brand {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .site-nav-links { display: flex; gap: 1rem; align-items: center; }
+    .site-nav-links a {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      padding: 0.5rem 1rem;
+      border: 3px solid transparent;
+      transition: all 0.15s;
+    }
+    .site-nav-links a:hover {
+      border-color: #1a1a1a;
+      background: #c8ff00;
+      box-shadow: 4px 4px 0 #1a1a1a;
+    }
+    .nav-cta {
+      background: #ff3e9a !important;
+      color: #fff !important;
+      border: 3px solid #1a1a1a !important;
+      border-radius: 999px;
+      box-shadow: 4px 4px 0 #1a1a1a;
+    }
+    .nav-cta:hover {
+      background: #1a1a1a !important;
+      color: #c8ff00 !important;
+      box-shadow: 6px 6px 0 #ff3e9a !important;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: #c8ff00;
+      color: #1a1a1a;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.4rem 1rem;
+      border: 3px solid #1a1a1a;
+      border-radius: 999px;
+      box-shadow: 3px 3px 0 #1a1a1a;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 2rem;
+    }
+    .hero h1 {
+      font-size: 4.5rem;
+      font-weight: 700;
+      line-height: 1.05;
+      color: #1a1a1a;
+      max-width: 800px;
+    }
+    .hero h1 .highlight {
+      background: #ff3e9a;
+      color: #fff;
+      padding: 0 0.2em;
+      border: 3px solid #1a1a1a;
+      box-shadow: 4px 4px 0 #1a1a1a;
+      display: inline-block;
+      transform: rotate(-1deg);
+    }
+    .hero-desc {
+      font-size: 1.2rem;
+      color: #555;
+      max-width: 550px;
+      margin-top: 1.5rem;
+      line-height: 1.7;
+    }
+    .hero-buttons {
+      display: flex;
+      gap: 1.25rem;
+      margin-top: 2.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .btn-primary {
+      display: inline-block;
+      background: #1a1a1a;
+      color: #c8ff00;
+      font-family: 'Space Mono', monospace;
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 1rem 2.5rem;
+      border: 3px solid #1a1a1a;
+      border-radius: 0;
+      box-shadow: 6px 6px 0 #ff3e9a;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: all 0.15s;
+      cursor: pointer;
+    }
+    .btn-primary:hover {
+      box-shadow: -6px -6px 0 #c8ff00;
+      transform: translate(2px, 2px);
+      color: #c8ff00;
+    }
+    .btn-secondary {
+      display: inline-block;
+      background: #fffef0;
+      color: #1a1a1a;
+      font-family: 'Space Mono', monospace;
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 1rem 2.5rem;
+      border: 3px solid #1a1a1a;
+      box-shadow: 6px 6px 0 #1a1a1a;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: all 0.15s;
+    }
+    .btn-secondary:hover {
+      background: #ffdd00;
+      box-shadow: -6px -6px 0 #1a1a1a;
+      transform: translate(2px, 2px);
+    }
+
+    .features {
+      padding: 6rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .features-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #ff3e9a;
+      margin-bottom: 1rem;
+    }
+    .features-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 3rem;
+      max-width: 600px;
+    }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .feature-card {
+      background: #fff;
+      border: 3px solid #1a1a1a;
+      padding: 2rem;
+      box-shadow: 8px 8px 0 #1a1a1a;
+      transition: all 0.15s;
+    }
+    .feature-card:hover {
+      box-shadow: -8px -8px 0 #1a1a1a;
+      transform: translate(4px, 4px);
+    }
+    .feature-card:nth-child(1) { background: #c8ff00; }
+    .feature-card:nth-child(2) { background: #ff3e9a; color: #fff; }
+    .feature-card:nth-child(3) { background: #ffdd00; }
+    .feature-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.75rem;
+    }
+    .feature-card p {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      opacity: 0.85;
+    }
+
+    .pricing {
+      padding: 6rem 2rem;
+      background: #1a1a1a;
+      color: #fffef0;
+    }
+    .pricing-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .pricing-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #c8ff00;
+      margin-bottom: 1rem;
+    }
+    .pricing-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 3rem;
+    }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .price-card {
+      background: #2a2a2a;
+      border: 3px solid #444;
+      padding: 2.5rem 2rem;
+      box-shadow: 8px 8px 0 #444;
+      transition: all 0.15s;
+    }
+    .price-card:hover {
+      box-shadow: -8px -8px 0 #444;
+      transform: translate(4px, 4px);
+    }
+    .price-card.featured {
+      background: #ff3e9a;
+      border-color: #fffef0;
+      box-shadow: 8px 8px 0 #c8ff00;
+    }
+    .price-card.featured:hover {
+      box-shadow: -8px -8px 0 #c8ff00;
+    }
+    .price-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .price-amount {
+      font-family: 'Space Mono', monospace;
+      font-size: 3rem;
+      font-weight: 700;
+      margin: 1rem 0;
+    }
+    .price-amount span { font-size: 1rem; }
+    .price-features {
+      list-style: none;
+      margin: 1.5rem 0;
+    }
+    .price-features li {
+      padding: 0.4rem 0;
+      font-size: 0.9rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .site-main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 8rem 2rem 4rem;
+    }
+    .site-main h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      border-bottom: 4px solid #1a1a1a;
+      padding-bottom: 0.5rem;
+    }
+    .page-date {
+      font-family: 'Space Mono', monospace;
+      color: #888;
+      font-size: 0.85rem;
+      margin-bottom: 2rem;
+    }
+    .site-main p { margin-bottom: 1.25rem; line-height: 1.8; }
+    .site-main h2 {
+      font-size: 1.5rem;
+      margin: 2rem 0 1rem;
+      background: #c8ff00;
+      display: inline-block;
+      padding: 0.1em 0.3em;
+      border: 2px solid #1a1a1a;
+      box-shadow: 3px 3px 0 #1a1a1a;
+    }
+    .site-main h3 { font-size: 1.2rem; margin: 1.5rem 0 0.75rem; }
+    .site-main code {
+      background: #1a1a1a;
+      color: #c8ff00;
+      padding: 0.15em 0.4em;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.85em;
+      border: 2px solid #1a1a1a;
+    }
+    .site-main pre {
+      background: #1a1a1a;
+      color: #fffef0;
+      padding: 1.25rem;
+      border: 3px solid #1a1a1a;
+      box-shadow: 6px 6px 0 #ff3e9a;
+      overflow-x: auto;
+      margin-bottom: 1.5rem;
+    }
+    .site-main pre code { background: none; border: none; color: inherit; padding: 0; }
+    .site-main blockquote {
+      border-left: 6px solid #ff3e9a;
+      padding-left: 1.25rem;
+      color: #555;
+      margin: 1.5rem 0;
+      font-style: italic;
+    }
+    .site-main ul, .site-main ol { padding-left: 1.5rem; margin-bottom: 1.25rem; }
+    .site-main li { margin-bottom: 0.35rem; }
+    .site-main a {
+      color: #ff3e9a;
+      border-bottom: 2px solid #ff3e9a;
+      font-weight: 700;
+    }
+    .site-main a:hover { background: #ff3e9a; color: #fff; }
+    .site-main img { max-width: 100%; height: auto; border: 3px solid #1a1a1a; box-shadow: 6px 6px 0 #1a1a1a; }
+
+    .post-list { list-style: none; }
+    .post-list li {
+      padding: 1rem 1.25rem;
+      margin-bottom: 0.75rem;
+      border: 3px solid #1a1a1a;
+      box-shadow: 4px 4px 0 #1a1a1a;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      transition: all 0.15s;
+    }
+    .post-list li:hover {
+      box-shadow: -4px -4px 0 #1a1a1a;
+      transform: translate(2px, 2px);
+      background: #c8ff00;
+    }
+    .post-list a { color: #1a1a1a; font-weight: 700; border-bottom: none; }
+    .post-date { font-family: 'Space Mono', monospace; color: #888; font-size: 0.8rem; }
+
+    .taxonomy-desc { color: #888; margin-bottom: 2rem; }
+
+    .site-footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      border-top: 4px solid #1a1a1a;
+      margin-top: 4rem;
+      font-size: 0.85rem;
+      color: #888;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.5rem; }
+      .hero-buttons { flex-direction: column; align-items: center; }
+      .site-nav { padding: 0.75rem 1rem; }
+      .site-nav-links a { padding: 0.35rem 0.5rem; font-size: 0.75rem; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="site-nav">
+    <a href="{{ base_url }}/" class="site-brand">NeoBrutal</a>
+    <div class="site-nav-links">
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="{{ base_url }}/about/">About</a>
+      <a href="#" class="nav-cta">Get Started</a>
+    </div>
+  </nav>
