@@ -1,0 +1,40 @@
+{% include "header.html" %}
+
+{% if section.pages_count > 0 %}
+<div class="newspaper-grid">
+    {% for post in section.pages %}
+        {% if loop.index == 1 %}
+        <article class="article-lead">
+            <header>
+                <h2 class="headline-lead"><a href="{{ post.url | absolute_url }}">{{ post.title }}</a></h2>
+                {% if post.extra.subtitle %}<p class="subheadline">{{ post.extra.subtitle }}</p>{% endif %}
+                <p class="byline">By {{ post.authors | default(["The Editors"]) | join(", ") }} &bull; {{ post.date | date(format="%B %d, %Y") }}</p>
+            </header>
+            <div class="article-body columns-3">
+                {{ post.summary | default(post.content) | strip_html | truncate_words(n=300) }}
+                <a href="{{ post.url | absolute_url }}" class="read-more">Read Full Story &raquo;</a>
+            </div>
+        </article>
+        <hr class="article-divider">
+        <div class="secondary-articles">
+        {% else %}
+        <article class="article-secondary">
+            <header>
+                <h3 class="headline-secondary"><a href="{{ post.url | absolute_url }}">{{ post.title }}</a></h3>
+                {% if post.extra.subtitle %}<p class="subheadline-small">{{ post.extra.subtitle }}</p>{% endif %}
+            </header>
+            <div class="article-body">
+                <p>{{ post.summary | default(post.content) | strip_html | truncate_words(n=100) }} <a href="{{ post.url | absolute_url }}">more &raquo;</a></p>
+            </div>
+        </article>
+        {% endif %}
+    {% endfor %}
+    {% if section.pages_count > 1 %}
+        </div>
+    {% endif %}
+</div>
+{% else %}
+    <p>No news to report today.</p>
+{% endif %}
+
+{% include "footer.html" %}
