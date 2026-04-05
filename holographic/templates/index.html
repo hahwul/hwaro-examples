@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if config.title %}{{ config.title }}{% else %}Holographic{% endif %}</title>
+    <link rel="stylesheet" href="{{ config.base_url | default(value="") }}/css/style.css">
+    <style>
+        /* Base styles */
+        body {
+            background-color: #0d0d0d;
+            color: #fff;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 800px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            letter-spacing: -0.05em;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #aaa;
+            line-height: 1.6;
+        }
+
+        /* Iridescent / Holographic text effect without gradients */
+        /* Since gradients are strictly prohibited, we'll use SVG patterns, text-shadow, or color animations */
+        /* Let's try text-shadow with vibrant colors */
+        .holographic-text {
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.5);
+            position: relative;
+            animation: glitch-color 3s infinite alternate;
+            text-shadow:
+                2px 2px 0px rgba(255, 0, 128, 0.5),
+                -2px -2px 0px rgba(0, 255, 255, 0.5),
+                0px 4px 0px rgba(255, 255, 0, 0.3);
+        }
+
+        @keyframes glitch-color {
+            0% {
+                text-shadow:
+                    2px 2px 0px rgba(255, 0, 128, 0.5),
+                    -2px -2px 0px rgba(0, 255, 255, 0.5),
+                    0px 4px 0px rgba(255, 255, 0, 0.3);
+            }
+            33% {
+                text-shadow:
+                    -2px 2px 0px rgba(0, 255, 255, 0.5),
+                    2px -2px 0px rgba(255, 255, 0, 0.5),
+                    0px -4px 0px rgba(255, 0, 128, 0.3);
+            }
+            66% {
+                text-shadow:
+                    2px -2px 0px rgba(255, 255, 0, 0.5),
+                    -2px 2px 0px rgba(255, 0, 128, 0.5),
+                    4px 0px 0px rgba(0, 255, 255, 0.3);
+            }
+            100% {
+                text-shadow:
+                    2px 2px 0px rgba(255, 0, 128, 0.5),
+                    -2px -2px 0px rgba(0, 255, 255, 0.5),
+                    0px 4px 0px rgba(255, 255, 0, 0.3);
+            }
+        }
+
+        /* Foil card effect */
+        .foil-card {
+            background-color: #1a1a1a;
+            border-radius: 16px;
+            padding: 3rem;
+            margin-top: 3rem;
+            box-shadow:
+                0 10px 30px rgba(0,0,0,0.5),
+                inset 0 0 0 1px rgba(255,255,255,0.1),
+                inset 0 0 20px rgba(255,255,255,0.05);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .foil-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow:
+                0 20px 40px rgba(0,0,0,0.6),
+                inset 0 0 0 1px rgba(255,255,255,0.2),
+                inset 0 0 30px rgba(255,255,255,0.1);
+        }
+
+        /* Iridescent pseudo-element without gradients */
+        .foil-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background-color: rgba(255, 255, 255, 0.03);
+            mix-blend-mode: color-dodge;
+            transform: rotate(45deg);
+            pointer-events: none;
+            transition: all 0.5s ease;
+            box-shadow:
+                inset 0 0 50px rgba(255, 0, 128, 0.2),
+                inset 50px 0 50px rgba(0, 255, 255, 0.2),
+                inset -50px 0 50px rgba(255, 255, 0, 0.2);
+            animation: foil-shift 10s infinite linear;
+        }
+
+        @keyframes foil-shift {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .foil-card:hover::before {
+            box-shadow:
+                inset 0 0 100px rgba(255, 0, 128, 0.3),
+                inset 100px 0 100px rgba(0, 255, 255, 0.3),
+                inset -100px 0 100px rgba(255, 255, 0, 0.3);
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 1rem 2rem;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 30px;
+            background-color: #2a2a2a;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+            box-shadow:
+                0 5px 15px rgba(0,0,0,0.3),
+                inset 0 0 10px rgba(255, 0, 128, 0.2),
+                inset 0 0 20px rgba(0, 255, 255, 0.2);
+        }
+
+        .btn:hover {
+            background-color: #333;
+            border-color: rgba(255,255,255,0.4);
+            box-shadow:
+                0 8px 20px rgba(0,0,0,0.4),
+                inset 0 0 15px rgba(255, 0, 128, 0.4),
+                inset 0 0 30px rgba(0, 255, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Geometric background element without gradients */
+        .bg-element {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 100vw;
+            height: 100vw;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            opacity: 0.1;
+            pointer-events: none;
+            border-radius: 50%;
+            box-shadow:
+                0 0 100px 50px rgba(255, 0, 128, 0.5),
+                0 0 200px 100px rgba(0, 255, 255, 0.5),
+                0 0 300px 150px rgba(255, 255, 0, 0.5);
+            animation: pulse 5s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(0.8); }
+            100% { transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="bg-element"></div>
+    <div class="container">
+        <h1 class="holographic-text">Holographic</h1>
+        <p>A theme with an iridescent, rainbow foil reflection effect.</p>
+
+        <div class="foil-card">
+            <h2>Welcome to the Future</h2>
+            <p>Experience the mesmerizing shine of holographic foil, achieved through carefully crafted shadows, blending modes, and animations—no gradients required.</p>
+            <a href="#" class="btn">Explore Now</a>
+        </div>
+    </div>
+</body>
+</html>
