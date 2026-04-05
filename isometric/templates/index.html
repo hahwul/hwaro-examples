@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page.title %}{{ page.title }} - {% endif %}{{ config.title }}</title>
+    <style>
+        :root {
+            --bg-color: #f4f5f7;
+            --text-color: #333333;
+            --accent-color: #4a90e2;
+            --card-bg: #ffffff;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --border-color: #e1e4e8;
+            --nav-bg: #ffffff;
+            --font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-family);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--nav-bg);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--border-color);
+            z-index: 100;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: bold;
+            margin-left: 1.5rem;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: 1px;
+            color: var(--accent-color);
+        }
+
+        /* Main Layout */
+        main {
+            flex-grow: 1;
+            padding: 4rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header-content {
+            text-align: center;
+            max-width: 800px;
+            margin-bottom: 5rem;
+        }
+
+        .header-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+        }
+
+        /* Isometric Container */
+        .isometric-container {
+            perspective: 2000px;
+            transform-style: preserve-3d;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 500px;
+            margin-bottom: 4rem;
+        }
+
+        .isometric-grid {
+            position: relative;
+            width: 600px;
+            height: 600px;
+            transform: rotateX(60deg) rotateZ(-45deg);
+            transform-style: preserve-3d;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 20px;
+            padding: 20px;
+        }
+
+        /* Isometric Cards */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease;
+            box-shadow:
+                -1px 1px 0px var(--border-color),
+                -2px 2px 0px var(--border-color),
+                -3px 3px 0px var(--border-color),
+                -4px 4px 0px var(--border-color),
+                -5px 5px 0px var(--border-color),
+                -10px 10px 20px var(--shadow-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Hover effect - raises the card */
+        .card:hover {
+            transform: translateZ(30px);
+            box-shadow:
+                -1px 1px 0px var(--border-color),
+                -2px 2px 0px var(--border-color),
+                -3px 3px 0px var(--border-color),
+                -4px 4px 0px var(--border-color),
+                -5px 5px 0px var(--border-color),
+                -6px 6px 0px var(--border-color),
+                -7px 7px 0px var(--border-color),
+                -8px 8px 0px var(--border-color),
+                -15px 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Adding pseudo elements for the 3D sides */
+        .card::before, .card::after {
+            content: '';
+            position: absolute;
+            background-color: #e8eaed; /* Slightly darker for the shadow side */
+            display: block;
+        }
+
+        /* Left side */
+        .card::before {
+            top: 0;
+            left: 0;
+            width: 10px;
+            height: 100%;
+            transform-origin: left;
+            transform: rotateY(90deg);
+        }
+
+        /* Bottom side */
+        .card::after {
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            transform-origin: bottom;
+            transform: rotateX(-90deg);
+            background-color: #d1d5db; /* Darkest for the bottom side */
+        }
+
+        .card h3 {
+            margin: 0 0 10px 0;
+            color: var(--accent-color);
+            transform: translateZ(20px); /* Lift text above card */
+        }
+
+        .card p {
+            margin: 0;
+            font-size: 0.9rem;
+            transform: translateZ(10px); /* Lift text above card */
+        }
+
+        /* Floating elements over the cards */
+        .floating-element {
+            position: absolute;
+            background-color: var(--accent-color);
+            border-radius: 4px;
+            transform: translateZ(40px);
+            box-shadow: -2px 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .bar-chart .bar {
+            background-color: var(--accent-color);
+            width: 20px;
+            margin: 0 5px;
+            display: inline-block;
+            transform-style: preserve-3d;
+            position: relative;
+        }
+
+        .bar-chart .bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -5px;
+            width: 5px;
+            height: 100%;
+            background-color: #3a7bc8;
+            transform-origin: right;
+            transform: rotateY(-90deg);
+        }
+
+        .bar-chart .bar::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background-color: #5ba1ef;
+            transform-origin: bottom;
+            transform: rotateX(90deg);
+        }
+
+        /* Different card types */
+        .card-stats { grid-column: span 2; }
+        .card-profile { grid-row: span 2; }
+
+        footer {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            text-align: center;
+            padding: 2rem;
+            border-top: 5px solid var(--accent-color);
+        }
+
+        .content-area {
+            max-width: 800px;
+            background-color: var(--card-bg);
+            padding: 3rem;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            margin-top: 2rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .content-area h1, .content-area h2 {
+            color: var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">ISO</div>
+        <div>
+            <a href="{{ config.base_url }}/">Home</a>
+            <a href="{{ config.base_url }}/about/">About</a>
+        </div>
+    </nav>
+
+    <main>
+        <div class="header-content">
+            <h1>{{ section.title | default(value=config.title) }}</h1>
+            <p>{{ section.description | default(value=config.description) }}</p>
+        </div>
+
+        <div class="isometric-container">
+            <div class="isometric-grid">
+
+                <div class="card card-stats">
+                    <h3>Analytics</h3>
+                    <p>Monthly traffic visualization</p>
+                    <div class="bar-chart" style="margin-top: 15px; display: flex; align-items: flex-end; height: 60px;">
+                        <div class="bar" style="height: 30px;"></div>
+                        <div class="bar" style="height: 50px;"></div>
+                        <div class="bar" style="height: 20px;"></div>
+                        <div class="bar" style="height: 60px;"></div>
+                        <div class="bar" style="height: 40px;"></div>
+                    </div>
+                </div>
+
+                <div class="card card-profile">
+                    <div style="width: 60px; height: 60px; background-color: var(--border-color); border-radius: 50%; margin-bottom: 15px; transform: translateZ(20px);"></div>
+                    <h3>Profile</h3>
+                    <p>User Dashboard</p>
+                </div>
+
+                <div class="card">
+                    <h3>Tasks</h3>
+                    <p>5 Active</p>
+                    <div style="width: 80%; height: 8px; background-color: #e1e4e8; margin-top: 15px; border-radius: 4px; overflow: hidden; transform: translateZ(10px);">
+                        <div style="width: 60%; height: 100%; background-color: var(--accent-color);"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Messages</h3>
+                    <p>12 Unread</p>
+                    <div style="width: 40px; height: 30px; background-color: var(--accent-color); border-radius: 4px; margin-top: 10px; position: relative; transform: translateZ(15px);">
+                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 10px solid white;"></div>
+                    </div>
+                </div>
+
+                <div class="card card-stats" style="grid-column: span 3;">
+                    <h3>Project Status</h3>
+                    <div style="display: flex; justify-content: space-around; width: 100%; margin-top: 20px;">
+                        <div style="width: 40px; height: 40px; background-color: #4caf50; border-radius: 50%; transform: translateZ(20px); display: flex; justify-content: center; align-items: center; color: white; font-weight: bold;">1</div>
+                        <div style="width: 40px; height: 40px; background-color: #ff9800; border-radius: 50%; transform: translateZ(20px); display: flex; justify-content: center; align-items: center; color: white; font-weight: bold;">2</div>
+                        <div style="width: 40px; height: 40px; background-color: #f44336; border-radius: 50%; transform: translateZ(20px); display: flex; justify-content: center; align-items: center; color: white; font-weight: bold;">3</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="content-area">
+            {{ section.content | safe }}
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Isometric UI. Elegant design with pure CSS transforms.</p>
+    </footer>
+
+</body>
+</html>
