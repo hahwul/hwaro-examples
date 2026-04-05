@@ -1,0 +1,42 @@
+{% include "header.html" %}
+
+<div class="hero-section">
+    <div class="hero-content">
+        <h1>{{ page.title | default("Embrace the Asymmetry") }}</h1>
+        <div class="hero-text">
+            {{ content | safe }}
+        </div>
+    </div>
+    <div class="hero-image">
+        <div class="decorative-block dark"></div>
+        <img src="{{ config.base_url }}/images/hero.svg" alt="Abstract Asymmetric Art">
+        <div class="decorative-block light"></div>
+    </div>
+</div>
+
+<div class="posts-grid">
+    {% set posts = get_section(path="posts/_index.md") %}
+    {% if posts and posts.pages %}
+        {% for post in posts.pages | slice(end=3) %}
+        <article class="grid-item {% if loop.index == 1 %}large{% elif loop.index == 2 %}medium{% else %}small{% endif %}">
+            <div class="post-card">
+                <div class="post-meta">
+                    <span class="post-date">{{ post.date | date("%B %d, %Y") }}</span>
+                </div>
+                <h2 class="post-title"><a href="{{ post.url }}">{{ post.title }}</a></h2>
+                {% if post.summary %}
+                <p class="post-summary">{{ post.summary }}</p>
+                {% else %}
+                <p class="post-summary">{{ post.content | strip_html | truncate_words(20) }}</p>
+                {% endif %}
+                <a href="{{ post.url }}" class="read-more">Read Entry &rarr;</a>
+            </div>
+            {% if loop.index == 1 %}
+            <div class="overlap-accent"></div>
+            {% endif %}
+        </article>
+        {% endfor %}
+    {% endif %}
+</div>
+
+{% include "footer.html" %}
