@@ -1,0 +1,86 @@
+  </div><!-- /.relative.z-10 -->
+
+  <!-- Footer -->
+  <footer class="relative z-10 border-t mt-24" style="border-color: rgba(34,211,238,0.12); background-color: rgba(5,5,16,0.95);">
+    <div class="max-w-5xl mx-auto px-6 py-10">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+
+        <!-- Branding -->
+        <div>
+          <p class="font-mono text-biolum text-xs tracking-widest uppercase mb-1" style="text-shadow: 0 0 8px rgba(34,211,238,0.5);">
+            [ ABYSS DIVING CHRONICLE ]
+          </p>
+          <p class="text-xs" style="color: rgba(226,232,240,0.35);">
+            Descent into the deep — a diving chronicle
+          </p>
+        </div>
+
+        <!-- HUD Footer Stats -->
+        <div class="hud-panel flex items-center gap-6 px-5 py-3">
+          <div class="text-center">
+            <div class="hud-label">max depth</div>
+            <div class="hud-value text-sm">10,924 m</div>
+          </div>
+          <div class="w-px h-8 opacity-20" style="background-color: #22d3ee;"></div>
+          <div class="text-center">
+            <div class="hud-label">zone</div>
+            <div class="hud-value text-sm">hadal</div>
+          </div>
+          <div class="w-px h-8 opacity-20" style="background-color: #22d3ee;"></div>
+          <div class="text-center">
+            <div class="hud-label">status</div>
+            <div class="hud-value text-sm">descending</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8 pt-6" style="border-top: 1px solid rgba(34,211,238,0.08);">
+        <p class="text-center font-mono text-xs" style="color: rgba(226,232,240,0.25); letter-spacing: 0.1em;">
+          powered by <a href="https://github.com/hahwul/hwaro" style="color: rgba(34,211,238,0.5);">hwaro</a>
+          &nbsp;//&nbsp;
+          mariana trench expedition log
+          &nbsp;//&nbsp;
+          pressure: <span id="footerPressure">1.0</span> atm
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  {{ highlight_js }}
+  {{ auto_includes_js }}
+
+  <script>
+    // Depth / pressure scroll simulation
+    (function() {
+      var overlay   = document.getElementById('depthOverlay');
+      var navDepth  = document.getElementById('navDepth');
+      var navPressure = document.getElementById('navPressure');
+      var footPressure = document.getElementById('footerPressure');
+
+      var MAX_DEPTH = 10924; // Challenger Deep in metres
+      var MAX_DARK  = 0.55;  // max overlay opacity
+
+      function update() {
+        var scrolled = window.scrollY;
+        var total    = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+        var ratio    = Math.min(1, scrolled / total);
+
+        // Darken overlay
+        if (overlay) overlay.style.opacity = (ratio * MAX_DARK).toFixed(3);
+
+        // Depth + pressure HUD
+        var depth    = Math.round(ratio * MAX_DEPTH);
+        var pressure = (1 + depth * 0.1).toFixed(1); // ~0.1 atm per 10 m
+
+        var depthStr = String(depth).padStart(4, '0') + ' m';
+        if (navDepth)    navDepth.textContent    = depthStr;
+        if (navPressure) navPressure.textContent = pressure + ' atm';
+        if (footPressure) footPressure.textContent = pressure;
+      }
+
+      window.addEventListener('scroll', update, { passive: true });
+      update();
+    })();
+  </script>
+</body>
+</html>

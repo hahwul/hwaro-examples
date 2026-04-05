@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-[#09090b] text-zinc-100">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+  {{ og_all_tags }}
+  <script src="https://cdn.tailwindcss.com"></script>
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --terra-green: #16a34a;
+      --atmos-blue: #3b82f6;
+      --mars-red: #dc2626;
+      --void-black: #09090b;
+      --panel-bg: #111115;
+      --panel-border: #1e1e24;
+      --panel-border-accent: #2a2a35;
+      --text-dim: #6b7280;
+      --text-muted: #9ca3af;
+      --font-display: 'Rajdhani', system-ui, sans-serif;
+      --font-mono: 'Share Tech Mono', monospace;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      background-color: var(--void-black);
+      font-family: var(--font-display);
+      min-height: 100vh;
+    }
+
+    /* ===== SCAN LINE OVERLAY ===== */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-color: transparent;
+      background-size: 100% 4px;
+      background-repeat: repeat;
+      /* Solid-color scanlines via SVG data URI - no CSS gradient used */
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='4'%3E%3Crect y='2' width='1' height='2' fill='rgba(0,0,0,0.04)'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    /* ===== TYPOGRAPHY ===== */
+    .tf-mono { font-family: var(--font-mono); }
+    .tf-green { color: var(--terra-green); }
+    .tf-blue { color: var(--atmos-blue); }
+    .tf-red { color: var(--mars-red); }
+
+    /* ===== TOP NAV ===== */
+    .tf-nav {
+      background-color: var(--panel-bg);
+      border-bottom: 1px solid var(--panel-border-accent);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      height: 52px;
+    }
+
+    .tf-nav-logo {
+      font-family: var(--font-mono);
+      font-size: 1.05rem;
+      letter-spacing: 0.18em;
+      color: var(--terra-green);
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .tf-nav-logo span {
+      color: #374151;
+      margin: 0 0.5rem;
+    }
+
+    .tf-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    .tf-nav-link {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 0.35rem 1rem;
+      border-left: 1px solid var(--panel-border-accent);
+      transition: color 0.15s;
+    }
+
+    .tf-nav-link:hover { color: var(--atmos-blue); }
+
+    .tf-nav-signal {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-dim);
+    }
+
+    .tf-nav-signal-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: var(--terra-green);
+      animation: tf-pulse 2s ease-in-out infinite;
+    }
+
+    /* ===== HUD BAR ===== */
+    .tf-hud-bar {
+      background-color: #0c0c10;
+      border-bottom: 1px solid var(--panel-border-accent);
+      display: flex;
+      align-items: center;
+      padding: 0 1.5rem;
+      height: 38px;
+      gap: 2rem;
+      overflow-x: auto;
+    }
+
+    .tf-hud-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .tf-hud-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+    }
+
+    .tf-hud-value {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    /* ===== MAIN LAYOUT ===== */
+    .tf-main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+
+    /* ===== SECTION LABELS ===== */
+    .tf-section-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0 0 0.75rem;
+      border-bottom: 1px solid var(--panel-border-accent);
+      margin-bottom: 1.25rem;
+    }
+
+    /* ===== PLANET GRID ===== */
+    .tf-planet-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .tf-planet-card {
+      background-color: var(--panel-bg);
+      border: 1px solid var(--panel-border-accent);
+      display: flex;
+      gap: 1.25rem;
+      padding: 1.25rem;
+    }
+
+    /* ===== PLANET VISUALIZATION ===== */
+    .tf-planet-view {
+      position: relative;
+      width: 110px;
+      height: 110px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tf-planet-body {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      position: relative;
+      overflow: hidden;
+      clip-path: circle(50%);
+      animation: tf-planet-rotate 30s linear infinite;
+    }
+
+    .tf-planet-mars {
+      background-color: #7f1d1d;
+      box-shadow: inset -10px -6px 0 rgba(0,0,0,0.3);
+    }
+
+    .tf-planet-kepler {
+      background-color: #1e3a5f;
+      box-shadow: inset -10px -6px 0 rgba(0,0,0,0.3);
+    }
+
+    .tf-planet-proxima {
+      background-color: #1c1c2e;
+      box-shadow: inset -10px -6px 0 rgba(0,0,0,0.4);
+    }
+
+    .tf-planet-surface-line {
+      position: absolute;
+      top: 25%;
+      left: -10%;
+      width: 120%;
+      height: 2px;
+      background-color: rgba(255,255,255,0.06);
+      border-radius: 50%;
+      animation: tf-surface-drift 20s linear infinite;
+    }
+
+    .tf-planet-orbit-ring {
+      position: absolute;
+      width: 104px;
+      height: 104px;
+      border: 1px solid #1e2035;
+      border-radius: 50%;
+    }
+
+    .tf-planet-orbit-dot {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      background-color: var(--atmos-blue);
+      border-radius: 50%;
+      animation: tf-orbit 8s linear infinite;
+      transform-origin: 52px 52px;
+    }
+
+    /* ===== PLANET INFO ===== */
+    .tf-planet-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .tf-planet-name {
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      color: #e5e7eb;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.2rem;
+    }
+
+    .tf-planet-coords {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      margin-bottom: 0.85rem;
+      letter-spacing: 0.08em;
+    }
+
+    .tf-progress-block {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .tf-progress-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .tf-progress-label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      width: 80px;
+      flex-shrink: 0;
+      letter-spacing: 0.05em;
+    }
+
+    .tf-progress-bar-track {
+      flex: 1;
+      height: 3px;
+      background-color: #1e1e24;
+    }
+
+    .tf-progress-bar-fill {
+      height: 100%;
+      transition: width 0.3s;
+    }
+
+    .tf-fill-green { background-color: var(--terra-green); }
+    .tf-fill-blue { background-color: var(--atmos-blue); }
+    .tf-fill-red { background-color: var(--mars-red); }
+
+    .tf-progress-pct {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: var(--text-muted);
+      width: 28px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .tf-planet-status {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      padding: 0.25rem 0.6rem;
+      display: inline-block;
+    }
+
+    .tf-status-active {
+      background-color: rgba(22, 163, 74, 0.12);
+      color: var(--terra-green);
+      border: 1px solid rgba(22, 163, 74, 0.25);
+    }
+
+    .tf-status-warn {
+      background-color: rgba(220, 38, 38, 0.12);
+      color: var(--mars-red);
+      border: 1px solid rgba(220, 38, 38, 0.25);
+      animation: tf-blink 1.4s ease-in-out infinite;
+    }
+
+    .tf-status-init {
+      background-color: rgba(59, 130, 246, 0.1);
+      color: var(--atmos-blue);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+    }
+
+    /* ===== DASHBOARD LOWER ===== */
+    .tf-dashboard-lower {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 900px) {
+      .tf-dashboard-lower { grid-template-columns: 1fr; }
+    }
+
+    /* ===== PANEL HEADER ===== */
+    .tf-panel-header {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.6rem 0.85rem;
+      background-color: #0c0c10;
+      border-bottom: 1px solid var(--panel-border-accent);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .tf-panel-tag {
+      background-color: var(--panel-border-accent);
+      color: var(--text-dim);
+      padding: 0.1rem 0.35rem;
+      font-size: 0.6rem;
+    }
+
+    /* ===== ATMOSPHERE PANEL ===== */
+    .tf-atmos-panel {
+      background-color: var(--panel-bg);
+      border: 1px solid var(--panel-border-accent);
+    }
+
+    .tf-atmos-display {
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .tf-atmos-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .tf-atmos-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      width: 30px;
+      flex-shrink: 0;
+      letter-spacing: 0.05em;
+    }
+
+    .tf-atmos-bar-track {
+      flex: 1;
+      height: 5px;
+      background-color: #0c0c10;
+      border: 1px solid var(--panel-border-accent);
+    }
+
+    .tf-atmos-bar {
+      height: 100%;
+    }
+
+    .tf-atmos-val {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: #e5e7eb;
+      width: 44px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .tf-atmos-target {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: var(--text-dim);
+      width: 120px;
+      flex-shrink: 0;
+    }
+
+    /* ===== METRICS COLUMN ===== */
+    .tf-metrics-col {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tf-metric-card {
+      background-color: var(--panel-bg);
+      border: 1px solid var(--panel-border-accent);
+    }
+
+    .tf-data-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .tf-data-table td {
+      padding: 0.5rem 0.85rem;
+      border-bottom: 1px solid var(--panel-border);
+      font-size: 0.8rem;
+    }
+
+    .tf-td-label {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      letter-spacing: 0.04em;
+      width: 130px;
+    }
+
+    .tf-td-val {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: #e5e7eb;
+      width: 100px;
+    }
+
+    .tf-td-target {
+      font-family: var(--font-mono);
+      font-size: 0.63rem;
+      color: var(--text-dim);
+    }
+
+    /* ===== MISSION LINKS ===== */
+    .tf-mission-links {
+      margin-bottom: 2rem;
+    }
+
+    .tf-mission-link-btn {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      color: var(--atmos-blue);
+      border: 1px solid rgba(59,130,246,0.3);
+      padding: 0.5rem 1.2rem;
+      text-decoration: none;
+      transition: background-color 0.15s;
+    }
+
+    .tf-mission-link-btn:hover {
+      background-color: rgba(59,130,246,0.08);
+    }
+
+    /* ===== CONTENT AREA ===== */
+    .tf-content {
+      background-color: var(--panel-bg);
+      border: 1px solid var(--panel-border-accent);
+      padding: 2rem 2.25rem;
+    }
+
+    .tf-content h1 {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: #f1f5f9;
+      margin-bottom: 0.25rem;
+      text-transform: uppercase;
+    }
+
+    .tf-content h2 {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      color: #d1d5db;
+      margin: 2rem 0 0.75rem;
+      text-transform: uppercase;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--panel-border-accent);
+    }
+
+    .tf-content h3 {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--atmos-blue);
+      margin: 1.25rem 0 0.5rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .tf-content p {
+      font-size: 0.95rem;
+      color: #9ca3af;
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+
+    .tf-content ul, .tf-content ol {
+      margin: 0 0 1rem 1.25rem;
+      color: #9ca3af;
+      font-size: 0.92rem;
+      line-height: 1.7;
+    }
+
+    .tf-content li { margin-bottom: 0.3rem; }
+
+    .tf-content strong {
+      color: #e5e7eb;
+      font-weight: 600;
+    }
+
+    .tf-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+    }
+
+    .tf-content th {
+      text-align: left;
+      padding: 0.5rem 0.85rem;
+      background-color: #0c0c10;
+      color: var(--text-dim);
+      letter-spacing: 0.08em;
+      border-bottom: 1px solid var(--panel-border-accent);
+      text-transform: uppercase;
+    }
+
+    .tf-content td {
+      padding: 0.5rem 0.85rem;
+      border-bottom: 1px solid var(--panel-border);
+      color: #9ca3af;
+    }
+
+    .tf-content tr:hover td {
+      background-color: rgba(255,255,255,0.015);
+    }
+
+    .tf-content a {
+      color: var(--atmos-blue);
+      text-decoration: none;
+    }
+
+    .tf-content a:hover {
+      text-decoration: underline;
+    }
+
+    /* ===== PAGE META ===== */
+    .tf-page-meta {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 1.75rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--panel-border-accent);
+    }
+
+    .tf-meta-item {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      letter-spacing: 0.06em;
+    }
+
+    .tf-meta-item span {
+      color: var(--text-muted);
+    }
+
+    /* ===== TAGS ===== */
+    .tf-tag {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: var(--text-dim);
+      background-color: #0c0c10;
+      border: 1px solid var(--panel-border-accent);
+      padding: 0.15rem 0.5rem;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      text-transform: uppercase;
+      margin-right: 0.35rem;
+    }
+
+    .tf-tag:hover {
+      color: var(--atmos-blue);
+      border-color: rgba(59,130,246,0.3);
+      text-decoration: none;
+    }
+
+    /* ===== SECTION / MISSION LIST ===== */
+    .tf-mission-card {
+      background-color: var(--panel-bg);
+      border: 1px solid var(--panel-border-accent);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 0.75rem;
+      display: block;
+      text-decoration: none;
+      transition: border-color 0.15s;
+    }
+
+    .tf-mission-card:hover {
+      border-color: rgba(59,130,246,0.35);
+    }
+
+    .tf-mission-card-title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: #e5e7eb;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+
+    .tf-mission-card-desc {
+      font-size: 0.83rem;
+      color: var(--text-dim);
+      margin-bottom: 0.6rem;
+      line-height: 1.5;
+    }
+
+    .tf-mission-card-meta {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: #4b5563;
+      letter-spacing: 0.08em;
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes tf-pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    @keyframes tf-blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    @keyframes tf-planet-rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes tf-surface-drift {
+      from { transform: translateX(0); }
+      to { transform: translateX(-60px); }
+    }
+
+    @keyframes tf-orbit {
+      from { transform: rotate(0deg) translateX(52px) rotate(0deg); }
+      to { transform: rotate(360deg) translateX(52px) rotate(-360deg); }
+    }
+
+    /* ===== TAXONOMY ===== */
+    .tf-taxonomy-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .tf-taxonomy-card {
+      background-color: var(--panel-bg);
+      border: 1px solid var(--panel-border-accent);
+      padding: 1rem 1.25rem;
+      text-decoration: none;
+      display: block;
+      transition: border-color 0.15s;
+    }
+
+    .tf-taxonomy-card:hover {
+      border-color: rgba(59,130,246,0.35);
+    }
+
+    .tf-taxonomy-term {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .tf-taxonomy-count {
+      font-family: var(--font-mono);
+      font-size: 1.8rem;
+      color: var(--atmos-blue);
+      line-height: 1;
+    }
+
+    .tf-taxonomy-sub {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: var(--text-dim);
+      margin-top: 0.2rem;
+      letter-spacing: 0.06em;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="tf-nav">
+    <a href="{{ base_url }}/" class="tf-nav-logo">
+      TERRAFORM<span>/</span>CMD
+    </a>
+    <div class="tf-nav-links">
+      <a href="{{ base_url }}/" class="tf-nav-link">Dashboard</a>
+      <a href="{{ base_url }}/missions/" class="tf-nav-link">Missions</a>
+      <a href="{{ base_url }}/tags/" class="tf-nav-link">Index</a>
+    </div>
+    <div class="tf-nav-signal">
+      <div class="tf-nav-signal-dot"></div>
+      UPLINK NOMINAL
+    </div>
+  </nav>
+
+  <main class="tf-main">

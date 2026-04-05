@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description }}">
+  <title>{{ page.title }} — {{ site.title }}</title>
+  {{ og_all_tags }}
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            abyss:        '#050510',
+            biolum:       '#22d3ee',
+            deepnavy:     '#0c1445',
+            pressure:     '#e2e8f0',
+          },
+          fontFamily: {
+            mono: ['"Share Tech Mono"', '"Courier New"', 'monospace'],
+            sans: ['"Inter"', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+  <style>
+    /* ------------------------------------------------------------------ */
+    /* Base                                                                 */
+    /* ------------------------------------------------------------------ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --abyss:    #050510;
+      --biolum:   #22d3ee;
+      --navy:     #0c1445;
+      --pressure: #e2e8f0;
+      --mid:      #0a0a2a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--abyss);
+      color: var(--pressure);
+      font-family: 'Inter', system-ui, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* Depth Scroll Effect — body darkens as user scrolls deeper           */
+    /* ------------------------------------------------------------------ */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-color: #000008;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 0;
+      transition: opacity 0.1s ease;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* Bubble Particle System                                               */
+    /* ------------------------------------------------------------------ */
+    .bubble-container {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .bubble {
+      position: absolute;
+      bottom: -20px;
+      border-radius: 50%;
+      background-color: transparent;
+      border: 1px solid rgba(34, 211, 238, 0.25);
+      animation: rise linear infinite;
+    }
+
+    .bubble::after {
+      content: '';
+      position: absolute;
+      top: 20%;
+      left: 25%;
+      width: 30%;
+      height: 20%;
+      background-color: rgba(34, 211, 238, 0.15);
+      border-radius: 50%;
+    }
+
+    .bubble:nth-child(1)  { left: 5%;  width: 8px;  height: 8px;  animation-duration: 12s; animation-delay: 0s; }
+    .bubble:nth-child(2)  { left: 15%; width: 4px;  height: 4px;  animation-duration: 9s;  animation-delay: 2s; }
+    .bubble:nth-child(3)  { left: 28%; width: 12px; height: 12px; animation-duration: 15s; animation-delay: 1s; }
+    .bubble:nth-child(4)  { left: 40%; width: 6px;  height: 6px;  animation-duration: 11s; animation-delay: 4s; }
+    .bubble:nth-child(5)  { left: 52%; width: 3px;  height: 3px;  animation-duration: 8s;  animation-delay: 0.5s; }
+    .bubble:nth-child(6)  { left: 63%; width: 10px; height: 10px; animation-duration: 14s; animation-delay: 3s; }
+    .bubble:nth-child(7)  { left: 75%; width: 5px;  height: 5px;  animation-duration: 10s; animation-delay: 6s; }
+    .bubble:nth-child(8)  { left: 84%; width: 7px;  height: 7px;  animation-duration: 13s; animation-delay: 1.5s; }
+    .bubble:nth-child(9)  { left: 92%; width: 4px;  height: 4px;  animation-duration: 9s;  animation-delay: 5s; }
+    .bubble:nth-child(10) { left: 20%; width: 9px;  height: 9px;  animation-duration: 16s; animation-delay: 7s; }
+    .bubble:nth-child(11) { left: 45%; width: 5px;  height: 5px;  animation-duration: 11s; animation-delay: 2.5s; }
+    .bubble:nth-child(12) { left: 70%; width: 3px;  height: 3px;  animation-duration: 7s;  animation-delay: 9s; }
+
+    @keyframes rise {
+      0%   { transform: translateY(0) translateX(0); opacity: 0; }
+      10%  { opacity: 1; }
+      50%  { transform: translateY(-50vh) translateX(15px); }
+      90%  { opacity: 0.6; }
+      100% { transform: translateY(-110vh) translateX(-10px); opacity: 0; }
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* Light Scatter Effect                                                 */
+    /* ------------------------------------------------------------------ */
+    .light-scatter {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .scatter-ray {
+      position: absolute;
+      top: -10%;
+      width: 1px;
+      background-color: rgba(34, 211, 238, 0.04);
+      transform-origin: top center;
+      animation: scatter-flicker linear infinite;
+    }
+
+    .scatter-ray:nth-child(1) { left: 20%; height: 60%; transform: rotate(-5deg);  animation-duration: 8s;  animation-delay: 0s; }
+    .scatter-ray:nth-child(2) { left: 35%; height: 45%; transform: rotate(3deg);   animation-duration: 11s; animation-delay: 2s; }
+    .scatter-ray:nth-child(3) { left: 50%; height: 70%; transform: rotate(-2deg);  animation-duration: 9s;  animation-delay: 1s; }
+    .scatter-ray:nth-child(4) { left: 65%; height: 40%; transform: rotate(6deg);   animation-duration: 13s; animation-delay: 4s; }
+    .scatter-ray:nth-child(5) { left: 80%; height: 55%; transform: rotate(-4deg);  animation-duration: 7s;  animation-delay: 3s; }
+
+    @keyframes scatter-flicker {
+      0%, 100% { opacity: 0.3; }
+      33%       { opacity: 1; }
+      66%       { opacity: 0.1; }
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* Bioluminescence Glow Utilities                                       */
+    /* ------------------------------------------------------------------ */
+    .glow-text {
+      color: var(--biolum);
+      text-shadow:
+        0 0 8px rgba(34, 211, 238, 0.8),
+        0 0 20px rgba(34, 211, 238, 0.4),
+        0 0 40px rgba(34, 211, 238, 0.2);
+    }
+
+    .glow-border {
+      border: 1px solid rgba(34, 211, 238, 0.3);
+      box-shadow:
+        0 0 8px rgba(34, 211, 238, 0.15),
+        inset 0 0 8px rgba(34, 211, 238, 0.05);
+    }
+
+    .glow-border:hover {
+      border-color: rgba(34, 211, 238, 0.6);
+      box-shadow:
+        0 0 16px rgba(34, 211, 238, 0.3),
+        inset 0 0 12px rgba(34, 211, 238, 0.1);
+    }
+
+    .glow-btn {
+      background-color: transparent;
+      border: 1px solid var(--biolum);
+      color: var(--biolum);
+      box-shadow:
+        0 0 10px rgba(34, 211, 238, 0.4),
+        inset 0 0 6px rgba(34, 211, 238, 0.1);
+      transition: box-shadow 0.3s ease, background-color 0.3s ease;
+    }
+
+    .glow-btn:hover {
+      background-color: rgba(34, 211, 238, 0.1);
+      box-shadow:
+        0 0 24px rgba(34, 211, 238, 0.6),
+        inset 0 0 12px rgba(34, 211, 238, 0.2);
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* HUD Pressure Display                                                 */
+    /* ------------------------------------------------------------------ */
+    .hud-panel {
+      background-color: rgba(12, 20, 69, 0.7);
+      border: 1px solid rgba(34, 211, 238, 0.2);
+      box-shadow:
+        0 0 12px rgba(34, 211, 238, 0.1),
+        inset 0 0 20px rgba(5, 5, 16, 0.8);
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    .hud-label {
+      color: rgba(34, 211, 238, 0.6);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .hud-value {
+      color: var(--biolum);
+      font-family: 'Share Tech Mono', monospace;
+      text-shadow:
+        0 0 6px rgba(34, 211, 238, 0.7),
+        0 0 14px rgba(34, 211, 238, 0.3);
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* Depth meter bar                                                       */
+    /* ------------------------------------------------------------------ */
+    .depth-bar-track {
+      background-color: rgba(12, 20, 69, 0.8);
+      border: 1px solid rgba(34, 211, 238, 0.2);
+      overflow: hidden;
+    }
+
+    .depth-bar-fill {
+      background-color: var(--biolum);
+      box-shadow: 0 0 8px rgba(34, 211, 238, 0.8);
+      height: 100%;
+      transition: width 0.4s ease;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* Cards                                                                */
+    /* ------------------------------------------------------------------ */
+    .log-card {
+      background-color: rgba(12, 20, 69, 0.5);
+      border: 1px solid rgba(34, 211, 238, 0.15);
+      box-shadow: 0 0 20px rgba(5, 5, 16, 0.8);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .log-card:hover {
+      border-color: rgba(34, 211, 238, 0.4);
+      box-shadow:
+        0 0 30px rgba(5, 5, 16, 0.9),
+        0 0 15px rgba(34, 211, 238, 0.15);
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* Navigation                                                           */
+    /* ------------------------------------------------------------------ */
+    .site-nav {
+      background-color: rgba(5, 5, 16, 0.92);
+      border-bottom: 1px solid rgba(34, 211, 238, 0.12);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 1px 20px rgba(34, 211, 238, 0.06);
+    }
+
+    .nav-link {
+      color: rgba(226, 232, 240, 0.6);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: color 0.2s ease, text-shadow 0.2s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--biolum);
+      text-shadow: 0 0 8px rgba(34, 211, 238, 0.6);
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* Prose Content                                                        */
+    /* ------------------------------------------------------------------ */
+    .prose-abyss h1, .prose-abyss h2, .prose-abyss h3,
+    .prose-abyss h4, .prose-abyss h5, .prose-abyss h6 {
+      color: var(--biolum);
+      font-weight: 600;
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+      text-shadow: 0 0 10px rgba(34, 211, 238, 0.3);
+    }
+    .prose-abyss h1 { font-size: 1.75rem; }
+    .prose-abyss h2 { font-size: 1.4rem; border-bottom: 1px solid rgba(34, 211, 238, 0.2); padding-bottom: 0.4rem; }
+    .prose-abyss h3 { font-size: 1.15rem; }
+
+    .prose-abyss p {
+      color: rgba(226, 232, 240, 0.85);
+      line-height: 1.85;
+      margin-bottom: 1rem;
+    }
+
+    .prose-abyss a {
+      color: var(--biolum);
+      text-decoration: underline;
+      text-decoration-color: rgba(34, 211, 238, 0.4);
+    }
+    .prose-abyss a:hover { text-shadow: 0 0 8px rgba(34, 211, 238, 0.5); }
+
+    .prose-abyss ul, .prose-abyss ol {
+      color: rgba(226, 232, 240, 0.8);
+      margin-left: 1.5rem;
+      margin-bottom: 1rem;
+      line-height: 1.8;
+    }
+
+    .prose-abyss blockquote {
+      border-left: 2px solid var(--biolum);
+      padding-left: 1rem;
+      color: rgba(226, 232, 240, 0.65);
+      font-style: italic;
+      margin: 1.5rem 0;
+      box-shadow: -4px 0 12px rgba(34, 211, 238, 0.1);
+    }
+
+    .prose-abyss code {
+      font-family: 'Share Tech Mono', monospace;
+      background-color: rgba(12, 20, 69, 0.8);
+      border: 1px solid rgba(34, 211, 238, 0.2);
+      color: var(--biolum);
+      padding: 0.1em 0.4em;
+      border-radius: 3px;
+      font-size: 0.85em;
+    }
+
+    .prose-abyss pre {
+      background-color: rgba(5, 5, 16, 0.9);
+      border: 1px solid rgba(34, 211, 238, 0.15);
+      padding: 1.25rem;
+      overflow-x: auto;
+      margin-bottom: 1.5rem;
+      border-radius: 4px;
+    }
+
+    .prose-abyss pre code {
+      background: none;
+      border: none;
+      padding: 0;
+    }
+
+    .prose-abyss hr {
+      border: none;
+      border-top: 1px solid rgba(34, 211, 238, 0.15);
+      margin: 2rem 0;
+      box-shadow: 0 0 8px rgba(34, 211, 238, 0.08);
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* Tag Pills                                                            */
+    /* ------------------------------------------------------------------ */
+    .tag-pill {
+      display: inline-block;
+      background-color: rgba(12, 20, 69, 0.8);
+      border: 1px solid rgba(34, 211, 238, 0.3);
+      color: var(--biolum);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      padding: 0.2rem 0.65rem;
+      border-radius: 2px;
+      text-decoration: none;
+      text-transform: lowercase;
+      box-shadow: 0 0 6px rgba(34, 211, 238, 0.1);
+      transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .tag-pill:hover {
+      border-color: rgba(34, 211, 238, 0.7);
+      box-shadow: 0 0 12px rgba(34, 211, 238, 0.3);
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* Scrollbar                                                            */
+    /* ------------------------------------------------------------------ */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background-color: var(--abyss); }
+    ::-webkit-scrollbar-thumb {
+      background-color: rgba(34, 211, 238, 0.3);
+      border-radius: 2px;
+    }
+    ::-webkit-scrollbar-thumb:hover { background-color: rgba(34, 211, 238, 0.6); }
+
+    /* ------------------------------------------------------------------ */
+    /* Depth scroll darkening via JS                                        */
+    /* ------------------------------------------------------------------ */
+    .depth-overlay {
+      position: fixed;
+      inset: 0;
+      background-color: #000005;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 2;
+      transition: opacity 0.2s ease;
+    }
+  </style>
+</head>
+<body class="bg-abyss text-pressure">
+
+  <!-- Depth darkening overlay -->
+  <div class="depth-overlay" id="depthOverlay"></div>
+
+  <!-- Ambient light scatter rays -->
+  <div class="light-scatter" aria-hidden="true">
+    <div class="scatter-ray"></div>
+    <div class="scatter-ray"></div>
+    <div class="scatter-ray"></div>
+    <div class="scatter-ray"></div>
+    <div class="scatter-ray"></div>
+  </div>
+
+  <!-- Bubble particles -->
+  <div class="bubble-container" aria-hidden="true">
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="site-nav fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
+      <a href="{{ base_url }}/" class="font-mono text-biolum text-sm tracking-widest uppercase" style="text-shadow: 0 0 10px rgba(34,211,238,0.6);">
+        [ ABYSS ]
+      </a>
+      <div class="flex items-center gap-8">
+        <a href="{{ base_url }}/logs/" class="nav-link">Dive Logs</a>
+        <a href="{{ base_url }}/tags/" class="nav-link">Tags</a>
+      </div>
+      <!-- Live depth HUD in nav -->
+      <div class="hud-panel px-3 py-1 hidden sm:flex items-center gap-3">
+        <div>
+          <div class="hud-label">depth</div>
+          <div class="hud-value text-sm" id="navDepth">0000 m</div>
+        </div>
+        <div class="w-px h-8 bg-biolum opacity-20"></div>
+        <div>
+          <div class="hud-label">pressure</div>
+          <div class="hud-value text-sm" id="navPressure">1.0 atm</div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main content wrapper -->
+  <div class="relative z-10 pt-14">
