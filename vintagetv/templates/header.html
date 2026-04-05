@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page_title %}{{ page_title }} - {% endif %}{{ site.title }}</title>
+    <meta name="description" content="{{ page_description | default(site.description) }}">
+    {{ auto_includes | safe }}
+    <style>
+        :root {
+            --phosphor-green: #33ff00;
+            --phosphor-dim: #1a8000;
+            --crt-bg: #050505;
+            --scanline: rgba(0, 0, 0, 0.3);
+            --glitch: rgba(51, 255, 0, 0.4);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--crt-bg);
+            color: var(--phosphor-green);
+            font-family: 'Courier New', Courier, monospace;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* CRT Container and Effects */
+        .crt-container {
+            position: relative;
+            min-height: 100vh;
+            padding: 2rem;
+            box-sizing: border-box;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Scanline Overlay via repeating-linear-gradient - WAIT, NO GRADIENTS ALLOWED! */
+        /* Memory says: strictly no gradients or emojis. */
+        /* I will use inline SVG for scanlines and CRT effects to avoid CSS gradients. */
+
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='4' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100' height='2' fill='rgba(0,0,0,0.4)'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        .vignette {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            box-shadow: inset 0 0 100px rgba(0,0,0,0.9);
+            pointer-events: none;
+            z-index: 101;
+        }
+
+        header {
+            border-bottom: 2px solid var(--phosphor-green);
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        h1, h2, h3 {
+            font-weight: normal;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 0px var(--phosphor-dim);
+        }
+
+        a {
+            color: var(--phosphor-green);
+            text-decoration: none;
+            border-bottom: 1px dashed var(--phosphor-dim);
+            transition: all 0.2s;
+        }
+
+        a:hover {
+            background-color: var(--phosphor-green);
+            color: var(--crt-bg);
+            border-bottom-color: var(--phosphor-green);
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            border: none;
+            font-weight: bold;
+        }
+
+        nav a:before {
+            content: "[ ";
+            color: var(--phosphor-dim);
+        }
+
+        nav a:after {
+            content: " ]";
+            color: var(--phosphor-dim);
+        }
+
+        /* Post Styling */
+        .post-meta {
+            color: var(--phosphor-dim);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .post-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .post-item {
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--phosphor-dim);
+            padding-left: 1rem;
+        }
+
+        .post-item:hover {
+            border-left-color: var(--phosphor-green);
+        }
+
+        .post-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .post-title a {
+            border: none;
+        }
+
+        code {
+            background-color: rgba(51, 255, 0, 0.1);
+            padding: 0.2rem 0.4rem;
+            color: #fff;
+        }
+
+        pre {
+            background-color: rgba(0, 0, 0, 0.8) !important;
+            border: 1px solid var(--phosphor-dim);
+            padding: 1rem;
+            overflow-x: auto;
+        }
+
+        /* Glitch Animation Keyframes */
+        @keyframes text-glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 1px); }
+            40% { transform: translate(-2px, -1px); }
+            60% { transform: translate(2px, 1px); }
+            80% { transform: translate(2px, -1px); }
+            100% { transform: translate(0); }
+        }
+
+        .glitch-effect:hover {
+            animation: text-glitch 0.2s linear infinite;
+            color: #fff;
+            text-shadow: -2px 0 var(--phosphor-green), 2px 0 #00ffff;
+        }
+
+        /* TV Status Overlay */
+        .tv-status {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.2rem;
+            color: var(--phosphor-green);
+            opacity: 0.8;
+        }
+
+        .blink {
+            animation: blinker 1s linear infinite;
+        }
+
+        @keyframes blinker {
+            50% { opacity: 0; }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="scanlines"></div>
+    <div class="vignette"></div>
+
+    <div class="crt-container">
+        <div class="tv-status">
+            CH 03 <span class="blink">REC</span>
+        </div>
+        <header>
+            <h1 class="glitch-effect"><a href="{{ base_url }}/">{{ site.title }}</a></h1>
+            <nav>
+                <ul>
+                    <li><a href="{{ base_url }}/">BROADCAST</a></li>
+                    <li><a href="{{ base_url }}/posts">ARCHIVE</a></li>
+                    <li><a href="{{ base_url }}/about">SYSTEM</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
