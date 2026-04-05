@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page and page.title %}{{ page.title }} - {% elif section and section.title %}{{ section.title }} - {% endif %}{{ site.title }}</title>
+    <meta name="description" content="{% if page and page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #050505;
+            --text-color: #e5e5d8;
+            --border-color: #d1c8a1;
+            --font-family: 'Playfair Display', serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-family);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        /* Noise effect without gradients */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 10;
+            opacity: 0.1;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Ornate border box resembling intertitles */
+        .intertitle-box {
+            border: 4px solid var(--border-color);
+            padding: 3rem;
+            margin-bottom: 2rem;
+            position: relative;
+            text-align: center;
+        }
+
+        .intertitle-box::before, .intertitle-box::after {
+            content: "";
+            position: absolute;
+            border: 2px solid var(--border-color);
+        }
+
+        .intertitle-box::before {
+            top: 6px;
+            left: 6px;
+            right: 6px;
+            bottom: 6px;
+        }
+
+        .intertitle-box::after {
+            top: 18px;
+            left: 18px;
+            right: 18px;
+            bottom: 18px;
+        }
+
+        /* Ornate corners using SVG data URIs */
+        .corner {
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            background-color: var(--bg-color);
+            z-index: 2;
+        }
+        .corner-tl { top: -4px; left: -4px; background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M32 0H0V32C0 14.3269 14.3269 0 32 0Z' fill='%23d1c8a1'/%3E%3C/svg%3E"); }
+        .corner-tr { top: -4px; right: -4px; background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0H32V32C32 14.3269 17.6731 0 0 0Z' fill='%23d1c8a1'/%3E%3C/svg%3E"); }
+        .corner-bl { bottom: -4px; left: -4px; background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M32 32H0V0C0 17.6731 14.3269 32 32 32Z' fill='%23d1c8a1'/%3E%3C/svg%3E"); }
+        .corner-br { bottom: -4px; right: -4px; background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 32H32V0C32 17.6731 17.6731 32 0 32Z' fill='%23d1c8a1'/%3E%3C/svg%3E"); }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+
+        p {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        .intertitle-box p {
+            text-align: center;
+            font-size: 1.5rem;
+        }
+
+        a {
+            color: var(--border-color);
+            text-decoration: none;
+            border-bottom: 1px dashed var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--bg-color);
+            background-color: var(--border-color);
+        }
+
+        header nav {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        header nav a {
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0 1rem;
+            border: none;
+            font-weight: bold;
+        }
+
+        header nav a:hover {
+            background-color: transparent;
+            color: var(--text-color);
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .post-meta {
+            text-align: center;
+            font-style: italic;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+
+        .post-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .post-list li {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .post-list h2 {
+            margin-bottom: 0.5rem;
+        }
+
+        .post-list h2 a {
+            border: none;
+        }
+
+        .read-more {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .read-more:hover {
+            background-color: var(--border-color);
+            color: var(--bg-color);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(209, 200, 161, 0.3);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        hr {
+            border: 0;
+            border-top: 2px dotted var(--border-color);
+            margin: 3rem 0;
+        }
+
+        blockquote {
+            font-style: italic;
+            border-left: 4px solid var(--border-color);
+            margin: 2rem 0;
+            padding-left: 1.5rem;
+            color: #ccc;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid var(--border-color);
+            padding: 4px;
+            filter: grayscale(100%) sepia(20%) contrast(1.2);
+            display: block;
+            margin: 2rem auto;
+        }
+
+        /* Decorative ornament */
+        .ornament {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        .ornament::before {
+            content: "✥ ✥ ✥";
+            color: var(--border-color);
+            font-size: 1.5rem;
+        }
+
+        @media (max-width: 600px) {
+            .intertitle-box { padding: 1.5rem; }
+            .intertitle-box::after { display: none; }
+            h1 { font-size: 2rem; }
+        }
+    </style>
+    {{ auto_includes | safe }}
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav>
+                <a href="{{ base_url }}/">{{ site.title }}</a>
+                <a href="{{ base_url }}/posts/">Archive</a>
+            </nav>
+        </header>
