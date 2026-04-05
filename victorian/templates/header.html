@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page_title %}{{ page_title }} &mdash; {% endif %}{{ site.title }}</title>
+    <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+    {{ auto_includes | safe }}
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Pinyon+Script&display=swap');
+
+        :root {
+            --bg-color: #1a1614;
+            --text-color: #d8c8b8;
+            --accent-color: #8c2a2a;
+            --muted-color: #8a7c6f;
+            --border-color: #3b3028;
+            --ornament-color: #5c4e40;
+            --link-hover: #b04040;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.8;
+            font-size: 1.15rem;
+        }
+
+        /* Elaborate Ornaments using SVG data URIs to avoid gradients */
+        .ornament-top {
+            display: block;
+            width: 100%;
+            height: 40px;
+            background-image: url("data:image/svg+xml,%3Csvg width='40' height='20' viewBox='0 0 40 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0C10 0 0 10 0 10s10 10 20 10 20-10 20-10S30 0 20 0zm0 18c-8 0-16-6-18-8 2-2 10-8 18-8s16 6 18 8c-2 2-10 8-18 8z' fill='%235c4e40' fill-opacity='0.5' fill-rule='evenodd'/%3E%3C/svg%3E");
+            background-repeat: repeat-x;
+            background-position: center top;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .ornament-bottom {
+            display: block;
+            width: 100%;
+            height: 40px;
+            background-image: url("data:image/svg+xml,%3Csvg width='40' height='20' viewBox='0 0 40 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0C10 0 0 10 0 10s10 10 20 10 20-10 20-10S30 0 20 0zm0 18c-8 0-16-6-18-8 2-2 10-8 18-8s16 6 18 8c-2 2-10 8-18 8z' fill='%235c4e40' fill-opacity='0.5' fill-rule='evenodd'/%3E%3C/svg%3E");
+            background-repeat: repeat-x;
+            background-position: center bottom;
+            margin-top: 2rem;
+            border-top: 2px solid var(--border-color);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+        }
+
+        /* Frame effect */
+        .container::before, .container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background-color: var(--border-color);
+        }
+        .container::before {
+            left: 0;
+            border-right: 1px solid var(--bg-color);
+            border-left: 1px solid var(--ornament-color);
+        }
+        .container::after {
+            right: 0;
+            border-left: 1px solid var(--bg-color);
+            border-right: 1px solid var(--ornament-color);
+        }
+
+        .inner-content {
+            padding: 2rem 1.5rem;
+        }
+
+        header.site-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        /* Decorative flourish below header */
+        header.site-header::after {
+            content: '❦';
+            position: absolute;
+            bottom: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            background: var(--bg-color);
+            padding: 0 15px;
+        }
+
+        h1.site-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            margin: 0 0 0.5rem 0;
+            color: var(--text-color);
+            letter-spacing: 0.1em;
+            text-shadow: 2px 2px 4px #000;
+        }
+
+        h1.site-title a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        p.site-subtitle {
+            font-family: 'Pinyon Script', cursive;
+            font-size: 1.8rem;
+            color: var(--muted-color);
+            margin: 0;
+        }
+
+        nav.site-nav {
+            margin-top: 1.5rem;
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            letter-spacing: 0.05em;
+        }
+
+        nav.site-nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            margin: 0 1rem;
+            position: relative;
+        }
+
+        nav.site-nav a:hover {
+            color: var(--link-hover);
+        }
+
+        nav.site-nav a::after {
+            content: '·';
+            position: absolute;
+            right: -1.2rem;
+            color: var(--ornament-color);
+        }
+
+        nav.site-nav a:last-child::after {
+            content: '';
+        }
+
+        main {
+            min-height: 50vh;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Cinzel', serif;
+            color: var(--text-color);
+            font-weight: normal;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 0.5rem;
+            margin-top: 2.5rem;
+        }
+
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: color 0.3s, border-bottom 0.3s;
+        }
+
+        a:hover {
+            color: var(--link-hover);
+            border-bottom: 1px solid var(--link-hover);
+        }
+
+        .post-meta {
+            font-size: 0.95rem;
+            color: var(--muted-color);
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+
+        .post-content {
+            text-align: justify;
+        }
+
+        .post-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        /* Drop cap for paragraphs */
+        .post-content > p:first-of-type::first-letter {
+            font-family: 'Cinzel', serif;
+            font-size: 4rem;
+            float: left;
+            line-height: 0.8;
+            padding-right: 0.5rem;
+            padding-top: 0.3rem;
+            color: var(--accent-color);
+        }
+
+        hr {
+            border: 0;
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        hr::before {
+            content: '❧ ❧ ❧';
+            font-size: 1.5rem;
+            color: var(--border-color);
+            letter-spacing: 0.5em;
+        }
+
+        blockquote {
+            margin: 2rem 1rem;
+            padding: 1rem 2rem;
+            border-left: 2px solid var(--accent-color);
+            background-color: rgba(60, 48, 40, 0.2);
+            font-style: italic;
+            position: relative;
+        }
+
+        blockquote::before {
+            content: '\201C';
+            font-family: 'Cinzel', serif;
+            font-size: 4rem;
+            position: absolute;
+            left: 5px;
+            top: -15px;
+            color: var(--ornament-color);
+            opacity: 0.3;
+        }
+
+        .post-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .post-item {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .post-item:last-child {
+            border-bottom: none;
+        }
+
+        .post-item-title {
+            font-size: 2.5rem;
+            margin: 0 0 0.5rem 0;
+        }
+
+        .post-item-title a {
+            color: var(--text-color);
+            border-bottom: none;
+        }
+
+        .post-item-title a:hover {
+            color: var(--link-hover);
+        }
+
+        .post-item-meta {
+            font-style: italic;
+            color: var(--muted-color);
+            margin-bottom: 1rem;
+        }
+
+        .post-item-summary {
+            text-align: justify;
+        }
+
+        .read-more {
+            display: inline-block;
+            margin-top: 1rem;
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent-color);
+        }
+
+        .read-more::before, .read-more::after {
+            content: ' ~ ';
+            color: var(--ornament-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="ornament-top"></div>
+    <div class="container">
+        <div class="inner-content">
+            <header class="site-header">
+                <h1 class="site-title"><a href="{{ base_url }}/">{{ site.title }}</a></h1>
+                {% if site.description %}
+                    <p class="site-subtitle">{{ site.description }}</p>
+                {% endif %}
+                <nav class="site-nav">
+                    <a href="{{ base_url }}/">Home</a>
+                    <a href="{{ base_url }}/posts/">Chronicles</a>
+                    <a href="{{ base_url }}/about/">About</a>
+                </nav>
+            </header>
+            <main>
