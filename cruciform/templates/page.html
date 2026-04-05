@@ -1,0 +1,44 @@
+{% include "header.html" %}
+      <article class="page-content">
+        <header class="page-header">
+          <h1 class="page-header__title">{{ page.title }}</h1>
+          {% if page.date %}
+          <div class="page-meta">
+            <time class="page-meta__date">{{ page.date | date("%d.%m.%Y") }}</time>
+            {% if page.reading_time %}<span class="page-meta__reading-time">{{ page.reading_time }} min read</span>{% endif %}
+          </div>
+          {% endif %}
+          {% if page.tags %}
+          <div class="tag-list">
+            {% for tag in page.tags %}
+            <a href="{{ base_url }}/tags/{{ tag | slugify }}/" class="tag-link">{{ tag }}</a>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </header>
+        <div class="content-body">
+          {{ content | safe }}
+        </div>
+      </article>
+
+      {% if page.earlier or page.later %}
+      <nav class="post-nav">
+        {% if page.earlier %}
+        <a href="{{ base_url }}{{ page.earlier.url }}" class="post-nav__link post-nav__link--prev">
+          <span class="post-nav__label">Previous</span>
+          <span class="post-nav__title">{{ page.earlier.title }}</span>
+        </a>
+        {% else %}
+        <div class="post-nav__link post-nav__link--empty"></div>
+        {% endif %}
+        {% if page.later %}
+        <a href="{{ base_url }}{{ page.later.url }}" class="post-nav__link post-nav__link--next">
+          <span class="post-nav__label">Next</span>
+          <span class="post-nav__title">{{ page.later.title }}</span>
+        </a>
+        {% else %}
+        <div class="post-nav__link post-nav__link--empty"></div>
+        {% endif %}
+      </nav>
+      {% endif %}
+{% include "footer.html" %}
