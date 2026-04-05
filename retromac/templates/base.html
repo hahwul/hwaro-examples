@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
+    <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+    {{ og_all_tags | safe }}
+    {{ canonical_tag | safe }}
+    {{ highlight_tags | safe }}
+    {{ auto_includes | safe }}
+    {% include "header.html" %}
+</head>
+<body>
+    <div class="desktop">
+        <!-- Classic Mac OS Menu Bar -->
+        <div class="menu-bar">
+            <div class="menu-item apple-logo"></div>
+            <div class="menu-item active">File</div>
+            <div class="menu-item">Edit</div>
+            <div class="menu-item">View</div>
+            <div class="menu-item">Special</div>
+            <div class="menu-item">Help</div>
+            <div class="clock" id="clock">10:00 AM</div>
+        </div>
+
+        <div class="desktop-content">
+            {% block content %}{% endblock %}
+        </div>
+
+        <!-- Desktop Icons (Decorative) -->
+        <div class="desktop-icons">
+            <a href="{{ base_url }}/" class="desktop-icon">
+                <div class="icon-img" style="background-color: #ffffff; border: 1px solid #000; width: 32px; height: 32px; margin: 0 auto; display: flex; align-items: center; justify-content: center;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                </div>
+                <span>Macintosh HD</span>
+            </a>
+            <a href="{{ base_url }}/about.md" class="desktop-icon">
+                <div class="icon-img" style="background-color: #ffffff; border: 1px solid #000; width: 32px; height: 32px; margin: 0 auto; display: flex; align-items: center; justify-content: center;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                </div>
+                <span>About</span>
+            </a>
+        </div>
+
+        {% include "footer.html" %}
+    </div>
+
+    <script>
+        // Simple clock
+        function updateClock() {
+            const now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            const strTime = hours + ':' + minutes + ' ' + ampm;
+            document.getElementById('clock').textContent = strTime;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+</html>
