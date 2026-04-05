@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="{{ page_language }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description | e }}">
+  <title>{% if page.title is present %}{{ page.title | e }} - {% endif %}{{ site.title | e }}</title>
+  {{ og_all_tags }}
+  {{ hreflang_tags }}
+  <style>
+    :root {
+      --neon-pink: #ff1493;
+      --yellow: #ffe14c;
+      --cyan: #00e5ff;
+      --brick: #8b3a3a;
+      --concrete: #808080;
+      --wall: #f0f0f0;
+      --bg: #1a1a1a;
+      --bg-surface: #242424;
+      --text: #e0e0e0;
+      --text-muted: #999;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.7;
+      margin: 0;
+      color: var(--text);
+      background-color: var(--bg);
+      background-image: url("data:image/svg+xml,%3Csvg width='4' height='4' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='2' height='2' fill='%23242424'/%3E%3C/svg%3E");
+      background-size: 4px 4px;
+    }
+
+    /* Brick texture header band */
+    .brick-band {
+      height: 6px;
+      background-color: var(--brick);
+      background-image: url("data:image/svg+xml,%3Csvg width='6' height='3' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='3' height='1.5' fill='%237a3232'/%3E%3C/svg%3E");
+      background-size: 6px 3px;
+    }
+
+    .site-wrapper {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Header */
+    .site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 0;
+      border-bottom: 2px solid var(--brick);
+      margin-bottom: 2.5rem;
+    }
+
+    .site-logo {
+      font-family: "Impact", "Arial Black", sans-serif;
+      font-weight: 900;
+      font-size: 1.8rem;
+      color: var(--neon-pink);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      text-shadow: 2px 2px 0 var(--brick), -1px -1px 0 var(--cyan);
+      position: relative;
+    }
+
+    .site-logo:hover {
+      color: var(--yellow);
+      text-shadow: 2px 2px 0 var(--brick), -1px -1px 0 var(--neon-pink);
+    }
+
+    .site-header nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .site-header nav a {
+      color: var(--concrete);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      padding-bottom: 2px;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .site-header nav a:hover {
+      color: var(--cyan);
+      border-bottom-color: var(--cyan);
+    }
+
+    /* Main */
+    .site-main { min-height: calc(100vh - 220px); }
+
+    /* Footer */
+    .site-footer {
+      margin-top: 3rem;
+      padding: 1.5rem 0;
+      border-top: 2px solid var(--brick);
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      text-align: center;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* Typography */
+    h1, h2, h3 {
+      font-family: "Impact", "Arial Black", sans-serif;
+      line-height: 1.2;
+      margin-top: 1.5em;
+      margin-bottom: 0.5em;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin-top: 0;
+      color: var(--neon-pink);
+      text-shadow: 3px 3px 0 var(--brick);
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      color: var(--yellow);
+    }
+
+    h3 {
+      font-size: 1.15rem;
+      color: var(--cyan);
+    }
+
+    p { margin: 1em 0; }
+
+    a {
+      color: var(--cyan);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    a:hover {
+      color: var(--neon-pink);
+      text-decoration: underline;
+    }
+
+    code {
+      background: var(--bg-surface);
+      padding: 0.15rem 0.4rem;
+      border-radius: 3px;
+      font-size: 0.85em;
+      font-family: "SFMono-Regular", Consolas, monospace;
+      color: var(--yellow);
+      border: 1px solid #333;
+    }
+
+    pre {
+      background: #111;
+      padding: 1rem;
+      border-radius: 0;
+      overflow-x: auto;
+      border-left: 4px solid var(--neon-pink);
+    }
+
+    pre code { background: none; padding: 0; border: none; color: var(--text); }
+
+    /* Post list */
+    ul#posts, ul.section-list { list-style: none; padding: 0; margin: 2rem 0; }
+
+    ul#posts li, ul.section-list li {
+      margin-bottom: 0.75rem;
+      padding: 1rem 1.25rem;
+      background: var(--bg-surface);
+      border-left: 4px solid var(--neon-pink);
+      transition: border-color 0.2s;
+    }
+
+    ul#posts li:nth-child(even), ul.section-list li:nth-child(even) {
+      border-left-color: var(--cyan);
+    }
+
+    ul#posts li:nth-child(3n), ul.section-list li:nth-child(3n) {
+      border-left-color: var(--yellow);
+    }
+
+    ul#posts li:hover, ul.section-list li:hover {
+      border-left-color: var(--wall);
+    }
+
+    ul#posts li a, ul.section-list li a {
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Article */
+    article {
+      padding-bottom: 2rem;
+    }
+
+    article img {
+      max-width: 100%;
+      border: 3px solid var(--brick);
+    }
+
+    /* Taxonomy */
+    .taxonomy-desc {
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    /* Pagination */
+    nav.pagination { margin: 2rem 0; }
+
+    nav.pagination .pagination-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    nav.pagination a {
+      display: inline-block;
+      padding: 0.3rem 0.65rem;
+      border: 2px solid var(--concrete);
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      transition: all 0.2s;
+    }
+
+    nav.pagination a:hover {
+      color: var(--neon-pink);
+      border-color: var(--neon-pink);
+    }
+
+    .pagination-current span {
+      display: inline-block;
+      padding: 0.3rem 0.65rem;
+      border: 2px solid var(--neon-pink);
+      background: var(--neon-pink);
+      color: var(--bg);
+      font-weight: 700;
+      font-size: 0.8rem;
+    }
+
+    .pagination-disabled span {
+      display: inline-block;
+      padding: 0.3rem 0.65rem;
+      border: 2px solid #333;
+      color: #555;
+      font-size: 0.8rem;
+    }
+
+    /* Splatter decorative divider */
+    .splatter-divider {
+      text-align: center;
+      margin: 2rem 0;
+      color: var(--concrete);
+      font-size: 1.5rem;
+      letter-spacing: 8px;
+    }
+
+    /* 404 */
+    .error-code {
+      font-family: "Impact", "Arial Black", sans-serif;
+      font-size: 6rem;
+      color: var(--neon-pink);
+      text-shadow: 4px 4px 0 var(--brick);
+      margin: 0;
+      line-height: 1;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .site-header {
+        flex-direction: column;
+        gap: 0.75rem;
+        align-items: flex-start;
+      }
+      .site-wrapper { padding: 0 1rem; }
+      h1 { font-size: 1.6rem; }
+      .site-logo { font-size: 1.4rem; }
+    }
+  </style>
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+</head>
+<body data-section="{{ page.section }}">
+  <div class="brick-band"></div>
+  <div class="site-wrapper">
+    <header class="site-header">
+      <a href="{{ base_url }}/" class="site-logo">Graffiti</a>
+      <nav>
+        <a href="{{ base_url }}/">Home</a>
+        <a href="{{ base_url }}/posts/">Posts</a>
+        <a href="{{ base_url }}/about/">About</a>
+      </nav>
+    </header>
