@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page.title %}{{ page.title }} - {% endif %}{{ config.title }}</title>
+    {% include "header.html" %}
+</head>
+<body>
+    <div class="desktop">
+        <div class="window">
+            <div class="window-titlebar">
+                <div class="window-title">
+                    <span style="margin-right: 5px; background: #fff; width: 14px; height: 14px; border: 1px solid #000; display: inline-block;"></span>
+                    {% if page.title %}{{ page.title }}{% else %}Explorer{% endif %}
+                </div>
+                <div class="window-controls">
+                    <button class="win-btn" aria-label="Minimize">_</button>
+                    <button class="win-btn" aria-label="Maximize">[]</button>
+                    <button class="win-btn" aria-label="Close">X</button>
+                </div>
+            </div>
+            <div class="menubar">
+                <div class="menu-item">File</div>
+                <div class="menu-item">Edit</div>
+                <div class="menu-item">View</div>
+                <div class="menu-item">Help</div>
+            </div>
+            <div class="window-content">
+                {% block content %}{% endblock content %}
+            </div>
+        </div>
+    </div>
+
+    <div class="taskbar">
+        <a href="{{ config.base_url }}" class="start-btn">
+            <span style="display:inline-block; width:16px; height:16px; background-color: #000; border: 1px solid #fff;"></span>
+            Start
+        </a>
+        <div class="taskbar-divider"></div>
+        <a href="{{ config.base_url }}" class="taskbar-item active">
+            <span style="display:inline-block; width:14px; height:14px; background-color: #fff; border: 1px solid #000; margin-right: 4px;"></span>
+            Explorer
+        </a>
+        <div class="taskbar-clock">
+            <span id="clock">12:00 PM</span>
+        </div>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            const strTime = hours + ':' + minutes + ' ' + ampm;
+            document.getElementById('clock').innerText = strTime;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+</html>
