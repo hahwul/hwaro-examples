@@ -1,0 +1,35 @@
+{{ auto_includes | safe }}
+{% include "header.html" %}
+
+<div class="panel" style="margin-bottom: 2rem;">
+    <h1 style="margin-bottom: 0;">{{ section.title | default(value="DIRECTORY_LISTING") }}</h1>
+    {% if section.description %}
+    <p style="font-family: var(--font-mono); color: var(--metallic-mid); margin-top: 0.5rem;">[ {{ section.description }} ]</p>
+    {% endif %}
+</div>
+
+<div class="content-area">
+    {% if section.pages %}
+        {% for post in section.pages %}
+        <article class="post-card">
+            <h3 class="post-title"><a href="{{ base_url }}/{{ post.path }}">{{ post.title }}</a></h3>
+            <div class="post-meta">
+                {% if post.date %}DATE: {{ post.date | date(format="%Y-%m-%d") }} | {% endif %}
+                AUTHOR: {% if post.author %}{{ post.author }}{% else %}SYS_ADMIN{% endif %}
+            </div>
+
+            {% if post.taxonomies and post.taxonomies.tags %}
+            <div class="tags" style="margin-bottom: 1rem;">
+                {% for tag in post.taxonomies.tags %}
+                <span class="tag">#{{ tag }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </article>
+        {% endfor %}
+    {% else %}
+        <p style="font-family: var(--font-mono); color: var(--primary-accent);">[ DIRECTORY_EMPTY ]</p>
+    {% endif %}
+</div>
+
+{% include "footer.html" %}
