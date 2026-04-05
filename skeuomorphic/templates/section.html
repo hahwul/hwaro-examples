@@ -1,0 +1,40 @@
+{% include "header.html" %}
+
+<article class="post">
+    <header>
+        <h1 class="post-title">{{ section.title | default(page.title | default("Ledger Entries")) }}</h1>
+        {% if section.description %}
+            <p><em>{{ section.description }}</em></p>
+        {% endif %}
+    </header>
+
+    {% if content %}
+    <div class="post-content" style="margin-bottom: 40px; border-bottom: 1px dashed var(--paper-border); padding-bottom: 20px;">
+        {{ content | safe }}
+    </div>
+    {% endif %}
+
+    <div class="entries">
+        {% for post in section.pages %}
+        <div class="post" style="margin-bottom: 30px;">
+            <h2 class="post-title" style="font-size: 1.5em; margin-bottom: 5px;"><a href="{{ post.url }}">{{ post.title }}</a></h2>
+            <div class="post-meta" style="margin-bottom: 10px; padding-bottom: 0; border-bottom: none;">
+                {{ post.date | date("%B %d, %Y") }}
+            </div>
+            <div class="post-content">
+                {{ post.summary | default(post.content | strip_html | truncate_words(30)) }}
+            </div>
+            <a href="{{ post.url }}" style="font-size: 0.9em; font-weight: bold; text-transform: uppercase;">Read Entry &raquo;</a>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if section.pages_count > 10 %}
+    <div class="pagination">
+        <span>&laquo; Older entries</span>
+        <span>Newer entries &raquo;</span>
+    </div>
+    {% endif %}
+</article>
+
+{% include "footer.html" %}
