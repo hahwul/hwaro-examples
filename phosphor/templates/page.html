@@ -1,0 +1,114 @@
+{% include "header.html" %}
+
+  <main class="max-w-5xl mx-auto px-6 py-12">
+
+    <article class="specimen-appear">
+      <!-- Breadcrumb -->
+      <div class="mb-8">
+        <span class="depth-marker">
+          <a href="{{ base_url }}/" class="hover:text-bio-cyan transition-colors">Phosphor</a>
+          &nbsp;/&nbsp;
+          {% if page.path contains "gallery" %}
+          <a href="{{ base_url }}/gallery/" class="hover:text-bio-cyan transition-colors">Gallery</a>
+          &nbsp;/&nbsp;
+          {% endif %}
+          {{ page.title }}
+        </span>
+      </div>
+
+      <!-- Page header -->
+      <header class="mb-10">
+        <h1 class="page-heading glow-cyan mb-4">{{ page.title }}</h1>
+
+        {% if page.description %}
+        <p class="text-slate-600 text-sm leading-relaxed max-w-2xl font-light">
+          {{ page.description }}
+        </p>
+        {% endif %}
+
+        <!-- Specimen metadata from front matter -->
+        {% if page.extra.scientific_name or page.extra.depth_range %}
+        <div class="mt-6 glow-box">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {% if page.extra.scientific_name %}
+            <div>
+              <div class="specimen-meta mb-1">Scientific Name</div>
+              <div class="text-slate-500 text-xs italic font-mono">{{ page.extra.scientific_name }}</div>
+            </div>
+            {% endif %}
+            {% if page.extra.depth_range %}
+            <div>
+              <div class="specimen-meta mb-1">Depth Range</div>
+              <div class="depth-number">{{ page.extra.depth_range }}</div>
+            </div>
+            {% endif %}
+            {% if page.extra.emission_color %}
+            <div>
+              <div class="specimen-meta mb-1">Emission</div>
+              <div class="text-xs font-mono" style="color: #22c55e; text-shadow: 0 0 6px #22c55e66;">{{ page.extra.emission_color }}</div>
+            </div>
+            {% endif %}
+            {% if page.extra.mechanism %}
+            <div>
+              <div class="specimen-meta mb-1">Mechanism</div>
+              <div class="text-slate-600 text-xs font-mono">{{ page.extra.mechanism }}</div>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- Date and read time -->
+        <div class="mt-4 flex items-center gap-4">
+          {% if page.date %}
+          <span class="font-mono text-xs text-slate-700">{{ page.date }}</span>
+          {% endif %}
+          {% if page.reading_time %}
+          <span class="font-mono text-xs text-slate-800">&middot; {{ page.reading_time }} min read</span>
+          {% endif %}
+          {% if page.tags %}
+          <div class="flex flex-wrap gap-1">
+            {% for tag in page.tags %}
+            <a href="{{ base_url }}/tags/{{ tag | slugify }}/" class="bio-tag no-underline">{{ tag }}</a>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+      </header>
+
+      <hr class="bio-divider">
+
+      <!-- Content -->
+      <div class="content-prose">
+        {{ content | safe }}
+      </div>
+
+      <hr class="bio-divider">
+
+      <!-- Post navigation -->
+      <nav class="flex justify-between gap-6 mt-6">
+        {% if page.higher %}
+        <a href="{{ base_url }}{{ page.higher.url }}"
+           class="block flex-1 glow-box hover:border-bio-cyan transition-all duration-300 no-underline">
+          <div class="specimen-meta mb-1">&larr; Newer specimen</div>
+          <div class="specimen-title text-slate-500 text-sm">{{ page.higher.title }}</div>
+        </a>
+        {% else %}
+        <div class="flex-1"></div>
+        {% endif %}
+
+        {% if page.lower %}
+        <a href="{{ base_url }}{{ page.lower.url }}"
+           class="block flex-1 text-right glow-box hover:border-bio-cyan transition-all duration-300 no-underline">
+          <div class="specimen-meta mb-1">Older specimen &rarr;</div>
+          <div class="specimen-title text-slate-500 text-sm">{{ page.lower.title }}</div>
+        </a>
+        {% else %}
+        <div class="flex-1"></div>
+        {% endif %}
+      </nav>
+    </article>
+
+  </main>
+
+{% include "footer.html" %}

@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title }} | {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
+  <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+  {{ og_all_tags }}
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'quantum-blue': '#1e3a5f',
+            'wave-cyan': '#06b6d4',
+            'entangle-purple': '#7c3aed',
+            'collapse-white': '#f0f0f0',
+          },
+          fontFamily: {
+            'mono': ['JetBrains Mono', 'Fira Code', 'Consolas', 'monospace'],
+            'sans': ['Inter', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+  <style>
+    /* =========================================================
+       QUANTUM - Color Variables & Base
+    ========================================================= */
+    :root {
+      --quantum-blue: #1e3a5f;
+      --quantum-blue-dark: #0f1f33;
+      --quantum-blue-deeper: #080f1a;
+      --wave-cyan: #06b6d4;
+      --wave-cyan-dim: #0891b2;
+      --entangle-purple: #7c3aed;
+      --entangle-purple-dim: #5b21b6;
+      --collapse-white: #f0f0f0;
+      --collapse-white-dim: #a0aab4;
+      --bg-primary: #060d18;
+      --bg-secondary: #0a1525;
+      --bg-card: #0d1e30;
+      --border-subtle: #1a3050;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--collapse-white);
+      font-family: 'Inter', system-ui, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* =========================================================
+       DOUBLE-SLIT INTERFERENCE PATTERN BACKGROUND
+       Uses SVG data URI patterns, no gradients
+    ========================================================= */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='60'%3E%3Crect x='18' y='0' width='2' height='60' fill='%2306b6d4' opacity='0.03'/%3E%3Crect x='36' y='0' width='2' height='60' fill='%2306b6d4' opacity='0.06'/%3E%3Crect x='54' y='0' width='2' height='60' fill='%2306b6d4' opacity='0.03'/%3E%3Crect x='0' y='58' width='56' height='2' fill='%237c3aed' opacity='0.02'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      pointer-events: none;
+    }
+
+    /* Secondary interference layer - diagonal fringes */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cline x1='0' y1='0' x2='40' y2='40' stroke='%2306b6d4' stroke-width='0.5' opacity='0.015'/%3E%3Cline x1='40' y1='0' x2='0' y2='40' stroke='%237c3aed' stroke-width='0.5' opacity='0.015'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      pointer-events: none;
+    }
+
+    /* Site wrapper sits above background patterns */
+    .site-wrapper {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* =========================================================
+       SUPERPOSITION FLICKER ANIMATION
+       Elements flicker between two states
+    ========================================================= */
+    @keyframes superposition {
+      0%   { opacity: 1; color: var(--wave-cyan); }
+      45%  { opacity: 1; color: var(--wave-cyan); }
+      50%  { opacity: 0.4; color: var(--entangle-purple); }
+      55%  { opacity: 1; color: var(--entangle-purple); }
+      95%  { opacity: 1; color: var(--entangle-purple); }
+      100% { opacity: 1; color: var(--wave-cyan); }
+    }
+
+    @keyframes superposition-subtle {
+      0%   { border-color: rgba(6, 182, 212, 0.3); }
+      49%  { border-color: rgba(6, 182, 212, 0.3); }
+      50%  { border-color: rgba(124, 58, 237, 0.5); }
+      99%  { border-color: rgba(124, 58, 237, 0.5); }
+      100% { border-color: rgba(6, 182, 212, 0.3); }
+    }
+
+    @keyframes qubit-spin {
+      0%   { transform: rotate(0deg) scale(1); }
+      25%  { transform: rotate(90deg) scale(0.95); }
+      50%  { transform: rotate(180deg) scale(1); }
+      75%  { transform: rotate(270deg) scale(0.95); }
+      100% { transform: rotate(360deg) scale(1); }
+    }
+
+    @keyframes phase-oscillate {
+      0%   { transform: translateX(0px); }
+      25%  { transform: translateX(2px); }
+      50%  { transform: translateX(0px); }
+      75%  { transform: translateX(-2px); }
+      100% { transform: translateX(0px); }
+    }
+
+    /* Wavefunction collapse animation on click/hover */
+    @keyframes wavefunction-collapse {
+      0%   { filter: blur(8px); opacity: 0.3; transform: scale(1.05); }
+      40%  { filter: blur(2px); opacity: 0.8; transform: scale(1.01); }
+      70%  { filter: blur(0.5px); opacity: 0.95; transform: scale(1.002); }
+      100% { filter: blur(0px); opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes probability-cloud-in {
+      0%   { filter: blur(0px); }
+      100% { filter: blur(3px) brightness(1.15); }
+    }
+
+    @keyframes probability-cloud-out {
+      0%   { filter: blur(3px) brightness(1.15); }
+      100% { filter: blur(0px); }
+    }
+
+    /* Interference fringe pulse */
+    @keyframes fringe-pulse {
+      0%   { opacity: 0.4; }
+      50%  { opacity: 1; }
+      100% { opacity: 0.4; }
+    }
+
+    /* =========================================================
+       NAVIGATION
+    ========================================================= */
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: rgba(6, 13, 24, 0.92);
+      border-bottom: 1px solid var(--border-subtle);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 4rem;
+    }
+
+    .nav-logo {
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      line-height: 1;
+    }
+
+    .logo-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--wave-cyan);
+      letter-spacing: 0.08em;
+      animation: superposition 7s ease-in-out infinite;
+    }
+
+    .logo-sub {
+      font-size: 0.6rem;
+      color: var(--collapse-white-dim);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-top: 2px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 0.25rem;
+    }
+
+    .nav-links a {
+      display: block;
+      padding: 0.4rem 0.9rem;
+      color: var(--collapse-white-dim);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      border: 1px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .nav-links a:hover {
+      color: var(--wave-cyan);
+      border-color: rgba(6, 182, 212, 0.4);
+      animation: wavefunction-collapse 0.5s ease-out forwards;
+    }
+
+    /* =========================================================
+       MAIN CONTENT AREA
+    ========================================================= */
+    .site-main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+      min-height: calc(100vh - 4rem - 80px);
+    }
+
+    /* =========================================================
+       HERO SECTION
+    ========================================================= */
+    .hero {
+      padding: 5rem 0 4rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero-quantum-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: 1px solid rgba(6, 182, 212, 0.4);
+      padding: 0.3rem 1rem;
+      margin-bottom: 2rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--wave-cyan);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      animation: superposition-subtle 4s step-end infinite;
+    }
+
+    .hero-qubit {
+      width: 8px;
+      height: 8px;
+      background-color: var(--wave-cyan);
+      display: inline-block;
+      animation: qubit-spin 3s linear infinite;
+    }
+
+    .hero-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 600;
+      color: var(--collapse-white);
+      letter-spacing: 0.05em;
+      line-height: 1;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title span {
+      color: var(--wave-cyan);
+      animation: superposition 5s ease-in-out infinite;
+    }
+
+    .hero-subtitle {
+      font-size: 1.1rem;
+      color: var(--collapse-white-dim);
+      max-width: 580px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      padding: 0.85rem 2.5rem;
+      background-color: var(--wave-cyan);
+      color: var(--bg-primary);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      font-family: 'JetBrains Mono', monospace;
+      border: 1px solid var(--wave-cyan);
+      transition: background-color 0.2s, color 0.2s;
+      text-transform: uppercase;
+    }
+
+    .hero-cta:hover {
+      background-color: transparent;
+      color: var(--wave-cyan);
+      animation: wavefunction-collapse 0.4s ease-out;
+    }
+
+    .hero-cta-secondary {
+      display: inline-block;
+      padding: 0.85rem 2rem;
+      background-color: transparent;
+      color: var(--entangle-purple);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      font-family: 'JetBrains Mono', monospace;
+      border: 1px solid var(--entangle-purple);
+      margin-left: 1rem;
+      transition: background-color 0.2s, color 0.2s;
+      text-transform: uppercase;
+    }
+
+    .hero-cta-secondary:hover {
+      background-color: var(--entangle-purple);
+      color: var(--collapse-white);
+      animation: wavefunction-collapse 0.4s ease-out;
+    }
+
+    /* =========================================================
+       INTERFERENCE VISUALIZER (decorative)
+    ========================================================= */
+    .interference-bar {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 3px;
+      height: 60px;
+      margin: 3rem 0 2rem;
+    }
+
+    .fringe {
+      width: 4px;
+      background-color: var(--wave-cyan);
+      animation: fringe-pulse 2s ease-in-out infinite;
+    }
+
+    .fringe:nth-child(1)  { height: 8px;  animation-delay: 0s; opacity: 0.15; }
+    .fringe:nth-child(2)  { height: 16px; animation-delay: 0.1s; opacity: 0.25; }
+    .fringe:nth-child(3)  { height: 32px; animation-delay: 0.2s; opacity: 0.45; }
+    .fringe:nth-child(4)  { height: 50px; animation-delay: 0.3s; opacity: 0.7; }
+    .fringe:nth-child(5)  { height: 60px; animation-delay: 0.4s; opacity: 1; }
+    .fringe:nth-child(6)  { height: 50px; animation-delay: 0.3s; opacity: 0.7; }
+    .fringe:nth-child(7)  { height: 32px; animation-delay: 0.2s; opacity: 0.45; }
+    .fringe:nth-child(8)  { height: 16px; animation-delay: 0.1s; opacity: 0.25; }
+    .fringe:nth-child(9)  { height: 8px;  animation-delay: 0s; opacity: 0.15; }
+    .fringe:nth-child(10) { height: 4px;  animation-delay: 0.05s; opacity: 0.08; }
+    .fringe:nth-child(11) { height: 16px; animation-delay: 0.15s; opacity: 0.22; background-color: var(--entangle-purple); }
+    .fringe:nth-child(12) { height: 30px; animation-delay: 0.25s; opacity: 0.4; background-color: var(--entangle-purple); }
+    .fringe:nth-child(13) { height: 16px; animation-delay: 0.15s; opacity: 0.22; background-color: var(--entangle-purple); }
+    .fringe:nth-child(14) { height: 4px;  animation-delay: 0.05s; opacity: 0.08; }
+    .fringe:nth-child(15) { height: 8px;  animation-delay: 0s; opacity: 0.15; }
+    .fringe:nth-child(16) { height: 16px; animation-delay: 0.1s; opacity: 0.25; }
+    .fringe:nth-child(17) { height: 32px; animation-delay: 0.2s; opacity: 0.45; }
+    .fringe:nth-child(18) { height: 50px; animation-delay: 0.3s; opacity: 0.7; }
+    .fringe:nth-child(19) { height: 60px; animation-delay: 0.4s; opacity: 1; }
+    .fringe:nth-child(20) { height: 50px; animation-delay: 0.3s; opacity: 0.7; }
+    .fringe:nth-child(21) { height: 32px; animation-delay: 0.2s; opacity: 0.45; }
+    .fringe:nth-child(22) { height: 16px; animation-delay: 0.1s; opacity: 0.25; }
+    .fringe:nth-child(23) { height: 8px;  animation-delay: 0s; opacity: 0.15; }
+
+    /* =========================================================
+       HOME INTRO
+    ========================================================= */
+    .home-intro {
+      padding: 2rem 0 3rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .home-intro-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .home-intro-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--wave-cyan);
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+
+    .home-intro-text {
+      color: var(--collapse-white-dim);
+      line-height: 1.8;
+      font-size: 1rem;
+    }
+
+    /* =========================================================
+       CARDS & GRIDS
+    ========================================================= */
+    .section-heading {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--wave-cyan);
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .section-heading::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background-color: var(--border-subtle);
+    }
+
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .post-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      padding: 1.75rem;
+      position: relative;
+      transition: border-color 0.2s;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .post-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background-color: var(--wave-cyan);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    .post-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .post-card:hover {
+      border-color: rgba(6, 182, 212, 0.5);
+      animation: superposition-subtle 3s step-end infinite;
+    }
+
+    /* Probability cloud blur on hover */
+    .post-card:hover .card-meta {
+      filter: blur(0.3px) brightness(1.2);
+      transition: filter 0.3s;
+    }
+
+    /* Wavefunction collapse on click */
+    .post-card:active {
+      animation: wavefunction-collapse 0.3s ease-out;
+    }
+
+    .card-state-indicator {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--entangle-purple);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      animation: superposition 6s ease-in-out infinite;
+      display: block;
+    }
+
+    .card-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--collapse-white);
+      margin-bottom: 0.75rem;
+      line-height: 1.4;
+    }
+
+    .card-title a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .card-title a:hover {
+      color: var(--wave-cyan);
+    }
+
+    .card-desc {
+      color: var(--collapse-white-dim);
+      font-size: 0.875rem;
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: rgba(160, 170, 180, 0.7);
+    }
+
+    .card-meta time {
+      color: rgba(6, 182, 212, 0.6);
+    }
+
+    .card-author {
+      color: rgba(124, 58, 237, 0.7);
+    }
+
+    .card-reading-time {
+      color: rgba(160, 170, 180, 0.5);
+    }
+
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .card-tag {
+      display: inline-block;
+      padding: 0.15rem 0.5rem;
+      border: 1px solid rgba(124, 58, 237, 0.3);
+      color: rgba(124, 58, 237, 0.8);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .card-tag:hover {
+      border-color: var(--entangle-purple);
+      color: var(--entangle-purple);
+      animation: wavefunction-collapse 0.3s ease-out;
+    }
+
+    /* Read more link */
+    .card-read-more {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--wave-cyan);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      border-bottom: 1px solid rgba(6, 182, 212, 0.3);
+      padding-bottom: 1px;
+      transition: border-color 0.2s;
+    }
+
+    .card-read-more:hover {
+      border-color: var(--wave-cyan);
+    }
+
+    /* =========================================================
+       RESEARCH HIGHLIGHTS (home)
+    ========================================================= */
+    .highlights-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background-color: var(--border-subtle);
+      border: 1px solid var(--border-subtle);
+      margin-bottom: 3rem;
+    }
+
+    .highlight-item {
+      background-color: var(--bg-card);
+      padding: 1.5rem;
+      transition: background-color 0.2s;
+    }
+
+    .highlight-item:hover {
+      background-color: var(--bg-secondary);
+    }
+
+    .highlight-item:hover .highlight-value {
+      animation: superposition 3s ease-in-out infinite;
+    }
+
+    .highlight-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--collapse-white-dim);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .highlight-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--wave-cyan);
+    }
+
+    .highlight-unit {
+      font-size: 0.75rem;
+      color: var(--collapse-white-dim);
+      margin-left: 0.25rem;
+    }
+
+    /* =========================================================
+       PAGE DETAIL (single post)
+    ========================================================= */
+    .page-detail {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 2rem 0;
+    }
+
+    .page-header {
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .page-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--wave-cyan);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .page-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background-color: var(--wave-cyan);
+      animation: qubit-spin 2s linear infinite;
+    }
+
+    .page-title {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(1.5rem, 4vw, 2.25rem);
+      font-weight: 700;
+      color: var(--collapse-white);
+      line-height: 1.3;
+      margin-bottom: 1rem;
+    }
+
+    .page-description {
+      color: var(--collapse-white-dim);
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .page-meta {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .page-meta time {
+      color: var(--wave-cyan);
+    }
+
+    .page-meta-author {
+      color: var(--entangle-purple);
+    }
+
+    .page-meta-reading {
+      color: var(--collapse-white-dim);
+    }
+
+    /* =========================================================
+       CONTENT TYPOGRAPHY
+    ========================================================= */
+    .page-content {
+      color: var(--collapse-white-dim);
+      line-height: 1.8;
+      font-size: 1rem;
+    }
+
+    .page-content h2 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--collapse-white);
+      margin: 2.5rem 0 1rem;
+      padding-left: 0.75rem;
+      border-left: 2px solid var(--wave-cyan);
+      font-family: 'Inter', sans-serif;
+    }
+
+    .page-content h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--collapse-white);
+      margin: 2rem 0 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.03em;
+    }
+
+    .page-content p {
+      margin-bottom: 1.5rem;
+    }
+
+    .page-content a {
+      color: var(--wave-cyan);
+      text-decoration: underline;
+      text-decoration-color: rgba(6, 182, 212, 0.4);
+      transition: text-decoration-color 0.2s;
+    }
+
+    .page-content a:hover {
+      text-decoration-color: var(--wave-cyan);
+    }
+
+    .page-content code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.875em;
+      background-color: var(--bg-secondary);
+      color: var(--wave-cyan);
+      padding: 0.15em 0.4em;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .page-content pre {
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-left: 3px solid var(--wave-cyan);
+      padding: 1.5rem;
+      overflow-x: auto;
+      margin-bottom: 1.5rem;
+    }
+
+    .page-content pre code {
+      background-color: transparent;
+      border: none;
+      padding: 0;
+    }
+
+    .page-content blockquote {
+      border-left: 2px solid var(--entangle-purple);
+      padding-left: 1.25rem;
+      margin: 1.5rem 0;
+      color: rgba(160, 170, 180, 0.8);
+      font-style: italic;
+    }
+
+    .page-content ul, .page-content ol {
+      padding-left: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .page-content li {
+      margin-bottom: 0.4rem;
+    }
+
+    .page-content strong {
+      color: var(--collapse-white);
+      font-weight: 600;
+    }
+
+    /* =========================================================
+       PAGE TAGS FOOTER
+    ========================================================= */
+    .page-tags {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .tags-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--collapse-white-dim);
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border: 1px solid rgba(124, 58, 237, 0.4);
+      color: rgba(124, 58, 237, 0.9);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      transition: border-color 0.2s, color 0.2s, background-color 0.2s;
+    }
+
+    .tag:hover {
+      background-color: var(--entangle-purple);
+      border-color: var(--entangle-purple);
+      color: var(--collapse-white);
+      animation: wavefunction-collapse 0.35s ease-out;
+    }
+
+    /* =========================================================
+       SECTION PAGE (posts listing)
+    ========================================================= */
+    .section-page {
+      padding: 2rem 0;
+    }
+
+    .section-header {
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .section-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: var(--collapse-white);
+      letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-desc {
+      color: var(--collapse-white-dim);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .section-content {
+      color: var(--collapse-white-dim);
+      margin-bottom: 2rem;
+      line-height: 1.7;
+    }
+
+    /* =========================================================
+       TAXONOMY PAGES
+    ========================================================= */
+    .taxonomy-page, .taxonomy-term-page {
+      padding: 2rem 0;
+    }
+
+    .taxonomy-list {
+      color: var(--collapse-white-dim);
+      line-height: 1.8;
+    }
+
+    /* =========================================================
+       404 PAGE
+    ========================================================= */
+    .page-404 {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+      text-align: center;
+    }
+
+    .error-container {
+      max-width: 500px;
+    }
+
+    .error-state {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--entangle-purple);
+      margin-bottom: 1rem;
+      animation: superposition 4s ease-in-out infinite;
+    }
+
+    .error-code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 6rem;
+      font-weight: 700;
+      color: var(--quantum-blue);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+      border: 1px solid var(--border-subtle);
+      padding: 1rem 2rem;
+      display: inline-block;
+      animation: superposition-subtle 3s step-end infinite;
+    }
+
+    .error-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--collapse-white);
+      margin-bottom: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .error-desc {
+      color: var(--collapse-white-dim);
+      line-height: 1.7;
+      margin-bottom: 0.75rem;
+      font-size: 0.95rem;
+    }
+
+    .error-sub {
+      color: rgba(160, 170, 180, 0.6);
+      font-size: 0.85rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    /* =========================================================
+       PROBABILITY CLOUD HOVER EFFECT
+       Applied to interactive card-body elements
+    ========================================================= */
+    .probability-hover {
+      transition: filter 0.4s ease;
+    }
+
+    .probability-hover:hover {
+      filter: blur(0.4px) brightness(1.12);
+    }
+
+    /* =========================================================
+       UTILITY
+    ========================================================= */
+    .text-cyan   { color: var(--wave-cyan); }
+    .text-purple { color: var(--entangle-purple); }
+    .text-dim    { color: var(--collapse-white-dim); }
+
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+    .quantum-divider {
+      height: 1px;
+      background-color: var(--border-subtle);
+      margin: 3rem 0;
+      position: relative;
+    }
+
+    .quantum-divider::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 1px;
+      background-color: var(--wave-cyan);
+      animation: fringe-pulse 2s ease-in-out infinite;
+    }
+
+    /* =========================================================
+       RESPONSIVE
+    ========================================================= */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .posts-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .highlights-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding: 3rem 0 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="site-wrapper">
+
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a href="{{ base_url }}/" class="nav-logo">
+        <span class="logo-title">QUANTUM</span>
+        <span class="logo-sub">Science Blog</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="{{ base_url }}/">Home</a></li>
+        <li><a href="{{ base_url }}/posts/">Research</a></li>
+        <li><a href="{{ base_url }}/tags/">Topics</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="site-main">

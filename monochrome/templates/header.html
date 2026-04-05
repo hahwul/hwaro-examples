@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title }} — {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+  {{ og_all_tags }}
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Grayscale palette only: #000, #1a1a1a, #333, #4d4d4d, #666, #808080, #999, #b3b3b3, #ccc, #e6e6e6, #fff */
+
+    :root {
+      --bg:        #f5f5f5;
+      --bg-card:   #fff;
+      --border:    #ccc;
+      --text-main: #1a1a1a;
+      --text-muted:#666;
+      --text-dim:  #999;
+      --accent:    #333;
+      --nav-bg:    #fff;
+      --nav-border:#e6e6e6;
+      --footer-bg: #e6e6e6;
+      --tag-bg:    #e6e6e6;
+      --tag-text:  #4d4d4d;
+    }
+
+    [data-theme="dark"] {
+      --bg:        #1a1a1a;
+      --bg-card:   #333;
+      --border:    #4d4d4d;
+      --text-main: #e6e6e6;
+      --text-muted:#999;
+      --text-dim:  #808080;
+      --accent:    #ccc;
+      --nav-bg:    #1a1a1a;
+      --nav-border:#333;
+      --footer-bg: #000;
+      --tag-bg:    #4d4d4d;
+      --tag-text:  #ccc;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.75;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Nav */
+    .site-nav {
+      background-color: var(--nav-bg);
+      border-bottom: 1px solid var(--nav-border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      transition: background-color 0.3s ease;
+    }
+
+    .site-nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+
+    .site-brand {
+      font-family: 'Georgia', serif;
+      font-size: 1.25rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-main);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .site-brand:hover { color: var(--text-muted); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Georgia', serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text-main); }
+
+    /* Theme toggle */
+    .theme-toggle {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-family: 'Georgia', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.75rem;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .theme-toggle:hover {
+      border-color: var(--text-muted);
+      color: var(--text-main);
+    }
+
+    /* Main content area */
+    main {
+      flex: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 3rem 2rem;
+    }
+
+    /* Images — forced grayscale, color reveals on hover */
+    img.mono-img {
+      filter: grayscale(100%);
+      transition: filter 0.5s ease;
+      display: block;
+      width: 100%;
+    }
+    img.mono-img:hover {
+      filter: grayscale(0%);
+    }
+
+    /* Essay grid */
+    .essay-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2px;
+      margin-top: 3rem;
+    }
+
+    .essay-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .essay-card:hover { border-color: var(--text-muted); }
+
+    .essay-card-inner {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .essay-card-placeholder {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background-color: var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s;
+    }
+    .essay-card:hover .essay-card-placeholder {
+      background-color: var(--text-dim);
+    }
+
+    .essay-card-body {
+      padding: 1.5rem;
+    }
+
+    .essay-card-title {
+      font-size: 1.1rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: var(--text-main);
+      margin-bottom: 0.5rem;
+    }
+
+    .essay-card-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .essay-card-meta {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    /* Page / article styles */
+    .article-header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .article-title {
+      font-size: 2.5rem;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      line-height: 1.2;
+      color: var(--text-main);
+      margin-bottom: 1rem;
+    }
+
+    .article-desc {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      font-style: italic;
+      margin-bottom: 1rem;
+    }
+
+    .article-meta {
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .article-content {
+      max-width: 720px;
+    }
+
+    .article-content h2 {
+      font-size: 1.4rem;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      color: var(--text-main);
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.5rem;
+    }
+
+    .article-content h3 {
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--accent);
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .article-content p {
+      margin-bottom: 1.5rem;
+      color: var(--text-main);
+    }
+
+    .article-content blockquote {
+      border-left: 3px solid var(--border);
+      padding-left: 1.5rem;
+      margin: 2rem 0;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    /* Tags */
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 2rem;
+    }
+
+    .tag-pill {
+      background-color: var(--tag-bg);
+      color: var(--tag-text);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.75rem;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      transition: background-color 0.2s, color 0.2s;
+    }
+    .tag-pill:hover {
+      background-color: var(--text-muted);
+      color: var(--bg);
+    }
+
+    /* Section heading */
+    .section-heading {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 400;
+      color: var(--text-main);
+      letter-spacing: 0.02em;
+    }
+
+    /* Artist statement (homepage) */
+    .statement-block {
+      max-width: 680px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 4rem 0 2rem;
+    }
+
+    .statement-block p {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      line-height: 1.9;
+      margin-bottom: 1.2rem;
+    }
+
+    /* Taxonomy */
+    .taxonomy-list {
+      list-style: none;
+      margin-top: 2rem;
+    }
+
+    .taxonomy-list li {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .taxonomy-list a {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      text-decoration: none;
+      color: var(--text-main);
+      font-size: 0.95rem;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+    .taxonomy-list a:hover { color: var(--text-muted); }
+
+    .taxonomy-count {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+    }
+
+    /* 404 */
+    .not-found {
+      text-align: center;
+      padding: 6rem 0;
+    }
+
+    .not-found-code {
+      font-size: 5rem;
+      font-weight: 400;
+      color: var(--border);
+      letter-spacing: 0.1em;
+      display: block;
+    }
+
+    .not-found-msg {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      margin-top: 1rem;
+      font-style: italic;
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .nav-links { gap: 1rem; }
+      .article-title { font-size: 1.75rem; }
+      .statement-block { padding: 2rem 0 1rem; }
+      .essay-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Divider rule */
+    .thin-rule {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 3rem 0;
+    }
+  </style>
+</head>
+<body>
+  <nav class="site-nav">
+    <div class="site-nav-inner">
+      <a href="{{ base_url }}/" class="site-brand">Monochrome</a>
+      <ul class="nav-links">
+        <li><a href="{{ base_url }}/">Home</a></li>
+        <li><a href="{{ base_url }}/essays/">Essays</a></li>
+        <li><a href="{{ base_url }}/tags/">Tags</a></li>
+      </ul>
+      <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">Dark</button>
+    </div>
+  </nav>
+  <main>

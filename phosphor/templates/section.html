@@ -1,0 +1,83 @@
+{% include "header.html" %}
+
+  <main class="max-w-5xl mx-auto px-6 py-12">
+
+    <!-- Section header -->
+    <section class="mb-12 specimen-appear">
+      <div class="depth-marker mb-3">// specimen archive</div>
+      <h1 class="page-heading glow-cyan mb-4">{{ section.title }}</h1>
+
+      {% if section.description %}
+      <p class="text-slate-600 text-sm max-w-2xl font-light leading-relaxed">
+        {{ section.description }}
+      </p>
+      {% endif %}
+
+      {% if content %}
+      <div class="content-prose mt-6">{{ content | safe }}</div>
+      {% endif %}
+    </section>
+
+    <!-- Gallery grid -->
+    <section class="mb-12">
+      <div class="section-heading">// documented specimens &mdash; {{ section.pages | length }} entries</div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for post in section.pages %}
+        <a href="{{ base_url }}{{ post.url }}"
+           class="specimen-card block p-6 no-underline specimen-appear
+                  {% if loop.index % 3 == 2 %}specimen-card-green{% elif loop.index % 3 == 0 %}specimen-card-purple{% endif %}"
+           style="animation-delay: {{ loop.index * 0.1 }}s;">
+
+          <!-- Depth / date -->
+          <div class="flex items-center justify-between mb-3">
+            <span class="depth-marker
+                         {% if loop.index % 3 == 2 %}text-neon-green{% elif loop.index % 3 == 0 %}text-plankton-purple{% endif %}">
+              {{ post.date }}
+            </span>
+            <span class="pulse-dot
+                         {% if loop.index % 3 == 2 %}bg-neon-green{% elif loop.index % 3 == 0 %}bg-plankton-purple{% endif %}"
+                  style="{% if loop.index % 3 == 2 %}background-color:#22c55e;box-shadow:0 0 4px #22c55e,0 0 8px #22c55e;{% elif loop.index % 3 == 0 %}background-color:#a855f7;box-shadow:0 0 4px #a855f7,0 0 8px #a855f7;{% endif %}">
+            </span>
+          </div>
+
+          <!-- Title -->
+          <h2 class="specimen-title text-slate-400 mb-3 text-base">{{ post.title }}</h2>
+
+          <!-- Description -->
+          {% if post.description %}
+          <p class="text-slate-700 text-xs leading-relaxed font-light">
+            {{ post.description }}
+          </p>
+          {% endif %}
+
+          <!-- Tags -->
+          {% if post.tags %}
+          <div class="flex flex-wrap gap-1 mt-4">
+            {% for tag in post.tags %}
+            <span class="bio-tag
+                         {% if loop.parent.loop.index % 3 == 2 %}text-neon-green{% elif loop.parent.loop.index % 3 == 0 %}text-plankton-purple{% endif %}"
+                  style="{% if loop.parent.loop.index % 3 == 2 %}border-color:#22c55e33;color:#22c55e;background-color:#22c55e11;{% elif loop.parent.loop.index % 3 == 0 %}border-color:#a855f733;color:#a855f7;background-color:#a855f711;{% endif %}">
+              {{ tag }}
+            </span>
+            {% endfor %}
+          </div>
+          {% endif %}
+
+        </a>
+        {% endfor %}
+      </div>
+
+      {% if section.pages | length == 0 %}
+      <div class="text-center py-16">
+        <div class="font-mono text-xs text-slate-800 tracking-widest uppercase">No specimens documented</div>
+      </div>
+      {% endif %}
+    </section>
+
+    <!-- Pagination -->
+    {{ pagination }}
+
+  </main>
+
+{% include "footer.html" %}

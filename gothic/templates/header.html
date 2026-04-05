@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+  {{ og_all_tags }}
+
+  <!-- Google Fonts: UnifrakturMaguntia for Gothic titles, IM Fell English for body -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=IM+Fell+English:ital@0;1&family=Cinzel:wght@400;700;900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'gargoyle':  '#1a1a1a',
+            'gargoyle-deep': '#0d0d0d',
+            'gargoyle-mid': '#252525',
+            'stain-red': '#991b1b',
+            'stain-red-light': '#b91c1c',
+            'stone': '#6b7280',
+            'stone-light': '#9ca3af',
+            'stone-dark': '#4b5563',
+            'candle-gold': '#d4a017',
+            'candle-dim': '#a07810',
+          },
+          fontFamily: {
+            gothic: ['"UnifrakturMaguntia"', 'serif'],
+            cinzel: ['"Cinzel"', 'serif'],
+            fell: ['"IM Fell English"', 'serif'],
+          },
+          animation: {
+            'candle': 'candle 3s ease-in-out infinite',
+            'candle-slow': 'candle 5s ease-in-out infinite',
+            'candle-flicker': 'flicker 2s ease-in-out infinite',
+          },
+          keyframes: {
+            candle: {
+              '0%, 100%': { opacity: '1' },
+              '25%': { opacity: '0.85' },
+              '50%': { opacity: '0.95' },
+              '75%': { opacity: '0.80' },
+            },
+            flicker: {
+              '0%, 100%': { opacity: '1', transform: 'scaleY(1)' },
+              '20%': { opacity: '0.9', transform: 'scaleY(0.98)' },
+              '40%': { opacity: '0.75', transform: 'scaleY(0.95)' },
+              '60%': { opacity: '0.95', transform: 'scaleY(1.02)' },
+              '80%': { opacity: '0.85', transform: 'scaleY(0.97)' },
+            }
+          }
+        },
+      },
+    }
+  </script>
+
+  <style type="text/tailwindcss">
+    /* ========== Gothic Arch Shape ========== */
+    .gothic-arch {
+      clip-path: polygon(0% 100%, 0% 30%, 50% 0%, 100% 30%, 100% 100%);
+    }
+
+    .gothic-arch-frame {
+      position: relative;
+    }
+    .gothic-arch-frame::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      height: 60px;
+      background-color: #1a1a1a;
+      clip-path: polygon(10% 100%, 10% 40%, 50% 0%, 90% 40%, 90% 100%);
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    /* ========== Rose Window Divider ========== */
+    .rose-divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    .rose-divider::before,
+    .rose-divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background-color: #4b5563;
+    }
+    .rose-window {
+      display: inline-block;
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+    }
+
+    /* ========== Candle Accent ========== */
+    .candle-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #d4a017;
+      box-shadow: 0 0 6px 2px #d4a01766;
+      animation: candle 3s ease-in-out infinite;
+    }
+
+    /* ========== Prose: rendered markdown ========== */
+    .prose {
+      @apply text-stone-light font-fell leading-loose max-w-none;
+    }
+    .prose h1, .prose h2, .prose h3, .prose h4 {
+      @apply font-cinzel text-candle-gold leading-tight;
+    }
+    .prose h1 { @apply text-4xl mt-0 mb-6; }
+    .prose h2 { @apply text-2xl mt-10 mb-4 border-b border-stone-dark pb-2; }
+    .prose h3 { @apply text-xl mt-8 mb-3; }
+    .prose h4 { @apply text-lg mt-6 mb-2; }
+    .prose p  { @apply mb-6 text-lg; }
+    .prose a  { @apply text-candle-gold hover:text-candle-dim transition-colors underline underline-offset-4; }
+    .prose strong { @apply text-stone-light font-bold; }
+    .prose em { @apply italic text-stone-light; }
+    .prose blockquote {
+      @apply border-l-4 border-stain-red pl-6 py-2 my-8 text-stone italic text-xl bg-gargoyle-mid;
+    }
+    .prose ul, .prose ol { @apply mb-6 ml-6 space-y-2; }
+    .prose li { @apply pl-2 marker:text-stain-red; }
+    .prose code {
+      @apply text-[0.85em] bg-gargoyle-mid text-candle-gold px-1.5 py-0.5 rounded font-mono border border-stone-dark;
+    }
+    .prose pre {
+      @apply bg-gargoyle-mid px-6 py-5 overflow-x-auto my-8 rounded border border-stone-dark leading-relaxed;
+    }
+    .prose pre code { @apply bg-transparent p-0 border-none; }
+    .prose img {
+      @apply max-w-full rounded my-8 w-full object-cover border border-stone-dark;
+    }
+    .prose table { @apply w-full border-collapse my-8 text-left; }
+    .prose th { @apply px-4 py-3 border-b border-stone-dark text-candle-gold font-cinzel bg-gargoyle-mid; }
+    .prose td { @apply px-4 py-3 border-b border-stone-dark text-stone-light; }
+    .prose hr { @apply border-stone-dark my-8; }
+
+    /* ========== Chronicle Card ========== */
+    .chronicle-card {
+      @apply block border border-stone-dark bg-gargoyle-mid p-6 transition-all duration-300 hover:border-candle-gold hover:bg-gargoyle-deep;
+      position: relative;
+    }
+    .chronicle-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background-color: #991b1b;
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+      transform-origin: left;
+    }
+    .chronicle-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    /* ========== Pagination ========== */
+    nav.pagination { @apply my-10; }
+    nav.pagination .pagination-list {
+      @apply list-none p-0 m-0 flex gap-3 flex-wrap items-center justify-center;
+    }
+    nav.pagination a {
+      @apply inline-block px-4 py-2 border border-stone-dark text-sm no-underline text-stone hover:text-candle-gold hover:border-candle-gold transition-all font-cinzel;
+    }
+    .pagination-current span {
+      @apply inline-block px-4 py-2 bg-stain-red text-stone-light text-sm font-cinzel border border-stain-red;
+    }
+    .pagination-disabled span {
+      @apply inline-block px-4 py-2 border border-stone-dark text-stone opacity-30 text-sm font-cinzel;
+    }
+
+    /* ========== Tag Pills ========== */
+    .tag-pill {
+      @apply inline-block px-3 py-1 text-xs font-cinzel text-stone border border-stone-dark hover:border-candle-gold hover:text-candle-gold transition-colors no-underline uppercase tracking-widest;
+    }
+
+    /* ========== Section List ========== */
+    ul.section-list { @apply list-none p-0 my-8 space-y-3; }
+    ul.section-list li {
+      @apply p-4 bg-gargoyle-mid border border-stone-dark hover:border-candle-gold transition-colors;
+    }
+    ul.section-list li a { @apply font-cinzel text-candle-gold hover:text-candle-dim transition-colors no-underline; }
+  </style>
+
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+</head>
+<body class="font-fell text-stone-light bg-gargoyle min-h-screen leading-relaxed" style="background-color: #1a1a1a; color: #9ca3af;">
+
+  <!-- Atmospheric top border -->
+  <div class="w-full h-px bg-stain-red" style="background-color: #991b1b;"></div>
+
+  <header style="background-color: #0d0d0d; border-bottom: 1px solid #4b5563;">
+    <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="{{ base_url }}/" class="no-underline flex items-center gap-3" style="text-decoration: none;">
+        <!-- Candle flame accent -->
+        <span class="candle-dot" style="animation: candle 3s ease-in-out infinite;"></span>
+        <span style="font-family: 'UnifrakturMaguntia', serif; font-size: 1.75rem; color: #d4a017; letter-spacing: 0.05em;">{{ site.title }}</span>
+      </a>
+      <nav class="flex gap-6 items-center">
+        <a href="{{ base_url }}/chronicles/" style="font-family: 'Cinzel', serif; font-size: 0.8rem; color: #6b7280; text-decoration: none; text-transform: uppercase; letter-spacing: 0.15em;" onmouseover="this.style.color='#d4a017'" onmouseout="this.style.color='#6b7280'">Chronicles</a>
+        <a href="{{ base_url }}/tags/" style="font-family: 'Cinzel', serif; font-size: 0.8rem; color: #6b7280; text-decoration: none; text-transform: uppercase; letter-spacing: 0.15em;" onmouseover="this.style.color='#d4a017'" onmouseout="this.style.color='#6b7280'">Reliquary</a>
+      </nav>
+    </div>
+  </header>

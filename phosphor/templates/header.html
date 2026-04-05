@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="description" content="{{ page.description }}">
+  <title>{{ page.title }} - {{ site.title }}</title>
+  {{ og_all_tags }}
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'bio-cyan': '#06b6d4',
+            'neon-green': '#22c55e',
+            'deep-black': '#020617',
+            'plankton-purple': '#a855f7',
+            'abyss': '#010409',
+            'void': '#030712',
+          },
+          fontFamily: {
+            'mono': ['Courier New', 'Courier', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Raleway:wght@300;400;600;800&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: #020617;
+      color: #94a3b8;
+      font-family: 'Raleway', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Bioluminescent pulse animation */
+    @keyframes bio-pulse {
+      0%, 100% {
+        opacity: 1;
+        text-shadow:
+          0 0 4px #06b6d4,
+          0 0 12px #06b6d4,
+          0 0 24px #06b6d488,
+          0 0 48px #06b6d444;
+      }
+      50% {
+        opacity: 0.85;
+        text-shadow:
+          0 0 2px #06b6d4,
+          0 0 8px #06b6d4,
+          0 0 16px #06b6d488,
+          0 0 32px #06b6d422;
+      }
+    }
+
+    @keyframes bio-pulse-green {
+      0%, 100% {
+        opacity: 1;
+        text-shadow:
+          0 0 4px #22c55e,
+          0 0 12px #22c55e,
+          0 0 24px #22c55e88,
+          0 0 48px #22c55e44;
+      }
+      50% {
+        opacity: 0.85;
+        text-shadow:
+          0 0 2px #22c55e,
+          0 0 8px #22c55e,
+          0 0 16px #22c55e88,
+          0 0 32px #22c55e22;
+      }
+    }
+
+    @keyframes bio-pulse-purple {
+      0%, 100% {
+        box-shadow:
+          0 0 8px #a855f7,
+          0 0 20px #a855f788,
+          0 0 40px #a855f744,
+          inset 0 0 20px #a855f711;
+      }
+      50% {
+        box-shadow:
+          0 0 4px #a855f7,
+          0 0 12px #a855f788,
+          0 0 24px #a855f744,
+          inset 0 0 10px #a855f708;
+      }
+    }
+
+    @keyframes float-creature {
+      0%, 100% { transform: translateY(0px); }
+      33% { transform: translateY(-6px); }
+      66% { transform: translateY(-3px); }
+    }
+
+    @keyframes specimen-appear {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes border-glow {
+      0%, 100% {
+        border-color: #06b6d444;
+        box-shadow: 0 0 8px #06b6d422;
+      }
+      50% {
+        border-color: #06b6d488;
+        box-shadow: 0 0 16px #06b6d444, inset 0 0 8px #06b6d411;
+      }
+    }
+
+    @keyframes scan-line {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(100vh); }
+    }
+
+    /* Site title glow */
+    .site-title-glow {
+      font-family: 'Space Mono', monospace;
+      color: #06b6d4;
+      animation: bio-pulse 3s ease-in-out infinite;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    /* Nav links */
+    .nav-link {
+      color: #475569;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.3s, text-shadow 0.3s;
+    }
+
+    .nav-link:hover {
+      color: #22c55e;
+      text-shadow:
+        0 0 4px #22c55e,
+        0 0 12px #22c55e88;
+    }
+
+    /* Header */
+    .site-header {
+      background-color: #010409;
+      border-bottom: 1px solid #06b6d422;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    /* Specimen cards */
+    .specimen-card {
+      background-color: #030712;
+      border: 1px solid #06b6d433;
+      animation:
+        border-glow 4s ease-in-out infinite,
+        float-creature 6s ease-in-out infinite;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .specimen-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #06b6d406;
+      opacity: 0;
+      transition: opacity 0.4s;
+      pointer-events: none;
+    }
+
+    .specimen-card:hover {
+      border-color: #06b6d4;
+      box-shadow:
+        0 0 16px #06b6d444,
+        0 0 32px #06b6d422,
+        0 0 64px #06b6d411,
+        inset 0 0 32px #06b6d408;
+      transform: translateY(-4px) scale(1.01);
+      animation-play-state: paused;
+    }
+
+    .specimen-card:hover::before {
+      opacity: 1;
+    }
+
+    .specimen-card-purple:hover {
+      border-color: #a855f7;
+      box-shadow:
+        0 0 16px #a855f744,
+        0 0 32px #a855f722,
+        0 0 64px #a855f711,
+        inset 0 0 32px #a855f708;
+    }
+
+    .specimen-card-green:hover {
+      border-color: #22c55e;
+      box-shadow:
+        0 0 16px #22c55e44,
+        0 0 32px #22c55e22,
+        0 0 64px #22c55e11,
+        inset 0 0 32px #22c55e08;
+    }
+
+    /* Glowing headings */
+    .glow-cyan {
+      color: #06b6d4;
+      text-shadow:
+        0 0 4px #06b6d4,
+        0 0 12px #06b6d4,
+        0 0 24px #06b6d488;
+    }
+
+    .glow-green {
+      color: #22c55e;
+      text-shadow:
+        0 0 4px #22c55e,
+        0 0 12px #22c55e,
+        0 0 24px #22c55e88;
+    }
+
+    .glow-purple {
+      color: #a855f7;
+      text-shadow:
+        0 0 4px #a855f7,
+        0 0 12px #a855f7,
+        0 0 24px #a855f788;
+    }
+
+    /* Specimen title */
+    .specimen-title {
+      font-family: 'Space Mono', monospace;
+      font-size: 1rem;
+      letter-spacing: 0.05em;
+      transition: color 0.3s, text-shadow 0.3s;
+    }
+
+    .specimen-card:hover .specimen-title {
+      color: #06b6d4;
+      text-shadow:
+        0 0 4px #06b6d4,
+        0 0 12px #06b6d488;
+    }
+
+    .specimen-card-purple:hover .specimen-title {
+      color: #a855f7;
+      text-shadow:
+        0 0 4px #a855f7,
+        0 0 12px #a855f788;
+    }
+
+    .specimen-card-green:hover .specimen-title {
+      color: #22c55e;
+      text-shadow:
+        0 0 4px #22c55e,
+        0 0 12px #22c55e88;
+    }
+
+    /* Tag badges */
+    .bio-tag {
+      display: inline-block;
+      background-color: #06b6d411;
+      border: 1px solid #06b6d433;
+      color: #06b6d4;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.5rem;
+      transition: all 0.3s;
+    }
+
+    .bio-tag:hover {
+      background-color: #06b6d422;
+      border-color: #06b6d4;
+      box-shadow: 0 0 8px #06b6d444;
+    }
+
+    /* Depth indicator */
+    .depth-marker {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: #a855f7;
+      text-shadow: 0 0 6px #a855f766;
+      letter-spacing: 0.05em;
+    }
+
+    /* Content prose */
+    .content-prose {
+      color: #64748b;
+      line-height: 1.8;
+      font-size: 0.95rem;
+    }
+
+    .content-prose h2 {
+      font-family: 'Space Mono', monospace;
+      color: #06b6d4;
+      text-shadow:
+        0 0 4px #06b6d4,
+        0 0 12px #06b6d488;
+      font-size: 1.1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin: 2rem 0 1rem;
+      border-bottom: 1px solid #06b6d422;
+      padding-bottom: 0.5rem;
+    }
+
+    .content-prose h3 {
+      font-family: 'Space Mono', monospace;
+      color: #22c55e;
+      text-shadow: 0 0 6px #22c55e66;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      margin: 1.5rem 0 0.75rem;
+    }
+
+    .content-prose p {
+      margin-bottom: 1.25rem;
+    }
+
+    .content-prose strong {
+      color: #a855f7;
+      text-shadow: 0 0 4px #a855f766;
+    }
+
+    .content-prose em {
+      color: #22c55e;
+      font-style: italic;
+    }
+
+    .content-prose a {
+      color: #06b6d4;
+      text-decoration: none;
+      text-shadow: 0 0 4px #06b6d466;
+      border-bottom: 1px solid #06b6d444;
+      transition: all 0.3s;
+    }
+
+    .content-prose a:hover {
+      color: #67e8f9;
+      text-shadow: 0 0 8px #06b6d4;
+      border-bottom-color: #06b6d4;
+    }
+
+    /* Divider */
+    .bio-divider {
+      border: none;
+      height: 1px;
+      background-color: #06b6d422;
+      box-shadow: 0 0 8px #06b6d422;
+      margin: 2.5rem 0;
+    }
+
+    /* Section heading */
+    .section-heading {
+      font-family: 'Space Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-size: 0.75rem;
+      color: #334155;
+      margin-bottom: 2rem;
+    }
+
+    /* Page heading */
+    .page-heading {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* Glowing border box */
+    .glow-box {
+      border: 1px solid #06b6d433;
+      background-color: #030712;
+      padding: 1.5rem;
+      animation: border-glow 5s ease-in-out infinite;
+    }
+
+    /* Specimen appear animation */
+    .specimen-appear {
+      animation: specimen-appear 0.6s ease both;
+    }
+
+    /* Scan line effect */
+    .scanlines::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background-color: #06b6d408;
+      animation: scan-line 8s linear infinite;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* Specimen meta */
+    .specimen-meta {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: #1e293b;
+      letter-spacing: 0.05em;
+    }
+
+    .specimen-meta span {
+      color: #a855f7;
+      text-shadow: 0 0 4px #a855f766;
+    }
+
+    /* Footer */
+    .site-footer {
+      border-top: 1px solid #06b6d422;
+      background-color: #010409;
+    }
+
+    /* Mobile menu */
+    #mobile-menu {
+      display: none;
+      background-color: #010409;
+      border-top: 1px solid #06b6d422;
+    }
+
+    #mobile-menu.open {
+      display: block;
+    }
+
+    /* Pulse dot */
+    .pulse-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #22c55e;
+      box-shadow: 0 0 4px #22c55e, 0 0 8px #22c55e;
+      animation: bio-pulse-green 2s ease-in-out infinite;
+      display: inline-block;
+    }
+
+    /* Depth number */
+    .depth-number {
+      font-family: 'Space Mono', monospace;
+      color: #a855f7;
+      font-size: 0.75rem;
+      text-shadow: 0 0 6px #a855f766;
+    }
+  </style>
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+</head>
+<body class="scanlines">
+
+  <header class="site-header">
+    <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="{{ base_url }}/" class="site-title-glow text-xl font-bold no-underline">
+        {{ site.title }}
+      </a>
+
+      <nav class="hidden md:flex items-center gap-8">
+        <a href="{{ base_url }}/gallery/" class="nav-link">Gallery</a>
+        <a href="{{ base_url }}/tags/" class="nav-link">Specimens</a>
+        <a href="{{ base_url }}/rss.xml" class="nav-link" target="_blank">Feed</a>
+      </nav>
+
+      <button id="menu-btn" class="md:hidden text-slate-600 hover:text-bio-cyan transition-colors" onclick="toggleMobileMenu()" title="Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+    </div>
+    <div id="mobile-menu">
+      <div class="max-w-5xl mx-auto px-6 py-4 flex flex-col gap-4">
+        <a href="{{ base_url }}/gallery/" class="nav-link">Gallery</a>
+        <a href="{{ base_url }}/tags/" class="nav-link">Specimens</a>
+        <a href="{{ base_url }}/rss.xml" class="nav-link" target="_blank">Feed</a>
+      </div>
+    </div>
+  </header>

@@ -1,0 +1,95 @@
+{% include "header.html" %}
+
+<main class="max-w-4xl mx-auto px-6 py-16">
+
+  <!-- Section header -->
+  <div class="mb-12">
+    <div class="hud-label mb-3">// dive log archive</div>
+    <h1 class="glow-text text-4xl font-mono font-semibold mb-4">
+      {{ section.title }}
+    </h1>
+    {% if section.description %}
+    <p style="color: rgba(226,232,240,0.5); font-style: italic;">{{ section.description }}</p>
+    {% endif %}
+
+    <!-- Depth separator -->
+    <div class="mt-6 flex items-center gap-4">
+      <div class="flex-1 h-px" style="background-color: rgba(34,211,238,0.2); box-shadow: 0 0 6px rgba(34,211,238,0.1);"></div>
+      <span class="hud-label">{{ section.pages | length }} records</span>
+      <div class="flex-1 h-px" style="background-color: rgba(34,211,238,0.2);"></div>
+    </div>
+  </div>
+
+  <!-- Dive log list -->
+  <div class="space-y-6">
+    {% for post in section.pages %}
+    <a href="{{ base_url }}{{ post.url }}" class="log-card block p-6 rounded-sm" style="text-decoration: none;">
+
+      <!-- Log entry HUD bar -->
+      <div class="flex flex-wrap items-center gap-4 mb-4">
+        {% if post.date %}
+        <div class="hud-panel px-3 py-1 flex items-center gap-3">
+          <div>
+            <div class="hud-label">date</div>
+            <div class="hud-value text-xs">{{ post.date }}</div>
+          </div>
+        </div>
+        {% endif %}
+
+        {% if post.extra.depth %}
+        <div class="hud-panel px-3 py-1">
+          <div class="hud-label">max depth</div>
+          <div class="hud-value text-xs">{{ post.extra.depth }}</div>
+        </div>
+        {% endif %}
+
+        {% if post.extra.zone %}
+        <div class="hud-panel px-3 py-1">
+          <div class="hud-label">zone</div>
+          <div class="hud-value text-xs">{{ post.extra.zone }}</div>
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- Title -->
+      <h2 class="text-xl font-semibold mb-2 font-mono" style="color: #22d3ee;">
+        {{ post.title }}
+      </h2>
+
+      <!-- Description -->
+      {% if post.description %}
+      <p class="text-sm leading-relaxed mb-4" style="color: rgba(226,232,240,0.6);">
+        {{ post.description }}
+      </p>
+      {% endif %}
+
+      <!-- Tags -->
+      {% if post.tags %}
+      <div class="flex flex-wrap gap-2">
+        {% for tag in post.tags %}
+        <span class="tag-pill">{{ tag }}</span>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <!-- Dive deeper indicator -->
+      <div class="mt-4 flex items-center gap-2" style="color: rgba(34,211,238,0.4);">
+        <div class="flex-1 h-px" style="background-color: rgba(34,211,238,0.1);"></div>
+        <span class="font-mono text-xs tracking-widest">DIVE DEEPER</span>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+
+    </a>
+    {% endfor %}
+  </div>
+
+  <!-- Pagination -->
+  {% if pagination %}
+  <div class="mt-12 flex justify-center">
+    {{ pagination }}
+  </div>
+  {% endif %}
+
+</main>
+
+{% include "footer.html" %}

@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+  {% if page.description %}<meta name="description" content="{{ page.description }}">{% endif %}
+  {{ og_all_tags }}
+
+  <!-- Google Fonts: Cormorant Garamond + Cinzel -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            marble:   '#faf9f6',
+            gold:     '#b8860b',
+            'gold-light': '#d4a017',
+            'gold-dark':  '#8a6408',
+            purple:   '#4a0e4e',
+            'purple-light': '#6b1a71',
+            column:   '#8b8682',
+            'column-light': '#c4c0bc',
+            'column-dark':  '#5c5956',
+            parchment: '#f0ece4',
+          },
+          fontFamily: {
+            display: ['Cinzel', 'Georgia', 'serif'],
+            body:    ['Cormorant Garamond', 'Georgia', 'serif'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <style type="text/tailwindcss">
+    /* ------------------------------------------------------------------ */
+    /* BASE                                                                 */
+    /* ------------------------------------------------------------------ */
+    body {
+      @apply font-body text-purple bg-marble leading-relaxed antialiased;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* TYPOGRAPHY / PROSE                                                   */
+    /* ------------------------------------------------------------------ */
+    .prose { @apply font-body text-purple; }
+    .prose h1, .prose h2, .prose h3 {
+      @apply font-display font-semibold text-purple;
+    }
+    .prose h1 { @apply text-3xl mt-0 mb-4 tracking-wide; }
+    .prose h2 { @apply text-2xl mt-10 mb-4 border-b border-gold/30 pb-2; }
+    .prose h3 { @apply text-xl mt-8 mb-3; }
+    .prose p  { @apply mb-5 text-lg leading-loose; }
+    .prose a  { @apply text-gold hover:text-gold-dark underline; }
+    .prose strong { @apply font-semibold text-purple; }
+    .prose em     { @apply italic; }
+    .prose ul, .prose ol { @apply mb-5 ml-8 text-lg; }
+    .prose li { @apply my-2; }
+    .prose blockquote {
+      @apply border-l-4 border-gold/50 pl-5 py-1 my-6 italic text-column;
+    }
+    .prose table {
+      @apply w-full border-collapse my-6 text-base;
+    }
+    .prose thead tr {
+      @apply border-b-2 border-gold/40;
+    }
+    .prose th {
+      @apply font-display text-left py-2 px-4 text-purple uppercase tracking-wider text-sm;
+    }
+    .prose td {
+      @apply py-2 px-4 border-b border-column-light/60 text-column-dark;
+    }
+    .prose code {
+      @apply text-sm bg-parchment px-1.5 py-0.5 rounded border border-column-light text-purple font-mono;
+    }
+    .prose pre {
+      @apply bg-parchment px-5 py-4 overflow-x-auto my-4 rounded border border-column-light;
+    }
+    .prose pre code { @apply bg-transparent p-0 border-0; }
+
+    /* ------------------------------------------------------------------ */
+    /* NAVIGATION                                                           */
+    /* ------------------------------------------------------------------ */
+    .site-nav {
+      @apply bg-marble border-b-2 border-gold/40 sticky top-0 z-50;
+      box-shadow: 0 2px 8px rgba(184,134,11,0.10);
+    }
+    .nav-inner {
+      @apply max-w-6xl mx-auto px-6 py-0 flex items-stretch justify-between;
+    }
+    .nav-brand {
+      @apply font-display font-bold text-purple text-xl no-underline py-4 tracking-widest uppercase flex items-center gap-3;
+    }
+    .nav-brand-badge {
+      @apply w-8 h-8 border-2 border-gold flex items-center justify-center text-gold font-display font-bold text-sm;
+    }
+    .nav-links {
+      @apply hidden md:flex items-center gap-0 list-none m-0 p-0;
+    }
+    .nav-links li { @apply m-0; }
+    .nav-links a {
+      @apply inline-block font-display text-sm tracking-widest uppercase text-column hover:text-purple no-underline
+             px-5 py-5 border-b-2 border-transparent hover:border-gold transition-all;
+    }
+    .nav-cta {
+      @apply inline-block font-display text-sm tracking-widest uppercase px-5 py-4 ml-4
+             bg-purple text-marble no-underline self-center
+             border-2 border-purple hover:bg-purple-light hover:border-purple-light transition-all;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* COLUMN DECORATIVE BORDERS                                            */
+    /* ------------------------------------------------------------------ */
+    .column-border-left,
+    .column-border-right {
+      @apply hidden lg:block w-10 shrink-0;
+      background-color: transparent;
+      border-left: 3px solid #b8860b;
+      border-right: 1px solid #d4a017;
+      position: relative;
+    }
+    .column-border-left::before,
+    .column-border-right::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 3px; right: 1px;
+      height: 20px;
+      background-color: #b8860b;
+    }
+    .column-border-left::after,
+    .column-border-right::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 3px; right: 1px;
+      height: 20px;
+      background-color: #b8860b;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* HERO SECTION                                                         */
+    /* ------------------------------------------------------------------ */
+    .hero-section {
+      @apply flex min-h-screen;
+      background-color: #faf9f6;
+      border-bottom: 3px solid #b8860b;
+    }
+    .column-left, .column-right {
+      @apply hidden lg:block w-16 shrink-0;
+      background-color: #f0ece4;
+      border-right: 2px solid #b8860b;
+      position: relative;
+    }
+    .column-right {
+      border-right: none;
+      border-left: 2px solid #b8860b;
+    }
+    /* Corinthian capital effect via box shadows */
+    .column-left::before, .column-right::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 80px;
+      background-color: #f0ece4;
+      border-bottom: 4px solid #b8860b;
+      box-shadow:
+        inset 0 -8px 0 0 #d4a017,
+        inset 0 -16px 0 0 #b8860b;
+    }
+    .column-left::after, .column-right::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 40px;
+      background-color: #f0ece4;
+      border-top: 4px solid #b8860b;
+    }
+    .hero-inner {
+      @apply flex-1 flex items-center justify-center py-24 px-6;
+    }
+    .arch-frame {
+      @apply max-w-3xl w-full text-center px-10 py-16 relative;
+      border: 2px solid #b8860b;
+      border-top: none;
+      border-radius: 0 0 4px 4px;
+      /* Arch top via pseudo-element workaround using box-shadow */
+      box-shadow:
+        0 0 0 1px rgba(184,134,11,0.2),
+        0 4px 32px rgba(184,134,11,0.08);
+    }
+    .arch-frame::before {
+      content: '';
+      position: absolute;
+      top: -60px; left: -2px; right: -2px;
+      height: 60px;
+      border: 2px solid #b8860b;
+      border-bottom: none;
+      border-radius: 999px 999px 0 0;
+      background-color: #f0ece4;
+    }
+    .arch-frame::after {
+      content: '';
+      position: absolute;
+      top: -4px; left: 50%; transform: translateX(-50%);
+      width: 12px; height: 12px;
+      background-color: #b8860b;
+      border-radius: 50%;
+    }
+    .laurel-row {
+      @apply flex justify-center mb-6;
+    }
+    .laurel-icon {
+      @apply w-32 h-auto;
+    }
+    .hero-overtitle {
+      @apply font-display text-xs tracking-[0.3em] uppercase text-column mb-4;
+    }
+    .hero-title {
+      @apply font-display font-bold text-5xl md:text-6xl text-purple mb-6 leading-tight tracking-wide;
+    }
+    .hero-subtitle {
+      @apply font-body text-xl text-column leading-loose mb-8 italic;
+    }
+    .hero-divider {
+      @apply flex items-center justify-center gap-3 mb-8;
+    }
+    .divider-rule {
+      @apply block h-px w-20 bg-gold/40;
+    }
+    .hero-actions {
+      @apply flex flex-wrap gap-4 justify-center;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* BUTTONS                                                              */
+    /* ------------------------------------------------------------------ */
+    .btn-primary {
+      @apply inline-block font-display text-sm tracking-widest uppercase px-8 py-3
+             bg-purple text-marble no-underline
+             border-2 border-purple hover:bg-purple-light hover:border-purple-light transition-all;
+    }
+    .btn-secondary {
+      @apply inline-block font-display text-sm tracking-widest uppercase px-8 py-3
+             bg-transparent text-purple no-underline
+             border-2 border-gold hover:bg-gold/10 transition-all;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* CONTENT SECTIONS                                                     */
+    /* ------------------------------------------------------------------ */
+    .content-section {
+      @apply py-20 px-6;
+      background-color: #faf9f6;
+    }
+    .alt-section {
+      background-color: #f0ece4;
+    }
+    .section-header {
+      @apply max-w-3xl mx-auto text-center mb-14;
+    }
+    .shield-icon {
+      @apply mx-auto mb-4 w-12 h-auto;
+    }
+    .section-title {
+      @apply font-display font-semibold text-4xl text-purple mb-4 tracking-wide;
+    }
+    .section-description {
+      @apply font-body italic text-xl text-column leading-loose;
+    }
+    .section-footer-link {
+      @apply text-center mt-12;
+    }
+    .link-decorated {
+      @apply font-display text-sm tracking-widest uppercase text-gold hover:text-gold-dark no-underline
+             border-b-2 border-gold/40 pb-1 hover:border-gold transition-all;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* EVENT CARDS                                                          */
+    /* ------------------------------------------------------------------ */
+    .event-grid {
+      @apply max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8;
+    }
+    .event-card {
+      @apply block no-underline bg-marble border-2 border-column-light hover:border-gold
+             transition-all hover:shadow-lg;
+    }
+    .event-card-arch {
+      @apply flex items-center justify-center py-8;
+      background-color: #f0ece4;
+      border-bottom: 2px solid #b8860b;
+      clip-path: ellipse(100% 90% at 50% 100%);
+      padding-bottom: 2.5rem;
+    }
+    .event-number {
+      @apply font-display font-bold text-4xl text-gold;
+    }
+    .event-card-body {
+      @apply p-6;
+    }
+    .event-date {
+      @apply font-display text-xs tracking-widest uppercase text-column mb-2;
+    }
+    .event-card-title {
+      @apply font-display font-semibold text-xl text-purple mb-3 leading-snug;
+    }
+    .event-card-desc {
+      @apply font-body italic text-base text-column leading-relaxed mb-4;
+    }
+    .event-tag {
+      @apply inline-block font-display text-xs tracking-widest uppercase px-3 py-1
+             border border-gold/50 text-gold;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* VENUE CARDS                                                          */
+    /* ------------------------------------------------------------------ */
+    .venue-grid {
+      @apply max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6;
+    }
+    .venue-card {
+      @apply p-8 border-2 border-column-light hover:border-gold transition-all
+             flex items-start gap-5;
+      background-color: #faf9f6;
+    }
+    .venue-icon-wrap {
+      @apply shrink-0 w-12 h-12 flex items-center justify-center;
+    }
+    .venue-card-title {
+      @apply font-display font-semibold text-lg text-purple mb-2;
+    }
+    .venue-card-desc {
+      @apply font-body text-base text-column leading-relaxed;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* SPEAKERS                                                             */
+    /* ------------------------------------------------------------------ */
+    .speakers-grid {
+      @apply max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8;
+    }
+    .speaker-card {
+      @apply text-center p-8 border-2 border-column-light hover:border-gold transition-all;
+      background-color: #f0ece4;
+    }
+    .speaker-avatar {
+      @apply w-16 h-16 mx-auto mb-4 border-2 border-gold
+             flex items-center justify-center font-display font-bold text-2xl text-gold;
+      background-color: #faf9f6;
+    }
+    .speaker-name {
+      @apply font-display font-semibold text-lg text-purple mb-1;
+    }
+    .speaker-role {
+      @apply font-display text-xs tracking-wider uppercase text-column mb-3;
+    }
+    .speaker-topic {
+      @apply font-body italic text-base text-column leading-relaxed;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* CTA SECTION                                                          */
+    /* ------------------------------------------------------------------ */
+    .cta-section {
+      @apply py-24 px-6;
+      background-color: #4a0e4e;
+    }
+    .cta-inner {
+      @apply max-w-3xl mx-auto text-center;
+    }
+    .cta-title {
+      @apply font-display font-bold text-4xl text-marble mb-4 tracking-wide;
+    }
+    .cta-desc {
+      @apply font-body italic text-xl text-marble/80 mb-8 leading-loose;
+    }
+    .cta-section .btn-primary {
+      @apply bg-gold border-gold text-marble hover:bg-gold-dark hover:border-gold-dark;
+    }
+    .cta-section .laurel-row svg g {
+      stroke: #d4a017;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* POST PAGES                                                           */
+    /* ------------------------------------------------------------------ */
+    .post-arch-header {
+      @apply text-center py-16 px-6 border-b-2 border-gold/30 mb-12;
+      background-color: #f0ece4;
+    }
+    .post-label {
+      @apply font-display text-xs tracking-[0.3em] uppercase text-column mb-4;
+    }
+    .post-title {
+      @apply font-display font-bold text-5xl text-purple mb-4 leading-tight tracking-wide;
+    }
+    .post-meta {
+      @apply font-display text-sm tracking-wider text-column;
+    }
+    .post-divider {
+      @apply flex items-center justify-center gap-3 mt-6;
+    }
+    .post-body {
+      @apply max-w-3xl mx-auto px-6 pb-20;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* SECTION LISTING                                                      */
+    /* ------------------------------------------------------------------ */
+    .events-listing {
+      @apply max-w-4xl mx-auto px-6 py-16;
+    }
+    .events-listing-header {
+      @apply text-center mb-14;
+    }
+    .event-list-item {
+      @apply block no-underline mb-6 border-2 border-column-light hover:border-gold
+             transition-all p-8 flex gap-6 items-start;
+      background-color: #f0ece4;
+    }
+    .event-list-number {
+      @apply font-display font-bold text-3xl text-gold/50 shrink-0 w-10 text-right;
+    }
+    .event-list-body {}
+    .event-list-date {
+      @apply font-display text-xs tracking-widest uppercase text-column mb-1;
+    }
+    .event-list-title {
+      @apply font-display font-semibold text-xl text-purple mb-2;
+    }
+    .event-list-desc {
+      @apply font-body italic text-base text-column;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* TAXONOMY                                                             */
+    /* ------------------------------------------------------------------ */
+    .taxonomy-section {
+      @apply max-w-3xl mx-auto px-6 py-16;
+    }
+    .tag-grid {
+      @apply flex flex-wrap gap-3 my-8;
+    }
+    .tag-pill {
+      @apply inline-block font-display text-sm tracking-widest uppercase px-4 py-2
+             border-2 border-gold/40 text-gold no-underline hover:border-gold hover:text-gold-dark transition-all;
+    }
+    ul.section-list { @apply list-none p-0 my-6 space-y-3; }
+    ul.section-list li {
+      @apply p-4 border-2 border-column-light hover:border-gold transition-all;
+      background-color: #f0ece4;
+    }
+    ul.section-list li a {
+      @apply font-display font-medium text-purple hover:text-gold transition-colors no-underline;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* PAGINATION                                                           */
+    /* ------------------------------------------------------------------ */
+    nav.pagination { @apply my-10; }
+    nav.pagination .pagination-list {
+      @apply list-none p-0 m-0 flex gap-2 flex-wrap items-center justify-center;
+    }
+    nav.pagination a {
+      @apply inline-block px-4 py-2 border-2 border-column-light text-sm no-underline text-column
+             hover:border-gold hover:text-gold transition-all font-display tracking-wider;
+    }
+    .pagination-current span {
+      @apply inline-block px-4 py-2 border-2 border-gold bg-purple text-marble text-sm font-display;
+    }
+    .pagination-disabled span {
+      @apply inline-block px-4 py-2 border-2 border-column-light/50 text-column-light opacity-50 text-sm font-display;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* 404                                                                  */
+    /* ------------------------------------------------------------------ */
+    .not-found {
+      @apply min-h-screen flex items-center justify-center text-center px-6 py-24;
+      background-color: #faf9f6;
+    }
+    .not-found-inner {
+      @apply max-w-xl;
+    }
+    .not-found-num {
+      @apply font-display font-bold text-8xl text-gold/40 leading-none mb-4;
+    }
+    .not-found-title {
+      @apply font-display font-semibold text-3xl text-purple mb-4;
+    }
+    .not-found-desc {
+      @apply font-body italic text-xl text-column mb-8;
+    }
+  </style>
+
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a href="{{ base_url }}/" class="nav-brand">
+        <span class="nav-brand-badge">C</span>
+        Colosseum
+      </a>
+      <ul class="nav-links">
+        <li><a href="{{ base_url }}/events/">Events</a></li>
+        <li><a href="{{ base_url }}/#venue">Venue</a></li>
+        <li><a href="{{ base_url }}/#speakers">Orators</a></li>
+      </ul>
+      <a href="{{ base_url }}/events/" class="nav-cta">Book a Seat</a>
+    </div>
+  </nav>
