@@ -1,0 +1,307 @@
+<style>
+    :root {
+        --win-bg: #c0c0c0;
+        --win-border-light: #ffffff;
+        --win-border-light-inner: #dfdfdf;
+        --win-border-dark: #000000;
+        --win-border-dark-inner: #808080;
+        --win-title-bg: #000080;
+        --win-title-text: #ffffff;
+        --win-text: #000000;
+        --desktop-bg: #008080;
+    }
+
+    body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        font-family: 'MS Sans Serif', 'Arial', sans-serif;
+        font-size: 14px;
+        background-color: var(--desktop-bg);
+        color: var(--win-text);
+        overflow: hidden;
+    }
+
+    .desktop {
+        position: relative;
+        height: calc(100vh - 40px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .window {
+        background-color: var(--win-bg);
+        border-top: 2px solid var(--win-border-light);
+        border-left: 2px solid var(--win-border-light);
+        border-right: 2px solid var(--win-border-dark);
+        border-bottom: 2px solid var(--win-border-dark);
+        box-shadow: inset 1px 1px var(--win-border-light-inner), inset -1px -1px var(--win-border-dark-inner);
+        width: 100%;
+        max-width: 800px;
+        max-height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .window-titlebar {
+        background-color: var(--win-title-bg);
+        color: var(--win-title-text);
+        padding: 2px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: bold;
+        margin: 2px;
+    }
+
+    .window-title {
+        padding-left: 4px;
+        display: flex;
+        align-items: center;
+    }
+
+    .window-controls {
+        display: flex;
+        gap: 2px;
+    }
+
+    .win-btn {
+        background-color: var(--win-bg);
+        border-top: 1px solid var(--win-border-light);
+        border-left: 1px solid var(--win-border-light);
+        border-right: 1px solid var(--win-border-dark);
+        border-bottom: 1px solid var(--win-border-dark);
+        box-shadow: inset 1px 1px var(--win-border-light-inner), inset -1px -1px var(--win-border-dark-inner);
+        font-family: 'MS Sans Serif', 'Arial', sans-serif;
+        font-weight: bold;
+        font-size: 12px;
+        min-width: 20px;
+        min-height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        cursor: pointer;
+        color: var(--win-text);
+    }
+
+    .win-btn:active {
+        border-top: 1px solid var(--win-border-dark);
+        border-left: 1px solid var(--win-border-dark);
+        border-right: 1px solid var(--win-border-light);
+        border-bottom: 1px solid var(--win-border-light);
+        box-shadow: inset 1px 1px var(--win-border-dark-inner), inset -1px -1px var(--win-border-light-inner);
+        padding-top: 2px;
+        padding-left: 2px;
+    }
+
+    .window-content {
+        padding: 15px;
+        overflow-y: auto;
+        background-color: var(--win-bg);
+        flex-grow: 1;
+    }
+
+    .document {
+        background-color: #ffffff;
+        border-top: 2px solid var(--win-border-dark-inner);
+        border-left: 2px solid var(--win-border-dark-inner);
+        border-right: 2px solid var(--win-border-light);
+        border-bottom: 2px solid var(--win-border-light);
+        box-shadow: inset 1px 1px var(--win-border-dark), inset -1px -1px var(--win-border-light-inner);
+        padding: 20px;
+        margin-top: 10px;
+        min-height: 200px;
+    }
+
+    .taskbar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 40px;
+        background-color: var(--win-bg);
+        border-top: 2px solid var(--win-border-light);
+        display: flex;
+        align-items: center;
+        padding: 0 4px;
+        z-index: 1000;
+        box-shadow: inset 0 1px var(--win-border-light-inner);
+    }
+
+    .start-btn {
+        background-color: var(--win-bg);
+        border-top: 2px solid var(--win-border-light);
+        border-left: 2px solid var(--win-border-light);
+        border-right: 2px solid var(--win-border-dark);
+        border-bottom: 2px solid var(--win-border-dark);
+        box-shadow: inset 1px 1px var(--win-border-light-inner), inset -1px -1px var(--win-border-dark-inner);
+        font-weight: bold;
+        padding: 4px 8px;
+        text-decoration: none;
+        color: var(--win-text);
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .start-btn:active {
+        border-top: 2px solid var(--win-border-dark);
+        border-left: 2px solid var(--win-border-dark);
+        border-right: 2px solid var(--win-border-light);
+        border-bottom: 2px solid var(--win-border-light);
+        box-shadow: inset 1px 1px var(--win-border-dark-inner), inset -1px -1px var(--win-border-light-inner);
+        padding: 5px 7px 3px 9px;
+    }
+
+    .taskbar-item {
+        background-color: var(--win-bg);
+        border-top: 2px solid var(--win-border-light);
+        border-left: 2px solid var(--win-border-light);
+        border-right: 2px solid var(--win-border-dark);
+        border-bottom: 2px solid var(--win-border-dark);
+        box-shadow: inset 1px 1px var(--win-border-light-inner), inset -1px -1px var(--win-border-dark-inner);
+        padding: 4px 8px;
+        text-decoration: none;
+        color: var(--win-text);
+        margin-right: 4px;
+        display: flex;
+        align-items: center;
+    }
+
+    .taskbar-item.active {
+        border-top: 2px solid var(--win-border-dark);
+        border-left: 2px solid var(--win-border-dark);
+        border-right: 2px solid var(--win-border-light);
+        border-bottom: 2px solid var(--win-border-light);
+        box-shadow: inset 1px 1px var(--win-border-dark-inner), inset -1px -1px var(--win-border-light-inner);
+        padding: 5px 7px 3px 9px;
+        background-color: #d4d4d4;
+    }
+
+    .taskbar-divider {
+        width: 2px;
+        height: 30px;
+        background-color: var(--win-border-light);
+        border-left: 1px solid var(--win-border-dark-inner);
+        margin: 0 8px;
+    }
+
+    .taskbar-clock {
+        margin-left: auto;
+        border-top: 2px solid var(--win-border-dark-inner);
+        border-left: 2px solid var(--win-border-dark-inner);
+        border-right: 2px solid var(--win-border-light);
+        border-bottom: 2px solid var(--win-border-light);
+        box-shadow: inset 1px 1px var(--win-border-dark), inset -1px -1px var(--win-border-light-inner);
+        padding: 4px 10px;
+    }
+
+    a {
+        color: #0000ff;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    a:visited {
+        color: #800080;
+    }
+
+    hr {
+        border: none;
+        border-top: 1px solid var(--win-border-dark-inner);
+        border-bottom: 1px solid var(--win-border-light);
+        margin: 15px 0;
+    }
+
+    ul.directory-list {
+        list-style-type: none;
+        padding-left: 0;
+    }
+
+    ul.directory-list li {
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+    }
+
+    ul.directory-list a {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--win-text);
+        text-decoration: none;
+        padding: 2px 4px;
+    }
+
+    ul.directory-list a:hover {
+        background-color: var(--win-title-bg);
+        color: var(--win-title-text);
+    }
+
+    ul.directory-list a:hover .icon-file, ul.directory-list a:hover .icon-folder {
+        /* Keep icons looking the same on hover */
+    }
+
+    .icon-file {
+        display: inline-block;
+        width: 16px;
+        height: 20px;
+        background-color: #fff;
+        border: 1px solid var(--win-text);
+        position: relative;
+    }
+
+    .icon-file::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        border-top: 6px solid var(--win-bg);
+        border-left: 6px solid var(--win-border-dark-inner);
+    }
+
+    .icon-folder {
+        display: inline-block;
+        width: 20px;
+        height: 16px;
+        background-color: #ffd700;
+        border: 1px solid var(--win-text);
+        position: relative;
+    }
+
+    .icon-folder::before {
+        content: '';
+        position: absolute;
+        top: -4px;
+        left: -1px;
+        width: 8px;
+        height: 4px;
+        background-color: #ffd700;
+        border: 1px solid var(--win-text);
+        border-bottom: none;
+    }
+
+    .menubar {
+        display: flex;
+        gap: 15px;
+        padding: 4px 10px;
+        border-bottom: 1px solid var(--win-border-dark-inner);
+        box-shadow: 0 1px 0 var(--win-border-light);
+        margin-bottom: 10px;
+    }
+
+    .menu-item {
+        cursor: pointer;
+    }
+
+    .menu-item::first-letter {
+        text-decoration: underline;
+    }
+</style>
