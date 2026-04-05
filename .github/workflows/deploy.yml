@@ -268,12 +268,54 @@ jobs:
             .card-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.15rem; }
             .tag { background: #1a1a1a; color: #666; padding: 0.15rem 0.45rem; border-radius: 4px; font-size: 0.6rem; }
             .no-results { text-align: center; color: #555; padding: 3rem 1rem; font-size: 0.9rem; display: none; }
+            .surprise-btn { background: linear-gradient(135deg, #6366f1, #a855f7); border: none; border-radius: 8px; color: #fff; font-size: 0.85rem; padding: 0.6rem 1rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: transform 0.2s, box-shadow 0.2s; font-weight: 600; }
+            .surprise-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4); }
+            .surprise-btn svg { width: 16px; height: 16px; fill: currentColor; }
+            .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 2rem; backdrop-filter: blur(8px); }
+            .modal-overlay.open { display: flex; }
+            .modal-content { background: #0d0d0d; border: 1px solid #333; border-radius: 16px; max-width: 900px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; box-shadow: 0 24px 48px rgba(0,0,0,0.5); }
+            .modal-close { position: absolute; top: 1rem; right: 1rem; background: #1a1a1a; border: none; color: #fff; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10; transition: background 0.2s; }
+            .modal-close:hover { background: #333; }
+            .modal-body { display: flex; flex-direction: column; }
+            .modal-img-wrap { width: 100%; background: #000; line-height: 0; }
+            .modal-img { width: 100%; height: auto; }
+            .modal-info { padding: 2rem; }
+            .modal-info h2 { font-size: 1.5rem; margin-bottom: 0.5rem; color: #fff; }
+            .modal-info p { color: #aaa; line-height: 1.6; margin-bottom: 1.5rem; }
+            .modal-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+            .btn { text-decoration: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-size: 0.9rem; font-weight: 600; transition: all 0.2s; display: flex; align-items: center; gap: 0.5rem; }
+            .btn-primary { background: #fff; color: #000; }
+            .btn-primary:hover { background: #ccc; }
+            .btn-secondary { background: #1a1a1a; color: #fff; border: 1px solid #333; }
+            .btn-secondary:hover { background: #2a2a2a; border-color: #444; }
             @media (max-width: 600px) {
               .github-link { position: static; justify-content: center; margin-bottom: 1.5rem; }
+              .controls { flex-direction: column; align-items: stretch; }
+              .slider-wrap { justify-content: center; }
+              .modal-overlay { padding: 1rem; }
+              .modal-info { padding: 1.5rem; }
             }
           </style>
           </head>
           <body>
+          <div class="modal-overlay" id="modalOverlay">
+            <div class="modal-content">
+              <button class="modal-close" onclick="closeModal()">✕</button>
+              <div class="modal-body">
+                <div class="modal-img-wrap">
+                  <img src="" alt="" class="modal-img" id="modalImg">
+                </div>
+                <div class="modal-info">
+                  <h2 id="modalTitle"></h2>
+                  <p id="modalDesc"></p>
+                  <div class="modal-actions">
+                    <a href="" class="btn btn-primary" id="modalDemoLink">Live Demo</a>
+                    <a href="" class="btn btn-secondary" id="modalSourceLink">Source Code</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <a href="${REPO_URL}" class="github-link">
             <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
             GitHub
@@ -453,6 +495,10 @@ jobs:
               />
           </svg></p>
           <div class="controls">
+            <button class="surprise-btn" onclick="surpriseMe()">
+              <svg viewBox="0 0 16 16"><path d="M12.93 2.65l-1.47 1.47a.75.75 0 001.06 1.06l2.83-2.83a.75.75 0 000-1.06L12.52.46a.75.75 0 00-1.06 1.06l1.47 1.47H10.5a3.75 3.75 0 00-3 1.5 3.75 3.75 0 00-3-1.5H1.75a.75.75 0 000 1.5H4.5a2.25 2.25 0 012.25 2.25v5.5A2.25 2.25 0 014.5 14.5H1.75a.75.75 0 000 1.5H4.5a3.75 3.75 0 003-1.5 3.75 3.75 0 003 1.5h2.43l-1.47 1.47a.75.75 0 001.06 1.06l2.83-2.83a.75.75 0 000-1.06l-2.83-2.83a.75.75 0 00-1.06 1.06l1.47 1.47H10.5a2.25 2.25 0 01-2.25-2.25v-5.5A2.25 2.25 0 0110.5 4.49h2.43z"/></svg>
+              Surprise Me!
+            </button>
             <div class="search-wrap">
               <svg viewBox="0 0 16 16"><path d="M11.5 7a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zm-.82 4.74a6 6 0 111.06-1.06l3.04 3.04a.75.75 0 11-1.06 1.06l-3.04-3.04z"></path></svg>
               <input type="text" class="search-input" id="search" placeholder="Search examples..." autocomplete="off">
@@ -480,6 +526,37 @@ jobs:
           <div class="grid" id="grid">${SITE_LINKS}</div>
           <div class="no-results" id="noResults">No examples found.</div>
           <script>
+          function surpriseMe() {
+            var cards = Array.from(document.querySelectorAll('.card'));
+            if (cards.length === 0) return;
+            var randomCard = cards[Math.floor(Math.random() * cards.length)];
+            
+            var name = randomCard.dataset.name;
+            var title = randomCard.dataset.title;
+            var desc = randomCard.dataset.desc;
+            var demoUrl = randomCard.querySelector('.main-link').href;
+            var sourceUrl = randomCard.querySelector('.card-footer-row').href;
+            
+            document.getElementById('modalImg').src = 'screenshots/' + name + '.png';
+            document.getElementById('modalImg').alt = name;
+            document.getElementById('modalTitle').textContent = title || name;
+            document.getElementById('modalDesc').textContent = desc || '';
+            document.getElementById('modalDemoLink').href = demoUrl;
+            document.getElementById('modalSourceLink').href = sourceUrl;
+            
+            document.getElementById('modalOverlay').classList.add('open');
+            document.body.style.overflow = 'hidden';
+          }
+          function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('open');
+            document.body.style.overflow = '';
+          }
+          document.getElementById('modalOverlay').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+          });
+          document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+          });
           function copyScaffold(el) {
             var cmd = el.getAttribute('data-cmd');
             navigator.clipboard.writeText(cmd).then(function() {
