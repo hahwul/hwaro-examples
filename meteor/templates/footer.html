@@ -1,0 +1,165 @@
+    <footer class="site-footer">
+      <p style="text-align: center; color: var(--text-muted); margin-top: 4rem;">
+        Made under the starlight with Hwaro
+      </p>
+    </footer>
+  </div>
+
+  <script>
+    // Meteor Shower Animation
+    const canvas = document.getElementById('meteor-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+
+    function resize() {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+
+    class Star {
+      constructor() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.size = Math.random() * 1.5;
+        this.opacity = Math.random();
+        this.speed = 0.005 + Math.random() * 0.01;
+      }
+
+      draw() {
+        ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      update() {
+        this.opacity += this.speed;
+        if (this.opacity > 1 || this.opacity < 0) this.speed *= -1;
+      }
+    }
+
+    class Meteor {
+      constructor() {
+        this.reset();
+      }
+
+      reset() {
+        this.x = Math.random() * width;
+        this.y = -20;
+        this.length = 10 + Math.random() * 30;
+        this.speed = 5 + Math.random() * 10;
+        this.angle = (Math.PI / 4) + (Math.random() * 0.2 - 0.1); // Around 45 degrees
+        this.active = false;
+        this.wait = Math.random() * 200;
+      }
+
+      update() {
+        if (!this.active) {
+          if (this.wait > 0) {
+            this.wait--;
+          } else {
+            this.active = true;
+          }
+          return;
+        }
+
+        this.x += Math.cos(this.angle) * this.speed;
+        this.y += Math.sin(this.angle) * this.speed;
+
+        if (this.x > width + 50 || this.y > height + 50) {
+          this.reset();
+        }
+      }
+
+      draw() {
+        if (!this.active) return;
+        ctx.strokeStyle = '#FDE047'; // Streak Gold
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(this.x, this.y);
+        ctx.lineTo(this.x - Math.cos(this.angle) * this.length, this.y - Math.sin(this.angle) * this.length);
+        ctx.stroke();
+      }
+    }
+
+    const stars = Array.from({ length: 200 }, () => new Star());
+    const meteors = Array.from({ length: 15 }, () => new Meteor());
+
+    function animate() {
+      ctx.fillStyle = '#050505';
+      ctx.fillRect(0, 0, width, height);
+
+      stars.forEach(star => {
+        star.update();
+        star.draw();
+      });
+
+      meteors.forEach(meteor => {
+        meteor.update();
+        meteor.draw();
+      });
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    // Wish Handling
+    const makeWishBtn = document.getElementById('make-wish-btn');
+    const wishBox = document.getElementById('wish-box');
+    const sendWishBtn = document.getElementById('send-wish-btn');
+    const wishText = document.getElementById('wish-text');
+    const wishWall = document.getElementById('wish-wall');
+
+    if (makeWishBtn) {
+      makeWishBtn.addEventListener('click', () => {
+        wishBox.classList.toggle('hidden');
+        if (!wishBox.classList.contains('hidden')) {
+          wishText.focus();
+        }
+      });
+    }
+
+    if (sendWishBtn) {
+      sendWishBtn.addEventListener('click', () => {
+        const text = wishText.value.trim();
+        if (text) {
+          addWishCard(text);
+          wishText.value = '';
+          wishBox.classList.add('hidden');
+          
+          // Trigger a special meteor effect
+          const m = new Meteor();
+          m.speed = 20;
+          m.length = 100;
+          m.active = true;
+          m.wait = 0;
+          meteors.push(m);
+          setTimeout(() => {
+            const index = meteors.indexOf(m);
+            if (index > -1) meteors.splice(index, 1);
+          }, 2000);
+        }
+      });
+    }
+
+    function addWishCard(text) {
+      const card = document.createElement('div');
+      card.className = 'wish-card';
+      const date = new Date().toLocaleDateString();
+      card.innerHTML = `
+        <div class="wish-card-text">${text}</div>
+        <span class="wish-card-date">${date}</span>
+      `;
+      wishWall.prepend(card);
+    }
+  </script>
+  {{ highlight_js }}
+  {{ auto_includes_js }}
+</body>
+</html>
