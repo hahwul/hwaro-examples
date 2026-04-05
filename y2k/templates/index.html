@@ -1,0 +1,43 @@
+{{ auto_includes | safe }}
+{% include "header.html" %}
+
+<div class="panel">
+    {{ content | safe }}
+</div>
+
+<div class="content-area">
+    {% set posts = get_section(path="posts/_index.md") %}
+    {% if posts and posts.pages %}
+        <h2 style="border-bottom: 2px solid var(--primary-accent); display: inline-block; padding-bottom: 5px; margin-bottom: 1.5rem;">LATEST_ENTRIES</h2>
+        {% for post in posts.pages | slice(end=5) %}
+        <article class="post-card">
+            <h3 class="post-title"><a href="{{ base_url }}/{{ post.path }}">{{ post.title }}</a></h3>
+            <div class="post-meta">
+                {% if post.date %}DATE: {{ post.date | date(format="%Y-%m-%d %H:%M:%S") }} | {% endif %}
+                AUTHOR: {% if post.author %}{{ post.author }}{% else %}SYS_ADMIN{% endif %}
+            </div>
+            <div class="post-summary" style="margin-bottom: 1rem;">
+                {% if post.description %}
+                    {{ post.description }}
+                {% else %}
+                    {{ post.content | striptags | truncate(length=150) }}
+                {% endif %}
+            </div>
+
+            {% if post.taxonomies and post.taxonomies.tags %}
+            <div class="tags">
+                {% for tag in post.taxonomies.tags %}
+                <span class="tag">#{{ tag }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <a href="{{ base_url }}/{{ post.path }}" class="btn">READ_MORE ></a>
+        </article>
+        {% endfor %}
+    {% else %}
+        <p style="font-family: var(--font-mono); color: var(--primary-accent);">[ NO_ENTRIES_FOUND ]</p>
+    {% endif %}
+</div>
+
+{% include "footer.html" %}

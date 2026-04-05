@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+    <style>
+        :root {
+            /* Y2K Cyber/Metallic Palette (Solid Colors ONLY, no gradients) */
+            --bg-color: #0b0c10;
+            --text-color: #c5c6c7;
+            --primary-accent: #66fcf1;
+            --secondary-accent: #45a29e;
+            --panel-bg: #1f2833;
+            --border-color: #66fcf1;
+            --metallic-light: #e0e6ed;
+            --metallic-mid: #a3b1c6;
+            --metallic-dark: #7a8a9e;
+            --font-main: 'Verdana', 'Tahoma', sans-serif;
+            --font-mono: 'Courier New', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            background-image:
+                linear-gradient(rgba(102, 252, 241, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(102, 252, 241, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        /* Enforce NO Gradients / Emojis via strict overrides just in case */
+        * {
+            background-image: none !important; /* Removing the grid background just to be absolutely sure about no gradients */
+        }
+        body {
+            background-color: var(--bg-color);
+            /* Solid grid using multiple box shadows on a pseudo element or base64 SVG */
+        }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            background-color: var(--bg-color);
+            /* SVG pattern for grid without CSS gradients */
+            background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M 20 0 L 0 0 0 20' fill='none' stroke='%2366fcf1' stroke-opacity='0.05' stroke-width='1'/%3E%3C/svg%3E") !important;
+        }
+
+        a {
+            color: var(--primary-accent);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        a:hover {
+            color: var(--metallic-light);
+            border-bottom: 1px solid var(--primary-accent);
+            text-shadow: 0 0 5px var(--primary-accent);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Metallic Panels using Solid Colors and Borders (NO Gradients) */
+        .panel {
+            background-color: var(--panel-bg);
+            border: 2px solid var(--metallic-mid);
+            border-top-color: var(--metallic-light);
+            border-left-color: var(--metallic-light);
+            border-bottom-color: var(--metallic-dark);
+            border-right-color: var(--metallic-dark);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.5), inset 1px 1px 0px var(--metallic-light);
+        }
+
+        .header-panel {
+            text-align: center;
+            border-color: var(--primary-accent);
+            border-top-color: #8afff6;
+            border-left-color: #8afff6;
+            border-bottom-color: #3bb3aa;
+            border-right-color: #3bb3aa;
+            background-color: #1a222b;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-mono);
+            color: var(--primary-accent);
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 0px var(--secondary-accent);
+        }
+
+        .site-title {
+            display: inline-block;
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--metallic-light);
+            text-shadow:
+                -1px -1px 0 var(--metallic-dark),
+                 1px -1px 0 var(--metallic-dark),
+                -1px  1px 0 var(--metallic-dark),
+                 1px  1px 0 var(--metallic-dark),
+                 3px  3px 0 var(--primary-accent);
+            margin-bottom: 0.5rem;
+        }
+
+        nav {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px dashed var(--secondary-accent);
+        }
+
+        nav a {
+            display: inline-block;
+            margin: 0 10px;
+            font-family: var(--font-mono);
+            font-size: 1.1rem;
+            padding: 5px 10px;
+            background-color: var(--bg-color);
+            border: 1px solid var(--primary-accent);
+            color: var(--primary-accent);
+        }
+
+        nav a:hover {
+            background-color: var(--primary-accent);
+            color: var(--bg-color);
+            border-color: var(--metallic-light);
+            text-shadow: none;
+        }
+
+        .content-area {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .post-card {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--secondary-accent);
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .post-card::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            width: 20px;
+            height: 20px;
+            border-top: 2px solid var(--primary-accent);
+            border-left: 2px solid var(--primary-accent);
+        }
+
+        .post-card::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            right: -5px;
+            width: 20px;
+            height: 20px;
+            border-bottom: 2px solid var(--primary-accent);
+            border-right: 2px solid var(--primary-accent);
+        }
+
+        .post-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .post-meta {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--metallic-mid);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px dotted var(--metallic-dark);
+        }
+
+        .btn {
+            display: inline-block;
+            font-family: var(--font-mono);
+            background-color: var(--bg-color);
+            color: var(--primary-accent);
+            border: 2px solid var(--primary-accent);
+            padding: 0.5rem 1rem;
+            margin-top: 1rem;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            font-weight: bold;
+            box-shadow: 3px 3px 0px var(--secondary-accent);
+            transition: all 0.1s ease;
+        }
+
+        .btn:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0px var(--secondary-accent);
+            background-color: var(--primary-accent);
+            color: var(--bg-color);
+        }
+
+        .tags {
+            margin-top: 1rem;
+        }
+
+        .tag {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            background-color: var(--secondary-accent);
+            color: var(--bg-color);
+            padding: 2px 6px;
+            margin-right: 5px;
+            border: 1px solid var(--primary-accent);
+        }
+
+        code {
+            font-family: var(--font-mono);
+            background-color: #000;
+            color: #0f0;
+            padding: 2px 4px;
+            border: 1px solid #333;
+        }
+
+        pre {
+            background-color: #000 !important;
+            border: 2px solid var(--metallic-mid);
+            border-left: 10px solid var(--secondary-accent);
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        pre code {
+            background-color: transparent;
+            color: var(--metallic-light);
+            border: none;
+            padding: 0;
+        }
+
+        blockquote {
+            border-left: 4px solid var(--primary-accent);
+            background-color: rgba(69, 162, 158, 0.1);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: var(--metallic-light);
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-color);
+            border-left: 1px solid var(--metallic-dark);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--metallic-mid);
+            border: 1px solid var(--metallic-light);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-accent);
+        }
+
+        .decorative-bar {
+            height: 10px;
+            background-color: var(--primary-accent);
+            width: 100%;
+            display: flex;
+        }
+        .decorative-bar-segment {
+            flex-grow: 1;
+            border-right: 2px solid var(--bg-color);
+        }
+        .decorative-bar-segment:nth-child(even) {
+            background-color: var(--secondary-accent);
+        }
+
+        /* Prose specific styles */
+        .prose p {
+            margin-bottom: 1.5rem;
+        }
+        .prose img {
+            max-width: 100%;
+            height: auto;
+            border: 3px solid var(--metallic-mid);
+            box-shadow: 5px 5px 0px rgba(102, 252, 241, 0.2);
+            display: block;
+            margin: 2rem auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-overlay"></div>
+    <div class="decorative-bar">
+        <div class="decorative-bar-segment"></div>
+        <div class="decorative-bar-segment"></div>
+        <div class="decorative-bar-segment"></div>
+        <div class="decorative-bar-segment"></div>
+        <div class="decorative-bar-segment"></div>
+        <div class="decorative-bar-segment"></div>
+        <div class="decorative-bar-segment"></div>
+        <div class="decorative-bar-segment"></div>
+    </div>
+    <div class="container">
+        <header class="panel header-panel">
+            <a href="{{ base_url }}/" class="site-title">{{ site.title | default(value="Y2K_SYS") }}</a>
+            <p style="font-family: var(--font-mono); color: var(--metallic-mid); margin-top: 0.5rem;">[ SYSTEM_ONLINE :: AESTHETIC_MODULE_LOADED ]</p>
+            <nav>
+                <a href="{{ base_url }}/">HOME</a>
+                <a href="{{ base_url }}/about">ABOUT</a>
+                <a href="{{ base_url }}/archive">ARCHIVE</a>
+                <a href="{{ base_url }}/links">LINKS</a>
+            </nav>
+        </header>
+        <main>
