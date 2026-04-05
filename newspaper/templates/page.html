@@ -1,0 +1,27 @@
+{% include "header.html" %}
+
+<article class="article-full">
+    <header class="article-header">
+        <h1 class="headline-full">{{ page.title }}</h1>
+        {% if page.extra.subtitle %}<p class="subheadline-full">{{ page.extra.subtitle }}</p>{% endif %}
+        <div class="article-meta">
+            <p class="byline">By {{ page.authors | default(["The Editors"]) | join(", ") }}</p>
+            <p class="dateline">{{ page.date | date(format="%B %d, %Y") }}</p>
+        </div>
+    </header>
+
+    <div class="article-content columns-2">
+        <span class="dropcap">{{ page.content | striptags | first }}</span>{{ page.content | safe | replace(page.content | striptags | first, "", 1) }}
+    </div>
+
+    {% if page.tags %}
+    <div class="article-tags">
+        <strong>Filed under:</strong>
+        {% for tag in page.tags %}
+            <a href="{{ base_url }}/tags/{{ tag | slugify }}">{{ tag }}</a>{% if not loop.last %}, {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+</article>
+
+{% include "footer.html" %}
