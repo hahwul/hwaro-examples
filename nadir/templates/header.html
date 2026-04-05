@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="{{ page_language }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description | e }}">
+  <title>{% if page.title is present %}{{ page.title | e }} - {% endif %}{{ site.title | e }}</title>
+  {{ og_all_tags }}
+  {{ hreflang_tags }}
+  <style>
+    :root {
+      --black: #000000;
+      --surface: #111111;
+      --dim: #888888;
+      --accent: #c0c0c0;
+      --faint: #333333;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+    body {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      background: var(--black);
+      color: var(--dim);
+      line-height: 1.7;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .wrapper {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Header */
+    .site-header {
+      padding: 3rem 0 2rem;
+      border-bottom: 1px solid var(--faint);
+      margin-bottom: 3rem;
+    }
+    .site-header .title-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+    }
+    .site-logo {
+      font-size: 0.9rem;
+      font-weight: 300;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .site-logo:hover { color: #ffffff; }
+    .site-header nav { display: flex; gap: 1.5rem; }
+    .site-header nav a {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--faint);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .site-header nav a:hover { color: var(--dim); }
+
+    /* Main */
+    .site-main { min-height: calc(100vh - 280px); }
+
+    /* Typography */
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+      margin-bottom: 1.5rem;
+    }
+    h2 {
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--dim);
+      margin-top: 2.5rem;
+      margin-bottom: 0.75rem;
+    }
+    h3 {
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: var(--dim);
+      margin-top: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    p { margin: 1em 0; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: #ffffff; }
+
+    article { padding-bottom: 3rem; }
+    article p { color: var(--dim); }
+
+    /* Code */
+    code {
+      background: var(--surface);
+      padding: 0.15rem 0.4rem;
+      border-radius: 2px;
+      font-size: 0.85em;
+      font-family: "SF Mono", "Fira Code", monospace;
+      color: var(--accent);
+    }
+    pre {
+      background: var(--surface);
+      padding: 1.25rem;
+      border-radius: 2px;
+      overflow-x: auto;
+      border: 1px solid var(--faint);
+      margin: 1.5rem 0;
+    }
+    pre code { background: none; padding: 0; }
+
+    /* Post list */
+    #posts { list-style: none; padding: 0; margin: 0; }
+    #posts li {
+      padding: 1.25rem 0;
+      border-bottom: 1px solid #0a0a0a;
+    }
+    #posts li:first-child { padding-top: 0; }
+    #posts li a {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--dim);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    #posts li a:hover { color: var(--accent); }
+    #posts li .meta {
+      font-size: 0.75rem;
+      color: var(--faint);
+      margin-top: 0.25rem;
+    }
+
+    /* Taxonomy */
+    .taxonomy-desc { color: var(--faint); margin-bottom: 1.5rem; font-size: 0.85rem; }
+
+    /* Pagination */
+    nav.pagination { margin: 2.5rem 0; }
+    nav.pagination .pagination-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    nav.pagination a {
+      display: inline-block;
+      padding: 0.25rem 0.6rem;
+      border: 1px solid var(--faint);
+      color: var(--faint);
+      text-decoration: none;
+      font-size: 0.8rem;
+    }
+    nav.pagination a:hover { color: var(--accent); border-color: var(--accent); }
+    .pagination-current span {
+      display: inline-block;
+      padding: 0.25rem 0.6rem;
+      border: 1px solid var(--dim);
+      color: var(--accent);
+      font-size: 0.8rem;
+    }
+    .pagination-disabled span {
+      display: inline-block;
+      padding: 0.25rem 0.6rem;
+      border: 1px solid #0a0a0a;
+      color: #222;
+      font-size: 0.8rem;
+    }
+
+    /* Section list (taxonomy pages) */
+    ul.section-list { list-style: none; padding: 0; }
+    ul.section-list li {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #0a0a0a;
+    }
+    ul.section-list li a { color: var(--dim); font-weight: 300; }
+    ul.section-list li a:hover { color: var(--accent); }
+
+    /* Footer */
+    .site-footer {
+      margin-top: 4rem;
+      padding: 2rem 0;
+      border-top: 1px solid var(--faint);
+      text-align: center;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--faint);
+    }
+
+    /* Blockquote */
+    blockquote {
+      border-left: 2px solid var(--faint);
+      padding-left: 1rem;
+      margin: 1.5rem 0;
+      color: var(--faint);
+      font-style: italic;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .site-header .title-row { flex-direction: column; gap: 0.75rem; }
+      .wrapper { padding: 0 1rem; }
+      h1 { font-size: 1.25rem; }
+    }
+  </style>
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+</head>
+<body>
+  <div class="wrapper">
+    <header class="site-header">
+      <div class="title-row">
+        <a href="{{ base_url }}/" class="site-logo">{{ site.title }}</a>
+        <nav>
+          <a href="{{ base_url }}/">Archive</a>
+          <a href="{{ base_url }}/about/">About</a>
+          <a href="{{ base_url }}/tags/">Tags</a>
+        </nav>
+      </div>
+    </header>
