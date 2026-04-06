@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ site.title }}{% endblock %}</title>
+    <style>
+        :root {
+            --bg-color: #f4f4f4;
+            --text-color: #111;
+            --accent-color: #e60000;
+            --border-color: #333;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Deconstructivist background elements */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -10vw;
+            left: -10vw;
+            width: 50vw;
+            height: 120vh;
+            background-color: #fff;
+            transform: rotate(15deg);
+            z-index: -1;
+            border-right: 5px solid var(--border-color);
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -20vh;
+            right: -5vw;
+            width: 40vw;
+            height: 80vh;
+            background-color: #eee;
+            transform: rotate(-10deg);
+            z-index: -2;
+            border-left: 2px solid var(--accent-color);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+        }
+
+        header {
+            margin-bottom: 5rem;
+            position: relative;
+            padding-top: 3rem;
+        }
+
+        .site-title {
+            font-size: 4rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            line-height: 0.8;
+            margin-bottom: 1rem;
+            display: inline-block;
+            transform: rotate(-2deg);
+            background: var(--text-color);
+            color: var(--bg-color);
+            padding: 10px 20px;
+            mix-blend-mode: multiply;
+        }
+
+        .site-title a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        nav {
+            margin-top: 2rem;
+            transform: rotate(1deg) translateX(20px);
+        }
+
+        nav a {
+            display: inline-block;
+            margin-right: 1.5rem;
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        nav a:hover {
+            border-bottom-color: var(--accent-color);
+            transform: translateY(-3px) rotate(-3deg);
+        }
+
+        .fragment {
+            position: absolute;
+            background: var(--accent-color);
+            z-index: -1;
+        }
+
+        .fragment-1 {
+            width: 100px;
+            height: 10px;
+            top: 20px;
+            left: 50%;
+            transform: rotate(45deg);
+        }
+
+        .fragment-2 {
+            width: 5px;
+            height: 150px;
+            top: 100px;
+            right: 10%;
+            transform: rotate(-20deg);
+            background: var(--border-color);
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        h1 { font-size: 3rem; transform: translateX(-10px); }
+        h2 { font-size: 2rem; border-left: 5px solid var(--accent-color); padding-left: 10px; }
+
+        p { margin-bottom: 1.5rem; max-width: 65ch; }
+
+        a {
+            color: var(--accent-color);
+            text-decoration: underline;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        /* Content Blocks */
+        .post-card {
+            background: #fff;
+            border: 2px solid var(--border-color);
+            padding: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+            transform: rotate(0.5deg);
+            box-shadow: 10px 10px 0 var(--border-color);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .post-card:nth-child(even) {
+            transform: rotate(-1deg) translateX(30px);
+            border-color: var(--accent-color);
+            box-shadow: -10px 10px 0 var(--accent-color);
+        }
+
+        .post-card:hover {
+            transform: translate(-5px, -5px) rotate(0deg);
+            box-shadow: 15px 15px 0 var(--border-color);
+        }
+        
+        .post-card:nth-child(even):hover {
+            transform: translate(5px, -5px) rotate(0deg);
+            box-shadow: -15px 15px 0 var(--accent-color);
+        }
+
+        .post-meta {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            color: #666;
+            margin-bottom: 1rem;
+            display: block;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 0.5rem;
+        }
+
+        /* Post Content Styles */
+        .content {
+            background: #fff;
+            padding: 3rem;
+            border: 3px solid var(--text-color);
+            position: relative;
+        }
+
+        .content::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: 10px;
+            bottom: 10px;
+            border: 1px solid var(--accent-color);
+            z-index: -1;
+            transform: rotate(-0.5deg);
+        }
+
+        blockquote {
+            font-size: 1.25rem;
+            font-weight: bold;
+            font-style: italic;
+            margin: 2rem -2rem 2rem 2rem;
+            padding: 1.5rem;
+            background: var(--text-color);
+            color: #fff;
+            transform: rotate(-1deg);
+            position: relative;
+        }
+
+        blockquote::after {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            right: 10px;
+            font-size: 5rem;
+            color: var(--accent-color);
+            opacity: 0.5;
+            font-family: serif;
+        }
+
+        footer {
+            margin-top: 8rem;
+            padding: 3rem 0;
+            border-top: 5px solid var(--text-color);
+            text-align: right;
+            transform: rotate(1deg);
+            background: var(--text-color);
+            color: #fff;
+        }
+
+        footer p {
+            margin: 0;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="fragment fragment-1"></div>
+    <div class="fragment fragment-2"></div>
+    
+    <div class="container">
+        <header>
+            <div class="site-title">
+                <a href="{{ site.base_url }}/">{{ site.title }}</a>
+            </div>
+            <nav>
+                <a href="{{ site.base_url }}/">Home</a>
+                <a href="{{ site.base_url }}/posts/">Manifesto</a>
+            </nav>
+        </header>
+
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; {{ current_year }} {{ site.title }}. Chaos by Design.</p>
+        </div>
+    </footer>
+</body>
+</html>
