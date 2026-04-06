@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{{ page.description | default(site.description) }}">
+  {{ og_all_tags }}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #faf9f6;
+      color: #2b2b2b;
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.8;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Occasional global elegant glitch effect */
+    @keyframes occasional-blur {
+      0%, 96%, 100% { filter: blur(0) contrast(1); transform: translateX(0); }
+      97% { filter: blur(1px) contrast(1.2); transform: translateX(-2px); }
+      98% { filter: blur(0) contrast(1); transform: translateX(1px); }
+      99% { filter: blur(2px) contrast(1.1); transform: translateX(0); }
+    }
+    body {
+      animation: occasional-blur 10s infinite;
+    }
+
+    a { color: #1a1a1a; text-decoration: none; transition: all 0.3s ease; position: relative; }
+    a:hover { opacity: 0.7; }
+
+    /* Elegant Glitch Text */
+    .glitch-text {
+      position: relative;
+      display: inline-block;
+      color: #111;
+      font-family: 'Cormorant Garamond', serif;
+    }
+    .glitch-text::before, .glitch-text::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #faf9f6;
+      overflow: hidden;
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+      opacity: 0;
+      transition: opacity 0.1s;
+    }
+    .glitch-text:hover::before, .glitch-text:hover::after {
+      opacity: 0.8;
+    }
+    .glitch-text:hover::before {
+      left: -2px;
+      text-shadow: 1px 0 #cc0000;
+      animation: elegant-glitch-anim-1 2s infinite linear alternate-reverse;
+      z-index: -1;
+    }
+    .glitch-text:hover::after {
+      left: 2px;
+      text-shadow: -1px 0 #0000cc;
+      animation: elegant-glitch-anim-2 3s infinite linear alternate-reverse;
+      z-index: -2;
+    }
+
+    @keyframes elegant-glitch-anim-1 {
+      0% { clip-path: inset(20% 0 80% 0); }
+      20% { clip-path: inset(60% 0 10% 0); }
+      40% { clip-path: inset(40% 0 50% 0); }
+      60% { clip-path: inset(80% 0 5% 0); }
+      80% { clip-path: inset(10% 0 70% 0); }
+      100% { clip-path: inset(30% 0 40% 0); }
+    }
+    @keyframes elegant-glitch-anim-2 {
+      0% { clip-path: inset(10% 0 60% 0); }
+      20% { clip-path: inset(80% 0 5% 0); }
+      40% { clip-path: inset(30% 0 20% 0); }
+      60% { clip-path: inset(50% 0 30% 0); }
+      80% { clip-path: inset(5% 0 80% 0); }
+      100% { clip-path: inset(70% 0 10% 0); }
+    }
+
+    .site-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 2rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(250, 249, 246, 0.95);
+      backdrop-filter: blur(5px);
+    }
+    .site-brand {
+      font-size: 1.5rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      color: #111;
+      letter-spacing: 0.05em;
+    }
+    
+    /* Occasional shift for brand */
+    @keyframes brand-shift {
+      0%, 98%, 100% { transform: translateX(0); opacity: 1; }
+      98.5% { transform: translateX(-3px) skewX(2deg); opacity: 0.8; }
+      99% { transform: translateX(3px) skewX(-2deg); opacity: 0.9; }
+      99.5% { transform: translateX(0); opacity: 1; }
+    }
+    .site-brand {
+      animation: brand-shift 8s infinite;
+    }
+
+    .site-nav-links a {
+      margin-left: 3rem;
+      color: #555;
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    .site-nav-links a:hover { color: #111; }
+
+    .hero {
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+      margin-top: 4rem;
+    }
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 5rem;
+      font-weight: 400;
+      color: #111;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+    .hero-tagline {
+      font-size: 1rem;
+      color: #666;
+      font-weight: 300;
+      max-width: 500px;
+      line-height: 1.6;
+    }
+    .hero-prompt {
+      display: none;
+    }
+
+    .posts-section {
+      padding: 4rem 2rem 8rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-size: 0.8rem;
+      color: #999;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 4rem;
+      text-align: center;
+      position: relative;
+    }
+    .section-label::after {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 40px;
+      background: #ccc;
+      margin: 1rem auto 0;
+    }
+    
+    .post-card {
+      padding: 3rem 0;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid #eee;
+      transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+      position: relative;
+    }
+    .post-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -20px;
+      width: 3px;
+      height: 0;
+      background: #111;
+      transition: height 0.4s ease;
+    }
+    .post-card:hover::before {
+      height: 100%;
+    }
+    
+    /* Hover offset for elegance glitch */
+    .post-card:hover {
+      transform: translateX(10px);
+      border-bottom-color: #111;
+    }
+    
+    .post-card h3 { 
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem; 
+      margin-bottom: 0.75rem; 
+      font-weight: 400;
+    }
+    .post-card h3 a { color: #111; }
+    
+    .post-card-meta {
+      font-size: 0.8rem;
+      color: #888;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .post-card p { color: #555; font-size: 1rem; font-weight: 300; }
+
+    .site-main {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 10rem 2rem 6rem;
+    }
+    .site-main h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem;
+      font-weight: 400;
+      color: #111;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    .page-date { color: #888; font-size: 0.85rem; margin-bottom: 3rem; text-transform: uppercase; letter-spacing: 0.1em; }
+    .site-main p { margin-bottom: 1.5rem; color: #333; }
+    .site-main h2 { font-family: 'Cormorant Garamond', serif; font-weight: 400; color: #111; font-size: 2rem; margin: 3rem 0 1.5rem; }
+    .site-main h3 { font-family: 'Cormorant Garamond', serif; font-weight: 400; color: #222; font-size: 1.5rem; margin: 2rem 0 1rem; }
+    .site-main code { background: #f0f0f0; color: #c00; padding: 0.2em 0.4em; font-size: 0.85em; font-family: monospace; border-radius: 2px; }
+    .site-main pre { background: #f9f9f9; border-left: 2px solid #ddd; padding: 1.5rem; overflow-x: auto; margin-bottom: 2rem; font-family: monospace; font-size: 0.9em; }
+    .site-main pre code { background: none; padding: 0; color: inherit; }
+    .site-main blockquote { border-left: 1px solid #111; padding-left: 2rem; color: #666; margin: 2.5rem 0; font-style: italic; font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; }
+    .site-main ul, .site-main ol { padding-left: 2rem; margin-bottom: 1.5rem; color: #333; }
+    .site-main li { margin-bottom: 0.5rem; }
+    .site-main img { max-width: 100%; height: auto; margin: 2rem 0; filter: grayscale(20%); transition: filter 0.5s; }
+    .site-main img:hover { filter: grayscale(0%); }
+    .site-main a { border-bottom: 1px solid #ddd; }
+    .site-main a:hover { border-bottom-color: #111; }
+
+    .post-list { list-style: none; }
+    .post-list li {
+      padding: 1.5rem 0;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .post-list a { color: #111; border-bottom: none; font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; }
+    .post-list a:hover { opacity: 0.7; }
+    .post-date { color: #888; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; }
+
+    .taxonomy-desc { color: #666; margin-bottom: 3rem; font-style: italic; font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; }
+
+    .site-footer {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: #999;
+      font-size: 0.8rem;
+      margin-top: 4rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 3rem; }
+      .site-nav { padding: 1.5rem 2rem; }
+      .site-nav-links a { margin-left: 1.5rem; font-size: 0.75rem; }
+      .post-card h3 { font-size: 1.8rem; }
+      .post-card:hover { transform: translateX(5px); }
+    }
+  </style>
+</head>
+<body>
+  <nav class="site-nav">
+    <a href="{{ base_url }}/" class="site-brand">Glitch Elegance</a>
+    <div class="site-nav-links">
+      <a href="{{ base_url }}/posts/">Archive</a>
+      <a href="{{ base_url }}/about/">About</a>
+    </div>
+  </nav>
