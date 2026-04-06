@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ site.title }} - {{ page.title | default(value=site.description) }}</title>
+    <meta name="description" content="{{ site.description }}">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Sand Colors */
+            --sand-light: #f5f2eb;
+            --sand-base: #e8e3d3;
+            --sand-dark: #d8d1bc;
+            --sand-shadow: #c5bba1;
+            
+            /* Stone Colors */
+            --stone-dark: #2c2f33;
+            --stone-medium: #4a4e54;
+            --stone-light: #6a6f78;
+            
+            /* Typography */
+            --font-heading: 'Cormorant Garamond', serif;
+            --font-body: 'Lato', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--sand-base);
+            color: var(--stone-dark);
+            font-family: var(--font-body);
+            line-height: 1.7;
+            font-weight: 300;
+            overflow-x: hidden;
+            
+            /* Topographic Sand Pattern Background (SVG Data URI) */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.005' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.25 0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0 1'/%3E%3C/feComponentTransfer%3E%3CfeGaussianBlur stdDeviation='2'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='2' intercept='-0.5'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' fill='%23e8e3d3'/%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' fill='%23d8d1bc' opacity='0.4'/%3E%3C/svg%3E");
+            background-attachment: fixed;
+            background-size: cover;
+        }
+        
+        /* Better ripple pattern via CSS masks */
+        .sand-ripple {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.15;
+            background-image: 
+                radial-gradient(circle at 50% 50%, transparent 20%, var(--sand-dark) 21%, transparent 22%),
+                radial-gradient(circle at 50% 50%, transparent 30%, var(--sand-dark) 31%, transparent 32%),
+                radial-gradient(circle at 50% 50%, transparent 40%, var(--sand-dark) 41%, transparent 42%),
+                radial-gradient(circle at 50% 50%, transparent 50%, var(--sand-dark) 51%, transparent 52%),
+                radial-gradient(circle at 50% 50%, transparent 60%, var(--sand-dark) 61%, transparent 62%),
+                radial-gradient(circle at 50% 50%, transparent 70%, var(--sand-dark) 71%, transparent 72%),
+                radial-gradient(circle at 50% 50%, transparent 80%, var(--sand-dark) 81%, transparent 82%),
+                radial-gradient(circle at 50% 50%, transparent 90%, var(--sand-dark) 91%, transparent 92%);
+            background-size: 150vw 150vw;
+            background-position: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* The Stone Header */
+        .site-header {
+            background-color: var(--stone-dark);
+            color: var(--sand-light);
+            padding: 60px 40px;
+            margin-bottom: 60px;
+            border-radius: 40px 4px 40px 4px; /* Organic stone-like shape */
+            box-shadow: 
+                10px 10px 20px rgba(0, 0, 0, 0.1),
+                -5px -5px 15px rgba(255, 255, 255, 0.1) inset,
+                5px 5px 15px rgba(0, 0, 0, 0.5) inset;
+            position: relative;
+        }
+        
+        /* Subtle texture on the stone */
+        .site-header::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            border-radius: inherit;
+            pointer-events: none;
+        }
+
+        .site-header h1 {
+            color: var(--sand-light);
+            font-family: var(--font-heading);
+            font-size: 3rem;
+            font-weight: 300;
+            margin: 0 0 10px 0;
+            letter-spacing: 2px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .site-header p {
+            margin: 0;
+            font-size: 1.1rem;
+            color: var(--sand-shadow);
+            position: relative;
+            z-index: 1;
+        }
+
+        nav {
+            margin-top: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        nav a {
+            color: var(--sand-base);
+            text-decoration: none;
+            margin-right: 20px;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-bottom: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            color: white;
+            border-bottom: 1px solid var(--sand-light);
+        }
+
+        /* Content Area */
+        main {
+            background-color: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(5px);
+            padding: 50px;
+            border-radius: 2px 20px 2px 20px;
+            box-shadow: 
+                5px 5px 15px rgba(0, 0, 0, 0.05),
+                -5px -5px 15px rgba(255, 255, 255, 0.5);
+            position: relative;
+        }
+        
+        /* A smaller "stone" acting as an accent */
+        main::before {
+            content: "";
+            position: absolute;
+            top: -20px;
+            right: 40px;
+            width: 40px;
+            height: 30px;
+            background-color: var(--stone-medium);
+            border-radius: 60% 40% 50% 50% / 50% 50% 40% 60%;
+            box-shadow: 
+                3px 5px 8px rgba(0,0,0,0.2),
+                inset -2px -3px 5px rgba(0,0,0,0.4),
+                inset 2px 3px 5px rgba(255,255,255,0.1);
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-heading);
+            color: var(--stone-dark);
+            font-weight: 400;
+        }
+        
+        .post-header h1 {
+            color: var(--stone-dark);
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            margin-top: 40px;
+            border-bottom: 1px solid var(--sand-shadow);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        a {
+            color: var(--stone-medium);
+            text-decoration: none;
+            border-bottom: 1px solid var(--sand-shadow);
+            transition: color 0.3s, border-color 0.3s;
+        }
+
+        a:hover {
+            color: var(--stone-dark);
+            border-color: var(--stone-dark);
+        }
+
+        blockquote {
+            margin: 40px 0;
+            padding: 20px 40px;
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-style: italic;
+            color: var(--stone-medium);
+            border-left: 4px solid var(--stone-light);
+            background-color: rgba(245, 242, 235, 0.5);
+            border-radius: 0 10px 10px 0;
+        }
+
+        code {
+            background-color: var(--sand-light);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.9em;
+            color: var(--stone-medium);
+        }
+
+        pre code {
+            display: block;
+            padding: 20px;
+            background-color: var(--stone-dark);
+            color: var(--sand-light);
+            border-radius: 8px;
+            overflow-x: auto;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        ul, ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        /* Posts List */
+        .post-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .post-item {
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .post-item h2 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .post-meta {
+            font-size: 0.85rem;
+            color: var(--stone-light);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        footer {
+            margin-top: 80px;
+            text-align: center;
+            padding: 40px 0;
+            color: var(--stone-light);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--sand-shadow);
+        }
+    </style>
+</head>
+<body>
+    <div class="sand-ripple"></div>
+    <div class="container">
+        <header class="site-header">
+            <h1>{{ site.title }}</h1>
+            <p>{{ site.description }}</p>
+            <nav>
+                <a href="{{ site.base_url }}/">Home</a>
+                <a href="{{ site.base_url }}/posts">Posts</a>
+                <a href="{{ site.base_url }}/about">About</a>
+            </nav>
+        </header>
