@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title | default(site.title) }}</title>
+    <meta name="description" content="{{ page.description | default(site.description) }}">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --radar-green: #0f0;
+            --radar-green-dim: rgba(0, 255, 0, 0.3);
+            --radar-green-glow: rgba(0, 255, 0, 0.8);
+            --bg-color: #050505;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--radar-green);
+            font-family: 'Share Tech Mono', monospace;
+            line-height: 1.6;
+            overflow-x: hidden;
+            text-shadow: 0 0 5px var(--radar-green-glow);
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* CRT Scanline Effect */
+        body::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(18, 16, 16, 0) 50%,
+                rgba(0, 0, 0, 0.25) 50%
+            );
+            background-size: 100% 4px;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        /* CRT Flicker */
+        body::after {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: rgba(0, 255, 0, 0.02);
+            opacity: 0;
+            z-index: 100;
+            pointer-events: none;
+            animation: flicker 0.15s infinite;
+        }
+
+        @keyframes flicker {
+            0% { opacity: 0.05; }
+            50% { opacity: 0; }
+            100% { opacity: 0.05; }
+        }
+
+        /* Container Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            position: relative;
+            z-index: 10;
+            flex: 1;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                grid-template-columns: 350px 1fr;
+            }
+        }
+
+        /* Sidebar / Radar Display */
+        .radar-panel {
+            border: 2px solid var(--radar-green);
+            padding: 1.5rem;
+            background: rgba(0, 20, 0, 0.8);
+            box-shadow: 0 0 15px var(--radar-green-dim) inset, 0 0 10px var(--radar-green-dim);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .radar-title {
+            text-align: center;
+            border-bottom: 1px dashed var(--radar-green);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            width: 100%;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Circular Radar Construction */
+        .radar {
+            position: relative;
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            border: 2px solid var(--radar-green);
+            background:
+                repeating-radial-gradient(
+                    transparent,
+                    transparent 24px,
+                    var(--radar-green-dim) 25px,
+                    var(--radar-green-dim) 26px
+                ),
+                linear-gradient(
+                    transparent 49%,
+                    var(--radar-green-dim) 49%,
+                    var(--radar-green-dim) 51%,
+                    transparent 51%
+                ),
+                linear-gradient(
+                    90deg,
+                    transparent 49%,
+                    var(--radar-green-dim) 49%,
+                    var(--radar-green-dim) 51%,
+                    transparent 51%
+                );
+            background-size: 100% 100%, 100% 100%, 100% 100%;
+            background-color: #001100;
+            overflow: hidden;
+            box-shadow: 0 0 20px var(--radar-green-glow);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Radar Sweep Animation */
+        .sweep {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 50%;
+            height: 50%;
+            background: conic-gradient(
+                from 0deg at 0% 100%,
+                transparent 0deg,
+                rgba(0, 255, 0, 0.1) 70deg,
+                rgba(0, 255, 0, 0.8) 90deg,
+                transparent 90deg
+            );
+            transform-origin: 0% 100%;
+            animation: rotate 4s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Radar Blips */
+        .blip {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: var(--radar-green);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--radar-green-glow);
+            opacity: 0;
+        }
+
+        .blip1 { top: 30%; left: 60%; animation: fadeBlip 4s linear infinite 0.5s; }
+        .blip2 { top: 70%; left: 40%; animation: fadeBlip 4s linear infinite 2.5s; }
+        .blip3 { top: 20%; left: 30%; animation: fadeBlip 4s linear infinite 3.5s; }
+
+        @keyframes fadeBlip {
+            0% { opacity: 1; transform: scale(1.5); }
+            10% { opacity: 0.8; transform: scale(1); }
+            40% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        .radar-stats {
+            width: 100%;
+            font-size: 0.9rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+        }
+
+        .stat-label {
+            color: rgba(0, 255, 0, 0.7);
+        }
+
+        /* Main Content Area */
+        .content-panel {
+            border: 2px solid var(--radar-green);
+            padding: 2rem;
+            background: rgba(0, 20, 0, 0.6);
+            box-shadow: 0 0 15px var(--radar-green-dim) inset;
+            position: relative;
+        }
+
+        .content-panel::before {
+            content: "SYS_MSG_RECV";
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: var(--bg-color);
+            padding: 0 10px;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--radar-green-dim);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        li::marker {
+            content: "> ";
+            color: var(--radar-green);
+        }
+
+        a {
+            color: #fff;
+            text-decoration: none;
+            border-bottom: 1px dashed var(--radar-green);
+            transition: all 0.2s;
+        }
+
+        a:hover {
+            background-color: var(--radar-green);
+            color: var(--bg-color);
+            text-shadow: none;
+        }
+
+        code {
+            background: rgba(0, 255, 0, 0.15);
+            padding: 0.1rem 0.3rem;
+            border: 1px solid var(--radar-green-dim);
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        pre {
+            background: rgba(0, 20, 0, 0.9);
+            border: 1px solid var(--radar-green);
+            padding: 1rem;
+            overflow-x: auto;
+            margin-bottom: 1rem;
+        }
+
+        /* Header Navigation */
+        header {
+            border-bottom: 2px solid var(--radar-green);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 20, 0, 0.8);
+            position: relative;
+            z-index: 10;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+            padding-left: 0;
+            margin-bottom: 0;
+        }
+
+        nav li {
+            margin-bottom: 0;
+        }
+
+        nav li::marker {
+            content: none;
+        }
+
+        .sys-time {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Blinking Cursor */
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2em;
+            background-color: var(--radar-green);
+            vertical-align: middle;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="site-branding">
+            <strong>{{ site.title | upper }}</strong> <span class="sys-time" id="clock">00:00:00 UTC</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{{ site.base_url }}/">[MAIN]</a></li>
+                {% if site.sections %}
+                    {% for section in site.sections %}
+                        <li><a href="{{ section.url }}">[{{ section.title | upper }}]</a></li>
+                    {% endfor %}
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <aside class="radar-panel">
+            <h3 class="radar-title">SCANNING SYSTEM</h3>
+            <div class="radar">
+                <div class="sweep"></div>
+                <div class="blip blip1"></div>
+                <div class="blip blip2"></div>
+                <div class="blip blip3"></div>
+            </div>
+            <div class="radar-stats">
+                <div class="stat-label">STATUS:</div>
+                <div>ONLINE</div>
+                <div class="stat-label">RANGE:</div>
+                <div>100 KM</div>
+                <div class="stat-label">MODE:</div>
+                <div>ACTIVE</div>
+                <div class="stat-label">TARGETS:</div>
+                <div>3 DETECTED</div>
+            </div>
+        </aside>
+
+        <main class="content-panel">
+            {% block content %}{% endblock %}
+            <div style="margin-top: 2rem;">
+                <span class="cursor"></span>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Simple clock for terminal effect
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toISOString().substring(11, 19) + ' UTC';
+            const clockEl = document.getElementById('clock');
+            if(clockEl) {
+                clockEl.textContent = timeString;
+            }
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+</html>
