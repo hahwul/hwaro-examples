@@ -1,0 +1,33 @@
+{% include "header.html" %}
+
+<div class="prism-card">
+    {% if section is defined and section.title %}
+        <h1 class="page-title" data-text="{{ section.title }}">{{ section.title }}</h1>
+        {% if section.content %}
+            <div class="content-body">{{ section.content | safe }}</div>
+        {% endif %}
+    {% elif taxonomy_term is defined %}
+        <h1 class="page-title" data-text="{{ taxonomy_term }}">{{ taxonomy_term }}</h1>
+    {% elif taxonomy_name is defined %}
+        <h1 class="page-title" data-text="{{ taxonomy_name }}">{{ taxonomy_name }}</h1>
+    {% else %}
+        <h1 class="page-title" data-text="Archive">Archive</h1>
+    {% endif %}
+</div>
+
+<div class="post-list">
+    {% set items = section.pages | default(val=taxonomy_pages | default(val=site.pages)) %}
+    {% for post in items %}
+    <a href="{{ post.url }}" class="prism-card post-card">
+        <h2>{{ post.title }}</h2>
+        {% if post.date %}
+        <time class="post-date">{{ post.date | date(format="%B %d, %Y") }}</time>
+        {% endif %}
+        {% if post.summary %}
+        <p>{{ post.summary | strip_html | truncate_words(n=30) }}</p>
+        {% endif %}
+    </a>
+    {% endfor %}
+</div>
+
+{% include "footer.html" %}
