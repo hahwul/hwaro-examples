@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+    <meta name="description" content="{{ page.description | default(site.description) }}">
+    <style>
+        /* Japanese Industrial Theme CSS */
+        :root {
+            --color-bg: #f4f4f4; /* Light concrete */
+            --color-text: #111111; /* Almost black */
+            --color-accent: #e60000; /* Bold Red */
+            --color-white: #ffffff;
+            --color-black: #000000;
+            --color-concrete: #dcdcdc;
+            --color-concrete-dark: #aaaaaa;
+        }
+
+        @font-face {
+            font-family: 'Inter';
+            src: url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap');
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+            
+            /* Concrete texture using SVG background */
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            background-attachment: fixed;
+        }
+
+        /* Structural lines */
+        .grid-container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            min-height: 100vh;
+            border-left: 10px solid var(--color-accent);
+        }
+
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+                border-left: none;
+                border-top: 10px solid var(--color-accent);
+            }
+        }
+
+        /* Sidebar / Header */
+        .sidebar {
+            background-color: var(--color-white);
+            border-right: 2px solid var(--color-black);
+            padding: 3rem 2rem;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 10;
+        }
+
+        .site-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            color: var(--color-black);
+            line-height: 1.1;
+        }
+
+        .site-description {
+            font-size: 0.9rem;
+            color: var(--color-concrete-dark);
+            margin-bottom: 3rem;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        nav a {
+            display: block;
+            color: var(--color-text);
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s ease, color 0.2s ease;
+            text-transform: uppercase;
+        }
+
+        nav a:hover {
+            color: var(--color-accent);
+            border-bottom: 2px solid var(--color-accent);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 4rem;
+            max-width: 900px;
+            background-color: transparent;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 2rem;
+            }
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-top: 0;
+            margin-bottom: 2rem;
+            letter-spacing: -2px;
+            color: var(--color-black);
+            position: relative;
+        }
+
+        /* Red accent square on h1 */
+        h1::before {
+            content: '';
+            position: absolute;
+            left: -4rem;
+            top: 0.5rem;
+            width: 1.5rem;
+            height: 1.5rem;
+            background-color: var(--color-accent);
+        }
+
+        @media (max-width: 768px) {
+            h1::before {
+                left: -2rem;
+            }
+            h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            border-bottom: 4px solid var(--color-black);
+            padding-bottom: 0.5rem;
+            margin-top: 3rem;
+        }
+
+        p {
+            font-size: 1.1rem;
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+            max-width: 70ch;
+        }
+
+        /* Exposed concrete block styling for emphasis */
+        .concrete-block {
+            background-color: var(--color-concrete);
+            padding: 2rem;
+            border: 2px solid var(--color-black);
+            margin: 2rem 0;
+            position: relative;
+            box-shadow: 10px 10px 0 var(--color-black); /* Solid shadow */
+        }
+
+        .concrete-block::after {
+             content: '';
+             position: absolute;
+             bottom: -12px;
+             right: -12px;
+             width: 20px;
+             height: 20px;
+             background-color: var(--color-accent);
+        }
+
+        a {
+            color: var(--color-accent);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            text-decoration-thickness: 2px;
+            font-weight: 700;
+        }
+        
+        a:hover {
+            color: var(--color-black);
+            text-decoration-color: var(--color-black);
+        }
+
+        /* Technical / Monospace elements */
+        code, pre {
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+            background-color: var(--color-black);
+            color: var(--color-white);
+            padding: 0.2rem 0.4rem;
+            font-size: 0.9em;
+        }
+
+        pre {
+            padding: 1.5rem;
+            border-left: 5px solid var(--color-accent);
+            overflow-x: auto;
+        }
+
+        /* Industrial decorative elements */
+        .decor-line {
+            height: 2px;
+            background-color: var(--color-black);
+            width: 100%;
+            margin: 4rem 0;
+            position: relative;
+        }
+        
+        .decor-line::before {
+            content: '///';
+            position: absolute;
+            right: 0;
+            top: -10px;
+            background: var(--color-bg);
+            padding-left: 10px;
+            font-weight: 900;
+            color: var(--color-accent);
+            letter-spacing: 2px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="grid-container">
+        <aside class="sidebar">
+            <h1 class="site-title">{{ site.title }}</h1>
+            <div class="site-description">{{ site.description }}</div>
+            <nav>
+                <a href="{{ site.base_url | default('.') }}/">Home</a>
+                <a href="{{ site.base_url | default('.') }}/about">About</a>
+            </nav>
+            <div style="flex-grow: 1;"></div>
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--color-concrete-dark);">
+                SYS.REQ // 2024
+            </div>
+        </aside>
+
+        <main class="main-content">
+            {% block content %}{% endblock content %}
+        </main>
+    </div>
+</body>
+</html>
