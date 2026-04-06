@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="section-header">
+    <h1>{{ section.title }}</h1>
+    {% if section.content %}
+    <div class="content-body text-center mb-4">
+        {{ section.content | safe }}
+    </div>
+    {% endif %}
+</div>
+
+<div class="post-list">
+    {% for page in section.pages %}
+    <article class="post-item glass-panel">
+        <div class="post-content">
+            <h2><a href="{{ page.permalink }}">{{ page.title }}</a></h2>
+            {% if page.date %}
+            <div class="post-meta">{{ page.date | date(format="%B %d, %Y") }}</div>
+            {% endif %}
+            <p class="post-summary">
+                {% if page.summary %}
+                    {{ page.summary }}
+                {% elif page.content %}
+                    {{ page.content | striptags | truncate(length=150) }}
+                {% endif %}
+            </p>
+            <a href="{{ page.permalink }}" class="read-more">Examine Structure →</a>
+        </div>
+        <div class="post-decoration">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <g stroke="var(--glass-border)" stroke-width="1" fill="none">
+                    <path d="M50 10 L50 90 M10 50 L90 50 M21.7 21.7 L78.3 78.3 M21.7 78.3 L78.3 21.7" />
+                    <circle cx="50" cy="50" r="20" stroke-dasharray="2,4" />
+                </g>
+            </svg>
+        </div>
+    </article>
+    {% endfor %}
+</div>
+
+<style>
+    .section-header {
+        margin-bottom: 4rem;
+    }
+
+    .post-list {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .post-item {
+        display: flex;
+        padding: 2.5rem;
+        gap: 2rem;
+        align-items: center;
+        transition: transform 0.3s, border-color 0.3s;
+    }
+
+    .post-item:hover {
+        transform: translateX(10px);
+        border-color: var(--accent-cyan);
+    }
+
+    .post-content {
+        flex: 1;
+    }
+
+    .post-item h2 {
+        margin-bottom: 0.5rem;
+        font-size: 1.8rem;
+    }
+
+    .post-item h2 a {
+        color: #fff;
+    }
+
+    .post-item h2 a:hover {
+        color: var(--accent-cyan);
+    }
+
+    .post-meta {
+        font-family: 'Fira Code', monospace;
+        color: var(--accent-blue);
+        font-size: 0.85rem;
+        margin-bottom: 1rem;
+    }
+
+    .post-summary {
+        margin-bottom: 1.5rem;
+        font-size: 0.95rem;
+    }
+
+    .read-more {
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 600;
+    }
+
+    .post-decoration {
+        width: 100px;
+        height: 100px;
+        flex-shrink: 0;
+        opacity: 0.5;
+        transition: transform 1s ease-in-out, opacity 0.3s;
+    }
+
+    .post-item:hover .post-decoration {
+        transform: rotate(90deg);
+        opacity: 1;
+        stroke: var(--accent-cyan);
+    }
+    
+    @media (max-width: 600px) {
+        .post-item {
+            flex-direction: column;
+            text-align: center;
+        }
+        .post-decoration {
+            display: none;
+        }
+    }
+</style>
+{% endblock %}
