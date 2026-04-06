@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page is defined %}{{ page.title }} | {% elif section is defined %}{{ section.title }} | {% endif %}{{ site.title }}</title>
+    <style>
+        :root {
+            --bg-color: #050b14;
+            --text-color: #e0f0ff;
+            --accent-cyan: #00f0ff;
+            --accent-blue: #4a90e2;
+            --glass-bg: rgba(10, 20, 35, 0.4);
+            --glass-border: rgba(150, 200, 255, 0.2);
+            --frost-blur: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* SVG Background Patterns */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -2;
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(74, 144, 226, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 10% 90%, rgba(0, 240, 255, 0.05) 0%, transparent 40%);
+            pointer-events: none;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1;
+            opacity: 0.15;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg stroke='%234a90e2' stroke-width='0.5' fill='none'%3E%3Cpath d='M50 0 L50 100 M0 50 L100 50 M14.6 14.6 L85.4 85.4 M14.6 85.4 L85.4 14.6'/%3E%3Ccircle cx='50' cy='50' r='20'/%3E%3Cpath d='M50 20 L40 10 M50 20 L60 10 M50 80 L40 90 M50 80 L60 90'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: 150px 150px;
+            pointer-events: none;
+        }
+
+        /* Glassmorphism Components */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--frost-blur));
+            -webkit-backdrop-filter: blur(var(--frost-blur));
+            border: 1px solid var(--glass-border);
+            border-radius: 2px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 0 20px rgba(150, 200, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-panel::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transform: skewX(-20deg);
+            animation: shine 8s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            20% { left: 200%; }
+            100% { left: 200%; }
+        }
+
+        /* Header */
+        .frost-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(5, 11, 20, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1rem 0;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-color);
+            gap: 1rem;
+        }
+
+        .snowflake-icon {
+            width: 32px;
+            height: 32px;
+            color: var(--accent-cyan);
+            animation: slowSpin 20s linear infinite;
+        }
+
+        @keyframes slowSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .site-title {
+            font-size: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .main-nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            padding-bottom: 0.2rem;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-cyan);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 50%;
+            width: 0; height: 1px;
+            background: var(--accent-cyan);
+            transition: all 0.3s;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            width: 100%;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-weight: 300;
+            letter-spacing: 1px;
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+        }
+
+        h1 {
+            font-size: 3rem;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            position: relative;
+            padding-bottom: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        h1::after {
+            content: '✧';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--accent-cyan);
+            font-size: 1rem;
+        }
+
+        h1::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-blue), transparent);
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            color: #b0c8e0;
+        }
+
+        a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            transition: text-shadow 0.3s;
+        }
+
+        a:hover {
+            text-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
+        }
+
+        /* Footer */
+        .frost-footer {
+            background: rgba(5, 11, 20, 0.8);
+            border-top: 1px solid var(--glass-border);
+            padding: 2rem 0;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            text-align: center;
+            color: rgba(224, 240, 255, 0.5);
+            font-size: 0.85rem;
+        }
+
+        .footer-crystals {
+            margin-top: 1rem;
+            color: var(--accent-blue);
+            opacity: 0.5;
+            letter-spacing: 1rem;
+            margin-left: 1rem;
+        }
+
+        /* Content Markdown Styling */
+        .content-body h2 {
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 0.5rem;
+            margin-top: 3rem;
+        }
+
+        .content-body ul, .content-body ol {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+            color: #b0c8e0;
+        }
+
+        .content-body li {
+            margin-bottom: 0.5rem;
+        }
+
+        .content-body blockquote {
+            border-left: 2px solid var(--accent-cyan);
+            padding-left: 1.5rem;
+            font-style: italic;
+            color: #8aa6c1;
+            background: rgba(0, 240, 255, 0.03);
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-body code {
+            font-family: 'Fira Code', 'Courier New', monospace;
+            background: rgba(0,0,0,0.3);
+            padding: 0.2rem 0.4rem;
+            border-radius: 2px;
+            color: var(--accent-cyan);
+            font-size: 0.9em;
+        }
+
+        .content-body pre {
+            background: #03060a;
+            padding: 1.5rem;
+            border: 1px solid var(--glass-border);
+            border-radius: 2px;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-body pre code {
+            background: transparent;
+            padding: 0;
+            color: #e0f0ff;
+        }
+
+        /* Utilities */
+        .text-center { text-align: center; }
+        .mt-4 { margin-top: 2rem; }
+        .mb-4 { margin-bottom: 2rem; }
+        
+        /* Stop infinite animations inside video generation environment, if needed, though slowSpin is slow enough */
+    </style>
+</head>
+<body>
+    {% include "header.html" %}
+
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    {% include "footer.html" %}
+</body>
+</html>
