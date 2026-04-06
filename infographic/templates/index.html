@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="{{ config.default_language | default(value='en') }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if section.title %}{{ section.title }} - {% endif %}{{ config.title }}</title>
+    <meta name="description" content="{% if section.description %}{{ section.description }}{% else %}{{ config.description }}{% endif %}">
+    <link rel="stylesheet" href="{{ config.base_url }}/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="infographic-container">
+        
+        <header class="hero-section">
+            <div class="hero-content">
+                <h1 class="main-title">{{ section.title | default(value=config.title) }}</h1>
+                <p class="main-subtitle">{{ section.description | default(value=config.description) }}</p>
+                <div class="scroll-indicator">
+                    <div class="mouse">
+                        <div class="wheel"></div>
+                    </div>
+                    <p>Scroll to unfold</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="data-stream">
+            <div class="center-line"></div>
+            
+            {% if section.extra.timeline is defined %}
+                {% for item in section.extra.timeline %}
+                    <section class="data-node {% if loop.index % 2 == 0 %}node-right{% else %}node-left{% endif %}">
+                        <div class="node-connector" style="background-color: {{ item.color }};"></div>
+                        <div class="node-content" style="border-top: 4px solid {{ item.color }};">
+                            <div class="node-year" style="color: {{ item.color }};">{{ item.year }}</div>
+                            <h2 class="node-title">{{ item.title }}</h2>
+                            <p class="node-desc">{{ item.description }}</p>
+                            
+                            <div class="node-visualization">
+                                <!-- Abstract data visualization shape based on loop index -->
+                                {% if loop.index == 1 %}
+                                    <div class="chart-bar" style="width: 20%; background-color: {{ item.color }};"></div>
+                                {% elif loop.index == 2 %}
+                                    <div class="chart-bar" style="width: 40%; background-color: {{ item.color }};"></div>
+                                {% elif loop.index == 3 %}
+                                    <div class="chart-bar" style="width: 60%; background-color: {{ item.color }};"></div>
+                                {% elif loop.index == 4 %}
+                                    <div class="chart-bar" style="width: 80%; background-color: {{ item.color }};"></div>
+                                {% else %}
+                                    <div class="chart-bar" style="width: 100%; background-color: {{ item.color }};"></div>
+                                {% endif %}
+                                <div class="node-stat">{{ item.stat }}</div>
+                            </div>
+                        </div>
+                    </section>
+                {% endfor %}
+            {% endif %}
+            
+            <section class="data-node node-center final-node">
+                <div class="node-connector" style="background-color: #fff;"></div>
+                <div class="node-content">
+                    <h2 class="node-title">The Future</h2>
+                    <p class="node-desc">The data continues to flow. What's next is up to us.</p>
+                </div>
+            </section>
+        </div>
+        
+    </div>
+
+    <!-- Intersection Observer for scroll animations -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const nodes = document.querySelectorAll('.data-node');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                    }
+                });
+            }, {
+                threshold: 0.2,
+                rootMargin: "0px 0px -100px 0px"
+            });
+            
+            nodes.forEach(node => {
+                observer.observe(node);
+            });
+        });
+    </script>
+</body>
+</html>
