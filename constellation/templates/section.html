@@ -1,25 +1,36 @@
-{% include "header.html" %}
-  <main class="site-main">
-    <div class="page-header">
-      <h1>{{ page.title }}</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if section.title %}{{ section.title }} | {% endif %}{{ config.title | default(value='Constellation') }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ get_url(path='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        {% include "header.html" %}
+        
+        <main>
+            <h1>{{ section.title }}</h1>
+            {% if section.content %}
+            <div class="post-content">
+                {{ section.content | safe }}
+            </div>
+            {% endif %}
+
+            <ul class="post-list">
+            {% for post in section.pages %}
+                <li class="post-item">
+                    <h3 class="post-title"><a href="{{ post.permalink }}">{{ post.title }}</a></h3>
+                    <time class="post-date">{{ post.date | date(format="%B %d, %Y") }}</time>
+                    <p>{{ post.description }}</p>
+                </li>
+            {% endfor %}
+            </ul>
+        </main>
+        
+        {% include "footer.html" %}
     </div>
-    {{ content }}
-
-    <ul class="post-list">
-      {% for item in section.pages %}
-      <li class="post-card">
-        <div class="post-card-title"><a href="{{ base_url }}{{ item.url }}">{{ item.title }}</a></div>
-        {% if item.date %}<div class="post-card-date">{{ item.date }}</div>{% endif %}
-        {% if item.description %}<div class="post-card-desc">{{ item.description }}</div>{% endif %}
-        {% if item.reading_time %}
-        <div class="post-card-meta">
-          <span><span class="meta-label">Read</span> {{ item.reading_time }} min</span>
-        </div>
-        {% endif %}
-      </li>
-      {% endfor %}
-    </ul>
-
-    {{ pagination }}
-  </main>
-{% include "footer.html" %}
+</body>
+</html>

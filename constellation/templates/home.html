@@ -1,41 +1,39 @@
-{% include "header.html" %}
-  <main class="site-main">
-    <section class="hero">
-      <h1><span>*</span> Constellation</h1>
-      <p>Observations from the night sky. A field guide to stars, constellations, and celestial phenomena visible from Earth.</p>
-    </section>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page.title %}{{ page.title }} | {% endif %}{{ config.title | default(value='Constellation') }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ get_url(path='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        {% include "header.html" %}
+        
+        <main>
+            {% if section.content %}
+            <div class="post-content">
+                {{ section.content | safe }}
+            </div>
+            {% endif %}
 
-    <div class="section-divider">Seasonal Night Sky Guide</div>
-    <div class="sky-guide">
-      <div class="sky-guide-item">
-        <span class="sky-guide-season">Winter</span>
-        <span class="sky-guide-text">Orion dominates the southern sky. The Pleiades ride high. Sirius blazes near the horizon. Best season for bright stellar targets.</span>
-      </div>
-      <div class="sky-guide-item">
-        <span class="sky-guide-season">Spring</span>
-        <span class="sky-guide-text">Leo climbs to the meridian. The Virgo galaxy cluster opens for deep-sky observers. The Milky Way lies low.</span>
-      </div>
-      <div class="sky-guide-item">
-        <span class="sky-guide-season">Summer</span>
-        <span class="sky-guide-text">The Summer Triangle rises. Sagittarius and the galactic center transit at midnight. Rich Milky Way star fields overhead.</span>
-      </div>
-      <div class="sky-guide-item">
-        <span class="sky-guide-season">Autumn</span>
-        <span class="sky-guide-text">Andromeda galaxy reaches prime position. Pegasus spans the zenith. Double Cluster in Perseus is a binocular showpiece.</span>
-      </div>
+            <h2>Recent Observations</h2>
+            <ul class="post-list">
+            {% set posts_section = get_section(path="posts/_index.md") %}
+            {% for post in posts_section.pages | slice(end=5) %}
+                <li class="post-item">
+                    <h3 class="post-title"><a href="{{ post.permalink }}">{{ post.title }}</a></h3>
+                    {% if post.date %}
+                    <time class="post-date">{{ post.date | date(format="%B %d, %Y") }}</time>
+                    {% endif %}
+                    <p>{{ post.description }}</p>
+                </li>
+            {% endfor %}
+            </ul>
+        </main>
+        
+        {% include "footer.html" %}
     </div>
-
-    <div class="section-divider">Recent Observations</div>
-    <ul class="post-list">
-      {% for item in site.pages %}
-      {% if item.section == "posts" %}
-      <li class="post-card">
-        <div class="post-card-title"><a href="{{ base_url }}{{ item.url }}">{{ item.title }}</a></div>
-        {% if item.date %}<div class="post-card-date">{{ item.date }}</div>{% endif %}
-        {% if item.description %}<div class="post-card-desc">{{ item.description }}</div>{% endif %}
-      </li>
-      {% endif %}
-      {% endfor %}
-    </ul>
-  </main>
-{% include "footer.html" %}
+</body>
+</html>

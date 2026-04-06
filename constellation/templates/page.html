@@ -1,53 +1,47 @@
-{% include "header.html" %}
-  <main class="site-main">
-    <div class="page-header">
-      <h1>{{ page.title }}</h1>
-      {% if page.date %}
-      <span class="page-date">{{ page.date }}</span>
-      {% if page.reading_time %}<span class="page-reading-time">{{ page.reading_time }} min read</span>{% endif %}
-      {% endif %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page.title %}{{ page.title }} | {% endif %}{{ config.title | default(value='Constellation') }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ get_url(path='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        {% include "header.html" %}
+        
+        <main>
+            <article>
+                <h1>{{ page.title }}</h1>
+                {% if page.date %}
+                <time class="post-date">{{ page.date | date(format="%B %d, %Y") }}</time>
+                {% endif %}
+                
+                {% if page.description %}
+                <div class="celestial-card">
+                    <div class="metadata-item">
+                        <span class="metadata-label">Metadata</span>
+                        <span class="metadata-value">{{ page.description }}</span>
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="post-content">
+                    {{ page.content | safe }}
+                </div>
+
+                {% if page.taxonomies.tags %}
+                <div class="post-tags">
+                    {% for tag in page.taxonomies.tags %}
+                    <a href="{{ get_url(path='tags/' ~ tag) }}" class="tag">{{ tag }}</a>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </article>
+        </main>
+        
+        {% include "footer.html" %}
     </div>
-
-    {% if page.description %}
-    <div class="celestial-meta">
-      <div class="celestial-meta-item">
-        <span class="celestial-meta-label">Magnitude</span>
-        <span class="celestial-meta-value">--</span>
-      </div>
-      <div class="celestial-meta-item">
-        <span class="celestial-meta-label">Distance</span>
-        <span class="celestial-meta-value">--</span>
-      </div>
-      <div class="celestial-meta-item">
-        <span class="celestial-meta-label">Classification</span>
-        <span class="celestial-meta-value">--</span>
-      </div>
-    </div>
-    {% endif %}
-
-    {{ content }}
-
-    {% if page.tags %}
-    <div class="page-tags">
-      {% for tag in page.tags %}
-      <a href="{{ base_url }}/tags/{{ tag | slugify }}/">{{ tag }}</a>
-      {% endfor %}
-    </div>
-    {% endif %}
-
-    <nav class="post-nav">
-      {% if page.higher %}
-      <a href="{{ base_url }}{{ page.higher.url }}">
-        <span class="nav-label">Previous</span>
-        {{ page.higher.title }}
-      </a>
-      {% endif %}
-      {% if page.lower %}
-      <a href="{{ base_url }}{{ page.lower.url }}" class="nav-next">
-        <span class="nav-label">Next</span>
-        {{ page.lower.title }}
-      </a>
-      {% endif %}
-    </nav>
-  </main>
-{% include "footer.html" %}
+</body>
+</html>
