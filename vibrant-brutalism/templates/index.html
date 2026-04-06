@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="post-list">
+    {% set pages = paginator.pages if paginator is defined else section.pages %}
+    {% for page in pages %}
+    <article class="post-card">
+        <h2><a href="{{ page.permalink }}">{{ page.title }}</a></h2>
+        {% if page.date %}
+        <div class="meta">
+            <time datetime="{{ page.date }}">{{ page.date | date(format="%Y-%m-%d") }}</time>
+        </div>
+        {% endif %}
+        {% if page.summary %}
+        <p>{{ page.summary | striptags }}</p>
+        {% elif page.content %}
+        <p>{{ page.content | striptags | truncate(length=150) }}</p>
+        {% endif %}
+    </article>
+    {% endfor %}
+    
+    {% if paginator is defined %}
+    <div class="pagination">
+        {% if paginator.previous %}
+        <a href="{{ paginator.previous }}" class="prev">← Newer</a>
+        {% endif %}
+        {% if paginator.next %}
+        <a href="{{ paginator.next }}" class="next">Older →</a>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+
+<aside class="sidebar">
+    <h3>Manifesto</h3>
+    <p>Raw structure. Clashing neon colors. Thick borders. Bold typography. We do not hide our structure; we celebrate it. This is Vibrant Brutalism.</p>
+    <br>
+    <h3>Categories</h3>
+    <ul>
+        <li><a href="#">Design</a></li>
+        <li><a href="#">Architecture</a></li>
+        <li><a href="#">Typography</a></li>
+        <li><a href="#">Neon Colors</a></li>
+    </ul>
+</aside>
+{% endblock content %}
