@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="{{ site.language_code | default("en") }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+    <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+    
+    <!-- Minimal setup for Tailwind via CDN to save time, with custom config for our typography/colors -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ink: '#111111',
+                        paper: '#f9f8f4',
+                        redseal: '#ba2311',
+                        ash: '#888888',
+                    },
+                    fontFamily: {
+                        sans: ['"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
+                        serif: ['"Playfair Display"', '"Bodoni MT"', 'Didot', '"Times New Roman"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts for the elegant serif -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --ink-stroke: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="%23111111" opacity="0.05" d="M0,50 Q25,30 50,50 T100,50 Q75,70 50,50 T0,50 Z"/></svg>');
+        }
+        
+        body {
+            background-color: theme('colors.paper');
+            color: theme('colors.ink');
+            position: relative;
+            overflow-x: hidden;
+            font-family: theme('fontFamily.sans');
+        }
+
+        /* Abstract structural ink strokes */
+        .ink-stroke-vertical {
+            position: fixed;
+            top: -10%;
+            left: 10%;
+            width: 20vw;
+            height: 120vh;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 800" preserveAspectRatio="none"><path d="M40,0 Q60,200 45,400 T50,800 L0,800 Q10,400 20,0 Z" fill="%23111111" opacity="0.03"/></svg>');
+            background-size: 100% 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .ink-stroke-horizontal {
+            position: fixed;
+            top: 30%;
+            right: -5%;
+            width: 60vw;
+            height: 30vh;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 100" preserveAspectRatio="none"><path d="M0,40 Q200,60 400,45 T800,50 L800,0 Q400,10 0,20 Z" fill="%23111111" opacity="0.04"/></svg>');
+            background-size: 100% 100%;
+            z-index: -1;
+            transform: rotate(-10deg);
+            pointer-events: none;
+        }
+        
+        .ink-splatter {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            top: -50px;
+            right: -50px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="%23111111" opacity="0.02" filter="url(%23displacementFilter)"/><defs><filter id="displacementFilter"><feTurbulence type="fractalNoise" baseFrequency="0.1" numOctaves="3" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="20" xChannelSelector="R" yChannelSelector="G"/></filter></defs></svg>');
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6, .font-serif {
+            font-family: theme('fontFamily.serif');
+        }
+
+        .brush-title {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .brush-title::after {
+            content: '';
+            position: absolute;
+            bottom: 10%;
+            left: -5%;
+            width: 110%;
+            height: 40%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20" preserveAspectRatio="none"><path d="M0,10 Q25,0 50,10 T100,10 Q75,20 50,10 T0,10 Z" fill="%23ba2311" opacity="0.2"/></svg>');
+            z-index: -1;
+        }
+
+        /* Nav */
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: theme('colors.redseal');
+        }
+
+        /* Content Markdown Styling */
+        .content-area p {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            font-size: 1.125rem;
+            color: theme('colors.ink');
+        }
+
+        .content-area a {
+            color: theme('colors.redseal');
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s;
+        }
+
+        .content-area a:hover {
+            border-bottom-color: theme('colors.redseal');
+        }
+
+        .content-area h2 {
+            font-size: 2.25rem;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .content-area h3 {
+            font-size: 1.75rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .content-area blockquote {
+            border-left: 4px solid theme('colors.ink');
+            padding-left: 1.5rem;
+            margin-left: 0;
+            margin-right: 0;
+            font-style: italic;
+            font-size: 1.25rem;
+            color: theme('colors.ash');
+            font-family: theme('fontFamily.serif');
+        }
+
+        /* The seal */
+        .seal {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border: 2px solid theme('colors.redseal');
+            color: theme('colors.redseal');
+            font-family: theme('fontFamily.serif');
+            font-weight: bold;
+            font-size: 0.8rem;
+            border-radius: 4px;
+            transform: rotate(-5deg);
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="ink-stroke-vertical"></div>
+    <div class="ink-stroke-horizontal"></div>
+    
+    <header class="py-12 px-6 md:px-12 max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center relative">
+        <div class="ink-splatter"></div>
+        <a href="{{ site.base_url }}/" class="text-4xl font-serif font-bold tracking-tight mb-6 md:mb-0 text-ink flex items-center gap-4 hover:opacity-80 transition-opacity">
+            <span>{{ site.title }}</span>
+            <span class="seal text-redseal border-redseal">AC</span>
+        </a>
+        
+        <nav class="flex gap-8 text-sm uppercase tracking-widest font-bold">
+            <a href="{{ site.base_url }}/" class="nav-link">Home</a>
+            <a href="{{ site.base_url }}/posts/" class="nav-link">Expressions</a>
+            <a href="{{ site.base_url }}/tags/" class="nav-link">Tags</a>
+        </nav>
+    </header>
+    
+    <main class="max-w-4xl mx-auto px-6 md:px-12 py-12 min-h-[60vh]">

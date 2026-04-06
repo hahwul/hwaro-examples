@@ -1,0 +1,37 @@
+{% include "header.html" %}
+
+<div class="mb-16">
+    <h1 class="text-5xl font-bold font-serif mb-4 brush-title">{{ section.title | default("Section") }}</h1>
+    {% if section.description %}
+        <p class="text-xl text-ash italic font-serif">{{ section.description }}</p>
+    {% endif %}
+</div>
+
+<div class="space-y-16">
+    {% for post in section.pages %}
+        <article class="group">
+            <a href="{{ post.url | default(site.base_url ~ post.path) }}" class="block">
+                <header class="mb-4">
+                    {% if post.date %}
+                        <span class="text-xs text-ash tracking-widest uppercase mb-2 block">{{ post.date | date("%Y-%m-%d") }}</span>
+                    {% endif %}
+                    <h2 class="text-3xl font-bold font-serif group-hover:text-redseal transition-colors">{{ post.title }}</h2>
+                </header>
+                <div class="text-lg text-ink/80 font-serif italic mb-4 border-l-2 border-transparent group-hover:border-redseal pl-4 transition-all">
+                    {% if post.description %}
+                        {{ post.description }}
+                    {% elif post.summary %}
+                        {{ post.summary | strip_html | safe }}
+                    {% else %}
+                        {{ post.content | strip_html | truncate_words(30) | safe }}
+                    {% endif %}
+                </div>
+            </a>
+            <a href="{{ post.url | default(site.base_url ~ post.path) }}" class="text-sm uppercase tracking-widest text-redseal font-bold flex items-center gap-2 group-hover:gap-4 transition-all">
+                Read Expression <span class="text-lg">&rarr;</span>
+            </a>
+        </article>
+    {% endfor %}
+</div>
+
+{% include "footer.html" %}
