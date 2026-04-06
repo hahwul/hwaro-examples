@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="hero-block">
+        <div class="hero-carving"></div>
+        <div class="hero-content">
+            <h2>{{ section.title | default(value=config.title) }}</h2>
+            <div class="hero-description">{{ section.content | safe }}</div>
+        </div>
+        <div class="hero-carving-right"></div>
+    </div>
+
+    <div class="stepped-pyramid">
+        <div class="step step-1"></div>
+        <div class="step step-2"></div>
+        <div class="step step-3"></div>
+        <div class="step-top"></div>
+    </div>
+
+    <section class="carving-grid">
+        {% set artifacts_section = get_section(path="artifacts/_index.md") %}
+        {% if artifacts_section.pages %}
+            {% for page in artifacts_section.pages %}
+            <article class="stone-block">
+                <div class="block-decoration top-left"></div>
+                <div class="block-decoration bottom-right"></div>
+                <h3 class="block-title"><a href="{{ page.permalink }}">{{ page.title }}</a></h3>
+                <div class="block-summary">
+                    {% if page.description %}
+                        {{ page.description }}
+                    {% else %}
+                        {{ page.content | striptags | truncate(length=120) }}
+                    {% endif %}
+                </div>
+                <div class="block-actions">
+                    <a href="{{ page.permalink }}" class="btn-carve">Inspect Carving</a>
+                </div>
+            </article>
+            {% endfor %}
+        {% endif %}
+    </section>
+{% endblock content %}
