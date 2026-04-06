@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page is defined %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+    <meta name="description" content="{% if page is defined and page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Warm Earthy Tones */
+            --yarn-base: #f4eee1;      /* Undyed wool */
+            --yarn-warm: #e6d8c4;      /* Light beige */
+            --yarn-accent1: #c65e41;   /* Terracotta red */
+            --yarn-accent2: #d89f53;   /* Mustard yellow */
+            --yarn-accent3: #4a6350;   /* Forest green */
+            --yarn-dark: #3a2e26;      /* Dark brown */
+            
+            --thread-shadow: rgba(58, 46, 38, 0.3);
+            --thread-highlight: rgba(255, 255, 255, 0.6);
+            
+            --bg-color: #faf5eb;
+            --text-color: #2c2117;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            font-size: 18px;
+            /* SVG Woven Pattern Background */
+            background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='weave' width='40' height='40' patternUnits='userSpaceOnUse'%3E%3Cg opacity='0.4'%3E%3Crect width='40' height='40' fill='%23f4eee1'/%3E%3Cpath d='M0 10h40M0 30h40' stroke='%23e6d8c4' stroke-width='4'/%3E%3Cpath d='M10 0v40M30 0v40' stroke='%23e6d8c4' stroke-width='4'/%3E%3Cpath d='M0 10h10M20 10h20M0 30h20M30 30h10' stroke='%23f4eee1' stroke-width='4'/%3E%3Cpath d='M10 0v10M10 20v20M30 0v20M30 30v10' stroke='%23f4eee1' stroke-width='4'/%3E%3C/g%3E%3C/pattern%3E%3C/defs%3E%3Crect width='40' height='40' fill='url(%23weave)'/%3E%3C/svg%3E");
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* SVG Filters for Fabric Texture */
+        .svg-filters {
+            width: 0;
+            height: 0;
+            position: absolute;
+        }
+
+        /* Thread border decoration */
+        .thread-border {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            pointer-events: none;
+            z-index: 1000;
+            border: 2px dashed var(--yarn-accent1);
+            border-radius: 4px;
+            box-shadow: 0 0 0 4px var(--bg-color), 0 0 0 6px var(--yarn-accent3);
+            opacity: 0.8;
+        }
+
+        /* Main Container */
+        .tapestry-container {
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 40px;
+            background-color: var(--yarn-base);
+            box-shadow: 
+                0 10px 30px rgba(0,0,0,0.1),
+                inset 0 0 50px rgba(230, 216, 196, 0.5);
+            position: relative;
+            z-index: 10;
+            flex: 1;
+            /* Rough edges simulating cut fabric */
+            clip-path: polygon(
+                1% 0%, 99% 1%, 100% 98%, 98% 100%, 2% 99%, 0% 2%
+            );
+            filter: url(#fabric-texture);
+        }
+
+        /* Fringes / Tassels */
+        .tapestry-container::before,
+        .tapestry-container::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 20px;
+            background-image: repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 4px,
+                var(--yarn-warm) 4px,
+                var(--yarn-warm) 8px
+            );
+            z-index: -1;
+        }
+        .tapestry-container::before {
+            top: -20px;
+        }
+        .tapestry-container::after {
+            bottom: -20px;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--yarn-dark);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            text-align: center;
+            letter-spacing: 0.05em;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 0 var(--thread-highlight), -1px -1px 0 var(--thread-shadow);
+            border-bottom: 3px double var(--yarn-accent2);
+            padding-bottom: 10px;
+        }
+        
+        h1 a {
+            color: inherit;
+        }
+        
+        h1 a::after {
+            display: none;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            color: var(--yarn-accent1);
+            margin-top: 2rem;
+            border-left: 6px solid var(--yarn-accent3);
+            padding-left: 15px;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+
+        a {
+            color: var(--yarn-accent1);
+            text-decoration: none;
+            position: relative;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        a::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--yarn-accent2);
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--yarn-accent3);
+        }
+
+        a:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+            background-color: var(--yarn-accent3);
+        }
+
+        /* Stitched UI Elements */
+        .stitched-box {
+            background-color: var(--yarn-warm);
+            padding: 20px;
+            margin: 20px 0;
+            border: 2px dashed var(--yarn-accent1);
+            position: relative;
+            box-shadow: 4px 4px 0 var(--thread-shadow);
+        }
+
+        /* Thread separators */
+        hr {
+            border: none;
+            height: 4px;
+            background-image: repeating-linear-gradient(
+                90deg,
+                var(--yarn-accent2),
+                var(--yarn-accent2) 10px,
+                transparent 10px,
+                transparent 20px
+            );
+            margin: 30px 0;
+            opacity: 0.8;
+        }
+
+        /* Buttons / Stitched patches */
+        .btn {
+            display: inline-block;
+            background-color: var(--yarn-accent3);
+            color: #fff;
+            padding: 10px 25px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 2px dashed #fff;
+            box-shadow: 0 0 0 4px var(--yarn-accent3), 4px 4px 10px rgba(0,0,0,0.2);
+            margin: 10px 0;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 0 4px var(--yarn-accent1), 6px 6px 15px rgba(0,0,0,0.3);
+            background-color: var(--yarn-accent1);
+            color: #fff;
+        }
+        
+        .btn:hover::after {
+            display: none;
+        }
+
+        /* Code blocks as woven patches */
+        pre {
+            background-color: var(--yarn-dark);
+            color: var(--yarn-warm);
+            padding: 20px;
+            overflow-x: auto;
+            border-left: 8px solid var(--yarn-accent2);
+            border-right: 8px solid var(--yarn-accent2);
+            font-family: monospace;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        pre::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='4' height='4' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='4' height='4' fill='none'/%3E%3Cpath d='M0 0l4 4M4 0L0 4' stroke='rgba(255,255,255,0.05)' stroke-width='1'/%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        code {
+            background-color: rgba(0,0,0,0.1);
+            padding: 2px 6px;
+            color: var(--yarn-accent1);
+            font-weight: bold;
+        }
+
+        /* Images framed as embroidery hoops or canvas patches */
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 30px auto;
+            border: 8px solid #fff;
+            box-shadow: 0 0 0 2px var(--yarn-dark), 5px 5px 15px rgba(0,0,0,0.3);
+            filter: sepia(0.2) contrast(1.1); /* Give images a slightly warmer, vintage look */
+        }
+
+        /* Navigation */
+        nav {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 20px;
+            background-color: rgba(255,255,255,0.5);
+            border-top: 2px dashed var(--yarn-accent3);
+            border-bottom: 2px dashed var(--yarn-accent3);
+        }
+
+        nav a {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            color: var(--yarn-dark);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        nav a:hover {
+            color: var(--yarn-accent1);
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 40px;
+            padding: 30px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--yarn-dark);
+            background-color: var(--yarn-warm);
+            border-top: 4px solid var(--yarn-accent3);
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Post Metadata */
+        .meta {
+            font-style: italic;
+            color: var(--yarn-accent3);
+            margin-bottom: 2rem;
+            text-align: left;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+        }
+        
+        /* Post List */
+        .post-list {
+            list-style: none;
+        }
+        
+        .post-item {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px dashed var(--yarn-accent2);
+        }
+        
+        .post-item h2 {
+            border: none;
+            margin-top: 0;
+            padding-left: 0;
+            font-size: 2rem;
+        }
+        
+        .post-item a::after {
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .tapestry-container {
+                margin: 40px 20px;
+                padding: 20px;
+            }
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SVG Filters Definition for Fabric Texture -->
+    <svg class="svg-filters" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <filter id="fabric-texture" x="0" y="0" width="100%" height="100%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" result="noise" />
+                <feColorMatrix type="matrix" values="1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 0.1 0" in="noise" result="coloredNoise" />
+                <feComposite operator="in" in="coloredNoise" in2="SourceGraphic" result="composite" />
+                <feBlend mode="multiply" in="composite" in2="SourceGraphic" result="blend" />
+            </filter>
+        </defs>
+    </svg>
+
+    <div class="thread-border"></div>
+
+    <div class="tapestry-container">
+        {% include "header.html" %}
+        
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+        
+        {% include "footer.html" %}
+    </div>
+
+</body>
+</html>
