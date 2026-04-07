@@ -1,0 +1,47 @@
+{% include "header.html" %}
+
+<div class="hero" style="text-align: center; margin: 4rem 0;">
+    <h1>{{ page.title | default(value=config.title) }}</h1>
+    <p style="font-size: 1.2rem; color: #558b2f; max-width: 600px; margin: 1rem auto;">
+        {{ page.description | default(value=config.description) }}
+    </p>
+</div>
+
+{% if page is defined and page.content %}
+<div class="page-content" style="margin-bottom: 3rem; background: transparent; box-shadow: none; border: none; padding: 0;">
+    {{ page.content | safe }}
+</div>
+{% endif %}
+
+{% if section is defined and section.pages %}
+<ul class="post-list">
+    {% for post in section.pages %}
+    <li class="post-card">
+        <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+        <div class="post-meta">
+            {% if post.date %}
+            <span>{{ post.date | date(format="%B %d, %Y") }}</span>
+            {% endif %}
+            {% if post.extra and post.extra.author %}
+            <span>&bull; {{ post.extra.author }}</span>
+            {% endif %}
+        </div>
+        {% if post.summary %}
+        <p class="post-summary">{{ post.summary }}</p>
+        {% elif post.description %}
+        <p class="post-summary">{{ post.description }}</p>
+        {% endif %}
+
+        {% if post.tags %}
+        <div class="tags">
+            {% for tag in post.tags %}
+            <span class="tag">{{ tag }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% include "footer.html" %}
