@@ -9,7 +9,7 @@ Vibrant Brutalism answers this question by turning the dial to 11.
 
 ### Structural Honesty
 
-Like the Brutalist architecture movement of the 1950s, we believe in **structural honesty**. 
+Like the Brutalist architecture movement of the 1950s, we believe in **structural honesty**.
 
 1. We use thick, solid borders.
 2. We employ harsh drop shadows without blur.
