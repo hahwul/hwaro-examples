@@ -1,0 +1,40 @@
+{% include "header.html" %}
+
+  <main class="wrapper">
+    <header class="section-header">
+      <h1 class="section-title">{{ section.title }}</h1>
+      {% if section.description %}<p class="section-description">{{ section.description }}</p>{% endif %}
+    </header>
+
+    {% set items = section.pages %}
+    {% if paginator %}
+      {% set items = paginator.pages %}
+    {% endif %}
+
+    {% for post in items %}
+    <a href="{{ config.base_url }}{{ post.path }}" class="post-entry">
+      <div class="post-entry-meta">
+        {% if post.date %}<span class="date">{{ post.date | date(format="%B %d, %Y") }}</span>{% endif %}
+        {% if post.taxonomies.categories %} — <span class="category">{{ post.taxonomies.categories | first }}</span>{% endif %}
+      </div>
+      <h2 class="post-entry-title">{{ post.title }}</h2>
+      {% if post.description %}<p class="post-entry-summary">{{ post.description }}</p>{% endif %}
+    </a>
+    {% endfor %}
+
+    {% if paginator %}
+    {% if paginator.total_pages > 1 %}
+    <div class="pagination">
+      {% if paginator.previous %}
+      <a href="{{ paginator.previous }}">Prev</a>
+      {% endif %}
+      <span class="current">{{ paginator.current_index }} / {{ paginator.total_pages }}</span>
+      {% if paginator.next %}
+      <a href="{{ paginator.next }}">Next</a>
+      {% endif %}
+    </div>
+    {% endif %}
+    {% endif %}
+  </main>
+
+{% include "footer.html" %}
