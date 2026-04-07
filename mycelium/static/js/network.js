@@ -31,14 +31,14 @@ class Node {
 
         if (this.x < 0 || this.x > width) this.vx *= -1;
         if (this.y < 0 || this.y > height) this.vy *= -1;
-        
+
         this.pulsePhase += 0.02;
     }
 
     draw() {
         let alpha = this.baseAlpha + Math.sin(this.pulsePhase) * 0.3;
         if (alpha < 0) alpha = 0;
-        
+
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(74, 222, 128, ${alpha})`;
@@ -70,11 +70,11 @@ function drawConnections() {
                 ctx.beginPath();
                 ctx.moveTo(nodes[i].x, nodes[i].y);
                 ctx.lineTo(nodes[j].x, nodes[j].y);
-                
+
                 // Pulsating effect for lines based on connected nodes
                 let pulse = (Math.sin(nodes[i].pulsePhase) + Math.sin(nodes[j].pulsePhase)) / 2;
                 let lineAlpha = opacity * (0.1 + pulse * 0.1);
-                
+
                 ctx.strokeStyle = `rgba(45, 212, 191, ${lineAlpha})`; // Teal accent
                 ctx.lineWidth = opacity * 1.5;
                 ctx.stroke();
@@ -108,12 +108,12 @@ canvas.addEventListener('mousemove', (e) => {
     // Optional: Make nodes move slightly towards mouse to simulate biological attraction
     let mouseX = e.clientX;
     let mouseY = e.clientY;
-    
+
     nodes.forEach(node => {
         let dx = mouseX - node.x;
         let dy = mouseY - node.y;
         let dist = Math.sqrt(dx*dx + dy*dy);
-        
+
         if(dist < 100) {
             node.x += dx * 0.01;
             node.y += dy * 0.01;
