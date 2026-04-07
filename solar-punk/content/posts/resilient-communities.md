@@ -11,7 +11,7 @@ In the solarpunk vision, technology serves the community rather than exploiting 
 
 ## Localized Networks
 
-Mesh networks allow neighborhoods to share internet access, creating a resilient infrastructure that is less dependent on centralized ISPs. 
+Mesh networks allow neighborhoods to share internet access, creating a resilient infrastructure that is less dependent on centralized ISPs.
 
 ## Open-Source Software
 
