@@ -1,0 +1,53 @@
+{% include "header.html" %}
+  <main class="site-main">
+    {% if page.title %}
+      <h1>{{ page.title | escape }}</h1>
+    {% elif section.title %}
+      <h1>{{ section.title | escape }}</h1>
+    {% endif %}
+
+    {% if content %}
+      <div class="taxonomy-desc">
+        {{ content | safe }}
+      </div>
+      <div class="repousse-divider"></div>
+    {% endif %}
+
+    <ul class="section-list">
+      {% for p in section.pages %}
+      <li>
+        <h2><a href="{{ p.permalink | default(value=p.url) | default(value="#") }}">{{ p.title | escape }}</a></h2>
+        {% if p.date %}
+          <span class="post-meta">{{ p.date | date(format="%B %d, %Y") }}</span>
+        {% endif %}
+        {% if p.summary %}
+          <p>{{ p.summary | strip_html | safe }}</p>
+        {% elif p.description %}
+          <p>{{ p.description | escape }}</p>
+        {% endif %}
+        <a href="{{ p.permalink | default(value=p.url) | default(value="#") }}">Read more...</a>
+      </li>
+      {% endfor %}
+    </ul>
+
+    {% if paginator %}
+      <nav class="pagination">
+        <ul class="pagination-list">
+          {% if paginator.previous %}
+            <li><a href="{{ paginator.previous }}">&laquo; Prev</a></li>
+          {% else %}
+            <li class="pagination-disabled"><span>&laquo; Prev</span></li>
+          {% endif %}
+
+          <li class="pagination-current"><span>{{ paginator.current_index }} / {{ paginator.number_pagers }}</span></li>
+
+          {% if paginator.next %}
+            <li><a href="{{ paginator.next }}">Next &raquo;</a></li>
+          {% else %}
+            <li class="pagination-disabled"><span>Next &raquo;</span></li>
+          {% endif %}
+        </ul>
+      </nav>
+    {% endif %}
+  </main>
+{% include "footer.html" %}

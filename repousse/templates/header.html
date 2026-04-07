@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="{{ page_language | default(value="en") }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description | default(value=site.description) | default(value="") | escape }}">
+  <title>{% if page.title %}{{ page.title | escape }} - {% endif %}{{ site.title | escape }}</title>
+  {{ og_all_tags }}
+  {{ hreflang_tags }}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Base repousse metal colors */
+      --metal-base: #a67c52; /* Bronze/Copper base */
+      --metal-light: #cfa882;
+      --metal-dark: #664627;
+      --metal-shadow: #2c1a0c;
+      --metal-highlight: #eed8bf;
+
+      --bg-color: #1a1614; /* Dark tarnished background */
+      --text-color: #f4e8dc;
+      --text-muted: #c4b09c;
+
+      --border-color: #4a3320;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      font-family: "Cormorant Garamond", serif;
+      line-height: 1.6;
+      margin: 0;
+      color: var(--text-color);
+      background-color: var(--bg-color);
+      /* Base texture simulation using noise and faint background colors if needed,
+         but NO gradients are allowed, so we stick to solid bg. */
+    }
+
+    /* Layout */
+    .site-wrapper {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 3rem;
+
+      /* The Repoussé Metal Plate Effect */
+      background-color: var(--metal-base);
+      color: var(--metal-shadow);
+
+      /* Complex box-shadow to simulate hammered metal edge */
+      box-shadow:
+        inset 0 0 10px var(--metal-shadow),
+        inset 0 0 20px var(--metal-shadow),
+        inset 2px 2px 5px var(--metal-highlight),
+        inset -2px -2px 5px var(--metal-shadow),
+        inset 5px 5px 15px rgba(238, 216, 191, 0.4),
+        inset -5px -5px 15px rgba(44, 26, 12, 0.6),
+        0 10px 30px rgba(0,0,0,0.8),
+        0 0 0 2px var(--metal-dark),
+        0 0 0 8px var(--metal-base),
+        0 0 0 10px var(--metal-shadow);
+
+      border-radius: 4px;
+      position: relative;
+    }
+
+    /* Decorative corner rivets */
+    .site-wrapper::before,
+    .site-wrapper::after {
+      content: "";
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background-color: var(--metal-base);
+      border-radius: 50%;
+      box-shadow:
+        inset 2px 2px 3px var(--metal-highlight),
+        inset -2px -2px 3px var(--metal-shadow),
+        1px 1px 2px rgba(0,0,0,0.5);
+    }
+
+    .site-wrapper::before { top: 15px; left: 15px; }
+    .site-wrapper::after { bottom: 15px; right: 15px; }
+
+    .site-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 2rem;
+      border-bottom: 3px double var(--metal-shadow);
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    /* Inner rivets for header */
+    .site-header::before,
+    .site-header::after {
+      content: "";
+      position: absolute;
+      bottom: -6px;
+      width: 8px;
+      height: 8px;
+      background-color: var(--metal-base);
+      border-radius: 50%;
+      box-shadow:
+        inset 1px 1px 2px var(--metal-highlight),
+        inset -1px -1px 2px var(--metal-shadow),
+        1px 1px 1px rgba(0,0,0,0.5);
+    }
+    .site-header::before { left: 10%; }
+    .site-header::after { right: 10%; }
+
+    .site-logo {
+      font-family: "Cinzel Decorative", serif;
+      font-weight: 900;
+      font-size: 3rem;
+      color: var(--metal-base);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-align: center;
+
+      /* Embossed text effect */
+      text-shadow:
+        -1px -1px 1px var(--metal-highlight),
+        1px 1px 2px var(--metal-shadow),
+        0px 0px 4px rgba(0,0,0,0.3);
+    }
+
+    .site-header nav {
+      display: flex;
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+
+    .site-header nav a {
+      font-family: "Playfair Display", serif;
+      color: var(--metal-shadow);
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.5rem 1rem;
+      border: 1px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .site-header nav a:hover {
+      /* Engraved hover effect */
+      border: 1px solid var(--metal-shadow);
+      background-color: rgba(44, 26, 12, 0.05);
+      box-shadow:
+        inset 1px 1px 3px var(--metal-shadow),
+        inset -1px -1px 3px var(--metal-highlight);
+    }
+
+    .site-main {
+      min-height: calc(100vh - 400px);
+    }
+
+    .site-footer {
+      margin-top: 3rem;
+      padding: 2rem 0;
+      border-top: 3px double var(--metal-shadow);
+      color: var(--metal-shadow);
+      font-size: 0.95rem;
+      text-align: center;
+      font-family: "Playfair Display", serif;
+      position: relative;
+    }
+
+    /* Inner rivets for footer */
+    .site-footer::before,
+    .site-footer::after {
+      content: "";
+      position: absolute;
+      top: -6px;
+      width: 8px;
+      height: 8px;
+      background-color: var(--metal-base);
+      border-radius: 50%;
+      box-shadow:
+        inset 1px 1px 2px var(--metal-highlight),
+        inset -1px -1px 2px var(--metal-shadow),
+        1px 1px 1px rgba(0,0,0,0.5);
+    }
+    .site-footer::before { left: 10%; }
+    .site-footer::after { right: 10%; }
+
+
+    /* Typography */
+    h1, h2, h3, h4 {
+      font-family: "Cinzel Decorative", serif;
+      line-height: 1.2;
+      color: var(--metal-base);
+      margin-top: 1.5em;
+      margin-bottom: 0.75em;
+      font-weight: 700;
+
+      /* Embossed text effect */
+      text-shadow:
+        -1px -1px 1px var(--metal-highlight),
+        1px 1px 2px var(--metal-shadow);
+    }
+
+    h1 { font-size: 2.5rem; text-align: center; border-bottom: 1px solid var(--metal-shadow); padding-bottom: 0.5rem; }
+    h2 { font-size: 1.8rem; }
+    h3 { font-size: 1.4rem; }
+
+    p { margin: 1.2em 0; font-size: 1.15rem; color: var(--metal-shadow); text-align: justify; }
+
+    a {
+      color: #110904;
+      text-decoration: underline;
+      text-decoration-color: rgba(44, 26, 12, 0.4);
+      text-underline-offset: 4px;
+    }
+
+    a:hover {
+      color: #000;
+      text-decoration-color: var(--metal-shadow);
+    }
+
+    code {
+      background: rgba(0,0,0,0.05);
+      padding: 0.2rem 0.4rem;
+      border-radius: 2px;
+      font-size: 0.9em;
+      font-family: "Courier New", Courier, monospace;
+      color: var(--metal-dark);
+      /* Etched look */
+      box-shadow: inset 1px 1px 2px var(--metal-shadow);
+    }
+
+    pre {
+      background: var(--bg-color);
+      color: var(--text-color);
+      padding: 1.5rem;
+      border-radius: 4px;
+      overflow-x: auto;
+      border: 4px solid var(--metal-dark);
+      box-shadow:
+        inset 0 0 10px rgba(0,0,0,0.8),
+        0 2px 5px rgba(0,0,0,0.2);
+    }
+    pre code {
+      background: none;
+      padding: 0;
+      box-shadow: none;
+      color: inherit;
+    }
+
+    blockquote {
+      margin: 2rem 0;
+      padding: 1.5rem 2rem;
+      border-left: none;
+      background-color: transparent;
+      font-family: "Playfair Display", serif;
+      font-style: italic;
+      font-size: 1.3rem;
+      color: var(--metal-shadow);
+      position: relative;
+      text-align: center;
+    }
+
+    blockquote::before {
+      content: "“";
+      font-family: "Cinzel Decorative", serif;
+      font-size: 4rem;
+      position: absolute;
+      top: -1rem;
+      left: 0;
+      color: rgba(44, 26, 12, 0.2);
+    }
+    blockquote::after {
+      content: "”";
+      font-family: "Cinzel Decorative", serif;
+      font-size: 4rem;
+      position: absolute;
+      bottom: -3rem;
+      right: 0;
+      color: rgba(44, 26, 12, 0.2);
+    }
+
+    /* Components */
+    ul.section-list { list-style: none; padding: 0; margin: 2rem 0; }
+    ul.section-list li {
+      margin-bottom: 1.5rem;
+      padding: 1.5rem;
+      background: transparent;
+
+      /* Engraved panel effect */
+      box-shadow:
+        inset 1px 1px 4px var(--metal-shadow),
+        inset -1px -1px 4px var(--metal-highlight);
+      border: 1px solid rgba(44, 26, 12, 0.1);
+    }
+
+    ul.section-list li h2 {
+      margin-top: 0;
+      border-bottom: none;
+      font-size: 1.5rem;
+    }
+
+    ul.section-list li a {
+      text-decoration: none;
+    }
+
+    .post-meta {
+      font-family: "Playfair Display", serif;
+      font-size: 0.9rem;
+      color: var(--metal-dark);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .taxonomy-desc { color: var(--metal-dark); margin-bottom: 2rem; font-style: italic; text-align: center;}
+
+    nav.pagination { margin: 3rem 0; display: flex; justify-content: center; }
+    nav.pagination .pagination-list { list-style: none; padding: 0; margin: 0; display: flex; gap: 1rem; align-items: center; }
+    nav.pagination a, .pagination-current span, .pagination-disabled span {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      font-family: "Cinzel Decorative", serif;
+      font-weight: bold;
+      color: var(--metal-shadow);
+      text-decoration: none;
+
+      /* Raised button effect */
+      box-shadow:
+        1px 1px 3px var(--metal-shadow),
+        -1px -1px 3px var(--metal-highlight);
+      background-color: var(--metal-base);
+    }
+
+    nav.pagination a:hover {
+      /* Pressed button effect */
+      box-shadow:
+        inset 1px 1px 3px var(--metal-shadow),
+        inset -1px -1px 3px var(--metal-highlight);
+    }
+
+    .pagination-current span {
+      box-shadow:
+        inset 2px 2px 4px var(--metal-shadow),
+        inset -1px -1px 2px var(--metal-highlight);
+      background-color: rgba(44, 26, 12, 0.1);
+    }
+    .pagination-disabled span {
+      opacity: 0.5;
+      box-shadow: none;
+      border: 1px solid var(--metal-dark);
+    }
+
+    /* Added extra structural elements for repoussé feel */
+    .repousse-divider {
+      height: 4px;
+      margin: 2rem 0;
+      background: transparent;
+      border-top: 1px solid var(--metal-shadow);
+      border-bottom: 1px solid var(--metal-highlight);
+      position: relative;
+    }
+
+    .repousse-divider::after {
+      content: "";
+      position: absolute;
+      top: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 12px;
+      height: 12px;
+      background-color: var(--metal-base);
+      border-radius: 50%;
+      box-shadow:
+        inset 1px 1px 2px var(--metal-highlight),
+        inset -1px -1px 2px var(--metal-shadow);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .site-wrapper { padding: 1.5rem; margin: 1rem; }
+      .site-logo { font-size: 2rem; }
+      .site-header nav { flex-direction: column; gap: 0.5rem; align-items: center; }
+      h1 { font-size: 2rem; }
+    }
+  </style>
+  {{ highlight_css | default(value="") | safe }}
+  {{ auto_includes_css | default(value="") | safe }}
+</head>
+<body data-section="{{ page.section | default(value="") }}">
+  <div class="site-wrapper">
+    <header class="site-header">
+      <a href="{{ site.base_url | default(value="/") }}" class="site-logo">{{ site.title | default(value="Repoussé") }}</a>
+      <nav>
+        <a href="{{ site.base_url | default(value="/") }}">Gallery</a>
+        <a href="{{ site.base_url | default(value="/") }}/about/">Artisan</a>
+      </nav>
+    </header>
