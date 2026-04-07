@@ -7,7 +7,7 @@ This theme was built as a study in minimal, dark UI design with a focus on CSS g
 
 ## Design Philosophy
 
-The goal was to create a UI that feels solid, cold, and razor-sharp. 
+The goal was to create a UI that feels solid, cold, and razor-sharp.
 
 *   **Typography**: Relies on `Inter` for general readability and structural integrity, while `JetBrains Mono` provides a technical, precise feel for metadata and code blocks.
 *   **Texture**: A very subtle SVG noise filter is applied to the background to break up the flat black and give a slight grainy texture, like unpolished stone.
