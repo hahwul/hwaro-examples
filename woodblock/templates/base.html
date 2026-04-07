@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="{{ config.default_language }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ config.title }}{% endblock %}</title>
+    <meta name="description" content="{{ config.description }}">
+    <link rel="stylesheet" href="{{ get_url(path='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="site-wrapper">
+        <header class="site-header ink-bleed">
+            <div class="header-inner">
+                <div class="site-branding">
+                    <h1 class="site-title"><a href="{{ config.base_url }}">{{ config.title }}</a></h1>
+                    <p class="site-subtitle">{{ config.description }}</p>
+                </div>
+            </div>
+        </header>
+
+        <main class="site-content">
+            {% block content %}{% endblock %}
+        </main>
+
+        <footer class="site-footer">
+            <div class="footer-inner">
+                <p>&copy; {{ config.extra.author | default(value="Author") }}. All rights reserved.</p>
+                <div class="stamp-mark ink-bleed">印</div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- SVG Filters for woodblock texture -->
+    <svg style="position: absolute; width: 0; height: 0;" aria-hidden="true">
+        <defs>
+            <filter id="wood-grain" x="0%" y="0%" width="100%" height="100%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.08 0.8" numOctaves="3" result="noise" />
+                <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.1 0" in="noise" result="coloredNoise" />
+                <feComposite operator="in" in="coloredNoise" in2="SourceGraphic" result="composite" />
+                <feBlend mode="multiply" in="composite" in2="SourceGraphic" result="blend" />
+            </filter>
+
+            <filter id="ink-bleed" x="-10%" y="-10%" width="120%" height="120%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" result="noise" />
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="4" xChannelSelector="R" yChannelSelector="G" result="displaced" />
+            </filter>
+
+            <filter id="paper-texture">
+                <feTurbulence type="fractalNoise" baseFrequency="0.015" result="noise" />
+                <feDiffuseLighting in="noise" lighting-color="#fff" surfaceScale="1.5">
+                    <feDistantLight azimuth="45" elevation="60" />
+                </feDiffuseLighting>
+                <feBlend mode="multiply" in="SourceGraphic" in2="noise" />
+            </filter>
+        </defs>
+    </svg>
+</body>
+</html>
