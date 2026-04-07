@@ -54,18 +54,61 @@ jobs:
       - name: Restore screenshot cache
         uses: actions/cache@v4
         with:
-          path: _screenshot_cache
-          key: screenshots-${{ hashFiles('**/config.toml', '**/templates/**', '**/static/**', '**/content/**') }}
+          path: |
+            _screenshot_cache
+            _cached_hashes.json
+          key: screenshots-v2-${{ github.sha }}
           restore-keys: |
-            screenshots-
+            screenshots-v2-
 
-      - name: Build screenshots for changed themes
-        if: steps.changes.outputs.changed != ''
+      - name: Determine screenshots to capture
+        id: screenshots
+        run: |
+          mkdir -p "${GITHUB_WORKSPACE}/_screenshot_cache"
+
+          # Compute per-theme content hash (config + templates + static + content)
+          echo "{}" > _theme_hashes.json
+          for dir in */; do
+            dir_name="${dir%/}"
+            if [ -f "${dir_name}/config.toml" ]; then
+              HASH=$(find "${dir_name}" -type f \( -name "*.toml" -o -name "*.html" -o -name "*.css" -o -name "*.js" -o -name "*.md" -o -name "*.png" -o -name "*.jpg" -o -name "*.svg" \) -exec sha256sum {} \; 2>/dev/null | sort | sha256sum | cut -d' ' -f1)
+              _theme_hashes_tmp=$(jq --arg k "$dir_name" --arg v "$HASH" '. + {($k): $v}' _theme_hashes.json)
+              echo "$_theme_hashes_tmp" > _theme_hashes.json
+            fi
+          done
+
+          # Compare against cached hashes to find stale screenshots
+          NEED_CAPTURE=""
+          TOTAL=0
+          SKIPPED=0
+          for dir_name in $(jq -r 'keys[]' _theme_hashes.json); do
+            TOTAL=$((TOTAL + 1))
+            NEW_HASH=$(jq -r --arg k "$dir_name" '.[$k]' _theme_hashes.json)
+            OLD_HASH=""
+            if [ -f _cached_hashes.json ]; then
+              OLD_HASH=$(jq -r --arg k "$dir_name" '.[$k] // ""' _cached_hashes.json)
+            fi
+            CACHED="_screenshot_cache/${dir_name}.png"
+
+            if [ "$NEW_HASH" = "$OLD_HASH" ] && [ -f "$CACHED" ] && [ "$(stat -c%s "$CACHED" 2>/dev/null || echo 0)" -gt 1024 ]; then
+              SKIPPED=$((SKIPPED + 1))
+            else
+              NEED_CAPTURE="${NEED_CAPTURE} ${dir_name}"
+            fi
+          done
+
+          NEED_CAPTURE=$(echo $NEED_CAPTURE | xargs)
+          COUNT=$(echo $NEED_CAPTURE | wc -w | xargs)
+          echo "need_capture=${NEED_CAPTURE}" >> $GITHUB_OUTPUT
+          echo "Screenshots: ${COUNT} to capture, ${SKIPPED} cached (${TOTAL} total)"
+
+      - name: Build sites for screenshot capture
+        if: steps.screenshots.outputs.need_capture != ''
         run: |
           SCREENSHOT_DIR="${GITHUB_WORKSPACE}/_screenshot_site"
           mkdir -p "${SCREENSHOT_DIR}"
 
-          for dir_name in ${{ steps.changes.outputs.changed }}; do
+          for dir_name in ${{ steps.screenshots.outputs.need_capture }}; do
             echo "Building ${dir_name} (screenshot)..."
             docker run --rm \
               -v "${GITHUB_WORKSPACE}/${dir_name}:/src" \
@@ -74,79 +117,57 @@ jobs:
                 -i /src \
                 -o /output \
                 --base-url "http://localhost:8000/${dir_name}"
-            echo "Done: ${dir_name}"
           done
 
-      - name: Capture screenshots for changed themes
+      - name: Capture screenshots
+        if: steps.screenshots.outputs.need_capture != ''
         run: |
           npm init -y
           npm install playwright
           npx playwright install --with-deps chromium
-          mkdir -p "${GITHUB_WORKSPACE}/_site/screenshots"
-          mkdir -p "${GITHUB_WORKSPACE}/_screenshot_cache"
 
           SCREENSHOT_DIR="${GITHUB_WORKSPACE}/_screenshot_site"
-          CHANGED="${{ steps.changes.outputs.changed }}"
+          cd "${SCREENSHOT_DIR}"
+          python3 -m http.server 8000 &
+          SERVER_PID=$!
+          sleep 2
+          cd "${GITHUB_WORKSPACE}"
 
-          if [ -n "${CHANGED}" ] && [ -d "${SCREENSHOT_DIR}" ]; then
-            # Skip themes that already have a valid cached screenshot (>1KB PNG)
-            NEED_CAPTURE=""
-            SKIPPED=0
-            for dir_name in ${CHANGED}; do
-              cached="${GITHUB_WORKSPACE}/_screenshot_cache/${dir_name}.png"
-              if [ -f "${cached}" ] && [ "$(stat -c%s "${cached}" 2>/dev/null || stat -f%z "${cached}" 2>/dev/null)" -gt 1024 ]; then
-                SKIPPED=$((SKIPPED + 1))
-              else
-                NEED_CAPTURE="${NEED_CAPTURE} ${dir_name}"
-              fi
-            done
-            NEED_CAPTURE=$(echo ${NEED_CAPTURE} | xargs)
-            echo "Skipped ${SKIPPED} themes with valid cached screenshots"
-            echo "Need capture: ${NEED_CAPTURE:-none}"
-
-            if [ -n "${NEED_CAPTURE}" ]; then
-              # Serve changed themes and capture new screenshots
-              cd "${SCREENSHOT_DIR}"
-              python3 -m http.server 8000 &
-              SERVER_PID=$!
-              sleep 2
-              cd "${GITHUB_WORKSPACE}"
-
-              node -e "
-              const { chromium } = require('playwright');
-              const fs = require('fs');
-              (async () => {
-                const browser = await chromium.launch();
-                const page = await browser.newPage();
-                await page.setViewportSize({ width: 1280, height: 720 });
-                const targets = '${NEED_CAPTURE}'.split(' ').filter(Boolean);
-                for (const dir of targets) {
-                  try {
-                    await page.goto('http://localhost:8000/' + dir + '/', { waitUntil: 'networkidle', timeout: 30000 });
-                    const outPath = '${GITHUB_WORKSPACE}/_screenshot_cache/' + dir + '.png';
-                    await page.screenshot({ path: outPath });
-                    // Validate captured screenshot (must be >1KB)
-                    const stat = fs.statSync(outPath);
-                    if (stat.size <= 1024) {
-                      fs.unlinkSync(outPath);
-                      console.error('Invalid screenshot (too small): ' + dir);
-                    } else {
-                      console.log('Screenshot: ' + dir);
-                    }
-                  } catch (e) {
-                    console.error('Failed: ' + dir, e.message);
-                  }
+          node -e "
+          const { chromium } = require('playwright');
+          const fs = require('fs');
+          (async () => {
+            const browser = await chromium.launch();
+            const page = await browser.newPage();
+            await page.setViewportSize({ width: 1280, height: 720 });
+            const targets = '${{ steps.screenshots.outputs.need_capture }}'.split(' ').filter(Boolean);
+            for (const dir of targets) {
+              try {
+                await page.goto('http://localhost:8000/' + dir + '/', { waitUntil: 'networkidle', timeout: 30000 });
+                const outPath = '${GITHUB_WORKSPACE}/_screenshot_cache/' + dir + '.png';
+                await page.screenshot({ path: outPath });
+                const stat = fs.statSync(outPath);
+                if (stat.size <= 1024) {
+                  fs.unlinkSync(outPath);
+                  console.error('Invalid screenshot (too small): ' + dir);
+                } else {
+                  console.log('Screenshot: ' + dir);
                 }
-                await browser.close();
-              })();
-              "
+              } catch (e) {
+                console.error('Failed: ' + dir, e.message);
+              }
+            }
+            await browser.close();
+          })();
+          "
 
-              kill $SERVER_PID || true
-            fi
-            sudo rm -rf "${SCREENSHOT_DIR}"
-          fi
+          kill $SERVER_PID || true
+          sudo rm -rf "${SCREENSHOT_DIR}"
 
-          # Copy all cached screenshots to _site
+      - name: Update screenshot hash manifest
+        run: |
+          cp _theme_hashes.json _cached_hashes.json
+          mkdir -p "${GITHUB_WORKSPACE}/_site/screenshots"
           if [ -d "${GITHUB_WORKSPACE}/_screenshot_cache" ]; then
             cp -f ${GITHUB_WORKSPACE}/_screenshot_cache/*.png "${GITHUB_WORKSPACE}/_site/screenshots/" 2>/dev/null || true
           fi
