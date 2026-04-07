@@ -1,0 +1,295 @@
+/* Amber Preservation Theme CSS */
+:root {
+    /* Rich honey/amber palette */
+    --amber-deep: #7a3000;
+    --amber-core: #b45309;
+    --amber-glow: #d97706;
+    --amber-light: #f59e0b;
+    --amber-pale: #fcd34d;
+    --amber-highlight: #fef3c7;
+
+    /* Text colors */
+    --text-dark: #431407;
+    --text-muted: #78350f;
+    --text-light: #fef3c7;
+
+    /* Shadows to create the thick, glossy resin effect */
+    --resin-shadow-outer: 0 10px 30px rgba(122, 48, 0, 0.4),
+                          0 4px 10px rgba(180, 83, 9, 0.5);
+    --resin-shadow-inner: inset 0 2px 15px rgba(254, 243, 199, 0.7),
+                          inset 0 -5px 20px rgba(122, 48, 0, 0.8),
+                          inset 5px 0 15px rgba(217, 119, 6, 0.5);
+
+    --fossil-shadow-inner: inset 0 2px 5px rgba(254, 243, 199, 0.5),
+                           inset 0 -5px 15px rgba(122, 48, 0, 0.9),
+                           inset 0 0 40px rgba(180, 83, 9, 0.8);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--amber-pale);
+    /* Avoid gradients per guidelines, use a solid pattern or repeating radial shadow if needed,
+       but for now stick to solid background color for safety, layered with box-shadows on elements */
+    background-image: radial-gradient(circle at 50% 50%, var(--amber-pale) 0%, var(--amber-light) 100%);
+    /* Wait, the guidelines say "strictly avoiding CSS gradients and emojis" in some examples.
+       Let's stick to NO GRADIENTS AT ALL to be safe. */
+    background: var(--amber-light);
+    color: var(--text-dark);
+    font-family: 'Lato', sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+/* Override background to enforce NO GRADIENT rule */
+body {
+    background-color: var(--amber-light);
+    background-image: none;
+    position: relative;
+    z-index: 1;
+}
+
+/* Create a "resin" overlay effect for the whole page */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    box-shadow: inset 0 0 100px rgba(122, 48, 0, 0.8);
+    z-index: 999;
+}
+
+.amber-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+a {
+    color: var(--amber-deep);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--text-dark);
+}
+
+/* Header styling */
+.amber-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 3rem;
+    background-color: rgba(245, 158, 11, 0.8); /* var(--amber-light) with opacity */
+    border-radius: 20px;
+    /* High gloss effect */
+    box-shadow: var(--resin-shadow-outer), var(--resin-shadow-inner);
+    border: 2px solid var(--amber-pale);
+    backdrop-filter: blur(5px);
+    position: relative;
+    overflow: hidden;
+}
+
+/* The gloss highlight */
+.amber-header::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: rgba(254, 243, 199, 0.1);
+    transform: rotate(30deg);
+    pointer-events: none;
+}
+
+.amber-header h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 1px 1px 0 rgba(254, 243, 199, 0.8), -1px -1px 0 rgba(122, 48, 0, 0.5);
+}
+
+.subtitle {
+    font-style: italic;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+.amber-nav {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.amber-nav a {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    background-color: rgba(217, 119, 6, 0.4);
+    box-shadow: inset 0 1px 3px rgba(254, 243, 199, 0.8), 0 2px 4px rgba(122, 48, 0, 0.4);
+    border: 1px solid var(--amber-pale);
+}
+
+.amber-nav a:hover {
+    background-color: rgba(180, 83, 9, 0.6);
+    color: var(--text-light);
+    box-shadow: inset 0 -1px 3px rgba(122, 48, 0, 0.8), 0 1px 2px rgba(122, 48, 0, 0.4);
+}
+
+/* Content grid */
+.fossil-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+/* Card / Specimen styling */
+.fossil-card, .specimen-page {
+    background-color: rgba(217, 119, 6, 0.9); /* var(--amber-glow) */
+    border-radius: 15px;
+    padding: 1.5rem;
+    /* Trapped in amber effect */
+    box-shadow: var(--resin-shadow-outer), var(--fossil-shadow-inner);
+    border: 3px solid rgba(245, 158, 11, 0.8);
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.fossil-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(122, 48, 0, 0.6), var(--fossil-shadow-inner);
+}
+
+/* Inner fossil container (the object trapped inside) */
+.fossil-inner {
+    background-color: rgba(254, 243, 199, 0.15); /* Pale yellow transparency */
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: inset 0 0 20px rgba(67, 20, 7, 0.3), 0 2px 10px rgba(254, 243, 199, 0.2);
+    border: 1px solid rgba(122, 48, 0, 0.3);
+    backdrop-filter: blur(2px);
+}
+
+.fossil-inner header h2 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.fossil-inner time {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+}
+
+.summary {
+    margin-bottom: 1.5rem;
+    color: var(--text-dark);
+}
+
+.read-more {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: var(--amber-deep);
+    color: var(--text-light);
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    box-shadow: 0 4px 6px rgba(67, 20, 7, 0.5), inset 0 2px 4px rgba(254, 243, 199, 0.3);
+    border: 1px solid var(--amber-core);
+}
+
+.read-more:hover {
+    background-color: var(--text-dark);
+    color: var(--amber-pale);
+    box-shadow: 0 2px 4px rgba(67, 20, 7, 0.5), inset 0 1px 2px rgba(254, 243, 199, 0.1);
+}
+
+/* Page specific styling */
+.specimen-page {
+    margin-bottom: 3rem;
+}
+
+.specimen-page h1 {
+    font-size: 2.5rem;
+    border-bottom: 2px solid rgba(122, 48, 0, 0.2);
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+.content-body p {
+    margin-bottom: 1.5rem;
+}
+
+.content-body blockquote {
+    border-left: 4px solid var(--amber-deep);
+    padding-left: 1rem;
+    font-style: italic;
+    color: var(--text-muted);
+    background-color: rgba(254, 243, 199, 0.2);
+    padding: 1rem;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 1.5rem;
+}
+
+/* Footer styling */
+.amber-footer {
+    text-align: center;
+    padding: 2rem;
+    margin-top: 3rem;
+    color: var(--text-muted);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    border-top: 1px solid rgba(122, 48, 0, 0.3);
+}
+
+/* Add some simulated bubbles inside the amber */
+.amber-container::before {
+    content: '';
+    position: absolute;
+    top: 20%;
+    right: -5%;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: transparent;
+    box-shadow: inset -2px -2px 5px rgba(122, 48, 0, 0.5), inset 2px 2px 5px rgba(254, 243, 199, 0.8);
+    pointer-events: none;
+    z-index: 20;
+}
+
+.amber-container::after {
+    content: '';
+    position: absolute;
+    bottom: 30%;
+    left: -10%;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: transparent;
+    box-shadow: inset -3px -3px 8px rgba(122, 48, 0, 0.4), inset 3px 3px 8px rgba(254, 243, 199, 0.7);
+    pointer-events: none;
+    z-index: 20;
+}
