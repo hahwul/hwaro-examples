@@ -6,7 +6,7 @@ taxonomies:
   tags: ["history", "technique"]
 ---
 
-The process of marbling paper is one of controlled chaos. It involves floating pigments on a viscous bath—often derived from carrageenan moss—and carefully manipulating these floating colors with styluses and rakes to create intricate, flowing patterns. 
+The process of marbling paper is one of controlled chaos. It involves floating pigments on a viscous bath—often derived from carrageenan moss—and carefully manipulating these floating colors with styluses and rakes to create intricate, flowing patterns.
 
 > "It is a performance in water, captured forever in a single sheet of paper."
 

@@ -3,7 +3,7 @@ title: "About the Bindery"
 date: "2023-11-14"
 ---
 
-Welcome to the digital bindery. This space is dedicated to the ancient craft of bookbinding and the creation of hand-marbled endpapers. 
+Welcome to the digital bindery. This space is dedicated to the ancient craft of bookbinding and the creation of hand-marbled endpapers.
 
 We celebrate the tactile qualities of physical books: the smell of the paper, the texture of the leather, and the unique, unrepeatable patterns created by fluid dynamics during the marbling process.
 
