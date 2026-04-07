@@ -6,11 +6,11 @@ tags = ["design", "architecture", "deconstructivism"]
 categories = ["thoughts"]
 +++
 
-Deconstructivism is a movement of postmodern architecture which appeared in the 1980s. It gives the impression of the fragmentation of the constructed building, characterized by an absence of harmony, continuity, or symmetry. 
+Deconstructivism is a movement of postmodern architecture which appeared in the 1980s. It gives the impression of the fragmentation of the constructed building, characterized by an absence of harmony, continuity, or symmetry.
 
 ## The Core Concept
 
-The core concept is to break apart the structure, to dislocate the form, and to challenge the traditional ideas of order and balance. Yet, in this chaos, a new kind of balance emerges. 
+The core concept is to break apart the structure, to dislocate the form, and to challenge the traditional ideas of order and balance. Yet, in this chaos, a new kind of balance emerges.
 
 ### Implementation
 

@@ -1,4 +1,4 @@
 +++
 title = "Deconstructivist Home"
 +++
-Welcome to the fragmented reality. 
+Welcome to the fragmented reality.
