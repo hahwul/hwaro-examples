@@ -1,0 +1,88 @@
+{% include "header.html" %}
+  <main class="glass-panel">
+    <div class="content">
+      {{ content | safe }}
+    </div>
+
+    {% if section.pages %}
+      <div class="posts-list">
+        <h2>Recent Observations</h2>
+        {% for post in section.pages %}
+          <article class="post-item">
+            <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+            <div class="post-meta">
+              {% if post.date %}
+                <time>{{ post.date | date(format="%B %d, %Y") }}</time>
+              {% endif %}
+            </div>
+            {% if post.summary %}
+              <p class="post-summary">{{ post.summary | strip_html | truncate_words(n=30) }}</p>
+            {% elif post.description %}
+              <p class="post-summary">{{ post.description }}</p>
+            {% endif %}
+            <a href="{{ post.url }}" class="read-more">Examine &rarr;</a>
+          </article>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </main>
+
+  <style>
+    .posts-list {
+      margin-top: 3rem;
+    }
+
+    .posts-list h2 {
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--glass-border);
+      display: inline-block;
+    }
+
+    .post-item {
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      background: rgba(0, 0, 0, 0.2);
+      border-left: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .post-item:hover {
+      background: rgba(255, 255, 255, 0.03);
+      border-left-color: var(--accent);
+    }
+
+    .post-item h3 {
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-item h3 a {
+      color: #fff;
+    }
+
+    .post-item h3 a:hover {
+      color: var(--accent);
+      text-shadow: none;
+    }
+
+    .post-meta {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+      margin-bottom: 1rem;
+    }
+
+    .post-summary {
+      color: var(--text-main);
+      margin-bottom: 1rem;
+    }
+
+    .read-more {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 600;
+    }
+  </style>
+{% include "footer.html" %}
