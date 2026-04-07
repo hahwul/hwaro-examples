@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="{{ config.default_language }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page.title %}{{ page.title }} | {% endif %}{{ config.title }}</title>
+    <meta name="description" content="{{ config.description }}">
+    <link rel="stylesheet" href="{{ get_url(path='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <h1 class="site-title"><a href="{{ config.base_url }}">{{ config.title }}</a></h1>
+            <p class="site-description">{{ config.description }}</p>
+        </div>
+    </header>
+
+    {% block content %}
+    <main class="parquet-floor">
+        <div class="intro-block">
+            <div class="intro-content">
+                {{ section.content | safe }}
+            </div>
+        </div>
+
+        {% for page in section.pages %}
+            <article class="parquet-block {{ page.extra.block_type | default(value='square') }} {{ page.extra.color_theme | default(value='oak') }}">
+                <div class="block-inner">
+                    <h2 class="block-title"><a href="{{ page.permalink }}">{{ page.title }}</a></h2>
+                    {% if page.date %}
+                        <time class="block-date" datetime="{{ page.date }}">{{ page.date | date(format="%B %d, %Y") }}</time>
+                    {% endif %}
+                    <div class="block-summary">
+                        {{ page.content | striptags | truncate(length=120) | safe }}
+                    </div>
+                </div>
+            </article>
+        {% endfor %}
+    </main>
+    {% endblock content %}
+
+    <footer class="site-footer">
+        <p>&copy; 2024 {{ config.extra.author }}. All rights reserved.</p>
+    </footer>
+</body>
+</html>
