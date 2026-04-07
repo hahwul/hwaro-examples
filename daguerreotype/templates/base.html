@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="{% if config.default_language %}{{ config.default_language }}{% else %}en{% endif %}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% if page.title %}{{ page.title }} | {% elif section.title %}{{ section.title }} | {% endif %}{{ config.title }}</title>
+    <meta name="description" content="{% if page.description %}{{ page.description }}{% elif section.description %}{{ section.description }}{% else %}{{ config.description }}{% endif %}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ get_url(path="css/style.css") }}">
+</head>
+<body>
+    <!-- SVG filters for Daguerreotype effect -->
+    <svg style="width:0;height:0;position:absolute;" aria-hidden="true" focusable="false">
+      <defs>
+        <filter id="daguerreotype-noise">
+          <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch"/>
+          <feColorMatrix type="matrix" values="
+            1 0 0 0 0,
+            0 1 0 0 0,
+            0 0 1 0 0,
+            0 0 0 0.3 0" />
+        </filter>
+      </defs>
+    </svg>
+
+    <div class="container">
+        <header class="site-header">
+            <h1 class="site-title"><a href="{{ config.base_url }}" style="border:none; color:inherit;">{{ config.title }}</a></h1>
+            {% if config.description %}
+                <p class="site-description">{{ config.description }}</p>
+            {% endif %}
+
+            <nav class="main-nav">
+                <a href="{{ config.base_url }}">Home</a>
+                <a href="{{ get_url(path="about") }}">About</a>
+                <a href="{{ get_url(path="gallery") }}">Gallery</a>
+                <a href="{{ get_url(path="tags") }}">Tags</a>
+            </nav>
+        </header>
+
+        <main>
+            {% block content %}{% endblock content %}
+        </main>
+
+        <footer class="site-footer">
+            <p>&copy; {{ now() | date(format="%Y") }} {{ config.title }}. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
