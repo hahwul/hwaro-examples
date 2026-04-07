@@ -14,7 +14,7 @@ By using standard offset coordinates for text shadow, we separate the colors.
 
 ```css
 .site-title {
-    text-shadow: 
+    text-shadow:
         3px 0 0 var(--prism-red),
         -3px 0 0 var(--prism-cyan);
     mix-blend-mode: screen;
