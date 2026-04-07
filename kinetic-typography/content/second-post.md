@@ -11,7 +11,7 @@ The marquees running across the top and bottom of this site aren't just decorati
 
 ### Interaction as Animation
 
-Hover states are where kinetic typography truly shines. When a user interacts with a text element, the element should respond. 
+Hover states are where kinetic typography truly shines. When a user interacts with a text element, the element should respond.
 
 In this theme, navigation links reveal a secondary color layer on hover, sliding in smoothly. Titles shift from solid fills to stark outlines with heavy drop shadows, simulating a sudden jump off the page.
 

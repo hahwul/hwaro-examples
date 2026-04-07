@@ -5,7 +5,7 @@ description = "Exploring typography as a structural element in web design."
 template = "page.html"
 +++
 
-When we strip away images, illustrations, and complex background elements, what remains? The text. 
+When we strip away images, illustrations, and complex background elements, what remains? The text.
 
 But text doesn't have to be passive. In kinetic typography, words become physical objects. They possess weight, dimension, and momentum. They can stack like bricks, scroll like tickers, or shatter upon interaction.
 
