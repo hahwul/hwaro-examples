@@ -1,0 +1,389 @@
+:root {
+    --bg-color: #0b0c10;
+    --text-primary: #f8f8f2;
+    --text-secondary: #a9a9b3;
+
+    /* Prism Colors */
+    --prism-red: rgba(255, 60, 60, 0.7);
+    --prism-green: rgba(60, 255, 60, 0.7);
+    --prism-blue: rgba(60, 60, 255, 0.7);
+    --prism-magenta: rgba(255, 60, 255, 0.7);
+    --prism-cyan: rgba(60, 255, 255, 0.7);
+    --prism-yellow: rgba(255, 255, 60, 0.7);
+
+    /* Glass Effect */
+    --glass-bg: rgba(25, 25, 30, 0.4);
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Background gradient for refraction interaction */
+body::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 50% 50%, rgba(20, 20, 30, 1) 0%, rgba(11, 12, 16, 1) 100%);
+    z-index: -2;
+}
+
+/* Abstract light shapes to interact with glass */
+.bg-light {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    z-index: -1;
+    opacity: 0.6;
+    animation: float 20s infinite ease-in-out alternate;
+}
+.bg-light-1 {
+    top: 20%; left: 10%; width: 300px; height: 300px; background: var(--prism-magenta);
+}
+.bg-light-2 {
+    bottom: 10%; right: 20%; width: 400px; height: 400px; background: var(--prism-blue); animation-delay: -5s;
+}
+.bg-light-3 {
+    top: 40%; right: 10%; width: 250px; height: 250px; background: var(--prism-yellow); animation-delay: -10s;
+}
+
+@keyframes float {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(50px, 50px) scale(1.2); }
+}
+
+a {
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+a:hover {
+    color: #fff;
+    text-shadow: 2px 0 0 var(--prism-red), -2px 0 0 var(--prism-cyan);
+}
+
+.site-header {
+    padding: 2rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+}
+
+.site-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+    position: relative;
+    display: inline-block;
+}
+
+/* Prismatic text effect */
+.site-title {
+    text-shadow:
+        3px 0 0 var(--prism-red),
+        -3px 0 0 var(--prism-cyan);
+    mix-blend-mode: screen;
+}
+
+.site-nav a {
+    margin-left: 2rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.9rem;
+}
+
+main {
+    flex: 1;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 5%;
+    position: relative;
+    z-index: 5;
+}
+
+/* The Core Prism Component */
+.prism-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 3rem;
+    margin-bottom: 3rem;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    transition: transform 0.4s ease, border-color 0.4s ease;
+}
+
+/* Simulate light splitting through the glass edges */
+.prism-card::before,
+.prism-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: 16px;
+    z-index: -1;
+    transition: all 0.4s ease;
+}
+
+.prism-card::before {
+    box-shadow:
+        inset 5px 0 15px -5px var(--prism-red),
+        inset -5px 0 15px -5px var(--prism-cyan);
+    opacity: 0.5;
+}
+
+.prism-card::after {
+    box-shadow:
+        inset 0 5px 15px -5px var(--prism-green),
+        inset 0 -5px 15px -5px var(--prism-magenta);
+    opacity: 0.5;
+}
+
+.prism-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.prism-card:hover::before {
+    box-shadow:
+        inset 10px 0 20px -5px var(--prism-red),
+        inset -10px 0 20px -5px var(--prism-cyan);
+    opacity: 0.8;
+}
+
+.prism-card:hover::after {
+    box-shadow:
+        inset 0 10px 20px -5px var(--prism-green),
+        inset 0 -10px 20px -5px var(--prism-magenta);
+    opacity: 0.8;
+}
+
+/* Typography inside Prism */
+h1, h2, h3 {
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.page-title {
+    font-size: 3.5rem;
+    font-weight: 900;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.03em;
+    position: relative;
+    display: inline-block;
+}
+
+/* A dramatic split text effect */
+.page-title::before,
+.page-title::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.7;
+    mix-blend-mode: screen;
+    pointer-events: none;
+}
+
+.page-title::before {
+    color: var(--prism-red);
+    transform: translateX(-4px) translateY(-2px);
+    z-index: -1;
+}
+
+.page-title::after {
+    color: var(--prism-cyan);
+    transform: translateX(4px) translateY(2px);
+    z-index: -2;
+}
+
+.post-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    list-style: none;
+}
+
+.post-card {
+    display: block;
+    height: 100%;
+    padding: 2rem;
+}
+
+.post-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.post-date {
+    display: block;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.post-card p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.content-body {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.content-body p {
+    margin-bottom: 1.5rem;
+}
+
+.content-body h2, .content-body h3 {
+    margin-top: 3rem;
+    color: #fff;
+}
+
+/* Image Refraction */
+.content-body img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin: 2rem 0;
+    filter: drop-shadow(5px 5px 0 var(--prism-red)) drop-shadow(-5px -5px 0 var(--prism-cyan));
+}
+
+.content-body pre {
+    background: rgba(0, 0, 0, 0.5) !important;
+    padding: 1.5rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 2px 2px 0 var(--prism-magenta), -2px -2px 0 var(--prism-blue);
+    margin: 2rem 0;
+}
+
+/* Prismatic Buttons */
+.btn {
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    border-radius: 30px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.85rem;
+    font-weight: 600;
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(90deg, var(--prism-red), var(--prism-yellow), var(--prism-green), var(--prism-cyan), var(--prism-blue), var(--prism-magenta), var(--prism-red));
+    background-size: 400%;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btn:hover::before {
+    opacity: 0.5;
+    animation: rainbow 5s linear infinite;
+}
+
+.btn:hover {
+    border-color: transparent;
+    text-shadow: none;
+}
+
+@keyframes rainbow {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+.site-footer {
+    text-align: center;
+    padding: 3rem 5%;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    position: relative;
+    z-index: 10;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 3rem;
+}
+
+/* Tags */
+.tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1rem 0;
+}
+
+.tag {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary);
+}
+
+.tag:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    box-shadow: 0 0 10px var(--prism-cyan);
+}
+
+@media (max-width: 768px) {
+    .site-header {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    .page-title {
+        font-size: 2.5rem;
+    }
+    .prism-card {
+        padding: 2rem;
+    }
+}
