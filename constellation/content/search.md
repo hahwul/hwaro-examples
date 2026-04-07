@@ -1,5 +1,5 @@
 +++
 title = "Search"
-template = "search"
+template = "search.html"
 description = "Search the star catalog"
 +++
