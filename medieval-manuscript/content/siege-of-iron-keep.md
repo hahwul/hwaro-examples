@@ -11,7 +11,7 @@ marginalia = [
 ]
 +++
 
-Many years have passed since the forces of the shadow king first marched upon the Iron Keep. It was a time of great sorrow, yet also of unparalleled bravery. The defenders stood upon the battlements, their armor gleaming in the meager sunlight that managed to pierce through the thick, swirling fog. 
+Many years have passed since the forces of the shadow king first marched upon the Iron Keep. It was a time of great sorrow, yet also of unparalleled bravery. The defenders stood upon the battlements, their armor gleaming in the meager sunlight that managed to pierce through the thick, swirling fog.
 
 The siege lasted for forty days and forty nights. Food ran scarce, and the morale of the men wavered, but their commander, Lord Alaric, remained steadfast.
 
