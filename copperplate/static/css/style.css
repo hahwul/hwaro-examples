@@ -1,10 +1,11 @@
 :root {
-    --bg-color: #f7f4eb; /* Cream/parchment background */
-    --text-color: #2c251e; /* Deep brownish black */
-    --copper-color: #b87333; /* Classic copper */
+    --bg-color: #fcfaf2; /* Lighter, cleaner parchment */
+    --text-color: #2c251e;
+    --copper: #b87333;
     --copper-dark: #8c5322;
-    --copper-light: #e09e5c;
+    --copper-light: #d99058;
     --border-color: #3b3127;
+    --accent-color: #a67c52;
 }
 
 * {
@@ -13,8 +14,16 @@
     padding: 0;
 }
 
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 body {
-    background-color: var(--bg-color);
+    background-color: #e5e0d5; /* Outer background */
+    background-image: 
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.05) 100%),
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
     color: var(--text-color);
     font-family: 'Playfair Display', serif;
     line-height: 1.6;
@@ -22,211 +31,299 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    padding: 2rem;
+    padding: 3rem 1rem;
 }
 
-/* Page Borders to simulate an engraved plate */
 .page-border {
     width: 100%;
-    max-width: 1000px;
-    border: 4px solid var(--border-color);
-    padding: 6px;
+    max-width: 1100px;
     background-color: var(--bg-color);
-    box-shadow:
-        10px 10px 0px 0px rgba(44, 37, 30, 0.1),
-        inset 0 0 0 1px var(--copper-dark);
+    padding: 12px;
+    position: relative;
+    box-shadow: 
+        0 20px 50px rgba(0,0,0,0.2),
+        0 5px 15px rgba(0,0,0,0.1);
+    animation: fadeIn 1s ease-out;
+}
+
+.page-border::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border: 1px solid var(--border-color);
+    margin: 4px;
+    pointer-events: none;
 }
 
 .inner-border {
-    border: 1px solid var(--border-color);
-    padding: 3rem;
+    border: 2px solid var(--border-color);
+    padding: 4rem;
     position: relative;
-    /* Simulate etched corners */
-    background-image:
-        url('data:image/svg+xml;utf8,<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg"><path d="M0,20 L20,0" stroke="%233b3127" stroke-width="1"/></svg>'),
-        url('data:image/svg+xml;utf8,<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg"><path d="M0,0 L20,20" stroke="%233b3127" stroke-width="1"/></svg>'),
-        url('data:image/svg+xml;utf8,<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg"><path d="M0,0 L20,20" stroke="%233b3127" stroke-width="1"/></svg>'),
-        url('data:image/svg+xml;utf8,<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg"><path d="M0,20 L20,0" stroke="%233b3127" stroke-width="1"/></svg>');
+    background-image: 
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0 L60 0 L60 2 L2 2 L2 60 L0 60 Z' fill='%233b3127'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M60 0 L0 0 L0 2 L58 2 L58 60 L60 60 Z' fill='%233b3127'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 60 L60 60 L60 58 L2 58 L2 0 L0 0 Z' fill='%233b3127'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M60 60 L0 60 L0 58 L58 58 L58 0 L60 0 Z' fill='%233b3127'/%3E%3C/svg%3E");
     background-position: top left, top right, bottom left, bottom right;
     background-repeat: no-repeat;
 }
 
 header {
     text-align: center;
-    margin-bottom: 4rem;
+    margin-bottom: 5rem;
 }
 
 header h1 {
     font-family: 'Cinzel', serif;
-    font-size: 3rem;
+    font-size: 3.5rem;
     text-transform: uppercase;
-    letter-spacing: 0.2em;
-    font-weight: 600;
+    letter-spacing: 0.3em;
+    font-weight: 800;
     color: var(--copper-dark);
-    margin: 1rem 0;
-    /* Create an etched text effect using text-shadow */
-    text-shadow:
-        1px 1px 0px var(--bg-color),
-        2px 2px 0px rgba(44, 37, 30, 0.2);
+    margin: 1.5rem 0;
+    position: relative;
+    display: inline-block;
+}
+
+header h1::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 25%;
+    width: 50%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--copper), transparent);
 }
 
 .header-flourish {
     font-family: 'Pinyon Script', cursive;
-    font-size: 2.5rem;
-    color: var(--copper-color);
+    font-size: 3rem;
+    color: var(--accent-color);
+    opacity: 0.7;
 }
 
 .hero {
     text-align: center;
-    margin-bottom: 4rem;
+    margin-bottom: 5rem;
 }
 
 .script-title {
     font-family: 'Pinyon Script', cursive;
-    font-size: 4.5rem;
+    font-size: 5rem;
     font-weight: normal;
     color: var(--text-color);
-    margin-bottom: 1rem;
-    /* Elegant shadow without gradient */
-    text-shadow: 2px 2px 0px var(--copper-light);
-    transform: rotate(-2deg);
+    margin-bottom: 1.5rem;
+    text-shadow: 1px 1px 0px rgba(184, 115, 51, 0.3);
 }
 
 .engraving-line {
-    width: 60%;
-    height: 1px;
-    background-color: transparent;
-    margin: 2rem auto;
-    border-top: 1px solid var(--border-color);
-    border-bottom: 2px solid var(--text-color);
+    width: 40%;
+    height: 2px;
+    background: var(--border-color);
+    margin: 2.5rem auto;
     position: relative;
 }
 
-.engraving-line::before, .engraving-line::after {
-    content: '';
+.engraving-line::before {
+    content: '❦';
     position: absolute;
-    width: 6px;
-    height: 6px;
-    background-color: var(--copper-dark);
-    border-radius: 50%;
-    top: -2px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--bg-color);
+    padding: 0 15px;
+    color: var(--copper);
+    font-size: 1.5rem;
 }
 
-.engraving-line::before { left: -10px; }
-.engraving-line::after { right: -10px; }
-
 .content-body {
-    font-size: 1.2rem;
-    max-width: 700px;
+    font-size: 1.3rem;
+    max-width: 800px;
     margin: 0 auto;
     text-align: justify;
-    text-justify: inter-word;
-    /* Simulating old ink */
-    color: #38312a;
+    color: #443e38;
 }
 
 .content-body p {
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
+    position: relative;
 }
 
 .content-body p:first-child::first-letter {
     font-family: 'Cinzel', serif;
-    font-size: 4rem;
+    font-size: 5rem;
     float: left;
-    margin-right: 0.5rem;
-    line-height: 1;
+    margin-right: 1rem;
+    line-height: 0.8;
     color: var(--copper-dark);
-    text-shadow: 1px 1px 0px var(--border-color);
+    border: 1px solid var(--copper-light);
+    padding: 0.5rem;
+    margin-top: 0.2rem;
 }
 
 .ornament {
-    font-size: 2rem;
-    color: var(--copper-color);
-    margin: 3rem 0;
+    font-size: 2.5rem;
+    color: var(--copper);
+    margin: 4rem 0;
+    opacity: 0.6;
 }
 
 .gallery {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
-    margin-top: 3rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 3rem;
+    margin-top: 4rem;
 }
 
 .plate {
-    border: 1px solid var(--border-color);
-    padding: 8px;
     background-color: #fff;
-    /* Solid shadows for a physical plate feel */
-    box-shadow:
-        4px 4px 0px 0px var(--copper-color),
-        5px 5px 0px 0px var(--border-color);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 10px;
+    border: 1px solid #ddd;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    position: relative;
 }
 
 .plate:hover {
-    transform: translate(-2px, -2px);
-    box-shadow:
-        6px 6px 0px 0px var(--copper-color),
-        7px 7px 0px 0px var(--border-color);
+    transform: translateY(-10px) rotate(1deg);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
 }
 
 .plate-inner {
-    border: 1px dashed var(--copper-dark);
-    padding: 2rem 1rem;
+    border: 1px solid var(--border-color);
+    padding: 3rem 1.5rem;
     text-align: center;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     background-color: var(--bg-color);
+    position: relative;
+}
+
+.plate-inner::before {
+    content: '';
+    position: absolute;
+    top: 5px; left: 5px; right: 5px; bottom: 5px;
+    border: 1px dashed var(--accent-color);
+    opacity: 0.3;
 }
 
 .plate-inner h3 {
     font-family: 'Cinzel', serif;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     color: var(--text-color);
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    letter-spacing: 0.1em;
 }
 
 .plate-inner p {
     font-family: 'Pinyon Script', cursive;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     color: var(--copper-dark);
 }
 
 footer {
     text-align: center;
-    margin-top: 5rem;
-    font-family: 'Cinzel', serif;
-    font-size: 0.9rem;
-    color: var(--copper-dark);
+    margin-top: 6rem;
+    padding-top: 4rem;
+    position: relative;
 }
 
-.footer-line {
-    width: 100px;
-    height: 1px;
-    background-color: var(--border-color);
-    margin: 0 auto 1rem auto;
+.wax-seal {
+    width: 80px;
+    height: 80px;
+    background: #8b1e1e;
+    border-radius: 50%;
+    margin: 0 auto 2rem;
+    position: relative;
+    box-shadow: 
+        inset -5px -5px 10px rgba(0,0,0,0.4),
+        inset 5px 5px 10px rgba(255,255,255,0.2),
+        0 5px 15px rgba(0,0,0,0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: rotate(-5deg);
+}
+
+.wax-seal::before {
+    content: '';
+    position: absolute;
+    top: -5px; left: -5px; right: -5px; bottom: -5px;
+    border-radius: 50%;
+    border: 3px solid rgba(139, 30, 30, 0.5);
+    filter: blur(2px);
+}
+
+.seal-inner {
+    width: 60px;
+    height: 60px;
+    border: 2px solid rgba(0,0,0,0.2);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Cinzel', serif;
+    font-size: 2rem;
+    color: rgba(255,255,255,0.4);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    font-weight: 800;
+}
+
+footer p {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    color: var(--copper-dark);
+    margin-bottom: 0.5rem;
 }
 
 .author-credits {
-    margin-top: 0.5rem;
     font-family: 'Playfair Display', serif;
     font-style: italic;
-    color: var(--text-color);
+    text-transform: none;
+    letter-spacing: normal;
+    color: var(--accent-color);
+    opacity: 0.8;
+}
+
+/* Texture Overlay */
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+    opacity: 0.2;
+    pointer-events: none;
+    z-index: 1000;
 }
 
 /* Media Queries */
 @media (max-width: 768px) {
+    body {
+        padding: 1rem;
+    }
+    
     .inner-border {
-        padding: 1.5rem;
+        padding: 2rem 1rem;
     }
 
     header h1 {
-        font-size: 2rem;
+        font-size: 2.2rem;
+        letter-spacing: 0.15em;
     }
 
     .script-title {
         font-size: 3.5rem;
+    }
+
+    .content-body {
+        font-size: 1.1rem;
+        text-align: left;
     }
 }
