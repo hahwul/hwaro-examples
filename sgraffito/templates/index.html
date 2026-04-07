@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% if section.content %}
+    <article class="page-content">
+      {{ section.content | safe }}
+    </article>
+  {% endif %}
+
+  <div class="posts-list">
+    {% for page in section.pages %}
+      <div class="post-card-wrapper" style="margin-bottom: 3rem;">
+        <article class="post-card">
+          <h2><a href="{{ page.permalink }}">{{ page.title }}</a></h2>
+          {% if page.date %}
+            <div class="post-meta">{{ page.date | date(format="%B %d, %Y") }}</div>
+          {% endif %}
+          <div class="post-summary">
+            {% if page.summary %}
+              {{ page.summary | safe }}
+            {% else %}
+              {{ page.content | striptags | truncate(length=150) | safe }}
+            {% endif %}
+          </div>
+        </article>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
