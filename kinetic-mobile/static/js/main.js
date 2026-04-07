@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const hangingElements = document.querySelectorAll('.hanging-element');
-    
+
     // Physics variables
     let scrollVelocity = 0;
     let lastScrollY = window.scrollY;
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Base wire length on viewport height to look like a mobile
         const wireLength = Math.max(50, viewportHeight * lengthFactor);
         wire.style.height = `${wireLength}px`;
-        
+
         // Initialize pendulum state
         el.pendulum = {
             angle: 0,
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Calculate velocity (difference in scroll position)
         scrollVelocity = currentScrollY - lastScrollY;
         lastScrollY = currentScrollY;
-        
+
         if (!isScrolling) {
             isScrolling = true;
             updatePhysics();
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         hangingElements.forEach(el => {
             const p = el.pendulum;
-            
+
             // Check if element is in viewport to optimize
             const rect = el.getBoundingClientRect();
             const inViewport = (
@@ -55,11 +55,11 @@ document.addEventListener('DOMContentLoaded', () => {
             );
 
             if (inViewport) {
-                // Apply scroll force. 
+                // Apply scroll force.
                 // Heavier items swing less, longer wires swing slower but further.
                 // Scroll down pushes bottom up (positive angle), scroll up pushes bottom down (negative angle)
                 const force = (scrollVelocity / p.weight) * (100 / p.length);
-                
+
                 // Add force to velocity, capped to prevent crazy spinning
                 p.velocity += force;
                 p.velocity = Math.max(-15, Math.min(15, p.velocity));

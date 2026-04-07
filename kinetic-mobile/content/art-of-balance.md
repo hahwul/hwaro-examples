@@ -11,5 +11,5 @@ The term "mobile" (French for "motive", "moving") was suggested by Marcel Ducham
 
 This digital interpretation attempts to bring that same sense of delicate balance and responsive motion to web typography and layout. As you scroll, the viewport acts as the wind, pushing against the elements and setting them in motion.
 
-> "Just as one can compose colors, or forms, so one can compose motions." 
+> "Just as one can compose colors, or forms, so one can compose motions."
 > — Alexander Calder
