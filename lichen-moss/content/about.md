@@ -4,7 +4,7 @@ date = "2024-05-10"
 description = "A study in slow growth."
 +++
 
-We find peace in the persistent, quiet spread of green across stone. 
+We find peace in the persistent, quiet spread of green across stone.
 
 > "Nature does not hurry, yet everything is accomplished."
 
