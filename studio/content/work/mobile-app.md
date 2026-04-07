@@ -3,7 +3,6 @@ title = "Pulse Fitness App"
 weight = 2
 description = "A cross-platform fitness tracking app with social features"
 tags = ["mobile", "app", "development"]
-services = ["Mobile Apps", "Web Development"]
 
 [extra]
 year = 2024

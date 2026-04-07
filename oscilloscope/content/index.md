@@ -1,7 +1,7 @@
 +++
-title: "SYSTEM INITIALIZED"
-description: "Welcome to the oscilloscope interface"
-date: "1970-01-01"
+title = "SYSTEM INITIALIZED"
+description = "Welcome to the oscilloscope interface"
+date = "1970-01-01"
 +++
 
 ### SIGNAL LOCK ESTABLISHED

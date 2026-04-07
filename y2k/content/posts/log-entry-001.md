@@ -1,7 +1,7 @@
 +++
 title = "Log Entry 001: Initialization"
 date = "2024-10-26"
-author = "SYS_ADMIN"
+authors = ["SYS_ADMIN"]
 description = "First transmission from the newly established server protocol."
 [taxonomies]
 tags = ["y2k", "cyber", "update"]

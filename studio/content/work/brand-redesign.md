@@ -3,7 +3,6 @@ title = "Solaris Brand Redesign"
 weight = 1
 description = "A complete visual identity overhaul for a renewable energy startup"
 tags = ["branding", "identity", "strategy"]
-services = ["Brand Identity", "Web Design"]
 
 [extra]
 year = 2025
