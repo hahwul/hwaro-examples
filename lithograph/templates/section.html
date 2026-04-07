@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}{{ section.title }} | {{ config.title }}{% endblock %}
+
+{% block content %}
+    <h2>{{ section.title }}</h2>
+
+    {% if section.content %}
+    <div class="content">
+        {{ section.content | safe }}
+    </div>
+    {% endif %}
+
+    <ul class="post-list">
+    {% for page in section.pages %}
+        <li class="post-item">
+            <h3 class="post-title"><a href="{{ page.permalink }}">{{ page.title }}</a></h3>
+            <div class="post-meta">
+                {% if page.date %}
+                    Published on {{ page.date | date(format="%B %d, %Y") }}
+                {% endif %}
+            </div>
+            {% if page.summary %}
+                <p class="post-summary">{{ page.summary | safe }}</p>
+            {% elif page.description %}
+                <p class="post-summary">{{ page.description }}</p>
+            {% endif %}
+
+            {% if page.taxonomies.tags %}
+                <ul class="tags">
+                {% for tag in page.taxonomies.tags %}
+                    <li><a href="{{ get_taxonomy_url(kind="tags", name=tag) }}">{{ tag }}</a></li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock content %}
