@@ -1,0 +1,89 @@
+{% include "header.html" %}
+
+<style>
+  .taxonomy-header {
+    padding: 3rem 0;
+    text-align: center;
+    background: linear-gradient(135deg, var(--valley-blue) 0%, var(--lowland-green) 100%);
+    border-radius: 12px;
+    margin-bottom: 3rem;
+    color: white;
+    box-shadow: 0 4px 16px rgba(45, 80, 22, 0.2);
+  }
+
+  .taxonomy-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  }
+
+  .terms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .term-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(45, 80, 22, 0.1);
+    border: 2px solid var(--ridge-white);
+    transition: all 0.3s ease;
+  }
+
+  .term-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(45, 80, 22, 0.2);
+    border-color: var(--contour-green);
+  }
+
+  .term-card a {
+    text-decoration: none;
+    color: var(--contour-green);
+    font-weight: 600;
+    font-size: 1.1rem;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .term-count {
+    font-size: 0.875rem;
+    color: var(--text-light);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  @media (max-width: 768px) {
+    .taxonomy-header h1 {
+      font-size: 2rem;
+    }
+
+    .terms-grid {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+  }
+</style>
+
+<div class="taxonomy-header">
+  <h1>All {{ taxonomy_name | default("Tags") }}</h1>
+  <p>Explore trails by region</p>
+</div>
+
+{% if taxonomy_terms %}
+<div class="terms-grid">
+  {% for term in taxonomy_terms | sort_by("name") %}
+  <div class="term-card">
+    <a href="{{ base_url }}/{{ taxonomy_name | default('tags') }}/{{ term.slug }}/">{{ term.name }}</a>
+    <div class="term-count">{{ term.pages_count }} trail{% if term.pages_count != 1 %}s{% endif %}</div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div style="text-align: center; padding: 4rem 2rem; background: white; border-radius: 8px; margin-top: 2rem;">
+  <p style="font-size: 1.25rem; color: var(--text-medium);">No tags yet.</p>
+</div>
+{% endif %}
+
+{% include "footer.html" %}

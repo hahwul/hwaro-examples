@@ -1,0 +1,148 @@
+{% include "header.html" %}
+
+<style>
+  .term-header {
+    padding: 3rem 0;
+    text-align: center;
+    background: linear-gradient(135deg, var(--valley-blue) 0%, var(--lowland-green) 100%);
+    border-radius: 12px;
+    margin-bottom: 3rem;
+    color: white;
+    box-shadow: 0 4px 16px rgba(45, 80, 22, 0.2);
+  }
+
+  .term-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  }
+
+  .term-header p {
+    font-size: 1.1rem;
+    opacity: 0.95;
+  }
+
+  .posts-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+  }
+
+  .post-card {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(45, 80, 22, 0.1);
+    transition: all 0.3s ease;
+    border: 2px solid var(--ridge-white);
+    position: relative;
+  }
+
+  .post-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--valley-blue) 0%, var(--lowland-green) 100%);
+  }
+
+  .post-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(45, 80, 22, 0.2);
+    border-color: var(--valley-blue);
+  }
+
+  .post-content {
+    padding: 1.5rem;
+    padding-left: 2rem;
+  }
+
+  .post-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: var(--contour-green);
+    font-weight: 600;
+  }
+
+  .post-card h2 a {
+    color: var(--contour-green);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .post-card h2 a:hover {
+    color: var(--valley-blue);
+  }
+
+  .post-meta {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.875rem;
+    color: var(--text-light);
+    margin-bottom: 0.75rem;
+    font-family: 'JetBrains Mono', monospace;
+    flex-wrap: wrap;
+  }
+
+  .post-meta .elevation {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    background: var(--valley-blue);
+    color: white;
+    border-radius: 4px;
+    font-size: 0.75rem;
+  }
+
+  .post-summary {
+    color: var(--text-medium);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 768px) {
+    .term-header h1 {
+      font-size: 2rem;
+    }
+
+    .posts-list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<div class="term-header">
+  <h1>{{ taxonomy_term | default("Tag") }}</h1>
+  <p>{{ taxonomy_pages | length }} trail{% if taxonomy_pages | length != 1 %}s{% endif %} in this region</p>
+</div>
+
+{% if taxonomy_pages %}
+<div class="posts-list">
+  {% for post in taxonomy_pages | sort_by("date", reverse=true) %}
+  <article class="post-card">
+    <div class="post-content">
+      <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+
+      <div class="post-meta">
+        <span>📅 {{ post.date | date("%B %d, %Y") }}</span>
+        {% if post.extra.elevation %}
+        <span class="elevation">⛰️ {{ post.extra.elevation }}</span>
+        {% endif %}
+        {% if post.reading_time %}
+        <span>⏱️ {{ post.reading_time }} min read</span>
+        {% endif %}
+      </div>
+
+      {% if post.summary %}
+      <p class="post-summary">{{ post.summary | strip_html | truncate_words(30) }}</p>
+      {% endif %}
+    </div>
+  </article>
+  {% endfor %}
+</div>
+{% endif %}
+
+{% include "footer.html" %}

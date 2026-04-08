@@ -1,0 +1,630 @@
+/* =============================================================================
+   SubZero Cryogenic Research Laboratory
+   Ultra-low temperature aesthetic with frost animations
+   ============================================================================= */
+
+/* =============================================================================
+   CSS Custom Properties - Cryogenic Color Palette
+   ============================================================================= */
+
+:root {
+  /* Core cryogenic colors */
+  --cryo-void: #060d18;           /* Deep frozen void background */
+  --cryo-blue: #0a1428;           /* Primary dark blue-black */
+  --freeze-white: #e8f2ff;        /* Ice white text */
+  --frost-cyan: #00d9ff;          /* Crystalline cyan accent */
+  --liquid-n2-cyan: #00b8e6;      /* Liquid nitrogen blue */
+  --ice-silver: #a8c5dd;          /* Frosted silver */
+
+  /* Semantic colors */
+  --bg-primary: var(--cryo-void);
+  --bg-secondary: #0d1422;
+  --surface: #121b2e;
+  --surface-raised: #1a2638;
+  --surface-overlay: rgba(18, 27, 46, 0.95);
+
+  --text-primary: var(--freeze-white);
+  --text-secondary: var(--ice-silver);
+  --text-muted: #7a8fa8;
+
+  --accent-primary: var(--frost-cyan);
+  --accent-secondary: var(--liquid-n2-cyan);
+
+  --border-color: rgba(0, 217, 255, 0.2);
+  --border-glow: rgba(0, 217, 255, 0.4);
+
+  /* Temperature indicator colors */
+  --temp-ultra-cold: #0066ff;     /* Below -200°C */
+  --temp-liquid-n2: #00d9ff;      /* -196°C */
+  --temp-cold: #4d9fff;           /* -80°C to -100°C */
+
+  /* Typography */
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* Spacing */
+  --max-width: 860px;
+  --spacing-unit: 1rem;
+
+  /* Frost animation timing */
+  --frost-duration: 8s;
+  --crystal-duration: 12s;
+}
+
+/* =============================================================================
+   Base Styles
+   ============================================================================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Frost creeping animation on viewport edges */
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Top frost border */
+body::before {
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--frost-cyan) 20%,
+    var(--freeze-white) 50%,
+    var(--frost-cyan) 80%,
+    transparent 100%
+  );
+  box-shadow: 0 0 20px var(--frost-cyan), 0 0 40px rgba(0, 217, 255, 0.3);
+  animation: frostCreep var(--frost-duration) ease-in-out infinite alternate;
+}
+
+/* Bottom frost border */
+body::after {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--liquid-n2-cyan) 30%,
+    var(--frost-cyan) 50%,
+    var(--liquid-n2-cyan) 70%,
+    transparent 100%
+  );
+  opacity: 0.5;
+  animation: frostCreep var(--frost-duration) ease-in-out infinite alternate-reverse;
+}
+
+@keyframes frostCreep {
+  0% {
+    opacity: 0.3;
+    filter: blur(0px);
+  }
+  50% {
+    opacity: 0.6;
+    filter: blur(2px);
+  }
+  100% {
+    opacity: 0.4;
+    filter: blur(1px);
+  }
+}
+
+/* =============================================================================
+   Crystalline Frost Particle Effect
+   ============================================================================= */
+
+.frost-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.frost-particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: var(--frost-cyan);
+  border-radius: 50%;
+  opacity: 0;
+  animation: frostDrift var(--crystal-duration) linear infinite;
+  box-shadow: 0 0 4px var(--frost-cyan);
+}
+
+.frost-particle:nth-child(1) { left: 5%; animation-delay: 0s; animation-duration: 14s; }
+.frost-particle:nth-child(2) { left: 15%; animation-delay: 2s; animation-duration: 11s; }
+.frost-particle:nth-child(3) { left: 25%; animation-delay: 4s; animation-duration: 13s; }
+.frost-particle:nth-child(4) { left: 35%; animation-delay: 1s; animation-duration: 15s; }
+.frost-particle:nth-child(5) { left: 45%; animation-delay: 3s; animation-duration: 12s; }
+.frost-particle:nth-child(6) { left: 55%; animation-delay: 5s; animation-duration: 14s; }
+.frost-particle:nth-child(7) { left: 65%; animation-delay: 2.5s; animation-duration: 11s; }
+.frost-particle:nth-child(8) { left: 75%; animation-delay: 4.5s; animation-duration: 13s; }
+.frost-particle:nth-child(9) { left: 85%; animation-delay: 1.5s; animation-duration: 12s; }
+.frost-particle:nth-child(10) { left: 95%; animation-delay: 3.5s; animation-duration: 14s; }
+
+@keyframes frostDrift {
+  0% {
+    transform: translateY(-5vh) translateX(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.7;
+  }
+  90% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(105vh) translateX(15px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* =============================================================================
+   Container
+   ============================================================================= */
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* =============================================================================
+   Header & Navigation
+   ============================================================================= */
+
+header {
+  background: var(--surface-overlay);
+  border-bottom: 1px solid var(--border-color);
+  padding: 1.5rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 217, 255, 0.1);
+}
+
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.site-title {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--frost-cyan);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  text-shadow: 0 0 10px rgba(0, 217, 255, 0.5);
+  transition: text-shadow 0.3s ease;
+}
+
+.site-title:hover {
+  text-shadow: 0 0 20px var(--frost-cyan), 0 0 30px rgba(0, 217, 255, 0.3);
+}
+
+.site-title::before {
+  content: '❄ ';
+  opacity: 0.8;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+nav a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: all 0.3s ease;
+  position: relative;
+  padding: 0.25rem 0;
+}
+
+nav a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--frost-cyan);
+  box-shadow: 0 0 5px var(--frost-cyan);
+  transition: width 0.3s ease;
+}
+
+nav a:hover {
+  color: var(--frost-cyan);
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+/* =============================================================================
+   Main Content
+   ============================================================================= */
+
+main {
+  min-height: calc(100vh - 200px);
+  padding: 3rem 0;
+}
+
+/* Temperature badge for section headers */
+.temp-badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  padding: 0.25rem 0.75rem;
+  background: rgba(0, 102, 255, 0.2);
+  border: 1px solid var(--temp-ultra-cold);
+  border-radius: 4px;
+  color: var(--frost-cyan);
+  margin-left: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  box-shadow: 0 0 10px rgba(0, 102, 255, 0.3);
+}
+
+/* =============================================================================
+   Typography
+   ============================================================================= */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--freeze-white);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: var(--frost-cyan);
+  text-shadow: 0 0 20px rgba(0, 217, 255, 0.4);
+  margin-top: 0;
+}
+
+h2 {
+  font-size: 1.75rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.5rem;
+}
+
+h3 {
+  font-size: 1.25rem;
+  color: var(--liquid-n2-cyan);
+}
+
+p {
+  margin-bottom: 1.25rem;
+  color: var(--text-secondary);
+}
+
+a {
+  color: var(--accent-primary);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+a:hover {
+  color: var(--freeze-white);
+  text-shadow: 0 0 10px rgba(0, 217, 255, 0.5);
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--surface-raised);
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  border: 1px solid var(--border-color);
+  color: var(--liquid-n2-cyan);
+}
+
+pre {
+  background: var(--surface);
+  border: 1px solid var(--border-color);
+  border-left: 3px solid var(--frost-cyan);
+  border-radius: 4px;
+  padding: 1.5rem;
+  overflow-x: auto;
+  margin-bottom: 1.5rem;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--freeze-white);
+}
+
+blockquote {
+  border-left: 3px solid var(--frost-cyan);
+  margin: 1.5rem 0;
+  padding: 1rem 1.5rem;
+  background: var(--surface);
+  font-style: italic;
+  color: var(--text-secondary);
+  box-shadow: 0 0 15px rgba(0, 217, 255, 0.1);
+}
+
+/* =============================================================================
+   Post Listings
+   ============================================================================= */
+
+.post-list {
+  list-style: none;
+  padding: 0;
+}
+
+.post-item {
+  background: var(--surface);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Thaw effect on hover */
+.post-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(0, 217, 255, 0.1),
+    transparent
+  );
+  transition: left 0.6s ease;
+}
+
+.post-item:hover::before {
+  left: 100%;
+}
+
+.post-item:hover {
+  border-color: var(--border-glow);
+  box-shadow: 0 0 30px rgba(0, 217, 255, 0.2), inset 0 0 20px rgba(0, 217, 255, 0.05);
+  transform: translateY(-4px);
+}
+
+.post-title {
+  font-size: 1.5rem;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.post-title a {
+  color: var(--freeze-white);
+  text-decoration: none;
+}
+
+.post-title a:hover {
+  color: var(--frost-cyan);
+}
+
+.post-meta {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.post-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.post-description {
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.post-tags {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  padding: 0.25rem 0.75rem;
+  background: rgba(0, 184, 230, 0.15);
+  border: 1px solid var(--liquid-n2-cyan);
+  border-radius: 4px;
+  color: var(--liquid-n2-cyan);
+  text-transform: lowercase;
+  transition: all 0.3s ease;
+}
+
+.tag:hover {
+  background: rgba(0, 217, 255, 0.3);
+  border-color: var(--frost-cyan);
+  color: var(--freeze-white);
+  box-shadow: 0 0 10px rgba(0, 217, 255, 0.4);
+}
+
+/* =============================================================================
+   Pagination
+   ============================================================================= */
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 3rem 0;
+  font-family: var(--font-mono);
+}
+
+.pagination a {
+  padding: 0.75rem 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
+}
+
+.pagination a:hover {
+  background: var(--surface-raised);
+  border-color: var(--frost-cyan);
+  color: var(--frost-cyan);
+  box-shadow: 0 0 15px rgba(0, 217, 255, 0.3);
+}
+
+/* =============================================================================
+   Footer
+   ============================================================================= */
+
+footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border-color);
+  padding: 2rem 0;
+  margin-top: 4rem;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+footer p {
+  margin: 0.5rem 0;
+}
+
+footer a {
+  color: var(--liquid-n2-cyan);
+}
+
+footer a:hover {
+  color: var(--frost-cyan);
+}
+
+/* =============================================================================
+   Responsive Design
+   ============================================================================= */
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1.5rem;
+  }
+
+  .site-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  nav ul {
+    gap: 1rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .post-item {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  nav ul {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+}
+
+/* =============================================================================
+   Utility Classes
+   ============================================================================= */
+
+.text-center {
+  text-align: center;
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+.mt-0 { margin-top: 0; }
+.mt-1 { margin-top: var(--spacing-unit); }
+.mt-2 { margin-top: calc(var(--spacing-unit) * 2); }
+.mt-3 { margin-top: calc(var(--spacing-unit) * 3); }
+
+.mb-0 { margin-bottom: 0; }
+.mb-1 { margin-bottom: var(--spacing-unit); }
+.mb-2 { margin-bottom: calc(var(--spacing-unit) * 2); }
+.mb-3 { margin-bottom: calc(var(--spacing-unit) * 3); }
