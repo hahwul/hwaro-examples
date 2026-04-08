@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }} | {{ site.title }}</title>
+    <style>
+        :root {
+            --bg-blackout: #000000;
+            --uv-purple: #6b00ff;
+            --laser-green: #00ff00;
+            --strobe-white: #ffffff;
+            --text-color: #ffffff;
+            --neon-glow: 0 0 5px var(--laser-green), 0 0 10px var(--laser-green);
+            --uv-glow: 0 0 5px var(--uv-purple), 0 0 15px var(--uv-purple);
+        }
+
+        @font-face {
+            font-family: 'ClubFont';
+            src: local('Impact'), local('Helvetica Neue'), sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-blackout);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .strobe-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0;
+            background-color: var(--strobe-white);
+        }
+
+        body.strobe-active .strobe-overlay {
+            animation: strobe-flash 0.15s infinite;
+        }
+
+        @keyframes strobe-flash {
+            0%, 80%, 100% { opacity: 0; }
+            40%, 60% { opacity: 0.15; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            body.strobe-active .strobe-overlay {
+                animation: none;
+            }
+        }
+
+        .fluorescent-text {
+            color: var(--laser-green);
+            text-shadow: var(--neon-glow);
+            text-transform: uppercase;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+
+        .uv-text {
+            color: var(--uv-purple);
+            text-shadow: var(--uv-glow);
+        }
+
+        header {
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid var(--uv-purple);
+            background: rgba(0, 0, 0, 0.8);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(5px);
+        }
+
+        .logo h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            color: var(--strobe-white);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--laser-green);
+            text-shadow: var(--neon-glow);
+        }
+
+        .a11y-toggle {
+            background: transparent;
+            border: 2px solid var(--laser-green);
+            color: var(--laser-green);
+            padding: 0.4rem 0.8rem;
+            cursor: pointer;
+            font-family: monospace;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            transition: all 0.2s;
+        }
+
+        .a11y-toggle:hover {
+            background: var(--laser-green);
+            color: var(--bg-blackout);
+            box-shadow: var(--neon-glow);
+        }
+
+        .a11y-toggle.off {
+            border-color: #444;
+            color: #444;
+        }
+
+        .a11y-toggle.off:hover {
+            background: #444;
+            color: #000;
+            box-shadow: none;
+        }
+
+        .laser-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        main {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body class="strobe-active">
+    <div class="strobe-overlay"></div>
+    <div class="laser-container" id="laser-beams">
+        <svg width="100%" height="100%" viewBox="0 0 1000 1000" preserveAspectRatio="none">
+            <style>
+                .laser-line {
+                    stroke: var(--laser-green);
+                    stroke-width: 2;
+                    filter: drop-shadow(0 0 5px var(--laser-green));
+                    animation: laser-drift 8s infinite ease-in-out;
+                }
+                .laser-line-purple {
+                    stroke: var(--uv-purple);
+                    stroke-width: 3;
+                    filter: drop-shadow(0 0 8px var(--uv-purple));
+                    animation: laser-drift 12s infinite ease-in-out reverse;
+                }
+                @keyframes laser-drift {
+                    0%, 100% { transform: translateY(0) rotate(0deg); }
+                    50% { transform: translateY(-50px) rotate(1deg); }
+                }
+            </style>
+            <line class="laser-line" x1="0" y1="200" x2="1000" y2="400" />
+            <line class="laser-line" x1="0" y1="800" x2="1000" y2="600" />
+            <line class="laser-line-purple" x1="200" y1="0" x2="400" y2="1000" />
+            <line class="laser-line-purple" x1="800" y1="0" x2="600" y2="1000" />
+        </svg>
+    </div>
+
+    <header>
+        <div class="logo">
+            <h1><a href="{{ base_url }}" style="text-decoration: none;" class="fluorescent-text">STROBE CLUB</a></h1>
+        </div>
+        <nav>
+            <a href="{{ base_url }}">LINEUP</a>
+            <a href="{{ base_url }}/about">INFO</a>
+            <button id="strobe-toggle" class="a11y-toggle" title="Toggle Strobe Effect">STROBE: ON</button>
+        </nav>
+    </header>
+
+    <script>
+        const strobeToggle = document.getElementById('strobe-toggle');
+        const body = document.body;
+
+        strobeToggle.addEventListener('click', () => {
+            if (body.classList.contains('strobe-active')) {
+                body.classList.remove('strobe-active');
+                strobeToggle.textContent = 'STROBE: OFF';
+                strobeToggle.classList.add('off');
+            } else {
+                body.classList.add('strobe-active');
+                strobeToggle.textContent = 'STROBE: ON';
+                strobeToggle.classList.remove('off');
+            }
+        });
+
+        // Check for prefers-reduced-motion
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            body.classList.remove('strobe-active');
+            strobeToggle.textContent = 'STROBE: OFF';
+            strobeToggle.classList.add('off');
+        }
+    </script>
