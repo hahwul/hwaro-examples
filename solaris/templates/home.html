@@ -1,0 +1,550 @@
+{% include "header.html" %}
+<style>
+  .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+  }
+
+  .dashboard-title {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+
+  .dashboard-subtitle {
+    color: var(--text-secondary);
+    font-size: 14px;
+  }
+
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: rgba(74, 222, 128, 0.1);
+    border: 1px solid rgba(74, 222, 128, 0.3);
+    border-radius: 6px;
+    color: var(--status-active);
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--status-active);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  /* Mission Stats Grid */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 32px;
+  }
+
+  .stat-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+  }
+
+  .stat-card.stat-solar::before { --accent-color: var(--solar-gold); }
+  .stat-card.stat-mars::before { --accent-color: var(--mars-red); }
+  .stat-card.stat-jupiter::before { --accent-color: var(--jupiter-orange); }
+  .stat-card.stat-saturn::before { --accent-color: var(--saturn-cream); }
+
+  .stat-label {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+  }
+
+  .stat-value {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-card.stat-solar .stat-value { color: var(--solar-gold); }
+  .stat-card.stat-mars .stat-value { color: var(--mars-red); }
+  .stat-card.stat-jupiter .stat-value { color: var(--jupiter-orange); }
+  .stat-card.stat-saturn .stat-value { color: var(--saturn-cream); }
+
+  .stat-change {
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+
+  .stat-change.positive {
+    color: var(--status-active);
+  }
+
+  /* Orbital View */
+  .orbital-view {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 32px;
+    margin-bottom: 32px;
+    min-height: 500px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .orbital-view-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .orbital-view-subtitle {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 32px;
+  }
+
+  .solar-system {
+    position: relative;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .sun {
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle, var(--solar-gold), var(--jupiter-orange));
+    border-radius: 50%;
+    position: absolute;
+    box-shadow: 0 0 40px rgba(244, 208, 63, 0.6);
+    animation: sun-glow 4s ease-in-out infinite;
+  }
+
+  @keyframes sun-glow {
+    0%, 100% {
+      box-shadow: 0 0 40px rgba(244, 208, 63, 0.6);
+    }
+    50% {
+      box-shadow: 0 0 60px rgba(244, 208, 63, 0.8), 0 0 80px rgba(255, 140, 66, 0.4);
+    }
+  }
+
+  .orbit {
+    position: absolute;
+    border: 1px dashed var(--orbit-line);
+    border-radius: 50%;
+    opacity: 0.5;
+  }
+
+  .orbit-1 { width: 120px; height: 120px; }
+  .orbit-2 { width: 180px; height: 180px; }
+  .orbit-3 { width: 240px; height: 240px; }
+  .orbit-4 { width: 320px; height: 320px; }
+  .orbit-5 { width: 400px; height: 400px; }
+
+  .planet {
+    position: absolute;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+  }
+
+  .planet-mercury {
+    width: 12px;
+    height: 12px;
+    background: #8c7853;
+    margin-left: 60px;
+    margin-top: -6px;
+    animation: orbit-mercury 8s linear infinite;
+  }
+
+  .planet-venus {
+    width: 16px;
+    height: 16px;
+    background: #ffc649;
+    margin-left: 90px;
+    margin-top: -8px;
+    animation: orbit-venus 12s linear infinite;
+  }
+
+  .planet-mars {
+    width: 14px;
+    height: 14px;
+    background: var(--mars-red);
+    margin-left: 120px;
+    margin-top: -7px;
+    animation: orbit-mars 16s linear infinite;
+    box-shadow: 0 0 10px rgba(205, 92, 92, 0.6);
+  }
+
+  .planet-jupiter {
+    width: 24px;
+    height: 24px;
+    background: var(--jupiter-orange);
+    margin-left: 160px;
+    margin-top: -12px;
+    animation: orbit-jupiter 24s linear infinite;
+    box-shadow: 0 0 12px rgba(255, 140, 66, 0.5);
+  }
+
+  .planet-saturn {
+    width: 20px;
+    height: 20px;
+    background: var(--saturn-cream);
+    margin-left: 200px;
+    margin-top: -10px;
+    animation: orbit-saturn 32s linear infinite;
+  }
+
+  @keyframes orbit-mercury {
+    from { transform: rotate(0deg) translateX(60px) rotate(0deg); }
+    to { transform: rotate(360deg) translateX(60px) rotate(-360deg); }
+  }
+
+  @keyframes orbit-venus {
+    from { transform: rotate(0deg) translateX(90px) rotate(0deg); }
+    to { transform: rotate(360deg) translateX(90px) rotate(-360deg); }
+  }
+
+  @keyframes orbit-mars {
+    from { transform: rotate(0deg) translateX(120px) rotate(0deg); }
+    to { transform: rotate(360deg) translateX(120px) rotate(-360deg); }
+  }
+
+  @keyframes orbit-jupiter {
+    from { transform: rotate(0deg) translateX(160px) rotate(0deg); }
+    to { transform: rotate(360deg) translateX(160px) rotate(-360deg); }
+  }
+
+  @keyframes orbit-saturn {
+    from { transform: rotate(0deg) translateX(200px) rotate(0deg); }
+    to { transform: rotate(360deg) translateX(200px) rotate(-360deg); }
+  }
+
+  /* Trajectory lines */
+  .trajectory-line {
+    position: absolute;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--solar-gold), transparent);
+    opacity: 0.3;
+    animation: trajectory-move 3s ease-in-out infinite;
+  }
+
+  .trajectory-line:nth-child(1) {
+    width: 200px;
+    top: 30%;
+    left: 10%;
+    transform: rotate(-20deg);
+  }
+
+  .trajectory-line:nth-child(2) {
+    width: 150px;
+    top: 60%;
+    left: 60%;
+    transform: rotate(40deg);
+    animation-delay: 1s;
+  }
+
+  .trajectory-line:nth-child(3) {
+    width: 180px;
+    top: 80%;
+    left: 20%;
+    transform: rotate(-45deg);
+    animation-delay: 2s;
+  }
+
+  @keyframes trajectory-move {
+    0%, 100% {
+      opacity: 0.1;
+      transform: translateX(0) rotate(var(--rotation, 0deg));
+    }
+    50% {
+      opacity: 0.4;
+      transform: translateX(20px) rotate(var(--rotation, 0deg));
+    }
+  }
+
+  /* Planet Data Cards */
+  .planet-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .planet-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 24px;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+
+  .planet-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--planet-color);
+  }
+
+  .planet-card.mercury { --planet-color: #8c7853; }
+  .planet-card.venus { --planet-color: #ffc649; }
+  .planet-card.mars { --planet-color: var(--mars-red); }
+  .planet-card.jupiter { --planet-color: var(--jupiter-orange); }
+  .planet-card.saturn { --planet-color: var(--saturn-cream); }
+
+  .planet-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .planet-name {
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .mission-status {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    background: rgba(74, 222, 128, 0.1);
+    color: var(--status-active);
+    border: 1px solid rgba(74, 222, 128, 0.3);
+  }
+
+  .planet-data {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .data-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .data-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-secondary);
+  }
+
+  .data-value {
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+  }
+
+  @media (max-width: 1024px) {
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .planet-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .stats-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<div class="dashboard-header">
+  <div>
+    <h1 class="dashboard-title">Mission Control Dashboard</h1>
+    <p class="dashboard-subtitle">Solar System Exploration · Last updated: {{ current_date }}</p>
+  </div>
+  <div class="status-badge">
+    <span class="status-dot"></span>
+    All Systems Operational
+  </div>
+</div>
+
+<!-- Mission Stats -->
+<div class="stats-grid">
+  <div class="stat-card stat-solar">
+    <div class="stat-label">Active Missions</div>
+    <div class="stat-value">5</div>
+    <div class="stat-change positive">+1 this quarter</div>
+  </div>
+  <div class="stat-card stat-mars">
+    <div class="stat-label">Data Received</div>
+    <div class="stat-value">2.4 TB</div>
+    <div class="stat-change positive">+324 GB today</div>
+  </div>
+  <div class="stat-card stat-jupiter">
+    <div class="stat-label">Probes Online</div>
+    <div class="stat-value">8</div>
+    <div class="stat-change">All functional</div>
+  </div>
+  <div class="stat-card stat-saturn">
+    <div class="stat-label">Distance Traveled</div>
+    <div class="stat-value">12.4 AU</div>
+    <div class="stat-change">Combined total</div>
+  </div>
+</div>
+
+<!-- Orbital View -->
+<div class="orbital-view">
+  <h2 class="orbital-view-title">Solar System Overview</h2>
+  <p class="orbital-view-subtitle">Real-time orbital positions and probe trajectories</p>
+
+  <div class="solar-system">
+    <div class="sun"></div>
+    <div class="orbit orbit-1"></div>
+    <div class="orbit orbit-2"></div>
+    <div class="orbit orbit-3"></div>
+    <div class="orbit orbit-4"></div>
+    <div class="orbit orbit-5"></div>
+
+    <div class="planet planet-mercury"></div>
+    <div class="planet planet-venus"></div>
+    <div class="planet planet-mars"></div>
+    <div class="planet planet-jupiter"></div>
+    <div class="planet planet-saturn"></div>
+
+    <div class="trajectory-line" style="--rotation: -20deg;"></div>
+    <div class="trajectory-line" style="--rotation: 40deg;"></div>
+    <div class="trajectory-line" style="--rotation: -45deg;"></div>
+  </div>
+</div>
+
+<!-- Planet Data Cards -->
+<div class="planet-grid">
+  <div class="planet-card mercury">
+    <div class="planet-card-header">
+      <h3 class="planet-name">Mercury</h3>
+      <span class="mission-status">Active</span>
+    </div>
+    <div class="planet-data">
+      <div class="data-item">
+        <div class="data-label">Distance</div>
+        <div class="data-value">0.39 AU</div>
+      </div>
+      <div class="data-item">
+        <div class="data-label">Gravity</div>
+        <div class="data-value">3.7 m/s²</div>
+      </div>
+      <div class="data-item">
+        <div class="data-label">Temperature</div>
+        <div class="data-value">430°C</div>
+      </div>
+      <div class="data-item">
+        <div class="data-label">Probe</div>
+        <div class="data-value">MESSENGER-II</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="planet-card venus">
+    <div class="planet-card-header">
+      <h3 class="planet-name">Venus</h3>
+      <span class="mission-status">Active</span>
+    </div>
+    <div class="planet-data">
+      <div class="data-item">
+        <div class="data-label">Distance</div>
+        <div class="data-value">0.72 AU</div>
+      </div>
+      <div class="data-item">
+        <div class="data-label">Gravity</div>
+        <div class="data-value">8.9 m/s²</div>
+      </div>
+      <div class="data-item">
+        <div class="data-label">Temperature</div>
+        <div class="data-value">462°C</div>
+      </div>
+      <div class="data-item">
+        <div class="data-label">Probe</div>
+        <div class="data-value">Venera-D</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="planet-card mars">
+    <div class="planet-card-header">
+      <h3 class="planet-name">Mars</h3>
+      <span class="mission-status">Active</span>
+    </div>
+    <div class="planet-data">
+      <div class="data-item">
+        <div class="data-label">Distance</div>
+        <div class="data-value">1.52 AU</div>
+      </div>
+      <div class="data-item">
+        <div class="data-label">Gravity</div>
+        <div class="data-value">3.7 m/s²</div>
+      </div>
+      <div class="data-item">
+        <div class="data-label">Temperature</div>
+        <div class="data-value">-63°C</div>
+      </div>
+      <div class="data-item">
+        <div class="data-label">Probe</div>
+        <div class="data-value">Perseverance</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="planet-card jupiter">
+    <div class="planet-card-header">
+      <h3 class="planet-name">Jupiter</h3>
+      <span class="mission-status">Active</span>
+    </div>
+    <div class="planet-data">
+      <div class="data-item">
+        <div class="data-label">Distance</div>
+        <div class="data-value">5.20 AU</div>
+      </div>
+      <div class="data-item">
+        <div class="data-label">Gravity</div>
+        <div class="data-value">24.8 m/s²</div>
+      </div>
+      <div class="data-item">
+        <div class="data-label">Temperature</div>
+        <div class="data-value">-108°C</div>
+      </div>
+      <div class="data-item">
+        <div class="data-label">Probe</div>
+        <div class="data-value">Juno</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% include "footer.html" %}

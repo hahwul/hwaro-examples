@@ -1,0 +1,143 @@
+{% include "header.html" %}
+<style>
+  .section-header {
+    margin-bottom: 32px;
+  }
+
+  .section-title {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .section-description {
+    font-size: 16px;
+    color: var(--text-secondary);
+  }
+
+  .mission-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .mission-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 28px;
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .mission-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--solar-gold);
+    box-shadow: 0 8px 24px rgba(244, 208, 63, 0.15);
+  }
+
+  .mission-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .mission-title {
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  .mission-badge {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    background: rgba(74, 222, 128, 0.1);
+    color: var(--status-active);
+    border: 1px solid rgba(74, 222, 128, 0.3);
+  }
+
+  .mission-description {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .mission-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .mission-stat {
+    font-size: 12px;
+  }
+
+  .mission-stat-label {
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+  }
+
+  .mission-stat-value {
+    font-weight: 600;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+  }
+
+  @media (max-width: 768px) {
+    .mission-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<div class="section-header">
+  <h1 class="section-title">{{ section.title }}</h1>
+  <p class="section-description">{{ section.description }}</p>
+</div>
+
+<div class="mission-grid">
+  {% for page in section.pages %}
+  <a href="{{ page.url }}" class="mission-card">
+    <div class="mission-card-header">
+      <h2 class="mission-title">{{ page.title }}</h2>
+      {% if page.extra.mission_status %}
+      <span class="mission-badge">{{ page.extra.mission_status }}</span>
+      {% endif %}
+    </div>
+    <p class="mission-description">{{ page.description | default(value=page.summary | strip_html | truncate_words(20)) }}</p>
+    <div class="mission-stats">
+      {% if page.extra.distance %}
+      <div class="mission-stat">
+        <div class="mission-stat-label">Distance</div>
+        <div class="mission-stat-value">{{ page.extra.distance }}</div>
+      </div>
+      {% endif %}
+      {% if page.extra.probe_name %}
+      <div class="mission-stat">
+        <div class="mission-stat-label">Probe</div>
+        <div class="mission-stat-value">{{ page.extra.probe_name }}</div>
+      </div>
+      {% endif %}
+      {% if page.extra.temperature %}
+      <div class="mission-stat">
+        <div class="mission-stat-label">Temperature</div>
+        <div class="mission-stat-value">{{ page.extra.temperature }}</div>
+      </div>
+      {% endif %}
+      {% if page.extra.gravity %}
+      <div class="mission-stat">
+        <div class="mission-stat-label">Gravity</div>
+        <div class="mission-stat-value">{{ page.extra.gravity }}</div>
+      </div>
+      {% endif %}
+    </div>
+  </a>
+  {% endfor %}
+</div>
+
+{% include "footer.html" %}
