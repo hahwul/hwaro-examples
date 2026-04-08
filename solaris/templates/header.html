@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page_title | default(value=site_title) }}</title>
+  <meta name="description" content="{{ page.description | default(value=site_description) }}">
+  {{ og_all_tags | safe }}
+  {{ canonical_tag | safe }}
+  <style>
+    :root {
+      --solar-gold: #f4d03f;
+      --mars-red: #cd5c5c;
+      --jupiter-orange: #ff8c42;
+      --saturn-cream: #f5deb3;
+      --deep-space: #0a0e27;
+      --space-dark: #141824;
+      --card-bg: #1a1f35;
+      --text-primary: #e8eaf0;
+      --text-secondary: #a8adb8;
+      --border-color: #2a3048;
+      --orbit-line: #2d3654;
+      --status-active: #4ade80;
+      --status-warning: #fbbf24;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif;
+      background: var(--deep-space);
+      color: var(--text-primary);
+      line-height: 1.6;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Starfield background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image:
+        radial-gradient(2px 2px at 20% 30%, white, transparent),
+        radial-gradient(2px 2px at 60% 70%, white, transparent),
+        radial-gradient(1px 1px at 50% 50%, white, transparent),
+        radial-gradient(1px 1px at 80% 10%, white, transparent),
+        radial-gradient(2px 2px at 90% 60%, white, transparent),
+        radial-gradient(1px 1px at 33% 80%, white, transparent),
+        radial-gradient(1px 1px at 15% 90%, white, transparent);
+      background-size: 200% 200%;
+      background-position: 0% 0%;
+      opacity: 0.4;
+      pointer-events: none;
+      z-index: 0;
+      animation: twinkle 8s ease-in-out infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.6; }
+    }
+
+    /* Orbital rings decoration */
+    .orbital-decoration {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 150vmax;
+      height: 150vmax;
+      border: 1px solid var(--orbit-line);
+      border-radius: 50%;
+      opacity: 0.15;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .orbital-decoration:nth-child(2) {
+      width: 120vmax;
+      height: 120vmax;
+      opacity: 0.1;
+      animation: orbit-rotate 120s linear infinite;
+    }
+
+    @keyframes orbit-rotate {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Header */
+    header {
+      background: rgba(26, 31, 53, 0.6);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 20px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--solar-gold), var(--jupiter-orange));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      animation: pulse-glow 3s ease-in-out infinite;
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% {
+        box-shadow: 0 0 10px rgba(244, 208, 63, 0.4);
+      }
+      50% {
+        box-shadow: 0 0 20px rgba(244, 208, 63, 0.6), 0 0 30px rgba(244, 208, 63, 0.3);
+      }
+    }
+
+    .logo-text {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 32px;
+    }
+
+    nav a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      transition: color 0.2s ease;
+      position: relative;
+    }
+
+    nav a:hover {
+      color: var(--solar-gold);
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--solar-gold);
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .main-content {
+      padding: 40px 0;
+      min-height: calc(100vh - 160px);
+    }
+  </style>
+</head>
+<body>
+  <div class="orbital-decoration"></div>
+  <div class="orbital-decoration"></div>
+  <header>
+    <div class="container header-content">
+      <a href="{{ base_url }}" class="logo">
+        <div class="logo-icon">☀</div>
+        <span class="logo-text">SOLARIS</span>
+      </a>
+      <nav>
+        <ul>
+          <li><a href="{{ base_url }}">Dashboard</a></li>
+          <li><a href="{{ base_url }}/planets/">Missions</a></li>
+          <li><a href="#">Telemetry</a></li>
+          <li><a href="#">Archive</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main class="main-content">
+    <div class="container">
