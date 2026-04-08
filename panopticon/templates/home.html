@@ -1,0 +1,33 @@
+{% include "header.html" %}
+
+<main class="panopticon-home">
+  <div class="watchtower">
+    <h1>Observation Center</h1>
+    <div class="summary">
+      {{ content | safe }}
+    </div>
+  </div>
+
+  <div class="radial-posts">
+    {% set posts = [] %}
+    {% for p in site.pages %}
+      {% if p.section == "posts" %}
+        {% set posts = posts | append(value=p) %}
+      {% endif %}
+    {% endfor %}
+
+    {% set posts_count = posts | length %}
+    {% set circle_count = 8 %}
+    {% if posts_count < 8 %}{% set circle_count = posts_count %}{% endif %}
+    {% if circle_count == 0 %}{% set circle_count = 1 %}{% endif %}
+    {% set step = 360 / circle_count %}
+
+    {% for post in posts | slice(count=8) %}
+      <div class="radial-item" style="transform: rotate({{ loop.index0 * step }}deg) translate(350px) rotate(-{{ loop.index0 * step }}deg);">
+        <a href="{{ post.permalink }}">{{ post.title }}</a>
+      </div>
+    {% endfor %}
+  </div>
+</main>
+
+{% include "footer.html" %}
