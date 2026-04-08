@@ -14,3 +14,6 @@ Japanese aesthetics values marks of wear by the use of an object. This can be se
 * Nothing is perfect
 
 By embracing these principles, we can find peace in the natural cycle of growth, decay, and death.
+
+
+*This fragment is part of the Kintsugi collection.*
