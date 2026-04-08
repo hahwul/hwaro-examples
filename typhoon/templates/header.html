@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{{ page.description | default(site.description) }}">
+  {{ og_all_tags }}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+  <style>
+    :root {
+      --storm-blue: #010b1a;
+      --cyclone-grey: #4a5568;
+      --eye-white: #f0f4f8;
+      --rain-cyan: #00f5ff;
+      --text-muted: #8a9ab0;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--storm-blue);
+      color: var(--eye-white);
+      font-family: 'JetBrains Mono', monospace;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+    /* Satellite Background */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(0, 245, 255, 0.05) 0%, transparent 60%),
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      opacity: 0.15;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    a { color: var(--rain-cyan); text-decoration: none; border-bottom: 1px dashed transparent; transition: 0.3s; }
+    a:hover { border-bottom-color: var(--rain-cyan); }
+
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(1, 11, 26, 0.8);
+      backdrop-filter: blur(10px);
+      border-bottom: 2px solid var(--cyclone-grey);
+      z-index: 1000;
+    }
+    .brand {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--rain-cyan);
+    }
+    nav a {
+      margin-left: 2rem;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Vortex Layout */
+    .vortex-container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .vortex-band {
+      position: absolute;
+      border: 1px solid rgba(74, 85, 104, 0.3);
+      border-radius: 50%;
+      animation: vortex-spin linear infinite;
+    }
+    @keyframes vortex-spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Eye of the Storm */
+    .eye-content {
+      position: relative;
+      max-width: 600px;
+      padding: 3rem;
+      background: rgba(1, 11, 26, 0.9);
+      border: 1px solid var(--rain-cyan);
+      box-shadow: 0 0 30px rgba(0, 245, 255, 0.2);
+      z-index: 10;
+      text-align: center;
+    }
+    .eye-content h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+    .eye-content .status-tag {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      background: var(--rain-cyan);
+      color: var(--storm-blue);
+      font-weight: bold;
+      font-size: 0.7rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Grid for News */
+    .spiral-grid {
+      position: relative;
+      width: 100%;
+      min-height: 120vh;
+      padding: 10rem 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .report-card {
+      position: relative;
+      background: rgba(1, 11, 26, 0.6);
+      border-left: 4px solid var(--cyclone-grey);
+      padding: 2rem;
+      transition: 0.5s;
+      transform: rotate(calc(var(--i, 0) * 2deg)) translateY(calc(var(--i, 0) * 10px));
+    }
+    .report-card:hover {
+      border-left-color: var(--rain-cyan);
+      transform: rotate(0deg) scale(1.05);
+      background: rgba(74, 85, 104, 0.2);
+      z-index: 50;
+    }
+    .report-card .date { font-size: 0.7rem; color: var(--text-muted); margin-bottom: 1rem; display: block; }
+    .report-card h2 { font-family: 'Oswald', sans-serif; font-size: 1.5rem; margin-bottom: 1rem; text-transform: uppercase; }
+
+    /* Page View */
+    .main-article {
+      max-width: 800px;
+      margin: 8rem auto 4rem;
+      padding: 4rem;
+      background: rgba(240, 244, 248, 0.03);
+      border: 1px solid rgba(74, 85, 104, 0.5);
+    }
+    .main-article h1 { font-family: 'Oswald', sans-serif; font-size: 3.5rem; margin-bottom: 2rem; text-transform: uppercase; border-bottom: 8px solid var(--rain-cyan); padding-bottom: 1rem; }
+    .main-article .meta { margin-bottom: 3rem; font-size: 0.9rem; color: var(--rain-cyan); text-transform: uppercase; }
+    .content-body { line-height: 1.8; font-size: 1.1rem; }
+    .content-body p { margin-bottom: 1.5rem; }
+    .content-body h2 { font-family: 'Oswald', sans-serif; color: var(--rain-cyan); margin: 3rem 0 1rem; text-transform: uppercase; }
+
+    footer {
+      text-align: center;
+      padding: 4rem 2rem;
+      border-top: 1px solid var(--cyclone-grey);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      letter-spacing: 2px;
+    }
+
+    @media (max-width: 768px) {
+      .eye-content h1 { font-size: 2rem; }
+      .main-article { padding: 2rem; margin: 6rem 1rem; }
+      .main-article h1 { font-size: 2.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="{{ base_url }}/" class="brand">Typhoon Eye</a>
+    <nav>
+      <a href="{{ base_url }}/reports/">Reports</a>
+      <a href="{{ base_url }}/about/">Intelligence</a>
+    </nav>
+  </header>
