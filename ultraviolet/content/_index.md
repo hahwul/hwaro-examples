@@ -1,6 +1,7 @@
 +++
-title = "Home"
+title = "Articles"
 sort_by = "date"
-template = "index.html"
-page_template = "page.html"
+template = "index"
+page_template = "page"
+render = true
 +++
