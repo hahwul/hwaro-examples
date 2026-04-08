@@ -1,0 +1,49 @@
+{% include "header.html" %}
+  <main class="site-main">
+    <h1>{{ section.title }}</h1>
+    {% if section.description is present %}
+      <p class="taxonomy-desc">{{ section.description }}</p>
+    {% endif %}
+
+    <ul class="section-list">
+      {% for page in section.pages %}
+        <li>
+          <a href="{{ page.url }}">
+            {{ page.title }}
+            {% if page.date is present %}
+              <span style="display:block; font-size:0.75rem; font-weight:400; margin-top:0.5rem; color:var(--text-dim);">
+                {{ page.date | date("%B %d, %Y") }}
+              </span>
+            {% endif %}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+
+    {% if section.paginator %}
+      <nav class="pagination">
+        <ul class="pagination-list">
+          {% if section.paginator.previous %}
+            <li><a href="{{ section.paginator.previous }}">&laquo; Previous</a></li>
+          {% else %}
+            <li class="pagination-disabled"><span>&laquo; Previous</span></li>
+          {% endif %}
+
+          {% for page_num in section.paginator.page_range %}
+            {% if page_num == section.paginator.current_index %}
+              <li class="pagination-current"><span>{{ page_num }}</span></li>
+            {% else %}
+              <li><a href="{{ section.paginator.base_url }}{{ page_num }}/">{{ page_num }}</a></li>
+            {% endif %}
+          {% endfor %}
+
+          {% if section.paginator.next %}
+            <li><a href="{{ section.paginator.next }}">Next &raquo;</a></li>
+          {% else %}
+            <li class="pagination-disabled"><span>Next &raquo;</span></li>
+          {% endif %}
+        </ul>
+      </nav>
+    {% endif %}
+  </main>
+{% include "footer.html" %}
