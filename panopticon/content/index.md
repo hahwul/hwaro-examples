@@ -1,0 +1,4 @@
++++
+title = "Panopticon"
+template = "home"
++++
