@@ -1,0 +1,536 @@
+:root {
+    --star-white: #f0f4f8;
+    --night-navy: #0a1628;
+    --constellation-gold: #c9a961;
+    --infinity-black: #010409;
+    --dim-star: rgba(240, 244, 248, 0.4);
+    --line-color: rgba(201, 169, 97, 0.25);
+    --card-bg: rgba(10, 22, 40, 0.85);
+    --border-color: rgba(201, 169, 97, 0.5);
+
+    --font-heading: 'Space Mono', monospace;
+    --font-body: 'Inter', sans-serif;
+}
+
+body {
+    background-color: var(--infinity-black);
+    color: var(--star-white);
+    font-family: var(--font-body);
+    margin: 0;
+    padding: 0;
+    line-height: 1.7;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Polar star field with concentric circles */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--night-navy);
+    background-image:
+        radial-gradient(circle at 50% 50%, transparent 10%, var(--infinity-black) 50%),
+        radial-gradient(circle at 50% 50%, rgba(201, 169, 97, 0.03) 1px, transparent 1px),
+        radial-gradient(circle at 50% 50%, rgba(201, 169, 97, 0.03) 1px, transparent 1px),
+        radial-gradient(circle at 50% 50%, rgba(201, 169, 97, 0.03) 1px, transparent 1px);
+    background-size: 100% 100%, 30% 30%, 50% 50%, 70% 70%;
+    background-position: center, center, center, center;
+    background-repeat: no-repeat;
+    z-index: -2;
+}
+
+/* CSS Starfield via box-shadow - polar distribution */
+body::after {
+    content: '';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 2px;
+    height: 2px;
+    background: transparent;
+    transform: translate(-50%, -50%);
+    /* Star field distributed in polar pattern */
+    box-shadow:
+        /* Inner ring - brightest stars */
+        100px 50px var(--star-white), -80px 40px var(--star-white), 60px -70px var(--star-white),
+        -90px -60px var(--star-white), 120px 20px var(--star-white), -110px 10px var(--star-white),
+        /* Middle ring */
+        200px 100px var(--dim-star), -180px 80px var(--dim-star), 150px -140px var(--dim-star),
+        -170px -120px var(--dim-star), 220px 50px var(--dim-star), -210px 30px var(--dim-star),
+        180px -100px var(--dim-star), -190px -90px var(--dim-star), 160px 130px var(--dim-star),
+        /* Outer ring */
+        300px 150px var(--dim-star), -280px 130px var(--dim-star), 250px -220px var(--dim-star),
+        -270px -200px var(--dim-star), 320px 80px var(--dim-star), -310px 60px var(--dim-star),
+        280px -180px var(--dim-star), -290px -160px var(--dim-star), 260px 200px var(--dim-star),
+        -240px 180px var(--dim-star), 340px 120px var(--dim-star), -330px 100px var(--dim-star),
+        /* Far field */
+        400px 200px var(--dim-star), -380px 180px var(--dim-star), 350px -280px var(--dim-star),
+        -370px -260px var(--dim-star), 420px 100px var(--dim-star), -410px 80px var(--dim-star),
+        380px -240px var(--dim-star), -390px -220px var(--dim-star), 360px 260px var(--dim-star),
+        /* Random scatter */
+        50px 200px var(--dim-star), -60px 180px var(--dim-star), 30px -150px var(--dim-star),
+        -40px -170px var(--dim-star), 70px 230px var(--dim-star), -80px 210px var(--dim-star),
+        150px 50px var(--dim-star), -140px 70px var(--dim-star), 130px -90px var(--dim-star),
+        -120px -110px var(--dim-star), 240px 140px var(--dim-star), -230px 160px var(--dim-star);
+    z-index: -1;
+    opacity: 0.7;
+    animation: twinkle 8s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 0.4; }
+}
+
+/* Typography - star magnitude inspired */
+h1 {
+    font-family: var(--font-heading);
+    color: var(--constellation-gold);
+    font-weight: 700;
+    font-size: 2.5rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+h2 {
+    font-family: var(--font-heading);
+    color: var(--constellation-gold);
+    font-weight: 600;
+    font-size: 1.8rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    color: var(--constellation-gold);
+    font-weight: 400;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 1.5rem;
+    margin-bottom: 0.8rem;
+}
+
+a {
+    color: var(--constellation-gold);
+    text-decoration: none;
+    border-bottom: 1px solid var(--line-color);
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    color: var(--star-white);
+    border-bottom: 1px solid var(--constellation-gold);
+    text-shadow: 0 0 8px rgba(201, 169, 97, 0.5);
+}
+
+/* Layout */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+/* Site Header - constellation line navigation */
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--line-color);
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.site-title {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--constellation-gold);
+    border-bottom: none;
+    position: relative;
+}
+
+.site-title::before {
+    content: '✦';
+    position: absolute;
+    left: -30px;
+    font-size: 1.2rem;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.site-nav {
+    display: flex;
+    gap: 2rem;
+}
+
+.site-nav a {
+    font-family: var(--font-heading);
+    font-size: 0.9rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--star-white);
+    border-bottom: 1px solid transparent;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.site-nav a::after {
+    content: '·';
+    position: absolute;
+    right: -1.2rem;
+    color: var(--dim-star);
+}
+
+.site-nav a:last-child::after {
+    content: '';
+}
+
+.site-nav a:hover {
+    color: var(--constellation-gold);
+    border-bottom: 1px solid var(--constellation-gold);
+}
+
+/* Main content */
+main {
+    min-height: 60vh;
+}
+
+/* Polar navigation hero */
+.polar-hero {
+    text-align: center;
+    padding: 4rem 0;
+    position: relative;
+}
+
+.polar-hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.polar-hero .subtitle {
+    font-size: 1.2rem;
+    color: var(--dim-star);
+    font-style: italic;
+}
+
+/* Concentric guide cards */
+.guide-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin: 3rem 0;
+}
+
+.guide-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+    position: relative;
+    backdrop-filter: blur(10px);
+}
+
+.guide-card::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border: 1px dashed var(--line-color);
+    border-radius: 6px;
+    pointer-events: none;
+}
+
+.guide-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--constellation-gold);
+    box-shadow: 0 10px 30px rgba(201, 169, 97, 0.2);
+}
+
+.guide-card h3 {
+    margin-top: 0;
+}
+
+/* Guide listing */
+.guide-list {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+}
+
+.guide-item {
+    background: var(--card-bg);
+    border-left: 3px solid var(--constellation-gold);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    backdrop-filter: blur(10px);
+}
+
+.guide-item::before {
+    content: '★';
+    position: absolute;
+    left: -18px;
+    top: 1.5rem;
+    color: var(--constellation-gold);
+    font-size: 1.2rem;
+    background: var(--infinity-black);
+    padding: 0 5px;
+}
+
+.guide-title {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.3rem;
+}
+
+.guide-title a {
+    border-bottom: none;
+}
+
+.guide-date {
+    display: inline-block;
+    font-size: 0.85rem;
+    color: var(--dim-star);
+    font-family: var(--font-heading);
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+}
+
+/* Celestial metadata card */
+.celestial-card {
+    background: var(--card-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    backdrop-filter: blur(10px);
+    position: relative;
+}
+
+.celestial-card::before {
+    content: '⊹';
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--infinity-black);
+    padding: 0 10px;
+    color: var(--constellation-gold);
+    font-size: 1.5rem;
+}
+
+.metadata-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+}
+
+.metadata-label {
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--constellation-gold);
+}
+
+.metadata-value {
+    color: var(--star-white);
+    font-size: 0.95rem;
+}
+
+/* Post content */
+.post-content {
+    line-height: 1.8;
+    margin: 2rem 0;
+}
+
+.post-content p {
+    margin: 1rem 0;
+}
+
+.post-content ul, .post-content ol {
+    margin: 1rem 0;
+    padding-left: 2rem;
+}
+
+.post-content li {
+    margin: 0.5rem 0;
+}
+
+.post-content code {
+    background: var(--card-bg);
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    font-size: 0.9em;
+    border: 1px solid var(--line-color);
+}
+
+.post-content pre {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 1.5rem;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+}
+
+.post-content pre code {
+    background: none;
+    border: none;
+    padding: 0;
+}
+
+/* Tags */
+.post-tags {
+    margin: 2rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tag {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-family: var(--font-heading);
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.tag:hover {
+    background: var(--constellation-gold);
+    color: var(--infinity-black);
+    border-color: var(--constellation-gold);
+}
+
+/* Footer */
+.site-footer {
+    margin-top: 5rem;
+    padding: 2rem 0;
+    border-top: 1px solid var(--line-color);
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--dim-star);
+}
+
+.site-footer a {
+    color: var(--constellation-gold);
+    border-bottom: 1px solid var(--line-color);
+}
+
+/* Search page */
+.search-container {
+    margin: 3rem 0;
+}
+
+.search-input {
+    width: 100%;
+    padding: 1rem;
+    background: var(--card-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--star-white);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    border-color: var(--constellation-gold);
+    box-shadow: 0 0 20px rgba(201, 169, 97, 0.3);
+}
+
+.search-results {
+    margin-top: 2rem;
+}
+
+/* 404 page */
+.error-page {
+    text-align: center;
+    padding: 5rem 0;
+}
+
+.error-page h1 {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.error-page p {
+    font-size: 1.2rem;
+    color: var(--dim-star);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .site-header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .site-title::before {
+        left: -25px;
+    }
+
+    .site-nav {
+        gap: 1rem;
+    }
+
+    .polar-hero h1 {
+        font-size: 2rem;
+    }
+
+    .guide-grid {
+        grid-template-columns: 1fr;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Print styles */
+@media print {
+    body::before, body::after {
+        display: none;
+    }
+
+    .site-nav, .site-footer, .post-tags {
+        display: none;
+    }
+}

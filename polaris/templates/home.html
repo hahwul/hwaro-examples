@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title | default(value='Polaris') }}</title>
+    <meta name="description" content="{{ site.description | default(value='A celestial navigation guide centered on the North Star') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ base_url }}/css/style.css">
+</head>
+<body>
+    <div class="container">
+        {% include "header.html" %}
+
+        <main>
+            <div class="polar-hero">
+                <h1>{{ site.title | default(value='Polaris') }}</h1>
+                <p class="subtitle">{{ site.description | default(value='Navigate by the North Star - Your guide to celestial observation') }}</p>
+            </div>
+
+            {% if section.content %}
+            <div class="post-content">
+                {{ section.content | safe }}
+            </div>
+            {% endif %}
+
+            <h2>Featured Guides</h2>
+            <div class="guide-grid">
+            {% set guides_section = get_section(path="guides/_index.md") %}
+            {% for guide in guides_section.pages | slice(end=3) %}
+                <div class="guide-card">
+                    <h3><a href="{{ guide.permalink }}">{{ guide.title }}</a></h3>
+                    {% if guide.date %}
+                    <time class="guide-date">{{ guide.date | date(format="%B %d, %Y") }}</time>
+                    {% endif %}
+                    <p>{{ guide.description }}</p>
+                </div>
+            {% endfor %}
+            </div>
+
+            <h2>All Guides</h2>
+            <ul class="guide-list">
+            {% for guide in guides_section.pages %}
+                <li class="guide-item">
+                    <h3 class="guide-title"><a href="{{ guide.permalink }}">{{ guide.title }}</a></h3>
+                    {% if guide.date %}
+                    <time class="guide-date">{{ guide.date | date(format="%B %d, %Y") }}</time>
+                    {% endif %}
+                    {% if guide.description %}
+                    <p>{{ guide.description }}</p>
+                    {% endif %}
+                </li>
+            {% endfor %}
+            </ul>
+        </main>
+
+        {% include "footer.html" %}
+    </div>
+</body>
+</html>

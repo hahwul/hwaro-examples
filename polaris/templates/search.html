@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search | {{ site.title | default(value='Polaris') }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ base_url }}/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
+</head>
+<body>
+    <div class="container">
+        {% include "header.html" %}
+
+        <main>
+            <h1>Search the Celestial Catalog</h1>
+
+            <div class="search-container">
+                <input type="text" id="search-input" class="search-input" placeholder="Search for guides, constellations, or navigation techniques...">
+            </div>
+
+            <div id="search-results" class="search-results">
+                <ul class="guide-list" id="results-list"></ul>
+            </div>
+        </main>
+
+        {% include "footer.html" %}
+    </div>
+
+    <script>
+        const searchInput = document.getElementById('search-input');
+        const resultsList = document.getElementById('results-list');
+
+        let fuse;
+
+        // Load search index
+        fetch('{{ base_url }}/search.json')
+            .then(response => response.json())
+            .then(data => {
+                fuse = new Fuse(data, {
+                    keys: ['title', 'content'],
+                    threshold: 0.4,
+                    includeScore: true
+                });
+            });
+
+        // Search on input
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value;
+
+            if (!query || !fuse) {
+                resultsList.innerHTML = '';
+                return;
+            }
+
+            const results = fuse.search(query);
+
+            if (results.length === 0) {
+                resultsList.innerHTML = '<li class="guide-item"><p>No guides found in the celestial catalog.</p></li>';
+                return;
+            }
+
+            resultsList.innerHTML = results.map(result => {
+                const item = result.item;
+                return `
+                    <li class="guide-item">
+                        <h3 class="guide-title"><a href="${item.url}">${item.title}</a></h3>
+                        <p>${item.content.substring(0, 200)}...</p>
+                    </li>
+                `;
+            }).join('');
+        });
+    </script>
+</body>
+</html>
