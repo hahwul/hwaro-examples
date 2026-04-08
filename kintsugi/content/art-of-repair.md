@@ -14,3 +14,6 @@ The technique consists of joining fragments and giving them a new, more refined 
 > "The world breaks everyone and afterward many are strong at the broken places."
 
 This aesthetic values the marks of wear by the use of an object. This can be seen as a rationale for keeping an object around even after it has broken.
+
+
+*This fragment is part of the Kintsugi collection.*
