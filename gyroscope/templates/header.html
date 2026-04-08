@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{{ page.description | default(value=site.description) }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            mono: ['"Share Tech Mono"', '"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            gyro: {
+              silver: '#e0e0e0',
+              red: '#ff3b3b',
+              green: '#3bff3b',
+              blue: '#3b3bff',
+              black: '#050505',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #050505;
+      color: #e0e0e0;
+      font-family: 'Share Tech Mono', 'JetBrains Mono', monospace;
+    }
+
+    .gimbal-view {
+      perspective: 1000px;
+      width: 300px;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gimbal-scene {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.1s;
+    }
+
+    .ring {
+      position: absolute;
+      border: 3px solid;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform-style: preserve-3d;
+    }
+
+    .ring-outer {
+      width: 280px;
+      height: 280px;
+      border-color: #ff3b3b; /* Axis Red - X */
+    }
+
+    .ring-middle {
+      width: 220px;
+      height: 220px;
+      border-color: #3bff3b; /* Axis Green - Y */
+    }
+
+    .ring-inner {
+      width: 160px;
+      height: 160px;
+      border-color: #3b3bff; /* Axis Blue - Z */
+    }
+
+    .gyro-core {
+      width: 40px;
+      height: 40px;
+      background-color: #e0e0e0;
+      border-radius: 50%;
+      box-shadow: 0 0 20px rgba(224, 224, 224, 0.5);
+    }
+
+    .instrument-grid {
+      background-image:
+        linear-gradient(rgba(224, 224, 224, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(224, 224, 224, 0.05) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    .scanline {
+      width: 100%;
+      height: 2px;
+      background: rgba(224, 224, 224, 0.1);
+      position: absolute;
+      top: 0;
+      z-index: 10;
+      pointer-events: none;
+      animation: scan 4s linear infinite;
+    }
+
+    @keyframes scan {
+      0% { top: 0; }
+      100% { top: 100%; }
+    }
+
+    .gauge-container {
+      background: rgba(224, 224, 224, 0.05);
+      border: 1px solid rgba(224, 224, 224, 0.2);
+      padding: 1rem;
+    }
+
+    .gauge-label {
+      font-size: 0.75rem;
+      color: rgba(224, 224, 224, 0.6);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .gauge-value {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .btn-action {
+      border: 1px solid #e0e0e0;
+      padding: 0.5rem 1rem;
+      transition: all 0.2s;
+    }
+
+    .btn-action:hover {
+      background: #e0e0e0;
+      color: #050505;
+    }
+  </style>
+</head>
+<body class="min-h-screen instrument-grid relative">
+  <div class="scanline"></div>
+
+  <header class="p-6 border-b border-gyro-silver/20 flex justify-between items-end bg-gyro-black/80 sticky top-0 z-50 backdrop-blur-sm">
+    <div>
+      <div class="text-xs text-gyro-silver/40 tracking-[0.3em] uppercase mb-1">Motion Sensor Telemetry</div>
+      <h1 class="text-3xl font-bold tracking-tighter uppercase"><a href="{{ base_url }}/">{{ site.title }}</a></h1>
+    </div>
+    <div class="hidden md:flex gap-8 text-right">
+      <div>
+        <div class="text-[10px] text-gyro-silver/40 uppercase">Status</div>
+        <div class="text-gyro-green flex items-center gap-2">
+          <span class="w-2 h-2 bg-gyro-green rounded-full animate-pulse"></span>
+          STABILIZED
+        </div>
+      </div>
+      <div>
+        <div class="text-[10px] text-gyro-silver/40 uppercase">Sync</div>
+        <div class="font-bold">REAL-TIME</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto p-6">

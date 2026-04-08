@@ -1,0 +1,219 @@
+{% include "header.html" %}
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+  <!-- Left Panel: Orientation Data -->
+  <div class="space-y-6">
+    <div class="gauge-container">
+      <div class="gauge-label">Orientation Alpha (Z)</div>
+      <div class="flex justify-between items-end">
+        <div class="gauge-value text-gyro-blue" id="alpha-val">0.00°</div>
+        <div class="text-xs text-gyro-silver/40">YAW</div>
+      </div>
+      <div class="w-full h-1 bg-gyro-silver/10 mt-2 relative overflow-hidden">
+        <div id="alpha-bar" class="absolute top-0 left-1/2 h-full bg-gyro-blue transition-all duration-100" style="width: 0%;"></div>
+      </div>
+    </div>
+
+    <div class="gauge-container">
+      <div class="gauge-label">Orientation Beta (X)</div>
+      <div class="flex justify-between items-end">
+        <div class="gauge-value text-gyro-red" id="beta-val">0.00°</div>
+        <div class="text-xs text-gyro-silver/40">PITCH</div>
+      </div>
+      <div class="w-full h-1 bg-gyro-silver/10 mt-2 relative overflow-hidden">
+        <div id="beta-bar" class="absolute top-0 left-1/2 h-full bg-gyro-red transition-all duration-100" style="width: 0%;"></div>
+      </div>
+    </div>
+
+    <div class="gauge-container">
+      <div class="gauge-label">Orientation Gamma (Y)</div>
+      <div class="flex justify-between items-end">
+        <div class="gauge-value text-gyro-green" id="gamma-val">0.00°</div>
+        <div class="text-xs text-gyro-silver/40">ROLL</div>
+      </div>
+      <div class="w-full h-1 bg-gyro-silver/10 mt-2 relative overflow-hidden">
+        <div id="gamma-bar" class="absolute top-0 left-1/2 h-full bg-gyro-green transition-all duration-100" style="width: 0%;"></div>
+      </div>
+    </div>
+
+    <div class="p-4 border border-gyro-silver/10 bg-gyro-silver/5">
+      <div class="text-[10px] uppercase text-gyro-silver/40 mb-2">Controls</div>
+      <button id="start-btn" class="btn-action w-full text-sm font-bold">INITIALIZE SENSORS</button>
+      <p id="status-msg" class="text-[10px] mt-2 text-gyro-silver/30 text-center uppercase">Awaiting interaction...</p>
+    </div>
+  </div>
+
+  <!-- Center Panel: 3D Visualizer -->
+  <div class="lg:col-span-1 flex flex-col items-center justify-center py-12 lg:py-0 border-x border-gyro-silver/5">
+    <div class="gimbal-view">
+      <div class="gimbal-scene" id="gimbal-scene">
+        <div class="ring ring-outer" id="ring-x">
+          <div class="ring ring-middle" id="ring-y">
+            <div class="ring ring-inner" id="ring-z">
+              <div class="gyro-core"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-8 text-center">
+      <div class="text-xs font-bold tracking-widest uppercase text-gyro-silver/60">3-Axis Gimbal Stabilization</div>
+      <div class="text-[10px] text-gyro-silver/30 mt-1 uppercase">CSS 3D Render Engine v1.0</div>
+    </div>
+  </div>
+
+  <!-- Right Panel: Motion Data -->
+  <div class="space-y-6">
+    <div class="gauge-container">
+      <div class="gauge-label">Rotation Rate Alpha</div>
+      <div class="gauge-value" id="rot-alpha">0.00 <span class="text-xs font-normal">deg/s</span></div>
+    </div>
+    <div class="gauge-container">
+      <div class="gauge-label">Rotation Rate Beta</div>
+      <div class="gauge-value" id="rot-beta">0.00 <span class="text-xs font-normal">deg/s</span></div>
+    </div>
+    <div class="gauge-container">
+      <div class="gauge-label">Rotation Rate Gamma</div>
+      <div class="gauge-value" id="rot-gamma">0.00 <span class="text-xs font-normal">deg/s</span></div>
+    </div>
+
+    <div class="gauge-container mt-12">
+      <div class="gauge-label">Total Acceleration</div>
+      <div class="flex items-baseline gap-2">
+        <div class="gauge-value" id="acc-total">0.00</div>
+        <div class="text-xs">m/s²</div>
+      </div>
+      <div class="mt-2 grid grid-cols-3 gap-1">
+        <div class="h-1 bg-gyro-red/40" id="acc-x-bar"></div>
+        <div class="h-1 bg-gyro-green/40" id="acc-y-bar"></div>
+        <div class="h-1 bg-gyro-blue/40" id="acc-z-bar"></div>
+      </div>
+      <div class="flex justify-between text-[8px] text-gyro-silver/40 mt-1 uppercase">
+        <span>X-Axis</span>
+        <span>Y-Axis</span>
+        <span>Z-Axis</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const startBtn = document.getElementById('start-btn');
+  const statusMsg = document.getElementById('status-msg');
+  const gimbalScene = document.getElementById('gimbal-scene');
+  const ringX = document.getElementById('ring-x');
+  const ringY = document.getElementById('ring-y');
+  const ringZ = document.getElementById('ring-z');
+
+  const alphaVal = document.getElementById('alpha-val');
+  const betaVal = document.getElementById('beta-val');
+  const gammaVal = document.getElementById('gamma-val');
+  const alphaBar = document.getElementById('alpha-bar');
+  const betaBar = document.getElementById('beta-bar');
+  const gammaBar = document.getElementById('gamma-bar');
+
+  const rotAlpha = document.getElementById('rot-alpha');
+  const rotBeta = document.getElementById('rot-beta');
+  const rotGamma = document.getElementById('rot-gamma');
+
+  const accTotal = document.getElementById('acc-total');
+  const accXBar = document.getElementById('acc-x-bar');
+  const accYBar = document.getElementById('acc-y-bar');
+  const accZBar = document.getElementById('acc-z-bar');
+
+  function updateOrientation(event) {
+    const alpha = event.alpha || 0;
+    const beta = event.beta || 0;
+    const gamma = event.gamma || 0;
+
+    alphaVal.innerText = `${alpha.toFixed(2)}°`;
+    betaVal.innerText = `${beta.toFixed(2)}°`;
+    gammaVal.innerText = `${gamma.toFixed(2)}°`;
+
+    alphaBar.style.width = `${Math.abs(alpha / 180) * 50}%`;
+    alphaBar.style.left = alpha >= 0 ? '50%' : `${50 - (Math.abs(alpha / 180) * 50)}%`;
+
+    betaBar.style.width = `${Math.abs(beta / 180) * 50}%`;
+    betaBar.style.left = beta >= 0 ? '50%' : `${50 - (Math.abs(beta / 180) * 50)}%`;
+
+    gammaBar.style.width = `${Math.abs(gamma / 90) * 50}%`;
+    gammaBar.style.left = gamma >= 0 ? '50%' : `${50 - (Math.abs(gamma / 90) * 50)}%`;
+
+    // Apply rotation to 3D gimbal
+    // Ring X (Outer) -> Beta
+    // Ring Y (Middle) -> Gamma
+    // Ring Z (Inner) -> Alpha
+    ringX.style.transform = `rotateX(${beta}deg)`;
+    ringY.style.transform = `rotateY(${gamma}deg)`;
+    ringZ.style.transform = `rotateZ(${alpha}deg)`;
+  }
+
+  function updateMotion(event) {
+    if (event.rotationRate) {
+      rotAlpha.innerHTML = `${(event.rotationRate.alpha || 0).toFixed(2)} <span class="text-xs font-normal">deg/s</span>`;
+      rotBeta.innerHTML = `${(event.rotationRate.beta || 0).toFixed(2)} <span class="text-xs font-normal">deg/s</span>`;
+      rotGamma.innerHTML = `${(event.rotationRate.gamma || 0).toFixed(2)} <span class="text-xs font-normal">deg/s</span>`;
+    }
+
+    if (event.acceleration) {
+      const x = event.acceleration.x || 0;
+      const y = event.acceleration.y || 0;
+      const z = event.acceleration.z || 0;
+      const total = Math.sqrt(x*x + y*y + z*z);
+
+      accTotal.innerText = total.toFixed(2);
+
+      accXBar.style.opacity = Math.min(1, Math.abs(x) / 10 + 0.2);
+      accYBar.style.opacity = Math.min(1, Math.abs(y) / 10 + 0.2);
+      accZBar.style.opacity = Math.min(1, Math.abs(z) / 10 + 0.2);
+    }
+  }
+
+  async function initSensors() {
+    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+      try {
+        const permission = await DeviceOrientationEvent.requestPermission();
+        if (permission === 'granted') {
+          window.addEventListener('deviceorientation', updateOrientation);
+          window.addEventListener('devicemotion', updateMotion);
+          statusMsg.innerText = "SENSORS ONLINE";
+          startBtn.style.display = 'none';
+        } else {
+          statusMsg.innerText = "PERMISSION DENIED";
+        }
+      } catch (err) {
+        console.error(err);
+        statusMsg.innerText = "ERROR INITIALIZING";
+      }
+    } else {
+      window.addEventListener('deviceorientation', updateOrientation);
+      window.addEventListener('devicemotion', updateMotion);
+      statusMsg.innerText = "SENSORS ONLINE";
+      startBtn.style.display = 'none';
+    }
+  }
+
+  startBtn.addEventListener('click', initSensors);
+
+  // Demo effect if no sensors available
+  let demoActive = true;
+  setTimeout(() => {
+    if (demoActive && alphaVal.innerText === '0.00°') {
+      statusMsg.innerText = "DEMO MODE ACTIVE";
+      let t = 0;
+      setInterval(() => {
+        t += 0.05;
+        const mockEvent = {
+          alpha: (Math.sin(t * 0.5) * 180 + 180) % 360,
+          beta: Math.sin(t) * 45,
+          gamma: Math.cos(t * 0.7) * 45
+        };
+        updateOrientation(mockEvent);
+      }, 50);
+    }
+  }, 3000);
+
+  window.addEventListener('deviceorientation', () => { demoActive = false; });
+</script>
+
+{% include "footer.html" %}
