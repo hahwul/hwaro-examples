@@ -1,0 +1,234 @@
+{% include "header.html" %}
+
+<style>
+  .hero {
+    padding: 4rem 0;
+    text-align: center;
+    background: linear-gradient(135deg, var(--lowland-green) 0%, var(--highland-brown) 50%, var(--snow-white) 100%);
+    border-radius: 12px;
+    margin-bottom: 3rem;
+    position: relative;
+    overflow: hidden;
+    color: white;
+    box-shadow: 0 4px 16px rgba(45, 80, 22, 0.2);
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.15;
+    background-image: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 30px,
+      rgba(255,255,255,0.1) 30px,
+      rgba(255,255,255,0.1) 32px
+    );
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .hero h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  }
+
+  .hero p {
+    font-size: 1.25rem;
+    opacity: 0.95;
+    line-height: 1.6;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+  }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .post-card {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(45, 80, 22, 0.1);
+    transition: all 0.3s ease;
+    border: 2px solid var(--ridge-white);
+    position: relative;
+  }
+
+  .post-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--lowland-green) 0%, var(--elevation-brown) 100%);
+  }
+
+  .post-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(45, 80, 22, 0.2);
+    border-color: var(--contour-green);
+  }
+
+  .post-content {
+    padding: 1.5rem;
+    padding-left: 2rem;
+  }
+
+  .post-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: var(--contour-green);
+    font-weight: 600;
+  }
+
+  .post-card h2 a {
+    color: var(--contour-green);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .post-card h2 a:hover {
+    color: var(--elevation-brown);
+  }
+
+  .post-meta {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.875rem;
+    color: var(--text-light);
+    margin-bottom: 0.75rem;
+    font-family: 'JetBrains Mono', monospace;
+    flex-wrap: wrap;
+  }
+
+  .post-meta .elevation {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    background: var(--lowland-green);
+    color: white;
+    border-radius: 4px;
+    font-size: 0.75rem;
+  }
+
+  .post-summary {
+    color: var(--text-medium);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .post-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background: var(--ridge-white);
+    color: var(--contour-green);
+    border-radius: 12px;
+    font-size: 0.8rem;
+    text-decoration: none;
+    border: 1px solid var(--lowland-green);
+    transition: all 0.3s ease;
+  }
+
+  .tag:hover {
+    background: var(--contour-green);
+    color: white;
+  }
+
+  .section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--contour-green);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid var(--elevation-brown);
+    display: inline-block;
+  }
+
+  @media (max-width: 768px) {
+    .hero h1 {
+      font-size: 2rem;
+    }
+
+    .hero p {
+      font-size: 1rem;
+    }
+
+    .posts-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<div class="hero">
+  <div class="hero-content">
+    <h1>{{ site_title }}</h1>
+    <p>{{ site_description }}</p>
+  </div>
+</div>
+
+{% if site.pages %}
+<h2 class="section-title">Recent Trails</h2>
+
+<div class="posts-grid">
+  {% for post in site.pages | sort_by("date", reverse=true) %}
+  {% if post.section == "posts" %}
+  <article class="post-card">
+    <div class="post-content">
+      <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+
+      <div class="post-meta">
+        <span>📅 {{ post.date | date("%B %d, %Y") }}</span>
+        {% if post.extra.elevation %}
+        <span class="elevation">⛰️ {{ post.extra.elevation }}</span>
+        {% endif %}
+        {% if post.reading_time %}
+        <span>⏱️ {{ post.reading_time }} min read</span>
+        {% endif %}
+      </div>
+
+      {% if post.summary %}
+      <p class="post-summary">{{ post.summary | strip_html | truncate_words(30) }}</p>
+      {% endif %}
+
+      {% if post.tags %}
+      <div class="post-tags">
+        {% for tag in post.tags %}
+        <a href="{{ base_url }}/tags/{{ tag | slugify }}/" class="tag">{{ tag }}</a>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+  </article>
+  {% endif %}
+  {% endfor %}
+</div>
+{% else %}
+<div style="text-align: center; padding: 4rem 2rem; background: white; border-radius: 8px; margin-top: 2rem;">
+  <p style="font-size: 1.25rem; color: var(--text-medium);">No trails documented yet. Start your first adventure!</p>
+</div>
+{% endif %}
+
+{% include "footer.html" %}
