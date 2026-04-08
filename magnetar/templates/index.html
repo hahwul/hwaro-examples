@@ -1,53 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ site.title }}</title>
-    <link rel="stylesheet" href="{{ base_url }}/css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Space+Mono&display=swap" rel="stylesheet">
-</head>
-<body>
-    <div class="field-lines"></div>
-    <div class="container">
-        <header>
-            <h1 class="glow-text">{{ site.title }}</h1>
-            <p class="subtitle">{{ site.description }}</p>
-        </header>
+{% extends "base.html" %}
 
-        <main>
-            <section class="content-box">
-                <h2>Forces</h2>
-                <div class="prose">
-                    {{ section.content | safe }}
-                </div>
-            </section>
-
-            <section class="features">
-                <div class="feature-card">
-                    <div class="card-inner">
-                        <h3>Pulsar</h3>
-                        <p>Rapid rotation and intense magnetic flux.</p>
-                    </div>
-                </div>
-                <div class="feature-card">
-                    <div class="card-inner">
-                        <h3>Emission</h3>
-                        <p>X-rays and gamma rays radiated outward.</p>
-                    </div>
-                </div>
-                <div class="feature-card">
-                    <div class="card-inner">
-                        <h3>Resonance</h3>
-                        <p>The universe vibrates with magnetic energy.</p>
-                    </div>
-                </div>
-            </section>
-        </main>
-
-        <footer>
-            <p>&copy; {{ now() | date(format="%Y") }} {{ site.title }}. Designed with immense forces.</p>
-        </footer>
+{% block content %}
+<section class="content-box">
+    <h2>Forces</h2>
+    <div class="prose">
+        {{ content | safe }}
     </div>
-</body>
-</html>
+</section>
+
+<div class="post-list">
+    {% for post in section.pages %}
+    <article class="post-card">
+        <div class="card-inner">
+            {% if post.date %}
+            <div class="post-date">{{ post.date | date(format="%B %d, %Y") }}</div>
+            {% endif %}
+            <h3><a href="{{ post.permalink }}">{{ post.title }}</a></h3>
+            <p>{{ post.summary | default(value=post.content | striptags | truncate(length=120)) }}</p>
+        </div>
+    </article>
+    {% endfor %}
+</div>
+
+<section class="features">
+    <div class="feature-card">
+        <div class="card-inner">
+            <h3>Pulsar</h3>
+            <p>Rapid rotation and intense magnetic flux.</p>
+        </div>
+    </div>
+    <div class="feature-card">
+        <div class="card-inner">
+            <h3>Emission</h3>
+            <p>X-rays and gamma rays radiated outward.</p>
+        </div>
+    </div>
+    <div class="feature-card">
+        <div class="card-inner">
+            <h3>Resonance</h3>
+            <p>The universe vibrates with magnetic energy.</p>
+        </div>
+    </div>
+</section>
+{% endblock content %}

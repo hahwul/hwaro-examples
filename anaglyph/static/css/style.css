@@ -1,19 +1,12 @@
 :root {
-    --bg-color: #f0f0f0;
-    --text-color: #111111;
+    --bg-color: #050505;
+    --text-color: #ffffff;
     --cyan: #00ffff;
     --red: #ff0000;
     --offset-x: 4px;
     --offset-y: 2px;
-}
-
-@media (prefers-color-scheme: dark) {
-    :root {
-        --bg-color: #050505;
-        --text-color: #ffffff;
-        --cyan: #0ff;
-        --red: #f00;
-    }
+    --font-header: 'Syncopate', sans-serif;
+    --font-body: 'Inter', sans-serif;
 }
 
 * {
@@ -25,12 +18,9 @@
 body {
     background-color: var(--bg-color);
     color: var(--text-color);
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-body);
     line-height: 1.6;
     overflow-x: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     min-height: 100vh;
 }
 
@@ -38,216 +28,163 @@ body {
     max-width: 900px;
     margin: 0 auto;
     padding: 4rem 2rem;
-    position: relative;
-    z-index: 1;
 }
 
-.site-header {
-    margin-bottom: 4rem;
+header {
+    margin-bottom: 5rem;
     text-align: center;
 }
 
-h1, h2, h3 {
-    font-family: 'Syncopate', sans-serif;
+footer {
+    margin-top: 5rem;
+    padding: 4rem 0;
+    text-align: center;
+    border-top: 2px solid var(--text-color);
+    box-shadow: 0 -4px 0 var(--cyan), 0 -8px 0 var(--red);
+}
+
+h1, h2, h3, h4 {
+    font-family: var(--font-header);
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.15em;
+    margin-bottom: 1.5rem;
 }
 
 h1 {
-    font-size: 4rem;
+    font-size: clamp(2.5rem, 8vw, 5rem);
     font-weight: 700;
-    margin-bottom: 1rem;
+    line-height: 1.1;
 }
 
 h2 {
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
-    padding-bottom: 1rem;
-    border-bottom: 2px solid var(--text-color);
-    box-shadow: 0 4px 0 var(--cyan), 0 8px 0 var(--red);
+    font-size: 2rem;
+    margin-top: 3rem;
 }
 
-.subtitle {
-    font-size: 1.2rem;
-    max-width: 600px;
-    margin: 0 auto;
-    opacity: 0.9;
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border-bottom: 2px solid transparent;
 }
 
-.content-box {
-    background: transparent;
-    padding: 3rem;
-    border: 4px solid var(--text-color);
-    /* The core anaglyph box shadow */
+a:hover {
+    border-bottom-color: var(--text-color);
+}
+
+.nav-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+    font-family: var(--font-header);
+    font-size: 0.8rem;
+}
+
+/* Core Anaglyph Effects */
+
+.anaglyph-text {
+    position: relative;
+    display: inline-block;
+    text-shadow:
+        var(--offset-x) var(--offset-y) 0 rgba(0, 255, 255, 0.8),
+        calc(var(--offset-x) * -1) calc(var(--offset-y) * -1) 0 rgba(255, 0, 0, 0.8);
+}
+
+.anaglyph-text-sub {
+    text-shadow:
+        2px 1px 0 rgba(0, 255, 255, 0.6),
+        -2px -1px 0 rgba(255, 0, 0, 0.6);
+}
+
+.anaglyph-box {
+    border: 3px solid var(--text-color);
     box-shadow:
         var(--offset-x) var(--offset-y) 0 var(--cyan),
         calc(var(--offset-x) * -1) calc(var(--offset-y) * -1) 0 var(--red);
-    position: relative;
-    transition: transform 0.3s ease;
+    padding: 2rem;
+    background: transparent;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.content-box:hover {
-    transform: translate(-2px, -1px);
+.anaglyph-box:hover {
+    transform: translate(-1px, -1px);
     box-shadow:
         calc(var(--offset-x) * 1.5) calc(var(--offset-y) * 1.5) 0 var(--cyan),
         calc(var(--offset-x) * -1.5) calc(var(--offset-y) * -1.5) 0 var(--red);
 }
 
-.prose {
-    font-size: 1.1rem;
-    margin-bottom: 3rem;
+/* Post List */
+
+.post-item {
+    margin-bottom: 4rem;
 }
 
-.prose p {
+.post-item h2 a {
+    border: none;
+}
+
+.post-meta {
+    font-family: var(--font-header);
+    font-size: 0.75rem;
+    opacity: 0.7;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+/* Content Styles */
+
+.content {
+    font-size: 1.1rem;
+    max-width: 65ch;
+}
+
+.content p {
     margin-bottom: 1.5rem;
 }
 
-/* The core anaglyph text effect */
-.anaglyph-text {
-    position: relative;
-    display: inline-block;
-    color: var(--text-color);
+.content ul, .content ol {
+    margin-bottom: 1.5rem;
+    margin-left: 1.5rem;
+}
+
+.content li {
+    margin-bottom: 0.5rem;
+}
+
+/* Glitch Animation */
+
+@keyframes glitch {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+    100% { transform: translate(0); }
+}
+
+.glitch:hover {
+    animation: glitch 0.3s linear infinite;
     text-shadow:
-        var(--offset-x) var(--offset-y) 0 rgba(0, 255, 255, 0.7),
-        calc(var(--offset-x) * -1) calc(var(--offset-y) * -1) 0 rgba(255, 0, 0, 0.7);
+        calc(var(--offset-x) * 2) calc(var(--offset-y) * 2) 0 var(--cyan),
+        calc(var(--offset-x) * -2) calc(var(--offset-y) * -2) 0 var(--red);
 }
 
-/* Subtle effect for secondary text */
-.anaglyph-text-sub {
-    text-shadow:
-        2px 1px 0 rgba(0, 255, 255, 0.5),
-        -2px -1px 0 rgba(255, 0, 0, 0.5);
-}
+/* Visual decorations */
 
-/* Abstract visual elements */
-.visual-elements {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin-top: 4rem;
-    padding-top: 3rem;
-    border-top: 2px solid var(--text-color);
-    box-shadow: inset 0 4px 0 var(--cyan), inset 0 8px 0 var(--red);
-}
-
-.shape {
-    width: 60px;
-    height: 60px;
-    background-color: var(--text-color);
-    /* Anaglyph box shadow for shapes */
+.decoration-bar {
+    height: 10px;
+    background: var(--text-color);
+    margin: 4rem 0;
     box-shadow:
-        var(--offset-x) var(--offset-y) 0 var(--cyan),
-        calc(var(--offset-x) * -1) calc(var(--offset-y) * -1) 0 var(--red);
-    transition: all 0.3s ease;
+        0 4px 0 var(--cyan),
+        0 8px 0 var(--red);
 }
 
-.circle {
-    border-radius: 50%;
-}
-
-.triangle {
-    background-color: transparent;
-    width: 0;
-    height: 0;
-    border-left: 35px solid transparent;
-    border-right: 35px solid transparent;
-    border-bottom: 60px solid var(--text-color);
-    box-shadow: none;
-    /* Simulate anaglyph for triangle using filter since box-shadow on border trick doesn't work well */
-    filter: drop-shadow(var(--offset-x) var(--offset-y) 0 var(--cyan)) drop-shadow(calc(var(--offset-x) * -1) calc(var(--offset-y) * -1) 0 var(--red));
-}
-
-.shape:hover {
-    transform: scale(1.1) rotate(5deg);
-}
-
-.site-footer {
-    margin-top: 5rem;
-    text-align: center;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-}
-
-/* Glitch animation for title */
-@keyframes glitch-anim {
-    0% {
-        text-shadow:
-            var(--offset-x) var(--offset-y) 0 var(--cyan),
-            calc(var(--offset-x) * -1) calc(var(--offset-y) * -1) 0 var(--red);
-    }
-    20% {
-        text-shadow:
-            calc(var(--offset-x) * 1.5) calc(var(--offset-y) * -0.5) 0 var(--cyan),
-            calc(var(--offset-x) * -1.5) calc(var(--offset-y) * 0.5) 0 var(--red);
-    }
-    40% {
-        text-shadow:
-            calc(var(--offset-x) * -0.5) calc(var(--offset-y) * 1.5) 0 var(--cyan),
-            calc(var(--offset-x) * 0.5) calc(var(--offset-y) * -1.5) 0 var(--red);
-    }
-    60% {
-        text-shadow:
-            var(--offset-x) var(--offset-y) 0 var(--cyan),
-            calc(var(--offset-x) * -1) calc(var(--offset-y) * -1) 0 var(--red);
-    }
-    80% {
-        text-shadow:
-            calc(var(--offset-x) * 2) 0 0 var(--cyan),
-            calc(var(--offset-x) * -2) 0 0 var(--red);
-    }
-    100% {
-        text-shadow:
-            var(--offset-x) var(--offset-y) 0 var(--cyan),
-            calc(var(--offset-x) * -1) calc(var(--offset-y) * -1) 0 var(--red);
-    }
-}
-
-.glitch-effect:hover {
-    animation: glitch-anim 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
-}
-
-/* Add some dynamic displacement using pseudo-elements */
-.glitch-effect::before,
-.glitch-effect::after {
-    content: attr(data-text);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.8;
-}
-
-.glitch-effect::before {
-    color: var(--cyan);
-    z-index: -1;
-    transform: translate(var(--offset-x), var(--offset-y));
-    mix-blend-mode: multiply;
-}
-
-.glitch-effect::after {
-    color: var(--red);
-    z-index: -2;
-    transform: translate(calc(var(--offset-x) * -1), calc(var(--offset-y) * -1));
-    mix-blend-mode: multiply;
-}
-
-@media (prefers-color-scheme: dark) {
-    .glitch-effect::before,
-    .glitch-effect::after {
-        mix-blend-mode: screen;
-    }
-}
-
-@media (max-width: 768px) {
-    h1 {
-        font-size: 2.5rem;
-    }
-    h2 {
-        font-size: 1.8rem;
-    }
-    .content-box {
-        padding: 1.5rem;
-    }
+/* Shortcodes styling */
+.alert {
+    border: 2px solid var(--text-color);
+    padding: 1rem;
+    margin: 2rem 0;
+    box-shadow: 4px 4px 0 var(--cyan), -4px -4px 0 var(--red);
 }

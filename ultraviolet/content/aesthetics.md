@@ -2,6 +2,7 @@
 title = "The Aesthetics of Ultraviolet"
 date = 2024-03-15
 description = "Exploring the deep purples and high contrasts of our new design language."
+weight = 1
 +++
 
 The concept behind the Ultraviolet theme is to create a striking contrast that demands attention, yet maintains an underlying elegance. By relying entirely on solid colors, sharp typography, and deliberate spacing, we avoid the softness of gradients.
