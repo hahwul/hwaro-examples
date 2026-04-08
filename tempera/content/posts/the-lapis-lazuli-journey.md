@@ -24,12 +24,10 @@ In 1826, a French chemist named Jean-Baptiste Guimet produced a synthetic ultram
 
 ### A Simple Palette Test
 
-```
-Pigment          | Source       | Cost (15th c.)
------------------|--------------|---------------
-Ultramarine      | Lapis lazuli | 8 ducats/oz
-Vermilion        | Cinnabar     | 2 ducats/oz
-Lead white       | Lead + acid  | 0.5 ducats/oz
-```
+| Pigment     | Source       | Cost (15th c.) |
+|-------------|--------------|----------------|
+| Ultramarine | Lapis lazuli | 8 ducats/oz    |
+| Vermilion   | Cinnabar     | 2 ducats/oz    |
+| Lead white  | Lead + acid  | 0.5 ducats/oz  |
 
 The disparity speaks volumes about the hierarchy of color in the medieval workshop.
