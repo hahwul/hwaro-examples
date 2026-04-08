@@ -2,6 +2,7 @@
 title = "Embracing Solid Colors"
 date = 2024-03-10
 description = "Why we chose to abandon gradients and focus on pure, unadulterated color blocks."
+weight = 2
 +++
 
 In modern web design, gradients have become ubiquitous. They are an easy way to add depth and interest to an otherwise flat interface. However, for the Ultraviolet theme, we made a conscious decision to ban them entirely.
