@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title | default(site.title) }}</title>
+    <meta name="description" content="{{ page.description | default(site.description) }}">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sonar-green: #20ff40;
+            --sonar-green-dim: rgba(32, 255, 64, 0.2);
+            --sonar-green-glow: rgba(32, 255, 64, 0.6);
+            --deep-sea-black: #000805;
+            --ping-white: #e0fff0;
+            --submarine-gray: #1a2520;
+            --scanline-color: rgba(0, 40, 0, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--deep-sea-black);
+            color: var(--sonar-green);
+            font-family: 'Share Tech Mono', monospace;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* CRT Scanline Effect */
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(18, 16, 16, 0) 50%,
+                var(--scanline-color) 50%
+            );
+            background-size: 100% 4px;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        /* CRT Flicker */
+        body::after {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: rgba(32, 255, 64, 0.015);
+            opacity: 0;
+            z-index: 1001;
+            pointer-events: none;
+            animation: flicker 0.12s infinite;
+        }
+
+        @keyframes flicker {
+            0% { opacity: 0.02; }
+            50% { opacity: 0; }
+            100% { opacity: 0.02; }
+        }
+
+        /* Header Navigation */
+        header {
+            background: var(--submarine-gray);
+            border-bottom: 2px solid var(--sonar-green);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .site-branding {
+            font-weight: bold;
+            letter-spacing: 3px;
+            text-shadow: 0 0 8px var(--sonar-green-glow);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--sonar-green);
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            padding: 0.2rem 0.5rem;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            background: var(--sonar-green-dim);
+            border-color: var(--sonar-green);
+            box-shadow: 0 0 10px var(--sonar-green-glow);
+        }
+
+        /* Main Content Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            position: relative;
+            z-index: 5;
+            flex: 1;
+        }
+
+        @media (min-width: 992px) {
+            .container {
+                grid-template-columns: 400px 1fr;
+            }
+        }
+
+        /* Sonar Sidebar */
+        .sonar-sidebar {
+            background: rgba(0, 15, 5, 0.8);
+            border: 2px solid var(--sonar-green);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: inset 0 0 20px var(--sonar-green-dim);
+            position: sticky;
+            top: 2rem;
+            height: fit-content;
+        }
+
+        .sonar-display {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            border: 2px solid var(--sonar-green);
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--submarine-gray) 0%, var(--deep-sea-black) 100%);
+            overflow: hidden;
+            margin-bottom: 2rem;
+            box-shadow: 0 0 30px var(--sonar-green-dim);
+        }
+
+        /* Grid lines */
+        .sonar-grid {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image:
+                repeating-radial-gradient(circle, transparent 0, transparent 49px, var(--sonar-green-dim) 50px),
+                linear-gradient(to right, var(--sonar-green-dim) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--sonar-green-dim) 1px, transparent 1px);
+            background-position: center;
+            background-size: 100% 100%, 100% 100%, 100% 100%;
+        }
+
+        /* Rotating Sweep */
+        .sweep {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 50%;
+            height: 2px;
+            background: linear-gradient(to right, var(--sonar-green), transparent);
+            transform-origin: left center;
+            animation: sweep-rotate 4s linear infinite;
+            box-shadow: 0 0 15px var(--sonar-green);
+            z-index: 5;
+        }
+
+        .sweep-area {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: conic-gradient(from 0deg at 50% 50%, rgba(32, 255, 64, 0.4) 0deg, transparent 90deg);
+            transform-origin: center;
+            animation: sweep-rotate 4s linear infinite;
+            z-index: 4;
+        }
+
+        @keyframes sweep-rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Ping expansion animation */
+        .ping {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 2px solid var(--sonar-green);
+            border-radius: 50%;
+            width: 0;
+            height: 0;
+            opacity: 0;
+            animation: ping-expand 4s ease-out infinite;
+        }
+
+        .ping-delayed {
+            animation-delay: 2s;
+        }
+
+        @keyframes ping-expand {
+            0% { width: 0; height: 0; opacity: 1; }
+            100% { width: 100%; height: 100%; opacity: 0; }
+        }
+
+        .blip {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--ping-white);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--ping-white);
+            opacity: 0;
+        }
+
+        .blip-1 { top: 30%; left: 70%; animation: blip-fade 4s infinite 0.8s; }
+        .blip-2 { top: 60%; left: 40%; animation: blip-fade 4s infinite 2.2s; }
+        .blip-3 { top: 80%; left: 60%; animation: blip-fade 4s infinite 3.5s; }
+
+        @keyframes blip-fade {
+            0% { opacity: 0; transform: scale(0.5); }
+            5% { opacity: 1; transform: scale(1.2); }
+            20% { opacity: 0; transform: scale(1); }
+            100% { opacity: 0; }
+        }
+
+        .telemetry {
+            width: 100%;
+            font-size: 0.8rem;
+            border-top: 1px solid var(--sonar-green-dim);
+            padding-top: 1rem;
+        }
+
+        .telemetry-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.3rem;
+        }
+
+        .telemetry-label { opacity: 0.6; }
+
+        /* Main content area */
+        .main-content {
+            background: rgba(0, 10, 5, 0.6);
+            border: 2px solid var(--sonar-green);
+            padding: 3rem;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
+            position: relative;
+        }
+
+        .main-content::before {
+            content: "DECODING_DATA_STREAM...";
+            position: absolute;
+            top: -12px;
+            left: 30px;
+            background: var(--deep-sea-black);
+            padding: 0 10px;
+            font-size: 0.7rem;
+            color: var(--sonar-green);
+            letter-spacing: 2px;
+        }
+
+        h1, h2, h3 {
+            color: var(--ping-white);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 10px var(--sonar-green-glow);
+        }
+
+        h1 { font-size: 2.5rem; border-bottom: 1px solid var(--sonar-green); padding-bottom: 0.5rem; }
+        h2 { font-size: 1.8rem; margin-top: 2rem; }
+
+        p { margin-bottom: 1.5rem; }
+
+        a {
+            color: var(--ping-white);
+            text-decoration: none;
+            border-bottom: 1px dashed var(--sonar-green);
+            transition: background 0.2s;
+        }
+
+        a:hover {
+            background: var(--sonar-green-dim);
+            color: var(--sonar-green);
+        }
+
+        ul { margin-bottom: 1.5rem; list-style: none; }
+        li { margin-bottom: 0.8rem; position: relative; padding-left: 1.5rem; }
+        li::before {
+            content: ">>";
+            position: absolute;
+            left: 0;
+            color: var(--sonar-green);
+        }
+
+        /* Discovery Hub List */
+        .discovery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .discovery-card {
+            border: 1px solid var(--sonar-green-dim);
+            padding: 1.5rem;
+            background: rgba(26, 37, 32, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .discovery-card:hover {
+            border-color: var(--sonar-green);
+            box-shadow: 0 0 15px var(--sonar-green-dim);
+            transform: translateY(-5px);
+        }
+
+        .discovery-card::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 2px;
+            background: var(--sonar-green);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .discovery-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        .discovery-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .discovery-card p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            font-size: 0.7rem;
+            background: var(--sonar-green-dim);
+            padding: 0.1rem 0.4rem;
+            margin-right: 0.3rem;
+            border: 1px solid var(--sonar-green);
+        }
+
+        footer {
+            padding: 2rem;
+            text-align: center;
+            font-size: 0.8rem;
+            opacity: 0.6;
+            border-top: 1px solid var(--sonar-green-dim);
+            background: var(--submarine-gray);
+        }
+
+        /* Utils */
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2rem;
+            background: var(--sonar-green);
+            vertical-align: middle;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <header>
+        <div class="site-branding">
+            &lt;SONAR_INIT&gt; {{ site.title }}
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{{ base_url }}/">HUB</a></li>
+                <li><a href="{{ base_url }}/discovery/">DISCOVERY</a></li>
+                <li><a href="{{ base_url }}/about/">SPEC</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <aside class="sonar-sidebar">
+            <div class="sonar-display">
+                <div class="sonar-grid"></div>
+                <div class="ping"></div>
+                <div class="ping ping-delayed"></div>
+                <div class="sweep"></div>
+                <div class="sweep-area"></div>
+                <div class="blip blip-1"></div>
+                <div class="blip blip-2"></div>
+                <div class="blip blip-3"></div>
+            </div>
+            <div class="telemetry">
+                <div class="telemetry-row">
+                    <span class="telemetry-label">STATUS:</span>
+                    <span>ACTIVE_SCAN</span>
+                </div>
+                <div class="telemetry-row">
+                    <span class="telemetry-label">DEPTH:</span>
+                    <span>4,500m</span>
+                </div>
+                <div class="telemetry-row">
+                    <span class="telemetry-label">FREQ:</span>
+                    <span>22.5 kHz</span>
+                </div>
+                <div class="telemetry-row">
+                    <span class="telemetry-label">SECTOR:</span>
+                    <span>7-B / NORTH</span>
+                </div>
+                <div class="telemetry-row" style="margin-top: 1rem; color: var(--ping-white);">
+                    <span>SYSTEM_READY</span>
+                    <span class="cursor"></span>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <footer>
+        &copy; 2024 {{ site.title }} - SUBMARINE_OPERATIONS_HUB
+    </footer>
+
+    <script>
+        // Potential for interactive blips or data updates
+        console.log("Sonar system engaged.");
+    </script>
+</body>
+</html>
