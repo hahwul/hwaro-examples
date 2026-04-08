@@ -31,7 +31,7 @@ The palette is drawn from real Tokyo signage — the hot pink of entertainment d
 ```css
 :root {
   --neon-pink: #ff2d78;
-  --electric-cyan: #00f0ff;
+  --neon-cyan: #00f0ff;
   --neon-gold: #ffdd00;
 }
 ```
