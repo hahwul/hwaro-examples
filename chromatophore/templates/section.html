@@ -1,0 +1,47 @@
+{% include "header.html" %}
+
+<div class="content-box">
+  <h2 style="margin-top: 0;">{{ page.title | default(value=site.title) }}</h2>
+  {% if page.content %}
+    <div style="margin-bottom: 40px;">
+      {{ page.content }}
+    </div>
+  {% endif %}
+</div>
+
+{% if paginator %}
+  {% set pages = paginator.pages %}
+{% else %}
+  {% set pages = section.pages %}
+{% endif %}
+
+{% if pages %}
+  <ul class="post-list">
+    {% for post in pages %}
+      <li class="post-item">
+        <h3><a href="{{ post.permalink }}">{{ post.title }}</a></h3>
+        {% if post.date %}
+          <div class="post-meta">{{ post.date | date(format="%B %d, %Y") }}</div>
+        {% endif %}
+        {% if post.description %}
+          <p>{{ post.description }}</p>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+
+  {% if paginator %}
+    <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+      {% if paginator.previous %}
+        <a href="{{ paginator.previous }}" style="font-weight: bold; text-transform: uppercase;">&larr; Previous</a>
+      {% else %}
+        <span></span>
+      {% endif %}
+      {% if paginator.next %}
+        <a href="{{ paginator.next }}" style="font-weight: bold; text-transform: uppercase;">Next &rarr;</a>
+      {% endif %}
+    </div>
+  {% endif %}
+{% endif %}
+
+{% include "footer.html" %}
