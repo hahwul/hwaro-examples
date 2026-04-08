@@ -16,6 +16,15 @@ brew install hahwul/tap/hwaro
 yay -S hwaro
 ```
 
+### Nix
+This repository includes a Nix flake that provides a dev shell with Hwaro pre-installed. If you have Nix with flakes enabled:
+
+```bash
+nix develop
+```
+
+This supports `x86_64-linux`, `aarch64-linux`, and `aarch64-darwin`.
+
 ### Manual / Other Platforms
 You can download pre-built binaries (DEB, RPM, APK, or raw binaries) directly from the [GitHub Releases page](https://github.com/hahwul/hwaro/releases).
 
