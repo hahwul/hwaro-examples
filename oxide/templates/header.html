@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="{{ page_language }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description | e }}">
+  <title>{% if page.title is present %}{{ page.title | e }} - {% endif %}{{ site.title | e }}</title>
+  {{ og_all_tags }}
+  {{ hreflang_tags }}
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Roboto+Condensed:wght@300;400;700&display=swap');
+
+    :root {
+      --rust-orange: #c7522a;
+      --patina-green: #5d7361;
+      --corrosion-brown: #6b4423;
+      --iron-grey: #3a3a3a;
+      --dark-bg: #1a1a1a;
+      --light-rust: #e86a47;
+      --oxidized-copper: #4a6d5a;
+      --steel: #7c8a94;
+      --worn-metal: #949494;
+      --text-light: #c4bdb8;
+      --text-dim: #8a8078;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      font-family: 'Roboto Condensed', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      margin: 0;
+      color: var(--text-light);
+      background-color: var(--dark-bg);
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Corroded metal texture background with SVG filter */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -50%; left: -50%; right: -50%; bottom: -50%;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(199, 82, 42, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(93, 115, 97, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(107, 68, 35, 0.08) 0%, transparent 60%);
+      filter: url(#rust-turbulence);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.7;
+      animation: oxidation-spread 30s ease-in-out infinite alternate;
+    }
+
+    @keyframes oxidation-spread {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(-2%, -3%) scale(1.05); }
+    }
+
+    /* Noise grain overlay for gritty texture */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2.5' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      opacity: 0.03;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* SVG filters for rust texture */
+    svg.texture-defs {
+      position: absolute;
+      width: 0;
+      height: 0;
+    }
+
+    /* Layout */
+    .site-wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2.5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 3rem 0 2rem;
+      margin-bottom: 3rem;
+      border-bottom: 2px solid var(--iron-grey);
+      position: relative;
+    }
+
+    /* Rust accent line - animated oxidation */
+    .site-header::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 45%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--rust-orange) 0%, transparent 100%);
+      opacity: 0.8;
+      transition: width 0.6s ease;
+    }
+
+    .site-header:hover::after {
+      width: 65%;
+    }
+
+    .site-logo {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 2.2rem;
+      color: var(--rust-orange);
+      text-decoration: none;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    .site-logo:hover {
+      color: var(--light-rust);
+      text-shadow: 3px 3px 8px rgba(199, 82, 42, 0.5);
+    }
+
+    .site-header nav { display: flex; gap: 2.5rem; }
+
+    .site-header nav a {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 500;
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      transition: color 0.3s, text-shadow 0.3s;
+      position: relative;
+    }
+
+    .site-header nav a::before {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--rust-orange);
+      transition: width 0.3s;
+    }
+
+    .site-header nav a:hover {
+      color: var(--rust-orange);
+      text-shadow: 0 0 8px rgba(199, 82, 42, 0.6);
+    }
+
+    .site-header nav a:hover::before {
+      width: 100%;
+    }
+
+    .site-main { min-height: calc(100vh - 250px); }
+
+    .site-footer {
+      margin-top: 5rem;
+      padding: 2.5rem 0;
+      border-top: 2px solid var(--iron-grey);
+      color: var(--text-dim);
+      font-size: 0.75rem;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-weight: 400;
+      position: relative;
+    }
+
+    .site-footer::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      right: 0;
+      width: 35%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, var(--patina-green) 100%);
+      opacity: 0.6;
+    }
+
+    /* Typography */
+    h1, h2, h3 {
+      font-family: 'Rajdhani', sans-serif;
+      line-height: 1.2;
+      margin-top: 1.8em;
+      margin-bottom: 0.6em;
+      font-weight: 600;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-top: 0;
+      color: var(--rust-orange);
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.4);
+      position: relative;
+      display: inline-block;
+    }
+
+    h1::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--rust-orange) 0%, var(--patina-green) 100%);
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      color: var(--light-rust);
+      position: relative;
+      padding-left: 1.2rem;
+    }
+
+    h2::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.4em;
+      width: 4px;
+      height: 1.2em;
+      background: linear-gradient(180deg, var(--rust-orange) 0%, var(--corrosion-brown) 100%);
+    }
+
+    h3 {
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: var(--worn-metal);
+    }
+
+    p {
+      margin: 1em 0;
+      font-size: 1rem;
+      line-height: 1.85;
+      font-weight: 300;
+    }
+
+    a {
+      color: var(--rust-orange);
+      text-decoration: none;
+      transition: color 0.2s, text-shadow 0.2s;
+    }
+
+    a:hover {
+      color: var(--light-rust);
+      text-shadow: 0 0 8px rgba(199, 82, 42, 0.4);
+    }
+
+    code {
+      background: rgba(58, 58, 58, 0.6);
+      padding: 0.2rem 0.5rem;
+      border-radius: 2px;
+      font-size: 0.88em;
+      font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+      color: var(--steel);
+      border: 1px solid rgba(124, 138, 148, 0.2);
+    }
+
+    pre {
+      background: rgba(26, 26, 26, 0.8);
+      padding: 1.5rem;
+      border-radius: 2px;
+      overflow-x: auto;
+      border: 1px solid var(--iron-grey);
+      border-left: 4px solid var(--rust-orange);
+    }
+
+    pre code {
+      background: none;
+      padding: 0;
+      border: none;
+    }
+
+    /* Gallery post list */
+    ul#posts, ul.section-list {
+      list-style: none;
+      padding: 0;
+      margin: 2.5rem 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    ul#posts li, ul.section-list li {
+      padding: 0;
+      background: linear-gradient(135deg, rgba(58, 58, 58, 0.4) 0%, rgba(26, 26, 26, 0.6) 100%);
+      border: 1px solid var(--iron-grey);
+      border-left: 3px solid var(--rust-orange);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Hover = time-accelerated oxidation */
+    ul#posts li:hover, ul.section-list li:hover {
+      border-left-width: 6px;
+      border-left-color: var(--light-rust);
+      box-shadow: 0 8px 24px rgba(199, 82, 42, 0.25), inset 0 0 30px rgba(93, 115, 97, 0.15);
+      transform: translateY(-4px);
+    }
+
+    ul#posts li::before, ul.section-list li::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(circle at 30% 40%, rgba(199, 82, 42, 0.0) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.6s;
+    }
+
+    ul#posts li:hover::before, ul.section-list li:hover::before {
+      opacity: 1;
+      animation: rust-spread 2s ease-in-out infinite;
+    }
+
+    @keyframes rust-spread {
+      0%, 100% { background: radial-gradient(circle at 30% 40%, rgba(199, 82, 42, 0.15) 0%, transparent 50%); }
+      50% { background: radial-gradient(circle at 35% 45%, rgba(93, 115, 97, 0.12) 0%, transparent 55%); }
+    }
+
+    ul#posts li a, ul.section-list li a {
+      display: block;
+      padding: 1.5rem 1.8rem;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 600;
+      font-size: 1.3rem;
+      color: var(--text-light);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    ul#posts li a:hover, ul.section-list li a:hover {
+      color: var(--rust-orange);
+    }
+
+    /* Article */
+    article {
+      padding: 1.5rem 0;
+    }
+
+    article img {
+      max-width: 100%;
+      border: 6px solid var(--iron-grey);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(199, 82, 42, 0.1);
+      margin: 2rem 0;
+      transition: all 0.5s;
+    }
+
+    article img:hover {
+      border-color: var(--rust-orange);
+      box-shadow: 0 8px 40px rgba(199, 82, 42, 0.4), inset 0 0 30px rgba(93, 115, 97, 0.15);
+    }
+
+    /* Blockquote - industrial callout */
+    blockquote {
+      margin: 2.5rem 0;
+      padding: 1.8rem 2.2rem;
+      border-left: 5px solid var(--patina-green);
+      background: linear-gradient(135deg, rgba(93, 115, 97, 0.15) 0%, rgba(58, 58, 58, 0.2) 100%);
+      font-family: 'Rajdhani', sans-serif;
+      font-style: normal;
+      font-size: 1.15rem;
+      color: var(--text-light);
+      font-weight: 400;
+      position: relative;
+    }
+
+    blockquote::before {
+      content: '"';
+      position: absolute;
+      top: -10px;
+      left: 15px;
+      font-size: 4rem;
+      color: var(--patina-green);
+      opacity: 0.3;
+      font-family: Georgia, serif;
+    }
+
+    /* Taxonomy */
+    .taxonomy-desc {
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      margin-bottom: 2rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      font-weight: 400;
+    }
+
+    /* Pagination */
+    nav.pagination { margin: 3rem 0; }
+
+    nav.pagination .pagination-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+    }
+
+    nav.pagination a {
+      display: inline-block;
+      padding: 0.5rem 0.9rem;
+      border: 1px solid var(--iron-grey);
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      font-weight: 500;
+      transition: all 0.3s;
+      background: rgba(58, 58, 58, 0.3);
+    }
+
+    nav.pagination a:hover {
+      color: var(--rust-orange);
+      border-color: var(--rust-orange);
+      background: rgba(199, 82, 42, 0.15);
+    }
+
+    .pagination-current span {
+      display: inline-block;
+      padding: 0.5rem 0.9rem;
+      border: 1px solid var(--rust-orange);
+      color: var(--rust-orange);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+      background: rgba(199, 82, 42, 0.2);
+    }
+
+    .pagination-disabled span {
+      display: inline-block;
+      padding: 0.5rem 0.9rem;
+      border: 1px solid var(--iron-grey);
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      opacity: 0.3;
+    }
+
+    /* Divider - corroded metal break */
+    hr {
+      border: none;
+      text-align: center;
+      margin: 3rem 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, var(--iron-grey) 20%, var(--rust-orange) 50%, var(--iron-grey) 80%, transparent 100%);
+      position: relative;
+    }
+
+    hr::after {
+      content: '';
+      position: absolute;
+      top: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 10px;
+      height: 10px;
+      background: var(--rust-orange);
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(199, 82, 42, 0.8);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .site-header {
+        flex-direction: column;
+        gap: 1.5rem;
+        align-items: flex-start;
+      }
+      .site-wrapper { padding: 0 1.5rem; }
+      .site-logo { font-size: 1.8rem; }
+      h1 { font-size: 2.2rem; }
+      ul#posts, ul.section-list {
+        grid-template-columns: 1fr;
+      }
+      .site-header::after { width: 100%; }
+      .site-header nav { gap: 1.5rem; }
+    }
+  </style>
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+</head>
+<body data-section="{{ page.section }}">
+  <!-- SVG filters for rust texture effects -->
+  <svg class="texture-defs">
+    <defs>
+      <filter id="rust-turbulence">
+        <feTurbulence type="fractalNoise" baseFrequency="0.02 0.015" numOctaves="3" seed="5" />
+        <feColorMatrix type="saturate" values="0.3" />
+        <feComponentTransfer>
+          <feFuncR type="linear" slope="1.5" />
+          <feFuncG type="linear" slope="0.8" />
+          <feFuncB type="linear" slope="0.5" />
+        </feComponentTransfer>
+        <feBlend mode="overlay" in="SourceGraphic" />
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="site-wrapper">
+    <header class="site-header">
+      <a href="{{ base_url }}/" class="site-logo">{{ site.title }}</a>
+      <nav>
+        <a href="{{ base_url }}/">Home</a>
+        <a href="{{ base_url }}/posts/">Gallery</a>
+        <a href="{{ base_url }}/about/">About</a>
+        <a href="{{ base_url }}/tags/">Tags</a>
+      </nav>
+    </header>
