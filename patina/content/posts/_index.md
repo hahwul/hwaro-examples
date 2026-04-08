@@ -1,6 +1,6 @@
 +++
 title = "Writing"
 sort_by = "date"
-reverse = false
+reverse = true
 template = "section"
 +++
