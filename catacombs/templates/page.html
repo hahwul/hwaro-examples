@@ -1,0 +1,52 @@
+{% include "header.html" %}
+
+<article>
+  <header style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255, 153, 51, 0.1);">
+    <h1 style="margin-top: 0; margin-bottom: 0.5rem;">{{ page.title }}</h1>
+    {% if page.date %}
+    <div class="post-meta">
+      <time datetime="{{ page.date }}">{{ page.date | date("%B %d, %Y") }}</time>
+      {% if page.reading_time %}
+      <span style="color: rgba(232, 220, 200, 0.3);"> · </span>
+      <span class="reading-info">{{ page.reading_time }} min read</span>
+      {% endif %}
+      {% if page.word_count %}
+      <span style="color: rgba(232, 220, 200, 0.3);"> · </span>
+      <span class="reading-info">{{ page.word_count }} words</span>
+      {% endif %}
+    </div>
+    {% endif %}
+    {% if page.tags %}
+    <div style="margin-top: 1rem;">
+      {% for tag in page.tags %}
+      <a href="{{ base_url }}/tags/{{ tag | slugify }}/" class="tag-pill">{{ tag }}</a>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </header>
+
+  <div class="prose-content">
+    {{ content | safe }}
+  </div>
+
+  {% if page.lower or page.higher %}
+  <nav style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255, 153, 51, 0.1); display: flex; justify-content: space-between; gap: 1rem;">
+    {% if page.lower %}
+    <div style="flex: 1;">
+      <p style="font-size: 0.75rem; color: rgba(232, 220, 200, 0.4); font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.25rem;">Previous</p>
+      <a href="{{ page.lower.url }}" style="font-size: 0.95rem; color: var(--torch-amber); text-decoration: none;">{{ page.lower.title }}</a>
+    </div>
+    {% else %}
+    <div style="flex: 1;"></div>
+    {% endif %}
+    {% if page.higher %}
+    <div style="flex: 1; text-align: right;">
+      <p style="font-size: 0.75rem; color: rgba(232, 220, 200, 0.4); font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.25rem;">Next</p>
+      <a href="{{ page.higher.url }}" style="font-size: 0.95rem; color: var(--torch-amber); text-decoration: none;">{{ page.higher.title }}</a>
+    </div>
+    {% endif %}
+  </nav>
+  {% endif %}
+</article>
+
+{% include "footer.html" %}
