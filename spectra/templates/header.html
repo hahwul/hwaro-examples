@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ site_title }}{% if page_title %} | {{ page_title }}{% endif %}</title>
+    <meta name="description" content="{{ page.description | default(value=site_description) }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&display=swap">
+    <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --text-color: #e0e0e0;
+            --accent-color: #00ff41; /* Lab green */
+            --grid-color: rgba(0, 255, 65, 0.05);
+            --spectrum-gradient: linear-gradient(to right,
+                #440044 0%,   /* 380nm */
+                #0000ff 15%,  /* 440nm */
+                #00ffff 30%,  /* 490nm */
+                #00ff00 45%,  /* 510nm */
+                #ffff00 65%,  /* 580nm */
+                #ff0000 85%,  /* 645nm */
+                #aa0000 100%  /* 700nm */
+            );
+            --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-mono);
+            line-height: 1.6;
+            background-image:
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 20px 20px;
+            overflow-x: hidden;
+        }
+
+        header {
+            padding: 2rem;
+            border-bottom: 2px solid var(--accent-color);
+            position: relative;
+        }
+
+        .spectrum-bar {
+            height: 8px;
+            width: 100%;
+            background: var(--spectrum-gradient);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+
+        .lab-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 1rem;
+        }
+
+        .lab-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .lab-info {
+            font-size: 0.8rem;
+            color: #666;
+            text-align: right;
+        }
+
+        nav {
+            margin-top: 1rem;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            margin-right: 1.5rem;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        a {
+            color: var(--accent-color);
+        }
+
+        h1, h2, h3 {
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+            text-transform: uppercase;
+        }
+
+        .spectral-divider {
+            height: 4px;
+            background: var(--spectrum-gradient);
+            margin: 2rem 0;
+            border-radius: 2px;
+        }
+
+        /* Prism Divider */
+        .prism-divider {
+            height: 60px;
+            background:
+                linear-gradient(135deg, transparent 45%, var(--accent-color) 45%, var(--accent-color) 55%, transparent 55%),
+                linear-gradient(45deg, transparent 45%, var(--accent-color) 45%, var(--accent-color) 55%, transparent 55%);
+            background-size: 20px 20px;
+            opacity: 0.3;
+            margin: 3rem 0;
+        }
+
+        .spectrogram-box {
+            border: 1px solid var(--accent-color);
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.5);
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .spectrogram-box::before {
+            content: "SCANNING...";
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: var(--bg-color);
+            padding: 0 10px;
+            font-size: 0.7rem;
+            color: var(--accent-color);
+        }
+
+        .spectrogram-data {
+            height: 150px;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 10px,
+                rgba(0, 255, 65, 0.1) 10px,
+                rgba(0, 255, 65, 0.1) 11px
+            );
+            border-bottom: 1px solid var(--accent-color);
+            display: flex;
+            align-items: flex-end;
+            gap: 2px;
+            padding: 0 10px;
+        }
+
+        .spectral-peak {
+            background: var(--accent-color);
+            width: 4px;
+            min-height: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="lab-header">
+                <div class="lab-title">{{ site_title }}</div>
+                <div class="lab-info">
+                    UNIT: L-380-700<br>
+                    RANGE: 380nm - 700nm
+                </div>
+            </div>
+            <nav>
+                <a href="{{ base_url }}/">HOME</a>
+                <a href="{{ base_url }}/analysis/">ANALYSIS</a>
+                <a href="{{ base_url }}/about/">LAB INFO</a>
+            </nav>
+        </div>
+        <div class="spectrum-bar"></div>
+    </header>
+    <main class="container">
