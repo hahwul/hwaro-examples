@@ -1,0 +1,33 @@
+{% include "header.html" %}
+  <main class="site-main">
+    <section class="taxonomy-term-page fade-in">
+      <header class="section-header">
+        <div class="time-signature">
+          <span class="measure-line"></span>
+          <span class="measure-count">4/4</span>
+          <span class="measure-line"></span>
+        </div>
+        <h1 class="section-title">#{{ taxonomy_term }}</h1>
+      </header>
+
+      <div class="posts-list">
+        {% for post in taxonomy_pages | sort_by(attribute="date", reverse=true) %}
+        <article class="post-item fade-in" style="animation-delay: {{ loop.index0 | times: 0.1 }}s">
+          <div class="post-meta">
+            <time class="post-date">{{ post.date | date(format="%Y-%m-%d") }}</time>
+            {% if post.extra.bpm %}
+            <span class="post-bpm">{{ post.extra.bpm }} BPM</span>
+            {% endif %}
+          </div>
+          <h2 class="post-title">
+            <a href="{{ post.url }}">{{ post.title }}</a>
+          </h2>
+          {% if post.summary %}
+          <p class="post-summary">{{ post.summary | strip_html | truncate_words(n=40) }}</p>
+          {% endif %}
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+{% include "footer.html" %}
