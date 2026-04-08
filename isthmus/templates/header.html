@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="{{ page_language }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description | e }}">
+  <title>{% if page.title is present %}{{ page.title | e }} - {% endif %}{{ site.title | e }}</title>
+  {{ og_all_tags }}
+  {{ hreflang_tags }}
+    <style>
+    :root {
+      --bridge-turquoise: #4ecdc4;
+      --land-green: #2d5a27;
+      --sea-blue: #0077be;
+      --path-sand: #e3d18a;
+      --text-dark: #1e293b;
+      --text-light: #f8fafc;
+      --bg-sea: #f0f9ff;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      color: var(--text-dark);
+      background: var(--bg-sea);
+      overflow-x: hidden;
+    }
+
+    /* Layout */
+    .site-wrapper {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(8px);
+      border-bottom: 2px solid var(--bridge-turquoise);
+      z-index: 100;
+    }
+
+    .site-logo {
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: var(--sea-blue);
+      text-decoration: none;
+      letter-spacing: -1px;
+    }
+
+    .site-header nav { display: flex; gap: 1.5rem; }
+    .site-header nav a {
+      color: var(--text-dark);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: color 0.3s;
+    }
+    .site-header nav a:hover { color: var(--bridge-turquoise); }
+
+    .site-main {
+      flex: 1;
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-top: 60px; /* Header height */
+      scrollbar-width: none; /* Firefox */
+    }
+    .site-main::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+
+    .continent-section {
+      flex: 0 0 100vw;
+      height: 100%;
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 4rem;
+      position: relative;
+    }
+
+    /* Coastline Borders */
+    .continent-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 150px;
+      background: var(--color-land, var(--land-green));
+      z-index: -1;
+    }
+
+    .west-side::before {
+      left: 0;
+      clip-path: ellipse(100% 50% at 0% 50%);
+      background: var(--land-green);
+    }
+
+    .east-side::before {
+      right: 0;
+      clip-path: ellipse(100% 50% at 100% 50%);
+      background: var(--land-green);
+    }
+
+    /* Bridge/Path */
+    .isthmus-path {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 40px;
+      background: var(--path-sand);
+      transform: translateY(-50%);
+      z-index: -2;
+      opacity: 0.8;
+      mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    }
+
+    .bridge-navigation {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      margin-top: 2rem;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      border: 2px solid var(--path-sand);
+    }
+
+    .bridge-link {
+      padding: 0.8rem 1.5rem;
+      background: var(--bridge-turquoise);
+      color: white;
+      text-decoration: none;
+      border-radius: 25px;
+      font-weight: bold;
+      transition: transform 0.2s, background 0.3s;
+    }
+    .bridge-link:hover {
+      transform: scale(1.05);
+      background: var(--sea-blue);
+    }
+
+    /* Typography */
+    h1 {
+      font-size: 4rem;
+      margin: 0;
+      color: var(--sea-blue);
+      text-shadow: 2px 2px 0 var(--path-sand);
+    }
+    .content-box {
+      max-width: 600px;
+      background: white;
+      padding: 3rem;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      border-left: 10px solid var(--land-green);
+    }
+
+    .site-footer {
+      position: fixed;
+      bottom: 1rem;
+      right: 2rem;
+      color: var(--sea-blue);
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+  </style>
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+</head>
+<body data-section="{{ page.section }}">
+  <div class="site-wrapper">
+    <header class="site-header">
+      <a href="{{ base_url }}/" class="site-logo">{{ site.title }}</a>
+            <nav>
+        <a href="{{ base_url }}/">Home</a>
+        <a href="{{ base_url }}/about/">About</a>
+      </nav>
+    </header>
