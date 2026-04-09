@@ -1,6 +1,6 @@
 +++
 title = "Terrazzo Collection"
-template = "index.html"
+template = "index"
 sort_by = "weight"
 +++
 
