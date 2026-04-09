@@ -1,12 +1,12 @@
 +++
 title = "The Art of the Woodblock"
 description = "Carved lines, bold impressions, and lasting impact."
-transparent = true
+template = "section"
 +++
 
 ## A Timeless Craft
 
-Woodblock printing represents the striking interplay between positive and negative space. The raw texture of the grain, the sharp gouge marks, and the deep, rich ink transfers all contribute to a uniquely bold and elegant visual language.
+Woodblock printing represents the striking interplay between positive and negative space. The raw texture of the grain, the sharp gouge marks, and the deep, rich ink transfers all contribute to a uniquely bold and visual language.
 
 ### Core Principles
 

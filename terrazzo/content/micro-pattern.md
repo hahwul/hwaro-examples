@@ -1,5 +1,6 @@
 +++
 title = "Micro Pattern"
+template = "page"
 date = 2023-10-05
 weight = 2
 description = "A delicate micro-terrazzo approach with finely crushed aggregates."

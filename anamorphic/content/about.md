@@ -2,7 +2,6 @@
 title = "About Anamorphic"
 description = "Discover the concept behind the anamorphic theme."
 weight = 1
-template = "page.html"
 +++
 
 This theme embraces the anamorphic aesthetic: creating art and design that relies on specific perspectives, optical illusions, and severe geometric distortion to form a cohesive image or layout.
