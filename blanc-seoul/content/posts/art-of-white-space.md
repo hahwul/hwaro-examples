@@ -1,11 +1,10 @@
----
-title: "Yeobaek: The Art of White Space"
-date: 2025-04-10
-description: "In Korean aesthetics, empty space is not absence but presence. How the philosophy of yeobaek shapes thoughtful design."
-template: "page"
-[taxonomies]
++++
+title = "Yeobaek: The Art of White Space"
+date = "2025-04-10"
+description = "In Korean aesthetics, empty space is not absence but presence. How the philosophy of yeobaek shapes thoughtful design."
 tags = ["design", "philosophy", "minimal"]
----
+template = "page"
++++
 
 ## The Space Between
 

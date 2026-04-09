@@ -6,40 +6,38 @@
         <h1 class="article-title">{{ page.title }}</h1>
         {% if page.date %}
         <div class="article-meta">
-          <time>{{ page.date | date: "%Y년 %m월 %d일" }}</time>
+          <time>{{ page.date | date("%B %d, %Y") }}</time>
           {% if page.reading_time %}
           <span class="meta-sep">&middot;</span>
-          <span>{{ page.reading_time }}분 읽기</span>
+          <span>{{ page.reading_time }} min read</span>
           {% endif %}
         </div>
         {% endif %}
-        {% if page.taxonomies.tags %}
+        {% if page.tags %}
         <div class="article-tags">
-          {% for tag in page.taxonomies.tags %}
-          <a href="{{ tag | taxonomy_url: 'tags' }}" class="article-tag">{{ tag }}</a>
+          {% for tag in page.tags %}
+          <a href="{{ base_url }}/tags/{{ tag | slugify }}/" class="article-tag">{{ tag }}</a>
           {% endfor %}
         </div>
         {% endif %}
       </header>
       <div class="article-content">
-        {{ page.content | safe }}
+        {{ content | safe }}
       </div>
-      {% if page.earlier or page.later %}
       <nav class="article-nav">
-        {% if page.earlier %}
-        <a href="{{ page.earlier.permalink }}" class="nav-prev">
-          <span class="nav-label">이전 글</span>
-          <span class="nav-title">{{ page.earlier.title }}</span>
+        {% if page.lower %}
+        <a href="{{ base_url }}{{ page.lower.url }}" class="nav-prev">
+          <span class="nav-label">Previous</span>
+          <span class="nav-title">{{ page.lower.title }}</span>
         </a>
         {% endif %}
-        {% if page.later %}
-        <a href="{{ page.later.permalink }}" class="nav-next">
-          <span class="nav-label">다음 글</span>
-          <span class="nav-title">{{ page.later.title }}</span>
+        {% if page.higher %}
+        <a href="{{ base_url }}{{ page.higher.url }}" class="nav-next">
+          <span class="nav-label">Next</span>
+          <span class="nav-title">{{ page.higher.title }}</span>
         </a>
         {% endif %}
       </nav>
-      {% endif %}
     </div>
   </article>
 </main>

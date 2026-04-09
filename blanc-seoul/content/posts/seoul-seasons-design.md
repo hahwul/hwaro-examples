@@ -1,11 +1,10 @@
----
-title: "Seoul's Four Seasons as a Design Palette"
-date: 2025-04-03
-description: "Each season in Seoul brings a distinct visual language. How nature's palette can inspire digital design systems."
-template: "page"
-[taxonomies]
++++
+title = "Seoul's Four Seasons as a Design Palette"
+date = "2025-04-03"
+description = "Each season in Seoul brings a distinct visual language. How nature's palette can inspire digital design systems."
 tags = ["seoul", "inspiration", "color"]
----
+template = "page"
++++
 
 ## A City That Changes Its Colors
 

@@ -1,11 +1,10 @@
----
-title: "Welcome to Blanc Seoul"
-date: 2025-05-01
-description: "Introducing Blanc Seoul — a light blog theme that finds beauty in clarity, space, and the quiet elegance of modern Korean design."
-template: "page"
-[taxonomies]
++++
+title = "Welcome to Blanc Seoul"
+date = "2025-05-01"
+description = "Introducing Blanc Seoul — a light blog theme that finds beauty in clarity, space, and the quiet elegance of modern Korean design."
 tags = ["design", "seoul", "introduction"]
----
+template = "page"
++++
 
 ## A Theme Born from Light
 

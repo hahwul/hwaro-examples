@@ -1,6 +1,7 @@
----
-title: "About"
----
++++
+title = "About"
+template = "page"
++++
 
 ## Blanc Seoul
 

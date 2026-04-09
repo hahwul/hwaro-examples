@@ -1,11 +1,10 @@
----
-title: "The Quiet Beauty of Korean Typography"
-date: 2025-04-18
-description: "Hangul is both a writing system and a design system. Its geometric logic and visual harmony make it one of the world's most elegant scripts."
-template: "page"
-[taxonomies]
++++
+title = "The Quiet Beauty of Korean Typography"
+date = "2025-04-18"
+description = "Hangul is both a writing system and a design system. Its geometric logic and visual harmony make it one of the world's most elegant scripts."
 tags = ["typography", "korean", "design"]
----
+template = "page"
++++
 
 ## A Script Designed, Not Evolved
 
@@ -19,10 +18,10 @@ Each Hangul syllable block occupies a square cell, composed of two to four indiv
 
 ```
   Initial consonant
-  ┌─────────┐
-  │  ㅎ  ㅏ │  → 하 (ha)
-  │    ㄴ   │  → 한 (han)
-  └─────────┘
+  +----------+
+  |  ㅎ  ㅏ  |  -> 하 (ha)
+  |    ㄴ    |  -> 한 (han)
+  +----------+
 ```
 
 This block structure creates a natural grid rhythm in running text. Unlike Latin scripts, where letter widths vary dramatically (compare "m" and "i"), Hangul maintains a consistent visual density.

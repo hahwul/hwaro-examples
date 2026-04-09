@@ -1,4 +1,4 @@
----
-title: "Blanc Seoul"
-template: "home"
----
++++
+title = "Blanc Seoul"
+template = "home"
++++

@@ -8,10 +8,10 @@
         <span class="hero-line"></span>
         <span class="hero-en">Blanc Seoul</span>
       </h1>
-      <p class="hero-desc">{{ site.description }}</p>
+      <p class="hero-desc">{{ site_description }}</p>
       <div class="hero-actions">
-        <a href="{{ 'posts/' | url }}" class="btn btn-primary">글 읽기</a>
-        <a href="{{ 'about/' | url }}" class="btn btn-secondary">소개</a>
+        <a href="{{ base_url }}/posts/" class="btn btn-primary">Read Posts</a>
+        <a href="{{ base_url }}/about/" class="btn btn-secondary">About</a>
       </div>
     </div>
   </section>
@@ -19,26 +19,30 @@
   <section class="latest-posts">
     <div class="section-inner">
       <div class="section-header">
-        <h2 class="section-title">최근 글</h2>
+        <h2 class="section-title"><span class="title-kr">최근 글</span> Latest Posts</h2>
         <span class="section-line"></span>
       </div>
       <div class="post-grid">
         {% for post in site.pages %}
-          {% if post.section == "posts" and post.path != "posts/_index.md" %}
-          <article class="post-card">
-            <a href="{{ post.permalink }}">
-              <time class="post-date">{{ post.date | date: "%Y.%m.%d" }}</time>
-              <h3 class="post-title">{{ post.title }}</h3>
-              <p class="post-desc">{{ post.description }}</p>
-              <div class="post-tags">
-                {% for tag in post.taxonomies.tags %}
-                <span class="post-tag">{{ tag }}</span>
-                {% endfor %}
-              </div>
-              <span class="post-read">읽기 &rarr;</span>
-            </a>
-          </article>
-          {% endif %}
+        {% if post.date %}
+        <article class="post-card">
+          <a href="{{ base_url }}{{ post.url }}">
+            <time class="post-date">{{ post.date | date("%Y.%m.%d") }}</time>
+            <h3 class="post-title">{{ post.title }}</h3>
+            {% if post.description %}
+            <p class="post-desc">{{ post.description }}</p>
+            {% endif %}
+            {% if post.tags %}
+            <div class="post-tags">
+              {% for tag in post.tags %}
+              <span class="post-tag">{{ tag }}</span>
+              {% endfor %}
+            </div>
+            {% endif %}
+            <span class="post-read">Read more &rarr;</span>
+          </a>
+        </article>
+        {% endif %}
         {% endfor %}
       </div>
     </div>

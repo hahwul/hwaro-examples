@@ -1,11 +1,10 @@
----
-title: "The Architectural Duality of Seoul"
-date: 2025-04-25
-description: "How Seoul's architecture holds centuries of tradition and decades of innovation in a single skyline."
-template: "page"
-[taxonomies]
++++
+title = "The Architectural Duality of Seoul"
+date = "2025-04-25"
+description = "How Seoul's architecture holds centuries of tradition and decades of innovation in a single skyline."
 tags = ["architecture", "seoul", "modern"]
----
+template = "page"
++++
 
 ## Two Timelines, One City
 
