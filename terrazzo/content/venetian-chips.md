@@ -1,5 +1,6 @@
 +++
 title = "Venetian Chips"
+template = "page"
 date = 2023-10-01
 weight = 1
 description = "Classic Venetian terrazzo featuring larger marble chips."
