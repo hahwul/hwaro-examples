@@ -1,0 +1,46 @@
+{% include "header.html" %}
+
+  <main class="wrapper">
+    <header class="section-header">
+      <h1 class="section-title">{{ section.title }}</h1>
+      {% if section.description %}
+      <p class="section-description">{{ section.description }}</p>
+      {% endif %}
+    </header>
+
+    {% set items = section.pages %}
+    {% if paginator %}
+      {% set items = paginator.pages %}
+    {% endif %}
+
+    {% for post in items %}
+    <article class="post-card">
+      <div class="post-card-meta">
+        {% if post.date %}<time>{{ post.date | date(format="%B %d, %Y") }}</time>{% endif %}
+        {% if post.taxonomies and post.taxonomies.categories %}
+        <span class="post-card-category">{{ post.taxonomies.categories | first }}</span>
+        {% endif %}
+      </div>
+      <h2 class="post-card-title"><a href="{{ base_url }}{{ post.url }}">{{ post.title }}</a></h2>
+      {% if post.description %}
+      <p class="post-card-excerpt">{{ post.description }}</p>
+      {% endif %}
+    </article>
+    {% endfor %}
+
+    {% if paginator %}
+    {% if paginator.total_pages > 1 %}
+    <div class="pagination">
+      {% if paginator.previous %}
+      <a href="{{ paginator.previous }}" class="pagination-link">&larr; Newer</a>
+      {% endif %}
+      <span class="pagination-current">{{ paginator.current_index }} / {{ paginator.total_pages }}</span>
+      {% if paginator.next %}
+      <a href="{{ paginator.next }}" class="pagination-link">Older &rarr;</a>
+      {% endif %}
+    </div>
+    {% endif %}
+    {% endif %}
+  </main>
+
+{% include "footer.html" %}

@@ -1,6 +1,5 @@
 +++
 title = "About Tempera"
-date = 2023-10-25
 description = "Understanding the philosophy behind this theme."
 +++
 
