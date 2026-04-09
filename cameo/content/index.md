@@ -1,20 +1,21 @@
 +++
 title = "Cameo"
-description = "A bold, creative aesthetic focused on high contrast and elegant simplicity."
-template = "page"
+tags = ["cameo", "portfolio", "bold", "monochrome"]
 +++
 
-This is the homepage of **Cameo**. It is built without gradients and without emojis, relying entirely on strong typography and solid colors for visual impact.
+# Bold Simplicity
 
-## The Vision
+Welcome to Cameo. This theme emphasizes stark contrasts, bold typography, and a resolute rejection of unnecessary embellishments. There are no gradients here. No emojis. Just pure, unadulterated content delivered with brutalist elegance.
 
-We believe in the power of direct, unambiguous design.
+## Core Principles
 
-By removing visual noise like complex shading or soft edges, we create a stark and striking aesthetic that demands attention.
+- **Monochrome palette.** Black text on a white background.
+- **Bold typography.** Uppercase headers and large fonts command attention.
+- **High contrast.** Clear boundaries with solid borders.
 
-*   **Bold Typography**
-*   **High Contrast**
-*   **Solid Blocks**
-*   **Clear Intent**
+## Explore
 
-[Discover More](#)
+Dive into the content structure built on top of the powerful [Hwaro](https://github.com/hahwul/hwaro) static site generator.
+
+- [View Portfolio](/tags/)
+- [Read Manifesto](/categories/)
