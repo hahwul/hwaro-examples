@@ -1,0 +1,46 @@
+{% include "header.html" %}
+
+  <main class="wrapper">
+    <header class="section-header gilded-frame">
+      <div class="frame-inner">
+        <h1 class="section-title">{{ section.title }}</h1>
+        {% if section.description %}<p class="section-description">{{ section.description }}</p>{% endif %}
+      </div>
+    </header>
+
+    {% set items = section.pages %}
+    {% if paginator %}
+      {% set items = paginator.pages %}
+    {% endif %}
+
+    {% for post in items %}
+    <a href="{{ base_url }}{{ post.url }}" class="post-card">
+      <div class="post-card-frame">
+        <div class="post-card-inner">
+          <div class="post-meta">
+            {% if post.date %}<time>{{ post.date | date(format="%B %d, %Y") }}</time>{% endif %}
+          </div>
+          <h2 class="post-card-title">{{ post.title }}</h2>
+          {% if post.description %}<p class="post-card-summary">{{ post.description }}</p>{% endif %}
+          <span class="read-more">Read More →</span>
+        </div>
+      </div>
+    </a>
+    {% endfor %}
+
+    {% if paginator %}
+    {% if paginator.total_pages > 1 %}
+    <div class="pagination">
+      {% if paginator.previous %}
+      <a href="{{ paginator.previous }}" class="page-link">← Prev</a>
+      {% endif %}
+      <span class="page-current">{{ paginator.current_index }} / {{ paginator.total_pages }}</span>
+      {% if paginator.next %}
+      <a href="{{ paginator.next }}" class="page-link">Next →</a>
+      {% endif %}
+    </div>
+    {% endif %}
+    {% endif %}
+  </main>
+
+{% include "footer.html" %}
