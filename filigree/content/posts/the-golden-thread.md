@@ -4,6 +4,7 @@ date = "2024-05-15"
 description = "Tracing the lineage of intricate design through the ages."
 categories = ["Design History"]
 tags = ["gold", "history", "aesthetics"]
+template = "post"
 +++
 
 In the annals of art history, the golden thread is a recurring motif. It represents connection, continuity, and the intricate, delicate work required to weave something beautiful from raw materials.
