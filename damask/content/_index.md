@@ -1,0 +1,4 @@
++++
+template = "home"
+transparent = true
++++
