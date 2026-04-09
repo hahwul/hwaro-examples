@@ -4,6 +4,7 @@ date = "2024-06-20"
 description = "Exploring the cool, understated elegance of silver in design."
 categories = ["Color Theory"]
 tags = ["silver", "design", "minimalism"]
+template = "post"
 +++
 
 While gold demands attention, silver quietly reflects it. In the realm of intricate design, silver provides a cool counterpoint, a necessary breath of air amidst the visual density.
