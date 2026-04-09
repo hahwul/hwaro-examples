@@ -1,0 +1,137 @@
+    <footer class="site-footer">
+      <p>&copy; {{ now | date(format="%Y") }} {{ site.title }}. Built with <a href="https://github.com/hahwul/hwaro" target="_blank" rel="noopener">Hwaro</a>.</p>
+    </footer>
+  </div>
+  {{ auto_includes_js }}
+
+  <script>
+    // Elegant Fireworks Animation
+    const canvas = document.getElementById('fireworksCanvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    class Particle {
+      constructor(x, y, color) {
+        this.x = x;
+        this.y = y;
+        this.color = color;
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 2 + 1;
+        this.vx = Math.cos(angle) * speed;
+        this.vy = Math.sin(angle) * speed;
+        this.life = 1.0;
+        this.decay = Math.random() * 0.015 + 0.015;
+        this.size = Math.random() * 2 + 1;
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.vy += 0.02; // gravity
+        this.life -= this.decay;
+        this.size = Math.max(0, this.size - 0.02);
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${this.color}, ${this.life})`;
+        ctx.fill();
+
+        // Glow effect
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = `rgba(${this.color}, ${this.life * 0.5})`;
+      }
+    }
+
+    class Firework {
+      constructor() {
+        this.x = Math.random() * width;
+        this.y = height;
+        this.targetY = Math.random() * (height * 0.5) + height * 0.1;
+        this.speed = Math.random() * 3 + 3;
+
+        // Elegant color palette (gold, bronze, silver, soft white)
+        const palettes = [
+          '203, 166, 119', // Gold/Bronze
+          '224, 224, 224', // Silver
+          '255, 255, 255', // White
+          '184, 151, 104'  // Darker Gold
+        ];
+        this.color = palettes[Math.floor(Math.random() * palettes.length)];
+
+        this.particles = [];
+        this.exploded = false;
+      }
+      update() {
+        if (!this.exploded) {
+          this.y -= this.speed;
+          if (this.y <= this.targetY) {
+            this.explode();
+          }
+        } else {
+          for (let i = this.particles.length - 1; i >= 0; i--) {
+            let p = this.particles[i];
+            p.update();
+            if (p.life <= 0) {
+              this.particles.splice(i, 1);
+            }
+          }
+        }
+      }
+      explode() {
+        this.exploded = true;
+        const count = Math.floor(Math.random() * 40) + 40;
+        for (let i = 0; i < count; i++) {
+          this.particles.push(new Particle(this.x, this.y, this.color));
+        }
+      }
+      draw() {
+        if (!this.exploded) {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${this.color}, 0.8)`;
+          ctx.fill();
+          ctx.shadowBlur = 5;
+          ctx.shadowColor = `rgba(${this.color}, 0.5)`;
+        } else {
+          for (let p of this.particles) {
+            p.draw();
+          }
+        }
+        ctx.shadowBlur = 0; // reset
+      }
+    }
+
+    let fireworks = [];
+
+    function animate() {
+      // Clear with slight fade for trail effect
+      ctx.fillStyle = 'rgba(10, 10, 12, 0.2)';
+      ctx.fillRect(0, 0, width, height);
+
+      if (Math.random() < 0.03) {
+        fireworks.push(new Firework());
+      }
+
+      for (let i = fireworks.length - 1; i >= 0; i--) {
+        let f = fireworks[i];
+        f.update();
+        f.draw();
+        if (f.exploded && f.particles.length === 0) {
+          fireworks.splice(i, 1);
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+</body>
+</html>
