@@ -4,6 +4,7 @@ date = "2024-07-05"
 description = "How to frame content with the care of a master jeweler."
 categories = ["Web Design"]
 tags = ["css", "borders", "layout"]
+template = "post"
 +++
 
 A frame is more than just a boundary; it is the context in which the art is viewed. In a design scheme inspired by filigree, the border is a primary structural and decorative element.
