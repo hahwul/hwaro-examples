@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page and page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+    <meta name="description" content="{% if page and page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --container-bg: #ffffff;
+            --border-color: #eaeaea;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Elegant Box-Shadow Confetti Effect */
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 8px;
+            height: 16px;
+            background-color: transparent;
+            /* Using solid colors with subtle box-shadow for a glowing, elegant effect */
+            animation: fall linear infinite;
+        }
+
+        /* Generate different confetti pieces using box-shadows to avoid gradients */
+        .confetti:nth-child(1) { left: 10%; box-shadow: inset 0 0 0 8px rgba(231, 76, 60, 0.8), 0 0 10px rgba(231, 76, 60, 0.3); animation-duration: 4s; animation-delay: 0s; }
+        .confetti:nth-child(2) { left: 20%; width: 12px; height: 12px; border-radius: 50%; box-shadow: inset 0 0 0 6px rgba(52, 152, 219, 0.8), 0 0 10px rgba(52, 152, 219, 0.3); animation-duration: 5s; animation-delay: 1s; }
+        .confetti:nth-child(3) { left: 30%; box-shadow: inset 0 0 0 8px rgba(241, 196, 15, 0.8), 0 0 10px rgba(241, 196, 15, 0.3); animation-duration: 3.5s; animation-delay: 2s; }
+        .confetti:nth-child(4) { left: 40%; width: 10px; height: 10px; border-radius: 50%; box-shadow: inset 0 0 0 5px rgba(46, 204, 113, 0.8), 0 0 10px rgba(46, 204, 113, 0.3); animation-duration: 4.5s; animation-delay: 0.5s; }
+        .confetti:nth-child(5) { left: 50%; box-shadow: inset 0 0 0 8px rgba(155, 89, 182, 0.8), 0 0 10px rgba(155, 89, 182, 0.3); animation-duration: 6s; animation-delay: 3s; }
+        .confetti:nth-child(6) { left: 60%; width: 14px; height: 14px; box-shadow: inset 0 0 0 7px rgba(230, 126, 34, 0.8), 0 0 10px rgba(230, 126, 34, 0.3); animation-duration: 4.2s; animation-delay: 1.5s; }
+        .confetti:nth-child(7) { left: 70%; box-shadow: inset 0 0 0 8px rgba(26, 188, 156, 0.8), 0 0 10px rgba(26, 188, 156, 0.3); animation-duration: 5.5s; animation-delay: 2.5s; }
+        .confetti:nth-child(8) { left: 80%; width: 8px; height: 8px; border-radius: 50%; box-shadow: inset 0 0 0 4px rgba(231, 76, 60, 0.8), 0 0 10px rgba(231, 76, 60, 0.3); animation-duration: 3.8s; animation-delay: 0.8s; }
+        .confetti:nth-child(9) { left: 90%; box-shadow: inset 0 0 0 8px rgba(52, 152, 219, 0.8), 0 0 10px rgba(52, 152, 219, 0.3); animation-duration: 4.8s; animation-delay: 3.5s; }
+
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Layout */
+        header {
+            background-color: var(--container-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.5rem 0;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            z-index: 10;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: var(--text-color);
+        }
+
+        header h1 a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        nav {
+            margin-top: 1rem;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            margin: 0 1rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+
+        nav a:hover {
+            opacity: 1;
+            color: var(--accent-color);
+        }
+
+        main {
+            flex: 1;
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+            width: 100%;
+            box-sizing: border-box;
+            background-color: var(--container-bg);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
+            padding: 3rem;
+            z-index: 5;
+        }
+
+        h1, h2, h3 {
+            font-weight: 400;
+            color: #111;
+        }
+
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            font-size: 0.85rem;
+            color: #888;
+            border-top: 1px solid var(--border-color);
+            background-color: var(--container-bg);
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <div class="confetti-container">
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+    </div>
+
+    <header>
+        <h1><a href="{{ site.base_url }}/">{{ site.title }}</a></h1>
+        <nav>
+            <a href="{{ site.base_url }}/">Home</a>
+            <a href="{{ site.base_url }}/about/">About</a>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; {{ current_year }} {{ site.title }}. Elegant Celebration Theme.</p>
+    </footer>
+</body>
+</html>
