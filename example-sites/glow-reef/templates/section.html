@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<header>
+  <h1>{{ section.title | default(page.title | default("Posts")) }}</h1>
+  {% if section.description %}
+    <p class="description">{{ section.description }}</p>
+  {% endif %}
+</header>
+
+<div class="post-list">
+  {% set posts = section.pages | default(site.pages) %}
+  {% for post in posts %}
+    {% if post.template != "index" and not post.draft %}
+      <div class="post-card">
+        <h2 class="post-title"><a href="{{ post.url }}">{{ post.title }}</a></h2>
+        {% if post.date %}
+          <div class="post-meta">{{ post.date | date("%B %d, %Y") }}</div>
+        {% endif %}
+        {% if post.summary %}
+          <div class="post-summary">{{ post.summary | safe }}</div>
+        {% endif %}
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>
+{% endblock %}
