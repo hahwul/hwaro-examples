@@ -1,0 +1,48 @@
+{% include "header.html" %}
+  <main>
+    <section class="hero">
+      <div class="hero-orb"></div>
+      <p class="hero-eyebrow">Welcome to</p>
+      <h1 class="hero-title">{{ site.title }}</h1>
+      <p class="hero-desc">{{ site.description }}</p>
+      <div class="hero-divider">
+        <span class="divider-gem"></span>
+      </div>
+    </section>
+
+    <section class="recent-posts">
+      <h2 class="section-heading">Recent Posts</h2>
+
+      <div class="post-list">
+        {% for post in site.pages %}
+        {% if post.section == "posts" %}
+        <article class="post-card glass-panel">
+          <div class="post-card-meta">
+            {% if post.date %}<time>{{ post.date | date("%B %d, %Y") }}</time>{% endif %}
+            {% if post.reading_time %}<span class="separator">&middot;</span><span>{{ post.reading_time }} min read</span>{% endif %}
+          </div>
+
+          <h3 class="post-card-title">
+            <a href="{{ base_url }}{{ post.url }}">{{ post.title }}</a>
+          </h3>
+
+          {% if post.summary %}
+          <p class="post-card-summary">{{ post.summary | strip_html | truncate_words(25) }}</p>
+          {% endif %}
+
+          {% if post.tags %}
+          <div class="post-card-tags">
+            {% for tag in post.tags %}
+              <a href="{{ base_url }}/tags/{{ tag | slugify }}/" class="tag">{{ tag }}</a>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </article>
+        {% endif %}
+        {% endfor %}
+      </div>
+
+      <a href="{{ base_url }}/posts/" class="view-all-btn">View all posts &rarr;</a>
+    </section>
+  </main>
+{% include "footer.html" %}
