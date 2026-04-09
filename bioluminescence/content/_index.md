@@ -1,7 +1,7 @@
 +++
 title = "The Deep Abyss"
 description = "A journey into the glowing depths of the ocean."
-template = "section.html"
+template = "section"
 +++
 
 Welcome to the abyss. Here, light is created not by the sun, but by the creatures that inhabit the darkness.
