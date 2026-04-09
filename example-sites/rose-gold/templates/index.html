@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="home-content">
+    {% if content %}
+    <div class="intro">
+        {{ content | safe }}
+    </div>
+    {% endif %}
+
+    <hr>
+
+    <h2 class="section-title">Recent Writing</h2>
+
+    <div class="post-list">
+        {% for post in site.pages | sort_by("date", reverse=true) %}
+        {% if post.url != "/" and post.url != "/about/" %}
+        <article class="post-item">
+            <h3 class="post-title"><a href="{{ base_url }}{{ post.url }}">{{ post.title }}</a></h3>
+            <div class="post-meta">
+                {% if post.date %}
+                <span class="post-date">{{ post.date | date("%B %d, %Y") }}</span>
+                {% endif %}
+            </div>
+            {% if post.summary %}
+            <div class="post-summary">
+                {{ post.summary | strip_html | truncate_words(30) }}
+            </div>
+            {% endif %}
+        </article>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .intro {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: var(--text-color);
+        margin-bottom: 2rem;
+    }
+
+    .section-title {
+        text-align: center;
+        font-size: 1.8rem;
+        margin-bottom: 3rem;
+        position: relative;
+    }
+
+    .section-title::after {
+        content: "";
+        display: block;
+        width: 50px;
+        height: 2px;
+        background-color: var(--secondary-color);
+        margin: 1rem auto 0;
+    }
+
+    .post-item {
+        margin-bottom: 3rem;
+        padding-bottom: 3rem;
+        border-bottom: 1px dashed var(--border-color);
+    }
+
+    .post-item:last-child {
+        border-bottom: none;
+    }
+
+    .post-title {
+        font-size: 1.8rem;
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+    }
+
+    .post-meta {
+        font-family: var(--font-sans);
+        font-size: 0.85rem;
+        color: var(--secondary-color);
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .post-summary {
+        color: var(--text-color);
+    }
+</style>
+{% endblock %}
