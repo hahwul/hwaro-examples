@@ -1,0 +1,4 @@
++++
+title = "Editorials"
+template = "section"
++++
