@@ -7,4 +7,4 @@ transparent = true
 
 The daguerreotype was the first commercially successful photographic process (1839-1860) in the history of photography. Named after the inventor, Louis Jacques Mandé Daguerre, each daguerreotype is a unique image on a silvered copper plate.
 
-This theme is designed to capture the bold, creative, and elegant essence of those early photographs. Notice the lack of modern gradients, replaced instead by the subtle interplay of light and shadow, the harsh contrast of silver and tarnish, and the meticulous framing.
+This theme is designed to capture the bold, creative, and elegant essence of those early photographs. Notice the complete lack of modern gradients and emojis, replaced instead by the sharp contrast of silver and tarnish, bold solid borders, and meticulous framing.
