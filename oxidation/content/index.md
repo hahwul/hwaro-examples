@@ -1,11 +1,10 @@
 +++
-title = "Oxidation Theme"
-date = "2024-01-01"
+title = "Oxidation"
 description = "Welcome to Oxidation, a bold and elegant theme."
-template = "index.html"
+template = "home"
 +++
 
-This is a theme that draws inspiration from the natural process of oxidation. Expect deep rusted reds, rich earthy browns, and striking verdigris teals against an iron black canvas.
+A theme that draws inspiration from the natural process of oxidation. Deep rusted reds, rich earthy browns, and striking verdigris teals against an iron black canvas.
 
 ### The Beauty of Decay
 
