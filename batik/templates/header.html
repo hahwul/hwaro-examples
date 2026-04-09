@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="{{ page_language }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description | e }}">
+  <title>{% if page.title is present %}{{ page.title | e }} - {% endif %}{{ site.title | e }}</title>
+  {{ og_all_tags }}
+  {{ hreflang_tags }}
+    <style>
+    :root {
+      --primary: #b33939; /* Deep red often found in Batik */
+      --secondary: #d4a373; /* Earthy brown/gold */
+      --text: #1c1c1c;
+      --text-muted: #4a4a4a;
+      --border: #2c2c2c;
+      --bg: #fdfbf7; /* Off-white, natural fabric color */
+      --bg-subtle: #f0ece1;
+      --accent: #2c3e50; /* Deep blue/indigo, classic Batik color */
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    body { font-family: 'Georgia', serif; line-height: 1.8; margin: 0; color: var(--text); background: var(--bg); }
+
+    /* Layout */
+    .site-wrapper { max-width: 800px; margin: 0 auto; padding: 0 2rem; border-left: 2px solid var(--border); border-right: 2px solid var(--border); min-height: 100vh; background: var(--bg); position: relative; }
+    .site-wrapper::before, .site-wrapper::after {
+      content: ""; position: absolute; left: 0; right: 0; height: 10px; background: var(--accent);
+    }
+    .site-wrapper::before { top: 0; }
+    .site-wrapper::after { bottom: 0; }
+
+    .site-header { display: flex; align-items: center; justify-content: space-between; padding: 2rem 0; border-bottom: 2px solid var(--text); margin-bottom: 3rem; text-transform: uppercase; letter-spacing: 0.1em; }
+    .site-logo { font-weight: 700; font-size: 1.5rem; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; }
+    .site-logo::before { content: "❖"; color: var(--primary); font-size: 1.8rem; }
+    .site-header nav { display: flex; gap: 1.5rem; }
+    .site-header nav a { color: var(--text); text-decoration: none; font-size: 0.9rem; font-weight: 600; padding-bottom: 0.2rem; border-bottom: 2px solid transparent; transition: border-color 0.2s ease; }
+    .site-header nav a:hover { color: var(--primary); border-bottom-color: var(--primary); }
+    .site-main { min-height: calc(100vh - 250px); }
+    .site-footer { margin-top: 4rem; padding: 2rem 0; border-top: 2px solid var(--text); color: var(--text-muted); font-size: 0.85rem; text-align: center; text-transform: uppercase; letter-spacing: 0.05em; }
+
+    /* Typography */
+    h1, h2, h3 { line-height: 1.2; margin-top: 2em; margin-bottom: 1em; font-weight: 700; color: var(--accent); }
+    h1 { font-size: 2.5rem; margin-top: 0; text-align: center; border-bottom: 1px solid var(--border); padding-bottom: 0.5em; }
+    h2 { font-size: 1.8rem; display: inline-block; border-bottom: 2px solid var(--primary); }
+    h3 { font-size: 1.3rem; }
+    p { margin: 1.2em 0; }
+    a { color: var(--primary); text-decoration: underline; text-underline-offset: 4px; decoration-thickness: 2px; }
+    a:hover { color: var(--accent); }
+    code { background: var(--bg-subtle); padding: 0.2rem 0.4rem; font-size: 0.85em; font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; border: 1px solid var(--border); }
+    pre { background: #1c1c1c; color: #fdfbf7; padding: 1.5rem; overflow-x: auto; border: 2px solid var(--border); border-radius: 0; }
+    pre code { background: none; padding: 0; border: none; }
+
+    blockquote { margin: 2rem 0; padding: 1rem 2rem; border-left: 4px solid var(--primary); background: var(--bg-subtle); font-style: italic; color: var(--accent); }
+
+    /* Components */
+    ul.section-list { list-style: none; padding: 0; margin: 2rem 0; }
+    ul.section-list li { margin-bottom: 1rem; padding: 1rem; background: transparent; border: 1px solid var(--border); transition: transform 0.2s ease, border-color 0.2s ease; position: relative; }
+    ul.section-list li::before { content: "◈"; position: absolute; left: -10px; top: -10px; background: var(--bg); padding: 0 4px; color: var(--secondary); font-size: 1.2rem; }
+    ul.section-list li:hover { transform: translateY(-2px); border-color: var(--primary); }
+    ul.section-list li a { font-weight: 600; text-decoration: none; color: var(--text); font-size: 1.2rem; }
+    ul.section-list li a:hover { color: var(--primary); }
+    .taxonomy-desc { color: var(--text-muted); margin-bottom: 2rem; font-style: italic; text-align: center; }
+    nav.pagination { margin: 2rem 0; border-top: 1px solid var(--border); padding-top: 1.5rem; }
+    nav.pagination .pagination-list { list-style: none; padding: 0; margin: 0; display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; justify-content: center; }
+    nav.pagination a { display: inline-block; padding: 0.5rem 1rem; border: 1px solid var(--border); color: var(--text); text-decoration: none; font-weight: 600; background: var(--bg); }
+    nav.pagination a:hover { color: var(--bg); background: var(--text); }
+    .pagination-current span { display: inline-block; padding: 0.5rem 1rem; border: 1px solid var(--primary); background: var(--primary); color: var(--bg); font-weight: 600; }
+    .pagination-disabled span { display: inline-block; padding: 0.5rem 1rem; border: 1px solid var(--border); color: var(--text-muted); opacity: 0.5; }
+
+    img { max-width: 100%; height: auto; border: 2px solid var(--border); display: block; margin: 2rem auto; }
+    hr { border: none; border-top: 2px solid var(--border); margin: 3rem 0; position: relative; }
+    hr::after { content: "❖"; position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--bg); padding: 0 10px; color: var(--text); font-size: 1.2rem; }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .site-header { flex-direction: column; gap: 1rem; text-align: center; }
+      .site-wrapper { padding: 0 1rem; border: none; }
+      h1 { font-size: 2rem; }
+    }
+  </style>
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+</head>
+<body data-section="{{ page.section }}">
+  <div class="site-wrapper">
+    <header class="site-header">
+      <a href="{{ base_url }}/" class="site-logo">{{ site.title }}</a>
+            <nav>
+        <a href="{{ base_url }}/">Home</a>
+        <a href="{{ base_url }}/about/">About</a>
+      </nav>
+    </header>
