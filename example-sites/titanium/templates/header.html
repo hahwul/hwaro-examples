@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="{{ page_language }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description | e }}">
+  <title>{% if page.title %}{{ page.title | e }} - {% endif %}{{ site.title | e }}</title>
+  {{ og_all_tags }}
+  {{ hreflang_tags }}
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    :root {
+      /* Titanium Palette - Elegant, hi-tech, no excessive gradients */
+      --primary: #94a3b8; /* Cool silver */
+      --primary-hover: #cbd5e1;
+      --text: #e2e8f0; /* Off-white for high contrast on dark background */
+      --text-muted: #94a3b8;
+      --border: #334155; /* Dark gray border */
+      --bg: #0f172a; /* Deep slate, almost black */
+      --bg-subtle: #1e293b; /* Slightly lighter slate for panels */
+      --accent: #38bdf8; /* Subtle hi-tech blue accent */
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      color: var(--text);
+      background-color: var(--bg);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Layout */
+    .site-wrapper { max-width: 800px; margin: 0 auto; padding: 0 1.5rem; }
+    .site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 3rem;
+    }
+    .site-logo {
+      font-weight: 600;
+      font-size: 1.25rem;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color 0.2s ease;
+    }
+    .site-logo:hover { color: var(--primary-hover); }
+    .site-header nav { display: flex; gap: 1.5rem; }
+    .site-header nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+    .site-header nav a:hover { color: var(--text); }
+    .site-main { min-height: calc(100vh - 220px); }
+    .site-footer {
+      margin-top: 4rem;
+      padding: 2rem 0;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    /* Typography */
+    h1, h2, h3 { line-height: 1.3; margin-top: 2em; margin-bottom: 0.75em; font-weight: 600; color: #f8fafc; }
+    h1 { font-size: 2.25rem; margin-top: 0; letter-spacing: -0.02em; }
+    h2 { font-size: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+    h3 { font-size: 1.25rem; }
+    p { margin: 1.25em 0; color: #cbd5e1; }
+    a { color: var(--accent); text-decoration: none; transition: opacity 0.2s ease; }
+    a:hover { opacity: 0.8; text-decoration: underline; }
+    code {
+      background: var(--bg-subtle);
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.85em;
+      font-family: 'JetBrains Mono', monospace;
+      color: #e2e8f0;
+      border: 1px solid var(--border);
+    }
+    pre {
+      background: var(--bg-subtle);
+      padding: 1.25rem;
+      border-radius: 6px;
+      overflow-x: auto;
+      border: 1px solid var(--border);
+    }
+    pre code { background: none; padding: 0; border: none; color: inherit; }
+
+    /* Components */
+    ul.section-list { list-style: none; padding: 0; margin: 2rem 0; }
+    ul.section-list li {
+      margin-bottom: 1rem;
+      padding: 1rem 1.25rem;
+      background: var(--bg-subtle);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+    ul.section-list li:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    ul.section-list li a { font-weight: 500; font-size: 1.1rem; color: #f8fafc; }
+    ul.section-list li p { margin: 0.5rem 0 0; font-size: 0.95rem; color: var(--text-muted); }
+    .taxonomy-desc { color: var(--text-muted); margin-bottom: 1.5rem; }
+    nav.pagination { margin: 2rem 0; }
+    nav.pagination .pagination-list { list-style: none; padding: 0; margin: 0; display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; justify-content: center; }
+    nav.pagination a { display: inline-block; padding: 0.5rem 0.75rem; border-radius: 6px; border: 1px solid var(--border); color: var(--text-muted); text-decoration: none; transition: all 0.2s ease; }
+    nav.pagination a:hover { color: var(--text); border-color: var(--primary); background: var(--bg-subtle); }
+    .pagination-current span { display: inline-block; padding: 0.5rem 0.75rem; border-radius: 6px; border: 1px solid var(--primary); background: var(--bg-subtle); color: var(--text); }
+    .pagination-disabled span { display: inline-block; padding: 0.5rem 0.75rem; border-radius: 6px; border: 1px solid var(--border); color: var(--text-muted); opacity: 0.5; }
+
+    /* Tags */
+    .post-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
+    .post-tag { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; padding: 0.2rem 0.5rem; border-radius: 4px; background: transparent; border: 1px solid var(--border); color: var(--text-muted); text-decoration: none; transition: border-color 0.2s ease; }
+    .post-tag:hover { border-color: var(--primary); color: var(--text); text-decoration: none; }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .site-header { flex-direction: column; gap: 1rem; align-items: flex-start; padding: 1.5rem 0; }
+      .site-wrapper { padding: 0 1rem; }
+    }
+  </style>
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+</head>
+<body data-section="{{ page.section }}">
+  <div class="site-wrapper">
+    <header class="site-header">
+      <a href="{{ base_url }}/" class="site-logo">{{ site.title }}</a>
+      <nav>
+        <a href="{{ base_url }}/">Home</a>
+        <a href="{{ base_url }}/about/">About</a>
+      </nav>
+    </header>
