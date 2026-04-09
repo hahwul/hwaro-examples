@@ -14,7 +14,7 @@ In the West, we often think of white space as "empty" — unused real estate tha
 
 ## A Painting with Half the Canvas Blank
 
-Consider a traditional Korean ink wash painting (sumukhwa). The artist might paint a single branch of plum blossoms in the lower corner, leaving the vast majority of the silk empty. This is not laziness or incompleteness — the empty space *is* the sky, the air, the season, and the silence.
+Consider a traditional Korean ink wash painting. The artist might paint a single branch of plum blossoms in the lower corner, leaving the vast majority of the silk empty. This is not laziness or incompleteness — the empty space *is* the sky, the air, the season, and the silence.
 
 The viewer's mind fills the space with meaning. The painting becomes a collaboration between artist and audience.
 
@@ -32,7 +32,7 @@ The alternation between content and space creates a reading rhythm. Like music, 
 
 ### 3. Space Creates Meaning
 
-A single accent color on a white page has more impact than a dozen colors in a busy layout. Restraint amplifies.
+A single line of black text on a white page has more impact than a dozen elements in a busy layout. Restraint amplifies.
 
 ### 4. Space Creates Comfort
 
@@ -42,9 +42,9 @@ Dense interfaces create anxiety. Spacious interfaces create calm. When we read c
 
 This theme applies yeobaek throughout:
 
-- **Article pages** have wide margins and generous line height (1.85)
+- **Article pages** have wide margins and generous line height
 - **Post cards** use padding to let titles breathe
-- **The hero section** places a few elegant elements in a field of white
+- **The hero section** places a few elements in a field of white
 - **Navigation** uses space rather than visual separators
 
 > The space between things is not nothing. It is the most important thing.

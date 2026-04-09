@@ -1,4 +1,4 @@
 +++
-title = "Blanc Seoul"
+title = "Ink Seoul"
 template = "home"
 +++
