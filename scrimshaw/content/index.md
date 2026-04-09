@@ -1,9 +1,12 @@
 +++
-title = "Scrimshaw Design"
-description = "A daring, clean aesthetic example."
-template = "index"
+title = "Scrimshaw"
+date = "2026-04-06"
 +++
 
-This is the homepage of **Scrimshaw**. The design relies entirely on stark contrast, heavy typography, and absolute avoidance of gradients, shadows, and emojis. Everything is bold and straightforward.
+Welcome to Scrimshaw.
 
-Check out our [posts](/posts/) for more details.
+This is a space of stark contrasts. Ivory fields. Dark ink. Bold statements. No distractions.
+
+Here, design speaks for itself through typography, spacing, and unwavering clarity.
+
+Explore the [Portfolio](/posts/) to view the work.
