@@ -1,5 +1,6 @@
 +++
 title = "Bold Contrast"
+template = "page"
 date = 2023-10-10
 weight = 3
 description = "High-contrast terrazzo exploring deep dark bases with vibrant chips."
