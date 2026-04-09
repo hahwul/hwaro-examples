@@ -1,0 +1,36 @@
+{% include "header.html" %}
+
+<div class="section-container">
+    <header class="section-header">
+        <h1 class="section-title">{% if section.title %}{{ section.title }}{% else %}{{ page.title | default("Articles") }}{% endif %}</h1>
+        {% if section.description %}
+        <p class="section-description">{{ section.description }}</p>
+        {% endif %}
+    </header>
+
+    <div class="post-list">
+        {% set posts = section.pages | default(site.pages) %}
+        {% for post in posts %}
+        {% if not post.draft %}
+        <article class="post-card">
+            <h2 class="post-title"><a href="{{ base_url }}{{ post.url }}">{{ post.title }}</a></h2>
+            <div class="post-meta">
+                {% if post.date %}
+                <time datetime="{{ post.date | date("%Y-%m-%d") }}">{{ post.date | date("%B %d, %Y") }}</time>
+                {% endif %}
+            </div>
+            <div class="post-summary">
+                {% if post.description %}
+                    <p>{{ post.description }}</p>
+                {% elif post.summary %}
+                    <p>{{ post.summary | strip_html | truncate_words(30) }}</p>
+                {% endif %}
+            </div>
+            <a href="{{ base_url }}{{ post.url }}" class="read-more">Continue Reading <span class="arrow">→</span></a>
+        </article>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+{% include "footer.html" %}
