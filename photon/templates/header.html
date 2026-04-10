@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description | default(site.description) | e }}">
+  <title>{% if page.title %}{{ page.title | e }} - {% endif %}{{ site.title | e }}</title>
+  {{ og_all_tags }}
+  {{ hreflang_tags }}
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600&family=Inter:wght@300;400;500;600&display=swap');
+
+    :root {
+      --bg-dark: #050508;
+      --bg-card: rgba(15, 15, 25, 0.7);
+      --text-main: #e2e8f0;
+      --text-muted: #94a3b8;
+      --accent-color: #00f0ff; /* Cyan luminescent */
+      --accent-secondary: #ff007f; /* Magenta luminescent */
+      --accent-tertiary: #b900ff; /* Purple luminescent */
+      --glow-cyan: 0 0 15px rgba(0, 240, 255, 0.5), 0 0 30px rgba(0, 240, 255, 0.3);
+      --glow-magenta: 0 0 15px rgba(255, 0, 127, 0.5), 0 0 30px rgba(255, 0, 127, 0.3);
+      --glow-purple: 0 0 15px rgba(185, 0, 255, 0.5), 0 0 30px rgba(185, 0, 255, 0.3);
+      --border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.7;
+      margin: 0;
+      color: var(--text-main);
+      background-color: var(--bg-dark);
+      background-image:
+        radial-gradient(circle at 15% 50%, rgba(0, 240, 255, 0.05), transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(255, 0, 127, 0.05), transparent 25%),
+        radial-gradient(circle at 50% 80%, rgba(185, 0, 255, 0.05), transparent 25%);
+      background-attachment: fixed;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+    }
+
+    .site-wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 3rem;
+    }
+
+    .site-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-shadow: var(--glow-cyan);
+      transition: text-shadow 0.3s ease;
+    }
+
+    .site-logo:hover {
+      text-shadow: 0 0 20px rgba(0, 240, 255, 0.8), 0 0 40px rgba(0, 240, 255, 0.5);
+    }
+
+    .site-nav {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .site-nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: color 0.3s ease, text-shadow 0.3s ease;
+    }
+
+    .site-nav a:hover {
+      color: #fff;
+      text-shadow: var(--glow-magenta);
+    }
+
+    .site-main {
+      flex: 1;
+    }
+
+    /* Content Styling */
+    a {
+      color: var(--accent-color);
+      text-decoration: none;
+      transition: text-shadow 0.3s ease;
+    }
+
+    a:hover {
+      text-shadow: var(--glow-cyan);
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), var(--glow-purple);
+      border-color: rgba(185, 0, 255, 0.3);
+    }
+
+    .card-title {
+      margin-top: 0;
+      font-size: 1.5rem;
+    }
+
+    .card-title a {
+      color: #fff;
+    }
+
+    .card-title a:hover {
+      color: var(--accent-color);
+    }
+
+    code {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      font-family: 'Space Grotesk', monospace;
+      color: var(--accent-secondary);
+      font-size: 0.9em;
+    }
+
+    pre {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 1.5rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      overflow-x: auto;
+    }
+
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: var(--text-main);
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .tag {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      transition: all 0.3s ease;
+    }
+
+    .tag:hover {
+      border-color: var(--accent-color);
+      color: var(--accent-color);
+      box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+    }
+
+    /* Particles decoration */
+    .particle {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .particle-1 {
+      top: 20%; left: 10%; width: 4px; height: 4px; background: var(--accent-color);
+      box-shadow: var(--glow-cyan);
+    }
+    .particle-2 {
+      top: 70%; left: 80%; width: 6px; height: 6px; background: var(--accent-secondary);
+      box-shadow: var(--glow-magenta);
+    }
+    .particle-3 {
+      top: 40%; left: 90%; width: 3px; height: 3px; background: var(--accent-tertiary);
+      box-shadow: var(--glow-purple);
+    }
+    .particle-4 {
+      top: 80%; left: 20%; width: 5px; height: 5px; background: var(--accent-color);
+      box-shadow: var(--glow-cyan);
+    }
+
+    @media (max-width: 600px) {
+      .site-header {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+    }
+  </style>
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+</head>
+<body data-section="{{ page.section }}">
+  <div class="particle particle-1"></div>
+  <div class="particle particle-2"></div>
+  <div class="particle particle-3"></div>
+  <div class="particle particle-4"></div>
+
+  <div class="site-wrapper">
+    <header class="site-header">
+      <a href="{{ base_url }}/" class="site-logo">{{ site.title }}</a>
+      <nav class="site-nav">
+        <a href="{{ base_url }}/">Home</a>
+        <a href="{{ base_url }}/about/">About</a>
+      </nav>
+    </header>
