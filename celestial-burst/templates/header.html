@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="{{ page_language }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description | e }}">
+  <title>{% if page.title %}{{ page.title | e }} - {% endif %}{{ site.title | e }}</title>
+  {{ og_all_tags }}
+  {{ hreflang_tags }}
+  <style>
+    :root {
+      --primary: #f0c78a; /* Golden elegant accent */
+      --primary-glow: rgba(240, 199, 138, 0.4);
+      --text: #f4f4f5;
+      --text-muted: #a1a1aa;
+      --border: #27272a;
+      --bg: #09090b; /* Deep space dark */
+      --bg-subtle: #18181b;
+      --bg-card: #1f1f22;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      font-family: "Didot", "Playfair Display", "Times New Roman", serif;
+      line-height: 1.7;
+      margin: 0;
+      color: var(--text);
+      background-color: var(--bg);
+      /* NO gradients used here, solid background for elegant dark theme */
+    }
+
+    /* Layout */
+    .site-wrapper {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 3rem;
+    }
+
+    .site-logo {
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: var(--primary);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      /* Glowing effect without gradients */
+      text-shadow: 0 0 15px var(--primary-glow);
+    }
+    .site-logo:hover {
+      text-shadow: 0 0 25px var(--primary-glow);
+    }
+
+    .site-header nav { display: flex; gap: 2rem; }
+    .site-header nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 1rem;
+      letter-spacing: 0.05em;
+      transition: color 0.3s ease;
+    }
+    .site-header nav a:hover {
+      color: var(--primary);
+    }
+
+    .site-main { min-height: calc(100vh - 250px); }
+    .site-footer {
+      margin-top: 4rem;
+      padding: 2rem 0;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      text-align: center;
+      letter-spacing: 0.05em;
+    }
+
+    /* Typography */
+    h1, h2, h3 {
+      line-height: 1.4;
+      margin-top: 2em;
+      margin-bottom: 0.75em;
+      font-weight: normal;
+      color: var(--primary);
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-top: 0;
+      text-shadow: 0 0 10px var(--primary-glow);
+    }
+    h2 { font-size: 1.8rem; }
+    h3 { font-size: 1.4rem; }
+    p { margin: 1.2em 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-weight: 300; }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s ease;
+    }
+    a:hover { border-bottom-color: var(--primary); }
+
+    code {
+      background: var(--bg-subtle);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.85em;
+      font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+      color: var(--text);
+    }
+    pre {
+      background: var(--bg-subtle);
+      padding: 1.5rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      box-shadow: 0 0 15px rgba(0,0,0,0.5); /* Subtle depth shadow */
+    }
+    pre code { background: none; padding: 0; }
+
+    /* Components */
+    ul.section-list { list-style: none; padding: 0; margin: 2rem 0; }
+    ul.section-list li {
+      margin-bottom: 1rem;
+      padding: 1.5rem;
+      background: var(--bg-card);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    ul.section-list li:hover {
+      transform: translateY(-2px);
+      /* Glowing effect for cards */
+      box-shadow: 0 8px 30px var(--primary-glow);
+      border-color: rgba(240, 199, 138, 0.3);
+    }
+    ul.section-list li a {
+      font-family: "Didot", "Playfair Display", "Times New Roman", serif;
+      font-size: 1.4rem;
+      font-weight: normal;
+      color: var(--primary);
+      border: none;
+    }
+
+    .taxonomy-desc { color: var(--text-muted); margin-bottom: 2rem; font-family: -apple-system, sans-serif; font-weight: 300; }
+
+    nav.pagination { margin: 2rem 0; }
+    nav.pagination .pagination-list {
+      list-style: none; padding: 0; margin: 0; display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; justify-content: center;
+    }
+    nav.pagination a, .pagination-current span, .pagination-disabled span {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      font-family: -apple-system, sans-serif;
+      font-size: 0.9rem;
+    }
+    nav.pagination a {
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    nav.pagination a:hover {
+      color: var(--bg);
+      background: var(--primary);
+      border-color: var(--primary);
+      box-shadow: 0 0 15px var(--primary-glow);
+    }
+    .pagination-current span {
+      border: 1px solid var(--primary);
+      color: var(--bg);
+      background: var(--primary);
+      box-shadow: 0 0 10px var(--primary-glow);
+    }
+    .pagination-disabled span {
+      border: 1px solid var(--border);
+      color: var(--border);
+      opacity: 0.5;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .site-header { flex-direction: column; gap: 1rem; align-items: center; }
+      .site-wrapper { padding: 0 1.5rem; }
+      h1 { font-size: 2rem; }
+    }
+  </style>
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+</head>
+<body data-section="{{ page.section }}">
+  <div class="site-wrapper">
+    <header class="site-header">
+      <a href="{{ base_url }}/" class="site-logo">{{ site.title }}</a>
+      <nav>
+        <a href="{{ base_url }}/">Home</a>
+        <a href="{{ base_url }}/about/">About</a>
+      </nav>
+    </header>
