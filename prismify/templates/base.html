@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="{{ page_language }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description | e }}">
+  <title>{% if page.title %}{{ page.title | e }} - {% endif %}{{ site.title | e }}</title>
+  {{ og_all_tags }}
+  {{ hreflang_tags }}
+  <style>
+    :root {
+      --primary: #0070f3;
+      --text: #1a1a1a;
+      --text-muted: #57606a;
+      --border: rgba(0, 0, 0, 0.1);
+      --bg: #f8f9fa;
+      --card-bg: rgba(255, 255, 255, 0.7);
+      --glass-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+      --glass-shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      color: var(--text);
+      background: var(--bg);
+      min-height: 100vh;
+    }
+
+    /* Glassmorphism utility */
+    .glass {
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: var(--glass-shadow);
+      transition: all 0.3s ease;
+    }
+
+    .glass:hover {
+      box-shadow: var(--glass-shadow-hover);
+      transform: translateY(-2px);
+    }
+
+    /* Layout */
+    .site-wrapper { max-width: 1024px; margin: 0 auto; padding: 0 1.5rem; }
+    .site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 2rem;
+      margin: 2rem 0;
+    }
+
+    .site-logo {
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+    .site-header nav { display: flex; gap: 2rem; }
+    .site-header nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .site-header nav a:hover { color: var(--text); }
+
+    .site-main { min-height: calc(100vh - 250px); padding-bottom: 4rem; }
+
+    .site-footer {
+      margin-top: 4rem;
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4 {
+      line-height: 1.2;
+      margin-top: 2em;
+      margin-bottom: 1em;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    h1 { font-size: 3rem; margin-top: 0; text-align: center;}
+    h2 { font-size: 2rem; }
+    h3 { font-size: 1.5rem; }
+    p { margin: 1em 0; color: var(--text-muted); font-size: 1.1rem; }
+    a { color: var(--primary); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Button */
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      background: var(--text);
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background: #000;
+      color: white;
+      text-decoration: none;
+      transform: translateY(-1px);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover {
+      background: var(--border);
+      color: var(--text);
+    }
+
+    /* Grid for features/cards */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+
+    .card {
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .card h3 {
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .card p {
+      margin-top: 0;
+      font-size: 1rem;
+    }
+
+    .icon-wrapper {
+      background: rgba(0, 112, 243, 0.1);
+      color: var(--primary);
+      padding: 1rem;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+      display: inline-flex;
+    }
+
+    .icon-wrapper svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    /* Pricing Table */
+    .pricing-table {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin: 4rem 0;
+    }
+
+    .pricing-card {
+      padding: 3rem 2rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .pricing-card.popular {
+      border: 2px solid var(--primary);
+    }
+
+    .popular-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--primary);
+      color: white;
+      padding: 0.25rem 1rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .price {
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 1rem 0;
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+    }
+
+    .price span {
+      font-size: 1rem;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .pricing-features {
+      list-style: none;
+      padding: 0;
+      margin: 2rem 0;
+      text-align: left;
+    }
+
+    .pricing-features li {
+      padding: 0.5rem 0;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .pricing-features li svg {
+      color: #10b981;
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 6rem 0 4rem;
+    }
+
+    .hero p {
+      max-width: 600px;
+      margin: 1rem auto 2.5rem;
+      font-size: 1.25rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .site-header { flex-direction: column; gap: 1.5rem; padding: 1.5rem; }
+      .site-wrapper { padding: 0 1rem; }
+      .hero { padding: 4rem 0 2rem; }
+      h1 { font-size: 2.5rem; }
+    }
+  </style>
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+</head>
+<body data-section="{{ page.section }}">
+  <div class="site-wrapper">
+    <header class="site-header glass">
+      <a href="{{ base_url }}/" class="site-logo">{{ site.title }}</a>
+      <nav>
+        <a href="{{ base_url }}/">Home</a>
+        <a href="{{ base_url }}/about/">About</a>
+      </nav>
+    </header>
+
+    <main class="site-main">
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer glass">
+      &copy; {{ current_year }} {{ site.title }}. All rights reserved.
+    </footer>
+  </div>
+</body>
+</html>
