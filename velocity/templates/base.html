@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="{{ page_language }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description | e }}">
+  <title>{% if page.title %}{{ page.title | e }} - {% endif %}{{ site.title | e }}</title>
+  {{ og_all_tags }}
+  {{ hreflang_tags }}
+  <style>
+    :root {
+      --bg-color: #0b0f19;
+      --text-color: #e2e8f0;
+      --accent: #3b82f6; /* Blue solid accent */
+      --accent-glow: rgba(59, 130, 246, 0.4);
+      --secondary: #1e293b;
+      --border: #334155;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Typography & Animations */
+    h1, h2, h3 { font-weight: 800; letter-spacing: -0.05em; text-transform: uppercase; }
+
+    @keyframes slideIn {
+      from { transform: translateX(-50px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    .kinetic-text {
+      animation: slideIn 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      display: inline-block;
+    }
+
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #60a5fa; }
+
+    /* Layout Components */
+    .nav-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 3rem;
+      border-bottom: 1px solid var(--border);
+      background-color: var(--bg-color);
+      position: relative;
+      z-index: 10;
+    }
+    .nav-logo { font-size: 1.5rem; font-weight: 900; color: #fff; text-transform: uppercase; letter-spacing: 0.1em; }
+    .nav-links a { margin-left: 2rem; font-weight: 600; text-transform: uppercase; font-size: 0.85rem; color: #94a3b8; }
+    .nav-links a:hover { color: #fff; }
+
+    /* Diagonal sections using clip-path */
+    .hero-section {
+      padding: 8rem 3rem;
+      position: relative;
+      background-color: var(--secondary);
+      clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+      margin-bottom: -5%; /* Pull up the next section */
+      z-index: 2;
+    }
+
+    .hero-content { max-width: 800px; }
+    .hero-title { font-size: 4rem; line-height: 1.1; margin-bottom: 1.5rem; color: #fff; }
+    .hero-subtitle { font-size: 1.25rem; color: #cbd5e1; margin-bottom: 2.5rem; max-width: 600px; }
+
+    /* Buttons with glow instead of gradients */
+    .btn {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      background-color: var(--accent);
+      color: #fff;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border: none;
+      border-radius: 4px; /* Sharp edges */
+      cursor: pointer;
+      box-shadow: 0 0 20px var(--accent-glow);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 30px var(--accent-glow);
+      color: #fff;
+    }
+
+    /* Content Area */
+    .main-content {
+      padding: 6rem 3rem;
+      max-width: 1000px;
+      margin: 0 auto;
+      z-index: 1;
+      position: relative;
+    }
+
+    /* Markdown Styling */
+    .main-content h2 { font-size: 2.5rem; margin-top: 3rem; margin-bottom: 1.5rem; color: #fff; border-bottom: 2px solid var(--accent); display: inline-block; padding-bottom: 0.5rem; }
+    .main-content p { margin-bottom: 1.5rem; font-size: 1.1rem; }
+    .main-content ul { margin-bottom: 1.5rem; padding-left: 1.5rem; }
+    .main-content li { margin-bottom: 0.5rem; }
+
+    /* Code blocks */
+    code { font-family: 'Fira Code', monospace; background: var(--secondary); padding: 0.2rem 0.4rem; border-radius: 3px; font-size: 0.9em; }
+    pre { background: var(--secondary); padding: 1.5rem; border-radius: 4px; overflow-x: auto; border: 1px solid var(--border); margin-bottom: 1.5rem; }
+    pre code { background: none; padding: 0; }
+
+    .site-footer {
+      padding: 3rem;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      color: #64748b;
+      font-size: 0.9rem;
+      margin-top: 4rem;
+    }
+
+    /* Feature Grid (for custom layout in markdown) */
+    .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem; }
+    .feature-card {
+      background: var(--secondary);
+      padding: 2rem;
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      transition: transform 0.2s;
+    }
+    .feature-card:hover { transform: translateX(5px); }
+    .feature-card h3 { font-size: 1.5rem; margin-bottom: 1rem; color: #fff; }
+
+  </style>
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+</head>
+<body>
+
+  <header class="nav-header">
+    <a href="{{ base_url }}/" class="nav-logo">{{ site.title }}</a>
+    <nav class="nav-links">
+      <a href="{{ base_url }}/">Home</a>
+      <a href="{{ base_url }}/about/">About</a>
+    </nav>
+  </header>
+
+  {% block content %}{% endblock content %}
+
+  <footer class="site-footer">
+    <p>&copy; {{ current_year }} {{ site.title }}. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
