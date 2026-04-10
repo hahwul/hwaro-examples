@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="{{ page_language | default(value='en') }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description | default(value=site.description) | e }}">
+  <title>{% if page.title %}{{ page.title | e }} - {% endif %}{{ site.title | e }}</title>
+  {{ og_all_tags }}
+  {{ hreflang_tags }}
+  <style>
+    :root {
+      --bg-color: #050508;
+      --surface-color: #0d0d14;
+      --primary: #ffffff;
+      --secondary: #a3a3bc;
+      --accent: #5e6ad2;
+      --border: #1a1a24;
+      --glow-light: rgba(255, 255, 255, 0.05);
+      --glow-accent: rgba(94, 106, 210, 0.4);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--secondary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Star Field Parallax Background */
+    .star-field {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      background-color: var(--bg-color);
+      overflow: hidden;
+    }
+
+    .star {
+      position: absolute;
+      background-color: #fff;
+      border-radius: 50%;
+      opacity: 0;
+      animation: twinkle linear infinite;
+    }
+
+    @keyframes twinkle {
+      0% { opacity: 0; transform: translateY(0); }
+      50% { opacity: 0.8; }
+      100% { opacity: 0; transform: translateY(-50px); }
+    }
+
+    /* Layout */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* Header */
+    .site-header {
+      padding: 2rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .site-logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--primary);
+      text-decoration: none;
+      text-transform: uppercase;
+      box-shadow: 0 0 15px var(--glow-light);
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      transition: box-shadow 0.3s ease;
+      background-color: var(--surface-color);
+    }
+
+    .site-logo:hover {
+      box-shadow: 0 0 20px var(--glow-accent);
+    }
+
+    .site-nav {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .site-nav a {
+      color: var(--secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 1px;
+      transition: color 0.3s ease;
+    }
+
+    .site-nav a:hover {
+      color: var(--primary);
+    }
+
+    /* Main Content */
+    .site-main {
+      min-height: 70vh;
+      padding: 4rem 0;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 {
+      color: var(--primary);
+      font-weight: 600;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    p { margin-bottom: 1.5rem; }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Orbital Animations for Landing Page */
+    .orbit-container {
+      position: relative;
+      width: 400px;
+      height: 400px;
+      margin: 4rem auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .core {
+      width: 80px;
+      height: 80px;
+      background-color: var(--surface-color);
+      border-radius: 50%;
+      box-shadow: 0 0 30px var(--glow-accent), 0 0 10px rgba(255,255,255,0.2) inset;
+      z-index: 2;
+    }
+
+    .orbit-path {
+      position: absolute;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .orbit-path.inner { width: 200px; height: 200px; animation: rotate 15s linear infinite; }
+    .orbit-path.outer { width: 320px; height: 320px; animation: rotate 30s linear infinite reverse; }
+
+    .satellite {
+      position: absolute;
+      top: -6px;
+      left: 50%;
+      width: 12px;
+      height: 12px;
+      background-color: var(--primary);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--primary);
+      transform: translateX(-50%);
+    }
+
+    .satellite.small {
+      width: 8px;
+      height: 8px;
+      top: -4px;
+      background-color: var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+    }
+
+    @keyframes rotate {
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .hero h1 {
+      font-size: 4rem;
+      letter-spacing: 2px;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 20px var(--glow-light);
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      max-width: 600px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      background-color: var(--surface-color);
+      color: var(--primary);
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px var(--glow-light);
+    }
+
+    .btn:hover {
+      background-color: var(--bg-color);
+      border-color: var(--accent);
+      box-shadow: 0 0 25px var(--glow-accent);
+      text-decoration: none;
+    }
+
+    /* Footer */
+    .site-footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 0;
+      text-align: center;
+      color: var(--secondary);
+      font-size: 0.85rem;
+    }
+
+    /* Markdown Code Blocks */
+    code { background: var(--surface-color); padding: 0.2rem 0.4rem; border-radius: 4px; font-family: monospace; border: 1px solid var(--border); }
+    pre { background: var(--surface-color); padding: 1.5rem; border-radius: 8px; overflow-x: auto; border: 1px solid var(--border); }
+    pre code { background: none; padding: 0; border: none; }
+
+  </style>
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+</head>
+<body data-section="{{ page.section }}">
+  <div class="star-field" id="star-field"></div>
+
+  <div class="container">
+    <header class="site-header">
+      <a href="{{ base_url }}/" class="site-logo">{{ site.title }}</a>
+      <nav class="site-nav">
+        <a href="{{ base_url }}/">Home</a>
+        <a href="{{ base_url }}/about/">About</a>
+      </nav>
+    </header>
+
+    <script>
+      // Generate stars
+      const starField = document.getElementById('star-field');
+      for (let i = 0; i < 100; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+
+        // Random properties
+        const size = Math.random() * 3 + 1;
+        const posX = Math.random() * 100;
+        const posY = Math.random() * 100;
+        const duration = Math.random() * 3 + 2;
+        const delay = Math.random() * 5;
+
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        star.style.left = `${posX}vw`;
+        star.style.top = `${posY}vh`;
+        star.style.animationDuration = `${duration}s`;
+        star.style.animationDelay = `${delay}s`;
+
+        starField.appendChild(star);
+      }
+    </script>
