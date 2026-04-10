@@ -1,22 +1,18 @@
 +++
 title = "Apolo"
-tags = ["elegant", "dark"]
-template = "page"
+tags = ["elegant", "dark", "minimal"]
 +++
 
 # Welcome to Apolo
 
-Experience the elegance. A minimalist space with soft glowing elements, built for Hwaro.
+A dark, elegant theme for Hwaro.
 
-## Design Philosophy
+## Features
 
-The Apolo theme focuses on creating a visually comfortable dark environment accented by subtle luminescence, ensuring content remains the primary focus while offering a modern, sophisticated aesthetic.
+- Minimalist design
+- High contrast
+- Subtle glow effects
 
-- **Minimalist Core:** No clutter, just content.
-- **Luminescent Accents:** Soft glows that guide the eye without overwhelming.
-- **Dark Elegance:** A carefully selected palette of deep blues, purples, and soft grays.
+## Taxonomies
 
-### Try It Out
-
-- Explore the [About](/about/) page.
-- View [All Tags](/tags/).
+- [All Tags](/tags/)
