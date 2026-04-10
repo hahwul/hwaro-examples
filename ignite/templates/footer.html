@@ -1,0 +1,72 @@
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">🔥 Ignite</div>
+    <div class="footer-links">
+      <a href="{{ base_url }}/#features">Platform</a>
+      <a href="{{ base_url }}/#story">Story</a>
+      <a href="{{ base_url }}/#testimonials">Testimonials</a>
+    </div>
+    <div class="footer-copy">&copy; {{ current_year }} Ignite. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+(function() {
+  var nav = document.getElementById('site-nav');
+  var toggle = document.querySelector('.nav-toggle');
+  var links = document.querySelector('.nav-links');
+
+  window.addEventListener('scroll', function() {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  if (toggle) {
+    toggle.addEventListener('click', function() {
+      links.classList.toggle('open');
+      toggle.classList.toggle('active');
+    });
+  }
+
+  document.querySelectorAll('.nav-links a').forEach(function(a) {
+    a.addEventListener('click', function() {
+      links.classList.remove('open');
+      toggle.classList.remove('active');
+    });
+  });
+
+  /* Animated counters */
+  var observed = false;
+  function animateCounters() {
+    if (observed) return;
+    var counters = document.querySelectorAll('.counter-value');
+    if (!counters.length) return;
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting && !entry.target.dataset.animated) {
+          entry.target.dataset.animated = '1';
+          var target = parseInt(entry.target.dataset.target, 10);
+          var duration = 2000;
+          var start = performance.now();
+          function step(now) {
+            var progress = Math.min((now - start) / duration, 1);
+            var eased = 1 - Math.pow(1 - progress, 3);
+            entry.target.textContent = Math.floor(eased * target);
+            if (progress < 1) requestAnimationFrame(step);
+            else entry.target.textContent = target;
+          }
+          requestAnimationFrame(step);
+        }
+      });
+    }, { threshold: 0.3 });
+    counters.forEach(function(c) { io.observe(c); });
+    observed = true;
+  }
+  animateCounters();
+})();
+</script>
+
+{{ highlight_js }}
+{{ auto_includes_js }}
+</body>
+</html>
