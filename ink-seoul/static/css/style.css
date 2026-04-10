@@ -4,10 +4,10 @@
    ======================================== */
 
 :root {
-  --white: #FFFFFF;
-  --paper: #F7F7F7;
-  --mist: #F0F0F0;
-  --ash: #E0E0E0;
+  --white: #FAFAF8;
+  --paper: #F5F4F0;
+  --mist: #EEEEE8;
+  --ash: #DDD9D4;
   --silver: #CCCCCC;
   --gray: #777777;
   --stone: #555555;
@@ -92,6 +92,16 @@ img {
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes inkBreathe {
+  0%, 100% { transform: translate(-50%, -46%) scale(1) rotate(0deg); }
+  50%      { transform: translate(-50%, -46%) scale(1.03) rotate(1deg); }
+}
+
+@keyframes inkReveal {
+  from { clip-path: circle(0% at 50% 50%); opacity: 0; }
+  to   { clip-path: circle(150% at 50% 50%); opacity: 1; }
 }
 
 .hero-inner, .post-grid, .post-list, .article-inner {
@@ -212,25 +222,64 @@ img {
 
 /* ===== Hero ===== */
 .hero {
-  padding: 7rem 2rem 5.5rem;
+  padding: 8.5rem 2rem 6.5rem;
   text-align: center;
   position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background-color: var(--white);
+  background-image:
+    radial-gradient(ellipse 70% 55% at 15% 10%, rgba(0, 0, 0, 0.10), transparent 70%),
+    radial-gradient(ellipse 50% 65% at 88% 50%, rgba(0, 0, 0, 0.08), transparent 60%),
+    radial-gradient(ellipse 90% 45% at 50% 108%, rgba(0, 0, 0, 0.09), transparent 50%),
+    radial-gradient(ellipse 35% 40% at 65% 25%, rgba(0, 0, 0, 0.05), transparent 55%),
+    radial-gradient(ellipse 25% 30% at 30% 70%, rgba(0, 0, 0, 0.04), transparent 50%);
+  animation: inkReveal 1.2s var(--ease) both;
 }
 
+/* Top brush drip */
 .hero::before {
   content: '';
   position: absolute;
   top: 0;
   left: 50%;
-  width: 1px;
-  height: 52px;
-  background: var(--ash);
+  width: 1.5px;
+  height: 68px;
+  background: linear-gradient(to bottom, var(--charcoal), var(--ash) 60%, transparent);
+  opacity: 0.5;
+}
+
+/* Ensō — filled ink circle, inverts content via difference blend */
+.hero::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 480px;
+  height: 480px;
+  background: radial-gradient(
+    ellipse at 48% 52%,
+    rgba(255,255,255, 1) 52%,
+    rgba(255,255,255, 0.85) 62%,
+    rgba(255,255,255, 0.5) 74%,
+    rgba(255,255,255, 0.15) 87%,
+    transparent 100%
+  );
+  border-radius: 47% 53% 51% 49% / 52% 48% 53% 47%;
+  transform: translate(-50%, -46%);
+  mix-blend-mode: difference;
+  pointer-events: none;
+  z-index: 2;
+  animation: inkBreathe 8s ease-in-out infinite;
 }
 
 .hero-inner {
   max-width: var(--max-w);
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
+
 
 .hero-label {
   font-size: 0.65rem;
@@ -243,11 +292,26 @@ img {
 
 .hero-title {
   margin-bottom: 2rem;
+  position: relative;
+}
+
+/* Ink accent dot */
+.hero-title::before {
+  content: '';
+  position: absolute;
+  top: -1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5px;
+  height: 5px;
+  background: var(--black);
+  border-radius: 50% 50% 50% 40%;
+  opacity: 0.25;
 }
 
 .hero-kr {
   font-family: var(--font-serif);
-  font-size: 4rem;
+  font-size: 4.2rem;
   font-weight: 300;
   letter-spacing: -0.03em;
   color: var(--black);
@@ -257,10 +321,11 @@ img {
 
 .hero-rule {
   display: block;
-  width: 40px;
-  height: 2px;
-  background: var(--black);
+  width: 56px;
+  height: 3px;
+  background: linear-gradient(to right, transparent 2%, var(--black) 15%, var(--black) 85%, transparent 98%);
   margin: 1.5rem auto;
+  border-radius: 40% 60% 55% 45% / 60% 38% 52% 48%;
 }
 
 .hero-en {
@@ -349,7 +414,7 @@ img {
 .section-rule {
   flex: 1;
   height: 1px;
-  background: var(--ash);
+  background: linear-gradient(to right, var(--ash), transparent);
 }
 
 .latest-posts {
@@ -385,7 +450,7 @@ img {
 
 .post-card:hover {
   border-color: var(--silver);
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.03);
 }
 
 .post-card:hover::after {
@@ -651,6 +716,7 @@ img {
   margin: 2rem 0;
   padding: 1.25rem 1.5rem;
   border-left: 3px solid var(--black);
+  border-image: linear-gradient(to bottom, var(--black), var(--ash)) 1;
   background: var(--paper);
   font-style: italic;
   color: var(--charcoal);
@@ -663,10 +729,12 @@ img {
 /* HR */
 .article-body hr {
   border: none;
-  height: 1px;
-  background: var(--ash);
+  height: 2px;
+  background: var(--charcoal);
   margin: 3rem auto;
-  max-width: 60px;
+  max-width: 48px;
+  border-radius: 45% 55% 50% 50% / 60% 40% 55% 45%;
+  opacity: 0.4;
 }
 
 /* Code */
@@ -908,8 +976,9 @@ img {
   .nav-links.active { right: 0; }
   .nav-links a { font-size: 1.1rem; }
 
-  .hero { padding: 5rem 1.5rem 4rem; }
-  .hero::before { height: 36px; }
+  .hero { padding: 6rem 1.5rem 5rem; }
+  .hero::before { height: 44px; }
+  .hero::after { width: 400px; height: 400px; }
   .hero-kr { font-size: 3rem; }
   .hero-en { font-size: 0.9rem; letter-spacing: 0.25em; }
 
@@ -931,9 +1000,10 @@ img {
   .header-inner { padding: 0 1.25rem; }
   .logo-en { display: none; }
 
-  .hero { padding: 3.5rem 1.25rem 2.5rem; }
-  .hero-kr { font-size: 2.2rem; }
-  .hero-rule { width: 30px; margin: 1rem auto; }
+  .hero { padding: 4.5rem 1.25rem 3.5rem; }
+  .hero::after { width: 300px; height: 300px; }
+  .hero-kr { font-size: 2.4rem; }
+  .hero-rule { width: 36px; margin: 1rem auto; }
   .hero-en { font-size: 0.78rem; letter-spacing: 0.2em; }
   .hero-desc { font-size: 0.88rem; margin-bottom: 2rem; }
 
