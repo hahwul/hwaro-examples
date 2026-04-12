@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="{{ page_language }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description | e }}">
+  <title>{{ page.title | e }} - {{ site.title | e }}</title>
+  {{ og_all_tags }}
+  {{ hreflang_tags }}
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            emerald: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              600: '#059669',
+              700: '#047857',
+              800: '#065f46',
+              900: '#064e3b',
+            },
+            slate: {
+              50: '#f8fafc',
+              900: '#0f172a',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            serif: ['ui-serif', 'Georgia', 'Cambria', '"Times New Roman"', 'Times', 'serif'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <style type="text/tailwindcss">
+    @layer base {
+      body {
+        @apply bg-slate-50 text-slate-900 font-sans antialiased;
+      }
+      h1, h2, h3, h4, h5, h6 {
+        @apply font-serif text-slate-900;
+      }
+    }
+
+    .prose {
+      @apply max-w-none text-slate-700 leading-relaxed;
+    }
+    .prose h1 { @apply text-4xl font-bold mb-8 mt-4; }
+    .prose h2 { @apply text-2xl font-semibold mb-4 mt-12 border-b border-slate-200 pb-2; }
+    .prose h3 { @apply text-xl font-semibold mb-3 mt-8; }
+    .prose p { @apply mb-6; }
+    .prose a { @apply text-emerald-700 hover:text-emerald-600 underline decoration-emerald-200 decoration-2 underline-offset-4 transition-all; }
+    .prose strong { @apply text-slate-900 font-semibold; }
+    .prose code {
+      @apply bg-slate-100 px-1.5 py-0.5 rounded text-sm font-mono text-emerald-800 border border-slate-200;
+    }
+    .prose pre {
+      @apply bg-slate-900 p-6 rounded-xl overflow-x-auto my-8 shadow-sm;
+    }
+    .prose pre code { @apply bg-transparent p-0 border-0 text-slate-300; }
+    .prose blockquote {
+      @apply my-8 pl-6 border-l-4 border-emerald-600 italic text-slate-600 bg-emerald-50/50 py-4 pr-4 rounded-r-lg;
+    }
+    .prose ul { @apply list-disc pl-6 mb-6 marker:text-emerald-600; }
+    .prose ol { @apply list-decimal pl-6 mb-6 marker:text-emerald-600; }
+    .prose li { @apply mb-2; }
+    .prose img { @apply rounded-xl border border-slate-200 shadow-sm my-8; }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      @apply bg-slate-100;
+    }
+    ::-webkit-scrollbar-thumb {
+      @apply bg-slate-300 rounded-full border-2 border-solid border-slate-100 hover:bg-slate-400;
+    }
+
+    /* Search Styles */
+    #searchOverlay.active {
+      @apply opacity-100 pointer-events-auto;
+    }
+    .search-result-item.active {
+      @apply bg-emerald-50 border-emerald-200;
+    }
+    .search-result-item.active .search-result-title {
+      @apply text-emerald-900;
+    }
+    mark {
+      @apply bg-emerald-100 text-emerald-900 font-medium px-0.5 rounded;
+    }
+  </style>
+
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+</head>
+<body class="flex flex-col min-h-screen">
+  <!-- Sticky Header -->
+  <header class="sticky top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10 bg-white/95">
+    <div class="max-w-8xl mx-auto">
+      <div class="py-4 border-b border-slate-900/10 lg:px-8 lg:border-0 mx-4 lg:mx-0">
+        <div class="relative flex items-center">
+          <a class="mr-3 flex-none w-[2.0625rem] overflow-hidden md:w-auto" href="{{ base_url }}/">
+            <span class="sr-only">Evergreen Docs home page</span>
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 bg-emerald-700 rounded-lg flex items-center justify-center text-white font-serif font-bold text-xl">E</div>
+              <span class="text-slate-900 font-serif font-bold text-xl tracking-tight">Evergreen <span class="text-emerald-700 font-normal italic">Docs</span></span>
+            </div>
+          </a>
+          <nav class="hidden md:flex items-center ml-auto text-sm font-medium text-slate-700">
+            <a href="{{ base_url }}/getting-started/" class="hover:text-emerald-700 px-4 py-2">Getting Started</a>
+            <a href="{{ base_url }}/guide/" class="hover:text-emerald-700 px-4 py-2">Guide</a>
+            <a href="{{ base_url }}/reference/" class="hover:text-emerald-700 px-4 py-2 border-r border-slate-200 mr-4">Reference</a>
+            <div class="flex items-center gap-4 pl-4">
+              <button onclick="openSearch()" class="text-slate-400 hover:text-slate-500 flex items-center gap-2 px-3 py-1.5 border border-slate-200 rounded-md bg-slate-50 text-xs">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <span>Search</span>
+                <kbd class="font-sans font-semibold">⌘K</kbd>
+              </button>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Search Overlay -->
+  <div id="searchOverlay" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-200 flex items-start justify-center pt-24" onclick="if(event.target===this)closeSearch()">
+    <div class="bg-white w-full max-w-2xl rounded-xl shadow-2xl overflow-hidden mx-4 flex flex-col max-h-[70vh]">
+      <div class="p-4 border-b border-slate-200 flex items-center gap-3">
+        <svg width="20" height="20" class="text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="searchInput" placeholder="Search documentation..." autocomplete="off" class="flex-1 text-lg outline-none text-slate-900 placeholder-slate-400">
+        <kbd class="text-xs bg-slate-100 px-2 py-1 rounded text-slate-500 cursor-pointer" onclick="closeSearch()">ESC</kbd>
+      </div>
+      <div id="searchResults" class="overflow-y-auto p-2">
+        <!-- Results injected here -->
+      </div>
+    </div>
+  </div>
+
+  <div class="flex-auto w-full max-w-8xl mx-auto lg:flex">
+    <!-- Sidebar -->
+    <aside class="hidden lg:block fixed z-20 inset-0 top-[3.8125rem] left-[max(0px,calc(50%-45rem))] right-auto w-[19rem] pb-10 px-8 overflow-y-auto border-r border-slate-100">
+      <nav class="lg:text-sm lg:leading-6 relative pt-10">
+        <div class="space-y-10">
+          <div>
+            <h5 class="mb-4 lg:mb-3 font-semibold text-slate-900">Getting Started</h5>
+            <ul class="space-y-2 border-l border-slate-100">
+              <li><a class="block border-l pl-4 -ml-px border-transparent hover:border-slate-400 text-slate-700 hover:text-slate-900 py-1" href="{{ base_url }}/getting-started/">Overview</a></li>
+              <li><a class="block border-l pl-4 -ml-px border-transparent hover:border-slate-400 text-slate-700 hover:text-slate-900 py-1" href="{{ base_url }}/getting-started/installation/">Installation</a></li>
+              <li><a class="block border-l pl-4 -ml-px border-transparent hover:border-slate-400 text-slate-700 hover:text-slate-900 py-1" href="{{ base_url }}/getting-started/quick-start/">Quick Start</a></li>
+            </ul>
+          </div>
+          <div>
+            <h5 class="mb-4 lg:mb-3 font-semibold text-slate-900">Core Concepts</h5>
+            <ul class="space-y-2 border-l border-slate-100">
+              <li><a class="block border-l pl-4 -ml-px border-transparent hover:border-slate-400 text-slate-700 hover:text-slate-900 py-1" href="{{ base_url }}/guide/content-management/">Content Management</a></li>
+              <li><a class="block border-l pl-4 -ml-px border-transparent hover:border-slate-400 text-slate-700 hover:text-slate-900 py-1" href="{{ base_url }}/guide/templates/">Templates</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="lg:pl-[19rem] flex-auto">
+      <div class="max-w-3xl mx-auto pt-10 pb-24 px-6 lg:px-8">
+        <article class="prose">
+          {% block content %}{% endblock %}
+        </article>
+
+        <footer class="mt-24 pt-10 border-t border-slate-200">
+          <div class="flex justify-between items-center text-sm text-slate-500">
+            <p>&copy; {{ current_year }} Evergreen Docs. Built with Hwaro.</p>
+            <div class="flex gap-6">
+              <a href="#" class="hover:text-slate-900">Status</a>
+              <a href="#" class="hover:text-slate-900">Privacy</a>
+              <a href="#" class="hover:text-slate-900">Terms</a>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </main>
+  </div>
+
+  {{ highlight_js }}
+  <script src="{{ base_url }}/js/search.js"></script>
+  {{ auto_includes_js }}
+</body>
+</html>
