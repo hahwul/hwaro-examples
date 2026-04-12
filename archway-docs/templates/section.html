@@ -1,0 +1,37 @@
+{% include "header.html" %}
+
+<div class="section-header">
+  <h1>{{ section.title | e }}</h1>
+  {% if section.content %}
+  <div class="prose">
+    {{ content | safe }}
+  </div>
+  {% endif %}
+</div>
+
+{% if section.pages %}
+<div class="timeline">
+  {% for p in section.pages %}
+  <div class="timeline-item">
+    <div class="timeline-dot"></div>
+    <div class="timeline-date">{{ p.date | date(format="%B %e, %Y") }}</div>
+    <div class="timeline-content">
+      <h3><a href="{{ p.permalink }}">{{ p.title | e }}</a></h3>
+      <div class="timeline-meta">
+        <span class="badge badge-{{ p.extra.status | lower | default(value='proposed') }}">{{ p.extra.status | default(value='Proposed') }}</span>
+        {% if p.extra.id %}
+        <span class="text-muted" style="font-size: 0.875rem;">ID: {{ p.extra.id }}</span>
+        {% endif %}
+      </div>
+      {% if p.description %}
+      <p style="margin-top: 0.5rem; font-size: 0.9375rem; color: var(--text-muted);">{{ p.description }}</p>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<p class="text-muted">No records found in this section.</p>
+{% endif %}
+
+{% include "footer.html" %}
