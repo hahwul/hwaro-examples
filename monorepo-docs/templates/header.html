@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="{{ page_language }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description | default(value=site.description) | escape }}">
+  <title>{% if page.title %}{{ page.title | escape }} - {% endif %}{{ site.title | escape }}</title>
+  <link rel="stylesheet" href="{{ base_url }}/css/style.css">
+  {{ highlight_css | safe }}
+</head>
+<body>
+  <header class="header">
+    <div class="header-left">
+      <a href="{{ base_url }}" class="logo">{{ site.title }}</a>
+
+      <div class="package-switcher">
+        <button class="package-switcher-btn">
+          <span>📦 Select Package</span>
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="package-switcher-content">
+          <a href="{{ base_url }}/toolkit" class="package-item">
+            <span>🛠️</span>
+            <span>Toolkit</span>
+          </a>
+          <a href="{{ base_url }}/framework" class="package-item">
+            <span>🏗️</span>
+            <span>Framework</span>
+          </a>
+          <a href="{{ base_url }}/cli" class="package-item">
+            <span>💻</span>
+            <span>CLI</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <nav style="display: flex; gap: 1.5rem; align-items: center;">
+        <button onclick="openSearch()" class="nav-link" style="background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <span>Search</span>
+          <kbd style="font-size: 0.7rem; opacity: 0.5; margin-left: 0.5rem; background: rgba(255,255,255,0.1); padding: 2px 4px; border-radius: 4px;">⌘K</kbd>
+        </button>
+        <a href="{{ base_url }}/guide" class="nav-link">Guide</a>
+        <a href="{{ base_url }}/graph" class="nav-link">Graph</a>
+        <a href="https://github.com/hwaro" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <div id="searchOverlay" class="search-overlay">
+    <div class="search-modal">
+      <div class="search-header">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" id="searchInput" placeholder="Search documentation..." autocomplete="off">
+        <button onclick="closeSearch()" class="search-close">ESC</button>
+      </div>
+      <div id="searchResults" class="search-results"></div>
+    </div>
+  </div>
+
+  <div class="layout">
+    <aside class="sidebar">
+      {% if page %}
+        {% if page.permalink is containing("/toolkit/") %}
+          <div class="nav-section">
+            <div class="nav-section-title">TOOLKIT PACKAGE</div>
+            {% set pkg_section = get_section(path="toolkit/_index.md") %}
+            {% for p in pkg_section.pages %}
+              <a href="{{ p.permalink }}" class="nav-link {% if page.permalink == p.permalink %}active{% endif %}">{{ p.title }}</a>
+            {% endfor %}
+          </div>
+        {% elif page.permalink is containing("/framework/") %}
+          <div class="nav-section">
+            <div class="nav-section-title">FRAMEWORK PACKAGE</div>
+            {% set pkg_section = get_section(path="framework/_index.md") %}
+            {% for p in pkg_section.pages %}
+              <a href="{{ p.permalink }}" class="nav-link {% if page.permalink == p.permalink %}active{% endif %}">{{ p.title }}</a>
+            {% endfor %}
+          </div>
+        {% elif page.permalink is containing("/cli/") %}
+          <div class="nav-section">
+            <div class="nav-section-title">CLI PACKAGE</div>
+            {% set pkg_section = get_section(path="cli/_index.md") %}
+            {% for p in pkg_section.pages %}
+              <a href="{{ p.permalink }}" class="nav-link {% if page.permalink == p.permalink %}active{% endif %}">{{ p.title }}</a>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% elif section %}
+         {% if section.permalink is containing("/toolkit/") %}
+          <div class="nav-section">
+            <div class="nav-section-title">TOOLKIT PACKAGE</div>
+            {% set pkg_section = get_section(path="toolkit/_index.md") %}
+            {% for p in pkg_section.pages %}
+              <a href="{{ p.permalink }}" class="nav-link">{{ p.title }}</a>
+            {% endfor %}
+          </div>
+        {% elif section.permalink is containing("/framework/") %}
+          <div class="nav-section">
+            <div class="nav-section-title">FRAMEWORK PACKAGE</div>
+            {% set pkg_section = get_section(path="framework/_index.md") %}
+            {% for p in pkg_section.pages %}
+              <a href="{{ p.permalink }}" class="nav-link">{{ p.title }}</a>
+            {% endfor %}
+          </div>
+        {% elif section.permalink is containing("/cli/") %}
+          <div class="nav-section">
+            <div class="nav-section-title">CLI PACKAGE</div>
+            {% set pkg_section = get_section(path="cli/_index.md") %}
+            {% for p in pkg_section.pages %}
+              <a href="{{ p.permalink }}" class="nav-link">{{ p.title }}</a>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endif %}
+
+      <div class="nav-section">
+        <div class="nav-section-title">Documentation</div>
+        <a href="{{ base_url }}/guide" class="nav-link">General Guide</a>
+        <a href="{{ base_url }}/graph" class="nav-link">Dependency Graph</a>
+      </div>
+    </aside>
+
+    <main class="main">
