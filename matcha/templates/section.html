@@ -1,0 +1,47 @@
+{% include "header.html" %}
+{% include "nav.html" %}
+<div class="blog-container">
+  <main class="blog-main">
+    <div class="section-header" style="margin-bottom: 4rem; text-align: center;">
+      <h1 style="font-size: 3rem;">{{ page.title | e }}</h1>
+      {% if page.description %}
+        <p class="section-desc" style="font-size: 1.25rem; color: var(--text-secondary);">{{ page.description | e }}</p>
+      {% endif %}
+    </div>
+
+    {{ content | safe }}
+
+    <div class="post-list">
+      {% for post in section.pages %}
+        <article class="post-item">
+          <div class="post-meta">{{ post.date | date("%B %d, %Y") }}</div>
+          <h2 class="post-title"><a href="{{ post.url }}">{{ post.title | e }}</a></h2>
+          <p class="post-excerpt">{{ post.summary | strip_html | truncate_words(30) }}</p>
+          <a href="{{ post.url }}" class="read-more">read more</a>
+        </article>
+      {% endfor %}
+    </div>
+
+    {% if paginate %}
+      <nav class="pagination">
+        <ul class="pagination-list">
+          {% if paginate.prev %}
+            <li><a href="{{ paginate.prev }}">Previous</a></li>
+          {% endif %}
+
+          {% for page_num in range(1, paginate.total_pages + 1) %}
+            {% if page_num == paginate.current_page %}
+              <li class="pagination-current"><span>{{ page_num }}</span></li>
+            {% else %}
+              <li><a href="{{ paginate.base_url }}{{ page_num }}/">{{ page_num }}</a></li>
+            {% endif %}
+          {% endfor %}
+
+          {% if paginate.next %}
+            <li><a href="{{ paginate.next }}">Next</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+    {% endif %}
+
+{% include "footer.html" %}
