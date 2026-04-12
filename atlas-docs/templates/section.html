@@ -1,0 +1,39 @@
+{% include "header.html" %}
+<div class="section-content">
+  <header class="section-header">
+    <h1 class="section-title">{{ section.title | escape }}</h1>
+    {% if section.content %}
+    <div class="prose">
+      {{ section.content | safe }}
+    </div>
+    {% endif %}
+  </header>
+
+  <div class="discovery-cluster">
+    <h2 class="cluster-heading">Discovery Log</h2>
+    <div class="cluster-grid">
+      {% for page in section.pages %}
+      <div class="discovery-item">
+        <div class="item-metadata">
+          <span class="item-coordinates">{% if page.extra.lat %}{{ page.extra.lat }}{% else %}LAT {{ loop.index0 * 2 + 10 }}° N{% endif %}</span>
+          <span class="item-id">#{{ loop.index }}</span>
+        </div>
+        <h3 class="item-title">
+          <a href="{{ page.url }}">{{ page.title | escape }}</a>
+        </h3>
+        {% if page.description %}
+        <p class="item-excerpt">{{ page.description | truncate(length=120) | escape }}</p>
+        {% endif %}
+        <div class="item-footer">
+          <a href="{{ page.url }}" class="read-more">Read Log &rarr;</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  {% if pagination %}
+  {{ pagination | safe }}
+  {% endif %}
+</div>
+{% include "footer.html" %}

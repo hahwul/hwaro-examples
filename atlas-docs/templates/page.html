@@ -1,0 +1,53 @@
+{% include "header.html" %}
+<article class="page-content">
+  <nav class="breadcrumbs">
+    <a href="{{ base_url }}/">Atlas</a>
+    {% for ancestor in page.ancestors %}
+    <span class="separator">/</span>
+    <a href="{{ ancestor.url }}">{{ ancestor.title }}</a>
+    {% endfor %}
+    <span class="separator">/</span>
+    <span class="current">{{ page.title }}</span>
+  </nav>
+
+  <header class="page-header">
+    <div class="header-metadata">
+      <div class="metadata-item">
+        <span class="label">COORDINATES</span>
+        <span class="value">{% if page.extra.lat %}{{ page.extra.lat }}{% else %}48.8584° N{% endif %}, {% if page.extra.lng %}{{ page.extra.lng }}{% else %}2.2945° E{% endif %}</span>
+      </div>
+      <div class="metadata-item">
+        <span class="label">LAST UPDATED</span>
+        <span class="value">{{ page.date | default(value="2024-05-20") }}</span>
+      </div>
+    </div>
+    <h1 class="page-title">{{ page.title | escape }}</h1>
+    {% if page.description %}
+    <p class="page-description">{{ page.description | escape }}</p>
+    {% endif %}
+  </header>
+
+  <div class="discovery-log prose">
+    {{ content | safe }}
+  </div>
+
+  <footer class="page-footer">
+    {% if page.lower or page.higher %}
+    <nav class="page-nav">
+      {% if page.lower %}
+      <a href="{{ page.lower.url }}" class="nav-prev">
+        <span class="nav-label">PREVIOUS EXPEDITION</span>
+        <span class="nav-title">{{ page.lower.title }}</span>
+      </a>
+      {% endif %}
+      {% if page.higher %}
+      <a href="{{ page.higher.url }}" class="nav-next">
+        <span class="nav-label">NEXT EXPEDITION</span>
+        <span class="nav-title">{{ page.higher.title }}</span>
+      </a>
+      {% endif %}
+    </nav>
+    {% endif %}
+  </footer>
+</article>
+{% include "footer.html" %}
