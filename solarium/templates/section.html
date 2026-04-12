@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<header class="section-header">
+  <h1>{{ section.title | e }}</h1>
+</header>
+
+<div class="post-list">
+  {% for p in section.pages %}
+  <article class="post-card">
+    <span class="post-card-meta">{{ p.date | date("%B %d, %Y") }}</span>
+    <h2 class="post-card-title">
+      <a href="{{ p.url }}">{{ p.title | e }}</a>
+    </h2>
+    <div class="post-card-excerpt">
+      {{ p.summary | default("") | strip_html | truncate_words(30) }}
+    </div>
+    <a href="{{ p.url }}" class="read-more">Read Entry &rarr;</a>
+  </article>
+  {% endfor %}
+</div>
+
+{% if paginator %}
+<nav class="pagination">
+  <div class="pagination-list">
+    {% if paginator.previous %}
+    <a href="{{ paginator.previous }}" class="pagination-prev">&larr; Newer</a>
+    {% endif %}
+
+    <span class="pagination-info">Page {{ paginator.current_index }} of {{ paginator.total_pages }}</span>
+
+    {% if paginator.next %}
+    <a href="{{ paginator.next }}" class="pagination-next">Older &rarr;</a>
+    {% endif %}
+  </div>
+</nav>
+{% endif %}
+{% endblock %}
