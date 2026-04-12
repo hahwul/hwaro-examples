@@ -1,0 +1,38 @@
+<div class="tabs-container">
+  <div class="tabs-header">
+    {% for tab in tabs %}
+    <button class="tab-btn {% if loop.first %}active{% endif %}" onclick="openTab(event)">
+      {{ tab.label }}
+    </button>
+    {% endfor %}
+  </div>
+  {% for tab in tabs %}
+  <div class="tab-content {% if loop.first %}active{% endif %}">
+    {{ tab.content | markdownify | safe }}
+  </div>
+  {% endfor %}
+</div>
+
+{% if not tabs_script_loaded %}
+<script>
+function openTab(evt) {
+  var i, tabcontent, tablinks;
+  var container = evt.currentTarget.closest('.tabs-container');
+  var index = Array.from(evt.currentTarget.parentNode.children).indexOf(evt.currentTarget);
+
+  tabcontent = container.getElementsByClassName("tab-content");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].classList.remove("active");
+  }
+
+  tablinks = container.getElementsByClassName("tab-btn");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].classList.remove("active");
+  }
+
+  tabcontent[index].classList.add("active");
+  evt.currentTarget.classList.add("active");
+}
+</script>
+{% set_global tabs_script_loaded = true %}
+{% endif %}
