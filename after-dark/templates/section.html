@@ -1,0 +1,47 @@
+{% include "header.html" %}
+    <section class="section-list">
+      <header class="section-header">
+        <h1>{{ section.title | e }}</h1>
+        {% if section.description %}
+        <p class="section-description">{{ section.description | e }}</p>
+        {% endif %}
+      </header>
+
+      <div class="posts-list">
+        {% for post in section.pages %}
+        <article class="post-card">
+          <div class="post-card-meta">
+            <time>{{ post.date }}</time>
+            {% if post.reading_time %}
+            <span class="meta-divider">·</span>
+            <span>{{ post.reading_time }} min read</span>
+            {% endif %}
+          </div>
+          <h2 class="post-card-title">
+            <a href="{{ post.url }}">{{ post.title | e }}</a>
+          </h2>
+          {% if post.summary %}
+          <p class="post-card-summary">{{ post.summary | strip_html | truncate_words(30) }}</p>
+          {% endif %}
+          <a href="{{ post.url }}" class="read-more">Read Entry →</a>
+        </article>
+        {% endfor %}
+      </div>
+
+      <div class="page-content">
+        {{ content | safe }}
+      </div>
+
+      {% if paginator %}
+      <nav class="pagination">
+        {% if paginator.previous %}
+        <a href="{{ paginator.previous }}" class="pag-prev">← Newer</a>
+        {% endif %}
+        <span class="pag-count">Page {{ paginator.current_index }} of {{ paginator.number_pagers }}</span>
+        {% if paginator.next %}
+        <a href="{{ paginator.next }}" class="pag-next">Older →</a>
+        {% endif %}
+      </nav>
+      {% endif %}
+    </section>
+{% include "footer.html" %}
