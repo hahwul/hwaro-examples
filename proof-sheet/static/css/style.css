@@ -1,0 +1,664 @@
+/* ============================================================================
+   Proof Sheet - Printer's Proof Publication
+   Clean typeset awaiting approval. Off-white paper, black ink, red corrections.
+   PROOF watermark over content, proofing stamps, visible spacing adjustments.
+   No gradients. No emojis.
+   ============================================================================ */
+
+:root {
+  --paper: #faf8f2;
+  --paper-2: #f2eee0;
+  --paper-3: #e6decf;
+  --rule: #d8cfb8;
+  --rule-soft: #e6decf;
+  --ink: #1a1a1a;
+  --ink-2: #2a2a2a;
+  --ink-3: #5a5a5a;
+  --ink-4: #8a8a8a;
+  --ink-muted: #a8a093;
+  --red: #b01818;
+  --red-2: #8a1010;
+  --blue: #1e4a7a;
+  --green: #2a6a3a;
+  --amber: #c97410;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Crimson Text", "Libre Baskerville", Georgia, serif;
+  font-size: 17px;
+  line-height: 1.75;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Subtle paper texture via repeating dots */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle at 2px 2px, rgba(168,160,147,0.08) 0.5px, transparent 0.5px);
+  background-size: 6px 6px;
+  z-index: 0;
+}
+
+.proof-wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------------- Header ---------------- */
+
+.site-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.6rem 0 1.2rem;
+  border-bottom: 1px solid var(--ink);
+  gap: 1.5rem; flex-wrap: wrap;
+  position: relative;
+}
+.site-header::after {
+  content: "";
+  position: absolute;
+  bottom: -5px; left: 0; right: 0;
+  height: 1px;
+  background: var(--ink);
+  opacity: 0.55;
+}
+
+.site-logo { display: flex; align-items: center; gap: 0.9rem; color: var(--ink); text-decoration: none; }
+.site-logo:hover .logo-main { color: var(--red); }
+.logo-mark { width: 52px; height: 52px; }
+.logo-text { display: flex; flex-direction: column; line-height: 1.15; }
+.logo-main {
+  font-family: "Libre Baskerville", "Crimson Text", serif;
+  font-weight: 700; font-size: 1.05rem;
+  letter-spacing: 0.18em;
+  color: var(--ink);
+  transition: color 0.2s;
+}
+.logo-sub {
+  font-family: "Libre Baskerville", serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: 0.78rem;
+  color: var(--red);
+  margin-top: 0.15rem;
+  letter-spacing: 0.08em;
+}
+
+.site-nav { display: flex; gap: 1.8rem; flex-wrap: wrap; }
+.site-nav a {
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 500;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  color: var(--ink-3); text-decoration: none;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+.site-nav a:hover { color: var(--red); border-bottom-color: var(--red); }
+
+/* ---------------- Main ---------------- */
+
+.site-main { padding: 2rem 0 3rem; }
+.proof-article { max-width: 100%; position: relative; }
+
+/* ---------------- Page proof sheet wrapper ---------------- */
+
+.proof-page {
+  position: relative;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  padding: 4rem 4.5rem 3.5rem;
+  margin: 2.5rem 0;
+  overflow: hidden;
+}
+
+/* Watermark: huge PROOF text behind content */
+.proof-page::before {
+  content: "PROOF";
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) rotate(-24deg);
+  font-family: "Libre Baskerville", serif;
+  font-weight: 700;
+  font-size: clamp(14rem, 28vw, 26rem);
+  color: rgba(176, 24, 24, 0.06);
+  letter-spacing: -0.02em;
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 0;
+  line-height: 1;
+}
+
+.proof-page > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Proof page header: proof number, date, signature */
+.proof-page-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: -2rem -2rem 2rem;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px dashed var(--rule);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.72rem;
+  color: var(--ink-3);
+  letter-spacing: 0.1em;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+.proof-page-head span { display: inline-block; }
+.proof-page-head .proof-no { color: var(--red); font-weight: 500; }
+
+/* Stamp placed in top-right of proof page */
+.proof-stamp {
+  position: absolute;
+  top: 3.5rem; right: 3rem;
+  width: 150px;
+  height: 70px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+@media (max-width: 720px) {
+  .proof-page { padding: 3rem 1.6rem 2.4rem; }
+  .proof-stamp { top: 2.4rem; right: 1rem; width: 110px; height: 54px; }
+}
+
+/* ---------------- HERO ---------------- */
+
+.proof-hero {
+  margin: 1.5rem 0 3rem;
+  position: relative;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 860px;
+  margin: 0 auto;
+  text-align: left;
+  padding: 3rem 3.5rem 3.5rem;
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  overflow: hidden;
+}
+
+.hero-content::before {
+  content: "PROOF";
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) rotate(-18deg);
+  font-family: "Libre Baskerville", serif;
+  font-weight: 700;
+  font-size: clamp(10rem, 22vw, 20rem);
+  color: rgba(176, 24, 24, 0.07);
+  letter-spacing: -0.02em;
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 0;
+  line-height: 1;
+}
+
+.hero-content > * { position: relative; z-index: 1; }
+
+.hero-eyebrow {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.25em;
+  color: var(--red);
+  margin: 0 0 1.2rem;
+  text-transform: uppercase;
+}
+
+.hero-title {
+  font-family: "Crimson Text", "Libre Baskerville", serif;
+  font-weight: 700;
+  font-size: clamp(2.6rem, 6vw, 4rem);
+  line-height: 1.15;
+  margin: 0 0 0.8rem;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.hero-lede {
+  font-family: "Crimson Text", serif;
+  font-size: 1.25rem;
+  font-style: italic;
+  color: var(--ink-2);
+  margin: 1.2rem 0 0;
+  line-height: 1.6;
+  max-width: 560px;
+}
+
+.hero-meta-row {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+  padding-top: 1.2rem;
+  border-top: 1px dashed var(--rule);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.78rem;
+  color: var(--ink-3);
+  letter-spacing: 0.08em;
+  flex-wrap: wrap;
+}
+.hero-meta-row span { display: inline-block; }
+.hero-meta-row .label { color: var(--red); display: block; font-size: 0.65rem; letter-spacing: 0.2em; margin-bottom: 0.15rem; text-transform: uppercase; }
+
+/* Hero stamp (top right) */
+.hero-stamp {
+  position: absolute;
+  top: 2.5rem; right: 2.8rem;
+  width: 170px;
+  height: 80px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+@media (max-width: 720px) {
+  .hero-content { padding: 2rem 1.4rem 2.4rem; }
+  .hero-stamp { top: 1.4rem; right: 1rem; width: 110px; height: 54px; }
+}
+
+/* ---------------- Headings ---------------- */
+
+.proof-article h1,
+.proof-article h2,
+.proof-article h3,
+.proof-article h4 {
+  font-family: "Libre Baskerville", "Crimson Text", serif;
+  color: var(--ink);
+  line-height: 1.25;
+}
+
+.proof-article h1 {
+  font-size: 2rem;
+  margin: 2rem 0 1.2rem;
+  font-weight: 700;
+}
+
+.proof-article h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 2.6rem 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--ink);
+}
+
+.proof-article h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 2rem 0 0.8rem;
+  color: var(--ink);
+}
+
+.proof-article h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-style: italic;
+  margin: 1.6rem 0 0.5rem;
+  color: var(--ink-2);
+}
+
+.proof-article p {
+  margin: 0 0 1.1rem;
+  text-align: justify;
+  hyphens: auto;
+}
+
+.proof-article a {
+  color: var(--red);
+  text-decoration: none;
+  border-bottom: 1px solid var(--red);
+}
+.proof-article a:hover { color: var(--red-2); border-bottom-color: var(--red-2); }
+
+.proof-article blockquote {
+  margin: 2rem 0;
+  padding: 1rem 1.6rem;
+  border-left: 3px solid var(--red);
+  background: var(--paper-2);
+  font-family: "Crimson Text", serif;
+  font-style: italic;
+  color: var(--ink-2);
+  font-size: 1.05rem;
+}
+.proof-article blockquote p { margin: 0.4rem 0; }
+
+/* ---------------- Lists ---------------- */
+
+.proof-article ul, .proof-article ol {
+  margin: 1.2rem 0;
+  padding-left: 1.6rem;
+}
+.proof-article li { margin: 0.3rem 0; }
+
+/* ---------------- Tables ---------------- */
+
+.proof-article table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  font-family: "Crimson Text", serif;
+  font-size: 1rem;
+}
+.proof-article th {
+  font-family: "Libre Baskerville", serif;
+  font-weight: 700;
+  font-size: 0.82rem;
+  text-align: left;
+  padding: 0.8rem 0.6rem;
+  border-bottom: 2px solid var(--ink);
+  letter-spacing: 0.02em;
+}
+.proof-article td {
+  padding: 0.7rem 0.6rem;
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink-2);
+  vertical-align: top;
+}
+.proof-article tr:last-child td { border-bottom: 2px solid var(--ink); }
+
+/* ---------------- Visible spacing adjustments (proof marks) ---------------- */
+
+/* Tight line with wider word-spacing to show spacing-adjusted proof */
+.proof-spaced {
+  word-spacing: 0.22em;
+  letter-spacing: 0.008em;
+  display: block;
+  padding: 0.2rem 0;
+}
+
+/* Line showing forced break markers */
+.proof-break {
+  position: relative;
+  display: block;
+}
+.proof-break::after {
+  content: " \2E3F ";
+  color: var(--red);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.85em;
+  display: inline-block;
+  margin-left: 0.2em;
+}
+
+/* Deletion (strikethrough, red) */
+.proof-delete {
+  text-decoration: line-through;
+  text-decoration-color: var(--red);
+  text-decoration-thickness: 1.5px;
+  color: var(--ink-3);
+}
+
+/* Insertion (red caret, red text) */
+.proof-insert {
+  color: var(--red);
+  border-bottom: 1px dotted var(--red);
+}
+
+/* STET marker following a deletion */
+.proof-stet {
+  font-family: "IBM Plex Mono", monospace;
+  color: var(--red);
+  font-size: 0.78em;
+  letter-spacing: 0.15em;
+  margin-left: 0.3em;
+  vertical-align: super;
+}
+
+/* ---------------- Marginalia (proofreader notes) ---------------- */
+
+.proof-margin {
+  float: right;
+  width: 210px;
+  margin: 0.2rem -220px 1rem 1.2rem;
+  padding: 0.6rem 0.9rem 0.7rem;
+  border-left: 2px solid var(--red);
+  font-family: "Libre Baskerville", serif;
+  font-style: italic;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--red-2);
+  background: var(--paper-2);
+  position: relative;
+}
+.proof-margin::before {
+  content: "\2192";
+  position: absolute;
+  left: -15px; top: 0.5rem;
+  font-family: "IBM Plex Mono", monospace;
+  color: var(--red);
+  font-size: 1rem;
+}
+@media (max-width: 1100px) {
+  .proof-margin { float: none; width: auto; margin: 1.2rem 0; }
+}
+
+/* ---------------- Stamp: inline stamp groups on pages ---------------- */
+
+.stamp-row {
+  display: flex;
+  gap: 1rem;
+  margin: 2rem 0 1.2rem;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.stamp-row svg { width: 140px; height: 70px; }
+
+/* ---------------- Proof-mark reference grid ---------------- */
+
+.mark-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.4rem;
+  margin: 2rem 0;
+}
+
+.mark-card {
+  padding: 1.4rem 1.3rem;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+}
+
+.mark-card .mark-symbol {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 1.5rem;
+  color: var(--red);
+  letter-spacing: 0.05em;
+  margin: 0 0 0.3rem;
+}
+
+.mark-card h4 {
+  font-family: "Libre Baskerville", serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin: 0.2rem 0 0.5rem;
+  color: var(--ink);
+}
+
+.mark-card p {
+  margin: 0.3rem 0;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--ink-2);
+  text-align: left;
+}
+
+.mark-card .mark-example {
+  font-family: "Crimson Text", serif;
+  font-size: 0.92rem;
+  margin-top: 0.6rem;
+  padding-top: 0.5rem;
+  border-top: 1px dashed var(--rule);
+  color: var(--ink-3);
+}
+
+/* ---------------- Schedule table (timeline) ---------------- */
+
+.schedule-table {
+  margin: 2rem 0;
+}
+.schedule-table th:first-child { width: 120px; }
+.schedule-table th:last-child { width: 140px; }
+
+.schedule-status {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  padding: 0.18rem 0.5rem;
+  display: inline-block;
+  border: 1px solid;
+}
+.schedule-status.done { color: var(--green); border-color: var(--green); }
+.schedule-status.now { color: var(--red); border-color: var(--red); }
+.schedule-status.next { color: var(--ink-3); border-color: var(--ink-3); }
+
+/* ---------------- Section lists ---------------- */
+
+.section-list {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0;
+}
+.section-list li {
+  padding: 0.8rem 1rem;
+  border-bottom: 1px dotted var(--rule);
+  font-family: "Crimson Text", serif;
+  background: var(--paper);
+}
+.section-list li a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: none;
+  font-weight: 600;
+}
+.section-list li a:hover { color: var(--red); }
+
+.taxonomy-desc {
+  font-family: "Crimson Text", serif;
+  font-style: italic;
+  color: var(--ink-3);
+  margin-bottom: 1.5rem;
+}
+
+/* ---------------- Pagination ---------------- */
+
+nav.pagination { margin: 2rem 0; }
+.pagination-list {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; gap: 0.4rem; flex-wrap: wrap; justify-content: center;
+}
+.pagination-list a, .pagination-list span {
+  display: inline-block;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--rule);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.82rem;
+  color: var(--ink-3);
+  text-decoration: none;
+}
+.pagination-list a:hover { color: var(--red); border-color: var(--red); }
+.pagination-current span { border-color: var(--red); color: var(--red); }
+.pagination-disabled span { opacity: 0.4; }
+
+/* ---------------- Footer ---------------- */
+
+.site-footer {
+  margin-top: 3rem;
+  padding: 0 0 2.5rem;
+}
+.footer-rule {
+  height: 1px;
+  background: var(--ink);
+  margin-bottom: 1px;
+}
+.footer-rule::after {
+  content: "";
+  display: block;
+  height: 1px;
+  margin-top: 3px;
+  background: var(--ink);
+  opacity: 0.55;
+}
+
+.footer-inner {
+  padding: 1.6rem 0 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.9rem;
+  text-align: center;
+}
+.footer-run {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.4rem;
+}
+.footer-signature {
+  display: block;
+  width: 220px; height: 40px;
+}
+.footer-tag {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.22em;
+  color: var(--ink);
+  margin: 0;
+}
+.footer-meta {
+  font-family: "Crimson Text", serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--ink-3);
+  margin: 0;
+}
+.footer-copyright {
+  font-family: "Libre Baskerville", serif;
+  font-size: 0.78rem;
+  color: var(--ink-muted);
+  margin: 0;
+}
+
+/* ---------------- Call to action ---------------- */
+
+.cta {
+  display: inline-block;
+  padding: 0.75rem 2rem;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  color: var(--paper);
+  background: var(--ink);
+  text-decoration: none;
+  border: 1px solid var(--ink);
+  text-transform: uppercase;
+  transition: background 0.2s, color 0.2s;
+}
+.cta:hover { background: var(--red); border-color: var(--red); color: var(--paper); }
+
+/* ---------------- Responsive ---------------- */
+
+@media (max-width: 720px) {
+  .site-header { flex-direction: column; align-items: flex-start; }
+  .site-nav { gap: 1rem; }
+  body { font-size: 16px; }
+  .proof-article h1 { font-size: 1.7rem; }
+  .proof-wrap { padding: 0 1.2rem; }
+  .hero-meta-row { gap: 1.2rem; }
+}
