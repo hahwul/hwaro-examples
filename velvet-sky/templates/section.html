@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="section-container">
+    <header class="section-header">
+        <h1 class="section-title">{{ section.title }}</h1>
+        {% if section.description %}
+            <p class="section-description">{{ section.description }}</p>
+        {% endif %}
+    </header>
+
+    <div class="post-list">
+        {% if section.pages %}
+            {% for post in section.pages %}
+                <article class="list-item">
+                    <h2 class="item-title"><a href="{{ post.url | absolute_url }}">{{ post.title }}</a></h2>
+                    <div class="item-meta">
+                        {% if post.date %}
+                            <time datetime="{{ post.date | date('%Y-%m-%d') }}">{{ post.date | date('%B %d, %Y') }}</time>
+                        {% endif %}
+                    </div>
+                    {% if post.summary %}
+                        <div class="item-summary">{{ post.summary | strip_html }}</div>
+                    {% elif post.description %}
+                        <div class="item-summary">{{ post.description }}</div>
+                    {% endif %}
+                </article>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    {% if pagination %}
+        <div class="pagination">
+            {{ pagination | safe }}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
