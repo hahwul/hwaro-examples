@@ -1,0 +1,375 @@
+/* =============================================================================
+   Pop-Up Page - Dimensional Publication
+   Issue #1559 | book, light, dimensional, paper-engineering, interactive
+   Palette: warm cream page surface, burnt-orange fold accents, charcoal structure
+   No gradients. Fold diagrams + tab-and-slot patterns drawn as inline SVG.
+   ============================================================================= */
+
+:root {
+  --page: #faf6ef;
+  --page-soft: #f0ebe2;
+  --page-deep: #e4ddd0;
+  --page-edge: #c9bfae;
+  --ink: #3a3530;
+  --ink-soft: #5c554c;
+  --ink-dim: #8a7d62;
+  --fold: #c4561a;        /* burnt-orange fold accent */
+  --fold-soft: #d88a5e;
+  --tab: #2b5e4a;         /* deep green tab accent */
+  --charcoal: #1e1c1a;    /* deep structural ink */
+  --bg: #fdfaf4;          /* outer background */
+  --score: rgba(201, 191, 174, 0.3);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg);
+  color: var(--ink);
+}
+
+body {
+  font-family: "Noto Sans", "Inter", system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.72;
+  min-height: 100vh;
+}
+
+.book-shell {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* --- Header -------------------------------------------------------------- */
+.site-header {
+  padding: 2rem 0 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  border-bottom: 1px solid var(--page-edge);
+  flex-wrap: wrap;
+}
+
+.site-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  text-decoration: none;
+  color: var(--ink);
+}
+.logo-mark { width: 52px; height: 52px; display: block; }
+.logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+.logo-main {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+  font-size: 1.25rem;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+}
+.logo-sub {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 0.82rem;
+  color: var(--fold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.site-nav {
+  display: flex;
+  gap: 1.4rem;
+  flex-wrap: wrap;
+}
+.site-nav a {
+  text-decoration: none;
+  color: var(--ink-soft);
+  font-family: "Inter", sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 2px;
+}
+.site-nav a:hover { color: var(--fold); border-bottom-color: var(--fold); }
+
+/* --- Spread (page) ------------------------------------------------------- */
+.site-main {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 3rem;
+}
+
+.spread {
+  position: relative;
+  background-color: var(--page);
+  border: 1px solid var(--page-edge);
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  min-height: 640px;
+  box-shadow:
+    0 1px 0 var(--page-deep),
+    0 18px 36px rgba(196, 86, 26, 0.08);
+  overflow: hidden;
+}
+
+.spread-narrow {
+  grid-template-columns: 1fr;
+}
+
+.fold-gutter {
+  background-color: var(--page-soft);
+  border-right: 1px dashed var(--page-edge);
+}
+.fold-gutter svg { width: 100%; height: 100%; display: block; }
+
+.spread-surface {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+.spread-surface svg { width: 100%; height: 100%; display: block; }
+
+.spread-body {
+  position: relative;
+  z-index: 2;
+  padding: clamp(1.5rem, 4vw, 3.5rem) clamp(1rem, 4vw, 3.5rem);
+}
+
+/* --- Typography in the spread -------------------------------------------- */
+.spread-body h1,
+.spread-body h2,
+.spread-body h3 {
+  font-family: "Montserrat", "Outfit", sans-serif;
+  color: var(--ink);
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 700;
+}
+.spread-body h1 {
+  font-size: clamp(2rem, 4.5vw, 3.1rem);
+  margin: 0 0 0.2em;
+  font-weight: 800;
+  letter-spacing: -0.005em;
+}
+.spread-body h2 {
+  font-size: 1.45rem;
+  margin: 2em 0 0.3em;
+  padding-top: 0.6em;
+  border-top: 1px solid var(--page-edge);
+}
+.spread-body h3 {
+  font-size: 1.05rem;
+  margin: 1.6em 0 0.2em;
+  color: var(--fold);
+}
+
+.spread-body p {
+  margin: 1em 0;
+  color: var(--ink);
+  font-family: "Noto Sans", "Inter", sans-serif;
+}
+.spread-body p.lede {
+  font-family: "Noto Sans", "Inter", sans-serif;
+  font-size: 1.15rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+.spread-label {
+  display: inline-block;
+  font-family: "Outfit", "Montserrat", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fold);
+  margin: 0 0 0.4em;
+  padding: 0.2em 0.6em;
+  background-color: var(--page-soft);
+  border: 1px solid var(--page-edge);
+}
+
+.spread-head { margin-bottom: 2rem; }
+.spread-title {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+  font-size: clamp(2rem, 4.5vw, 3.1rem);
+  margin: 0;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+}
+
+.spread-body a {
+  color: var(--fold);
+  text-decoration: none;
+  border-bottom: 1px solid var(--fold-soft);
+}
+.spread-body a:hover { color: var(--tab); border-bottom-color: var(--tab); }
+
+blockquote {
+  margin: 1.5rem 0;
+  padding: 0.5rem 1.25rem;
+  border-left: 3px solid var(--fold);
+  background-color: var(--page-soft);
+  font-style: italic;
+  color: var(--ink-soft);
+  font-family: "Noto Sans", "Inter", sans-serif;
+  font-size: 1.05rem;
+}
+
+.spread-body ul,
+.spread-body ol {
+  margin: 1em 0 1em 1.5em;
+  padding: 0;
+}
+.spread-body ul { list-style: disc; }
+.spread-body ol { list-style: decimal; }
+.spread-body li { padding: 0.2em 0; }
+
+/* --- Mechanism card grid ------------------------------------------------- */
+.mech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+.mech-card {
+  background-color: var(--page-soft);
+  border: 1px solid var(--page-edge);
+  padding: 1rem 1.1rem;
+  position: relative;
+}
+.mech-card h3 {
+  margin: 0 0 0.3em;
+  color: var(--tab);
+  font-size: 1rem;
+  font-family: "Outfit", "Montserrat", sans-serif;
+  font-weight: 600;
+}
+.mech-card p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+.mech-diagram {
+  margin-bottom: 0.75rem;
+}
+.mech-diagram svg {
+  width: 100%;
+  max-height: 80px;
+  display: block;
+}
+
+/* --- Pop-up diagrams ----------------------------------------------------- */
+.popup-diagram {
+  margin: 1.5rem 0;
+  background-color: var(--page-soft);
+  border: 1px solid var(--page-edge);
+  padding: 1rem;
+}
+.popup-diagram svg {
+  width: 100%;
+  max-height: 200px;
+  display: block;
+}
+
+/* --- Section list -------------------------------------------------------- */
+.section-list {
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0 0;
+  border-top: 1px solid var(--page-edge);
+}
+.section-list li {
+  padding: 0.75rem 0.25rem;
+  border-bottom: 1px solid var(--page-edge);
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  font-family: "Outfit", "Montserrat", sans-serif;
+}
+.section-list li::before {
+  content: "\25B3";               /* triangle up - fold marker */
+  color: var(--fold);
+  font-size: 0.8em;
+  flex-shrink: 0;
+}
+.section-list li a {
+  font-weight: 600;
+  color: var(--ink);
+  border: none;
+  font-size: 1.02rem;
+}
+.section-list li a:hover { color: var(--fold); }
+
+.taxonomy-desc {
+  color: var(--ink-soft);
+  font-style: italic;
+  margin-bottom: 1.25rem;
+}
+
+nav.pagination { margin-top: 2rem; }
+nav.pagination .pagination-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+}
+nav.pagination a,
+.pagination-current span,
+.pagination-disabled span {
+  display: inline-block;
+  padding: 0.3em 0.6em;
+  border: 1px solid var(--page-edge);
+  font-family: "Inter", sans-serif;
+  font-size: 0.85rem;
+  color: var(--ink);
+  text-decoration: none;
+  background-color: var(--page-soft);
+}
+nav.pagination a:hover { color: var(--fold); border-color: var(--fold); }
+.pagination-current span { color: var(--fold); border-color: var(--fold); }
+
+/* --- Footer -------------------------------------------------------------- */
+.site-footer {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 1.5rem 1.5rem 3rem;
+  border-top: 1px solid var(--page-edge);
+  text-align: center;
+}
+.footer-inner { padding-top: 1.5rem; }
+.footer-line {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0.2em 0;
+  letter-spacing: 0.02em;
+}
+.footer-line-small {
+  font-family: "Noto Sans", "Inter", sans-serif;
+  font-style: italic;
+  color: var(--ink-dim);
+  font-size: 0.9rem;
+  margin: 0.2em 0;
+}
+
+/* --- Responsive ---------------------------------------------------------- */
+@media (max-width: 760px) {
+  .spread { grid-template-columns: 32px minmax(0, 1fr); }
+  .spread-body { padding: 1.5rem 1.25rem 2rem; }
+  .site-header { padding: 1.5rem 0 1rem; flex-direction: column; align-items: flex-start; }
+  .site-nav { gap: 1rem; }
+  .spread-title, .spread-body h1 { font-size: 1.9rem; }
+  .spread-body h2 { font-size: 1.2rem; }
+  .popup-diagram svg { max-height: 140px; }
+}
