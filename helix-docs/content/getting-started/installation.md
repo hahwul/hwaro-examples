@@ -37,4 +37,4 @@ We recommend using a sterile virtual environment for all Helix projects.
 
 ## Next Steps
 
-Once your environment is isolated, proceed to [Rapid Prototyping]({{ base_url }}/getting-started/quick-start/) to begin building your first model.
+Once your environment is isolated, proceed to [Rapid Prototyping](/getting-started/quick-start/) to begin building your first model.

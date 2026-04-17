@@ -26,4 +26,4 @@ To initialize your research environment, follow our isolation protocols and rapi
 helix init my-research --scaffold science
 ```
 
-Next, analyze the [Structural Components]({{ base_url }}/guide/) to understand how data is synthesized within our environment.
+Next, analyze the [Structural Components](/guide/) to understand how data is synthesized within our environment.

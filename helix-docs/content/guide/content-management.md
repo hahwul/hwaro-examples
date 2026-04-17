@@ -42,7 +42,7 @@ Sections are directories containing related content. Each section should have an
 Link to other pages using relative paths:
 
 ```markdown
-[Installation](/getting-started/installation.html)
+[Installation](/getting-started/installation/)
 ```
 
 ## Images
