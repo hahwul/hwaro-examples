@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="hero">
+  <h1>{{ page.title }}</h1>
+  {% if page.description %}
+    <p class="hero-subtitle">{{ page.description }}</p>
+  {% endif %}
+</div>
+
+<div class="content-body">
+  {{ content | safe }}
+</div>
+
+{% if site.pages %}
+  <div class="portfolio-grid">
+    <style>
+      .portfolio-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+      .portfolio-item {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        background: var(--bg-alt);
+        text-decoration: none;
+        border-bottom: 1px solid var(--border);
+      }
+      .portfolio-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        border-bottom: 1px solid var(--border);
+      }
+      .portfolio-image {
+        height: 200px;
+        background-color: var(--bg);
+        background-size: cover;
+        background-position: center;
+        border-bottom: 1px solid var(--border);
+      }
+      .portfolio-content {
+        padding: 1.5rem;
+      }
+      .portfolio-title {
+        font-size: 1.2rem;
+        margin: 0 0 0.5rem 0;
+        color: var(--primary);
+      }
+      .portfolio-desc {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        margin: 0;
+        font-family: var(--font-sans);
+      }
+    </style>
+    {% for item in site.pages %}{% if item.section == "work" %}
+      <a href="{{ item.url }}" class="portfolio-item">
+        {% if item.image %}
+          <div class="portfolio-image" style="background-image: url('{{ item.image }}')"></div>
+        {% else %}
+          <div class="portfolio-image" style="background: linear-gradient(135deg, var(--bg-alt) 0%, var(--border) 100%);"></div>
+        {% endif %}
+        <div class="portfolio-content">
+          <h3 class="portfolio-title">{{ item.title }}</h3>
+          {% if item.description %}
+            <p class="portfolio-desc">{{ item.description }}</p>
+          {% elif item.summary %}
+            <p class="portfolio-desc">{{ item.summary | strip_html | truncate_words(15) }}</p>
+          {% endif %}
+        </div>
+      </a>
+    {% endif %}{% endfor %}
+  </div>
+{% endif %}
+{% endblock %}
