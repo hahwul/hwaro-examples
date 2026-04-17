@@ -1,0 +1,453 @@
+/* =========================================================================
+   Ledger Book -- Account Ledger Publication
+   ========================================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+
+:root {
+  --paper: #faf6ea;
+  --paper-tinted: #f2ecd9;
+  --paper-edge: #e9dfc3;
+  --rule-blue: #516b8c;
+  --rule-faint: #d5cfb8;
+  --ink: #18170f;
+  --ink-soft: #3a3728;
+  --ink-mute: #6e6951;
+  --red: #a92020;
+  --red-deep: #7a1414;
+  --green: #2b5c3a;
+  --tan: #8a6a2a;
+  --column: #bd4438;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { background: #201e15; }
+
+body {
+  font-family: 'Crimson Pro', 'Lora', Georgia, serif;
+  color: var(--ink);
+  background: var(--paper);
+  font-size: 18px;
+  line-height: 1.6;
+  margin: 0;
+  min-height: 100vh;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ------------- Page shell ------------- */
+.ledger {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 2.5rem;
+}
+
+.ledger-page {
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  padding: 0;
+  position: relative;
+}
+
+/* ------------- Masthead / Ledger head ------------- */
+.ledger-head {
+  border-bottom: 3px double var(--ink);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.ledger-head-left, .ledger-head-right {
+  padding: 1.5rem 1.8rem;
+}
+
+.ledger-head-right {
+  border-left: 1px solid var(--ink);
+  background: var(--paper-tinted);
+}
+
+.ledger-eyebrow {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 600;
+  font-size: 0.7rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 0.3rem;
+}
+
+.ledger-title {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 700;
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--ink);
+  margin: 0 0 0.3rem;
+}
+
+.ledger-subtitle {
+  font-family: 'Crimson Pro', 'Lora', serif;
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--ink-soft);
+  margin: 0.4rem 0 0;
+  max-width: 520px;
+}
+
+.ledger-ruled-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--red);
+}
+
+.ledger-ruled-header > div {
+  padding: 0.3rem 0;
+  border-top: 1px solid var(--red);
+  border-bottom: 1px solid var(--red);
+}
+
+.ledger-ruled-header > div + div { border-left: 1px solid var(--red); padding-left: 0.8rem; }
+
+.ledger-head-meta {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.8rem;
+  gap: 0 1rem;
+  margin-top: 1rem;
+}
+
+.ledger-head-meta dt {
+  font-weight: 600;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.72rem;
+}
+
+.ledger-head-meta dd {
+  margin: 0;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* ------------- Nav as column headings ------------- */
+.ledger-nav {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: 2px solid var(--ink);
+}
+
+.ledger-nav a {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 600;
+  font-size: 0.78rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 0.8rem 0.6rem;
+  color: var(--ink);
+  text-decoration: none;
+  background: var(--paper);
+  border-right: 1px solid var(--ink);
+}
+
+.ledger-nav a:last-child { border-right: none; }
+
+.ledger-nav a:hover { background: var(--paper-tinted); color: var(--red); }
+
+/* ------------- Main area with ruled lines ------------- */
+.ledger-body {
+  padding: 2rem 2rem 2.5rem;
+  position: relative;
+}
+
+/* ------------- SVG ruled layer ------------- */
+.ruled-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ledger-body > * { position: relative; z-index: 1; }
+
+/* ------------- Article typography ------------- */
+article h1 {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 0 0 0.5rem;
+}
+
+article h2 {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 600;
+  font-size: 1.4rem;
+  color: var(--ink);
+  border-bottom: 1px solid var(--red);
+  padding-bottom: 0.3rem;
+  margin: 2rem 0 0.9rem;
+  letter-spacing: -0.01em;
+}
+
+article h2::before {
+  content: attr(data-acct);
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 500;
+  color: var(--red);
+  margin-right: 0.6rem;
+  font-size: 0.88rem;
+  letter-spacing: 0.1em;
+}
+
+article h3 {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin: 1.5rem 0 0.4rem;
+  color: var(--ink-soft);
+  letter-spacing: 0;
+}
+
+article p {
+  font-family: 'Crimson Pro', 'Lora', serif;
+  font-size: 1.05rem;
+  line-height: 1.68;
+  margin: 0.8rem 0;
+  max-width: 68ch;
+}
+
+article a {
+  color: var(--red);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+article a:hover { color: var(--red-deep); }
+
+article blockquote {
+  border-left: 3px solid var(--red);
+  padding: 0.2rem 0 0.2rem 1rem;
+  margin: 1.2rem 0 1.2rem 0.3rem;
+  font-family: 'Crimson Pro', serif;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+article ul, article ol { padding-left: 1.4rem; }
+
+article code {
+  font-family: 'IBM Plex Mono', monospace;
+  background: var(--paper-tinted);
+  padding: 0.05em 0.35em;
+  font-size: 0.88em;
+  border: 1px solid var(--paper-edge);
+}
+
+article pre {
+  background: var(--paper-tinted);
+  padding: 1rem;
+  border: 1px solid var(--paper-edge);
+  overflow-x: auto;
+  font-size: 0.88rem;
+}
+
+article hr {
+  border: none;
+  border-top: 1px solid var(--red);
+  border-bottom: 1px solid var(--red);
+  height: 4px;
+  margin: 2.4rem 0;
+}
+
+/* ------------- Ledger table ------------- */
+.entry-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'IBM Plex Sans', sans-serif;
+  margin: 1.5rem 0;
+  font-size: 0.92rem;
+}
+
+.entry-table th, .entry-table td {
+  border: 1px solid var(--ink);
+  padding: 0.5rem 0.7rem;
+  text-align: left;
+  font-feature-settings: "tnum";
+}
+
+.entry-table th {
+  background: var(--red);
+  color: var(--paper);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+}
+
+.entry-table tr:nth-child(even) td { background: var(--paper-tinted); }
+
+.entry-table .num {
+  text-align: right;
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 500;
+}
+
+.entry-table .debit { color: var(--ink); }
+.entry-table .credit { color: var(--red); }
+
+.entry-table tfoot td {
+  background: var(--ink);
+  color: var(--paper);
+  font-weight: 700;
+}
+
+/* ------------- Entry cards ------------- */
+.entry-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 0;
+  border: 1px solid var(--ink);
+  margin: 1.5rem 0;
+}
+
+.entry-card {
+  padding: 1.2rem 1.2rem;
+  border-right: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  text-decoration: none;
+  display: block;
+  position: relative;
+}
+
+.entry-card:hover { background: var(--paper-tinted); }
+
+.entry-card-acct {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--red);
+  margin-bottom: 0.3rem;
+}
+
+.entry-card-title {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--ink);
+  margin: 0.2rem 0 0.4rem;
+  letter-spacing: -0.01em;
+}
+
+.entry-card-body {
+  font-family: 'Crimson Pro', serif;
+  font-size: 0.96rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.entry-card-date {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--ink-mute);
+  margin-top: 0.7rem;
+  padding-top: 0.5rem;
+  border-top: 1px dashed var(--paper-edge);
+  letter-spacing: 0.12em;
+}
+
+/* ------------- Page meta ------------- */
+.page-meta {
+  display: flex;
+  flex-wrap: wrap;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.78rem;
+  gap: 0.3rem 1.4rem;
+  color: var(--ink-mute);
+  margin: 0 0 1rem;
+  padding: 0.4rem 0;
+  border-top: 1px solid var(--red);
+  border-bottom: 1px solid var(--red);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.page-meta span { display: inline-flex; align-items: baseline; gap: 0.4rem; }
+.page-meta b { color: var(--red); font-weight: 600; }
+
+/* ------------- Register (catalog) ------------- */
+.register ul {
+  list-style: none;
+  padding: 0;
+  margin: 1.2rem 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 0;
+  border: 1px solid var(--ink);
+}
+
+.register li {
+  border-right: 1px solid var(--paper-edge);
+  border-bottom: 1px solid var(--paper-edge);
+  background: var(--paper);
+}
+
+.register li a {
+  display: block;
+  padding: 0.6rem 0.9rem;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 600;
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.register li a:hover { background: var(--red); color: var(--paper); }
+
+/* ------------- Footer ------------- */
+.ledger-foot {
+  border-top: 3px double var(--ink);
+  padding: 1rem 2rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+  background: var(--paper-tinted);
+}
+
+.ledger-foot p {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin: 0;
+}
+
+.ledger-foot b { color: var(--red); font-weight: 700; }
+
+/* ------------- Responsive ------------- */
+@media (max-width: 720px) {
+  .ledger-head { grid-template-columns: 1fr; }
+  .ledger-head-right { border-left: none; border-top: 1px solid var(--ink); }
+  .ledger-nav { grid-template-columns: repeat(2, 1fr); }
+  .ledger-nav a:nth-child(2) { border-right: none; }
+  .ledger-nav a:nth-child(1), .ledger-nav a:nth-child(2) { border-bottom: 1px solid var(--ink); }
+  .ledger-body { padding: 1.4rem 1rem 1.8rem; }
+  .ledger-head-left, .ledger-head-right { padding: 1rem 1.2rem; }
+}
