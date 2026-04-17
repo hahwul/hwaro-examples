@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="{{ page_language }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description | e }}">
+  <title>{% if page.title is present %}{{ page.title | e }} - {% endif %}{{ site.title | e }}</title>
+  {{ og_all_tags }}
+  {{ hreflang_tags }}
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+    :root {
+      --bg-color: #05050f;
+      --panel-bg: rgba(16, 20, 36, 0.85);
+      --panel-border: #2a3b5c;
+      --primary-glow: #00d2ff;
+      --secondary-glow: #3a7bd5;
+      --text-main: #e0e6ed;
+      --text-muted: #8a9bb2;
+      --accent: #00ffcc;
+      --font-display: 'Orbitron', sans-serif;
+      --font-body: 'Rajdhani', sans-serif;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-body);
+      line-height: 1.6;
+      margin: 0;
+      color: var(--text-main);
+      background-color: var(--bg-color);
+      background-image:
+        radial-gradient(circle at 15% 50%, rgba(58, 123, 213, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 85% 30%, rgba(0, 210, 255, 0.05) 0%, transparent 50%);
+      position: relative;
+      overflow-x: hidden;
+      min-height: 100vh;
+      font-size: 1.1rem;
+    }
+
+    /* Starry Background Effect */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image:
+        radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 40px 70px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 50px 160px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 90px 40px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 130px 80px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 160px 120px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 200px 50px, rgba(255,255,255,0.8), rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 250px 150px, rgba(255,255,255,0.8), rgba(0,0,0,0));
+      background-repeat: repeat;
+      background-size: 300px 300px;
+      opacity: 0.3;
+      z-index: -1;
+      animation: drift 100s linear infinite;
+    }
+
+    @keyframes drift {
+      from { transform: translateY(0); }
+      to { transform: translateY(-300px); }
+    }
+
+    /* Layout & Containers */
+    .site-wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .panel {
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0, 210, 255, 0.1), inset 0 0 20px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+      padding: 2rem;
+      position: relative;
+    }
+
+    .panel::before {
+      content: '';
+      position: absolute;
+      top: -1px; left: -1px; right: -1px; bottom: -1px;
+      border-radius: 8px;
+      background: linear-gradient(45deg, transparent 40%, rgba(0, 210, 255, 0.3) 50%, transparent 60%);
+      z-index: -1;
+      animation: scanline 6s linear infinite;
+    }
+
+    @keyframes scanline {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    /* Header */
+    .site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--panel-border);
+      margin-bottom: 2rem;
+    }
+
+    .site-logo {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.8rem;
+      color: var(--text-main);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 0 0 10px var(--primary-glow);
+    }
+
+    .site-logo::before {
+      content: '►';
+      color: var(--accent);
+      margin-right: 10px;
+      font-size: 1.2rem;
+      text-shadow: 0 0 5px var(--accent);
+    }
+
+    .site-header nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .site-header nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .site-header nav a:hover {
+      color: var(--primary-glow);
+      text-shadow: 0 0 8px var(--primary-glow);
+    }
+
+    .site-header nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary-glow);
+      transition: width 0.3s ease;
+      box-shadow: 0 0 5px var(--primary-glow);
+    }
+
+    .site-header nav a:hover::after {
+      width: 100%;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-display);
+      color: var(--text-main);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 5px rgba(224, 230, 237, 0.3);
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      color: var(--primary-glow);
+      text-shadow: 0 0 15px rgba(0, 210, 255, 0.5);
+      border-bottom: 1px solid rgba(0, 210, 255, 0.2);
+      padding-bottom: 0.5rem;
+      display: inline-block;
+    }
+
+    h2 { font-size: 1.6rem; color: var(--secondary-glow); }
+    h3 { font-size: 1.3rem; }
+
+    p { margin: 1.2em 0; }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: text-shadow 0.2s;
+    }
+
+    a:hover {
+      text-shadow: 0 0 8px var(--accent);
+    }
+
+    blockquote {
+      border-left: 4px solid var(--accent);
+      padding-left: 1rem;
+      margin-left: 0;
+      color: var(--text-muted);
+      font-style: italic;
+      background: rgba(0, 255, 204, 0.05);
+      padding: 1rem;
+      border-radius: 0 4px 4px 0;
+    }
+
+    code {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.2rem 0.4rem;
+      border-radius: 3px;
+      font-family: 'Courier New', Courier, monospace;
+      color: #ff9d00;
+    }
+
+    pre {
+      background: #0a0e17;
+      padding: 1.2rem;
+      border-radius: 6px;
+      overflow-x: auto;
+      border: 1px solid var(--panel-border);
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+    }
+
+    pre code {
+      background: none;
+      padding: 0;
+      color: inherit;
+    }
+
+    ul, ol {
+      padding-left: 1.5rem;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    li::marker {
+      color: var(--accent);
+    }
+
+    /* Content Area */
+    .site-main {
+      flex: 1;
+    }
+
+    /* Footer */
+    .site-footer {
+      margin-top: auto;
+      padding-top: 2rem;
+      border-top: 1px solid var(--panel-border);
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      text-align: center;
+      font-family: var(--font-display);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .status-indicator {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background-color: var(--accent);
+      border-radius: 50%;
+      margin-right: 8px;
+      box-shadow: 0 0 8px var(--accent);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(0, 255, 204, 0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(0, 255, 204, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(0, 255, 204, 0); }
+    }
+
+    /* Lists/Sections */
+    ul.section-list {
+      list-style: none;
+      padding: 0;
+      margin: 2rem 0;
+    }
+
+    ul.section-list li {
+      margin-bottom: 1rem;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    ul.section-list li:hover {
+      background: rgba(0, 210, 255, 0.05);
+      border-color: rgba(0, 210, 255, 0.3);
+      transform: translateX(5px);
+    }
+
+    ul.section-list li a {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      color: var(--text-main);
+    }
+
+    ul.section-list li a:hover {
+      color: var(--primary-glow);
+      text-shadow: 0 0 5px var(--primary-glow);
+    }
+
+    .taxonomy-desc {
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      font-style: italic;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .site-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+      }
+      .site-wrapper {
+        padding: 1rem;
+      }
+    }
+  </style>
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+</head>
+<body data-section="{{ page.section }}">
+  <div class="site-wrapper">
+    <div class="panel">
+      <header class="site-header">
+        <a href="{{ base_url }}/" class="site-logo">{{ site.title | default(value="Astral Voyage") }}</a>
+        <nav>
+          <a href="{{ base_url }}/">Logs</a>
+          <a href="{{ base_url }}/about/">Crew</a>
+        </nav>
+      </header>
