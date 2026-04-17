@@ -1,0 +1,98 @@
+{% include "header.html" %}
+<section class="room">
+  <div class="room-main">
+    <article class="briefing">
+      <div class="briefing-header">
+        <div class="kicker">{{ page.extra.beat | default(value="BRIEFING") }}</div>
+        <h1>{{ page.title }}</h1>
+        {% if page.extra.principal %}<div class="byline">Principal: <b>{{ page.extra.principal }}</b>{% if page.extra.reporter %} &middot; Filed by <b>{{ page.extra.reporter }}</b>{% endif %}</div>{% endif %}
+        <div class="dateline">
+          {% if page.date %}<span><b>Dateline</b>{{ page.date | date(format="%d %b %Y") }}</span>{% endif %}
+          {% if page.extra.rule %}<span><b>Rule</b>{{ page.extra.rule }}</span>{% endif %}
+          {% if page.extra.embargo %}<span><b>Embargo</b>{{ page.extra.embargo }}</span>{% endif %}
+          {% if page.extra.room %}<span><b>Room</b>{{ page.extra.room }}</span>{% endif %}
+        </div>
+      </div>
+      {% if page.extra.ground_rules %}
+      <div class="ground-rules">
+        <ul>
+          {% for rule in page.extra.ground_rules %}
+          <li>{{ rule | safe }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+      <div class="briefing-body">
+        {{ content }}
+      </div>
+    </article>
+  </div>
+  <aside class="room-aside">
+    <div class="aside-card">
+      <h4>The Media Pool</h4>
+      <svg class="aside-media-svg" viewBox="0 0 280 160" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <title>Camera and microphone cluster</title>
+        <rect x="0" y="0" width="280" height="160" fill="#fefbf5"/>
+        <rect x="0" y="140" width="280" height="20" fill="#e8e4dc"/>
+        <g transform="translate(60, 60)">
+          <rect x="-30" y="-16" width="60" height="34" fill="#1f2d38" stroke="#0e1a24" stroke-width="1"/>
+          <rect x="-24" y="-24" width="14" height="12" fill="#1f2d38"/>
+          <circle cx="6" cy="1" r="14" fill="#0e1a24"/>
+          <circle cx="6" cy="1" r="9" fill="#5a6570"/>
+          <circle cx="6" cy="1" r="5" fill="#1f2d38"/>
+          <circle cx="2" cy="-3" r="2" fill="#a02020" opacity="0.8"/>
+          <rect x="-28" y="18" width="56" height="4" fill="#0e1a24"/>
+          <line x1="0" y1="22" x2="0" y2="80" stroke="#0e1a24" stroke-width="2"/>
+          <polygon points="-20,80 20,80 16,90 -16,90" fill="#1f2d38"/>
+        </g>
+        <g transform="translate(160, 50)">
+          <ellipse cx="0" cy="0" rx="12" ry="18" fill="#0e1a24"/>
+          <g stroke="#5a6570" stroke-width="0.6" fill="none">
+            <line x1="-8" y1="-12" x2="8" y2="-12"/>
+            <line x1="-10" y1="-6" x2="10" y2="-6"/>
+            <line x1="-10" y1="0" x2="10" y2="0"/>
+            <line x1="-10" y1="6" x2="10" y2="6"/>
+            <line x1="-8" y1="12" x2="8" y2="12"/>
+          </g>
+          <rect x="-3" y="18" width="6" height="20" fill="#1f2d38"/>
+          <rect x="-6" y="38" width="12" height="6" fill="#0e1a24"/>
+          <line x1="0" y1="44" x2="0" y2="90" stroke="#0e1a24" stroke-width="2"/>
+        </g>
+        <g transform="translate(220, 72)">
+          <ellipse cx="0" cy="0" rx="10" ry="14" fill="#0e1a24"/>
+          <g stroke="#5a6570" stroke-width="0.5" fill="none">
+            <line x1="-6" y1="-8" x2="6" y2="-8"/>
+            <line x1="-8" y1="-2" x2="8" y2="-2"/>
+            <line x1="-8" y1="4" x2="8" y2="4"/>
+            <line x1="-6" y1="10" x2="6" y2="10"/>
+          </g>
+          <rect x="-2" y="14" width="4" height="16" fill="#1f2d38"/>
+          <line x1="0" y1="30" x2="0" y2="68" stroke="#0e1a24" stroke-width="1.5"/>
+        </g>
+      </svg>
+    </div>
+    <div class="aside-card">
+      <h4>Other Briefings</h4>
+      <ul>
+        {% for post in site.pages | sort_by(attribute="date", reverse=true) %}
+        {% if post.section == "briefings" and post.url != page.url %}
+        <li>
+          <a href="{{ post.url }}">{{ post.title }}</a>
+          <small>{% if post.date %}{{ post.date | date(format="%d %b %Y") }}{% endif %} &middot; {{ post.extra.beat | default(value="GENERAL") }}</small>
+        </li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="aside-card">
+      <h4>Accreditation</h4>
+      <div class="aside-contact">
+        <b>Credential Desk</b>
+        Briefing Room 4B &middot; 0700&ndash;0800
+        <b>Questions</b>
+        questions@press-pass.test
+      </div>
+    </div>
+  </aside>
+</section>
+{% include "footer.html" %}
