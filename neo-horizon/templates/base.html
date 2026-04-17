@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="{{ page_language }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{% if page is defined %}{{ page.description | e }}{% else %}{{ site.description | e }}{% endif %}">
+  <title>{% if page is defined and page.title is present %}{{ page.title | e }} - {% endif %}{{ site.title | e }}</title>
+  {{ og_all_tags | safe }}
+  {{ hreflang_tags | safe }}
+  <style>
+    :root {
+      --primary: #00f0ff;
+      --secondary: #ff003c;
+      --bg: #0d0d12;
+      --bg-glass: rgba(255, 255, 255, 0.05);
+      --bg-glass-hover: rgba(255, 255, 255, 0.1);
+      --text: #e0e0e0;
+      --text-muted: #8b8b99;
+      --border: rgba(0, 240, 255, 0.2);
+      --glow: 0 0 10px rgba(0, 240, 255, 0.5), 0 0 20px rgba(0, 240, 255, 0.3);
+      --font-mono: "Fira Code", "Consolas", monospace;
+      --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      margin: 0;
+      color: var(--text);
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(circle at 15% 50%, rgba(0, 240, 255, 0.05), transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(255, 0, 60, 0.05), transparent 25%);
+      background-attachment: fixed;
+    }
+
+    .site-wrapper {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Header */
+    .site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 3rem;
+    }
+
+    .site-logo {
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: var(--text);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: var(--glow);
+    }
+
+    .site-header nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .site-header nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: color 0.3s ease, text-shadow 0.3s ease;
+    }
+
+    .site-header nav a:hover {
+      color: var(--primary);
+      text-shadow: var(--glow);
+    }
+
+    /* Main Content */
+    .site-main { flex: 1; }
+
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 {
+      color: #ffffff;
+      font-family: var(--font-sans);
+      margin-top: 2em;
+      margin-bottom: 0.75em;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-top: 0;
+      text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    }
+
+    h2 {
+      font-size: 1.75rem;
+      border-bottom: 1px solid var(--bg-glass);
+      padding-bottom: 0.5rem;
+    }
+
+    p { margin: 1.2em 0; }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    a:hover {
+      color: var(--secondary);
+      text-shadow: 0 0 8px rgba(255, 0, 60, 0.5);
+    }
+
+    /* Code Blocks */
+    code {
+      background: var(--bg-glass);
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.85em;
+      font-family: var(--font-mono);
+      color: var(--primary);
+      border: 1px solid rgba(0, 240, 255, 0.1);
+    }
+
+    pre {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 1.5rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+    }
+
+    pre code {
+      background: none;
+      padding: 0;
+      border: none;
+      color: #e0e0e0;
+    }
+
+    /* Cards & Components */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .card {
+      background: var(--bg-glass);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      padding: 1.5rem;
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary);
+      box-shadow: var(--glow);
+    }
+
+    .card h3 {
+      margin-top: 0;
+      color: var(--primary);
+    }
+
+    ul.section-list {
+      list-style: none;
+      padding: 0;
+      margin: 2rem 0;
+    }
+
+    ul.section-list li {
+      margin-bottom: 1rem;
+      padding: 1rem 1.5rem;
+      background: var(--bg-glass);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    ul.section-list li:hover {
+      border-color: var(--primary);
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.1);
+      background: var(--bg-glass-hover);
+    }
+
+    ul.section-list li a {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    ul.section-list li a:hover {
+      color: var(--primary);
+      text-shadow: var(--glow);
+      text-decoration: none;
+    }
+
+    .list-date {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+    }
+
+    .taxonomy-desc {
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+    }
+
+    /* Pagination */
+    nav.pagination { margin: 3rem 0; }
+    nav.pagination .pagination-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    nav.pagination a, .pagination-current span, .pagination-disabled span {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 2.5rem;
+      height: 2.5rem;
+      padding: 0 0.5rem;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    nav.pagination a {
+      border: 1px solid var(--bg-glass);
+      color: var(--text-muted);
+      background: rgba(0,0,0,0.2);
+    }
+
+    nav.pagination a:hover {
+      color: var(--bg);
+      background: var(--primary);
+      border-color: var(--primary);
+      box-shadow: var(--glow);
+    }
+
+    .pagination-current span {
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      background: rgba(0, 240, 255, 0.1);
+      box-shadow: inset 0 0 10px rgba(0, 240, 255, 0.2);
+    }
+
+    .pagination-disabled span {
+      border: 1px solid rgba(255,255,255,0.02);
+      color: #444;
+      background: rgba(0,0,0,0.1);
+    }
+
+    /* Footer */
+    .site-footer {
+      margin-top: 4rem;
+      padding: 2rem 0;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      text-align: center;
+      font-family: var(--font-mono);
+    }
+
+    .site-footer a { color: var(--text-muted); text-decoration: underline; }
+    .site-footer a:hover { color: var(--primary); text-decoration: none; }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .site-header { flex-direction: column; gap: 1rem; align-items: flex-start; }
+      h1 { font-size: 2rem; }
+    }
+  </style>
+  {{ highlight_css | safe }}
+  {{ auto_includes_css | safe }}
+</head>
+<body data-section="{% if page is defined %}{{ page.section }}{% endif %}">
+  <div class="site-wrapper">
+    <header class="site-header">
+      <a href="{{ base_url }}" class="site-logo">{{ site.title }}</a>
+      <nav>
+        <a href="{{ base_url }}">Home</a>
+        <a href="{{ base_url }}about/">About</a>
+      </nav>
+    </header>
+
+    <main class="site-main">
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; {{ site.title }}. Built with <a href="https://github.com/hahwul/hwaro">Hwaro</a>.</p>
+    </footer>
+  </div>
+</body>
+</html>
