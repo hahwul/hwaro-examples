@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="hero">
+    <div class="hero-content">
+        <h1 class="hero-title">Welcome to Velvet Sky</h1>
+        <p class="hero-subtitle">Where elegance meets the quiet night.</p>
+    </div>
+</div>
+
+<div class="recent-posts">
+    <h2 class="section-title">Latest Journal Entries</h2>
+    <div class="post-grid">
+        {% set has_posts = false %}
+        {% for section in site.sections %}
+            {% if section.title == "Journal" %}
+                {% if section.pages %}
+                    {% set has_posts = true %}
+                    {% for post in section.pages %}
+                        <article class="post-card">
+                            <h3 class="post-title"><a href="{{ post.url | absolute_url }}">{{ post.title }}</a></h3>
+                            <div class="post-meta">
+                                {% if post.date %}
+                                    <time datetime="{{ post.date | date('%Y-%m-%d') }}">{{ post.date | date('%B %d, %Y') }}</time>
+                                {% endif %}
+                            </div>
+                            {% if post.summary %}
+                                <div class="post-summary">{{ post.summary | strip_html }}</div>
+                            {% elif post.description %}
+                                <div class="post-summary">{{ post.description }}</div>
+                            {% endif %}
+                            <a href="{{ post.url | absolute_url }}" class="read-more">Read Entry</a>
+                        </article>
+                    {% endfor %}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+
+        {% if not has_posts %}
+            <p class="no-posts">The journal is currently quiet.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
