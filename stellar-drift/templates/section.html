@@ -1,0 +1,72 @@
+{% include "header.html" %}
+
+<div class="content-glass">
+  {% if page.content %}
+    <div class="prose">
+      {{ page.content | safe }}
+    </div>
+  {% else %}
+    <header class="taxonomy-header">
+      <h1 class="article-title">{{ page.title }}</h1>
+      {% if page.description %}
+      <p class="post-summary">{{ page.description }}</p>
+      {% endif %}
+    </header>
+  {% endif %}
+
+  {% if paginator %}
+    <div class="post-list">
+      {% for post in paginator.pages %}
+        <a href="{{ base_url }}{{ post.permalink }}" class="post-card">
+          <h2>{{ post.title }}</h2>
+          <div class="post-meta">
+            {% if post.date %}
+              <time datetime="{{ post.date }}">{{ post.date | date(format="%Y-%m-%d") }}</time>
+            {% endif %}
+            {% if post.reading_time %}
+              <span>{{ post.reading_time }} min read</span>
+            {% endif %}
+          </div>
+          {% if post.description %}
+            <p class="post-summary">{{ post.description }}</p>
+          {% endif %}
+        </a>
+      {% endfor %}
+    </div>
+
+    {% if paginator.total_pages > 1 %}
+      <div class="pagination">
+        {% if paginator.previous %}
+          <a href="{{ base_url }}{{ paginator.previous }}" class="btn">← Newer</a>
+        {% endif %}
+        <span>Page {{ paginator.current_index }} of {{ paginator.total_pages }}</span>
+        {% if paginator.next %}
+          <a href="{{ base_url }}{{ paginator.next }}" class="btn">Older →</a>
+        {% endif %}
+      </div>
+    {% endif %}
+  {% else %}
+    {% if pages %}
+      <div class="post-list">
+        {% for post in pages %}
+          <a href="{{ base_url }}{{ post.permalink }}" class="post-card">
+            <h2>{{ post.title }}</h2>
+            <div class="post-meta">
+              {% if post.date %}
+                <time datetime="{{ post.date }}">{{ post.date | date(format="%Y-%m-%d") }}</time>
+              {% endif %}
+              {% if post.reading_time %}
+                <span>{{ post.reading_time }} min read</span>
+              {% endif %}
+            </div>
+            {% if post.description %}
+              <p class="post-summary">{{ post.description }}</p>
+            {% endif %}
+          </a>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endif %}
+</div>
+
+{% include "footer.html" %}
