@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="{{ page_language }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description | default(value=site.description) | e }}">
+  <title>{% if page.title is present %}{{ page.title | e }} - {% endif %}{{ site.title | e }}</title>
+  {{ og_all_tags | safe }}
+  {{ hreflang_tags | safe }}
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+    :root {
+      --cyan: #0ff;
+      --magenta: #f0f;
+      --bg: #050510;
+      --bg-panel: rgba(10, 10, 25, 0.85);
+      --text: #cceeff;
+      --border: #0ff;
+      --glitch-color1: #f0f;
+      --glitch-color2: #0ff;
+    }
+
+    body {
+      font-family: 'Share Tech Mono', monospace;
+      background-color: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      background-image:
+        linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px);
+      background-size: 20px 20px;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0,0,0,0.15),
+        rgba(0,0,0,0.15) 1px,
+        transparent 1px,
+        transparent 2px
+      );
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    .container {
+      flex: 1;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem;
+      width: 100%;
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    .container::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      box-shadow: inset 0 0 50px rgba(0, 255, 255, 0.1);
+      pointer-events: none;
+      border: 1px solid rgba(0, 255, 255, 0.2);
+      z-index: -1;
+    }
+
+    a {
+      color: var(--cyan);
+      text-decoration: none;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    a:hover {
+      color: var(--magenta);
+      text-shadow: 0 0 8px var(--magenta);
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      color: var(--cyan);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+      border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+      padding-bottom: 0.5rem;
+    }
+
+    /* Glitch effect on hover for h1 */
+    h1 {
+      position: relative;
+      display: inline-block;
+    }
+    h1:hover {
+      animation: glitch-skew 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+      color: #fff;
+    }
+    h1:hover::before,
+    h1:hover::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    h1:hover::before {
+      left: 2px;
+      text-shadow: -2px 0 var(--glitch-color1);
+      clip: rect(44px, 450px, 56px, 0);
+      animation: glitch-anim 5s infinite linear alternate-reverse;
+    }
+    h1:hover::after {
+      left: -2px;
+      text-shadow: -2px 0 var(--glitch-color2);
+      clip: rect(44px, 450px, 56px, 0);
+      animation: glitch-anim2 5s infinite linear alternate-reverse;
+    }
+
+    header {
+      border-bottom: 2px solid var(--cyan);
+      padding-bottom: 1rem;
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--magenta);
+      opacity: 0.5;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .nav-links a {
+      text-transform: uppercase;
+      font-size: 1.1rem;
+      padding: 0.2rem 0.5rem;
+      border: 1px solid transparent;
+    }
+
+    .nav-links a:hover {
+      border: 1px solid var(--cyan);
+      background: rgba(0, 255, 255, 0.1);
+    }
+
+    .site-title {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--cyan);
+      margin: 0;
+      text-shadow: 0 0 10px var(--cyan);
+    }
+
+    main {
+      background: var(--bg-panel);
+      padding: 2rem;
+      border: 1px solid rgba(0, 255, 255, 0.3);
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.1);
+      position: relative;
+    }
+
+    main::before {
+      content: "[ SYS_READY ]";
+      position: absolute;
+      top: -10px;
+      right: 10px;
+      background: var(--bg);
+      color: var(--cyan);
+      font-size: 0.8rem;
+      padding: 0 5px;
+    }
+
+    footer {
+      margin-top: auto;
+      text-align: center;
+      padding: 2rem 0;
+      border-top: 1px dashed var(--cyan);
+      color: rgba(204, 238, 255, 0.6);
+      font-size: 0.9rem;
+    }
+
+    /* Blocks */
+    pre {
+      background: rgba(0, 20, 30, 0.8);
+      border-left: 3px solid var(--magenta);
+      padding: 1rem;
+      overflow-x: auto;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+    }
+
+    code {
+      color: var(--magenta);
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    blockquote {
+      border-left: 4px solid var(--cyan);
+      margin-left: 0;
+      padding-left: 1rem;
+      color: #88ccff;
+      font-style: italic;
+      background: rgba(0, 255, 255, 0.05);
+      padding: 1rem;
+    }
+
+    hr {
+      border: 0;
+      height: 1px;
+      background-image: linear-gradient(to right, transparent, var(--cyan), transparent);
+      margin: 2rem 0;
+    }
+
+    /* Scanline animation */
+    @keyframes glitch-anim {
+      0% { clip: rect(10px, 9999px, 86px, 0); }
+      5% { clip: rect(62px, 9999px, 8px, 0); }
+      10% { clip: rect(74px, 9999px, 47px, 0); }
+      15% { clip: rect(2px, 9999px, 19px, 0); }
+      20% { clip: rect(11px, 9999px, 49px, 0); }
+      25% { clip: rect(59px, 9999px, 2px, 0); }
+      30% { clip: rect(89px, 9999px, 14px, 0); }
+      35% { clip: rect(51px, 9999px, 86px, 0); }
+      40% { clip: rect(79px, 9999px, 50px, 0); }
+      45% { clip: rect(40px, 9999px, 11px, 0); }
+      50% { clip: rect(27px, 9999px, 7px, 0); }
+      55% { clip: rect(4px, 9999px, 66px, 0); }
+      60% { clip: rect(93px, 9999px, 18px, 0); }
+      65% { clip: rect(10px, 9999px, 86px, 0); }
+      70% { clip: rect(56px, 9999px, 25px, 0); }
+      75% { clip: rect(20px, 9999px, 48px, 0); }
+      80% { clip: rect(81px, 9999px, 8px, 0); }
+      85% { clip: rect(70px, 9999px, 92px, 0); }
+      90% { clip: rect(38px, 9999px, 63px, 0); }
+      95% { clip: rect(31px, 9999px, 40px, 0); }
+      100% { clip: rect(17px, 9999px, 95px, 0); }
+    }
+    @keyframes glitch-anim2 {
+      0% { clip: rect(65px, 9999px, 100px, 0); }
+      5% { clip: rect(52px, 9999px, 74px, 0); }
+      10% { clip: rect(79px, 9999px, 85px, 0); }
+      15% { clip: rect(75px, 9999px, 5px, 0); }
+      20% { clip: rect(67px, 9999px, 61px, 0); }
+      25% { clip: rect(14px, 9999px, 79px, 0); }
+      30% { clip: rect(1px, 9999px, 66px, 0); }
+      35% { clip: rect(86px, 9999px, 30px, 0); }
+      40% { clip: rect(23px, 9999px, 98px, 0); }
+      45% { clip: rect(85px, 9999px, 72px, 0); }
+      50% { clip: rect(71px, 9999px, 75px, 0); }
+      55% { clip: rect(2px, 9999px, 48px, 0); }
+      60% { clip: rect(30px, 9999px, 16px, 0); }
+      65% { clip: rect(59px, 9999px, 50px, 0); }
+      70% { clip: rect(41px, 9999px, 62px, 0); }
+      75% { clip: rect(2px, 9999px, 82px, 0); }
+      80% { clip: rect(47px, 9999px, 73px, 0); }
+      85% { clip: rect(3px, 9999px, 27px, 0); }
+      90% { clip: rect(26px, 9999px, 55px, 0); }
+      95% { clip: rect(42px, 9999px, 97px, 0); }
+      100% { clip: rect(38px, 9999px, 49px, 0); }
+    }
+    @keyframes glitch-skew {
+      0% { transform: skew(0deg); }
+      10% { transform: skew(-5deg); }
+      20% { transform: skew(4deg); }
+      30% { transform: skew(-2deg); }
+      40% { transform: skew(1deg); }
+      50% { transform: skew(-3deg); }
+      60% { transform: skew(5deg); }
+      70% { transform: skew(-1deg); }
+      80% { transform: skew(2deg); }
+      90% { transform: skew(-4deg); }
+      100% { transform: skew(0deg); }
+    }
+
+  </style>
+  {{ highlight_css | safe }}
+  {{ auto_includes_css | safe }}
+</head>
+<body data-section="{{ page.section | default(value='') }}">
+  <div class="container">
+    {% include "header.html" %}
+
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+
+    {% include "footer.html" %}
+  </div>
+
+  {{ highlight_js | safe }}
+  {{ auto_includes_js | safe }}
+</body>
+</html>
