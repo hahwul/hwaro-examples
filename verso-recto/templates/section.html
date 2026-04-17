@@ -1,0 +1,43 @@
+{% include "header.html" %}
+<div class="spread-shell">
+  <div class="spread">
+    <div class="page verso">
+      <div class="running-head">
+        <span>{{ site.title }}</span>
+        <span class="folio">[iii]</span>
+      </div>
+      <h1 class="page-title">{{ page.title }}</h1>
+      {{ content }}
+    </div>
+    <div class="page recto">
+      <div class="running-head">
+        <span class="folio">[iv]</span>
+        <span>INDEX</span>
+      </div>
+      <h1 class="page-title">Contents</h1>
+      <p>The spreads in this section are listed on the facing register. Each spread is a two-page object: a serif verso and a sans recto, to be read together.</p>
+      <h2>How To Read</h2>
+      <p>Open the spread; the left-hand page sets the argument in a serif voice, the right-hand page answers in a sans voice. Do not turn a leaf until both pages have been read through.</p>
+    </div>
+  </div>
+</div>
+<section class="listing">
+  <h2><em>Index of</em> <strong>Spreads</strong></h2>
+  <div class="listing-grid">
+    {% for post in section.pages | sort_by(attribute="date", reverse=true) %}
+    <div class="listing-card" data-side="{% if loop.index0 is odd %}r{% else %}v{% endif %}">
+      <div class="listing-folio">
+        <span>{{ post.extra.folios | default(value="&#8212;") | safe }}</span>
+        <span>{{ post.extra.signature | default(value="A") }}</span>
+      </div>
+      <div class="listing-title"><a href="{{ post.url }}">{{ post.title }}</a></div>
+      {% if post.description %}<div class="listing-summary">{{ post.description }}</div>{% endif %}
+      <div class="listing-meta">
+        <span>{% if post.date %}{{ post.date | date(format="%d %b %Y") }}{% endif %}</span>
+        <span>{{ post.extra.spread | default(value="Sp. --") }}</span>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% include "footer.html" %}

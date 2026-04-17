@@ -1,0 +1,47 @@
+{% include "header.html" %}
+<div class="spread-shell">
+  <div class="spread">
+    <div class="page verso">
+      <div class="running-head">
+        <span>Prospectus</span>
+        <span class="folio">[i]</span>
+      </div>
+      <h1 class="page-title">Of the Facing Page</h1>
+      {{ content }}
+    </div>
+    <div class="page recto">
+      <div class="running-head">
+        <span class="folio">[ii]</span>
+        <span>FRONTISPIECE</span>
+      </div>
+      <h1 class="page-title">The Reader&rsquo;s Part.</h1>
+      <p>A codex opens to a spread, not to a page. The eye settles on the gutter first &mdash; the axis of the book &mdash; and from there it moves outward, to one page and then the other.</p>
+      <h2>Two Voices</h2>
+      <p>Verso speaks in serif: <em>Cormorant Garamond</em>, a revival of the old faces. Recto speaks in sans: <strong>Inter</strong>, a contemporary grotesque. Both voices sit on the same text face (Source Serif) in the running body, as a shared floor.</p>
+      <h2>The Invitation</h2>
+      <p>Open a spread. Do not turn until both pages have answered one another.</p>
+    </div>
+  </div>
+</div>
+<section class="listing">
+  <h2><em>This issue&rsquo;s</em> <strong>Spreads</strong></h2>
+  <div class="listing-grid">
+    {% for post in site.pages | sort_by(attribute="date", reverse=true) %}
+    {% if post.section == "spreads" %}
+    <div class="listing-card" data-side="{% if loop.index0 is odd %}r{% else %}v{% endif %}">
+      <div class="listing-folio">
+        <span>{{ post.extra.folios | default(value="&#8212;") | safe }}</span>
+        <span>{{ post.extra.signature | default(value="A") }}</span>
+      </div>
+      <div class="listing-title"><a href="{{ post.url }}">{{ post.title }}</a></div>
+      {% if post.description %}<div class="listing-summary">{{ post.description }}</div>{% endif %}
+      <div class="listing-meta">
+        <span>{% if post.date %}{{ post.date | date(format="%d %b %Y") }}{% endif %}</span>
+        <span>{{ post.extra.spread | default(value="Sp. --") }}</span>
+      </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+</section>
+{% include "footer.html" %}
