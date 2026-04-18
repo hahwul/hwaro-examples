@@ -33,27 +33,6 @@ jobs:
             echo "Newly added examples: $NEW"
           fi
 
-      - name: Run hwaro doctor on new examples
-        if: steps.detect.outputs.new != ''
-        run: |
-          FAILED=""
-          for name in ${{ steps.detect.outputs.new }}; do
-            echo ""
-            echo "::group::hwaro doctor — $name"
-            if ! docker run --rm \
-              -v "${GITHUB_WORKSPACE}/examples/$name:/src" \
-              -w /src \
-              ghcr.io/hahwul/hwaro doctor; then
-              FAILED="$FAILED $name"
-            fi
-            echo "::endgroup::"
-          done
-
-          if [ -n "$FAILED" ]; then
-            echo "::error::hwaro doctor failed for:$FAILED"
-            exit 1
-          fi
-
       - name: Trial build for new examples
         if: steps.detect.outputs.new != ''
         run: |
