@@ -30,7 +30,7 @@ You can download pre-built binaries (DEB, RPM, APK, or raw binaries) directly fr
 
 ## Contributing with Jules
 
-If you are using [Jules](https://jules.dev) to contribute to this repository, you can easily set up your environment by adding the following script to your **Environments > Setup script**. This will install the appropriate Hwaro binary for your architecture.
+If you are using [Jules](https://jules.google) to contribute to this repository, you can easily set up your environment by adding the following script to your **Environments > Setup script**. This will install the appropriate Hwaro binary for your architecture.
 
 ```bash
 #!/bin/bash
