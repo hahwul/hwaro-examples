@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="{{ page_language }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description | e }}">
+  <title>{% if page.title is defined and page.title %}{{ page.title | e }} - {% endif %}{{ site.title | e }}</title>
+  {{ og_all_tags }}
+  {{ hreflang_tags }}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #08040a;
+      --bg-card: rgba(20, 10, 25, 0.4);
+      --text-main: #f0e6f5;
+      --text-muted: #a894b5;
+      --accent-pink: #ff2a85;
+      --accent-purple: #8a2be2;
+      --accent-cyan: #05d9e8;
+      --border-glass: rgba(255, 42, 133, 0.15);
+      --glow-pink: rgba(255, 42, 133, 0.5);
+      --glow-purple: rgba(138, 43, 226, 0.5);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Outfit', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Ambient Background Effects */
+    body::before, body::after {
+      content: "";
+      position: absolute;
+      width: 60vw;
+      height: 60vw;
+      border-radius: 50%;
+      filter: blur(100px);
+      z-index: -1;
+      opacity: 0.4;
+      animation: drift 20s infinite alternate ease-in-out;
+    }
+
+    body::before {
+      top: -10vw;
+      left: -20vw;
+      background: radial-gradient(circle, var(--accent-purple) 0%, transparent 60%);
+    }
+
+    body::after {
+      bottom: -10vw;
+      right: -20vw;
+      background: radial-gradient(circle, var(--accent-pink) 0%, transparent 60%);
+      animation-delay: -10s;
+    }
+
+    @keyframes drift {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(10vw, 5vw) scale(1.1); }
+    }
+
+    /* Layout */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      width: 100%;
+    }
+
+    /* Header */
+    .site-header {
+      padding: 2rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-glass);
+      margin-bottom: 3rem;
+    }
+
+    .site-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text-main);
+      text-decoration: none;
+      letter-spacing: -0.05em;
+      position: relative;
+      text-transform: uppercase;
+    }
+
+    .site-title::after {
+      content: "🌸";
+      font-size: 1.2rem;
+      position: absolute;
+      top: 0;
+      right: -1.8rem;
+      filter: drop-shadow(0 0 5px var(--accent-pink));
+    }
+
+    .site-title span {
+      background: linear-gradient(90deg, var(--accent-pink), var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 15px var(--glow-pink);
+    }
+
+    .site-nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .site-nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 500;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .site-nav a:hover {
+      color: var(--accent-cyan);
+      text-shadow: 0 0 8px rgba(5, 217, 232, 0.6);
+    }
+
+    /* Main Content */
+    .site-main {
+      flex: 1;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      color: var(--text-main);
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      background: linear-gradient(135deg, #fff, var(--text-muted));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.02em;
+    }
+
+    h2 {
+      font-size: 2rem;
+      color: var(--accent-pink);
+    }
+
+    h3 {
+      font-size: 1.5rem;
+      color: var(--accent-cyan);
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+      color: var(--text-muted);
+    }
+
+    a {
+      color: var(--accent-pink);
+      text-decoration: none;
+      border-bottom: 1px dotted var(--accent-pink);
+      transition: all 0.3s ease;
+    }
+
+    a:hover {
+      color: var(--accent-cyan);
+      border-color: var(--accent-cyan);
+      text-shadow: 0 0 5px rgba(5, 217, 232, 0.4);
+    }
+
+    /* Glassmorphism Containers */
+    .glass-panel {
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-glass);
+      border-radius: 16px;
+      padding: 2.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .glass-panel::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,42,133,0.5), transparent);
+    }
+
+    .glass-panel:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
+      border-color: rgba(255, 42, 133, 0.3);
+    }
+
+    /* Code Blocks */
+    pre {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(138, 43, 226, 0.3);
+      padding: 1.5rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-family: 'Space Grotesk', monospace;
+      font-size: 0.95rem;
+    }
+
+    code {
+      font-family: 'Space Grotesk', monospace;
+      background: rgba(138, 43, 226, 0.15);
+      color: var(--accent-cyan);
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+
+    pre code {
+      background: none;
+      color: inherit;
+      padding: 0;
+    }
+
+    /* Buttons / Tags */
+    .tag {
+      display: inline-block;
+      padding: 0.4rem 1rem;
+      margin: 0 0.5rem 0.5rem 0;
+      background: rgba(5, 217, 232, 0.1);
+      border: 1px solid rgba(5, 217, 232, 0.3);
+      border-radius: 20px;
+      color: var(--accent-cyan);
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .tag:hover {
+      background: rgba(5, 217, 232, 0.2);
+      box-shadow: 0 0 10px rgba(5, 217, 232, 0.4);
+      transform: translateY(-2px);
+    }
+
+    /* Lists */
+    ul {
+      padding-left: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: var(--text-muted);
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    ul.section-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    ul.section-list li {
+      margin-bottom: 1rem;
+      background: var(--bg-card);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border-glass);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    ul.section-list li:hover {
+      border-color: var(--accent-purple);
+      box-shadow: 0 0 15px rgba(138, 43, 226, 0.2);
+      transform: translateX(5px);
+    }
+
+    ul.section-list li a {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--text-main);
+      border: none;
+    }
+
+    ul.section-list li a:hover {
+      color: var(--accent-pink);
+      text-shadow: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .site-header {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+      h1 {
+        font-size: 2.2rem;
+      }
+      .glass-panel {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <a href="{{ base_url }}/" class="site-title"><span>Midnight</span> Blossom</a>
+      <nav class="site-nav">
+        <a href="{{ base_url }}/">Home</a>
+        <a href="{{ base_url }}/about/">About</a>
+        <a href="{{ base_url }}/tags/">Tags</a>
+      </nav>
+    </header>
