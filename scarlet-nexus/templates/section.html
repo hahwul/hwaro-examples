@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-header">
+  <h1>{{ section.title | e }}</h1>
+  {% if section.description %}
+    <p>{{ section.description | e }}</p>
+  {% endif %}
+</div>
+
+{% if content %}
+  <div class="section-content">
+    {{ content | safe }}
+  </div>
+  <hr>
+{% endif %}
+
+<ul class="article-list">
+  {% for p in paginator.pages %}
+  <li class="article-item">
+    <h2 class="article-title"><a href="{{ base_url }}{{ p.permalink }}">{{ p.title | e }}</a></h2>
+    <div class="article-meta">
+      {% if p.date %}Published on {{ p.date | date(format="%B %d, %Y") }}{% endif %}
+    </div>
+    {% if p.description %}
+      <p class="article-desc">{{ p.description | e }}</p>
+    {% endif %}
+    {% if p.taxonomies is defined and p.taxonomies.tags is defined %}
+      <div class="tag-list">
+        {% for tag in p.taxonomies.tags %}
+          <a href="{{ base_url }}/tags/{{ tag | urlencode }}/" class="tag">#{{ tag | e }}</a>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </li>
+  {% endfor %}
+</ul>
+
+{% if paginator.total_pages > 1 %}
+  <nav class="pagination">
+    {% if paginator.previous %}
+      <a href="{{ base_url }}{{ paginator.previous }}">&larr; Previous</a>
+    {% endif %}
+    {% if paginator.next %}
+      <a href="{{ base_url }}{{ paginator.next }}">Next &rarr;</a>
+    {% endif %}
+  </nav>
+{% endif %}
+{% endblock %}
