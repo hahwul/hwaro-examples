@@ -1,0 +1,60 @@
+{% include "header.html" %}
+
+<main class="site-main">
+  <div class="glass-panel">
+    <h1>{% if section is defined and section.title %}{{ section.title }}{% else %}{{ page.title }}{% endif %}</h1>
+    <div class="content">
+      {{ content | safe }}
+    </div>
+
+    <ul class="section-list">
+      {% for page in section.pages %}
+        <li>
+          <h2><a href="{{ page.permalink }}">{{ page.title }}</a></h2>
+          {% if page.date %}
+            <time class="post-meta" datetime="{{ page.date }}">{{ page.date }}</time>
+          {% endif %}
+          {% if page.description %}
+            <p>{{ page.description }}</p>
+          {% endif %}
+
+          {% if page.taxonomies is defined and page.taxonomies.tags %}
+            <div class="taxonomy-tags" style="margin-top: 0.5rem;">
+              {% for tag in page.taxonomies.tags %}
+                <span class="tag">#{{ tag }}</span>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+
+    {% if pagination is defined and pagination.total_pages is defined and pagination.total_pages > 1 %}
+      <nav class="pagination" aria-label="Pagination">
+        <ul class="pagination-list">
+          {% if pagination.previous_page %}
+            <li><a href="{{ pagination.previous_page_link }}" aria-label="Previous page">&laquo; Prev</a></li>
+          {% else %}
+            <li class="pagination-disabled"><span aria-hidden="true">&laquo; Prev</span></li>
+          {% endif %}
+
+          {% for i in range(1, pagination.total_pages + 1) %}
+            {% if i == pagination.current_page %}
+              <li class="pagination-current"><span aria-current="page">{{ i }}</span></li>
+            {% else %}
+              <li><a href="{{ pagination.base_url }}{{ i }}/" aria-label="Page {{ i }}">{{ i }}</a></li>
+            {% endif %}
+          {% endfor %}
+
+          {% if pagination.next_page %}
+            <li><a href="{{ pagination.next_page_link }}" aria-label="Next page">Next &raquo;</a></li>
+          {% else %}
+            <li class="pagination-disabled"><span aria-hidden="true">Next &raquo;</span></li>
+          {% endif %}
+        </ul>
+      </nav>
+    {% endif %}
+  </div>
+</main>
+
+{% include "footer.html" %}
