@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="{{ page_language }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description | e }}">
+  <title>{% if page.title %}{{ page.title | e }} - {% endif %}{{ site.title | e }}</title>
+  {{ og_all_tags | safe }}
+  {{ hreflang_tags | safe }}
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap');
+
+    :root {
+      --bg: #0f0a0c;
+      --bg-alt: #1a1114;
+      --bg-hover: #26171b;
+      --text: #e6e0e2;
+      --text-muted: #a6989d;
+      --accent: #dc143c; /* Crimson */
+      --accent-hover: #ff335f;
+      --border: #3b2229;
+      --radius: 8px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Layout */
+    .site-wrapper {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .site-header {
+      padding: 3rem 0 2rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 3rem;
+    }
+
+    .site-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.5px;
+      transition: color 0.3s ease;
+    }
+
+    .site-title:hover {
+      color: var(--accent);
+    }
+
+    .site-nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .site-nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: color 0.3s ease;
+    }
+
+    .site-nav a:hover {
+      color: var(--accent);
+    }
+
+    .site-main {
+      flex-grow: 1;
+    }
+
+    .site-footer {
+      padding: 3rem 0;
+      margin-top: 4rem;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', serif;
+      color: var(--text);
+      line-height: 1.3;
+      margin-top: 2em;
+      margin-bottom: 0.8em;
+    }
+
+    h1 { font-size: 2.5rem; margin-top: 0; }
+    h2 { font-size: 1.8rem; }
+    h3 { font-size: 1.4rem; }
+
+    p { margin: 0 0 1.5em; }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px dashed var(--accent);
+      transition: all 0.3s ease;
+    }
+
+    a:hover {
+      color: var(--accent-hover);
+      border-bottom-style: solid;
+    }
+
+    hr {
+      border: 0;
+      height: 1px;
+      background: var(--border);
+      margin: 3rem 0;
+    }
+
+    blockquote {
+      margin: 2rem 0;
+      padding: 1.5rem 2rem;
+      border-left: 4px solid var(--accent);
+      background: var(--bg-alt);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--text-muted);
+    }
+
+    /* Code Blocks */
+    code {
+      font-family: 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      background: var(--bg-alt);
+      padding: 0.2em 0.4em;
+      border-radius: 3px;
+      font-size: 0.85em;
+      color: var(--accent-hover);
+    }
+
+    pre {
+      background: var(--bg-alt) !important;
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: inherit;
+    }
+
+    .hljs {
+      background: transparent !important;
+    }
+
+    /* Lists */
+    .article-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .article-item {
+      margin-bottom: 2.5rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .article-item:last-child {
+      border-bottom: none;
+    }
+
+    .article-title {
+      margin: 0 0 0.5rem;
+      font-size: 1.6rem;
+    }
+
+    .article-title a {
+      color: var(--text);
+      border: none;
+    }
+
+    .article-title a:hover {
+      color: var(--accent);
+    }
+
+    .article-meta {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+    }
+
+    .article-desc {
+      margin: 0;
+      color: var(--text-muted);
+    }
+
+    /* Taxonomy & Pagination */
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .tag {
+      font-size: 0.8rem;
+      padding: 0.2rem 0.6rem;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border); /* override default a */
+    }
+
+    .tag:hover {
+      background: var(--accent);
+      color: var(--bg);
+      border-color: var(--accent);
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .pagination a {
+      padding: 0.5rem 1rem;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .pagination a:hover {
+      background: var(--bg-hover);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* Page Header */
+    .page-header {
+      margin-bottom: 3rem;
+      text-align: center;
+    }
+
+    .page-header h1 {
+      margin-bottom: 0.5rem;
+    }
+
+    .page-header p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 600px) {
+      .site-header {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+      }
+      h1 { font-size: 2rem; }
+    }
+  </style>
+  {{ highlight_css | safe }}
+  {{ auto_includes_css | safe }}
+</head>
+<body>
+  <div class="site-wrapper">
+    <header class="site-header">
+      <a href="{{ base_url }}/" class="site-title">{{ site.title }}</a>
+      <nav class="site-nav">
+        <a href="{{ base_url }}/">Home</a>
+        <a href="{{ base_url }}/posts/">Posts</a>
+        <a href="{{ base_url }}/about/">About</a>
+      </nav>
+    </header>
+
+    <main class="site-main">
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; {{ site.title }} - Powered by Hwaro</p>
+    </footer>
+  </div>
+</body>
+</html>
