@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="{{ page_language }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description | e }}">
+  <title>{% if page.title is present %}{{ page.title | e }} - {% endif %}{{ site.title | e }}</title>
+  {{ og_all_tags }}
+  {{ hreflang_tags }}
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@0,400;0,500;1,400&display=swap');
+
+    :root {
+      --primary: #4cc9f0;
+      --primary-hover: #bde0fe;
+      --text: #e0e6ed;
+      --text-muted: #8b9bb4;
+      --border: #1d2538;
+      --bg: #0a0f18;
+      --bg-subtle: #121a2f;
+      --font-display: 'Playfair Display', serif;
+      --font-body: 'Lora', serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    body { font-family: var(--font-body); line-height: 1.7; margin: 0; color: var(--text); background: var(--bg); font-size: 18px; }
+
+    /* Layout */
+    .site-wrapper { max-width: 800px; margin: 0 auto; padding: 0 2rem; position: relative; }
+
+    /* Subtle glowing background effect to mimic moonlight */
+    body::before {
+      content: "";
+      position: absolute;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(76, 201, 240, 0.05) 0%, rgba(10, 15, 24, 0) 70%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .site-header { display: flex; align-items: center; justify-content: space-between; padding: 2.5rem 0; border-bottom: 1px solid var(--border); margin-bottom: 3rem; }
+    .site-logo { font-family: var(--font-display); font-weight: 600; font-size: 1.8rem; color: var(--text); text-decoration: none; letter-spacing: 0.5px; }
+    .site-logo:hover { color: var(--primary); text-shadow: 0 0 10px rgba(76, 201, 240, 0.3); transition: all 0.3s ease; }
+
+    .site-header nav { display: flex; gap: 1.5rem; }
+    .site-header nav a { color: var(--text-muted); text-decoration: none; font-size: 1rem; font-family: var(--font-display); text-transform: lowercase; letter-spacing: 1px; }
+    .site-header nav a:hover { color: var(--primary); }
+
+    .site-main { min-height: calc(100vh - 250px); }
+    .site-footer { margin-top: 4rem; padding: 2.5rem 0; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.9rem; text-align: center; font-family: var(--font-display); }
+
+    /* Typography */
+    h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.3; margin-top: 2em; margin-bottom: 0.8em; font-weight: 400; color: #ffffff; }
+    h1 { font-size: 2.5rem; margin-top: 0; letter-spacing: -0.5px; position: relative; display: inline-block; }
+    h1::after { content: ""; position: absolute; bottom: -10px; left: 0; width: 40px; height: 1px; background: var(--primary); opacity: 0.7; }
+    h2 { font-size: 1.8rem; }
+    h3 { font-size: 1.4rem; }
+    p { margin: 1.2em 0; color: #c4d0df; }
+
+    a { color: var(--primary); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s ease; }
+    a:hover { border-bottom-color: var(--primary); }
+
+    blockquote { border-left: 2px solid var(--primary); margin: 2rem 0; padding-left: 1.5rem; font-style: italic; color: var(--text-muted); font-size: 1.1rem; background: linear-gradient(90deg, rgba(76, 201, 240, 0.05) 0%, transparent 100%); padding-top: 0.5rem; padding-bottom: 0.5rem; }
+
+    code { background: var(--bg-subtle); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.85em; font-family: ui-monospace, monospace; color: #a2b4ce; border: 1px solid var(--border); }
+    pre { background: var(--bg-subtle); padding: 1.5rem; border-radius: 8px; overflow-x: auto; border: 1px solid var(--border); margin: 2rem 0; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+    pre code { background: none; padding: 0; border: none; color: inherit; }
+
+    /* Components */
+    ul.section-list { list-style: none; padding: 0; margin: 2rem 0; }
+    ul.section-list li { margin-bottom: 1rem; padding: 1.2rem; background: var(--bg-subtle); border-radius: 8px; border: 1px solid var(--border); transition: transform 0.2s ease, border-color 0.2s ease; }
+    ul.section-list li:hover { transform: translateY(-2px); border-color: rgba(76, 201, 240, 0.3); box-shadow: 0 5px 15px rgba(0,0,0,0.15); }
+    ul.section-list li a { font-family: var(--font-display); font-size: 1.3rem; color: #ffffff; border: none; }
+    ul.section-list li a:hover { color: var(--primary); }
+
+    .taxonomy-desc { color: var(--text-muted); margin-bottom: 2rem; font-style: italic; }
+
+    nav.pagination { margin: 3rem 0; padding-top: 2rem; border-top: 1px solid var(--border); }
+    nav.pagination .pagination-list { list-style: none; padding: 0; margin: 0; display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; align-items: center; font-family: var(--font-display); }
+    nav.pagination a { display: inline-block; padding: 0.4rem 0.8rem; border-radius: 4px; border: 1px solid var(--border); color: var(--text-muted); text-decoration: none; transition: all 0.2s ease; }
+    nav.pagination a:hover { color: var(--bg); background: var(--primary); border-color: var(--primary); }
+    .pagination-current span { display: inline-block; padding: 0.4rem 0.8rem; border-radius: 4px; border: 1px solid var(--primary); color: var(--bg); background: var(--primary); }
+    .pagination-disabled span { display: inline-block; padding: 0.4rem 0.8rem; border-radius: 4px; border: 1px solid var(--border); color: var(--border); cursor: not-allowed; }
+
+    hr { border: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 3rem 0; }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .site-header { flex-direction: column; gap: 1.5rem; align-items: center; padding: 2rem 0; }
+      .site-wrapper { padding: 0 1.5rem; }
+      h1 { font-size: 2rem; }
+      h1::after { left: 50%; transform: translateX(-50%); }
+      body { text-align: left; }
+    }
+  </style>
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+</head>
+<body data-section="{{ page.section }}">
+  <div class="site-wrapper">
+    <header class="site-header">
+      <a href="{{ base_url }}/" class="site-logo">{{ site.title }}</a>
+            <nav>
+        <a href="{{ base_url }}/">Home</a>
+        <a href="{{ base_url }}/about/">About</a>
+      </nav>
+    </header>
