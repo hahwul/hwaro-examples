@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<article class="post">
+  <header class="post-header">
+    <h1>{{ page.title | e }}</h1>
+    <div class="post-meta">
+      <time datetime="{{ page.date | date('%Y-%m-%d') }}">{{ page.date | date("%B %d, %Y") }}</time>
+      {% if page.taxonomies is defined and page.taxonomies.tags is defined %}
+        <span class="tags">
+          {% for tag in page.taxonomies.tags %}
+            <a href="{{ base_url }}tags/{{ tag | replace(' ', '-') | lower }}/">#{{ tag }}</a>
+          {% endfor %}
+        </span>
+      {% endif %}
+    </div>
+  </header>
+  <div class="post-content">
+    {{ content }}
+  </div>
+</article>
+
+{% if site.related is defined and site.related.enabled and page.related_pages is defined and page.related_pages | length > 0 %}
+<div class="related-posts">
+  <h3>Related Posts</h3>
+  <ul>
+    {% for related in page.related_pages %}
+      <li><a href="{{ related.permalink }}">{{ related.title }}</a></li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+{% endblock %}
