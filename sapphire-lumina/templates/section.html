@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="section-header">
+    <h1>{{ section.title }}</h1>
+    {% if section.description %}
+    <p class="section-description">{{ section.description }}</p>
+    {% endif %}
+</div>
+
+{% if content %}
+<div class="section-content">
+    {{ content | safe }}
+</div>
+{% endif %}
+
+<div class="post-list">
+    {% for post in section.pages %}
+    <article class="post-card glass-panel hover-lift">
+        <div class="post-card-content">
+            <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+            <div class="post-meta">
+                <time datetime="{{ post.date | date("%Y-%m-%d") }}">{{ post.date | date("%b %d, %Y") }}</time>
+            </div>
+            {% if post.summary %}
+            <div class="post-summary">
+                {{ post.summary | safe }}
+            </div>
+            {% endif %}
+            {% if post.taxonomies and post.taxonomies.tags %}
+            <div class="post-tags">
+                {% for tag in post.taxonomies.tags %}
+                <span class="tag glass-pill">#{{ tag }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </article>
+    {% endfor %}
+</div>
+
+{% if pagination is defined and pagination.total_pages is defined %}
+    {% if pagination.total_pages > 1 %}
+    <nav class="pagination">
+        {% if pagination.previous_page %}
+        <a href="{{ pagination.previous_page.url }}" class="prev">&larr; Newer</a>
+        {% endif %}
+
+        <span class="page-number">Page {{ pagination.current_page.number }} of {{ pagination.total_pages }}</span>
+
+        {% if pagination.next_page %}
+        <a href="{{ pagination.next_page.url }}" class="next">Older &rarr;</a>
+        {% endif %}
+    </nav>
+    {% endif %}
+{% endif %}
+{% endblock %}
