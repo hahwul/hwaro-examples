@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="glass-panel content-card">
+  {% if section.title %}
+    <h1 class="section-title">{{ section.title }}</h1>
+  {% endif %}
+  <div class="section-content">
+    {{ content | safe }}
+  </div>
+
+  <ul class="section-list">
+    {% for p in paginator.pages | default(section.pages, true) %}
+      <li>
+        <a href="{{ p.permalink }}">{{ p.title }}</a>
+        {% if p.date %}
+          <span class="date">{{ p.date | date("%Y-%m-%d") }}</span>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+
+  {% if paginator %}
+    <nav class="pagination">
+      <ul class="pagination-list">
+        {% if paginator.previous %}
+          <li><a href="{{ paginator.previous }}">&laquo; Prev</a></li>
+        {% endif %}
+        <li><span>Page {{ paginator.current_index }} of {{ paginator.total_pages }}</span></li>
+        {% if paginator.next %}
+          <li><a href="{{ paginator.next }}">Next &raquo;</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+  {% endif %}
+</div>
+{% endblock %}
