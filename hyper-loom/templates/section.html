@@ -1,0 +1,56 @@
+{% include "header.html" %}
+
+<div class="glass-panel">
+  <header>
+    <h1>{% if page.title is defined and page.title %}{{ page.title | e }}{% else %}Section{% endif %}</h1>
+    {% if page.description is defined and page.description %}
+      <p class="taxonomy-desc">{{ page.description | e }}</p>
+    {% endif %}
+  </header>
+
+  <div class="content">
+    {{ content | safe }}
+  </div>
+
+  <ul class="section-list">
+  {% for p in pages %}
+    <li>
+      <a href="{{ p.permalink }}">{{ p.title | e }}</a>
+      {% if p.date is defined and p.date %}
+      <time datetime="{{ p.date }}">{{ p.date }}</time>
+      {% endif %}
+      {% if p.description is defined and p.description %}
+      <p>{{ p.description | e }}</p>
+      {% endif %}
+    </li>
+  {% endfor %}
+  </ul>
+
+  {% if pagination is defined and pagination.total_pages is defined and pagination.total_pages > 1 %}
+  <nav class="pagination">
+    <ul class="pagination-list">
+      {% if pagination.prev_page %}
+      <li><a href="{{ pagination.prev_page_link }}">&laquo; Prev</a></li>
+      {% else %}
+      <li class="pagination-disabled"><span>&laquo; Prev</span></li>
+      {% endif %}
+
+      {% for i in range(1, pagination.total_pages + 1) %}
+        {% if i == pagination.current_page %}
+        <li class="pagination-current"><span>{{ i }}</span></li>
+        {% else %}
+        <li><a href="{{ pagination.page_link_prefix }}{{ i }}/">{{ i }}</a></li>
+        {% endif %}
+      {% endfor %}
+
+      {% if pagination.next_page %}
+      <li><a href="{{ pagination.next_page_link }}">Next &raquo;</a></li>
+      {% else %}
+      <li class="pagination-disabled"><span>Next &raquo;</span></li>
+      {% endif %}
+    </ul>
+  </nav>
+  {% endif %}
+</div>
+
+{% include "footer.html" %}
