@@ -1,0 +1,48 @@
+{% include "header.html" %}
+  <main class="site-main">
+    <div class="prose">
+      {{ content | safe }}
+    </div>
+
+    <ul class="section-list">
+      {% for page in section.pages %}
+      <li>
+        <a href="{{ base_url }}{{ page.permalink }}">{{ page.title }}</a>
+        {% if page.description %}
+          <p style="margin: 0.5rem 0 0; color: var(--text-muted); font-size: 0.95rem;">{{ page.description }}</p>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+
+    {% if paginator %}
+    <nav class="pagination">
+      <ul class="pagination-list">
+        {% if paginator.previous %}
+          <li><a href="{{ base_url }}{{ paginator.previous }}">Previous</a></li>
+        {% else %}
+          <li class="pagination-disabled"><span>Previous</span></li>
+        {% endif %}
+
+        {% for i in range(start=1, end=paginator.total_pages + 1) %}
+          {% if i == paginator.current_page %}
+            <li class="pagination-current"><span>{{ i }}</span></li>
+          {% else %}
+            {% if i == 1 %}
+              <li><a href="{{ base_url }}{{ section.permalink }}">{{ i }}</a></li>
+            {% else %}
+              <li><a href="{{ base_url }}{{ section.permalink }}page/{{ i }}/">{{ i }}</a></li>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+
+        {% if paginator.next %}
+          <li><a href="{{ base_url }}{{ paginator.next }}">Next</a></li>
+        {% else %}
+          <li class="pagination-disabled"><span>Next</span></li>
+        {% endif %}
+      </ul>
+    </nav>
+    {% endif %}
+  </main>
+{% include "footer.html" %}
