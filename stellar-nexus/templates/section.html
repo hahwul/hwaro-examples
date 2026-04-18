@@ -1,0 +1,56 @@
+{% include "header.html" %}
+
+<div class="stellar-page-container">
+  <main class="stellar-main-content">
+    <header class="section-header glass-panel">
+      <h1 class="section-title">{{ page.title | e }}</h1>
+      {% if page.description is defined and page.description %}
+      <p class="section-description">{{ page.description | e }}</p>
+      {% endif %}
+      {{ content }}
+    </header>
+
+    <div class="post-grid">
+      {% for child in section.pages %}
+      <article class="post-card glass-panel">
+        <h2 class="post-card-title">
+          <a href="{{ child.permalink }}">{{ child.title | e }}</a>
+        </h2>
+        <div class="post-meta">
+          <span class="post-date">{{ child.date | date(format="%B %d, %Y") }}</span>
+          {% if child.taxonomies is defined and child.taxonomies.tags %}
+          <div class="post-tags">
+            {% for tag in child.taxonomies.tags %}
+            <a href="/tags/{{ tag | slugify }}/" class="tag-link">#{{ tag }}</a>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+        <p class="post-card-excerpt">
+          {% if child.description is defined and child.description %}
+            {{ child.description | e }}
+          {% else %}
+            {{ child.content | striptags | truncate(length=120) }}
+          {% endif %}
+        </p>
+        <a href="{{ child.permalink }}" class="read-more">Read More &rarr;</a>
+      </article>
+      {% endfor %}
+    </div>
+
+    {% if pagination is defined and pagination.total_pages is defined and pagination.total_pages > 1 %}
+    <nav class="pagination glass-panel">
+      {% if pagination.prev %}
+        <a href="{{ pagination.prev }}" class="page-link">&laquo; Prev</a>
+      {% endif %}
+      <span class="page-current">Page {{ pagination.current }} of {{ pagination.total_pages }}</span>
+      {% if pagination.next %}
+        <a href="{{ pagination.next }}" class="page-link">Next &raquo;</a>
+      {% endif %}
+    </nav>
+    {% endif %}
+
+  </main>
+</div>
+
+{% include "footer.html" %}
