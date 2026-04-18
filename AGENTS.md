@@ -1,6 +1,6 @@
 # AGENTS.md - AI Agent Instructions for hwaro-examples
 
-This repository is a collection of example sites built with [Hwaro](https://hwaro.hahwul.com), a fast static site generator written in Crystal. Each subdirectory is an independent Hwaro site that gets deployed together to [examples.hwaro.hahwul.com](https://examples.hwaro.hahwul.com).
+This repository is a collection of example sites built with [Hwaro](https://hwaro.hahwul.com), a fast static site generator written in Crystal. Each subdirectory under `examples/` is an independent Hwaro site that gets deployed together to [examples.hwaro.hahwul.com](https://examples.hwaro.hahwul.com).
 
 ## Repository Structure
 
@@ -8,52 +8,30 @@ This repository is a collection of example sites built with [Hwaro](https://hwar
 hwaro-examples/
 ├── .github/workflows/deploy.yml   # Builds all sites and deploys to GitHub Pages
 ├── tags.json                       # Tag definitions for index page filtering
-├── acme-docs/                      # Documentation site (light, docs)
-├── anubis/                         # Minimal Egyptian theme (light, blog, minimal)
-├── beautiful-hwaro/                # Beautiful Jekyll-inspired blog (light, blog)
-├── book/                           # Book/documentation theme (light, docs)
-├── cactus/                         # Dark minimal blog (dark, blog, minimal)
-├── console/                        # Terminal-style theme (dark, blog, minimal)
-├── devconf/                        # Conference event site (dark, event, landing)
-├── devlog/                         # TIL & changelog blog (dark, blog, minimal)
-├── emerald/                        # Minimal blog theme (light, blog, minimal)
-├── ethos/                          # Engineering principles & culture (light, docs, culture)
-├── even/                           # Clean responsive theme (light, blog)
-├── flowsync/                       # SaaS landing page (dark, landing)
-├── folio/                          # Portfolio site (light, portfolio)
-├── garden/                         # Digital garden theme (light, blog, garden)
-├── forty/                          # Gallery/portfolio theme (dark, portfolio, gallery)
-├── gazette/                        # Editorial blog theme (light, blog, editorial)
-├── hacker/                         # Dark hacker theme (dark, blog)
-├── hermit/                         # Dark minimal blog (dark, blog, minimal)
-├── hwaro.386/                      # Retro DOS theme (dark, blog, retro)
-├── hwaronight/                     # Tokyo Night theme (dark, blog)
-├── ledger/                         # Financial ledger theme (light, docs, finance)
-├── modern-blog/                    # Modern personal blog (dark, blog)
-├── neon/                           # Cyberpunk neon theme (dark, blog, cyberpunk)
-├── no-style-please/                # No-CSS minimal theme (light, blog, minimal)
-├── paper/                          # Clean paper-style blog (light, blog, minimal)
-├── papermod/                       # PaperMod-inspired profile blog (light, blog, minimal)
-├── poison/                         # Sidebar navigation blog (dark, blog, sidebar)
-├── polaroid/                       # Photo gallery blog (light, blog, gallery)
-├── portfolio-blog/                 # Multilingual portfolio blog (dark, blog, portfolio)
-├── pulse-api/                      # API documentation (dark, docs)
-├── resume/                         # Resume/CV site (light, resume)
-├── studio/                         # Design studio site (dark, landing, portfolio)
-├── tale/                           # Traditional blog theme (light, blog, traditional)
-├── terminal/                       # Terminal dark blog (dark, blog)
-├── turret/                         # WAF/DDoS defense documentation (dark, docs, waf)
-└── AGENTS.md                       # This file
+├── AGENTS.md                       # This file
+└── examples/                       # All example sites live here (flat)
+    ├── acme-docs/                  # Documentation site (light, docs)
+    ├── anubis/                     # Minimal Egyptian theme (light, blog, minimal)
+    ├── beautiful-hwaro/            # Beautiful Jekyll-inspired blog (light, blog)
+    ├── book/                       # Book/documentation theme (light, docs)
+    ├── cactus/                     # Dark minimal blog (dark, blog, minimal)
+    ├── console/                    # Terminal-style theme (dark, blog, minimal)
+    ├── devconf/                    # Conference event site (dark, event, landing)
+    ├── hwaro.386/                  # Retro DOS theme (dark, blog, retro)
+    ├── neon/                       # Cyberpunk neon theme (dark, blog, cyberpunk)
+    ├── paper/                      # Clean paper-style blog (light, blog, minimal)
+    └── ... (1000+ more)
 ```
 
-Each subdirectory with a `config.toml` is automatically detected, built, and deployed by the CI workflow.
+Each subdirectory under `examples/` with a `config.toml` is automatically detected, built, and deployed by the CI workflow. The deployed URL remains flat — a site at `examples/<name>/` is served at `https://examples.hwaro.hahwul.com/<name>/` (no `examples/` prefix in the URL).
 
 ## Creating a New Example Site
 
 ### Step 0: Scaffold with `hwaro init`
 
 ```bash
-# Run from the repo root — creates a minimal skeleton (config.toml + empty dirs)
+# Run from the examples/ directory — creates a minimal skeleton (config.toml + empty dirs)
+cd examples
 hwaro init <site-name>
 
 # Equivalent to the above (explicit minimal skeleton)
@@ -67,7 +45,7 @@ hwaro init <site-name> --scaffold blog
 hwaro init <site-name> --scaffold docs
 
 # Remote scaffold from an existing example
-hwaro init <site-name> --scaffold https://github.com/user/repo/tree/main/some-example
+hwaro init <site-name> --scaffold https://github.com/hahwul/hwaro-examples/tree/main/examples/some-example
 
 # Minimal config with dark theme support
 hwaro init <site-name> --minimal-config
@@ -75,7 +53,7 @@ hwaro init <site-name> --minimal-config
 
 **Always start with `hwaro init`**, even for custom layouts. Running without `--scaffold` (or with `--scaffold simple`) gives you a bare skeleton with `config.toml` and empty directories — just fill in your own templates and content from there.
 
-Then work inside the generated `<site-name>/` directory. The default structure looks like this:
+Then work inside the generated `examples/<site-name>/` directory. The default structure looks like this:
 
 ```
 <site-name>/
@@ -316,7 +294,7 @@ You may add new tags if needed.
 ### Step 5: Validate and update config
 
 ```bash
-cd <site-name>
+cd examples/<site-name>
 hwaro tool doctor --fix
 ```
 
@@ -325,7 +303,7 @@ Automatically adds any missing config sections. Always run this when creating a 
 ### Step 6: Local preview
 
 ```bash
-cd <site-name>
+cd examples/<site-name>
 hwaro serve --open
 ```
 
@@ -334,9 +312,9 @@ Opens the site in your browser at `http://localhost:3000`.
 ## CI/CD Pipeline
 
 The deploy workflow (`.github/workflows/deploy.yml`):
-1. Iterates all directories containing `config.toml`
-2. Reads tags from `tags.json` (via `jq`)
-3. Builds each with Docker: `ghcr.io/hahwul/hwaro build --base-url "https://.../<dir_name>"`
+1. Iterates all directories under `examples/` containing `config.toml`
+2. Reads tags from `tags.json` (via `jq`) — keyed by site basename (no `examples/` prefix)
+3. Builds each with Docker: `ghcr.io/hahwul/hwaro build --base-url "https://.../<name>"`
 4. Captures screenshots of each site with Playwright
 5. Generates an index page at `_site/index.html` with:
    - Search bar and grid size slider
@@ -344,11 +322,11 @@ The deploy workflow (`.github/workflows/deploy.yml`):
    - Card per example: screenshot, title, description, tag badges, source code link, scaffold command (copy-to-clipboard)
 6. Deploys to GitHub Pages at `examples.hwaro.hahwul.com`
 
-Adding a new subdirectory with a valid `config.toml` + `tags.json` entry is all that's needed to include it in the deployment.
+Adding a new subdirectory under `examples/` with a valid `config.toml` + `tags.json` entry is all that's needed to include it in the deployment.
 
 ## Rules for AI Agents
 
-1. **One directory = one site.** Each sample site is fully self-contained. Never share files across subdirectories.
+1. **One directory = one site, under `examples/`.** Each sample site is fully self-contained at `examples/<name>/`. Never share files across subdirectories and never create sites outside `examples/`.
 2. **`config.toml` is required.** This is the only file the CI uses to detect a buildable site.
 3. **`base_url` stays `http://localhost:3000`.** CI overrides it at build time. Do not hardcode production URLs.
 4. **Use `{{ base_url }}` in templates** for all asset/link references (e.g., `{{ base_url }}/css/style.css`). Never use absolute paths without the prefix.

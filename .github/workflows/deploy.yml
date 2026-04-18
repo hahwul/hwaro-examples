@@ -28,12 +28,13 @@ jobs:
           # Find themes that changed since last commit
           CHANGED=""
           ALL=""
-          for dir in */; do
-            dir_name="${dir%/}"
-            if [ -f "${dir_name}/config.toml" ]; then
-              ALL="${ALL} ${dir_name}"
-              if git diff --name-only HEAD~1 HEAD -- "${dir_name}/" | grep -q .; then
-                CHANGED="${CHANGED} ${dir_name}"
+          for dir in examples/*/; do
+            src_path="${dir%/}"
+            name="${src_path#examples/}"
+            if [ -f "${src_path}/config.toml" ]; then
+              ALL="${ALL} ${name}"
+              if git diff --name-only HEAD~1 HEAD -- "${src_path}/" | grep -q .; then
+                CHANGED="${CHANGED} ${name}"
               fi
             fi
           done
@@ -68,11 +69,12 @@ jobs:
 
           # Compute per-theme content hash (config + templates + static + content)
           echo "{}" > _theme_hashes.json
-          for dir in */; do
-            dir_name="${dir%/}"
-            if [ -f "${dir_name}/config.toml" ]; then
-              HASH=$(find "${dir_name}" -type f \( -name "*.toml" -o -name "*.html" -o -name "*.css" -o -name "*.js" -o -name "*.md" -o -name "*.png" -o -name "*.jpg" -o -name "*.svg" \) -exec sha256sum {} \; 2>/dev/null | sort | sha256sum | cut -d' ' -f1)
-              _theme_hashes_tmp=$(jq --arg k "$dir_name" --arg v "$HASH" '. + {($k): $v}' _theme_hashes.json)
+          for dir in examples/*/; do
+            src_path="${dir%/}"
+            name="${src_path#examples/}"
+            if [ -f "${src_path}/config.toml" ]; then
+              HASH=$(find "${src_path}" -type f \( -name "*.toml" -o -name "*.html" -o -name "*.css" -o -name "*.js" -o -name "*.md" -o -name "*.png" -o -name "*.jpg" -o -name "*.svg" \) -exec sha256sum {} \; 2>/dev/null | sort | sha256sum | cut -d' ' -f1)
+              _theme_hashes_tmp=$(jq --arg k "$name" --arg v "$HASH" '. + {($k): $v}' _theme_hashes.json)
               echo "$_theme_hashes_tmp" > _theme_hashes.json
             fi
           done
@@ -81,19 +83,19 @@ jobs:
           NEED_CAPTURE=""
           TOTAL=0
           SKIPPED=0
-          for dir_name in $(jq -r 'keys[]' _theme_hashes.json); do
+          for name in $(jq -r 'keys[]' _theme_hashes.json); do
             TOTAL=$((TOTAL + 1))
-            NEW_HASH=$(jq -r --arg k "$dir_name" '.[$k]' _theme_hashes.json)
+            NEW_HASH=$(jq -r --arg k "$name" '.[$k]' _theme_hashes.json)
             OLD_HASH=""
             if [ -f _cached_hashes.json ]; then
-              OLD_HASH=$(jq -r --arg k "$dir_name" '.[$k] // ""' _cached_hashes.json)
+              OLD_HASH=$(jq -r --arg k "$name" '.[$k] // ""' _cached_hashes.json)
             fi
-            CACHED="_screenshot_cache/${dir_name}.png"
+            CACHED="_screenshot_cache/${name}.png"
 
             if [ "$NEW_HASH" = "$OLD_HASH" ] && [ -f "$CACHED" ] && [ "$(stat -c%s "$CACHED" 2>/dev/null || echo 0)" -gt 1024 ]; then
               SKIPPED=$((SKIPPED + 1))
             else
-              NEED_CAPTURE="${NEED_CAPTURE} ${dir_name}"
+              NEED_CAPTURE="${NEED_CAPTURE} ${name}"
             fi
           done
 
@@ -108,15 +110,15 @@ jobs:
           SCREENSHOT_DIR="${GITHUB_WORKSPACE}/_screenshot_site"
           mkdir -p "${SCREENSHOT_DIR}"
 
-          for dir_name in ${{ steps.screenshots.outputs.need_capture }}; do
-            echo "Building ${dir_name} (screenshot)..."
+          for name in ${{ steps.screenshots.outputs.need_capture }}; do
+            echo "Building ${name} (screenshot)..."
             docker run --rm \
-              -v "${GITHUB_WORKSPACE}/${dir_name}:/src" \
-              -v "${SCREENSHOT_DIR}/${dir_name}:/output" \
+              -v "${GITHUB_WORKSPACE}/examples/${name}:/src" \
+              -v "${SCREENSHOT_DIR}/${name}:/output" \
               ghcr.io/hahwul/hwaro build \
                 -i /src \
                 -o /output \
-                --base-url "http://localhost:8000/${dir_name}"
+                --base-url "http://localhost:8000/${name}"
           done
 
       - name: Capture screenshots
@@ -179,18 +181,19 @@ jobs:
           OUTPUT_DIR="${GITHUB_WORKSPACE}/_site"
           mkdir -p "${OUTPUT_DIR}"
 
-          for dir in */; do
-            dir_name="${dir%/}"
-            if [ -f "${dir_name}/config.toml" ]; then
-              echo "Building ${dir_name}..."
+          for dir in examples/*/; do
+            src_path="${dir%/}"
+            name="${src_path#examples/}"
+            if [ -f "${src_path}/config.toml" ]; then
+              echo "Building ${name}..."
               docker run --rm \
-                -v "${GITHUB_WORKSPACE}/${dir_name}:/src" \
-                -v "${OUTPUT_DIR}/${dir_name}:/output" \
+                -v "${GITHUB_WORKSPACE}/${src_path}:/src" \
+                -v "${OUTPUT_DIR}/${name}:/output" \
                 ghcr.io/hahwul/hwaro build \
                   -i /src \
                   -o /output \
-                  --base-url "${BASE_URL}/${dir_name}"
-              echo "Done: ${dir_name}"
+                  --base-url "${BASE_URL}/${name}"
+              echo "Done: ${name}"
             fi
           done
       - name: Generate index page
@@ -203,15 +206,16 @@ jobs:
           SITE_LINKS=""
           ALL_TAGS=""
           EXAMPLE_COUNT=0
-          for dir in */; do
-            dir_name="${dir%/}"
-            if [ -f "${dir_name}/config.toml" ]; then
-              TITLE=$(grep '^title' "${dir_name}/config.toml" | head -1 | sed 's/title *= *"//;s/"//')
-              DESCRIPTION=$(grep '^description' "${dir_name}/config.toml" | head -1 | sed 's/description *= *"//;s/"//')
-              THEME_REPO_URL="https://github.com/${GITHUB_REPOSITORY}/tree/main/${dir_name}"
-              SCAFFOLD_URL="https://github.com/${GITHUB_REPOSITORY}/tree/main/${dir_name}"
+          for dir in examples/*/; do
+            src_path="${dir%/}"
+            name="${src_path#examples/}"
+            if [ -f "${src_path}/config.toml" ]; then
+              TITLE=$(grep '^title' "${src_path}/config.toml" | head -1 | sed 's/title *= *"//;s/"//')
+              DESCRIPTION=$(grep '^description' "${src_path}/config.toml" | head -1 | sed 's/description *= *"//;s/"//')
+              THEME_REPO_URL="https://github.com/${GITHUB_REPOSITORY}/tree/main/${src_path}"
+              SCAFFOLD_URL="https://github.com/${GITHUB_REPOSITORY}/tree/main/${src_path}"
               SCAFFOLD_CMD="hwaro init my-site --scaffold ${SCAFFOLD_URL}"
-              TAGS=$(jq -r --arg d "${dir_name}" '.[$d] // [] | join(" ")' tags.json)
+              TAGS=$(jq -r --arg d "${name}" '.[$d] // [] | join(" ")' tags.json)
               TAGS_DISPLAY=""
               for tag in ${TAGS}; do
                 TAGS_DISPLAY="${TAGS_DISPLAY}<span class=\"tag\">${tag}</span>"
@@ -220,7 +224,7 @@ jobs:
                 fi
               done
               EXAMPLE_COUNT=$((EXAMPLE_COUNT + 1))
-              SITE_LINKS="${SITE_LINKS}<div class=\"card\" data-name=\"${dir_name}\" data-title=\"${TITLE}\" data-desc=\"${DESCRIPTION}\" data-tags=\"${TAGS}\"><a href=\"${BASE_URL}/${dir_name}/\" class=\"main-link\"><img src=\"screenshots/${dir_name}.png\" alt=\"${dir_name}\" class=\"preview\" loading=\"lazy\" onerror=\"var d=document.createElement('div');d.className='preview-fallback';d.textContent='No Preview';this.replaceWith(d);\"><div class=\"card-info\"><strong>${dir_name}</strong><span class=\"title\">${TITLE}</span><span class=\"desc\">${DESCRIPTION}</span><div class=\"card-tags\">${TAGS_DISPLAY}</div></div></a><div class=\"card-footer\"><a href=\"${THEME_REPO_URL}\" class=\"card-footer-row\"><svg viewBox=\"0 0 16 16\"><path d=\"M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z\"></path></svg>Source Code</a><div class=\"card-footer-row scaffold-row\" onclick=\"copyScaffold(this)\" data-cmd=\"${SCAFFOLD_CMD}\"><svg viewBox=\"0 0 16 16\"><path d=\"M4.72 3.22a.75.75 0 011.06 1.06L2.06 8l3.72 3.72a.75.75 0 11-1.06 1.06L.47 8.53a.75.75 0 010-1.06l4.25-4.25zm6.56 0a.75.75 0 10-1.06 1.06L13.94 8l-3.72 3.72a.75.75 0 101.06 1.06l4.25-4.25a.75.75 0 000-1.06l-4.25-4.25z\"></path></svg><span class=\"scaffold-cmd\">${SCAFFOLD_CMD}</span><svg class=\"copy-icon\" viewBox=\"0 0 16 16\"><path d=\"M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z\"></path><path d=\"M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 9.25a.75.75 0 01-1.5 0 .25.25 0 00-.25-.25h-7.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h1.5a.75.75 0 010 1.5h-1.5A1.75 1.75 0 015 14.25v-7.5z\"></path></svg></div></div></div>"
+              SITE_LINKS="${SITE_LINKS}<div class=\"card\" data-name=\"${name}\" data-title=\"${TITLE}\" data-desc=\"${DESCRIPTION}\" data-tags=\"${TAGS}\"><a href=\"${BASE_URL}/${name}/\" class=\"main-link\"><img src=\"screenshots/${name}.png\" alt=\"${name}\" class=\"preview\" loading=\"lazy\" onerror=\"var d=document.createElement('div');d.className='preview-fallback';d.textContent='No Preview';this.replaceWith(d);\"><div class=\"card-info\"><strong>${name}</strong><span class=\"title\">${TITLE}</span><span class=\"desc\">${DESCRIPTION}</span><div class=\"card-tags\">${TAGS_DISPLAY}</div></div></a><div class=\"card-footer\"><a href=\"${THEME_REPO_URL}\" class=\"card-footer-row\"><svg viewBox=\"0 0 16 16\"><path d=\"M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z\"></path></svg>Source Code</a><div class=\"card-footer-row scaffold-row\" onclick=\"copyScaffold(this)\" data-cmd=\"${SCAFFOLD_CMD}\"><svg viewBox=\"0 0 16 16\"><path d=\"M4.72 3.22a.75.75 0 011.06 1.06L2.06 8l3.72 3.72a.75.75 0 11-1.06 1.06L.47 8.53a.75.75 0 010-1.06l4.25-4.25zm6.56 0a.75.75 0 10-1.06 1.06L13.94 8l-3.72 3.72a.75.75 0 101.06 1.06l4.25-4.25a.75.75 0 000-1.06l-4.25-4.25z\"></path></svg><span class=\"scaffold-cmd\">${SCAFFOLD_CMD}</span><svg class=\"copy-icon\" viewBox=\"0 0 16 16\"><path d=\"M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z\"></path><path d=\"M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 9.25a.75.75 0 01-1.5 0 .25.25 0 00-.25-.25h-7.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h1.5a.75.75 0 010 1.5h-1.5A1.75 1.75 0 015 14.25v-7.5z\"></path></svg></div></div></div>"
             fi
           done
           # Identify top 8 tags and generate dynamic CSS
