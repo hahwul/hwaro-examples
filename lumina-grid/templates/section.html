@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="section">
+  <h1>{{ section.title | default("Directory") | e }}</h1>
+
+  {% if content %}
+    <div class="content" style="margin-bottom: 2rem;">
+      {{ content | safe }}
+    </div>
+  {% endif %}
+
+  {% if section.pages %}
+    <ul class="section-list">
+      {% for page in section.pages %}
+        <li>
+          <a href="{{ base_url }}{{ page.permalink }}">{{ page.title | e }}</a>
+          {% if page.description %}
+            <p style="margin: 0.5rem 0 0; color: var(--text-muted); font-size: 0.95rem;">{{ page.description | e }}</p>
+          {% endif %}
+          {% if page.date %}
+            <div style="margin-top: 0.5rem; font-family: ui-monospace, monospace; font-size: 0.8rem; color: var(--magenta);">
+              {{ page.date | date(format="%Y-%m-%d") }}
+            </div>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+
+    {% if pagination %}
+      <div class="pagination">
+        {{ pagination | safe }}
+      </div>
+    {% endif %}
+  {% else %}
+    <p style="color: var(--text-muted); font-style: italic;">// DIRECTORY_EMPTY //</p>
+  {% endif %}
+</div>
+{% endblock %}
