@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="{{ page_language | default('en') }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{% if page and page.description is present %}{{ page.description | e }}{% else %}{{ site.description | e }}{% endif %}">
+  <title>{% if page and page.title is present %}{{ page.title | e }} - {% elif section and section.title is present %}{{ section.title | e }} - {% endif %}{{ site.title | e }}</title>
+  {{ og_all_tags | safe }}
+  {{ hreflang_tags | safe }}
+  <style>
+    :root {
+      --bg-dark: #050508;
+      --grid-line: rgba(0, 255, 255, 0.08);
+      --text-main: #e0e0e0;
+      --text-muted: #8892b0;
+      --cyan: #00f0ff;
+      --magenta: #ff003c;
+      --accent: var(--cyan);
+      --border-color: rgba(0, 240, 255, 0.2);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      color: var(--text-main);
+      background-color: var(--bg-dark);
+      /* Cyberpunk grid background using box-shadow and pseudo elements instead of gradients */
+      min-height: 100vh;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><rect width="40" height="40" fill="none" stroke="rgba(0,255,255,0.08)" stroke-width="1"/></svg>');
+      z-index: -1;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Layout */
+    .site-wrapper { max-width: 800px; margin: 0 auto; padding: 0 2rem; flex: 1; display: flex; flex-direction: column; width: 100%; }
+
+    .site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2rem 0;
+      border-bottom: 2px solid var(--border-color);
+      margin-bottom: 3rem;
+      box-shadow: 0 4px 20px -10px rgba(0, 240, 255, 0.15);
+    }
+
+    .site-logo {
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: var(--cyan);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+    }
+
+    .site-header nav { display: flex; gap: 1.5rem; }
+    .site-header nav a {
+      color: var(--text-main);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-family: ui-monospace, monospace;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.2s ease;
+    }
+    .site-header nav a:hover {
+      color: var(--magenta);
+      text-shadow: 0 0 8px rgba(255, 0, 60, 0.6);
+    }
+
+    .site-main { flex: 1; }
+
+    .site-footer {
+      margin-top: 4rem;
+      padding: 2rem 0;
+      border-top: 1px solid var(--border-color);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      text-align: center;
+      font-family: ui-monospace, monospace;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4 {
+      line-height: 1.3;
+      margin-top: 2em;
+      margin-bottom: 0.8em;
+      font-weight: 700;
+      color: #fff;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-top: 0;
+      color: var(--cyan);
+      text-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+    }
+    h2 { font-size: 1.8rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.3em; }
+    h3 { font-size: 1.3rem; color: var(--magenta); }
+
+    p { margin: 1.2em 0; }
+
+    a {
+      color: var(--cyan);
+      text-decoration: none;
+      position: relative;
+    }
+    a:hover {
+      color: #fff;
+      text-shadow: 0 0 8px var(--cyan);
+    }
+    .site-main a {
+      border-bottom: 1px dashed var(--cyan);
+    }
+    .site-main a:hover {
+      border-bottom: 1px solid var(--cyan);
+    }
+
+    /* Elements */
+    code, pre {
+      font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+    }
+    code {
+      background: rgba(0, 240, 255, 0.1);
+      color: var(--cyan);
+      padding: 0.2rem 0.4rem;
+      border-radius: 3px;
+      font-size: 0.85em;
+      border: 1px solid rgba(0, 240, 255, 0.2);
+    }
+    pre {
+      background: rgba(5, 5, 10, 0.8);
+      padding: 1.2rem;
+      border-radius: 4px;
+      overflow-x: auto;
+      border: 1px solid var(--border-color);
+      border-left: 4px solid var(--magenta);
+    }
+    pre code { background: none; padding: 0; border: none; color: inherit; }
+
+    blockquote {
+      margin: 1.5rem 0;
+      padding: 1rem 1.5rem;
+      border-left: 4px solid var(--cyan);
+      background: rgba(0, 240, 255, 0.05);
+      color: var(--text-muted);
+    }
+
+    hr {
+      border: 0;
+      height: 1px;
+      background-color: var(--cyan);
+      margin: 3rem 0;
+      opacity: 0.2;
+    }
+
+    /* Custom classes used in content */
+    .hero {
+      text-align: center;
+      padding: 3rem 0 2rem;
+      margin-bottom: 2rem;
+    }
+    .hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 0.2em;
+    }
+    .hero .subtitle {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      font-family: ui-monospace, monospace;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+    .tech-specs {
+      background: rgba(255, 0, 60, 0.05);
+      border: 1px solid rgba(255, 0, 60, 0.3);
+      padding: 1.5rem;
+      border-radius: 4px;
+      margin: 2rem 0;
+    }
+    .tech-specs h3 {
+      margin-top: 0;
+      color: var(--magenta);
+    }
+    .tech-specs ul {
+      margin-bottom: 0;
+    }
+
+    /* Lists */
+    ul.section-list { list-style: none; padding: 0; margin: 2rem 0; }
+    ul.section-list li {
+      margin-bottom: 1rem;
+      padding: 1.5rem;
+      background: rgba(5, 5, 10, 0.7);
+      border-radius: 4px;
+      border: 1px solid var(--border-color);
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    ul.section-list li:hover {
+      border-color: var(--cyan);
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.1);
+      transform: translateX(5px);
+    }
+    ul.section-list li a { font-weight: 600; font-size: 1.2rem; border-bottom: none; }
+
+    .meta { font-family: ui-monospace, monospace; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 2rem; }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .site-header { flex-direction: column; gap: 1rem; }
+      .site-wrapper { padding: 0 1.2rem; }
+      .hero h1 { font-size: 2.5rem; }
+    }
+  </style>
+  {{ highlight_css | safe }}
+  {{ auto_includes_css | safe }}
+</head>
+<body data-section="{% if page and page.section %}{{ page.section }}{% endif %}">
+  <div class="site-wrapper">
+    <header class="site-header">
+      <a href="{{ base_url }}" class="site-logo">{{ site.title }}</a>
+      <nav>
+        <a href="{{ base_url }}">Home</a>
+        <a href="{{ base_url }}about/">About</a>
+      </nav>
+    </header>
+
+    <main class="site-main">
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; 2026 {{ site.title }}. // SYSTEM ONLINE // <a href="{{ base_url }}rss.xml">DATA STREAM</a></p>
+    </footer>
+  </div>
+</body>
+</html>
