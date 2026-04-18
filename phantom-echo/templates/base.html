@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+  {% if page.description %}
+  <meta name="description" content="{{ page.description }}">
+  {% else %}
+  <meta name="description" content="{{ site.description }}">
+  {% endif %}
+  {{ canonical_tag | safe }}
+  {{ og_all_tags | safe }}
+  {{ jsonld | safe }}
+  {{ auto_includes | safe }}
+  {% if site.highlight is defined and site.highlight.enabled %}
+  {{ highlight_css | safe }}
+  {% endif %}
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0B0C10;
+      --fg: #C5C6C7;
+      --accent1: #66FCF1;
+      --accent2: #45A29E;
+      --link: #FF0055;
+      --border: #1F2833;
+      --font: 'Space Mono', 'Courier New', monospace;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      background-color: var(--bg);
+      color: var(--fg);
+      font-family: var(--font);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--link);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    a:hover {
+      text-shadow: 0 0 8px var(--link);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    header {
+      border-bottom: 2px solid var(--accent1);
+      padding-bottom: 1rem;
+      margin-bottom: 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+    }
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--accent2);
+    }
+
+    .logo {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--accent1);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+    .logo:hover {
+      text-shadow: 0 0 10px var(--accent1);
+      color: var(--accent1);
+    }
+
+    nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+    nav a {
+      color: var(--fg);
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+    nav a:hover {
+      color: var(--accent1);
+      text-shadow: none;
+    }
+
+    footer {
+      border-top: 1px dashed var(--border);
+      margin-top: 4rem;
+      padding-top: 2rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      color: var(--accent1);
+      text-transform: uppercase;
+      margin-top: 2rem;
+    }
+
+    /* Base styles for components */
+    .post-list {
+      list-style: none;
+      padding: 0;
+    }
+    .post-item {
+      border-left: 3px solid var(--accent2);
+      padding-left: 1.5rem;
+      margin-bottom: 2rem;
+      background: rgba(31, 40, 51, 0.4);
+      padding: 1.5rem;
+      transition: transform 0.2s;
+    }
+    .post-item:hover {
+      transform: translateX(5px);
+      border-left-color: var(--accent1);
+      box-shadow: -5px 0 15px rgba(102, 252, 241, 0.2);
+    }
+    .post-item h2 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.5rem;
+    }
+    .post-meta {
+      font-size: 0.85rem;
+      color: var(--accent2);
+      margin-bottom: 1rem;
+    }
+
+    /* Content styling */
+    .content blockquote {
+      border-left: 4px solid var(--link);
+      margin: 1.5rem 0;
+      padding: 1rem 1.5rem;
+      background: rgba(255, 0, 85, 0.05);
+      font-style: italic;
+    }
+
+    .content img {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid var(--border);
+    }
+
+    /* Syntax Highlighting overrides for dark mode */
+    pre, .hljs {
+      background: #0f1219 !important;
+      border: 1px solid var(--border);
+      padding: 1rem;
+      border-radius: 4px;
+      overflow-x: auto;
+    }
+    code {
+      font-family: var(--font);
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.2rem 0.4rem;
+      border-radius: 3px;
+      color: var(--accent1);
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: inherit;
+    }
+
+    .tags {
+      margin-top: 1rem;
+    }
+    .tag {
+      display: inline-block;
+      padding: 0.2rem 0.5rem;
+      background: var(--border);
+      color: var(--fg);
+      font-size: 0.8rem;
+      margin-right: 0.5rem;
+      border-radius: 2px;
+    }
+    .tag:hover {
+      background: var(--accent2);
+      color: var(--bg);
+      text-shadow: none;
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
+    }
+  </style>
+  {% block header %}{% endblock %}
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="{{ base_url }}" class="logo">{{ site.title }}</a>
+      <nav>
+        <a href="{{ base_url }}posts/">Posts</a>
+        <a href="{{ base_url }}archives/">Archives</a>
+        <a href="{{ base_url }}about/">About</a>
+      </nav>
+    </header>
+
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+      {% block footer %}{% endblock %}
+      <p>&copy; {{ current_year }} {{ site.title }}. System Initialized.</p>
+    </footer>
+  </div>
+</body>
+</html>

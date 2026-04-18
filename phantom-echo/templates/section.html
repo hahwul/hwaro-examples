@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="content">
+  {% if page.title %}
+  <h1>{{ page.title | e }}</h1>
+  {% endif %}
+
+  {% if content %}
+  {{ content | safe }}
+  {% endif %}
+
+  <ul class="post-list">
+    {% for post in section.list %}
+    <li class="post-item">
+      <h2><a href="{{ post.url }}">{{ post.title | e }}</a></h2>
+      <div class="post-meta">
+        {% if post.date %}
+        <span class="date">{{ post.date | date("%Y-%m-%d") }}</span>
+        {% endif %}
+      </div>
+      <div class="post-summary">
+        {% if post.summary %}
+          {{ post.summary | strip_html | truncate_words(30) }}...
+        {% endif %}
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+
+  {% if pagination %}
+  <div class="pagination">
+    {% if pagination.prev %}
+    <a href="{{ pagination.prev }}" class="prev">&laquo; Previous</a>
+    {% else %}
+    <span class="prev disabled">&laquo; Previous</span>
+    {% endif %}
+
+    <span class="page-num">Page {{ pagination.current }} of {{ pagination.total }}</span>
+
+    {% if pagination.next %}
+    <a href="{{ pagination.next }}" class="next">Next &raquo;</a>
+    {% else %}
+    <span class="next disabled">Next &raquo;</span>
+    {% endif %}
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
