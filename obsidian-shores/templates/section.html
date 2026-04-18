@@ -1,0 +1,55 @@
+{% include "header.html" %}
+
+<div class="container">
+    {% if section is defined and section.title %}
+    <div class="hero">
+        <h1>{{ section.title }}</h1>
+        {% if section.description is defined and section.description %}
+        <p>{{ section.description }}</p>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    {% if content is defined and content %}
+    <div class="glass-panel content-area" style="margin-bottom: 3rem;">
+        {{ content | safe }}
+    </div>
+    {% endif %}
+
+    {% if section is defined and section.pages %}
+    <div class="post-grid">
+        {% for child in section.pages %}
+        <article class="glass-panel post-card">
+            <h3><a href="{{ child.permalink }}">{{ child.title }}</a></h3>
+            {% if child.date is defined and child.date %}
+            <span class="post-meta">{{ child.date | date("%Y-%m-%d") }}</span>
+            {% endif %}
+            {% if child.description is defined and child.description %}
+            <p>{{ child.description }}</p>
+            {% endif %}
+            <div>
+                <a href="{{ child.permalink }}" class="read-more">Read More</a>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if pagination is defined and pagination.total_pages > 1 %}
+    <div class="glass-panel" style="margin-top: 3rem; text-align: center;">
+        <div class="pagination">
+            {% if pagination.current_page > 1 %}
+            <a href="{{ pagination.prev_url }}" style="margin-right: 1rem;">&laquo; Previous</a>
+            {% endif %}
+
+            <span>Page {{ pagination.current_page }} of {{ pagination.total_pages }}</span>
+
+            {% if pagination.current_page < pagination.total_pages %}
+            <a href="{{ pagination.next_url }}" style="margin-left: 1rem;">Next &raquo;</a>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+{% include "footer.html" %}
