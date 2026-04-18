@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}
+  {% if section.title %}
+    {{ section.title }} | {{ site.title }}
+  {% else %}
+    {{ site.title }}
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="section-container">
+    {% if section.title %}
+        <h1 class="section-title">{{ section.title }}</h1>
+    {% endif %}
+
+    {% if content %}
+        <div class="section-content">
+            {{ content | safe }}
+        </div>
+    {% endif %}
+
+    <div class="post-list">
+        {% if paginator %}
+            {% set pages = paginator.pages %}
+        {% else %}
+            {% set pages = section.pages %}
+        {% endif %}
+
+        {% for post in pages %}
+            <article class="post-item">
+                <h2 class="post-item-title"><a href="{{ post.permalink }}">{{ post.title }}</a></h2>
+                {% if post.date %}
+                    <div class="post-item-meta">
+                        <time datetime="{{ post.date | date(format="%Y-%m-%d") }}">{{ post.date | date(format="%B %d, %Y") }}</time>
+                    </div>
+                {% endif %}
+                {% if post.description %}
+                    <p class="post-item-summary">{{ post.description }}</p>
+                {% endif %}
+            </article>
+        {% endfor %}
+    </div>
+
+    {% if paginator and paginator.number_pagers > 1 %}
+        <nav class="pagination">
+            {% if paginator.previous %}
+                <a href="{{ paginator.previous }}" class="prev">← Newer</a>
+            {% endif %}
+            <span class="page-number">Page {{ paginator.current_index }} of {{ paginator.number_pagers }}</span>
+            {% if paginator.next %}
+                <a href="{{ paginator.next }}" class="next">Older →</a>
+            {% endif %}
+        </nav>
+    {% endif %}
+</div>
+{% endblock %}

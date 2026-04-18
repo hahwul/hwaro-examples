@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}
+  {% if page.title %}
+    {{ page.title }} | {{ site.title }}
+  {% else %}
+    {{ site.title }}
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+<article class="post">
+    <header class="post-header">
+        {% if page.title %}
+            <h1 class="post-title">{{ page.title }}</h1>
+        {% endif %}
+
+        <div class="post-meta">
+            {% if page.date %}
+                <time datetime="{{ page.date | date(format="%Y-%m-%d") }}">
+                    {{ page.date | date(format="%B %d, %Y") }}
+                </time>
+            {% endif %}
+
+            {% if page.taxonomies is defined and page.taxonomies.categories is defined %}
+                <span class="post-categories">
+                    in
+                    {% for cat in page.taxonomies.categories %}
+                        <a href="/categories/{{ cat }}/">{{ cat }}</a>{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </span>
+            {% endif %}
+        </div>
+    </header>
+
+    <div class="content">
+        {{ content | safe }}
+    </div>
+
+    {% if page.taxonomies is defined and page.taxonomies.tags is defined %}
+        <footer class="post-footer">
+            <div class="post-tags">
+                {% for tag in page.taxonomies.tags %}
+                    <a href="/tags/{{ tag }}/" class="tag">#{{ tag }}</a>
+                {% endfor %}
+            </div>
+        </footer>
+    {% endif %}
+</article>
+{% endblock %}
