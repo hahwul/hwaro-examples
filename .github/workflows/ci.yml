@@ -1,0 +1,95 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  check-new-examples:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect newly added examples
+        id: detect
+        run: |
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+
+          # Examples where config.toml was newly added in this PR
+          NEW=$(git diff --name-only --diff-filter=A "$BASE_SHA" "$HEAD_SHA" \
+            | grep -E '^examples/[^/]+/config\.toml$' \
+            | sed -E 's|^examples/([^/]+)/config\.toml$|\1|' \
+            | sort -u \
+            | tr '\n' ' ' \
+            | xargs)
+
+          echo "new=$NEW" >> "$GITHUB_OUTPUT"
+          if [ -z "$NEW" ]; then
+            echo "No newly added examples in this PR."
+          else
+            echo "Newly added examples: $NEW"
+          fi
+
+      - name: Run hwaro doctor on new examples
+        if: steps.detect.outputs.new != ''
+        run: |
+          FAILED=""
+          for name in ${{ steps.detect.outputs.new }}; do
+            echo ""
+            echo "::group::hwaro doctor — $name"
+            if ! docker run --rm \
+              -v "${GITHUB_WORKSPACE}/examples/$name:/src" \
+              -w /src \
+              ghcr.io/hahwul/hwaro doctor; then
+              FAILED="$FAILED $name"
+            fi
+            echo "::endgroup::"
+          done
+
+          if [ -n "$FAILED" ]; then
+            echo "::error::hwaro doctor failed for:$FAILED"
+            exit 1
+          fi
+
+      - name: Trial build for new examples
+        if: steps.detect.outputs.new != ''
+        run: |
+          FAILED=""
+          for name in ${{ steps.detect.outputs.new }}; do
+            echo ""
+            echo "::group::hwaro build — $name"
+            OUT="${RUNNER_TEMP}/build-$name"
+            mkdir -p "$OUT"
+            if ! docker run --rm \
+              -v "${GITHUB_WORKSPACE}/examples/$name:/src" \
+              -v "$OUT:/output" \
+              ghcr.io/hahwul/hwaro build -i /src -o /output; then
+              FAILED="$FAILED $name"
+            fi
+            echo "::endgroup::"
+          done
+
+          if [ -n "$FAILED" ]; then
+            echo "::error::hwaro build failed for:$FAILED"
+            exit 1
+          fi
+
+      - name: Verify tags.json entry exists for each new example
+        if: steps.detect.outputs.new != ''
+        run: |
+          MISSING=""
+          for name in ${{ steps.detect.outputs.new }}; do
+            HAS=$(jq --arg k "$name" 'has($k)' tags.json)
+            if [ "$HAS" != "true" ]; then
+              MISSING="$MISSING $name"
+            fi
+          done
+
+          if [ -n "$MISSING" ]; then
+            echo "::error::Missing tags.json entry for:$MISSING"
+            echo "Add an entry under the site name key in tags.json (e.g., \"my-site\": [\"dark\", \"blog\"])."
+            exit 1
+          fi
