@@ -1,0 +1,37 @@
+{% include "header.html" %}
+  <main class="site-main glass-panel">
+    <h1>{{ page.title | e }}</h1>
+    {{ content }}
+
+    <ul class="section-list">
+      {% for child in section.pages %}
+      <li>
+        <a href="{{ child.permalink | default(child.path) }}">{{ child.title | e }}</a>
+        {% if child.description is defined and child.description %}
+          <p style="margin: 0.5rem 0 0; font-size: 0.95rem; color: var(--text-muted);">{{ child.description | e }}</p>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+
+    {% if pagination is defined and pagination.total_pages is defined and pagination.total_pages > 1 %}
+    <nav class="pagination">
+      <ul class="pagination-list">
+        {% if pagination.has_previous %}
+          <li><a href="{{ pagination.previous_page_url }}">&laquo; Prev</a></li>
+        {% else %}
+          <li class="pagination-disabled"><span>&laquo; Prev</span></li>
+        {% endif %}
+
+        <li class="pagination-current"><span>Page {{ pagination.current_page }} of {{ pagination.total_pages }}</span></li>
+
+        {% if pagination.has_next %}
+          <li><a href="{{ pagination.next_page_url }}">Next &raquo;</a></li>
+        {% else %}
+          <li class="pagination-disabled"><span>Next &raquo;</span></li>
+        {% endif %}
+      </ul>
+    </nav>
+    {% endif %}
+  </main>
+{% include "footer.html" %}
