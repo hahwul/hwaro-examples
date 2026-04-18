@@ -1,0 +1,43 @@
+{% include "header.html" %}
+<main class="main-content">
+  <div class="content-container">
+    {% if page.url == '/' or page.url == '' %}
+    <section class="hero frosted-container glass-card">
+      <h1 class="hero-title">{{ page.title }}</h1>
+      {% if page.description %}
+      <p class="hero-subtitle">{{ page.description }}</p>
+      {% endif %}
+      <div class="hero-content prose">
+        {{ content | safe }}
+      </div>
+    </section>
+
+    {% if site.pages %}
+    <div class="posts-grid">
+      {% for item in site.pages | sort_by("date", reverse=true) | truncate(length=6) %}
+        {% if item.url != '/' and item.url != '/about/' %}
+        <a href="{{ item.url }}" class="post-card frosted-container glass-card">
+          <div class="post-card-content">
+            <h3 class="post-card-title">{{ item.title }}</h3>
+            {% if item.date %}
+            <time class="post-card-date">{{ item.date | date("%B %d, %Y") }}</time>
+            {% endif %}
+            {% if item.description %}
+            <p class="post-card-desc">{{ item.description }}</p>
+            {% endif %}
+          </div>
+        </a>
+        {% endif %}
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {% else %}
+    <article class="page-content frosted-container glass-card prose">
+      <h1>{{ page.title }}</h1>
+      {{ content | safe }}
+    </article>
+    {% endif %}
+  </div>
+</main>
+{% include "footer.html" %}
