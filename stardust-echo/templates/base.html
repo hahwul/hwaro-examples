@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+  {% if page.description %}
+  <meta name="description" content="{{ page.description }}">
+  {% endif %}
+  {{ highlight_css | safe }}
+  {{ auto_includes_css | safe }}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-base: #0B0A1A;
+      --bg-glass: rgba(22, 20, 48, 0.4);
+      --border-glass: rgba(255, 255, 255, 0.08);
+      --text-main: #E2E8F0;
+      --text-muted: #94A3B8;
+      --accent-glow: rgba(138, 43, 226, 0.4);
+      --accent-color: #D8B4E2;
+      --link-color: #E9D5FF;
+      --link-hover: #FFFFFF;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Stardust Background Effect */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background-image:
+        radial-gradient(circle at 15% 50%, rgba(76, 29, 149, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 85% 30%, rgba(56, 189, 248, 0.1) 0%, transparent 50%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    a {
+      color: var(--link-color);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    a:hover {
+      color: var(--link-hover);
+      text-shadow: 0 0 8px var(--accent-glow);
+    }
+
+    .glass-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px;
+      width: 100%;
+    }
+
+    /* Header */
+    header {
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--border-glass);
+      background: var(--bg-glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .site-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #fff;
+      text-transform: uppercase;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .nav-links a {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Main Content */
+    main {
+      flex: 1;
+      padding: 4rem 0;
+    }
+
+    .content-card {
+      background: var(--bg-glass);
+      border: 1px solid var(--border-glass);
+      border-radius: 16px;
+      padding: 3rem;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .content-card:hover {
+      box-shadow: 0 12px 48px 0 rgba(138, 43, 226, 0.15);
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: linear-gradient(to right, #fff, var(--accent-color));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.2;
+    }
+
+    h2, h3, h4 {
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    ul, ol {
+      margin-bottom: 1.5rem;
+      padding-left: 1.5rem;
+      color: var(--text-muted);
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    /* Code blocks override */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1.5em;
+      background: #0d1117 !important; /* Force dark background */
+      border: 1px solid var(--border-glass);
+      border-radius: 8px;
+      color: #c9d1d9 !important;
+      font-family: monospace;
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    /* Inline code */
+    :not(pre) > code {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.2em 0.4em;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent-color);
+    }
+
+    /* Footer */
+    footer {
+      padding: 2rem 0;
+      text-align: center;
+      border-top: 1px solid var(--border-glass);
+      background: rgba(11, 10, 26, 0.8);
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .page-list {
+      list-style: none;
+      padding: 0;
+      margin: 2rem 0;
+    }
+
+    .page-list li {
+      margin-bottom: 1rem;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 8px;
+      border: 1px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .page-list li:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--border-glass);
+    }
+
+    .page-list a {
+      display: block;
+      font-size: 1.2rem;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .page-list span {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 768px) {
+      .content-card {
+        padding: 2rem;
+      }
+      h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="glass-container nav-container">
+      <nav>
+        <a href="{{ base_url }}" class="site-title">{{ site.title }}</a>
+        <div class="nav-links">
+          <a href="{{ base_url }}">Home</a>
+          <a href="{{ base_url }}about/">About</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="glass-container">
+    {% block content %}
+    {% endblock %}
+  </main>
+
+  <footer>
+    <div class="glass-container">
+      <p>&copy; {{ site.title }}. All rights reserved. Built with Hwaro.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
