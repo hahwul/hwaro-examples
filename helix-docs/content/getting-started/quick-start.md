@@ -42,5 +42,5 @@ Visit `http://localhost:3000` to see your site.
 
 ## Next Steps
 
-- Read about [Configuration](/getting-started/configuration.html)
-- Learn about [Content Management](/guide/content-management.html)
+- Read about [Configuration](/getting-started/configuration/)
+- Learn about [Content Management](/guide/content-management/)

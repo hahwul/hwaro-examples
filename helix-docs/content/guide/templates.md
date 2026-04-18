@@ -34,4 +34,4 @@ For complex data models, use our built-in shortcodes to enhance clarity.
 - **DNA Patterns**: Inject subtle helix-themed decorations.
 - **Progressive Disclosure**: Reveal content based on user interaction.
 
-Proceed to the [Terminal Hub]({{ base_url }}/reference/cli/) for advanced command-line control over your visualization engine.
+Proceed to the [Terminal Hub](/reference/cli/) for advanced command-line control over your visualization engine.
