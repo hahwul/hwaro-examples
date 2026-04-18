@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="glass-card">
+  <h1>{{ section.title | default(value="Section") }}</h1>
+  {% if section.description %}
+    <p style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 2rem;">{{ section.description }}</p>
+  {% endif %}
+
+  <div class="section-content">
+    {{ content | safe }}
+  </div>
+
+  <ul class="section-list">
+    {% for page in section.pages %}
+      <li>
+        <a href="{{ base_url }}{{ page.path }}">
+          {% if page.date is present %}
+            <span class="date-meta">{{ page.date | date(format="%B %d, %Y") }}</span>
+          {% endif %}
+          <span style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; display: block;">{{ page.title }}</span>
+          {% if page.description is present %}
+            <span style="color: var(--text-muted); font-weight: normal;">{{ page.description }}</span>
+          {% endif %}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+
+  {% if section.pages | length == 0 %}
+    <p style="color: var(--text-muted); font-style: italic;">No pages found in this section.</p>
+  {% endif %}
+</div>
+{% endblock %}
