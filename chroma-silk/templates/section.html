@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="section-header glass-panel" style="margin-bottom: 2rem;">
+    <h1 class="page-title">{{ section.title }}</h1>
+    {% if section.description %}
+    <p class="page-description" style="margin-bottom: 0;">{{ section.description }}</p>
+    {% endif %}
+
+    {% if content %}
+    <div class="content-body" style="margin-top: 2rem;">
+        {{ content | safe }}
+    </div>
+    {% endif %}
+</div>
+
+<div class="portfolio-grid">
+    {% for page in section.pages %}
+    <a href="{{ page.url }}" class="portfolio-card">
+        {% if page.date %}
+        <div class="card-date">{{ page.date | date(format="%B %d, %Y") }}</div>
+        {% endif %}
+        <h2 class="card-title">{{ page.title }}</h2>
+        {% if page.description %}
+        <p class="card-summary">{{ page.description }}</p>
+        {% elif page.summary %}
+        <p class="card-summary">{{ page.summary | strip_html | truncate_words(n=20) }}</p>
+        {% endif %}
+        <span class="card-link">View Project</span>
+    </a>
+    {% endfor %}
+</div>
+
+{% if section.subsections %}
+<div class="subsections" style="margin-top: 4rem;">
+    <h2 style="margin-bottom: 2rem; color: #fff; font-family: 'Outfit', sans-serif;">Categories</h2>
+    <div class="portfolio-grid">
+        {% for subsection in section.subsections %}
+        <a href="{{ subsection.url }}" class="portfolio-card" style="min-height: auto;">
+            <h3 class="card-title" style="margin-bottom: 0.5rem;">{{ subsection.title }}</h3>
+            {% if subsection.description %}
+            <p class="card-summary" style="margin-bottom: 0;">{{ subsection.description }}</p>
+            {% endif %}
+        </a>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
