@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="{{ page_language }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description | e }}">
+  <title>{% if page.title is present %}{{ page.title | e }} - {% endif %}{{ site.title | e }}</title>
+  {{ og_all_tags }}
+  {{ hreflang_tags }}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #030305;
+      --glow-purple: rgba(138, 43, 226, 0.6);
+      --glow-cyan: rgba(5, 217, 232, 0.6);
+      --glass-bg: rgba(15, 15, 20, 0.55);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #05d9e8;
+      --accent-alt: #8a2be2;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.7;
+      margin: 0;
+      color: var(--text-main);
+      background-color: var(--bg-dark);
+      background-image:
+        radial-gradient(circle at 15% 50%, var(--glow-purple) 0%, transparent 25%),
+        radial-gradient(circle at 85% 30%, var(--glow-cyan) 0%, transparent 25%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Animated background elements */
+    .bg-orbs {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      animation: float 20s infinite ease-in-out alternate;
+    }
+
+    .orb-1 {
+      width: 400px;
+      height: 400px;
+      background: var(--glow-purple);
+      top: -100px;
+      left: -100px;
+    }
+
+    .orb-2 {
+      width: 300px;
+      height: 300px;
+      background: var(--glow-cyan);
+      bottom: -50px;
+      right: -50px;
+      animation-delay: -5s;
+    }
+
+    @keyframes float {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(50px, 30px) scale(1.1); }
+      100% { transform: translate(-30px, 50px) scale(0.9); }
+    }
+
+    /* Layout */
+    .site-wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 2rem;
+      margin: 2rem 0 3rem;
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .site-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.4rem;
+      color: var(--text-main);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+      position: relative;
+    }
+
+    .site-logo::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background: linear-gradient(90deg, var(--accent-alt), var(--accent));
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.3s ease;
+    }
+
+    .site-logo:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    .site-header nav { display: flex; gap: 1.5rem; }
+
+    .site-header nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 500;
+      transition: color 0.3s ease, text-shadow 0.3s ease;
+    }
+
+    .site-header nav a:hover {
+      color: var(--accent);
+      text-shadow: 0 0 8px rgba(5, 217, 232, 0.5);
+    }
+
+    .site-main {
+      min-height: calc(100vh - 250px);
+    }
+
+    .glass-panel {
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 2.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .glass-panel:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .site-footer {
+      margin-top: 3rem;
+      padding: 2rem 0;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      text-align: center;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Space Grotesk', sans-serif;
+      line-height: 1.2;
+      margin-top: 1.5em;
+      margin-bottom: 0.75em;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-top: 0;
+      background: linear-gradient(to right, #fff, #a5b4fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    h2 { font-size: 1.8rem; }
+    h3 { font-size: 1.4rem; }
+    p { margin: 1.2em 0; color: var(--text-muted); }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.2s, text-shadow 0.2s;
+    }
+
+    a:hover {
+      color: #fff;
+      text-shadow: 0 0 10px var(--accent);
+    }
+
+    code {
+      background: rgba(0,0,0,0.3);
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.85em;
+      font-family: 'Space Grotesk', monospace;
+      color: #e2e8f0;
+      border: 1px solid var(--glass-border);
+    }
+
+    pre {
+      background: rgba(5, 5, 10, 0.6);
+      padding: 1.5rem;
+      border-radius: 12px;
+      overflow-x: auto;
+      border: 1px solid var(--glass-border);
+    }
+
+    pre code {
+      background: none;
+      padding: 0;
+      border: none;
+    }
+
+    /* Components */
+    ul.section-list {
+      list-style: none;
+      padding: 0;
+      margin: 1.5rem 0;
+      display: grid;
+      gap: 1rem;
+    }
+
+    ul.section-list li {
+      background: rgba(20, 20, 30, 0.4);
+      border-radius: 12px;
+      border: 1px solid var(--glass-border);
+      transition: all 0.3s ease;
+    }
+
+    ul.section-list li a {
+      display: block;
+      padding: 1.25rem 1.5rem;
+      font-weight: 500;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.1rem;
+    }
+
+    ul.section-list li:hover {
+      background: rgba(30, 30, 45, 0.6);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+
+    .taxonomy-desc { color: var(--text-muted); margin-bottom: 1.5rem; }
+
+    nav.pagination { margin: 2rem 0; }
+    nav.pagination .pagination-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    nav.pagination a, .pagination-current span, .pagination-disabled span {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 36px;
+      height: 36px;
+      padding: 0 0.5rem;
+      border-radius: 8px;
+      border: 1px solid var(--glass-border);
+      background: rgba(20, 20, 30, 0.4);
+      color: var(--text-muted);
+      text-decoration: none;
+      font-family: 'Space Grotesk', sans-serif;
+      transition: all 0.2s ease;
+    }
+
+    nav.pagination a:hover {
+      color: #fff;
+      border-color: var(--accent);
+      background: rgba(5, 217, 232, 0.1);
+      box-shadow: 0 0 10px rgba(5, 217, 232, 0.2);
+    }
+
+    .pagination-current span {
+      border-color: var(--accent);
+      background: rgba(5, 217, 232, 0.15);
+      color: #fff;
+    }
+
+    .pagination-disabled span {
+      opacity: 0.4;
+    }
+
+    /* Buttons / Tags */
+    .tag {
+      display: inline-block;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      background: rgba(138, 43, 226, 0.15);
+      border: 1px solid rgba(138, 43, 226, 0.3);
+      color: #d8b4fe;
+      font-size: 0.8rem;
+      font-family: 'Space Grotesk', sans-serif;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+      transition: all 0.2s ease;
+    }
+
+    .tag:hover {
+      background: rgba(138, 43, 226, 0.3);
+      border-color: rgba(138, 43, 226, 0.5);
+      color: #fff;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .site-header {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.25rem;
+        border-radius: 12px;
+      }
+      .site-wrapper { padding: 0 1rem; }
+      .glass-panel { padding: 1.5rem; border-radius: 16px; }
+      h1 { font-size: 2rem; }
+    }
+  </style>
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+</head>
+<body data-section="{{ page.section }}">
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+  </div>
+  <div class="site-wrapper">
+    <header class="site-header">
+      <a href="{{ base_url }}/" class="site-logo">{{ site.title }}</a>
+      <nav>
+        <a href="{{ base_url }}/">Home</a>
+        <a href="{{ base_url }}/about/">About</a>
+        <a href="{{ base_url }}/showcase/">Showcase</a>
+      </nav>
+    </header>
