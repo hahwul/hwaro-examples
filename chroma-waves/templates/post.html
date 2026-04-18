@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<article class="post">
+    <header class="post-header">
+        <h1 class="post-title">{{ page.title }}</h1>
+        <div class="post-meta">
+            {% if page.date %}
+            <time datetime="{{ page.date | date("%Y-%m-%d") }}">{{ page.date | date("%B %d, %Y") }}</time>
+            {% endif %}
+
+            {% if page.taxonomies.categories %}
+            <span class="categories">
+                in
+                {% for category in page.taxonomies.categories %}
+                <a href="/categories/{{ category | slugify }}/">{{ category }}</a>{% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </span>
+            {% endif %}
+        </div>
+    </header>
+
+    <div class="post-content">
+        {{ page.content | safe }}
+    </div>
+
+    <footer class="post-footer">
+        {% if page.taxonomies.tags %}
+        <div class="tags">
+            Tags:
+            {% for tag in page.taxonomies.tags %}
+            <a href="/tags/{{ tag | slugify }}/" class="tag">{{ tag }}</a>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </footer>
+</article>
+{% endblock %}
