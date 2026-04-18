@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="hero" style="margin-bottom: 4rem; text-align: center;">
+    <h1>{{ site.title }}</h1>
+    <p style="font-size: 1.2rem; color: rgba(255,255,255,0.7);">{{ site.description }}</p>
+  </div>
+
+  <div class="glass-panel content-area">
+    {{ content | safe }}
+  </div>
+
+  {% if section.pages is defined and section.pages %}
+    <h2 style="margin: 3rem 0 1.5rem; font-family: 'Space Grotesk', sans-serif;">Latest Posts</h2>
+    <div class="post-list">
+      {% for post in section.pages %}
+        <article class="glass-panel post-card">
+          <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+          <div class="post-meta">
+            {% if post.date %}
+              <time datetime="{{ post.date | date('%Y-%m-%d') }}">{{ post.date | date("%B %d, %Y") }}</time>
+            {% endif %}
+          </div>
+          {% if post.summary %}
+            <p>{{ post.summary | strip_html | truncate_words(20) }}</p>
+          {% endif %}
+        </article>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endblock %}
