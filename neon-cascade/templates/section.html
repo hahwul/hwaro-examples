@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="section-container">
+  <header class="section-header glass-panel">
+    <h1 class="section-title">{{ section.title }}</h1>
+    {% if section.description %}
+      <p class="section-description">{{ section.description }}</p>
+    {% endif %}
+  </header>
+
+  <div class="post-list">
+    {% for post in section.pages %}
+      <article class="post-card glass-panel interactive">
+        <h2 class="post-title"><a href="{{ post.url }}">{{ post.title }}</a></h2>
+        <div class="post-meta">
+          {% if post.date %}
+            <time datetime="{{ post.date | date("%Y-%m-%d") }}">{{ post.date | date("%B %d, %Y") }}</time>
+          {% endif %}
+        </div>
+        <div class="post-summary">
+          {% if post.summary %}
+            {{ post.summary | safe }}
+          {% else %}
+            {{ post.content | strip_html | truncate_words(30) }}...
+          {% endif %}
+        </div>
+        <div class="post-read-more">
+          <a href="{{ post.url }}" class="read-more-btn">Read More &rarr;</a>
+        </div>
+      </article>
+    {% endfor %}
+  </div>
+
+  {% if pagination is defined and pagination.total_pages is defined and pagination.total_pages > 1 %}
+    <nav class="pagination glass-panel">
+      {% if pagination.prev_page %}
+        <a href="{{ pagination.prev_page }}" class="page-link">&laquo; Previous</a>
+      {% endif %}
+
+      <span class="page-current">Page {{ pagination.current_page }} of {{ pagination.total_pages }}</span>
+
+      {% if pagination.next_page %}
+        <a href="{{ pagination.next_page }}" class="page-link">Next &raquo;</a>
+      {% endif %}
+    </nav>
+  {% endif %}
+</div>
+{% endblock %}
