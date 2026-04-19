@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title | default(value=site.title) }}</title>
+    <meta name="description" content="{{ page.description | default(value=site.description) }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
+    {% block extra_head %}{% endblock %}
+    <style>
+        :root {
+            --bg-color: #03010A;
+            --text-color: #e0e0ff;
+            --neon-cyan: #00f0ff;
+            --neon-magenta: #ff0055;
+            --neon-purple: #8a2be2;
+            --glass-bg: rgba(10, 5, 20, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-blur: blur(16px);
+
+            --font-main: 'Inter', sans-serif;
+            --font-display: 'Space Grotesk', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Aurora Background */
+        .aurora-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            background: radial-gradient(circle at 50% 50%, #080314 0%, var(--bg-color) 100%);
+        }
+
+        .aurora-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.6;
+            animation: float 20s infinite ease-in-out alternate;
+        }
+
+        .blob-cyan {
+            background: var(--neon-cyan);
+            width: 400px;
+            height: 400px;
+            top: -100px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+
+        .blob-magenta {
+            background: var(--neon-magenta);
+            width: 500px;
+            height: 500px;
+            bottom: -150px;
+            right: -100px;
+            animation-delay: -5s;
+        }
+
+        .blob-purple {
+            background: var(--neon-purple);
+            width: 600px;
+            height: 600px;
+            top: 30%;
+            left: 20%;
+            opacity: 0.4;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(50px, 30px) scale(1.1); }
+            100% { transform: translate(-30px, 50px) scale(0.9); }
+        }
+
+        /* Glassmorphism Elements */
+        .glass-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 3rem;
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-bottom: 1px solid var(--glass-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-brand {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-family: var(--font-display);
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
+        }
+
+        .glass-main {
+            flex: 1;
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .content-wrapper {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .content-wrapper {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 240, 255, 0.1);
+            border-color: rgba(0, 240, 255, 0.3);
+        }
+
+        .main-card h1 {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff, var(--neon-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .main-card p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            color: rgba(224, 224, 255, 0.8);
+        }
+
+        /* Custom UI Elements */
+        .neon-button {
+            background: transparent;
+            color: var(--neon-cyan);
+            border: 1px solid var(--neon-cyan);
+            padding: 0.8rem 2rem;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .neon-button:hover {
+            background: var(--neon-cyan);
+            color: var(--bg-color);
+            box-shadow: 0 0 20px var(--neon-cyan);
+        }
+
+        .secondary-card h3 {
+            font-family: var(--font-display);
+            color: var(--neon-magenta);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .secondary-card ul {
+            list-style: none;
+        }
+
+        .secondary-card li {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            font-family: var(--font-display);
+        }
+
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 10px;
+            box-shadow: 0 0 10px currentColor;
+        }
+
+        .status-indicator.online {
+            background-color: var(--neon-cyan);
+            color: var(--neon-cyan);
+        }
+
+        .status-indicator.warning {
+            background-color: #ffaa00;
+            color: #ffaa00;
+        }
+
+        .glass-footer {
+            text-align: center;
+            padding: 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-top: 1px solid var(--glass-border);
+            font-size: 0.9rem;
+            color: rgba(224, 224, 255, 0.6);
+        }
+    </style>
+</head>
+<body>
+    <div class="aurora-container">
+        <div class="aurora-blob blob-cyan"></div>
+        <div class="aurora-blob blob-magenta"></div>
+        <div class="aurora-blob blob-purple"></div>
+    </div>
+
+    <nav class="glass-nav">
+        <div class="nav-brand">Nexus</div>
+        <div class="nav-links">
+            <a href="{{ base_url }}/">Home</a>
+        </div>
+    </nav>
+
+    <main class="glass-main">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="glass-footer">
+        <p>&copy; 2024 Cyber Aurora Nexus. All rights reserved.</p>
+    </footer>
+</body>
+</html>
