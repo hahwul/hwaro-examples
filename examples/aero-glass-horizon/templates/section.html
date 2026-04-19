@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<header class="section-header">
+  <h1>{{ page.title | default(page.section | capitalize) }}</h1>
+</header>
+<div class="content-body">
+  {{ content | safe }}
+</div>
+{% if pages is present and pages | length > 0 %}
+<ul class="section-list">
+  {% for p in pages %}
+  <li>
+    <a href="{{ base_url }}{{ p.permalink }}">{{ p.title | default(p.slug) }}</a>
+    {% if p.description is present %}
+    <p class="desc">{{ p.description }}</p>
+    {% endif %}
+  </li>
+  {% endfor %}
+</ul>
+{% if pagination is present and pagination.total_pages > 1 %}
+<nav class="pagination">
+  <ul class="pagination-list">
+    {% if pagination.prev is present %}
+    <li><a href="{{ base_url }}{{ pagination.prev }}" class="pagination-prev">&laquo; Prev</a></li>
+    {% else %}
+    <li class="pagination-disabled"><span>&laquo; Prev</span></li>
+    {% endif %}
+
+    <li class="pagination-current"><span>{{ pagination.current_page }} of {{ pagination.total_pages }}</span></li>
+
+    {% if pagination.next is present %}
+    <li><a href="{{ base_url }}{{ pagination.next }}" class="pagination-next">Next &raquo;</a></li>
+    {% else %}
+    <li class="pagination-disabled"><span>Next &raquo;</span></li>
+    {% endif %}
+  </ul>
+</nav>
+{% endif %}
+{% endif %}
+{% endblock content %}
