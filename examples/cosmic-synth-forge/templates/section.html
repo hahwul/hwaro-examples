@@ -1,0 +1,60 @@
+{% include "header.html" %}
+
+<div class="section glass-card">
+    <header class="section-header">
+        <h1 class="section-title">{{ page.title }}</h1>
+        {% if page.description %}
+        <p class="section-description">{{ page.description }}</p>
+        {% endif %}
+    </header>
+
+    <div class="section-content">
+        {{ content | safe }}
+    </div>
+
+    {% if paginator is defined %}
+        <div class="page-list">
+            {% for p in paginator.pages %}
+            <article class="list-item">
+                <h2 class="list-title"><a href="{{ p.url }}">{{ p.title }}</a></h2>
+                {% if p.date %}
+                <time class="list-date" datetime="{{ p.date | date("%Y-%m-%d") }}">{{ p.date | date("%B %d, %Y") }}</time>
+                {% endif %}
+                {% if p.description %}
+                <p class="list-summary">{{ p.description }}</p>
+                {% endif %}
+            </article>
+            {% endfor %}
+        </div>
+
+        {% if paginator.total_pages > 1 %}
+        <nav class="pagination">
+            {% if paginator.previous %}
+            <a href="{{ paginator.previous }}" class="btn">Previous</a>
+            {% endif %}
+
+            <span class="page-info">Page {{ paginator.current_page }} of {{ paginator.total_pages }}</span>
+
+            {% if paginator.next %}
+            <a href="{{ paginator.next }}" class="btn">Next</a>
+            {% endif %}
+        </nav>
+        {% endif %}
+    {% elif pages is defined %}
+        <div class="page-list">
+            {% for p in pages %}
+            <article class="list-item">
+                <h2 class="list-title"><a href="{{ p.url }}">{{ p.title }}</a></h2>
+                {% if p.date %}
+                <time class="list-date" datetime="{{ p.date | date("%Y-%m-%d") }}">{{ p.date | date("%B %d, %Y") }}</time>
+                {% endif %}
+                {% if p.description %}
+                <p class="list-summary">{{ p.description }}</p>
+                {% endif %}
+            </article>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+
+{% include "footer.html" %}
