@@ -1,0 +1,39 @@
+{% include "header.html" %}
+  <main class="site-main glass-panel">
+    <h1>{% if page is defined and page.title %}{{ page.title }}{% else %}Section{% endif %}</h1>
+    {% if page is defined and page.description %}<p class="taxonomy-desc">{{ page.description }}</p>{% endif %}
+
+    {{ content | safe }}
+
+    <ul class="section-list">
+    {% if pages is defined %}
+      {% for item in pages %}
+        <li class="glass-panel" style="margin-bottom: 1rem; padding: 1.5rem; transition: transform 0.3s ease; background: rgba(20, 15, 45, 0.4);">
+          <a href="{{ item.permalink }}" style="font-size: 1.2rem; font-weight: 600; display: block; margin-bottom: 0.5rem; color: #fff;">{{ item.title }}</a>
+          {% if item.description %}
+            <p style="margin: 0; font-size: 0.95rem; color: var(--text-muted);">{{ item.description }}</p>
+          {% endif %}
+        </li>
+      {% endfor %}
+    {% endif %}
+    </ul>
+
+    {% if paginator is defined and paginator.total_pages > 1 %}
+    <nav class="pagination">
+      <ul class="pagination-list" style="list-style: none; padding: 0; display: flex; gap: 0.5rem; justify-content: center; margin-top: 2rem;">
+        {% if paginator.previous %}
+          <li><a href="{{ paginator.previous }}" style="padding: 0.5rem 1rem; border: 1px solid var(--glass-border); border-radius: 8px; border-color: var(--neon-cyan);">&larr; Prev</a></li>
+        {% endif %}
+
+        <li style="display: flex; align-items: center; padding: 0 1rem; color: var(--text-muted);">
+          Page {{ paginator.current_page }} of {{ paginator.total_pages }}
+        </li>
+
+        {% if paginator.next %}
+          <li><a href="{{ paginator.next }}" style="padding: 0.5rem 1rem; border: 1px solid var(--glass-border); border-radius: 8px; border-color: var(--neon-cyan);">Next &rarr;</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+    {% endif %}
+  </main>
+{% include "footer.html" %}
