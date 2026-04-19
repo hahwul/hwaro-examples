@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page is defined %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{% if page is defined %}{{ page.description | default(value=site.description) }}{% else %}{{ site.description }}{% endif %}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #050510;
+      --text-main: #e2e8f0;
+      --text-muted: #94a3b8;
+      --accent-cyan: #00f0ff;
+      --accent-magenta: #ff0055;
+      --accent-purple: #8a2be2;
+      --glass-bg: rgba(20, 20, 35, 0.4);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Aurora Background Effect */
+    .aurora-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      overflow: hidden;
+      background: radial-gradient(circle at 50% 50%, var(--bg-color) 0%, #000 100%);
+    }
+
+    .aurora-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.6;
+      animation: float 20s infinite alternate ease-in-out;
+    }
+
+    .orb-1 {
+      top: -10%;
+      left: -10%;
+      width: 50vw;
+      height: 50vw;
+      background: radial-gradient(circle, var(--accent-cyan), transparent 70%);
+      animation-delay: 0s;
+    }
+
+    .orb-2 {
+      bottom: -20%;
+      right: -10%;
+      width: 60vw;
+      height: 60vw;
+      background: radial-gradient(circle, var(--accent-magenta), transparent 70%);
+      animation-delay: -5s;
+    }
+
+    .orb-3 {
+      top: 30%;
+      left: 60%;
+      width: 40vw;
+      height: 40vw;
+      background: radial-gradient(circle, var(--accent-purple), transparent 70%);
+      animation-delay: -10s;
+    }
+
+    @keyframes float {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(10%, 10%) scale(1.1); }
+      100% { transform: translate(-5%, -15%) scale(0.9); }
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      padding: 2rem 0;
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: 1px;
+      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-magenta));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+    }
+
+    nav a {
+      color: var(--text-main);
+      text-decoration: none;
+      margin-left: 1.5rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: var(--accent-cyan);
+    }
+
+    main {
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 3rem;
+      box-shadow: var(--glass-shadow);
+      margin-bottom: 3rem;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Space Grotesk', sans-serif;
+      margin-bottom: 1.5rem;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      letter-spacing: -0.5px;
+      background: linear-gradient(90deg, #fff, var(--accent-cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      margin-top: 2rem;
+      color: var(--accent-magenta);
+    }
+
+    p {
+      margin-bottom: 1.2rem;
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+
+    a {
+      color: var(--accent-cyan);
+      text-decoration: none;
+      transition: text-shadow 0.3s ease;
+    }
+
+    a:hover {
+      text-shadow: 0 0 8px var(--accent-cyan);
+      text-decoration: underline;
+    }
+
+    ul, ol {
+      margin-bottom: 1.5rem;
+      padding-left: 1.5rem;
+      color: var(--text-muted);
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--glass-border);
+    }
+
+    /* List styling for taxonomy and section pages */
+    .post-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .post-list li {
+      margin-bottom: 1.5rem;
+      padding: 1.5rem;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+
+    .post-list li:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--accent-cyan);
+    }
+
+    .post-list h2 {
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+      font-size: 1.4rem;
+    }
+
+    .post-list h2 a {
+      color: #fff;
+      background: none;
+      -webkit-text-fill-color: initial;
+    }
+
+    .post-list h2 a:hover {
+      color: var(--accent-cyan);
+      text-shadow: none;
+      text-decoration: none;
+    }
+
+    .meta {
+      font-size: 0.85rem;
+      color: var(--accent-purple);
+      margin-bottom: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="aurora-bg">
+    <div class="aurora-orb orb-1"></div>
+    <div class="aurora-orb orb-2"></div>
+    <div class="aurora-orb orb-3"></div>
+  </div>
+
+  <div class="container">
+    <header>
+      <a href="{{ base_url }}/" class="logo">{{ site.title }}</a>
+      <nav>
+        <a href="{{ base_url }}/about/">About</a>
+        <a href="{{ base_url }}/tags/">Tags</a>
+      </nav>
+    </header>
+
+    <main>
+      {% block content %}{% endblock content %}
+    </main>
+
+    <footer>
+      <p>&copy; {{ site.title }}. Built with <a href="https://github.com/hahwul/hwaro" target="_blank">Hwaro</a>.</p>
+    </footer>
+  </div>
+</body>
+</html>
