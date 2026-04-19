@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .hero {
+        text-align: center;
+        padding: 6rem 0;
+        margin-bottom: 4rem;
+        position: relative;
+    }
+
+    .hero-title {
+        font-size: 4rem;
+        background: linear-gradient(to right, var(--neon-cyan), var(--neon-magenta), var(--neon-purple));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 1rem;
+        animation: gradient-shift 5s ease infinite alternate;
+    }
+
+    @keyframes gradient-shift {
+        0% { filter: hue-rotate(0deg); }
+        100% { filter: hue-rotate(45deg); }
+    }
+
+    .hero-subtitle {
+        font-size: 1.2rem;
+        color: var(--text-secondary);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 4rem;
+    }
+
+    .card {
+        padding: 2rem;
+        transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+        transition: left 0.5s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 40px 0 rgba(0, 240, 255, 0.15);
+        border-color: rgba(0, 240, 255, 0.5);
+    }
+
+    .card:hover::before {
+        left: 100%;
+    }
+
+    .card h3 {
+        color: var(--neon-cyan);
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .card p {
+        color: var(--text-secondary);
+        font-size: 1rem;
+    }
+
+    .content-block {
+        margin-top: 4rem;
+    }
+</style>
+
+<div class="hero">
+    <h1 class="hero-title">{{ page.title | default("Neon Cyber Core") }}</h1>
+    <p class="hero-subtitle">{{ page.description | default(site.description) }}</p>
+</div>
+
+<div class="glass-panel content-block">
+    <div style="padding: 2.5rem;" class="content-area">
+        {{ content | safe }}
+    </div>
+</div>
+
+{% if page.pages is defined and page.pages %}
+<div class="card-grid">
+    {% for post in page.pages %}
+    <a href="{{ post.url }}" class="glass-panel card">
+        <h3>{{ post.title }}</h3>
+        <p>{{ post.description | default(post.content | striptags | truncate(100)) }}</p>
+    </a>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% endblock %}
