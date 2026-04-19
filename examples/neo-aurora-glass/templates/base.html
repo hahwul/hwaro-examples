@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="{{ page_language | default(value='en') }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description | default(value=site.description) | e }}">
+  <title>{% if page.title is defined %}{{ page.title | e }} - {% endif %}{{ site.title | e }}</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+
+  {{ og_all_tags }}
+  {{ hreflang_tags }}
+
+  <style>
+    :root {
+      --bg-deep: #030508;
+      --bg-dark: #0a0e17;
+      --text-main: #e2e8f0;
+      --text-muted: #94a3b8;
+
+      /* Neon Aurora Accents */
+      --aurora-cyan: #00f0ff;
+      --aurora-magenta: #ff0055;
+      --aurora-purple: #8a2be2;
+
+      /* Glassmorphism */
+      --glass-bg: rgba(10, 14, 23, 0.4);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+
+      --font-sans: 'Inter', -apple-system, sans-serif;
+      --font-display: 'Space Grotesk', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      margin: 0;
+      color: var(--text-main);
+      background-color: var(--bg-deep);
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Animated Aurora Background Elements */
+    .aurora-bg {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: -1;
+      overflow: hidden;
+      background: var(--bg-deep);
+    }
+
+    .aurora-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.5;
+      animation: float 20s infinite ease-in-out alternate;
+    }
+
+    .aurora-orb-1 {
+      top: -10%; left: -10%;
+      width: 50vw; height: 50vw;
+      background: radial-gradient(circle, var(--aurora-cyan) 0%, transparent 70%);
+      animation-delay: 0s;
+    }
+
+    .aurora-orb-2 {
+      bottom: -20%; right: -10%;
+      width: 60vw; height: 60vw;
+      background: radial-gradient(circle, var(--aurora-purple) 0%, transparent 70%);
+      animation-delay: -5s;
+    }
+
+    .aurora-orb-3 {
+      top: 30%; left: 40%;
+      width: 40vw; height: 40vw;
+      background: radial-gradient(circle, var(--aurora-magenta) 0%, transparent 70%);
+      animation-delay: -10s;
+    }
+
+    @keyframes float {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(5%, 10%) scale(1.1); }
+      100% { transform: translate(-5%, -5%) scale(0.9); }
+    }
+
+    /* Layout */
+    .site-wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      width: 100%;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    .site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 2rem;
+      margin: 2rem 0;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: var(--glass-shadow);
+      z-index: 10;
+    }
+
+    .site-logo {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.4rem;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: -0.5px;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, var(--aurora-cyan), var(--aurora-magenta));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      transition: all 0.3s ease;
+    }
+
+    .site-logo:hover {
+      filter: brightness(1.2) drop-shadow(0 0 10px rgba(0, 240, 255, 0.5));
+    }
+
+    .site-nav { display: flex; gap: 1.5rem; }
+
+    .site-nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-family: var(--font-display);
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      transition: color 0.3s ease, text-shadow 0.3s ease;
+    }
+
+    .site-nav a:hover {
+      color: var(--aurora-cyan);
+      text-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
+    }
+
+    /* Main Content Area */
+    .site-main {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: var(--glass-shadow);
+      padding: 3rem;
+      margin-bottom: 3rem;
+      flex: 1;
+    }
+
+    /* Footer */
+    .site-footer {
+      text-align: center;
+      padding: 2rem;
+      margin-top: auto;
+      margin-bottom: 2rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      backdrop-filter: blur(16px);
+    }
+
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-display);
+      color: #fff;
+      line-height: 1.2;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-top: 0;
+      background: linear-gradient(135deg, #fff, var(--aurora-cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    h2 { font-size: 1.8rem; }
+    h3 { font-size: 1.4rem; }
+
+    p { margin: 1.2em 0; font-size: 1.05rem; }
+
+    a {
+      color: var(--aurora-cyan);
+      text-decoration: none;
+      transition: color 0.2s ease, text-shadow 0.2s ease;
+    }
+
+    a:hover {
+      color: var(--aurora-magenta);
+      text-shadow: 0 0 8px rgba(255, 0, 85, 0.5);
+    }
+
+    hr {
+      border: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--glass-border), transparent);
+      margin: 2rem 0;
+    }
+
+    /* Code Blocks */
+    code {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.9em;
+      font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+      color: var(--aurora-cyan);
+      border: 1px solid var(--glass-border);
+    }
+
+    pre {
+      background: rgba(5, 7, 12, 0.6);
+      padding: 1.5rem;
+      border-radius: 12px;
+      overflow-x: auto;
+      border: 1px solid var(--glass-border);
+      box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
+    }
+
+    pre code {
+      background: none;
+      padding: 0;
+      border: none;
+      color: var(--text-main);
+    }
+
+    /* UI Components */
+    ul.section-list { list-style: none; padding: 0; margin: 2rem 0; }
+    ul.section-list li {
+      margin-bottom: 1rem;
+      padding: 1.25rem;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+      border: 1px solid var(--glass-border);
+      transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+    }
+    ul.section-list li:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(0, 240, 255, 0.3);
+    }
+    ul.section-list li a { font-weight: 600; font-family: var(--font-display); font-size: 1.1rem; display: block; margin-bottom: 0.5rem; }
+
+    .taxonomy-desc { color: var(--text-muted); margin-bottom: 2rem; font-style: italic; }
+
+    nav.pagination { margin: 2.5rem 0 1rem; }
+    nav.pagination .pagination-list {
+      list-style: none; padding: 0; margin: 0; display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center;
+    }
+    nav.pagination a {
+      display: flex; align-items: center; justify-content: center;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--glass-border);
+      color: var(--text-main);
+      transition: all 0.3s ease;
+      font-family: var(--font-display);
+    }
+    nav.pagination a:hover {
+      background: rgba(0, 240, 255, 0.1);
+      border-color: var(--aurora-cyan);
+      color: var(--aurora-cyan);
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+    }
+    .pagination-current span {
+      display: flex; align-items: center; justify-content: center;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--aurora-cyan), var(--aurora-purple));
+      color: #fff;
+      border: none;
+      font-weight: bold;
+      font-family: var(--font-display);
+      box-shadow: 0 4px 15px rgba(0, 240, 255, 0.3);
+    }
+    .pagination-disabled span {
+      display: flex; align-items: center; justify-content: center;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      border: 1px solid var(--glass-border);
+      color: var(--text-muted);
+      opacity: 0.5;
+      font-family: var(--font-display);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .site-header { flex-direction: column; gap: 1rem; padding: 1.25rem; }
+      .site-main { padding: 2rem 1.5rem; }
+      h1 { font-size: 2rem; }
+    }
+  </style>
+
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+</head>
+<body data-section="{{ page.section | default(value='none') }}">
+
+  <div class="aurora-bg">
+    <div class="aurora-orb aurora-orb-1"></div>
+    <div class="aurora-orb aurora-orb-2"></div>
+    <div class="aurora-orb aurora-orb-3"></div>
+  </div>
+
+  <div class="site-wrapper">
+    <header class="site-header">
+      <a href="{{ base_url }}/" class="site-logo">{{ site.title | default(value='Site Title') }}</a>
+      <nav class="site-nav">
+        <a href="{{ base_url }}/">Home</a>
+        <a href="{{ base_url }}/about/">About</a>
+      </nav>
+    </header>
+
+    <main class="site-main">
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; {{ now() | date(format="%Y") }} {{ site.title | default(value='Site Title') }}. Powered by Hwaro.</p>
+    </footer>
+  </div>
+
+  {{ highlight_js }}
+  {{ auto_includes_js }}
+</body>
+</html>
