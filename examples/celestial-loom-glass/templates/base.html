@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="{{ page_language | default(value='en') }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page is defined and page.title %}{{ page.title | escape }} - {% elif section is defined and section.title %}{{ section.title | escape }} - {% endif %}{{ site.title | escape }}</title>
+  {% if page is defined and page.description %}<meta name="description" content="{{ page.description | escape }}">{% elif site.description %}<meta name="description" content="{{ site.description | escape }}">{% endif %}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  {{ og_all_tags | default(value='') | safe }}
+  {{ canonical_tag | default(value='') | safe }}
+  <style>
+    :root {
+      --bg-color: #05070f;
+      --glass-bg: rgba(255, 255, 255, 0.03);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --text-main: #e2e8f0;
+      --text-muted: #94a3b8;
+      --accent-cyan: #00f0ff;
+      --accent-magenta: #ff0055;
+      --accent-purple: #8a2be2;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    a {
+      color: var(--accent-cyan);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    a:hover {
+      color: var(--accent-magenta);
+    }
+
+    /* Ambient Background Orbs */
+    .bg-orbs {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: -1;
+      overflow: hidden;
+      background: radial-gradient(circle at 15% 50%, rgba(0, 240, 255, 0.08) 0%, transparent 50%),
+                  radial-gradient(circle at 85% 30%, rgba(255, 0, 85, 0.08) 0%, transparent 50%),
+                  radial-gradient(circle at 50% 80%, rgba(138, 43, 226, 0.08) 0%, transparent 50%);
+      filter: blur(40px);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    header {
+      padding: 2rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 3rem;
+    }
+
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+    }
+
+    .logo:hover {
+      color: #fff;
+    }
+
+    nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    nav a {
+      color: var(--text-muted);
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    nav a:hover {
+      color: var(--accent-cyan);
+      text-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
+    }
+
+    .glass-panel {
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 2.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    }
+
+    main {
+      min-height: 60vh;
+    }
+
+    /* Content Typography */
+    .content p { margin-bottom: 1.5rem; }
+    .content h1 { font-size: 2.5rem; background: linear-gradient(90deg, var(--accent-cyan), var(--accent-magenta)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .content h2 { font-size: 2rem; margin-top: 2rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem; }
+    .content ul, .content ol { margin-bottom: 1.5rem; padding-left: 1.5rem; }
+    .content li { margin-bottom: 0.5rem; }
+
+    .content code {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.9em;
+    }
+
+    .content pre {
+      background: rgba(0, 0, 0, 0.4);
+      padding: 1.5rem;
+      border-radius: 8px;
+      border: 1px solid var(--glass-border);
+      overflow-x: auto;
+      margin-bottom: 1.5rem;
+    }
+
+    .content pre code {
+      background: none;
+      padding: 0;
+    }
+
+    footer {
+      text-align: center;
+      padding: 3rem 0;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      border-top: 1px solid var(--glass-border);
+      margin-top: 4rem;
+    }
+  </style>
+  {{ highlight_tags | default(value='') | safe }}
+</head>
+<body>
+  <div class="bg-orbs"></div>
+
+  <div class="container">
+    <header>
+      <a href="{{ base_url | default(value='') }}/" class="logo">{{ site.title | escape }}</a>
+      <nav>
+        <a href="{{ base_url | default(value='') }}/">Home</a>
+        <a href="{{ base_url | default(value='') }}/about/">About</a>
+      </nav>
+    </header>
+
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+      &copy; {{ site.title | escape }}. A Hwaro glassmorphism showcase.
+    </footer>
+  </div>
+</body>
+</html>
