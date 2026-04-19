@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page is defined and page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
+    <meta name="description" content="{% if page is defined and page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+
+    <!-- Fonts: Space Grotesk & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Palette */
+            --bg-obsidian: #0b0c10;
+            --text-main: #f0f0f0;
+            --text-muted: #a0a0a0;
+
+            /* Neon Accents */
+            --neon-cyan: #00f0ff;
+            --neon-magenta: #ff0055;
+            --neon-purple: #8a2be2;
+
+            /* Glass */
+            --glass-bg: rgba(20, 22, 30, 0.4);
+            --glass-border: rgba(0, 240, 255, 0.2);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
+            --glass-blur: blur(16px);
+
+            /* Typography */
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-obsidian);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Ambient Glowing Orbs Background */
+        body::before, body::after {
+            content: '';
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -1;
+            opacity: 0.5;
+            animation: float 20s infinite alternate ease-in-out;
+        }
+
+        body::before {
+            top: -10%;
+            left: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, var(--neon-purple) 0%, transparent 70%);
+        }
+
+        body::after {
+            bottom: -10%;
+            right: -10%;
+            width: 40vw;
+            height: 40vw;
+            background: radial-gradient(circle, var(--neon-cyan) 0%, transparent 70%);
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(5%, 5%) scale(1.1); }
+            100% { transform: translate(-5%, -5%) scale(0.9); }
+        }
+
+        /* Glowing mesh accent */
+        .mesh-accent {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80vw;
+            height: 80vh;
+            background: radial-gradient(circle at center, var(--neon-magenta) 0%, transparent 50%);
+            filter: blur(150px);
+            opacity: 0.15;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            margin-top: 0;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255,255,255,0.2);
+        }
+
+        a {
+            color: var(--neon-cyan);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        a:hover {
+            color: #fff;
+            text-shadow: 0 0 8px var(--neon-cyan);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+            flex: 1;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Glassmorphism Header */
+        header {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-bottom: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            box-sizing: border-box;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: none;
+        }
+
+        nav a {
+            margin-left: 1.5rem;
+            font-family: var(--font-display);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        nav a:hover {
+            color: var(--neon-magenta);
+            text-shadow: 0 0 8px var(--neon-magenta);
+        }
+
+        /* Glassmorphism Main Content Area */
+        main {
+            margin-top: 3rem;
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: var(--glass-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        main::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+            opacity: 0.5;
+        }
+
+        /* Glass Footer */
+        footer {
+            margin-top: 4rem;
+            padding: 2rem 0;
+            text-align: center;
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Typography & Content Styling */
+        .content {
+            font-size: 1.1rem;
+        }
+
+        .content h1 { font-size: 2.5rem; margin-bottom: 1.5rem; }
+        .content h2 { font-size: 2rem; margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem;}
+        .content p { margin-bottom: 1.5rem; }
+
+        .content ul, .content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .content blockquote {
+            border-left: 4px solid var(--neon-magenta);
+            margin: 1.5rem 0;
+            padding: 1rem 1.5rem;
+            background: rgba(255, 0, 85, 0.05);
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        .content code {
+            font-family: monospace;
+            background: rgba(0,0,0,0.5);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            color: var(--neon-cyan);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+        }
+
+        .content pre {
+            background: rgba(0,0,0,0.6);
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .content pre code {
+            background: none;
+            padding: 0;
+            border: none;
+            color: inherit;
+        }
+
+        .post-meta {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            font-family: var(--font-display);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            nav {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+            nav a { margin: 0; }
+            main { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="mesh-accent"></div>
+
+    <header>
+        <div class="header-content">
+            <a href="{{ base_url }}/" class="logo">{{ site.title }}</a>
+            <nav>
+                <a href="{{ base_url }}/">Home</a>
+                <a href="{{ base_url }}/about/">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 {{ site.title }}. Built with <a href="https://github.com/hahwul/hwaro" target="_blank">Hwaro</a>.</p>
+    </footer>
+</body>
+</html>
