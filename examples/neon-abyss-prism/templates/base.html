@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
+    <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-void: #03010A;
+            --bg-darker: #010005;
+            --neon-cyan: #00f0ff;
+            --neon-magenta: #ff0055;
+            --neon-purple: #8a2be2;
+            --glass-bg: rgba(15, 10, 30, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-highlight: rgba(255, 255, 255, 0.12);
+            --text-main: #f0f4f8;
+            --text-muted: #a0abc0;
+            --font-sans: 'Inter', sans-serif;
+            --font-display: 'Space Grotesk', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-void);
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Abstract Neon Abyss Background */
+        .abyss-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(0, 240, 255, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(255, 0, 85, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(138, 43, 226, 0.1) 0%, transparent 60%);
+            background-color: var(--bg-void);
+            overflow: hidden;
+        }
+
+        .prism-shape {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple), var(--neon-magenta));
+            filter: blur(80px);
+            opacity: 0.3;
+            border-radius: 50%;
+            animation: float 20s infinite ease-in-out alternate;
+        }
+
+        .prism-1 { top: -100px; left: -100px; animation-delay: 0s; }
+        .prism-2 { bottom: -100px; right: -100px; animation-delay: -5s; width: 600px; height: 600px; }
+        .prism-3 { top: 40%; left: 60%; animation-delay: -10s; width: 300px; height: 300px; opacity: 0.2; }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            50% { transform: translate(50px, 30px) scale(1.1) rotate(45deg); }
+            100% { transform: translate(-30px, 50px) scale(0.9) rotate(-15deg); }
+        }
+
+        /* Grid Overlay */
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            perspective: 1000px;
+            transform-origin: bottom;
+            opacity: 0.5;
+        }
+
+        /* Layout */
+        .site-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .site-header {
+            padding: 2rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            margin-bottom: 3rem;
+        }
+
+        .site-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: white;
+            letter-spacing: -0.5px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .site-title::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-magenta));
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .site-title:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .site-nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .site-nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s ease, text-shadow 0.2s;
+        }
+
+        .site-nav a:hover {
+            color: white;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+
+        /* Main Content */
+        .site-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* Glass Panels */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-top: 1px solid var(--glass-highlight);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow:
+                0 20px 40px rgba(0,0,0,0.4),
+                inset 0 0 0 1px rgba(255,255,255,0.02);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .glass-panel:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255,255,255,0.15);
+            box-shadow:
+                0 30px 50px rgba(0,0,0,0.5),
+                0 0 30px rgba(0, 240, 255, 0.1),
+                inset 0 0 0 1px rgba(255,255,255,0.05);
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            background: linear-gradient(135deg, #fff 0%, #a0abc0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 2rem;
+        }
+
+        h2 { font-size: 2.2rem; }
+        h3 { font-size: 1.5rem; }
+
+        p { margin-bottom: 1.5rem; font-size: 1.1rem; color: var(--text-muted); }
+
+        a {
+            color: var(--neon-cyan);
+            text-decoration: none;
+            transition: color 0.2s, text-shadow 0.2s;
+        }
+
+        a:hover {
+            color: #fff;
+            text-shadow: 0 0 8px var(--neon-cyan);
+        }
+
+        ul, ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: var(--text-muted);
+        }
+
+        li { margin-bottom: 0.5rem; }
+
+        /* Footer */
+        .site-footer {
+            padding: 3rem 0;
+            margin-top: 4rem;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Component: Cards List */
+        .card-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: rgba(20, 15, 35, 0.5);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon-cyan), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card:hover {
+            background: rgba(30, 20, 50, 0.6);
+            border-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card h2 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: #fff;
+            background: none;
+            -webkit-text-fill-color: initial;
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            margin-bottom: 0;
+            flex-grow: 1;
+        }
+
+        .meta {
+            font-size: 0.85rem;
+            color: var(--neon-magenta);
+            margin-bottom: 0.5rem;
+            font-family: var(--font-display);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Code blocks */
+        pre {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+
+        code {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            color: var(--neon-cyan);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="abyss-bg">
+        <div class="prism-shape prism-1"></div>
+        <div class="prism-shape prism-2"></div>
+        <div class="prism-shape prism-3"></div>
+    </div>
+    <div class="grid-overlay"></div>
+
+    <div class="site-wrapper">
+        <header class="site-header">
+            <a href="{{ base_url }}" class="site-title">{{ site.title }}</a>
+            <nav class="site-nav">
+                <a href="{{ base_url }}">Home</a>
+                <a href="{{ base_url }}/about">About</a>
+            </nav>
+        </header>
+
+        <main class="site-main">
+            {% block content %}{% endblock content %}
+        </main>
+
+        <footer class="site-footer">
+            <p>&copy; 2024 {{ site.title }}. Built with Hwaro.</p>
+        </footer>
+    </div>
+</body>
+</html>
