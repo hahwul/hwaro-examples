@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page is defined and page.title %}{{ page.title | e }} | {% endif %}{{ site.title | e }}</title>
+    {% if page is defined and page.description %}
+    <meta name="description" content="{{ page.description | e }}">
+    {% elif site.description %}
+    <meta name="description" content="{{ site.description | e }}">
+    {% endif %}
+    {{ highlight_css | safe }}
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --text-color: #e0f2fe;
+            --neon-blue: #00ffff;
+            --neon-purple: #b026ff;
+            --neon-pink: #ff007f;
+            --grid-color: rgba(0, 255, 255, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Courier New', Courier, monospace;
+            line-height: 1.6;
+            background-image:
+                radial-gradient(circle at center, rgba(176, 38, 255, 0.1) 0%, transparent 60%),
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 100% 100%, 30px 30px, 30px 30px;
+            background-position: center center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .vortex-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 100vw;
+            height: 100vw;
+            transform: translate(-50%, -50%);
+            background: conic-gradient(from 0deg, transparent 0deg, rgba(0, 255, 255, 0.05) 90deg, rgba(176, 38, 255, 0.1) 180deg, transparent 270deg);
+            border-radius: 50%;
+            animation: spin 20s linear infinite;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        @keyframes spin {
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        header {
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--neon-purple);
+            box-shadow: 0 0 15px rgba(176, 38, 255, 0.3);
+            background: rgba(11, 15, 25, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--neon-blue);
+            text-shadow: 0 0 5px var(--neon-blue), 0 0 10px rgba(0, 255, 255, 0.5);
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        header h1 a {
+            color: var(--neon-pink);
+            text-shadow: 0 0 5px var(--neon-pink), 0 0 10px rgba(255, 0, 127, 0.5);
+            text-decoration: none;
+        }
+
+        header nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            margin: 0 1rem;
+            font-size: 1.1rem;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        header nav a:hover {
+            color: var(--neon-blue);
+            text-shadow: 0 0 8px var(--neon-blue);
+        }
+
+        main {
+            flex: 1;
+            max-width: 900px;
+            margin: 3rem auto;
+            padding: 2.5rem;
+            background: rgba(11, 15, 25, 0.7);
+            border: 1px solid var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.1), inset 0 0 20px rgba(0, 255, 255, 0.05);
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        main::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--neon-blue));
+            animation: scanline 4s linear infinite;
+        }
+
+        @keyframes scanline {
+            100% { left: 200%; }
+        }
+
+        a {
+            color: var(--neon-purple);
+            text-decoration: none;
+            position: relative;
+        }
+
+        a:hover {
+            color: var(--neon-pink);
+            text-shadow: 0 0 8px var(--neon-pink);
+        }
+
+        /* Specific fix for hljs to not clash with theme */
+        pre code.hljs, pre {
+            background-color: #05070a !important;
+            border: 1px solid var(--neon-purple);
+            border-radius: 4px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            box-shadow: inset 0 0 10px rgba(176, 38, 255, 0.2);
+        }
+
+        ul, ol {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        li::marker {
+            color: var(--neon-blue);
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--neon-purple), transparent);
+            margin: 2rem 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--neon-blue);
+            background: rgba(11, 15, 25, 0.9);
+            color: rgba(224, 242, 254, 0.6);
+            font-size: 0.9rem;
+            box-shadow: 0 -5px 15px rgba(0, 255, 255, 0.1);
+        }
+
+        .metadata {
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 1.5rem;
+            border-left: 3px solid var(--neon-purple);
+            padding-left: 1rem;
+        }
+
+        .tag-pill {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            margin-right: 0.5rem;
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid var(--neon-blue);
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: var(--neon-blue);
+            transition: all 0.2s;
+        }
+
+        .tag-pill:hover {
+            background: var(--neon-blue);
+            color: var(--bg-color);
+            box-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .pagination a {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--neon-purple);
+            color: var(--neon-purple);
+            background: transparent;
+            transition: all 0.3s;
+        }
+
+        .pagination a:hover {
+            background: rgba(176, 38, 255, 0.2);
+            box-shadow: 0 0 10px rgba(176, 38, 255, 0.5);
+            color: #fff;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="vortex-container"></div>
+    <header>
+        <h1><a href="{{ base_url }}">{{ site.title | e }}</a></h1>
+        <nav>
+            <a href="{{ base_url }}">Home</a>
+            <a href="{{ base_url }}about/">About</a>
+            <a href="{{ base_url }}tags/">Tags</a>
+            <a href="{{ base_url }}categories/">Categories</a>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; {{ now() | date("%Y") }} {{ site.title | e }}. Cyber Vortex UI Theme.</p>
+    </footer>
+</body>
+</html>

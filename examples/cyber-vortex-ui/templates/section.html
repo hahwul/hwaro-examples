@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section>
+    <header>
+        <h2>{{ page.title | e }}</h2>
+    </header>
+    {% if content %}
+    <div class="content">
+        {{ content | safe }}
+    </div>
+    {% endif %}
+
+    <div class="section-list" style="margin-top: 2rem;">
+        {% for p in pages %}
+        <article style="margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px dashed rgba(176, 38, 255, 0.3);">
+            <h3><a href="{{ base_url }}{{ p.url | replace(from='^/', to='') }}">{{ p.title | e }}</a></h3>
+            {% if p.description %}
+            <p>{{ p.description | e }}</p>
+            {% endif %}
+        </article>
+        {% endfor %}
+    </div>
+
+    {% if pagination is defined and pagination.total_pages is defined and pagination.total_pages > 1 %}
+    <div class="pagination">
+        {% if pagination.prev_url %}
+        <a href="{{ base_url }}{{ pagination.prev_url | replace(from='^/', to='') }}">&laquo; Previous</a>
+        {% endif %}
+        <span>Page {{ pagination.current_page }} of {{ pagination.total_pages }}</span>
+        {% if pagination.next_url %}
+        <a href="{{ base_url }}{{ pagination.next_url | replace(from='^/', to='') }}">Next &raquo;</a>
+        {% endif %}
+    </div>
+    {% endif %}
+</section>
+{% endblock %}
