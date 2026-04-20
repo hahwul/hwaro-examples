@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ site.title }}{% endblock title %}</title>
+    {% if site.description %}
+    <meta name="description" content="{{ site.description }}">
+    {% endif %}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Color Palette */
+            --bg-void: #030108;
+            --prism-cyan: #00f0ff;
+            --prism-magenta: #ff0055;
+            --prism-purple: #8a2be2;
+
+            --glass-bg: rgba(20, 10, 30, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-highlight: rgba(255, 255, 255, 0.2);
+
+            --text-main: #e0e0f0;
+            --text-muted: #8b8b9b;
+
+            /* Fonts */
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-body: 'Outfit', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-void);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Background Elements */
+        .prism-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .prism-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.5;
+            animation: float 20s infinite ease-in-out alternate;
+        }
+
+        .orb-1 {
+            top: -10%;
+            left: 10%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, var(--prism-cyan) 0%, transparent 70%);
+            animation-duration: 25s;
+        }
+
+        .orb-2 {
+            bottom: -20%;
+            right: -10%;
+            width: 60vw;
+            height: 60vw;
+            background: radial-gradient(circle, var(--prism-magenta) 0%, transparent 70%);
+            animation-duration: 30s;
+        }
+
+        .orb-3 {
+            top: 40%;
+            left: 40%;
+            width: 40vw;
+            height: 40vw;
+            background: radial-gradient(circle, var(--prism-purple) 0%, transparent 70%);
+            animation-duration: 22s;
+            mix-blend-mode: screen;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            50% { transform: translate(5%, 10%) rotate(180deg) scale(1.1); }
+            100% { transform: translate(-5%, -5%) rotate(360deg) scale(0.9); }
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Glassmorphism Header */
+        header {
+            margin-bottom: 4rem;
+            padding: 1.5rem 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-decoration: none;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--prism-cyan), var(--prism-magenta));
+            border-radius: 2px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #fff;
+            text-shadow: 0 0 8px var(--prism-cyan);
+        }
+
+        /* Glassmorphism Main Content Container */
+        main {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Subtle inner glow for main container */
+        main::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--glass-highlight), transparent);
+            z-index: 1;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-display);
+            color: #fff;
+            margin-top: 0;
+            line-height: 1.2;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff, var(--prism-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(0, 240, 255, 0.2);
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 40px;
+            height: 3px;
+            background: var(--prism-magenta);
+            border-radius: 2px;
+            box-shadow: 0 0 10px var(--prism-magenta);
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        a {
+            color: var(--prism-cyan);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            color: #fff;
+            text-shadow: 0 0 8px var(--prism-cyan);
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 4rem;
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        /* Utilities */
+        .glass-panel {
+            background: rgba(30, 15, 45, 0.5);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        /* Post List */
+        .post-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .post-item {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .post-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .post-title {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.5rem;
+        }
+
+        .post-title a {
+            color: #fff;
+            background: none;
+            -webkit-text-fill-color: initial;
+        }
+
+        .post-title a:hover {
+            color: var(--prism-magenta);
+            text-shadow: 0 0 10px rgba(255, 0, 85, 0.5);
+        }
+
+        .post-meta {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            font-family: var(--font-display);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            main {
+                padding: 2rem 1.5rem;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+    {% block extra_head %}{% endblock extra_head %}
+</head>
+<body>
+    <div class="prism-bg">
+        <div class="prism-orb orb-1"></div>
+        <div class="prism-orb orb-2"></div>
+        <div class="prism-orb orb-3"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <a href="{{ base_url }}" class="logo">{{ site.title }}</a>
+            <nav>
+                <ul>
+                    <li><a href="{{ base_url }}">Home</a></li>
+                    <li><a href="{{ base_url }}/about/">About</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            {% block content %}{% endblock content %}
+        </main>
+
+        <footer>
+            <p>&copy; {{ now() | date(format="%Y") }} {{ site.title }}. Built with Hwaro.</p>
+        </footer>
+    </div>
+</body>
+</html>
