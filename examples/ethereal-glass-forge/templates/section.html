@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="glass-panel">
+  <header class="section-header">
+    <h1 class="section-title">{% if page is defined and page.title %}{{ page.title | e }}{% else %}Section{% endif %}</h1>
+    {% if page is defined and page.description %}
+    <p class="section-description">{{ page.description | e }}</p>
+    {% endif %}
+  </header>
+
+  <div class="content section-content">
+    {% if content is defined and content %}
+      {{ content | safe }}
+    {% endif %}
+  </div>
+
+  <div class="section-list-container">
+      {% if paginator is defined %}
+          <ul class="section-list">
+              {% for post in paginator.pages %}
+                  <li>
+                      <a href="{{ post.url }}">{{ post.title | e }}</a>
+                      {% if post.date %}
+                      <span class="post-date">{{ post.date | date(format="%Y-%m-%d") }}</span>
+                      {% endif %}
+                  </li>
+              {% endfor %}
+          </ul>
+
+          {% if paginator.total_pages > 1 %}
+          <nav class="pagination">
+              <ul class="pagination-list">
+                  {% if paginator.previous %}
+                      <li><a href="{{ paginator.previous }}">&laquo; Prev</a></li>
+                  {% else %}
+                      <li class="pagination-disabled"><span>&laquo; Prev</span></li>
+                  {% endif %}
+
+                  <li class="pagination-current"><span>{{ paginator.current_index }} of {{ paginator.total_pages }}</span></li>
+
+                  {% if paginator.next %}
+                      <li><a href="{{ paginator.next }}">Next &raquo;</a></li>
+                  {% else %}
+                      <li class="pagination-disabled"><span>Next &raquo;</span></li>
+                  {% endif %}
+              </ul>
+          </nav>
+          {% endif %}
+      {% elif pages is defined %}
+          <ul class="section-list">
+              {% for post in pages %}
+                  <li>
+                      <a href="{{ post.url }}">{{ post.title | e }}</a>
+                      {% if post.date %}
+                      <span class="post-date">{{ post.date | date(format="%Y-%m-%d") }}</span>
+                      {% endif %}
+                  </li>
+              {% endfor %}
+          </ul>
+      {% endif %}
+  </div>
+</div>
+{% endblock %}
