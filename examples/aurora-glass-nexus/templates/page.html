@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block head %}
+<style>
+    .page-wrapper {
+        padding: 40px;
+        margin-top: 40px;
+    }
+
+    .page-header {
+        margin-bottom: 40px;
+        text-align: center;
+    }
+
+    .page-title {
+        font-size: 3rem;
+        margin-bottom: 10px;
+        background: linear-gradient(135deg, #fff, var(--aurora-cyan));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .page-meta {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .page-content {
+        font-size: 1.1rem;
+        line-height: 1.8;
+    }
+
+    .page-content p {
+        margin-bottom: 1.5em;
+    }
+
+    .page-content img {
+        max-width: 100%;
+        border-radius: 12px;
+        border: 1px solid var(--glass-border);
+    }
+
+    .page-content code {
+        background: rgba(0, 0, 0, 0.3);
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-family: monospace;
+        color: var(--aurora-cyan);
+    }
+
+    .page-content pre {
+        background: rgba(0, 0, 0, 0.4);
+        padding: 20px;
+        border-radius: 12px;
+        overflow-x: auto;
+        border: 1px solid var(--glass-border);
+    }
+
+    .page-content pre code {
+        background: transparent;
+        color: var(--text-primary);
+        padding: 0;
+    }
+
+    .page-tags {
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 1px solid var(--glass-border);
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .tag {
+        background: rgba(0, 240, 255, 0.1);
+        border: 1px solid rgba(0, 240, 255, 0.2);
+        color: var(--aurora-cyan);
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .tag:hover {
+        background: rgba(255, 0, 85, 0.1);
+        border-color: rgba(255, 0, 85, 0.3);
+        color: var(--aurora-magenta);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<article class="glass-panel page-wrapper">
+    <header class="page-header">
+        <h1 class="page-title">{{ page.title }}</h1>
+        {% if page.date %}
+        <div class="page-meta">
+            <span>{{ page.date | date("%B %d, %Y") }}</span>
+            {% if page.reading_time %}
+            <span>{{ page.reading_time }} min read</span>
+            {% endif %}
+        </div>
+        {% endif %}
+    </header>
+
+    <div class="page-content">
+        {{ content | safe }}
+    </div>
+
+    {% if page.taxonomies is defined and page.taxonomies.tags is defined %}
+    <div class="page-tags">
+        {% for tag in page.taxonomies.tags %}
+        <a href="{{ base_url }}/tags/{{ tag | slugify }}/" class="tag">{{ tag }}</a>
+        {% endfor %}
+    </div>
+    {% endif %}
+</article>
+{% endblock %}
