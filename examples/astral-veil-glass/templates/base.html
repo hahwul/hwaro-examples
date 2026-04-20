@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page is defined %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+    <meta name="description" content="{% if page is defined and page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --color-bg-base: #030408;
+            --color-bg-alt: #05070e;
+            --color-text-main: #e2e8f0;
+            --color-text-muted: #94a3b8;
+
+            --color-accent-cyan: #00f2fe;
+            --color-accent-blue: #4facfe;
+            --color-accent-purple: #8a2be2;
+
+            --glass-bg: rgba(10, 15, 30, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-bg-base);
+            color: var(--color-text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Abstract Background Elements */
+        .ambient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            background: radial-gradient(circle at 50% 50%, var(--color-bg-alt) 0%, var(--color-bg-base) 100%);
+        }
+
+        .ambient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.5;
+            animation: float 20s infinite alternate ease-in-out;
+        }
+
+        .orb-1 {
+            top: -10%;
+            left: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, var(--color-accent-cyan) 0%, transparent 70%);
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            bottom: -20%;
+            right: -10%;
+            width: 60vw;
+            height: 60vw;
+            background: radial-gradient(circle, var(--color-accent-purple) 0%, transparent 70%);
+            animation-delay: -5s;
+        }
+
+        .orb-3 {
+            top: 40%;
+            left: 60%;
+            width: 40vw;
+            height: 40vw;
+            background: radial-gradient(circle, var(--color-accent-blue) 0%, transparent 70%);
+            opacity: 0.3;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(5%, 5%) scale(1.1); }
+            100% { transform: translate(-5%, -5%) scale(0.9); }
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #ffffff;
+            letter-spacing: -0.02em;
+        }
+
+        a {
+            color: var(--color-accent-cyan);
+            text-decoration: none;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        a:hover {
+            color: #ffffff;
+            text-shadow: 0 0 8px var(--color-accent-cyan);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            width: 100%;
+        }
+
+        /* Glassmorphism Components */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--glass-shadow);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        }
+
+        header {
+            padding: 2rem 0;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--glass-border);
+            background: rgba(3, 4, 8, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .site-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .site-title span {
+            background: linear-gradient(90deg, var(--color-accent-cyan), var(--color-accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: var(--color-text-main);
+            font-size: 0.95rem;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--color-accent-cyan);
+            text-shadow: none;
+        }
+
+        main {
+            flex-grow: 1;
+            padding-bottom: 4rem;
+        }
+
+        /* Post lists */
+        .post-list {
+            list-style: none;
+            display: grid;
+            gap: 2rem;
+        }
+
+        .post-card {
+            display: block;
+            color: inherit;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+        }
+
+        .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
+            color: inherit;
+            text-shadow: none;
+        }
+
+        .post-card:hover .post-title {
+            color: var(--color-accent-cyan);
+        }
+
+        .post-card .glass-panel {
+            margin-bottom: 0;
+            height: 100%;
+        }
+
+        .post-meta {
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .post-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .post-summary {
+            color: var(--color-text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Content Markdown Styling */
+        .content {
+            font-size: 1.1rem;
+        }
+
+        .content h1 { font-size: 2.5rem; margin-top: 2rem; }
+        .content h2 { font-size: 2rem; margin-top: 2.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--glass-border); }
+        .content h3 { font-size: 1.5rem; margin-top: 2rem; }
+
+        .content p { margin-bottom: 1.5rem; }
+        .content ul, .content ol { margin-bottom: 1.5rem; padding-left: 1.5rem; color: var(--color-text-muted); }
+        .content li { margin-bottom: 0.5rem; }
+
+        .content code {
+            font-family: monospace;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: var(--color-accent-cyan);
+        }
+
+        .content pre {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .content pre code {
+            background: transparent;
+            padding: 0;
+            color: inherit;
+        }
+
+        .content blockquote {
+            border-left: 4px solid var(--color-accent-cyan);
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+            color: var(--color-text-muted);
+            background: linear-gradient(90deg, rgba(0, 242, 254, 0.05), transparent);
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+
+        footer {
+            padding: 3rem 0;
+            text-align: center;
+            color: var(--color-text-muted);
+            border-top: 1px solid var(--glass-border);
+            background: rgba(3, 4, 8, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            font-size: 0.9rem;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .glow-divider {
+            height: 1px;
+            width: 100px;
+            background: linear-gradient(90deg, transparent, var(--color-accent-cyan), transparent);
+            margin: 1rem auto;
+        }
+
+        /* Typography overrides */
+        .gradient-text {
+            background: linear-gradient(90deg, var(--color-accent-cyan), var(--color-accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
+        @media (max-width: 768px) {
+            .glass-panel { padding: 1.5rem; }
+            .content h1 { font-size: 2rem; }
+            .content h2 { font-size: 1.75rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="ambient-bg">
+        <div class="ambient-orb orb-1"></div>
+        <div class="ambient-orb orb-2"></div>
+        <div class="ambient-orb orb-3"></div>
+    </div>
+
+    <header>
+        <div class="container">
+            <nav>
+                <a href="{{ base_url }}/" class="site-title">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="url(#paint0_linear)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 17L12 22L22 17" stroke="url(#paint1_linear)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 12L12 17L22 12" stroke="url(#paint2_linear)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <defs>
+                            <linearGradient id="paint0_linear" x1="2" y1="7" x2="22" y2="7" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#00f2fe"/>
+                                <stop offset="1" stop-color="#4facfe"/>
+                            </linearGradient>
+                            <linearGradient id="paint1_linear" x1="2" y1="19.5" x2="22" y2="19.5" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#00f2fe"/>
+                                <stop offset="1" stop-color="#4facfe"/>
+                            </linearGradient>
+                            <linearGradient id="paint2_linear" x1="2" y1="14.5" x2="22" y2="14.5" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#00f2fe"/>
+                                <stop offset="1" stop-color="#4facfe"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span>Astral Veil</span>
+                </a>
+                <div class="nav-links">
+                    <a href="{{ base_url }}/">Home</a>
+                    <a href="{{ base_url }}/about/">About</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="glow-divider"></div>
+            <p>&copy; {{ site.time | date("%Y") }} {{ site.title }}. Built with <a href="https://github.com/hahwul/hwaro">Hwaro</a>.</p>
+        </div>
+    </footer>
+</body>
+</html>

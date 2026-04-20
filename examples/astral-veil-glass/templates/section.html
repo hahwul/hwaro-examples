@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="glass-panel" style="margin-bottom: 3rem; text-align: center;">
+    <h1 class="gradient-text" style="font-size: 3rem; margin-bottom: 1rem;">{{ section.title | default(value="Posts") }}</h1>
+    {% if section.description is defined and section.description %}
+    <p class="post-summary" style="font-size: 1.1rem; max-width: 600px; margin: 0 auto;">{{ section.description }}</p>
+    {% endif %}
+</div>
+
+{% if paginator is defined %}
+    {% set pages = paginator.pages %}
+{% else %}
+    {% set pages = section.pages %}
+{% endif %}
+
+<ul class="post-list">
+    {% for page in pages %}
+    <li>
+        <a href="{{ base_url }}{{ page.url }}" class="post-card">
+            <article class="glass-panel">
+                <h2 class="post-title">{{ page.title }}</h2>
+                <div class="post-meta">
+                    {% if page.date is defined %}
+                    <time datetime="{{ page.date | date("%Y-%m-%d") }}">{{ page.date | date("%B %d, %Y") }}</time>
+                    {% endif %}
+                </div>
+                {% if page.description is defined and page.description %}
+                <p class="post-summary">{{ page.description }}</p>
+                {% endif %}
+            </article>
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+
+{% if paginator is defined and paginator.total_pages > 1 %}
+<nav class="pagination glass-panel" style="margin-top: 3rem; display: flex; justify-content: center; gap: 1rem; padding: 1rem;">
+    {% if paginator.previous %}
+        <a href="{{ base_url }}{{ paginator.previous }}" class="btn">&larr; Previous</a>
+    {% endif %}
+
+    <span class="page-indicator" style="color: var(--color-text-muted); align-self: center;">
+        Page {{ paginator.current_index }} of {{ paginator.total_pages }}
+    </span>
+
+    {% if paginator.next %}
+        <a href="{{ base_url }}{{ paginator.next }}" class="btn">Next &rarr;</a>
+    {% endif %}
+</nav>
+{% endif %}
+
+{% endblock %}
