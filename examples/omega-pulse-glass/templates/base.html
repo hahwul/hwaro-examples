@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="{{ site.language | default('en') }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ page.title | default(site.title) }}{% endblock %}</title>
+    <meta name="description" content="{{ page.description | default(site.description) }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-void: #03010a;
+            --pulse-cyan: #00f0ff;
+            --pulse-magenta: #ff0055;
+            --pulse-purple: #8a2be2;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-glow: rgba(0, 240, 255, 0.15);
+            --text-main: #f0f4f8;
+            --text-muted: #a0aab2;
+            --font-body: 'Inter', sans-serif;
+            --font-heading: 'Space Grotesk', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-void);
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Background Elements */
+        .omega-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            background: radial-gradient(circle at 50% 50%, #060212 0%, var(--bg-void) 100%);
+        }
+
+        .pulse-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.5;
+            animation: pulse-drift 15s infinite alternate ease-in-out;
+        }
+
+        .orb-1 {
+            width: 40vw;
+            height: 40vw;
+            background: var(--pulse-cyan);
+            top: -10%;
+            left: -10%;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 50vw;
+            height: 50vw;
+            background: var(--pulse-magenta);
+            bottom: -20%;
+            right: -10%;
+            animation-delay: -5s;
+        }
+
+        .orb-3 {
+            width: 30vw;
+            height: 30vw;
+            background: var(--pulse-purple);
+            top: 40%;
+            left: 60%;
+            animation-delay: -10s;
+        }
+
+        @keyframes pulse-drift {
+            0% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+            50% { transform: translate(10%, 10%) scale(1.1); opacity: 0.6; }
+            100% { transform: translate(-5%, 5%) scale(0.9); opacity: 0.4; }
+        }
+
+        /* Glassmorphism Containers */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37), inset 0 0 20px var(--glass-glow);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-panel:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5), inset 0 0 30px rgba(255, 0, 85, 0.2);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            padding: 2rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--glass-border);
+            margin-bottom: 3rem;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-decoration: none;
+            color: #fff;
+            letter-spacing: -1px;
+            background: linear-gradient(90deg, var(--pulse-cyan), var(--pulse-magenta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-left: 2rem;
+            font-family: var(--font-heading);
+            font-weight: 600;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: #fff;
+            text-shadow: 0 0 10px var(--pulse-cyan);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(90deg, var(--pulse-cyan), var(--pulse-magenta));
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            margin-bottom: 1rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            color: #fff;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        a {
+            color: var(--pulse-cyan);
+            text-decoration: none;
+            transition: text-shadow 0.2s ease;
+        }
+
+        a:hover {
+            text-shadow: 0 0 8px var(--pulse-cyan);
+            text-decoration: underline;
+        }
+
+        /* Main Content */
+        main {
+            min-height: 60vh;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 5rem;
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Misc Elements */
+        .section-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .section-list li {
+            margin: 0;
+        }
+
+        .section-list a {
+            display: block;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .section-list a:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--pulse-cyan);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+            transform: translateY(-3px);
+            text-shadow: none;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: linear-gradient(45deg, var(--pulse-purple), var(--pulse-magenta));
+            color: #fff;
+            border-radius: 30px;
+            font-family: var(--font-heading);
+            font-weight: 600;
+            text-decoration: none;
+            margin-top: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(255, 0, 85, 0.4);
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 0, 85, 0.6);
+            color: #fff;
+            text-decoration: none;
+        }
+
+        pre {
+            background: rgba(0,0,0,0.5);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--glass-border);
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+
+        code {
+            font-family: 'Fira Code', monospace;
+            color: var(--pulse-cyan);
+        }
+
+        /* Highlight specific styles to avoid conflicts */
+        {% block extra_css %}{% endblock %}
+    </style>
+</head>
+<body>
+    <div class="omega-bg">
+        <div class="pulse-orb orb-1"></div>
+        <div class="pulse-orb orb-2"></div>
+        <div class="pulse-orb orb-3"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <a href="/" class="logo">{{ site.title | default("Omega Pulse") }}</a>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+            </nav>
+        </header>
+
+        {% block content %}{% endblock %}
+
+        <footer>
+            <p>&copy; {{ site.time | date("%Y") }} {{ site.title | default("Omega Pulse Glass") }}. All rights reserved.</p>
+            <p>Powered by <a href="https://github.com/hahwul/hwaro">Hwaro</a></p>
+        </footer>
+    </div>
+</body>
+</html>
