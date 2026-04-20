@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="section-card glass-card">
+  <header class="section-header">
+    <h1 class="section-title">{{ page.title | e }}</h1>
+    {% if page.description is defined %}
+    <p class="section-desc">{{ page.description | e }}</p>
+    {% endif %}
+    {{ content | safe }}
+  </header>
+
+  <div class="post-list">
+    {% for post in section.pages %}
+    <article class="post-item glass-panel">
+      <h2 class="post-item-title"><a href="{{ base_url }}{{ post.url }}">{{ post.title | e }}</a></h2>
+      <div class="post-meta">
+        <time datetime="{{ post.date | date(format='%Y-%m-%d') }}">{{ post.date | date(format="%b %d, %Y") }}</time>
+      </div>
+      {% if post.description is defined %}
+      <p class="post-item-desc">{{ post.description | e }}</p>
+      {% endif %}
+    </article>
+    {% endfor %}
+  </div>
+
+  {% if paginator is defined %}
+  <nav class="pagination">
+    {% if paginator.previous %}
+    <a href="{{ base_url }}{{ paginator.previous }}" class="btn-prev glass-btn">&larr; Prev</a>
+    {% endif %}
+    <span class="page-num">Page {{ paginator.current_page }} of {{ paginator.total_pages }}</span>
+    {% if paginator.next %}
+    <a href="{{ base_url }}{{ paginator.next }}" class="btn-next glass-btn">Next &rarr;</a>
+    {% endif %}
+  </nav>
+  {% endif %}
+</div>
+{% endblock %}
