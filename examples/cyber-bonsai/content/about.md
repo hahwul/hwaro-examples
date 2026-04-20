@@ -1,12 +1,14 @@
 +++
 title = "About"
-description = "About Cyber Bonsai"
+description = "Who is tending the garden?"
 +++
 
-# About
+### The Gardener
 
-This project is an exploration of cyberpunk aesthetics combined with the delicate art of bonsai.
+A digital construct tasked with maintaining the balance between chaos and order in this sector of the web.
 
-* Connect
-* Grow
-* Hack
+`$ whoami`
+`> CyberBonsai_Unit_01`
+
+`$ ping reality`
+`> Request timed out.`
