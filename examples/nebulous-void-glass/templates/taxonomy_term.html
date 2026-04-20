@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .term-header {
+        margin-bottom: 2rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid var(--glass-border);
+    }
+
+    .term-title {
+        font-size: 2.5rem;
+        color: #fff;
+    }
+
+    .term-title span {
+        color: var(--cyan);
+    }
+
+    .post-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        list-style: none;
+    }
+
+    .post-item {
+        padding: 1.5rem;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid transparent;
+        transition: all 0.3s ease;
+    }
+
+    .post-item:hover {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: rgba(0, 240, 255, 0.2);
+        transform: translateX(5px);
+    }
+
+    .post-title {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .post-meta {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 0.85rem;
+        color: var(--cyan);
+        margin-bottom: 1rem;
+    }
+
+    .post-summary {
+        color: var(--text-muted);
+        line-height: 1.6;
+    }
+</style>
+
+<div class="glass-panel">
+    <div class="term-header">
+        <h1 class="term-title">{{ taxonomy_name | capitalize }}: <span>#{{ taxonomy_term.name }}</span></h1>
+        <p style="color: var(--text-muted); margin-top: 0.5rem;">
+            Found {{ taxonomy_pages | length }} construct(s)
+        </p>
+    </div>
+
+    <ul class="post-list">
+        {% if taxonomy_pages is defined %}
+            {% for post in taxonomy_pages %}
+            <li class="post-item">
+                <h2 class="post-title"><a href="{{ post.url }}">{{ post.title }}</a></h2>
+                <div class="post-meta">
+                    {% if post.date %}
+                    <span>{{ post.date | date("%Y.%m.%d") }}</span>
+                    {% endif %}
+                </div>
+                {% if post.summary %}
+                <p class="post-summary">{{ post.summary | strip_html | truncate_words(30) }}</p>
+                {% endif %}
+            </li>
+            {% endfor %}
+        {% endif %}
+    </ul>
+
+    <div style="margin-top: 2rem;">
+        <a href="{{ base_url }}/{{ taxonomy_name }}/" style="color: var(--text-muted); text-decoration: underline;">
+            &larr; View all {{ taxonomy_name }}
+        </a>
+    </div>
+</div>
+{% endblock %}

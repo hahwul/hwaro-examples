@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .section-header {
+        margin-bottom: 2rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid var(--glass-border);
+    }
+
+    .section-header h1 {
+        font-size: 2.5rem;
+        color: #fff;
+    }
+
+    .post-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        list-style: none;
+    }
+
+    .post-item {
+        padding: 1.5rem;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid transparent;
+        transition: all 0.3s ease;
+    }
+
+    .post-item:hover {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: rgba(0, 240, 255, 0.2);
+        transform: translateX(5px);
+    }
+
+    .post-title {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .post-meta {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 0.85rem;
+        color: var(--cyan);
+        margin-bottom: 1rem;
+    }
+
+    .post-summary {
+        color: var(--text-muted);
+        line-height: 1.6;
+    }
+</style>
+
+<div class="glass-panel">
+    <div class="section-header">
+        <h1>{{ page.title | default("Section") }}</h1>
+        {% if page.description %}
+        <p style="color: var(--text-muted);">{{ page.description }}</p>
+        {% endif %}
+    </div>
+
+    {{ content | safe }}
+
+    {% if section is defined and section.pages %}
+    <ul class="post-list">
+        {% for post in section.pages %}
+        <li class="post-item">
+            <h2 class="post-title"><a href="{{ post.url }}">{{ post.title }}</a></h2>
+            <div class="post-meta">
+                {% if post.date %}
+                <span>{{ post.date | date("%Y.%m.%d") }}</span>
+                {% endif %}
+            </div>
+            {% if post.summary %}
+            <p class="post-summary">{{ post.summary | strip_html | truncate_words(30) }}</p>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>
+{% endblock %}
