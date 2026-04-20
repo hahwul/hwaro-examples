@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<article class="glass-panel content-area">
+    <h1>{{ page.title }}</h1>
+
+    {% if page.date %}
+    <div class="post-meta">
+        Published on <time datetime="{{ page.date | date('%Y-%m-%dT%H:%M:%S%z') }}">{{ page.date | date("%B %d, %Y") }}</time>
+    </div>
+    {% endif %}
+
+    {% if page.taxonomies is defined %}
+    <div class="taxonomies">
+        {% if page.taxonomies.categories is defined %}
+            {% for category in page.taxonomies.categories %}
+                <a href="{{ site.base_url }}/categories/{{ category | lower | replace(' ', '-') }}">{{ category }}</a>
+            {% endfor %}
+        {% endif %}
+        {% if page.taxonomies.tags is defined %}
+            {% for tag in page.taxonomies.tags %}
+                <a href="{{ site.base_url }}/tags/{{ tag | lower | replace(' ', '-') }}">#{{ tag }}</a>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <br>
+    {% endif %}
+
+    <div class="markdown-content">
+        {{ content | safe }}
+    </div>
+</article>
+{% endblock %}
