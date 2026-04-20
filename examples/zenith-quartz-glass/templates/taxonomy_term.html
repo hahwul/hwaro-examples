@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-header">
+  {% if term is defined %}
+    <h1 class="page-title">{{ term.name }}</h1>
+  {% endif %}
+  {% if taxonomy is defined %}
+    <p class="meta">{{ taxonomy.name | capitalize }}</p>
+  {% endif %}
+</div>
+
+<div class="grid-container">
+  {% if term is defined and term.pages is defined %}
+    {% for page in term.pages %}
+    <article class="card">
+      <h2 class="card-title"><a href="{{ page.url }}">{{ page.title }}</a></h2>
+      {% if page.date %}
+        <div class="card-date">{{ page.date | date(format="%B %d, %Y") }}</div>
+      {% endif %}
+      {% if page.description %}
+        <p class="card-desc">{{ page.description | truncate(length=120) }}</p>
+      {% endif %}
+      <a href="{{ page.url }}" class="card-link">Explore &rarr;</a>
+    </article>
+    {% endfor %}
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title }} | {% elif section.title %}{{ section.title }} | {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{% if page.description %}{{ page.description }}{% elif site.description %}{{ site.description }}{% endif %}">
+
+  {{ og_all_tags | default(value="") | safe }}
+  {{ canonical_tag | default(value="") | safe }}
+  {{ highlight_tags | default(value="") | safe }}
+  {{ auto_includes | default(value="") | safe }}
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-color: #020108;
+      --text-main: #f0f0f5;
+      --text-muted: #a0a0b0;
+      --accent-cyan: #00f0ff;
+      --accent-purple: #8a2be2;
+      --accent-silver: #c0c0d0;
+      --glass-bg: rgba(255, 255, 255, 0.03);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Space Grotesk', sans-serif;
+      margin-top: 0;
+      font-weight: 700;
+    }
+
+    a {
+      color: var(--accent-cyan);
+      text-decoration: none;
+      transition: color 0.3s ease, text-shadow 0.3s ease;
+    }
+
+    a:hover {
+      color: #fff;
+      text-shadow: 0 0 8px var(--accent-cyan);
+    }
+
+    .bg-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      pointer-events: none;
+      background: radial-gradient(circle at 15% 50%, rgba(0, 240, 255, 0.08) 0%, transparent 40%),
+                  radial-gradient(circle at 85% 30%, rgba(138, 43, 226, 0.1) 0%, transparent 45%);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+      flex: 1;
+      width: 100%;
+      box-sizing: border-box;
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      padding: 1.5rem 0;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--glass-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .site-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      background: linear-gradient(90deg, var(--accent-silver), var(--accent-cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0;
+    }
+
+    nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    nav a {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    nav a:hover {
+      color: #fff;
+    }
+
+    .glass-panel {
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--glass-shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glass-panel::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    }
+
+    .page-header {
+      margin-bottom: 2rem;
+    }
+
+    .page-title {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      color: #fff;
+    }
+
+    .meta {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid var(--glass-border);
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: auto;
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(0, 240, 255, 0.3);
+      box-shadow: 0 10px 30px rgba(0, 240, 255, 0.1);
+    }
+
+    .card-title {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-title a {
+      color: #fff;
+    }
+
+    .card-date {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .card-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+      flex: 1;
+    }
+
+    .card-link {
+      display: inline-block;
+      align-self: flex-start;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 600;
+      color: var(--accent-purple);
+    }
+
+    .card-link:hover {
+      color: var(--accent-cyan);
+    }
+
+    .content-body img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      border: 1px solid var(--glass-border);
+    }
+
+    .content-body pre {
+      background: rgba(0, 0, 0, 0.4) !important;
+      border: 1px solid var(--glass-border);
+      border-radius: 8px;
+      padding: 1rem;
+      overflow-x: auto;
+    }
+
+    .content-body code {
+      font-family: monospace;
+      font-size: 0.9em;
+    }
+
+    .content-body p code {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      color: var(--accent-cyan);
+    }
+
+    .content-body blockquote {
+      border-left: 3px solid var(--accent-purple);
+      margin: 0;
+      padding-left: 1rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="bg-animation"></div>
+
+  <div class="container">
+    <header>
+      <a href="{{ base_url }}/" class="site-title">{{ site.title }}</a>
+      <nav>
+        <a href="{{ base_url }}/">Home</a>
+        <a href="{{ base_url }}/about/">About</a>
+      </nav>
+    </header>
+
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+      &copy; {{ site.title }}. <a href="https://github.com/hahwul/hwaro" target="_blank" rel="noopener">Built with Hwaro</a>
+    </footer>
+  </div>
+</body>
+</html>
