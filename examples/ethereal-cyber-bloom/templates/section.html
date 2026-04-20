@@ -1,0 +1,36 @@
+{% include "header.html" %}
+
+<div class="section-container">
+    <header class="hero">
+        <h1>{{ section.title }}</h1>
+        {% if section.description %}
+            <p>{{ section.description }}</p>
+        {% endif %}
+    </header>
+
+    <div class="glass-panel">
+        <ul class="post-list">
+        {% for p in section.pages %}
+            <li class="post-item">
+                <h2><a href="{{ p.url }}">{{ p.title }}</a></h2>
+                <div class="post-meta">
+                    {% if p.date is defined %}<span class="date">{{ p.date | date("%Y-%m-%d") }}</span>{% endif %}
+                    {% if p.taxonomies is defined and p.taxonomies.tags is defined %}
+                        <span class="tags">
+                        {% for tag in p.taxonomies.tags %}
+                            <a href="{{ base_url }}/tags/{{ tag | slugify }}/" class="tag">#{{ tag }}</a>
+                        {% endfor %}
+                        </span>
+                    {% endif %}
+                </div>
+                {% if p.summary %}
+                    <p class="summary">{{ p.summary | strip_html | safe }}</p>
+                {% endif %}
+                <a href="{{ p.url }}" class="btn-glow">Access Data</a>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+</div>
+
+{% include "footer.html" %}
