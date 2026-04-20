@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{% if page is defined %}{{ page.description | default(value=site.description) | e }}{% else %}{{ site.description | e }}{% endif %}">
+  <title>{% if page is defined and page.title %}{{ page.title | e }} | {% endif %}{{ site.title | e }}</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-void: #020108;
+      --text-main: #e0e8f5;
+      --text-muted: #8a9bb8;
+
+      --neon-cyan: #00f0ff;
+      --neon-magenta: #ff0055;
+      --neon-purple: #8a2be2;
+
+      --glass-bg: rgba(10, 5, 20, 0.4);
+      --glass-border: rgba(0, 240, 255, 0.2);
+
+      --font-body: 'Outfit', sans-serif;
+      --font-display: 'Space Grotesk', sans-serif;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-body);
+      line-height: 1.6;
+      margin: 0;
+      color: var(--text-main);
+      background-color: var(--bg-void);
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Animated Quantum Background */
+    .quantum-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .quantum-node {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.6;
+      animation: drift 25s infinite ease-in-out alternate;
+    }
+
+    .node-cyan {
+      width: 60vw;
+      height: 60vw;
+      background: radial-gradient(circle, var(--neon-cyan), transparent 60%);
+      top: -20vh;
+      left: -20vw;
+      animation-delay: 0s;
+    }
+
+    .node-magenta {
+      width: 50vw;
+      height: 50vw;
+      background: radial-gradient(circle, var(--neon-magenta), transparent 60%);
+      bottom: -10vh;
+      right: -10vw;
+      animation-delay: -5s;
+    }
+
+    .node-purple {
+      width: 40vw;
+      height: 40vw;
+      background: radial-gradient(circle, var(--neon-purple), transparent 60%);
+      top: 30vh;
+      left: 30vw;
+      animation-delay: -10s;
+    }
+
+    @keyframes drift {
+      0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+      33% { transform: translate(10vw, 5vh) scale(1.1) rotate(45deg); }
+      66% { transform: translate(-5vw, 15vh) scale(0.9) rotate(-45deg); }
+      100% { transform: translate(-10vw, -5vh) scale(1.05) rotate(90deg); }
+    }
+
+    /* Layout */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      width: 100%;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    .site-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+      margin: 2rem 0;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+
+    .site-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.75rem;
+      color: var(--text-main);
+      text-decoration: none;
+      letter-spacing: -0.05em;
+      text-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
+      transition: all 0.3s ease;
+    }
+
+    .site-title:hover {
+      color: var(--neon-cyan);
+      text-shadow: 0 0 25px rgba(0, 240, 255, 0.8);
+    }
+
+    .site-nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .site-nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-family: var(--font-display);
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .site-nav a:hover {
+      color: var(--neon-magenta);
+      text-shadow: 0 0 10px rgba(255, 0, 85, 0.6);
+    }
+
+    /* Main Content */
+    .site-main {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 3rem;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      margin-bottom: 3rem;
+      flex-grow: 1;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-display);
+      line-height: 1.2;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-top: 0;
+      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-magenta));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 0 40px rgba(0, 240, 255, 0.2);
+    }
+
+    h2 { font-size: 2rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem; }
+    h3 { font-size: 1.5rem; color: var(--neon-cyan); }
+
+    p { margin-bottom: 1.5rem; font-size: 1.1rem; }
+
+    a {
+      color: var(--neon-cyan);
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    a:hover {
+      color: var(--neon-magenta);
+      text-shadow: 0 0 8px rgba(255, 0, 85, 0.5);
+    }
+
+    /* Post Lists */
+    .post-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .post-item {
+      margin-bottom: 1.5rem;
+      padding: 1.5rem;
+      background: rgba(10, 5, 20, 0.6);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .post-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5), 0 0 15px rgba(138, 43, 226, 0.3);
+      border-color: rgba(138, 43, 226, 0.5);
+    }
+
+    .post-title {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.5rem;
+    }
+
+    .post-title a {
+      background: none;
+      -webkit-text-fill-color: initial;
+      color: var(--text-main);
+      text-shadow: none;
+    }
+
+    .post-title a:hover {
+      color: var(--neon-cyan);
+    }
+
+    .post-meta {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-family: var(--font-display);
+      margin-bottom: 0.5rem;
+    }
+
+    .post-description {
+      margin: 0;
+      color: var(--text-main);
+      font-size: 1rem;
+    }
+
+    /* Elements */
+    code {
+      background: rgba(0, 240, 255, 0.1);
+      color: var(--neon-cyan);
+      padding: 0.2em 0.4em;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.9em;
+    }
+
+    pre {
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      overflow-x: auto;
+    }
+
+    pre code {
+      background: none;
+      color: var(--text-main);
+      padding: 0;
+    }
+
+    hr {
+      border: 0;
+      height: 1px;
+      background: var(--glass-border);
+      margin: 2rem 0;
+    }
+
+    /* Footer */
+    .site-footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-family: var(--font-display);
+      margin-top: auto;
+    }
+
+    @media (max-width: 768px) {
+      .site-header { flex-direction: column; gap: 1rem; text-align: center; }
+      .site-main { padding: 1.5rem; }
+      h1 { font-size: 2.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="quantum-bg">
+    <div class="quantum-node node-cyan"></div>
+    <div class="quantum-node node-magenta"></div>
+    <div class="quantum-node node-purple"></div>
+  </div>
+
+  <div class="container">
+    <header class="site-header">
+      <a href="{{ base_url }}" class="site-title">{{ site.title }}</a>
+      <nav class="site-nav">
+        <a href="{{ base_url }}">Home</a>
+        <a href="{{ base_url }}/posts/">Symphonies</a>
+      </nav>
+    </header>
+
+    <main class="site-main">
