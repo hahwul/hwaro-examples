@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% if page is defined %}
+    <title>{% if page.title is defined %}{{ page.title }} | {% endif %}{% if site is defined and site.title is defined %}{{ site.title }}{% endif %}</title>
+  {% elif section is defined %}
+    <title>{% if section.title is defined %}{{ section.title }} | {% endif %}{% if site is defined and site.title is defined %}{{ site.title }}{% endif %}</title>
+  {% elif term is defined %}
+    <title>{% if term.name is defined %}{{ term.name }} | {% endif %}{% if site is defined and site.title is defined %}{{ site.title }}{% endif %}</title>
+  {% else %}
+    <title>{% if site is defined and site.title is defined %}{{ site.title }}{% endif %}</title>
+  {% endif %}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-void: #050105;
+      --color-abyss: #0a0112;
+      --color-crimson: #ff003c;
+      --color-cyan: #00f0ff;
+      --color-text-main: #f0f0f5;
+      --color-text-muted: #a0a0b5;
+      --glass-bg: rgba(15, 2, 20, 0.4);
+      --glass-border: rgba(255, 0, 60, 0.2);
+      --glass-border-hover: rgba(0, 240, 255, 0.4);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: linear-gradient(135deg, var(--color-void), var(--color-abyss));
+      color: var(--color-text-main);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Animated Background Orbs */
+    .bg-orbs {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      animation: float 20s infinite alternate ease-in-out;
+      opacity: 0.5;
+    }
+
+    .orb-crimson {
+      background: var(--color-crimson);
+      width: 400px;
+      height: 400px;
+      top: 10%;
+      left: 10%;
+    }
+
+    .orb-cyan {
+      background: var(--color-cyan);
+      width: 500px;
+      height: 500px;
+      bottom: -10%;
+      right: 5%;
+      animation-delay: -5s;
+    }
+
+    .orb-purple {
+      background: #8a2be2;
+      width: 300px;
+      height: 300px;
+      top: 40%;
+      left: 50%;
+      animation-duration: 25s;
+    }
+
+    @keyframes float {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(50px, 30px) scale(1.1); }
+      100% { transform: translate(-30px, -50px) scale(0.9); }
+    }
+
+    /* Layout */
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* Glass Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 1rem 0;
+      background: rgba(5, 1, 5, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--glass-border);
+      transition: all 0.3s ease;
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--color-text-main);
+      text-decoration: none;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo span {
+      background: linear-gradient(90deg, var(--color-crimson), var(--color-cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    nav {
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav a {
+      color: var(--color-text-muted);
+      text-decoration: none;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background: linear-gradient(90deg, var(--color-crimson), var(--color-cyan));
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover {
+      color: var(--color-text-main);
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    /* Glass Container */
+    .glass-panel {
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 3rem;
+      margin-top: 3rem;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+      transition: border-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .glass-panel:hover {
+      border-color: var(--glass-border-hover);
+      transform: translateY(-2px);
+    }
+
+    /* Typography */
+    h1, h2, h3, h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #fff, var(--color-text-muted));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.25rem;
+      color: var(--color-text-muted);
+      max-width: 600px;
+      margin-bottom: 2.5rem;
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+    }
+
+    a {
+      color: var(--color-cyan);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    a:hover {
+      color: var(--color-crimson);
+      text-shadow: 0 0 8px rgba(255, 0, 60, 0.4);
+    }
+
+    /* Content Styling */
+    .content ul {
+      margin-left: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .content li {
+      margin-bottom: 0.5rem;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 4rem;
+      padding: 2rem 0;
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      color: var(--color-text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* Button */
+    .glass-btn {
+      display: inline-block;
+      padding: 0.8rem 2rem;
+      background: rgba(255, 0, 60, 0.1);
+      border: 1px solid var(--color-crimson);
+      color: var(--color-text-main);
+      border-radius: 30px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(4px);
+    }
+
+    .glass-btn:hover {
+      background: var(--color-crimson);
+      box-shadow: 0 0 20px rgba(255, 0, 60, 0.4);
+      color: #fff;
+    }
+
+    /* Tag List */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-top: 2rem;
+    }
+
+    .tag {
+      background: rgba(0, 240, 255, 0.1);
+      border: 1px solid rgba(0, 240, 255, 0.3);
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      color: var(--color-cyan);
+      transition: all 0.3s ease;
+    }
+
+    .tag:hover {
+      background: rgba(0, 240, 255, 0.2);
+      border-color: var(--color-cyan);
+      box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+    }
+
+    /* Listing */
+    .page-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .page-item {
+      padding: 1.5rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .page-item:last-child {
+      border-bottom: none;
+    }
+    .page-item h3 {
+      margin-bottom: 0.5rem;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="bg-orbs">
+    <div class="orb orb-crimson"></div>
+    <div class="orb orb-cyan"></div>
+    <div class="orb orb-purple"></div>
+  </div>
+
+  <header>
+    <div class="container header-content">
+      <a href="/" class="logo">
+        <span>Crimson</span> Abyss
+      </a>
+      <nav>
+        <a href="/">Nexus</a>
+        <a href="/about/">Echoes</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; {% if site is defined and site.title is defined %}{{ site.title }}{% endif %}. Forged in the Void.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
