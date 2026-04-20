@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>{{ page.title | e }}</h1>
+  <p class="taxonomy-desc">Posts tagged with "{{ page.title | e }}":</p>
+  {{ content | safe }}
+
+  <ul class="section-list">
+    {% for p in pages %}
+      <li>
+        <a href="{{ base_url }}{{ p.url }}">{{ p.title | e }}</a>
+        {% if p.description %}
+          <p>{{ p.description | e }}</p>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+
+  {% if pagination is defined and pagination.total_pages is defined and pagination.total_pages > 1 %}
+    <nav class="pagination">
+      <ul class="pagination-list">
+        {% if pagination.has_previous %}
+          <li><a href="{{ base_url }}{{ pagination.previous_page_url }}">&laquo;</a></li>
+        {% else %}
+          <li class="pagination-disabled"><span>&laquo;</span></li>
+        {% endif %}
+
+        {% for i in range(1, pagination.total_pages + 1) %}
+          {% if i == pagination.current_page %}
+            <li class="pagination-current"><span>{{ i }}</span></li>
+          {% else %}
+            {% if i == 1 %}
+              <li><a href="{{ base_url }}{{ page.url }}">{{ i }}</a></li>
+            {% else %}
+              <li><a href="{{ base_url }}{{ page.url }}page/{{ i }}/">{{ i }}</a></li>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+
+        {% if pagination.has_next %}
+          <li><a href="{{ base_url }}{{ pagination.next_page_url }}">&raquo;</a></li>
+        {% else %}
+          <li class="pagination-disabled"><span>&raquo;</span></li>
+        {% endif %}
+      </ul>
+    </nav>
+  {% endif %}
+{% endblock %}
