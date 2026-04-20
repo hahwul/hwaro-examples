@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page is defined and page.title %}{{ page.title }} | {% endif %}{{ site.title | default(value="Emerald Synth Glass") }}</title>
+    <meta name="description" content="{% if page is defined and page.description %}{{ page.description }}{% else %}{{ site.description | default(value="A dark themed glassmorphism site") }}{% endif %}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Backgrounds */
+            --bg-void: #010609;
+            --bg-deep: #03141a;
+
+            /* Emerald Accents */
+            --glow-emerald: #00f2fe;
+            --glow-cyan: #4facfe;
+            --glow-teal: #00ff87;
+
+            /* Text Colors */
+            --text-primary: #e0fbfc;
+            --text-secondary: #98c1d9;
+            --text-muted: #5c6b73;
+
+            /* Glassmorphism */
+            --glass-bg: rgba(3, 20, 26, 0.45);
+            --glass-border: rgba(0, 242, 254, 0.15);
+            --glass-highlight: rgba(79, 172, 254, 0.2);
+            --glass-blur: blur(16px);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+
+            /* Typography */
+            --font-sans: 'Inter', sans-serif;
+            --font-display: 'Space Grotesk', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-void);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Ambient Background Glows */
+        body::before, body::after {
+            content: '';
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -1;
+            opacity: 0.4;
+            animation: pulse 12s ease-in-out infinite alternate;
+        }
+
+        body::before {
+            top: -10%;
+            left: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, var(--glow-emerald) 0%, transparent 70%);
+        }
+
+        body::after {
+            bottom: -10%;
+            right: -10%;
+            width: 40vw;
+            height: 40vw;
+            background: radial-gradient(circle, var(--glow-cyan) 0%, transparent 70%);
+            animation-delay: -6s;
+        }
+
+        .ambient-orb {
+            position: fixed;
+            top: 40%;
+            left: 60%;
+            width: 30vw;
+            height: 30vw;
+            background: radial-gradient(circle, var(--glow-teal) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(150px);
+            z-index: -1;
+            opacity: 0.2;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.3; transform: scale(1); }
+            100% { opacity: 0.6; transform: scale(1.1); }
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            50% { transform: translate(-50px, 50px); }
+            100% { transform: translate(0, 0); }
+        }
+
+        /* Glass Container Styles */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            box-shadow: var(--glass-shadow);
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .glass-panel:hover {
+            border-color: var(--glass-highlight);
+            box-shadow: 0 12px 40px 0 rgba(0, 242, 254, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Typography Base */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: 3rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--glow-emerald));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(0, 242, 254, 0.3);
+        }
+
+        h2 { font-size: 2.25rem; color: var(--text-primary); }
+        h3 { font-size: 1.75rem; color: var(--text-secondary); }
+
+        p { margin-bottom: 1.5rem; }
+
+        a {
+            color: var(--glow-emerald);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        a:hover {
+            color: var(--glow-cyan);
+            text-shadow: 0 0 10px rgba(79, 172, 254, 0.5);
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            width: 100%;
+        }
+
+        /* Header */
+        .site-header {
+            padding: 2rem 0;
+            margin-bottom: 3rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: linear-gradient(to bottom, var(--bg-void) 0%, transparent 100%);
+        }
+
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .site-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .site-title::before {
+            content: '';
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background-color: var(--glow-emerald);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--glow-emerald);
+        }
+
+        .main-nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .main-nav a {
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .main-nav a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Main Content */
+        .site-main {
+            flex: 1;
+            padding-bottom: 4rem;
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Markdown Content Formatting */
+        .content-body {
+            font-size: 1.125rem;
+        }
+
+        .content-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            margin: 2rem 0;
+        }
+
+        .content-body pre {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .content-body code {
+            font-family: 'Space Grotesk', monospace;
+            background: rgba(0, 242, 254, 0.1);
+            color: var(--glow-cyan);
+            padding: 0.2em 0.4em;
+            border-radius: 4px;
+        }
+
+        .content-body pre code {
+            background: none;
+            padding: 0;
+            color: var(--text-secondary);
+        }
+
+        .content-body blockquote {
+            border-left: 4px solid var(--glow-emerald);
+            padding-left: 1.5rem;
+            margin-left: 0;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .content-body ul, .content-body ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .content-body li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Post Metadata */
+        .post-meta {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .tag-pill {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(0, 242, 254, 0.1);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--glow-emerald);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Lists / Section Grid */
+        .post-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .post-card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .post-card h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .post-card h3 a {
+            color: var(--text-primary);
+        }
+
+        .post-card h3 a:hover {
+            color: var(--glow-emerald);
+        }
+
+        .post-card .summary {
+            color: var(--text-secondary);
+            flex: 1;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .post-card .read-more {
+            display: inline-block;
+            color: var(--glow-cyan);
+            font-weight: 600;
+            font-family: var(--font-display);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        .site-footer {
+            margin-top: auto;
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Mobile Nav */
+        @media (max-width: 768px) {
+            .nav-wrapper {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            .post-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="ambient-orb"></div>
+
+    <header class="site-header">
+        <div class="container nav-wrapper">
+            <a href="{{ base_url }}/" class="site-title">{{ site.title | default(value="Emerald Synth Glass") }}</a>
+            <nav class="main-nav">
+                <a href="{{ base_url }}/">Home</a>
+                <a href="{{ base_url }}/about">About</a>
+                <a href="{{ base_url }}/posts">Posts</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="site-main container">
+        {% block content %}{% endblock content %}
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; {{ now() | date(format="%Y") }} {{ site.author | default(value="Hwaro") }}. Crafted with Hwaro.</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="section-header" style="margin-bottom: 3rem; text-align: center;">
+    <h3 style="color: var(--text-secondary); text-transform: uppercase; font-size: 1rem; letter-spacing: 0.1em; margin-bottom: 0.5rem;">{{ taxonomy.name | capitalize }}</h3>
+    <h1>{{ term.name }}</h1>
+</div>
+
+<div class="post-list">
+    {% set pages = term.pages | default(value=[]) %}
+    {% if paginator is defined %}
+        {% set pages = paginator.pages %}
+    {% endif %}
+
+    {% for p in pages %}
+    <article class="glass-panel post-card">
+        <h3><a href="{{ base_url }}{{ p.url }}">{{ p.title }}</a></h3>
+        <div class="post-meta" style="margin-bottom: 1rem;">
+            {% if p.date %}
+                <time datetime="{{ p.date }}">{{ p.date | date(format="%B %d, %Y") }}</time>
+            {% endif %}
+        </div>
+        <p class="summary">{{ p.description | default(value=p.content | striptags | truncate(length=150)) }}</p>
+        <a href="{{ base_url }}{{ p.url }}" class="read-more">Read More &rarr;</a>
+    </article>
+    {% endfor %}
+</div>
+
+{% if paginator is defined and paginator.number_pagers > 1 %}
+<nav class="pagination" style="margin-top: 3rem; display: flex; justify-content: center; gap: 1rem;">
+    {% if paginator.previous %}
+        <a href="{{ base_url }}{{ paginator.previous }}" class="glass-panel" style="padding: 0.5rem 1.5rem;">&larr; Prev</a>
+    {% endif %}
+    {% if paginator.next %}
+        <a href="{{ base_url }}{{ paginator.next }}" class="glass-panel" style="padding: 0.5rem 1.5rem;">Next &rarr;</a>
+    {% endif %}
+</nav>
+{% endif %}
+{% endblock content %}
