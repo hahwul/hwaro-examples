@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="content">
+    {% if section is defined and section.title %}
+    <header style="margin-bottom: 2rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 1rem;">
+        <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">{{ section.title }}</h1>
+    </header>
+    {% endif %}
+
+    {% if section is defined %}
+    {{ content | safe }}
+    {% endif %}
+
+    {% if section is defined and section.pages %}
+    <div style="margin-top: 3rem; display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));">
+        {% for p in section.pages %}
+        <article style="background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border); border-radius: 16px; padding: 1.5rem; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+            <h2 style="font-size: 1.4rem; margin-bottom: 0.5rem;">
+                <a href="{{ p.permalink }}">{{ p.title }}</a>
+            </h2>
+            {% if p.date %}
+            <time style="color: var(--text-muted); font-size: 0.85rem; display: block; margin-bottom: 1rem;">{{ p.date | date(format="%B %d, %Y") }}</time>
+            {% endif %}
+            {% if p.description %}
+            <p style="margin: 0; font-size: 0.95rem; color: var(--text-muted);">{{ p.description }}</p>
+            {% endif %}
+        </article>
+        {% endfor %}
+    </div>
+    {% endif %}
+</section>
+{% endblock %}
