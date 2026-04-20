@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section>
+    <h1>{{ section.title }}</h1>
+    {% if section.description %}
+    <p>{{ section.description }}</p>
+    {% endif %}
+
+    <div class="content">
+        {{ content | safe }}
+    </div>
+
+    <ul class="post-list">
+        {% for p in pages %}
+        <li class="post-item">
+            <h2 class="post-title"><a href="{{ p.permalink }}">{{ p.title }}</a></h2>
+            {% if p.date %}
+            <div class="post-meta">{{ p.date | date(format="%B %d, %Y") }}</div>
+            {% endif %}
+            {% if p.description %}
+            <p>{{ p.description }}</p>
+            {% endif %}
+
+            {% if p.taxonomies and p.taxonomies.tags %}
+            <div class="tags">
+                {% for tag in p.taxonomies.tags %}
+                <a href="{{ base_url }}tags/{{ tag | replace(' ', '-') | lower }}/" class="tag">#{{ tag }}</a>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+
+    {% if pagination is defined and pagination.total_pages is defined and pagination.total_pages > 1 %}
+    <div class="pagination">
+        Page {{ pagination.current_page }} of {{ pagination.total_pages }}
+    </div>
+    {% endif %}
+</section>
+{% endblock %}
