@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="{{ page_language | default(value='en') }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description | default(value=site.description) | e }}">
+  <title>{% if page.title is defined %}{{ page.title | e }} - {% endif %}{{ site.title | e }}</title>
+  {% if og_all_tags is defined %}{{ og_all_tags | safe }}{% endif %}
+  {% if hreflang_tags is defined %}{{ hreflang_tags | safe }}{% endif %}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-space: #03010A;
+      --bg-nebula: #0B041C;
+      --neon-cyan: #00F0FF;
+      --neon-magenta: #FF0055;
+      --neon-purple: #8A2BE2;
+      --text-main: #E0E6ED;
+      --text-muted: #8A9BB3;
+      --glass-bg: rgba(11, 4, 28, 0.4);
+      --glass-border: rgba(0, 240, 255, 0.2);
+      --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      --font-display: 'Space Grotesk', sans-serif;
+      --font-body: 'Outfit', sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-body);
+      line-height: 1.7;
+      margin: 0;
+      color: var(--text-main);
+      background-color: var(--bg-space);
+      background-image:
+        radial-gradient(circle at 15% 50%, rgba(138, 43, 226, 0.15), transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(0, 240, 255, 0.1), transparent 25%);
+      background-attachment: fixed;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Ambient Background Effects */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: linear-gradient(125deg, transparent 40%, rgba(255, 0, 85, 0.05) 50%, transparent 60%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* Grid overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background-image:
+        linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+      background-size: 50px 50px;
+      perspective: 1000px;
+      transform: rotateX(60deg) scale(2);
+      transform-origin: bottom;
+      pointer-events: none;
+      z-index: -2;
+      opacity: 0.5;
+    }
+
+    .site-wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Glassmorphism Header */
+    .site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 2rem;
+      margin: 2rem 0 4rem 0;
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      box-shadow: var(--glass-shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .site-header::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%; width: 50%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      transform: skewX(-20deg);
+      transition: 0.5s;
+    }
+
+    .site-header:hover::before {
+      left: 150%;
+    }
+
+    .site-logo {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: #fff;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      position: relative;
+      text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+    }
+
+    .site-logo span {
+      color: var(--neon-magenta);
+      text-shadow: 0 0 10px rgba(255, 0, 85, 0.5);
+    }
+
+    .site-header nav { display: flex; gap: 2rem; }
+    .site-header nav a {
+      color: var(--text-main);
+      text-decoration: none;
+      font-size: 1rem;
+      font-family: var(--font-display);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .site-header nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px; left: 0; width: 0; height: 2px;
+      background: var(--neon-cyan);
+      transition: width 0.3s ease;
+      box-shadow: 0 0 8px var(--neon-cyan);
+    }
+
+    .site-header nav a:hover {
+      color: var(--neon-cyan);
+    }
+
+    .site-header nav a:hover::after {
+      width: 100%;
+    }
+
+    .site-main {
+      min-height: calc(100vh - 300px);
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 3rem;
+      box-shadow: var(--glass-shadow);
+      position: relative;
+    }
+
+    /* Decorative corner elements */
+    .site-main::before, .site-main::after {
+      content: '';
+      position: absolute;
+      width: 30px; height: 30px;
+      border: 2px solid var(--neon-cyan);
+      pointer-events: none;
+    }
+
+    .site-main::before {
+      top: -2px; left: -2px;
+      border-right: none; border-bottom: none;
+      border-top-left-radius: 20px;
+    }
+
+    .site-main::after {
+      bottom: -2px; right: -2px;
+      border-left: none; border-top: none;
+      border-bottom-right-radius: 20px;
+      border-color: var(--neon-magenta);
+    }
+
+    /* Typography inside main content */
+    h1, h2, h3 {
+      font-family: var(--font-display);
+      color: #fff;
+      line-height: 1.2;
+      margin-top: 2em;
+      margin-bottom: 1em;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-top: 0;
+      background: linear-gradient(45deg, var(--neon-cyan), var(--neon-purple), var(--neon-magenta));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 30px rgba(138, 43, 226, 0.3);
+    }
+
+    h2 { font-size: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem; }
+    h3 { font-size: 1.5rem; color: var(--neon-cyan); }
+
+    p { margin: 1.5em 0; font-size: 1.1rem; color: var(--text-muted); }
+
+    a {
+      color: var(--neon-cyan);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .site-main a:hover {
+      color: #fff;
+      text-shadow: 0 0 8px var(--neon-cyan);
+    }
+
+    /* Code styling */
+    code {
+      background: rgba(0, 0, 0, 0.5);
+      color: var(--neon-magenta);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-family: 'Fira Code', ui-monospace, monospace;
+      font-size: 0.9em;
+      border: 1px solid rgba(255, 0, 85, 0.2);
+    }
+
+    pre {
+      background: #020106;
+      padding: 1.5rem;
+      border-radius: 12px;
+      overflow-x: auto;
+      border: 1px solid rgba(0, 240, 255, 0.2);
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+      position: relative;
+    }
+
+    pre::before {
+      content: '///';
+      position: absolute;
+      top: 0.5rem; right: 1rem;
+      color: var(--text-muted);
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      opacity: 0.5;
+    }
+
+    pre code {
+      background: none;
+      padding: 0;
+      border: none;
+      color: #E0E6ED;
+    }
+
+    /* Lists */
+    ul { list-style: none; padding-left: 1.5rem; }
+    ul li { position: relative; margin-bottom: 0.8rem; color: var(--text-muted); }
+    ul li::before {
+      content: '▹';
+      position: absolute;
+      left: -1.5rem;
+      color: var(--neon-cyan);
+      font-weight: bold;
+    }
+
+    hr {
+      border: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(138, 43, 226, 0.5), transparent);
+      margin: 3rem 0;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .site-header { flex-direction: column; gap: 1.5rem; text-align: center; }
+      .site-wrapper { padding: 0 1rem; }
+      .site-main { padding: 2rem 1.5rem; }
+      h1 { font-size: 2.2rem; }
+    }
+  </style>
+  {% if highlight_css is defined %}{{ highlight_css | safe }}{% endif %}
+  {% if auto_includes_css is defined %}{{ auto_includes_css | safe }}{% endif %}
+</head>
+<body data-section="{{ page.section | default(value='home') }}">
+  <div class="site-wrapper">
+    <header class="site-header">
+      <a href="{{ base_url | default(value='/') }}" class="site-logo">Hyper<span>Prism</span> Nova</a>
+      <nav>
+        <a href="{{ base_url | default(value='/') }}">Core</a>
+        <a href="{{ base_url | default(value='/') }}/about/">Nexus</a>
+      </nav>
+    </header>

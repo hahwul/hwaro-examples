@@ -1,0 +1,94 @@
+{% include "header.html" %}
+  <main class="site-main">
+    <h1>{{ page.title | e }}</h1>
+
+    {% if content is defined and content | length > 0 %}
+    <div class="content-body">
+      {{ content | safe }}
+    </div>
+    {% endif %}
+
+    <style>
+      .hyper-list {
+        list-style: none;
+        padding: 0;
+        margin: 2rem 0;
+        display: grid;
+        gap: 1.5rem;
+      }
+      .hyper-card {
+        background: rgba(0, 240, 255, 0.02);
+        border: 1px solid rgba(0, 240, 255, 0.1);
+        border-radius: 12px;
+        padding: 1.5rem;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+      .hyper-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; width: 4px; height: 100%;
+        background: var(--neon-cyan);
+        opacity: 0.5;
+        transition: opacity 0.3s ease;
+      }
+      .hyper-card:hover {
+        background: rgba(0, 240, 255, 0.05);
+        border-color: rgba(0, 240, 255, 0.3);
+        transform: translateX(5px);
+        box-shadow: 0 4px 20px rgba(0, 240, 255, 0.1);
+      }
+      .hyper-card:hover::before {
+        opacity: 1;
+        box-shadow: 0 0 10px var(--neon-cyan);
+      }
+      .hyper-card a {
+        display: block;
+        font-family: var(--font-display);
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #fff;
+        margin-bottom: 0.5rem;
+      }
+      .hyper-card a::before { display: none; }
+      .hyper-card .date {
+        font-family: 'Fira Code', monospace;
+        font-size: 0.8rem;
+        color: var(--neon-magenta);
+      }
+      .hyper-card p {
+        margin: 0.5rem 0 0 0;
+        font-size: 0.95rem;
+      }
+    </style>
+
+    <div class="hyper-list">
+      {% for p in section.pages %}
+        <div class="hyper-card">
+          <a href="{{ p.url }}">{{ p.title }}</a>
+          {% if p.date is defined %}
+            <div class="date">{{ p.date | date("%Y.%m.%d") }}</div>
+          {% endif %}
+          {% if p.description is defined %}
+            <p>{{ p.description }}</p>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+
+    {% if pagination is defined %}
+    <nav class="pagination" style="margin-top: 3rem; display: flex; justify-content: center; gap: 1rem;">
+      {% if pagination.prev is defined %}
+        <a href="{{ pagination.prev }}" class="sys-status" style="text-decoration: none;">&lt; Prev</a>
+      {% endif %}
+      <span class="sys-status" style="border-color: var(--neon-magenta); color: var(--neon-magenta);">
+        Page {{ pagination.current }}
+      </span>
+      {% if pagination.next is defined %}
+        <a href="{{ pagination.next }}" class="sys-status" style="text-decoration: none;">Next &gt;</a>
+      {% endif %}
+    </nav>
+    {% endif %}
+  </main>
+{% include "footer.html" %}
