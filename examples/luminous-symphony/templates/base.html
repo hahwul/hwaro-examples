@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ site.title }}{% endblock title %}</title>
+    <meta name="description" content="{% block description %}{{ site.description }}{% endblock description %}">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Luminous Symphony Color Palette */
+            --bg-void: #020108;
+            --bg-deep: #050314;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent-cyan: #00f0ff;
+            --accent-magenta: #ff0055;
+            --accent-purple: #8a2be2;
+            --accent-gold: #ffd700;
+
+            /* Glassmorphism settings */
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-void);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Animated Glowing Background Elements */
+        .cosmic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            background: radial-gradient(circle at center, var(--bg-deep) 0%, var(--bg-void) 100%);
+        }
+
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: float 20s infinite alternate ease-in-out;
+        }
+
+        .orb-1 {
+            width: 40vw;
+            height: 40vw;
+            background: radial-gradient(circle, var(--accent-purple), transparent 70%);
+            top: -10%;
+            left: -10%;
+            animation-duration: 25s;
+        }
+
+        .orb-2 {
+            width: 35vw;
+            height: 35vw;
+            background: radial-gradient(circle, var(--accent-magenta), transparent 70%);
+            bottom: -5%;
+            right: -5%;
+            animation-duration: 22s;
+            animation-delay: -5s;
+        }
+
+        .orb-3 {
+            width: 30vw;
+            height: 30vw;
+            background: radial-gradient(circle, var(--accent-cyan), transparent 70%);
+            top: 40%;
+            left: 40%;
+            animation-duration: 28s;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(5%, 5%) scale(1.1); }
+            66% { transform: translate(-5%, 10%) scale(0.9); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #fff 0%, var(--text-muted) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 { font-size: 2.5rem; }
+        h3 { font-size: 1.75rem; }
+
+        p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--accent-magenta);
+            text-shadow: 0 0 10px rgba(255, 0, 85, 0.5);
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            width: 100%;
+        }
+
+        main {
+            flex: 1;
+            padding: 4rem 0;
+        }
+
+        /* Glassmorphism Containers */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: var(--glass-shadow);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        }
+
+        .glass-panel:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Nav */
+        nav {
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(2, 1, 8, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-brand span {
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 1rem;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-magenta));
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+            text-shadow: none;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: auto;
+            padding: 3rem 0;
+            border-top: 1px solid var(--glass-border);
+            background: rgba(2, 1, 8, 0.5);
+            text-align: center;
+            backdrop-filter: blur(8px);
+        }
+
+        .footer-content {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Utilities */
+        .text-gradient {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-magenta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .glowing-text {
+            color: #fff;
+            text-shadow: 0 0 10px var(--accent-cyan), 0 0 20px var(--accent-purple);
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .glass-panel { padding: 2rem; }
+            .nav-links { gap: 1rem; }
+        }
+
+    </style>
+    {% block head %}{% endblock head %}
+</head>
+<body>
+    <div class="cosmic-bg">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+        <div class="glow-orb orb-3"></div>
+    </div>
+
+    {% include "header.html" ignore missing %}
+
+    <main class="container">
+        {% block content %}{% endblock content %}
+    </main>
+
+    {% include "footer.html" ignore missing %}
+</body>
+</html>
