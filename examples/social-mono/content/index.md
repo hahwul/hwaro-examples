@@ -1,0 +1,4 @@
++++
+title = "Mono Post"
++++
+HIGH CONTRAST. MINIMAL ELEMENTS. MAXIMUM IMPACT.
