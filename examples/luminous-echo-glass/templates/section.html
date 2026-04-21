@@ -1,0 +1,49 @@
+{% include "header.html" %}
+  <main class="site-main">
+    <div class="glass-panel">
+      {% if section.title is present %}
+        <h1>{{ section.title | e }}</h1>
+      {% endif %}
+
+      <div class="content">
+        {{ content | safe }}
+      </div>
+
+      {% if pages %}
+        <ul class="section-list">
+        {% for page in pages %}
+          <li>
+            <a href="{{ base_url }}{{ page.permalink }}">{{ page.title | e }}</a>
+            {% if page.date is present %}
+              <span style="float: right; color: var(--text-muted); font-size: 0.9em;">{{ page.date | date(format="%B %d, %Y") }}</span>
+            {% endif %}
+            {% if page.description is present %}
+              <p style="margin: 0.5em 0 0 0; font-size: 0.9em;">{{ page.description | e }}</p>
+            {% endif %}
+          </li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+
+      {% if paginator %}
+        <nav class="pagination">
+          <ul class="pagination-list">
+            {% if paginator.previous %}
+              <li><a href="{{ base_url }}{{ paginator.previous }}">&laquo; Prev</a></li>
+            {% else %}
+              <li class="pagination-disabled"><span>&laquo; Prev</span></li>
+            {% endif %}
+
+            <li class="pagination-current"><span>Page {{ paginator.current_page }} of {{ paginator.total_pages }}</span></li>
+
+            {% if paginator.next %}
+              <li><a href="{{ base_url }}{{ paginator.next }}">Next &raquo;</a></li>
+            {% else %}
+              <li class="pagination-disabled"><span>Next &raquo;</span></li>
+            {% endif %}
+          </ul>
+        </nav>
+      {% endif %}
+    </div>
+  </main>
+{% include "footer.html" %}
