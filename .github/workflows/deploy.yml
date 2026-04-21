@@ -109,17 +109,26 @@ jobs:
         run: |
           SCREENSHOT_DIR="${GITHUB_WORKSPACE}/_screenshot_site"
           mkdir -p "${SCREENSHOT_DIR}"
+          FAILED=""
 
           for name in ${{ steps.screenshots.outputs.need_capture }}; do
             echo "Building ${name} (screenshot)..."
-            docker run --rm \
+            if ! docker run --rm \
               -v "${GITHUB_WORKSPACE}/examples/${name}:/src" \
               -v "${SCREENSHOT_DIR}/${name}:/output" \
               ghcr.io/hahwul/hwaro build \
                 -i /src \
                 -o /output \
-                --base-url "http://localhost:8000/${name}"
+                --base-url "http://localhost:8000/${name}"; then
+              echo "::warning::Screenshot build failed for ${name}"
+              FAILED="${FAILED} ${name}"
+              rm -rf "${SCREENSHOT_DIR}/${name}"
+            fi
           done
+
+          if [ -n "${FAILED}" ]; then
+            echo "::warning::Screenshot builds failed for:${FAILED}"
+          fi
 
       - name: Capture screenshots
         if: steps.screenshots.outputs.need_capture != ''
@@ -180,22 +189,35 @@ jobs:
           BASE_URL="https://${GITHUB_REPOSITORY_OWNER}.github.io/${REPO_NAME}"
           OUTPUT_DIR="${GITHUB_WORKSPACE}/_site"
           mkdir -p "${OUTPUT_DIR}"
+          FAILED=""
+          TOTAL=0
 
           for dir in examples/*/; do
             src_path="${dir%/}"
             name="${src_path#examples/}"
             if [ -f "${src_path}/config.toml" ]; then
+              TOTAL=$((TOTAL + 1))
               echo "Building ${name}..."
-              docker run --rm \
+              if docker run --rm \
                 -v "${GITHUB_WORKSPACE}/${src_path}:/src" \
                 -v "${OUTPUT_DIR}/${name}:/output" \
                 ghcr.io/hahwul/hwaro build \
                   -i /src \
                   -o /output \
-                  --base-url "${BASE_URL}/${name}"
-              echo "Done: ${name}"
+                  --base-url "${BASE_URL}/${name}"; then
+                echo "Done: ${name}"
+              else
+                echo "::warning::Build failed for ${name}"
+                FAILED="${FAILED} ${name}"
+                rm -rf "${OUTPUT_DIR}/${name}"
+              fi
             fi
           done
+
+          if [ -n "${FAILED}" ]; then
+            FAIL_COUNT=$(echo ${FAILED} | wc -w | xargs)
+            echo "::warning::Build failures (${FAIL_COUNT}/${TOTAL}):${FAILED}"
+          fi
       - name: Generate index page
         run: |
           REPO_NAME="${GITHUB_REPOSITORY#*/}"
@@ -209,7 +231,7 @@ jobs:
           for dir in examples/*/; do
             src_path="${dir%/}"
             name="${src_path#examples/}"
-            if [ -f "${src_path}/config.toml" ]; then
+            if [ -f "${src_path}/config.toml" ] && [ -d "${OUTPUT_DIR}/${name}" ]; then
               TITLE=$(grep '^title' "${src_path}/config.toml" | head -1 | sed 's/title *= *"//;s/"//')
               DESCRIPTION=$(grep '^description' "${src_path}/config.toml" | head -1 | sed 's/description *= *"//;s/"//')
               THEME_REPO_URL="https://github.com/${GITHUB_REPOSITORY}/tree/main/${src_path}"
