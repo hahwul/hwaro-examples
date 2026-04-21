@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .taxonomy-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .taxonomy-title {
+        font-size: 2.5rem;
+        color: #fff;
+        text-transform: capitalize;
+    }
+
+    .terms-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: center;
+    }
+
+    .term-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.5rem 1.25rem;
+        background: rgba(0, 240, 255, 0.05);
+        border: 1px solid rgba(0, 240, 255, 0.2);
+        border-radius: 20px;
+        color: var(--cyan);
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .term-badge:hover {
+        background: rgba(0, 240, 255, 0.15);
+        border-color: var(--cyan);
+        transform: translateY(-2px);
+        color: #fff;
+    }
+
+    .term-count {
+        margin-left: 0.5rem;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 0.1rem 0.5rem;
+        border-radius: 10px;
+        font-size: 0.8rem;
+        color: #fff;
+    }
+</style>
+
+<div class="glass-panel">
+    <div class="taxonomy-header">
+        <h1 class="taxonomy-title">{{ taxonomy_name | default("Taxonomy") }}</h1>
+        <p style="color: var(--text-muted); margin-top: 1rem;">Browse contents by {{ taxonomy_name | default("category") }}</p>
+    </div>
+
+    <div class="terms-grid">
+        {% if taxonomy_terms is defined %}
+            {% for term in taxonomy_terms %}
+            <a href="{{ base_url }}/{{ taxonomy_name }}/{{ term.name | slugify }}/" class="term-badge">
+                #{{ term.name }} <span class="term-count">{{ term.pages | length }}</span>
+            </a>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
