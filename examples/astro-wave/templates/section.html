@@ -1,0 +1,39 @@
+{% include "header.html" %}
+
+<div class="section-container">
+  <h1>{% if section is defined and section.title is defined %}{{ section.title | e }}{% else %}{{ page.title | e }}{% endif %}</h1>
+
+  {% if section is defined and section.description is defined %}
+  <p style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 2rem;">{{ section.description | e }}</p>
+  {% endif %}
+
+  <div class="content-body" style="margin-bottom: 2rem;">
+    {{ content | safe }}
+  </div>
+
+  {% if section is defined and section.pages is defined %}
+  <ul class="post-list">
+    {% for p in section.pages %}
+    <li>
+      <h2><a href="{{ p.url }}">{{ p.title | e }}</a></h2>
+      {% if p.date is defined %}
+      <div class="post-meta">{{ p.date | date(format="%B %d, %Y") }}</div>
+      {% endif %}
+      {% if p.description is defined %}
+      <p>{{ p.description | e }}</p>
+      {% endif %}
+
+      {% if p.tags is defined %}
+      <div class="tags-container">
+        {% for tag in p.tags %}
+        <span class="tag">{{ tag }}</span>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</div>
+
+{% include "footer.html" %}
