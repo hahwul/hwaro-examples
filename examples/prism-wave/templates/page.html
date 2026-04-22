@@ -1,0 +1,26 @@
+{% include "header.html" %}
+  <main class="site-main">
+    <article class="glass-card">
+      {% if page is defined and page.title is defined %}
+        <h1>{{ page.title | e }}</h1>
+        {% if page.date is defined %}
+          <span class="meta">{{ page.date | date(format="%B %d, %Y") }}</span>
+        {% endif %}
+      {% endif %}
+      <div class="content">
+        {{ content | safe }}
+      </div>
+
+      {% if page is defined and page.taxonomies is defined and page.taxonomies.tags is defined %}
+        <div style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--glass-border);">
+          <span class="meta">Tags</span>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            {% for tag in page.taxonomies.tags %}
+              <a href="{{ base_url }}/tags/{{ tag | lower | replace(from=' ', to='-') }}/" style="padding: 0.3rem 0.8rem; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 20px; font-size: 0.85rem; color: var(--text);">#{{ tag }}</a>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+    </article>
+  </main>
+{% include "footer.html" %}
