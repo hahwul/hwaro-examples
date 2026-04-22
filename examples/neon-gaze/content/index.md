@@ -2,6 +2,7 @@
 title = "Welcome to Neon Gaze"
 description = "Enter the cyber grid with the Neon Gaze theme."
 tags = ["welcome", "cyberpunk"]
+categories = ["system", "updates"]
 +++
 
 # Initiate System Sequence
