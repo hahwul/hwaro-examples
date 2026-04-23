@@ -1,0 +1,52 @@
+{% include "header.html" %}
+  <main>
+    <section class="hero" style="grid-template-columns: 1fr;">
+      <div>
+        <div class="eyebrow">Index &middot; {{ page.title }}</div>
+        <h1>{{ page.title }} <em>&mdash;</em></h1>
+        {% if page.description %}<p class="lede">{{ page.description }}</p>{% endif %}
+      </div>
+    </section>
+
+    <div class="sec-head">
+      <span class="num">&mdash;</span>
+      <h2>All <em>projects</em></h2>
+      <span class="rule"></span>
+      <span class="year">{{ section.pages | length }} filed</span>
+    </div>
+
+    <section class="projects">
+      {% for post in section.pages %}
+      <article class="project">
+        <div>
+          <span class="idx">Project {{ "%02d" | format(loop.index) }} / {% if post.date %}{{ post.date | date("%Y") }}{% endif %}</span>
+          <div class="shape" aria-hidden="true">
+            {% if loop.index is divisibleby(3) %}
+            <svg width="56" height="56" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+              <polygon points="28,4 52,52 4,52" fill="currentColor"/>
+            </svg>
+            {% elif loop.index is even %}
+            <svg width="56" height="56" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+              <rect x="4" y="4" width="48" height="48" fill="currentColor"/>
+              <rect x="16" y="16" width="24" height="24" fill="#c9a84c"/>
+            </svg>
+            {% else %}
+            <svg width="56" height="56" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="28" cy="28" r="24" fill="currentColor"/>
+              <circle cx="28" cy="28" r="10" fill="#f5f0eb"/>
+            </svg>
+            {% endif %}
+          </div>
+          <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+          <p>{{ post.description }}</p>
+        </div>
+        <div class="foot">
+          <span>{{ post.extra.kind | default(value="Case Study") }}</span>
+          <span class="gold">{{ post.extra.client | default(value="Self-Initiated") }}</span>
+        </div>
+      </article>
+      {% endfor %}
+    </section>
+    {{ pagination }}
+  </main>
+{% include "footer.html" %}
