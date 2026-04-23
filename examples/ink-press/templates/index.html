@@ -1,0 +1,87 @@
+{% include "header.html" %}
+  <main>
+    <section class="lede-zone">
+      <div class="lede-byline">
+        <span class="accent-dot"></span>
+        <span>Lede &middot; Front Page</span>
+        <span>Filed {{ current_date }}</span>
+      </div>
+      <h2 class="lede-headline">A small press survives the century, printing only what matters.</h2>
+      <p class="lede-dek">In an age of feeds and ephemeral copy, a hand-set weekly based in a converted grain mill is filing reports that will outlive everyone who wrote them. We toured the shop.</p>
+      <div class="lede-byline">
+        <span>By the Editors</span>
+        <span>Photography by Inez Rosen</span>
+        <span>Ten-minute read</span>
+      </div>
+    </section>
+
+    <div class="section-rule">
+      <h2>On the Desks</h2>
+      <div class="rule"></div>
+      <span class="edition">Week of {{ current_date }}</span>
+    </div>
+
+    <section class="columns-3">
+      {% set desk_count = 0 %}
+      {% for post in site.pages | sort_by(attribute="date", reverse=true) %}
+      {% if post.section == "stories" and desk_count < 3 %}
+      <div class="col">
+        <span class="col-tag">{{ post.extra.desk | default(value="Culture") }}</span>
+        <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+        <p>{{ post.description }}</p>
+        <div class="byline">By {{ post.extra.author | default(value="Staff") }} &middot; {% if post.date %}{{ post.date | date("%b %d") }}{% endif %}</div>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </section>
+
+    <div class="section-rule">
+      <h2>Latest Filings</h2>
+      <div class="rule"></div>
+      <span class="edition">Chronological</span>
+    </div>
+
+    <section class="two-col">
+      <ul class="story-list">
+        {% for post in site.pages | sort_by(attribute="date", reverse=true) %}
+        {% if post.section == "stories" %}
+        <li>
+          <span class="sl-date">{% if post.date %}{{ post.date | date("%m.%d.%y") }}{% endif %}</span>
+          <div>
+            <div class="sl-title"><a href="{{ post.url }}">{{ post.title }}</a></div>
+            <div class="sl-dek">{{ post.description }}</div>
+          </div>
+        </li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+
+      <aside class="sidebar">
+        <h3>Of Note</h3>
+        <blockquote class="quote">&ldquo;A small press is an editorial machine in which each part refuses to be automated. That is the whole point.&rdquo;</blockquote>
+        <p>The editor of a one-sheet weekly in Trieste, quoted in this week's feature on the disappearing Adriatic print economy.</p>
+        <svg class="ornament-splash" width="110" height="60" viewBox="0 0 110 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M14 32 C22 8, 38 4, 48 20 C56 34, 68 38, 80 28 C92 18, 104 24, 104 40 C104 52, 86 56, 76 48 C64 40, 54 54, 44 50 C30 44, 18 46, 14 32 Z" fill="currentColor"/>
+          <circle cx="22" cy="46" r="3" fill="currentColor"/>
+          <circle cx="94" cy="12" r="2" fill="currentColor"/>
+          <circle cx="66" cy="54" r="2.5" fill="currentColor"/>
+        </svg>
+        <ul class="tally">
+          <li><span>Stories filed</span><span class="num">182</span></li>
+          <li><span>Corrections</span><span class="num">04</span></li>
+          <li><span>Subscribers</span><span class="num">2,310</span></li>
+          <li><span>Print runs</span><span class="num">48</span></li>
+        </ul>
+      </aside>
+    </section>
+
+    <div class="section-rule">
+      <h2>About This Publication</h2>
+      <div class="rule"></div>
+      <span class="edition">Colophon</span>
+    </div>
+    <section style="padding: 1rem 0 3rem; max-width: 70ch;">
+      {{ content }}
+    </section>
+  </main>
+{% include "footer.html" %}
