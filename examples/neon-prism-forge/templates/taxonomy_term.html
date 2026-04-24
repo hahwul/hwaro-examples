@@ -1,0 +1,31 @@
+{% include "header.html" %}
+  <div class="glass-panel">
+    <h1 class="page-title">
+      <span style="color: var(--text-muted); font-size: 1.2rem; display: block; margin-bottom: 0.5rem;">Posts tagged with</span>
+      #{{ taxonomy_term.name | default(val=page.title) }}
+    </h1>
+
+    <div class="post-list">
+      {% if taxonomy_term is defined and taxonomy_term.pages is defined %}
+        {% for post in taxonomy_term.pages %}
+        <article class="glass-panel post-card" style="margin-bottom: 0;">
+          <h2 class="post-title">
+            <a href="{{ base_url }}{{ post.url }}">{{ post.title }}</a>
+          </h2>
+          {% if post.date %}
+          <div class="post-meta">{{ post.date | date(format="%Y-%m-%d") }}</div>
+          {% endif %}
+
+          <div class="post-summary">
+            {% if post.summary %}
+              {{ post.summary | safe }}
+            {% else %}
+              {{ post.content | strip_html | truncate_words(n=20) }}
+            {% endif %}
+          </div>
+        </article>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+{% include "footer.html" %}
