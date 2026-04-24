@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="{{ page_language }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description | e }}">
+  <title>{% if page.title is present %}{{ page.title | e }} - {% endif %}{{ site.title | e }}</title>
+  {{ og_all_tags }}
+  {{ hreflang_tags }}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #9b4dca;
+      --secondary: #ff007f;
+      --accent: #00f0ff;
+      --text: #f0ebf8;
+      --text-muted: #a89bbd;
+      --border: rgba(255, 255, 255, 0.1);
+      --bg: #070212;
+      --glass-bg: rgba(20, 10, 40, 0.4);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      color: var(--text);
+      background: var(--bg);
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* Cosmic Background Orbs */
+    .bg-orbs {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: -1;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      animation: float 20s infinite alternate ease-in-out;
+    }
+    .orb-1 {
+      top: -10%; left: -10%; width: 50vw; height: 50vw;
+      background: radial-gradient(circle, rgba(155,77,202,0.4) 0%, rgba(155,77,202,0) 70%);
+      animation-delay: 0s;
+    }
+    .orb-2 {
+      bottom: -20%; right: -10%; width: 60vw; height: 60vw;
+      background: radial-gradient(circle, rgba(255,0,127,0.3) 0%, rgba(255,0,127,0) 70%);
+      animation-delay: -5s;
+    }
+    .orb-3 {
+      top: 40%; left: 60%; width: 40vw; height: 40vw;
+      background: radial-gradient(circle, rgba(0,240,255,0.2) 0%, rgba(0,240,255,0) 70%);
+      animation-delay: -10s;
+    }
+
+    @keyframes float {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(10%, 10%) scale(1.1); }
+    }
+
+    /* Layout */
+    .site-wrapper { max-width: 800px; margin: 0 auto; padding: 0 1.5rem; position: relative; z-index: 1; }
+
+    .site-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.5rem 2rem;
+      margin: 2rem 0;
+      border-radius: 16px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+    }
+
+    .site-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700; font-size: 1.4rem; color: #fff; text-decoration: none;
+      background: linear-gradient(90deg, var(--accent), var(--secondary), var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
+    }
+
+    .site-header nav { display: flex; gap: 1.5rem; }
+    .site-header nav a {
+      color: var(--text); text-decoration: none; font-size: 0.95rem;
+      font-weight: 500; transition: color 0.3s;
+    }
+    .site-header nav a:hover { color: var(--accent); }
+
+    .site-main { min-height: calc(100vh - 300px); margin-bottom: 2rem; }
+
+    /* Glass Panel Component */
+    .glass-panel {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 2.5rem;
+      box-shadow: var(--glass-shadow);
+      margin-bottom: 2rem;
+    }
+
+    /* Typography */
+    h1, h2, h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      line-height: 1.2; margin-top: 1.5em; margin-bottom: 0.5em; font-weight: 700; color: #fff;
+    }
+    h1 { font-size: 2.5rem; margin-top: 0; letter-spacing: -1px; }
+    h2 { font-size: 1.75rem; letter-spacing: -0.5px; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+    h3 { font-size: 1.25rem; color: var(--accent); }
+    p { margin: 1.2em 0; font-size: 1.05rem; }
+    a { color: var(--accent); text-decoration: none; transition: all 0.2s; }
+    a:hover { color: var(--secondary); text-shadow: 0 0 8px rgba(255, 0, 127, 0.4); }
+
+    code {
+      background: rgba(0,0,0,0.3); padding: 0.2rem 0.4rem; border-radius: 4px;
+      font-size: 0.85em; font-family: ui-monospace, monospace;
+      color: var(--secondary); border: 1px solid var(--border);
+    }
+    pre {
+      background: rgba(0,0,0,0.4); padding: 1.25rem; border-radius: 12px;
+      overflow-x: auto; border: 1px solid var(--glass-border); box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
+    }
+    pre code { background: none; padding: 0; border: none; color: var(--text); }
+
+    /* Components */
+    ul { padding-left: 1.5rem; }
+    ul li { margin-bottom: 0.5rem; }
+
+    ul.section-list { list-style: none; padding: 0; margin: 1.5rem 0; display: grid; gap: 1rem; }
+    ul.section-list li {
+      margin-bottom: 0; padding: 1.25rem;
+      background: rgba(255,255,255,0.02); border-radius: 12px;
+      border: 1px solid var(--glass-border); transition: transform 0.2s, background 0.2s;
+    }
+    ul.section-list li:hover { background: rgba(255,255,255,0.05); transform: translateY(-2px); border-color: rgba(255,255,255,0.15); }
+    ul.section-list li a { font-weight: 500; font-size: 1.1rem; color: #fff; }
+    ul.section-list li a:hover { color: var(--accent); text-shadow: none; }
+
+    .taxonomy-desc { color: var(--text-muted); margin-bottom: 1.5rem; font-style: italic; }
+
+    nav.pagination { margin: 2rem 0; }
+    nav.pagination .pagination-list { list-style: none; padding: 0; margin: 0; display: flex; gap: 0.5rem; justify-content: center; }
+    nav.pagination a, .pagination-current span, .pagination-disabled span {
+      display: inline-flex; align-items: center; justify-content: center; min-width: 2.5rem; height: 2.5rem; padding: 0 0.75rem;
+      border-radius: 8px; border: 1px solid var(--glass-border);
+      background: rgba(255,255,255,0.02); color: var(--text-muted); text-decoration: none;
+      font-family: 'Space Grotesk', sans-serif; font-weight: 500;
+    }
+    nav.pagination a:hover { color: var(--accent); border-color: var(--accent); background: rgba(0,240,255,0.05); }
+    .pagination-current span { color: #fff; border-color: var(--primary); background: rgba(155,77,202,0.2); }
+    .pagination-disabled span { opacity: 0.3; }
+
+    /* Footer */
+    .site-footer {
+      margin-top: 3rem; padding: 2rem; border-top: 1px solid var(--border);
+      color: var(--text-muted); font-size: 0.9rem; text-align: center;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .site-header { flex-direction: column; gap: 1rem; text-align: center; padding: 1.25rem; }
+      .site-header nav { width: 100%; justify-content: center; }
+      .glass-panel { padding: 1.5rem; }
+      h1 { font-size: 2rem; }
+    }
+  </style>
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+</head>
+<body data-section="{{ page.section }}">
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+  <div class="site-wrapper">
+    <header class="site-header">
+      <a href="{{ base_url }}/" class="site-logo">{{ site.title }}</a>
+      <nav>
+        <a href="{{ base_url }}/">Home</a>
+        <a href="{{ base_url }}/about/">About</a>
+      </nav>
+    </header>
