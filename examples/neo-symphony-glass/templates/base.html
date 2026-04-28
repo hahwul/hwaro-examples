@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="{{ page_language | default(value='en') }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description | default(value=site.description) | e }}">
+  <title>{% if page.title is present %}{{ page.title | e }} - {% endif %}{{ site.title | e }}</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+  :root {
+    --void-bg: #030008;
+    --text-primary: rgba(255, 255, 255, 0.95);
+    --text-secondary: rgba(255, 255, 255, 0.65);
+
+    --glass-bg: rgba(25, 10, 45, 0.25);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-highlight: rgba(255, 255, 255, 0.15);
+
+    --orb-1: #8b5cf6; /* Violet */
+    --orb-2: #ec4899; /* Magenta */
+    --orb-3: #06b6d4; /* Cyan */
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    color: var(--text-primary);
+    background-color: var(--void-bg);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Animated Orbs */
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    z-index: -1;
+    opacity: 0.5;
+    animation: float 20s infinite ease-in-out alternate;
+  }
+
+  .orb-1 {
+    top: -10%; left: -10%;
+    width: 50vw; height: 50vw;
+    background: var(--orb-1);
+    animation-delay: 0s;
+  }
+
+  .orb-2 {
+    bottom: -20%; right: -10%;
+    width: 60vw; height: 60vw;
+    background: var(--orb-2);
+    animation-delay: -5s;
+    animation-duration: 25s;
+  }
+
+  .orb-3 {
+    top: 40%; left: 40%;
+    width: 40vw; height: 40vw;
+    background: var(--orb-3);
+    animation-delay: -10s;
+    animation-duration: 30s;
+  }
+
+  @keyframes float {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(10%, 15%) scale(1.1); }
+    100% { transform: translate(-10%, -5%) scale(0.9); }
+  }
+
+  /* Typography */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    letter-spacing: -0.02em;
+  }
+
+  h1 { font-size: 3rem; margin-top: 0; background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.7) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  h2 { font-size: 2rem; }
+  h3 { font-size: 1.5rem; }
+  p { margin: 1em 0; color: var(--text-secondary); }
+
+  a {
+    color: var(--text-primary);
+    text-decoration: none;
+    border-bottom: 1px solid var(--glass-highlight);
+    transition: all 0.3s ease;
+  }
+  a:hover {
+    color: var(--orb-3);
+    border-bottom-color: var(--orb-3);
+  }
+
+  /* Layout & Glassmorphism */
+  .site-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem 0;
+    margin-bottom: 4rem;
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .site-logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    text-decoration: none;
+    border: none;
+    letter-spacing: -0.04em;
+  }
+  .site-logo:hover { color: var(--orb-2); border: none; }
+
+  .site-header nav { display: flex; gap: 2rem; }
+  .site-header nav a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 1rem;
+    border: none;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  .site-header nav a:hover { color: var(--text-primary); }
+
+  .site-main { min-height: calc(100vh - 250px); }
+
+  /* Glass Cards (used in markdown content) */
+  .glass-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 2.5rem;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+  .glass-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--glass-highlight);
+  }
+
+  .site-footer {
+    margin-top: 5rem;
+    padding: 2rem 0;
+    border-top: 1px solid var(--glass-border);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    text-align: center;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  @media (max-width: 768px) {
+    .site-header { flex-direction: column; gap: 1.5rem; padding: 1.5rem 0; }
+    h1 { font-size: 2.2rem; }
+    .glass-card { padding: 1.5rem; }
+  }
+  </style>
+</head>
+<body>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <div class="site-wrapper">
+    <header class="site-header">
+      <a href="{{ base_url }}/" class="site-logo">{{ site.title }}</a>
+      <nav>
+        <a href="{{ base_url }}/">Home</a>
+        <a href="{{ base_url }}/about/">About</a>
+      </nav>
+    </header>
+
+    <main class="site-main">
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; {{ now() | date(format="%Y") }} {{ site.title }}. Symphony in the void.</p>
+    </footer>
+  </div>
+</body>
+</html>
