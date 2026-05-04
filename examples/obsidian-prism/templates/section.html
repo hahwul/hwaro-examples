@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}{% if section %}{{ section.title }} | {% endif %}{{ site.title }}{% endblock %}
+
+{% block content %}
+<section class="section-content">
+    {% if section %}
+    <header class="section-header">
+        <h1 class="section-title">{{ section.title }}</h1>
+        {% if content %}
+        <div class="content section-description">
+            {{ content | safe }}
+        </div>
+        {% endif %}
+    </header>
+    {% endif %}
+
+    <div class="item-list">
+        {% set items = section.pages if section else pages %}
+        {% for item in items %}
+        <article class="list-item">
+            <h2 class="item-title"><a href="{{ site.base_url }}{{ item.permalink }}">{{ item.title }}</a></h2>
+            {% if item.date %}
+            <div class="item-meta">
+                <time datetime="{{ item.date }}">{{ item.date | date("%Y-%m-%d") }}</time>
+            </div>
+            {% endif %}
+            {% if item.description %}
+            <p class="item-summary">{{ item.description }}</p>
+            {% endif %}
+        </article>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
