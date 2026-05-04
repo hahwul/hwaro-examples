@@ -8,7 +8,7 @@ To work with these examples or for AI agents acting on your behalf, you need to 
 
 ### macOS / Linux (Homebrew)
 ```bash
-brew install hahwul/tap/hwaro
+brew install hahwul/hwaro/hwaro
 ```
 
 ### Linux (Arch)
