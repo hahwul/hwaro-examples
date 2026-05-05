@@ -7,10 +7,10 @@ Enter a dimension where **deep velvet night** meets glowing *neon synthwave* ech
 
 ## Features of the Void
 
-- 🌌 **Deep Velvet Void**: A rich, dark background infused with subtle glowing orbs.
-- 🔮 **Glassmorphism Panels**: Translucent UI components with a frosted glass effect (`backdrop-filter`).
-- ⚡ **Neon Accents**: Cybernetic pulses of Cyan (`#00f0ff`) and Magenta (`#ff0055`) illuminating the dark.
-- 📐 **Modern Typography**: Featuring *Space Grotesk* for bold headers and *Inter* for clean body text.
+- **Deep Velvet Void**: A rich, dark background infused with subtle glowing orbs.
+- **Glassmorphism Panels**: Translucent UI components with a frosted glass effect (`backdrop-filter`).
+- **Neon Accents**: Cybernetic pulses of Cyan (`#00f0ff`) and Magenta (`#ff0055`) illuminating the dark.
+- **Modern Typography**: Featuring *Space Grotesk* for bold headers and *Inter* for clean body text.
 
 ### Code in the Dark
 

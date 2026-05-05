@@ -28,7 +28,7 @@ def initiate_launch_sequence(planet):
     print(f"Preparing to launch toward {planet}...")
     for i in range(3, 0, -1):
         print(i)
-    print("Liftoff! 🚀")
+    print("Liftoff!")
 
 initiate_launch_sequence("Mars")
 ```

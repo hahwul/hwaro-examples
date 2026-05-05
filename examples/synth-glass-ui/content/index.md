@@ -8,10 +8,10 @@ Welcome to **Synth Glass UI**. This theme combines the nostalgic retro-futurism 
 
 ### Features
 
-- 🌌 **Animated Grid**: A pure CSS animated synthwave grid background.
-- 🪟 **Glass Cards**: Translucent, blurred containers with subtle borders.
-- 💖 **Neon Typography**: Glowing accents using neon pink and cyan.
-- 📱 **Responsive**: Fully adaptable to any screen size.
+- **Animated Grid**: A pure CSS animated synthwave grid background.
+- **Glass Cards**: Translucent, blurred containers with subtle borders.
+- **Neon Typography**: Glowing accents using neon pink and cyan.
+- **Responsive**: Fully adaptable to any screen size.
 
 Here's an example of some code in this theme:
 
