@@ -1,0 +1,18 @@
++++
+title = "Home"
+template = "index"
++++
+
+WE BUILD STRUCTURES IN THE DIGITAL VOID.
+
+OUR APPROACH IS FOUNDED ON MINIMALISM, RAW MATERIALS, AND UNYIELDING GEOMETRY. WE BELIEVE THAT FORM FOLLOWS FUNCTION, AND EVERY PIXEL MUST SERVE A PURPOSE.
+
+**RADIANT VERTEX** IS NOT JUST A PORTFOLIO. IT IS A DECLARATION OF ARCHITECTURAL INTENT.
+
+### PRINCIPLES
+
+1. **STRUCTURAL INTEGRITY**: Solid foundations over fragile abstractions.
+2. **HIGH CONTRAST**: Clarity through absolute light and absolute darkness.
+3. **NO DISTRACTIONS**: We reject gradients, soft shadows, and unnecessary ornaments.
+
+EXPLORE OUR [PROJECTS](/projects/) TO SEE THESE PRINCIPLES IN ACTION.
