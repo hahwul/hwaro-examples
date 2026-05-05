@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<header class="page-header">
+    <h1>Term: {% if term %}{{ term.name }}{% else %}Unknown{% endif %}</h1>
+</header>
+
+<div class="content">
+    <ul class="item-list">
+        {% if term and term.pages %}
+            {% for item in term.pages %}
+            <li class="item-card">
+                <h2 class="item-title"><a href="{{ item.permalink }}">{{ item.title }}</a></h2>
+                {% if item.date %}
+                <div class="item-date">{{ item.date | date("%Y-%m-%d") }}</div>
+                {% endif %}
+                {% if item.summary %}
+                <p class="item-summary">{{ item.summary | strip_html | truncate_words(30) }}</p>
+                {% endif %}
+            </li>
+            {% endfor %}
+        {% else %}
+            <p>No pages found for this term.</p>
+        {% endif %}
+    </ul>
+</div>
+{% endblock %}

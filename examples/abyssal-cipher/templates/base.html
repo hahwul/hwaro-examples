@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page_title %}{{ page_title }} | {% endif %}{{ site.title }}</title>
+    <meta name="description" content="{% if page_description %}{{ page_description }}{% else %}{{ site.description }}{% endif %}">
+
+    <!-- Google Fonts: Cormorant Garamond for elegant architectural headings, Inter for body -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Solid Dark Colors - NO Gradients */
+            --bg-deep-navy: #02040A;
+            --bg-slate-blue: #0A0F1D;
+            --bg-panel: #141A29;
+            --text-primary: #E2E8F0;
+            --text-secondary: #94A3B8;
+            --text-muted: #475569;
+            --accent-gold: #D4AF37;
+            --accent-gold-dim: #D4AF3733;
+            --border-color: #1E293B;
+
+            --font-display: 'Cormorant Garamond', serif;
+            --font-body: 'Inter', sans-serif;
+
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 2rem;
+            --spacing-lg: 4rem;
+            --spacing-xl: 8rem;
+
+            --content-width: 800px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-deep-navy);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        a {
+            color: var(--text-primary);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s ease, color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--accent-gold);
+            border-bottom-color: var(--accent-gold);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-display);
+            font-weight: 400;
+            line-height: 1.2;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: var(--spacing-sm);
+            margin-top: var(--spacing-lg);
+        }
+
+        h3 {
+            font-size: 1.75rem;
+            margin-top: var(--spacing-md);
+        }
+
+        p {
+            margin-bottom: var(--spacing-md);
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* Layout Architecture */
+        .site-container {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            grid-template-rows: 1fr auto;
+            min-height: 100vh;
+            border-left: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
+            max-width: 1400px;
+            margin: 0 auto;
+            background-color: var(--bg-slate-blue);
+        }
+
+        @media (max-width: 900px) {
+            .site-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Navigation Sidebar */
+        .site-sidebar {
+            border-right: 1px solid var(--border-color);
+            padding: var(--spacing-lg) var(--spacing-md);
+            display: flex;
+            flex-direction: column;
+            background-color: var(--bg-deep-navy);
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        @media (max-width: 900px) {
+            .site-sidebar {
+                height: auto;
+                position: relative;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+                padding: var(--spacing-md);
+            }
+        }
+
+        .site-title {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            color: var(--accent-gold);
+            margin-bottom: var(--spacing-md);
+            display: block;
+            border: none;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .site-title:hover {
+            color: var(--text-primary);
+            border: none;
+        }
+
+        .site-nav {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-lg);
+        }
+
+        .site-nav a {
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-secondary);
+            padding: var(--spacing-xs) 0;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .site-nav a::before {
+            content: '';
+            display: inline-block;
+            width: 0;
+            height: 1px;
+            background-color: var(--accent-gold);
+            margin-right: 0;
+            transition: width 0.3s ease, margin-right 0.3s ease;
+        }
+
+        .site-nav a:hover {
+            color: var(--text-primary);
+            border-color: transparent;
+        }
+
+        .site-nav a:hover::before {
+            width: 20px;
+            margin-right: 10px;
+        }
+
+        /* Main Content Area */
+        .site-main {
+            padding: var(--spacing-lg);
+            max-width: calc(var(--content-width) + var(--spacing-lg) * 2);
+        }
+
+        @media (max-width: 600px) {
+            .site-main {
+                padding: var(--spacing-md);
+            }
+        }
+
+        .page-header {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .page-meta {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-family: var(--font-body);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            gap: var(--spacing-sm);
+            align-items: center;
+        }
+
+        .page-meta span::after {
+            content: ' / ';
+            color: var(--border-color);
+        }
+        .page-meta span:last-child::after {
+            content: '';
+        }
+
+        /* Content Markdown Styles */
+        .content {
+            font-size: 1.1rem;
+        }
+
+        .content blockquote {
+            border-left: 2px solid var(--accent-gold);
+            padding-left: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-style: italic;
+            color: var(--text-primary);
+        }
+
+        .content ul, .content ol {
+            margin-bottom: var(--spacing-md);
+            padding-left: var(--spacing-md);
+            color: var(--text-secondary);
+        }
+
+        .content li {
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .content code {
+            background-color: var(--bg-panel);
+            color: var(--text-primary);
+            padding: 0.2em 0.4em;
+            font-size: 0.9em;
+            border: 1px solid var(--border-color);
+        }
+
+        .content pre {
+            background-color: var(--bg-panel);
+            padding: var(--spacing-md);
+            overflow-x: auto;
+            margin-bottom: var(--spacing-md);
+            border: 1px solid var(--border-color);
+            border-left: 2px solid var(--accent-gold);
+        }
+
+        .content pre code {
+            background-color: transparent;
+            padding: 0;
+            border: none;
+            color: var(--text-secondary);
+        }
+
+        /* Grid Lists (for section pages) */
+        .item-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--spacing-md);
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .item-card {
+            background-color: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            padding: var(--spacing-md);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            position: relative;
+        }
+
+        .item-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--accent-gold);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .item-card:hover {
+            border-color: var(--text-muted);
+            transform: translateY(-2px);
+        }
+
+        .item-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        .item-title {
+            font-size: 1.5rem;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .item-title a {
+            border: none;
+        }
+
+        .item-date {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .item-summary {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-bottom: 0;
+        }
+
+        /* Footer */
+        .site-footer {
+            grid-column: 1 / -1;
+            padding: var(--spacing-md) var(--spacing-lg);
+            border-top: 1px solid var(--border-color);
+            background-color: var(--bg-deep-navy);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-align: center;
+            font-family: var(--font-body);
+        }
+    </style>
+</head>
+<body>
+    <div class="site-container">
+        <aside class="site-sidebar">
+            <a href="{{ base_url }}/" class="site-title">{{ site.title }}</a>
+            <div style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: var(--spacing-md);">{{ site.description }}</div>
+
+            <nav class="site-nav">
+                <a href="{{ base_url }}/">Home</a>
+                <a href="{{ base_url }}/about/">About</a>
+                <a href="{{ base_url }}/posts/">Archives</a>
+            </nav>
+        </aside>
+
+        <main class="site-main">
+            {% block content %}{% endblock %}
+        </main>
+
+        <footer class="site-footer">
+            &copy; {{ current_year }} {{ site.title }}. All rights reserved.
+        </footer>
+    </div>
+</body>
+</html>
