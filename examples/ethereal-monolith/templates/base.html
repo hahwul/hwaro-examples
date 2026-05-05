@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page_title %}{{ page_title }} - {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{% if page_description %}{{ page_description }}{% else %}{{ site.description }}{% endif %}">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-color: #0b0f14;
+      --text-color: #e5e7eb;
+      --accent-color: #2dd4bf;
+      --border-color: #1f2937;
+
+      --font-sans: 'Inter', sans-serif;
+      --font-mono: 'Space Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      display: grid;
+      grid-template-columns: 1fr;
+      min-height: 100vh;
+    }
+
+    /* Architectural Layout Grid */
+    .site-wrapper {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      grid-template-columns: minmax(0, 1fr) minmax(auto, 800px) minmax(0, 1fr);
+      min-height: 100vh;
+    }
+
+    header {
+      grid-column: 1 / -1;
+      grid-row: 1;
+      padding: 2rem;
+      border-bottom: 2px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header a {
+      color: var(--text-color);
+      text-decoration: none;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    header nav a {
+      font-size: 1rem;
+      font-weight: 400;
+      margin-left: 2rem;
+      color: var(--accent-color);
+    }
+
+    main {
+      grid-column: 2;
+      grid-row: 2;
+      padding: 4rem 2rem;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-mono);
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      color: var(--text-color);
+      font-weight: 700;
+    }
+
+    h1 {
+      font-size: 3rem;
+      line-height: 1.2;
+      border-left: 8px solid var(--accent-color);
+      padding-left: 1rem;
+      margin-top: 0;
+    }
+
+    h2 {
+      font-size: 2rem;
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+    }
+
+    a {
+      color: var(--accent-color);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    a:hover {
+      border-color: var(--accent-color);
+    }
+
+    pre {
+      background-color: #000000;
+      padding: 1.5rem;
+      border: 1px solid var(--border-color);
+      overflow-x: auto;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      background-color: #000000;
+      padding: 0.2rem 0.4rem;
+      font-size: 0.9rem;
+    }
+
+    pre code {
+      padding: 0;
+      background-color: transparent;
+    }
+
+    blockquote {
+      margin: 2rem 0;
+      padding: 1rem 2rem;
+      border-left: 4px solid var(--accent-color);
+      background-color: #111827;
+      font-style: italic;
+    }
+
+    .meta {
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      color: #9ca3af;
+      margin-bottom: 2rem;
+      display: flex;
+      gap: 1rem;
+    }
+
+    .tags {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      background-color: transparent;
+      border: 1px solid var(--accent-color);
+      color: var(--accent-color);
+      padding: 0.2rem 0.5rem;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+    }
+
+    footer {
+      grid-column: 1 / -1;
+      grid-row: 3;
+      padding: 2rem;
+      border-top: 2px solid var(--border-color);
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      color: #9ca3af;
+    }
+
+    .item-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .item-card {
+      border: 1px solid var(--border-color);
+      padding: 2rem;
+      background-color: #111827;
+      transition: border-color 0.2s;
+      position: relative;
+    }
+
+    .item-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background-color: transparent;
+      transition: background-color 0.2s;
+    }
+
+    .item-card:hover {
+      border-color: var(--accent-color);
+    }
+
+    .item-card:hover::before {
+      background-color: var(--accent-color);
+    }
+
+    .item-card h2 {
+      margin-top: 0;
+      font-size: 1.5rem;
+    }
+
+    .item-card a {
+      border: none;
+    }
+
+    .item-card a::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="site-wrapper">
+    <header>
+      <a href="{{ base_url }}/">{{ site.title }}</a>
+      <nav>
+        <a href="{{ base_url }}/projects/">Projects</a>
+      </nav>
+    </header>
+
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+      <p>&copy; {{ current_year }} {{ site.title }}. Built with Hwaro.</p>
+    </footer>
+  </div>
+</body>
+</html>

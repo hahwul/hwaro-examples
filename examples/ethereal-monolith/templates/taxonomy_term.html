@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>{{ taxonomy_name | default("Taxonomy") | title }}: {% if taxonomy_term is defined %}{{ taxonomy_term.name }}{% else %}Unknown{% endif %}</h1>
+
+  <ul class="item-list">
+    {% if taxonomy_term is defined %}
+      {% for item in taxonomy_term.pages %}
+        <li class="item-card">
+          <h2><a href="{{ item.permalink }}">{{ item.title }}</a></h2>
+          {% if item.date %}
+            <div class="meta">{{ item.date | date("%Y-%m-%d") }}</div>
+          {% endif %}
+          {% if item.summary %}
+            <p>{{ item.summary | strip_html }}</p>
+          {% elif item.description %}
+            <p>{{ item.description }}</p>
+          {% endif %}
+        </li>
+      {% endfor %}
+    {% endif %}
+  </ul>
+{% endblock %}
