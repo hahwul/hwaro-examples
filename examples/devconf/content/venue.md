@@ -8,7 +8,7 @@ description = "Moscone West Convention Center, San Francisco"
 # Moscone West Convention Center
 
 <div class="bg-surface-alt rounded-xl p-6 my-6">
-  <p class="text-lg font-semibold mb-2">📍 747 Howard Street, San Francisco, CA 94103</p>
+  <p class="text-lg font-semibold mb-2">747 Howard Street, San Francisco, CA 94103</p>
   <p class="text-muted m-0">June 15-17, 2026 · Doors open at 8:30 AM daily</p>
 </div>
 

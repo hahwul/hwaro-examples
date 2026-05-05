@@ -42,9 +42,9 @@ description = "Enterprise SaaS landing with structured sections, trust badges, t
 <section class="trust-badges-section">
   <div class="container">
     <div class="trust-badges-grid">
-      {{ trust_badge(icon="🔒", title="SOC 2 Type II", description="Independently audited") }}
-      {{ trust_badge(icon="🏆", title="99.99% Uptime", description="Enterprise SLA guaranteed") }}
-      {{ trust_badge(icon="🌐", title="GDPR Compliant", description="Full data sovereignty") }}
+      {{ trust_badge(icon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="1em" height="1em" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>', title="SOC 2 Type II", description="Independently audited") }}
+      {{ trust_badge(icon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="1em" height="1em" aria-hidden="true"><path d="M6 9H4a2 2 0 01-2-2V5h4M18 9h2a2 2 0 002-2V5h-4M4 22h16M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22M18 2H6v7a6 6 0 0012 0V2z"/></svg>', title="99.99% Uptime", description="Enterprise SLA guaranteed") }}
+      {{ trust_badge(icon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="1em" height="1em" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>', title="GDPR Compliant", description="Full data sovereignty") }}
       {{ trust_badge(icon="⚡", title="Sub-100ms Latency", description="Global edge network") }}
     </div>
   </div>
@@ -58,12 +58,12 @@ description = "Enterprise SaaS landing with structured sections, trust badges, t
       <p class="section-desc">From workflow orchestration to advanced analytics, Elevate provides the tools your teams need to operate at peak performance.</p>
     </div>
     <div class="features-grid">
-      {{ feature(icon="📊", title="Advanced Analytics", description="Real-time dashboards with customizable KPIs, predictive insights, and automated reporting across your entire organization.") }}
-      {{ feature(icon="🔄", title="Workflow Automation", description="Design complex workflows with our visual builder. Automate approvals, notifications, and cross-team handoffs effortlessly.") }}
-      {{ feature(icon="🔗", title="200+ Integrations", description="Connect seamlessly with Salesforce, Slack, Jira, SAP, and hundreds more. Open API for custom connections.") }}
-      {{ feature(icon="🛡️", title="Enterprise Security", description="Role-based access, SSO/SAML, audit trails, and encryption at rest and in transit. Meet the strictest compliance requirements.") }}
-      {{ feature(icon="📈", title="Scalable Architecture", description="Built on a distributed microservices architecture that handles millions of transactions. Auto-scales with your growth.") }}
-      {{ feature(icon="🤝", title="Dedicated Support", description="24/7 priority support with dedicated customer success managers for enterprise accounts. 15-minute response SLA.") }}
+      {{ feature(icon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="1em" height="1em" aria-hidden="true"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/><line x1="3" y1="20" x2="21" y2="20"/></svg>', title="Advanced Analytics", description="Real-time dashboards with customizable KPIs, predictive insights, and automated reporting across your entire organization.") }}
+      {{ feature(icon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="1em" height="1em" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>', title="Workflow Automation", description="Design complex workflows with our visual builder. Automate approvals, notifications, and cross-team handoffs effortlessly.") }}
+      {{ feature(icon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="1em" height="1em" aria-hidden="true"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>', title="200+ Integrations", description="Connect seamlessly with Salesforce, Slack, Jira, SAP, and hundreds more. Open API for custom connections.") }}
+      {{ feature(icon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="1em" height="1em" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>', title="Enterprise Security", description="Role-based access, SSO/SAML, audit trails, and encryption at rest and in transit. Meet the strictest compliance requirements.") }}
+      {{ feature(icon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="1em" height="1em" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>', title="Scalable Architecture", description="Built on a distributed microservices architecture that handles millions of transactions. Auto-scales with your growth.") }}
+      {{ feature(icon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="1em" height="1em" aria-hidden="true"><path d="M11 17l-5-5 5-5M3 12h13M22 7v10"/></svg>', title="Dedicated Support", description="24/7 priority support with dedicated customer success managers for enterprise accounts. 15-minute response SLA.") }}
     </div>
   </div>
 </section>

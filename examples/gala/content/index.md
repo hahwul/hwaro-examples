@@ -22,25 +22,25 @@ template = "home"
 
   <div class="event-grid">
     <div class="event-card">
-      <div class="event-card-icon">🥂</div>
+      <div class="event-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="1em" height="1em" aria-hidden="true"><path d="M8 2 L6 9 a3 3 0 006 0 L10 2 Z"/><path d="M9 12 V21"/><path d="M6 21 H12"/><path d="M18 2 L16 9 a3 3 0 006 0 L20 2 Z" opacity=".5"/></svg></div>
       <h3>Champagne Reception</h3>
       <p class="event-time">7:00 PM &ndash; 8:00 PM</p>
       <p>Welcome cocktails and hors d'oeuvres in the Grand Foyer, accompanied by a live string quartet.</p>
     </div>
     <div class="event-card">
-      <div class="event-card-icon">🍽️</div>
+      <div class="event-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="1em" height="1em" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg></div>
       <h3>Gala Dinner</h3>
       <p class="event-time">8:00 PM &ndash; 10:00 PM</p>
       <p>A five-course dinner prepared by Michelin-starred chefs, paired with premier vintages from our curated cellar.</p>
     </div>
     <div class="event-card">
-      <div class="event-card-icon">🎭</div>
+      <div class="event-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="1em" height="1em" aria-hidden="true"><path d="M4 4 c0 8 2 14 7 14 s7-6 7-14"/><circle cx="9" cy="9" r="1" fill="currentColor"/><circle cx="14" cy="9" r="1" fill="currentColor"/><path d="M9 13 q2 2 4 0"/></svg></div>
       <h3>Live Performance</h3>
       <p class="event-time">10:00 PM &ndash; 11:00 PM</p>
       <p>An exclusive performance featuring world-renowned artists and an enchanting stage spectacle.</p>
     </div>
     <div class="event-card">
-      <div class="event-card-icon">💃</div>
+      <div class="event-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="1em" height="1em" aria-hidden="true"><circle cx="12" cy="4" r="2"/><path d="M12 6 v6 l-4 4 M12 12 l4 4 M9 22 L12 16 L15 22"/></svg></div>
       <h3>After-Party</h3>
       <p class="event-time">11:00 PM &ndash; Late</p>
       <p>Dance the night away to curated sets from celebrated DJs in the rooftop lounge under the stars.</p>

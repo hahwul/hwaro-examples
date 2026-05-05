@@ -66,27 +66,27 @@ template = "home"
         <p>Generate production-ready project structures in milliseconds. Supports React, Vue, Svelte, and more out of the box.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon icon-accent">🔧</div>
+        <div class="feature-icon icon-accent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="1em" height="1em" aria-hidden="true"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div>
         <h3>Task Runner</h3>
         <p>Define and run complex build pipelines with a simple TOML config. Parallel execution, dependency graphs, and caching built-in.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon icon-green">🔒</div>
+        <div class="feature-icon icon-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="1em" height="1em" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
         <h3>Sandboxed Execution</h3>
         <p>Run untrusted scripts safely in an isolated environment. Fine-grained permissions for filesystem, network, and environment access.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon icon-amber">📦</div>
+        <div class="feature-icon icon-amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="1em" height="1em" aria-hidden="true"><path d="M16.5 9.4l-9-5.19M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
         <h3>Smart Bundling</h3>
         <p>Tree-shake, minify, and bundle your code with zero config. Automatic code splitting and lazy loading for optimal performance.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon icon-primary">🔌</div>
+        <div class="feature-icon icon-primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="1em" height="1em" aria-hidden="true"><path d="M9 2v6M15 2v6M12 17v5M5 8h14l-1 7a4 4 0 01-4 4h-4a4 4 0 01-4-4z"/></svg></div>
         <h3>Plugin Ecosystem</h3>
         <p>Extend with plugins written in TypeScript or Lua. Hook into lifecycle events, transform outputs, and add custom commands.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon icon-accent">🚀</div>
+        <div class="feature-icon icon-accent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="1em" height="1em" aria-hidden="true"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 00-2.91-.09zM12 15l-3-3a22 22 0 012-3.95A12.88 12.88 0 0122 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 01-4 2zM9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></div>
         <h3>One-Click Deploy</h3>
         <p>Deploy to Vercel, Netlify, AWS, or your own server. Built-in preview environments and rollback support.</p>
       </div>
