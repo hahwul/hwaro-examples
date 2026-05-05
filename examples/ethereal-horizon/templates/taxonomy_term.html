@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}{{ term.name }} | {{ taxonomy.name | capitalize }} | {{ site.title }}{% endblock %}
+
+{% block content %}
+<div class="content-area">
+    <header class="page-header">
+        <h2 style="font-family: var(--font-mono); font-size: 1rem; color: var(--color-accent); font-weight: normal; margin-bottom: 0.5rem; text-transform: uppercase;">{{ taxonomy.name }}</h2>
+        <h1>{{ term.name }}</h1>
+    </header>
+
+    <div class="grid-layout">
+        {% for item in term.pages %}
+        <article class="card">
+            <h2><a href="{{ item.permalink }}" style="color: inherit; text-decoration: none;">{{ item.title }}</a></h2>
+            {% if item.date %}
+            <div class="meta">{{ item.date | date(format="%Y-%m-%d") }}</div>
+            {% endif %}
+            <div class="summary">
+                {% if item.description %}
+                    {{ item.description }}
+                {% else %}
+                    {{ item.content | striptags | truncate(length=120) }}
+                {% endif %}
+            </div>
+            <a href="{{ item.permalink }}" class="read-more">Read More -></a>
+        </article>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
