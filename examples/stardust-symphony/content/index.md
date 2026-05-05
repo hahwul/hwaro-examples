@@ -25,7 +25,7 @@ This theme features a radial gradient starry background, elegant glowing text (`
 
 ```python
 def stardust_symphony():
-    stars = ["✨", "🌟", "💫"]
+    stars = ["alpha", "beta", "gamma"]
     for star in stars:
         print(f"Let the {star} shine!")
 ```

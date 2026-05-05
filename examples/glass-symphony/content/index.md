@@ -23,7 +23,7 @@ def generate_symphony(notes=5):
     melody = []
     for i in range(notes):
         melody.append(f"note_{i}")
-    return " 🎵 ".join(melody)
+    return " | ".join(melody)
 
 print(generate_symphony())
 ```

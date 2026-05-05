@@ -12,9 +12,9 @@ This example showcases fluid background gradients, frosted glass UI components, 
 
 ### Features
 
-- 🌌 **Fluid Gradients**: Animated background layers that breathe life into the void.
-- 🪟 **Glassmorphism**: Elegant translucent panels leveraging `backdrop-filter`.
-- ⚡ **Lightweight**: Built on top of Hwaro's fast generation capabilities.
+- **Fluid Gradients**: Animated background layers that breathe life into the void.
+- **Glassmorphism**: Elegant translucent panels leveraging `backdrop-filter`.
+- **Lightweight**: Built on top of Hwaro's fast generation capabilities.
 
 <br>
 <a href="/about/" class="button">Discover More</a>

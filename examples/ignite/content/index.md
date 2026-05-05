@@ -59,27 +59,27 @@ description = "Bold startup landing with oversized hero text, gradient CTAs, ani
         <p>Push to production in seconds. Our edge network ensures your app is served from the closest node worldwide.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">🔗</div>
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="1em" height="1em" aria-hidden="true"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg></div>
         <h3>Seamless Integrations</h3>
         <p>Connect with 200+ tools your team already uses. GitHub, Slack, Linear, Figma — all synced in real-time.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">📊</div>
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="1em" height="1em" aria-hidden="true"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/><line x1="3" y1="20" x2="21" y2="20"/></svg></div>
         <h3>Real-Time Analytics</h3>
         <p>Track every metric that matters with beautiful dashboards. Make data-driven decisions without the guesswork.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">🛡️</div>
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="1em" height="1em" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
         <h3>Enterprise Security</h3>
         <p>SOC 2 Type II compliant. End-to-end encryption, SSO, RBAC, and audit logs come standard on every plan.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">🌐</div>
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="1em" height="1em" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
         <h3>Global Edge Network</h3>
         <p>300+ edge locations across 6 continents. Sub-50ms latency for 95% of the world's internet users.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">🤖</div>
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="1em" height="1em" aria-hidden="true"><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M12 4v4M2 14h2M20 14h2"/><circle cx="9" cy="14" r="1" fill="currentColor"/><circle cx="15" cy="14" r="1" fill="currentColor"/></svg></div>
         <h3>AI-Powered Workflows</h3>
         <p>Automate repetitive tasks with intelligent workflows. Our AI learns your patterns and suggests optimizations.</p>
       </div>

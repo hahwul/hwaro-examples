@@ -15,10 +15,12 @@ The core approach uses multiple `div` elements with CSS animations to simulate f
 
 ### Step 1: Create Petal Elements
 
+Each petal is an inline SVG so we get crisp scaling and full control over color and shape — no font-rendering surprises.
+
 ```html
-<div class="petal petal-1">🌸</div>
-<div class="petal petal-2">🌸</div>
-<div class="petal petal-3">🌸</div>
+<div class="petal petal-1"><svg viewBox="0 0 32 32" aria-hidden="true">...</svg></div>
+<div class="petal petal-2"><svg viewBox="0 0 32 32" aria-hidden="true">...</svg></div>
+<div class="petal petal-3"><svg viewBox="0 0 32 32" aria-hidden="true">...</svg></div>
 ```
 
 ### Step 2: Position and Animate

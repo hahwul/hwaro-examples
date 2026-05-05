@@ -5,7 +5,7 @@ title = "Home"
 <div class="bento-grid">
 
   <div class="bento-item bento-large">
-    <h2>Hi, I'm Alex 👋</h2>
+    <h2>Hi, I'm Alex.</h2>
     <p>I'm a creative developer and designer passionate about crafting beautiful, intuitive, and performant web experiences. I love bridging the gap between design and engineering.</p>
     <div class="social-links" style="justify-content: flex-start; margin-top: 2rem;">
       <a href="#">GitHub</a>

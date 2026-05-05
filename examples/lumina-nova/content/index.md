@@ -15,10 +15,10 @@ tags = ["lumina-nova", "dark", "creative"]
 
 <div class="glass-panel">
   <ul>
-    <li>🌌 <strong>Deep Space Gradient:</strong> A starry animated background using linear and radial gradients.</li>
-    <li>🔮 <strong>Glassmorphism:</strong> Panels that use <code>backdrop-filter</code> and semi-transparent backgrounds to simulate frosted glass.</li>
-    <li>⚡ <strong>Neon Accents:</strong> Glowing text and box shadows highlighting key elements.</li>
-    <li>🎨 <strong>Fully Responsive:</strong> Looks great on all screen sizes.</li>
+    <li><strong>Deep Space Gradient:</strong> A starry animated background using linear and radial gradients.</li>
+    <li><strong>Glassmorphism:</strong> Panels that use <code>backdrop-filter</code> and semi-transparent backgrounds to simulate frosted glass.</li>
+    <li><strong>Neon Accents:</strong> Glowing text and box shadows highlighting key elements.</li>
+    <li><strong>Fully Responsive:</strong> Looks great on all screen sizes.</li>
   </ul>
 
   <a href="#" class="neon-button">Explore More</a>
