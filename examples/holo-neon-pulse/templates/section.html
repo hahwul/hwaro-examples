@@ -1,28 +1,49 @@
 {% include "header.html" %}
-  <main class="site-main">
-    <h1>{{ page.title | e }}</h1>
-    {{ content | safe }}
-    <ul class="section-list">
-      {% for p in pages %}
-        <li><a href="{{ p.url }}">{{ p.title | e }}</a></li>
-      {% endfor %}
-    </ul>
-    {% if pagination is defined and pagination.total_pages is defined and pagination.total_pages > 1 %}
-      <nav class="pagination">
-        <ul class="pagination-list">
-          {% if pagination.previous %}
-            <li><a href="{{ pagination.previous }}">Previous</a></li>
-          {% else %}
-            <li class="pagination-disabled"><span>Previous</span></li>
-          {% endif %}
 
-          {% if pagination.next %}
-            <li><a href="{{ pagination.next }}">Next</a></li>
-          {% else %}
-            <li class="pagination-disabled"><span>Next</span></li>
-          {% endif %}
-        </ul>
-      </nav>
+<header class="page-head">
+  <svg class="corner" width="120" height="120" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+    <line x1="0" y1="40" x2="120" y2="40" stroke="#1f1f33" stroke-dasharray="2 4"/>
+    <line x1="0" y1="80" x2="120" y2="80" stroke="#1f1f33" stroke-dasharray="2 4"/>
+    <path d="M0,60 L 20,60 L 30,30 L 50,90 L 70,40 L 90,70 L 120,60" stroke="#c1ff3b" stroke-width="1.4" fill="none"/>
+    <circle cx="30" cy="30" r="2" fill="#2de2ff"/>
+    <circle cx="70" cy="40" r="2" fill="#ff2d92"/>
+  </svg>
+  <div class="eyebrow">section index</div>
+  <h1>{{ page.title | e }}</h1>
+  {% if page.description is present %}<p class="lead">{{ page.description | e }}</p>{% endif %}
+</header>
+
+{% if content %}
+<div class="content-body" style="margin-bottom:2.5rem;">
+  {{ content | safe }}
+</div>
+{% endif %}
+
+<ul class="section-list">
+  {% for p in pages %}
+    <li>
+      {% if p.date is present %}<div class="post-meta">{{ p.date | date(format="%Y-%m-%d") }}</div>{% endif %}
+      <a href="{{ p.url }}">{{ p.title | e }}</a>
+      {% if p.description is present %}<p style="color:var(--muted);margin:0.5rem 0 0;font-family:'Bricolage Grotesque',sans-serif;text-transform:none;font-weight:400;font-size:0.95rem;">{{ p.description | e }}</p>{% endif %}
+    </li>
+  {% endfor %}
+</ul>
+
+{% if pagination is defined and pagination.total_pages is defined and pagination.total_pages > 1 %}
+<nav class="pagination">
+  <ul class="pagination-list">
+    {% if pagination.previous %}
+      <li><a href="{{ pagination.previous }}">&larr; Previous</a></li>
+    {% else %}
+      <li class="pagination-disabled"><span>&larr; Previous</span></li>
     {% endif %}
-  </main>
+    {% if pagination.next %}
+      <li><a href="{{ pagination.next }}">Next &rarr;</a></li>
+    {% else %}
+      <li class="pagination-disabled"><span>Next &rarr;</span></li>
+    {% endif %}
+  </ul>
+</nav>
+{% endif %}
+
 {% include "footer.html" %}
