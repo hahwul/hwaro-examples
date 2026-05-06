@@ -1,33 +1,42 @@
 {% extends "index.html" %}
 
-{% block title %}{{ section.title }} | {{ site.title }}{% endblock %}
+{% block title %}{{ section.title | default(page.title) }} | {{ site.title }}{% endblock %}
 
 {% block content %}
-<header class="page-header">
-    <h1 class="page-title">{{ section.title }}</h1>
-    {% if section.description %}
-    <p class="page-description">{{ section.description }}</p>
+<section class="hero">
+  <svg class="hero-bg" viewBox="0 0 1200 360" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <line x1="0" y1="240" x2="1200" y2="240" stroke="#28e1ff" stroke-width="1.5" opacity="0.45"/>
+    <line x1="0" y1="260" x2="1200" y2="260" stroke="#28e1ff" stroke-width="0.5" opacity="0.25"/>
+    <line x1="0" y1="280" x2="1200" y2="280" stroke="#28e1ff" stroke-width="0.5" opacity="0.18"/>
+    <circle cx="940" cy="190" r="60" fill="none" stroke="#ff3d8b" stroke-width="1" opacity="0.5"/>
+    <circle cx="940" cy="190" r="100" fill="none" stroke="#ff3d8b" stroke-width="0.5" opacity="0.25"/>
+    <circle cx="940" cy="190" r="140" fill="none" stroke="#ff3d8b" stroke-width="0.5" opacity="0.12"/>
+  </svg>
+  <div class="wrap hero-content">
+    <div class="eyebrow">Index</div>
+    <h1>{{ section.title | default(page.title) | e }}</h1>
+    {% if section.description or page.description %}
+    <p class="lead">{{ section.description | default(page.description) | e }}</p>
     {% endif %}
-</header>
+  </div>
+</section>
 
-<div class="post-list">
+<section class="wrap" style="padding: 64px 0;">
+  <div class="content">{{ content | safe }}</div>
+  <ul class="section-list">
     {% for post in section.pages %}
-    <article class="glass-panel post-card">
-        <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
-        <div class="post-meta">
-            {% if post.date %}
-            <span>{{ post.date | date("%B %d, %Y") }}</span>
-            {% endif %}
-            {% if post.reading_time %}
-            <span>{{ post.reading_time }} min read</span>
-            {% endif %}
-        </div>
-        {% if post.description %}
-        <p class="post-summary">{{ post.description }}</p>
-        {% elif post.summary %}
-        <p class="post-summary">{{ post.summary | strip_html | truncate_words(30) }}</p>
-        {% endif %}
-    </article>
+    <li>
+      <div>
+        <a href="{{ post.url }}">{{ post.title | e }}</a>
+        {% if post.description %}<p style="margin: 6px 0 0; font-size: 0.95rem;">{{ post.description | e }}</p>{% endif %}
+      </div>
+      <span class="mono" style="color: var(--ink-mute); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap;">
+        {% if post.date %}{{ post.date | date("%Y.%m.%d") }}{% endif %}
+      </span>
+    </li>
     {% endfor %}
-</div>
+  </ul>
+  {{ section.list }}
+  {{ pagination }}
+</section>
 {% endblock %}
