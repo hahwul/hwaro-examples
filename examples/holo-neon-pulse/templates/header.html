@@ -7,101 +7,387 @@
   <title>{% if page.title is present %}{{ page.title | e }} - {% endif %}{{ site.title | e }}</title>
   {{ og_all_tags }}
   {{ hreflang_tags }}
-    <style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
     :root {
-      --primary: #ff00ff;
-      --secondary: #00ffff;
-      --text: #e0e0e0;
-      --text-muted: #a0a0a0;
-      --border: rgba(0, 255, 255, 0.3);
-      --bg: #050510;
-      --bg-subtle: rgba(255, 0, 255, 0.05);
-      --glass: rgba(10, 10, 25, 0.7);
+      --ink: #07070f;
+      --ink-2: #0d0d1a;
+      --panel: #12121f;
+      --line: #1f1f33;
+      --line-strong: #2d2d4a;
+      --text: #ececff;
+      --muted: #8a8aad;
+      --magenta: #ff2d92;
+      --cyan: #2de2ff;
+      --lime: #c1ff3b;
+      --amber: #ffb930;
+      --max: 1180px;
     }
     *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
     body {
-        font-family: "Courier New", Courier, monospace;
-        line-height: 1.6;
-        margin: 0;
-        color: var(--text);
-        background: var(--bg);
-        background-image:
-            linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255, 0, 255, 0.03) 1px, transparent 1px);
-        background-size: 20px 20px;
+      font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+      background: var(--ink);
+      color: var(--text);
+      line-height: 1.65;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--cyan); text-decoration: none; transition: color 0.15s; }
+    a:hover { color: var(--magenta); }
+    code { font-family: 'JetBrains Mono', monospace; background: var(--ink-2); border: 1px solid var(--line); padding: 0.1rem 0.4rem; font-size: 0.88em; color: var(--lime); }
+    pre { font-family: 'JetBrains Mono', monospace; background: var(--ink-2); border: 1px solid var(--line); padding: 1rem 1.25rem; overflow-x: auto; font-size: 0.9rem; }
+    pre code { background: none; border: none; padding: 0; color: var(--text); }
+    h1, h2, h3, h4 { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; line-height: 1.05; color: #fff; margin: 0 0 1rem; letter-spacing: -0.025em; text-transform: uppercase; }
+    h1 { font-size: clamp(2.4rem, 5vw, 4rem); }
+    h2 { font-size: 1.7rem; }
+    h3 { font-size: 1.25rem; }
+    p { margin: 0 0 1.1rem; }
+    blockquote { margin: 1.5rem 0; padding: 0.5rem 1.25rem; border-left: 3px solid var(--magenta); color: var(--muted); }
+    hr { border: none; border-top: 1px solid var(--line); margin: 2rem 0; }
+    table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-family: 'JetBrains Mono', monospace; font-size: 0.92rem; }
+    th, td { border: 1px solid var(--line); padding: 0.55rem 0.8rem; text-align: left; }
+    th { background: var(--ink-2); color: var(--cyan); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.78rem; }
+
+    .topbar { border-bottom: 1px solid var(--line); }
+    .topbar-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0.55rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.74rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .topbar-inner b { color: var(--cyan); font-weight: 500; }
+    .topbar-inner .sep { color: var(--line-strong); }
+    .pulse-led {
+      width: 7px; height: 7px;
+      background: var(--lime);
+      display: inline-block;
+      border: 1px solid var(--lime);
+      vertical-align: middle;
+      margin-right: 0.4rem;
     }
 
-    /* Layout */
-    .site-wrapper {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 0 1.5rem;
-        background: var(--glass);
-        backdrop-filter: blur(10px);
-        min-height: 100vh;
-        border-left: 1px solid var(--border);
-        border-right: 1px solid var(--border);
-        box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+    .site-header { border-bottom: 1px solid var(--line); background: var(--ink); position: sticky; top: 0; z-index: 10; }
+    .header-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 1.1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
     }
-    .site-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 1.5rem 0;
-        border-bottom: 2px solid var(--primary);
-        margin-bottom: 2rem;
-        text-shadow: 0 0 5px var(--primary), 0 0 10px var(--primary);
+    .brand { display: flex; align-items: center; gap: 0.85rem; color: #fff; text-decoration: none; }
+    .brand-logo { width: 40px; height: 40px; border: 1px solid var(--magenta); display: grid; place-items: center; }
+    .brand-name { font-family: 'Bricolage Grotesque', sans-serif; font-size: 1.15rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; }
+    .brand-name span { color: var(--magenta); }
+    .nav-links { display: flex; gap: 0.3rem; align-items: center; }
+    .nav-links a {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--muted);
+      font-size: 0.8rem;
+      padding: 0.55rem 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border: 1px solid transparent;
     }
-    .site-logo {
-        font-weight: bold;
-        font-size: 1.5rem;
-        color: var(--secondary);
-        text-decoration: none;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        text-shadow: 0 0 5px var(--secondary), 0 0 10px var(--secondary), 0 0 20px var(--secondary);
+    .nav-links a:hover { color: var(--text); border-color: var(--line-strong); }
+    .nav-cta {
+      color: var(--ink) !important;
+      background: var(--lime);
+      border: 1px solid var(--lime) !important;
+      font-weight: 700;
     }
-    .site-logo:hover { color: #fff; text-shadow: 0 0 10px #fff, 0 0 20px var(--secondary), 0 0 30px var(--secondary); }
-    .site-header nav { display: flex; gap: 1.5rem; }
-    .site-header nav a { color: var(--text); text-decoration: none; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s ease; }
-    .site-header nav a:hover { color: var(--secondary); text-shadow: 0 0 8px var(--secondary); }
-    .site-main { min-height: calc(100vh - 200px); }
-    .site-footer { margin-top: 3rem; padding: 2rem 0; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.9rem; text-align: center; }
+    .nav-cta:hover { background: var(--magenta); border-color: var(--magenta) !important; color: var(--ink) !important; }
 
-    /* Typography */
-    h1, h2, h3 { line-height: 1.3; margin-top: 1.5em; margin-bottom: 0.5em; font-weight: normal; color: var(--primary); text-shadow: 0 0 5px var(--primary); }
-    h1 { font-size: 2rem; margin-top: 0; text-transform: uppercase; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
-    h2 { font-size: 1.5rem; color: var(--secondary); text-shadow: 0 0 5px var(--secondary); }
-    h3 { font-size: 1.2rem; }
-    p { margin: 1em 0; }
-    a { color: var(--secondary); text-decoration: none; transition: all 0.2s; }
-    a:hover { color: var(--primary); text-shadow: 0 0 8px var(--primary); }
-    code { background: rgba(0,0,0,0.5); padding: 0.2rem 0.4rem; border-radius: 2px; font-size: 0.9em; border: 1px solid var(--border); color: var(--secondary); }
-    pre { background: rgba(0,0,0,0.8); padding: 1rem; border-radius: 4px; overflow-x: auto; border: 1px solid var(--primary); box-shadow: inset 0 0 10px rgba(255,0,255,0.2); }
-    pre code { background: none; padding: 0; border: none; color: inherit; }
-
-    /* Components */
-    ul.section-list { list-style: none; padding: 0; margin: 1.5rem 0; }
-    ul.section-list li { margin-bottom: 1rem; padding: 1rem; background: var(--bg-subtle); border-radius: 4px; border: 1px solid var(--border); transition: all 0.3s; }
-    ul.section-list li:hover { border-color: var(--secondary); box-shadow: 0 0 10px rgba(0,255,255,0.2); transform: translateX(5px); }
-    ul.section-list li a { font-size: 1.2rem; font-weight: bold; }
-    .taxonomy-desc { color: var(--text-muted); margin-bottom: 1.5rem; border-left: 3px solid var(--primary); padding-left: 1rem; }
-
-    /* Responsive */
-    @media (max-width: 600px) {
-      .site-header { flex-direction: column; gap: 1rem; align-items: center; }
-      .site-wrapper { border: none; }
+    .banner { border-bottom: 1px solid var(--line); position: relative; overflow: hidden; }
+    .banner-svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+    .banner-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 4.5rem 1.5rem 5rem;
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 3rem;
+      align-items: center;
     }
-    </style>
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--magenta);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 1.25rem;
+      padding: 0.3rem 0.65rem;
+      border: 1px solid var(--magenta);
+    }
+    .banner h1 { margin-bottom: 1rem; }
+    .banner h1 .accent-c { color: var(--cyan); }
+    .banner h1 .accent-m { color: var(--magenta); }
+    .banner h1 .accent-l { color: var(--lime); }
+    .banner-sub { color: var(--muted); max-width: 560px; font-size: 1.1rem; margin: 0 0 2rem; }
+    .banner-cta { display: inline-flex; gap: 0.6rem; flex-wrap: wrap; }
+    .btn {
+      font-family: 'JetBrains Mono', monospace;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1.1rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      border: 1px solid var(--line-strong);
+      color: var(--text);
+      font-weight: 500;
+    }
+    .btn:hover { border-color: var(--cyan); color: var(--cyan); }
+    .btn-solid { background: var(--cyan); color: var(--ink); border-color: var(--cyan); font-weight: 700; }
+    .btn-solid:hover { background: var(--lime); border-color: var(--lime); color: var(--ink); }
+
+    .spec {
+      border: 1px solid var(--line-strong);
+      background: var(--ink-2);
+      padding: 1.25rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      color: var(--muted);
+      position: relative;
+    }
+    .spec::before {
+      content: '';
+      position: absolute;
+      top: -1px; left: -1px;
+      width: 14px; height: 14px;
+      border-top: 2px solid var(--magenta);
+      border-left: 2px solid var(--magenta);
+    }
+    .spec::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; right: -1px;
+      width: 14px; height: 14px;
+      border-bottom: 2px solid var(--cyan);
+      border-right: 2px solid var(--cyan);
+    }
+    .spec h4 { font-family: 'JetBrains Mono', monospace; text-transform: uppercase; font-size: 0.74rem; letter-spacing: 0.16em; color: var(--lime); font-weight: 500; margin: 0 0 0.6rem; }
+    .spec .row { display: flex; justify-content: space-between; padding: 0.32rem 0; border-bottom: 1px dashed var(--line); }
+    .spec .row:last-child { border-bottom: none; }
+    .spec .row b { color: var(--text); font-weight: 500; }
+
+    .site-wrapper { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem; flex: 1; width: 100%; }
+    .site-main { padding: 3.5rem 0 4.5rem; }
+
+    .page-head {
+      border: 1px solid var(--line);
+      padding: 2rem 2.25rem 1.75rem;
+      margin-bottom: 2.75rem;
+      background: var(--ink-2);
+      position: relative;
+      overflow: hidden;
+    }
+    .page-head::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 4px;
+      background: var(--magenta);
+    }
+    .page-head .corner { position: absolute; top: 0; right: 0; }
+    .page-head h1 { margin-bottom: 0.5rem; }
+    .page-head .lead { color: var(--muted); margin: 0; max-width: 640px; font-size: 1.05rem; }
+    .meta-strip {
+      display: flex;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px dashed var(--line);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .post-list, .section-list, .term-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 1rem; }
+    .post-list li, .section-list li, .term-list li {
+      border: 1px solid var(--line);
+      background: var(--ink-2);
+      padding: 1.5rem 1.75rem;
+      transition: border-color 0.15s, transform 0.15s;
+      position: relative;
+    }
+    .post-list li::before, .section-list li::before, .term-list li::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 14px; height: 14px;
+      border-top: 1px solid var(--line-strong);
+      border-right: 1px solid var(--line-strong);
+    }
+    .post-list li:hover, .section-list li:hover, .term-list li:hover { border-color: var(--cyan); transform: translateY(-1px); }
+    .post-list h2, .section-list h2, .term-list h2 { margin: 0 0 0.5rem; font-size: 1.4rem; }
+    .post-list h2 a, .section-list h2 a, .term-list h2 a { color: var(--text); }
+    .post-list h2 a:hover, .section-list h2 a:hover, .term-list h2 a:hover { color: var(--cyan); }
+    .section-list a { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: 1.15rem; color: var(--text); text-transform: uppercase; }
+    .section-list a:hover { color: var(--cyan); }
+    .post-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.74rem;
+      color: var(--magenta);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      margin-bottom: 0.5rem;
+    }
+    .tags-container { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; }
+    .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      padding: 0.25rem 0.6rem;
+      border: 1px solid var(--line-strong);
+      color: var(--lime);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .tag:hover { background: var(--lime); color: var(--ink); border-color: var(--lime); }
+
+    .pagination { margin-top: 2rem; }
+    .pagination-list { display: flex; gap: 0.5rem; list-style: none; padding: 0; }
+    .pagination-list li { padding: 0; border: none; background: none; }
+    .pagination-list li::before { display: none; }
+    .pagination-list a, .pagination-disabled span {
+      font-family: 'JetBrains Mono', monospace;
+      padding: 0.5rem 0.9rem;
+      border: 1px solid var(--line-strong);
+      color: var(--text);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .pagination-disabled span { color: var(--muted); opacity: 0.5; }
+    .taxonomy-desc { color: var(--muted); margin-bottom: 1.5rem; padding-left: 1rem; border-left: 3px solid var(--magenta); }
+
+    .site-footer { border-top: 1px solid var(--line); margin-top: auto; }
+    .footer-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 3rem 1.5rem 2rem;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 2.5rem;
+    }
+    .footer-brand { display: flex; align-items: center; gap: 0.75rem; }
+    .footer-tagline { color: var(--muted); margin: 1rem 0 0; max-width: 320px; font-size: 0.9rem; }
+    .footer-col h4 { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.16em; color: var(--cyan); margin-bottom: 0.8rem; font-weight: 500; }
+    .footer-col ul { list-style: none; padding: 0; margin: 0; }
+    .footer-col li { margin-bottom: 0.5rem; font-size: 0.9rem; }
+    .footer-col a { color: var(--muted); }
+    .footer-col a:hover { color: var(--text); }
+    .footer-base {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 1.25rem 1.5rem;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.74rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 760px) {
+      .header-inner { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .nav-links { flex-wrap: wrap; }
+      .banner-inner { grid-template-columns: 1fr; padding: 3rem 1.5rem 4rem; }
+      .footer-inner { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
   {{ highlight_css }}
   {{ auto_includes_css }}
 </head>
 <body data-section="{{ page.section }}">
-  <div class="site-wrapper">
-    <header class="site-header">
-      <a href="{{ base_url }}/" class="site-logo">{{ site.title }}</a>
-            <nav>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <span><span class="pulse-led"></span> system: <b>online</b> <span class="sep">/</span> uplink: <b>nominal</b></span>
+      <span>node // <b>HOLO-04</b> <span class="sep">/</span> rev <b>2.4.1</b></span>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="{{ base_url }}/" class="brand">
+        <span class="brand-logo">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+            <path d="M2 11 L 6 11 L 8 4 L 14 18 L 16 11 L 20 11" stroke="#ff2d92" stroke-width="1.5" fill="none" stroke-linejoin="miter"/>
+          </svg>
+        </span>
+        <span class="brand-name">{{ site.title }}<span>.</span></span>
+      </a>
+      <nav class="nav-links">
         <a href="{{ base_url }}/">Home</a>
+        <a href="{{ base_url }}/posts/">Logs</a>
+        <a href="{{ base_url }}/tags/">Channels</a>
         <a href="{{ base_url }}/about/">About</a>
+        <a href="{{ base_url }}/posts/" class="nav-cta">Sync feed</a>
       </nav>
-    </header>
+    </div>
+  </header>
+
+  <section class="banner">
+    <svg class="banner-svg" preserveAspectRatio="none" viewBox="0 0 1200 360" aria-hidden="true">
+      <defs>
+        <pattern id="hngrid" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1f1f33" stroke-width="0.6"/>
+        </pattern>
+      </defs>
+      <rect width="1200" height="360" fill="url(#hngrid)"/>
+      <line x1="0" y1="180" x2="1200" y2="180" stroke="#2d2d4a" stroke-width="0.6" stroke-dasharray="4 4"/>
+      <path d="M0,180 L 80,180 L 100,120 L 130,240 L 160,80 L 190,250 L 210,180 L 270,180 L 290,140 L 320,210 L 340,180 L 420,180 L 450,90 L 490,260 L 520,180 L 600,180 L 640,140 L 680,220 L 720,180 L 800,180 L 830,100 L 870,250 L 900,180 L 1000,180 L 1030,140 L 1070,210 L 1100,180 L 1200,180" stroke="#ff2d92" stroke-width="1.6" fill="none"/>
+      <path d="M0,200 L 1200,200" stroke="#2de2ff" stroke-width="1" fill="none" stroke-dasharray="2 6" opacity="0.5"/>
+      <circle cx="100" cy="120" r="2" fill="#c1ff3b"/>
+      <circle cx="450" cy="90" r="2" fill="#c1ff3b"/>
+      <circle cx="830" cy="100" r="2" fill="#c1ff3b"/>
+    </svg>
+    <div class="banner-inner">
+      <div>
+        <div class="eyebrow"><span class="pulse-led"></span> live broadcast / 60 hz</div>
+        <h1>Hi-fi <span class="accent-m">holographic</span> signal &mdash; the <span class="accent-c">pulse</span> never <span class="accent-l">stops</span>.</h1>
+        <p class="banner-sub">{{ site.description }} A real-time log of waveforms, signal experiments, and tactile interfaces written in steady neon.</p>
+        <div class="banner-cta">
+          <a href="{{ base_url }}/posts/" class="btn btn-solid">View latest log</a>
+          <a href="{{ base_url }}/about/" class="btn">About the node</a>
+        </div>
+      </div>
+      <div class="spec">
+        <h4>Channel readout</h4>
+        <div class="row"><span>BAND</span><b>VHF-N</b></div>
+        <div class="row"><span>HZ</span><b>1.21 GHz</b></div>
+        <div class="row"><span>BPS</span><b>9.6 kb/s</b></div>
+        <div class="row"><span>SNR</span><b>+42.0 dB</b></div>
+        <div class="row"><span>SYNC</span><b style="color:var(--lime);">LOCKED</b></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="site-wrapper">
+    <main class="site-main">
