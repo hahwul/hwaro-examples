@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if section.title %}
+<header class="section-header">
+    <h1 class="section-title">{{ section.title }}</h1>
+</header>
+{% endif %}
+
+{% if content %}
+<div class="section-content">
+    {{ content | safe }}
+</div>
+{% endif %}
+
+<div class="grid-container">
+    {% for page in section.pages %}
+    <article class="grid-item">
+        <div class="item-meta">
+            <span class="item-id">No.{{ loop.index }}</span>
+            {% if page.date %}
+            <time class="item-date" datetime="{{ page.date | date("%Y-%m-%d") }}">{{ page.date | date("%Y.%m.%d") }}</time>
+            {% endif %}
+        </div>
+        <h2 class="item-title"><a href="{{ page.url }}">{{ page.title }}</a></h2>
+        {% if page.summary %}
+        <div class="item-summary">{{ page.summary | strip_html | truncate_words(20) }}</div>
+        {% endif %}
+    </article>
+    {% endfor %}
+</div>
+{% endblock %}
