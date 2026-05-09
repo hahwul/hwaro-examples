@@ -210,4 +210,4 @@ We print small editions of fine books, ephemera for other presses, wedding stati
 | Commercial (if interesting) | varies | on enquiry |
 | Specimen books | 40 to 80 copies | shop copies only |
 
-<p style="text-align:center;margin:3rem 0;"><a href="/specimen/" class="cta">See the Specimen</a></p>
+<p style="text-align:center;margin:3rem 0;"><a href="{{ base_url }}/specimen/" class="cta">See the Specimen</a></p>

@@ -113,4 +113,4 @@ Distribution is the reverse of setting, and, because it is mechanical rather tha
 >
 > -- Ernst Argent, founder of this shop, 1962.
 
-<p style="text-align:center;margin:3rem 0;"><a href="/specimen/" class="cta">To the Specimen</a></p>
+<p style="text-align:center;margin:3rem 0;"><a href="{{ base_url }}/specimen/" class="cta">To the Specimen</a></p>

@@ -154,4 +154,4 @@ A day's work on a hand press is, therefore, between four hundred and six hundred
 | 10 IV 26 | Broadside, Emerson | Washington 11 | 200 | S. Penrith |
 | 9 IV 26 | Shoreham tide tables (preliminary) | Albion 3 | 30 | M. Argent |
 
-<p style="text-align:center;margin:3rem 0;"><a href="/" class="cta">Return to the Forme</a></p>
+<p style="text-align:center;margin:3rem 0;"><a href="{{ base_url }}/" class="cta">Return to the Forme</a></p>

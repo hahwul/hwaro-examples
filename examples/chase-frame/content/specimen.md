@@ -121,4 +121,4 @@ We print a small specimen book every five years and keep a handful of spare copi
 Specimen 2023 Edition &mdash; 42 copies &mdash; &pound;9 &mdash; Available from the shop on enquiry
 </div>
 
-<p style="text-align:center;margin:3rem 0;"><a href="/presswork/" class="cta">See the Presswork</a></p>
+<p style="text-align:center;margin:3rem 0;"><a href="{{ base_url }}/presswork/" class="cta">See the Presswork</a></p>
