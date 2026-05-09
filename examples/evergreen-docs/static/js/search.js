@@ -8,7 +8,7 @@
   function loadSearchData(cb) {
     if (searchData) return cb(searchData);
     // Determine search.json URL relative to the current path or base_url
-    var searchUrl = window.location.origin + '/search.json';
+    var searchUrl = (window.siteBaseUrl || window.location.origin) + '/search.json';
 
     // Attempt to find base_url from links if we are in a subdirectory
     var navLinks = document.querySelectorAll('nav a');
