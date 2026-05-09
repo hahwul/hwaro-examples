@@ -70,4 +70,4 @@ Just as a tesseract is projected from four dimensions onto a two-dimensional scr
 
 ## Implementation
 
-These theoretical principles translate into concrete implementation patterns. See the [API Reference](/docs/api-reference/) for the specific interfaces and configuration options that enable multi-dimensional documentation.
+These theoretical principles translate into concrete implementation patterns. See the [API Reference]({{ base_url }}/docs/api-reference/) for the specific interfaces and configuration options that enable multi-dimensional documentation.

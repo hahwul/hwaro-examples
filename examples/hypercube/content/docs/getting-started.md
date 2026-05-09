@@ -108,4 +108,4 @@ tags = ["api", "reference"]
 
 ## Next Steps
 
-With the basics in place, proceed to [Dimensional Theory](/docs/dimensional-theory/) to understand the architectural principles, or jump directly to the [API Reference](/docs/api-reference/) for interface documentation.
+With the basics in place, proceed to [Dimensional Theory]({{ base_url }}/docs/dimensional-theory/) to understand the architectural principles, or jump directly to the [API Reference]({{ base_url }}/docs/api-reference/) for interface documentation.

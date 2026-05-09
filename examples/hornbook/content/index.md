@@ -20,5 +20,5 @@ We believe that the best lessons deserve a stage as focused as their contents.
 Explore our lessons of posts or read the origin story to learn about the origins of this press.
 
 <div style="margin-top: 4rem; text-align: center;">
-  <a href="/posts/" class="btn">VIEW THE LESSONS</a>
+  <a href="{{ base_url }}/posts/" class="btn">VIEW THE LESSONS</a>
 </div>
