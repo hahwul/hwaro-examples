@@ -1,4 +1,4 @@
 +++
 title = "Search"
-template = "search"
+template = "page"
 +++
