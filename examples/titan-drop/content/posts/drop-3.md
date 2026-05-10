@@ -1,0 +1,5 @@
++++
+title = "Final Approach"
+date = 2025-04-30
++++
+Initiating retrorockets for the final approach vector. Landing coordinates are locked, and the surface topography appears clear of major obstructions. Awaiting touchdown confirmation. The radar altimeter has acquired the surface and is feeding precise distance measurements to the flight computer. The main parachutes have been jettisoned to prevent interference with the terminal descent engines. The retrorockets fired with perfect synchronization, creating a localized dust cloud visible on the downward-facing cameras. The thrust vectors are dynamically adjusting to counteract a slight crosswind, ensuring a perfectly vertical touchdown. All systems are reporting green for landing. The impact absorption mechanisms are fully primed. We are currently ten meters above the surface and descending at a controlled rate of one meter per second. Contact light illuminated. Engine cutoff confirmed. The sensors indicate a stable attitude with zero lateral motion. We have achieved a successful landing on the target surface. Awaiting the final system health check before initiating the automated deployment sequence.

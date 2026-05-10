@@ -1,0 +1,5 @@
++++
+title = "Improved Formatting"
+date = 2025-02-14
++++
+Updates to the styling and typographic rhythm of the feed. Readability has been significantly improved for longer entries, and a cleaner aesthetic applies throughout the UI components. Based on extensive user research and A/B testing, we determined that increasing the line height and utilizing a geometric sans-serif font would dramatically improve the reading experience, particularly on mobile devices. We also adjusted the contrast ratios of the text against the background to meet strict accessibility standards, ensuring that everyone can comfortably consume the content. The entry separators have been subtly refined, using lighter strokes and increased padding to create a better sense of hierarchy and spatial organization. These changes might seem minor individually, but together they create a much more polished and professional look. We believe that good design is invisible, and these typographic enhancements should allow users to focus entirely on the information rather than the interface itself. Our design team is currently exploring additional themes and color palettes for future releases.
