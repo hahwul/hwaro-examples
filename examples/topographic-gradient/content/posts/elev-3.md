@@ -1,0 +1,5 @@
++++
+title = "Valley Floor Scans"
+date = 2025-10-18
++++
+Completing the low-altitude scans of the central valley. The contrast between the sheer cliffs and the flat basin is striking in our latest topographic models, highlighting the region's unique geological history. The drone fleet operated flawlessly, flying tightly controlled grid patterns to capture overlapping images for photogrammetric processing. The resulting 3D models reveal the subtle undulations of the valley floor, which were previously undocumented. The data clearly shows the remnants of an ancient riverbed that once carved its way through the landscape, offering clues about the climate and hydrology of the region thousands of years ago. The stark transition from the vertical rock faces to the gentle slopes of the valley is beautifully represented in the digital elevation models. This comprehensive dataset will serve as a foundational resource for a wide range of scientific disciplines, from geology and archaeology to ecology and land management. The project is nearing completion, with only a few peripheral areas remaining to be surveyed.
