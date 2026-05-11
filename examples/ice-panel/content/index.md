@@ -20,5 +20,5 @@ We believe that the best content deserves a stage as clear as ice.
 Explore our logs of posts or learn about the frost philosophy.
 
 <div style="margin-top: 4rem;">
-  <a href="/posts/" class="btn">VIEW THE LOGS</a>
+  <a href="{{ base_url }}/posts/" class="btn">VIEW THE LOGS</a>
 </div>

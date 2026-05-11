@@ -27,6 +27,6 @@ hwaro serve
 
 ## Links
 
-- [Browse the blog](blog/) for sample posts
-- [Read about this theme](about/)
-- [View all tags](tags/)
+- [Browse the blog]({{ base_url }}/blog/) for sample posts
+- [Read about this theme]({{ base_url }}/about/)
+- [View all tags]({{ base_url }}/tags/)

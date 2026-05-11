@@ -17,4 +17,4 @@ Welcome to the **Hyperpop** example site. This design concept embraces glamorous
 
 Feel the energy of the hyperpop aesthetic in every interaction. Explore the depths of digital excess combined with elegant typography.
 
-[Learn more about our vision](/about/)
+[Learn more about our vision]({{ base_url }}/about/)
