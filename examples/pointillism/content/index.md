@@ -12,7 +12,7 @@ Welcome to Pointillism Art. This theme constructs images, backgrounds, and UI bo
 
 Pointillism is a technique of painting in which small, distinct dots of color are applied in patterns to form an image. This theme applies the same concept to modern web design.
 
-![Test Image](/test.jpg)
+![Test Image]({{ base_url }}/test.jpg)
 
 ### Features
 
