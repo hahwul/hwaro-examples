@@ -20,5 +20,5 @@ We believe that the best content is that which electrifies us.
 Explore our streams of posts or see the network origins.
 
 <div style="margin-top: 4rem;">
-  <a href="/posts/" class="btn">VIEW THE STREAMS</a>
+  <a href="{{ base_url }}/posts/" class="btn">VIEW THE STREAMS</a>
 </div>
