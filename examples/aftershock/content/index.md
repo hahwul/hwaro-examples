@@ -9,7 +9,6 @@ description = "Post-event retrospective -- seismic impact, diminishing waves, la
     <h1>AFTERSHOCK</h1>
     <p class="hero-subtitle">The event is over. The reverberations are not. Revisit the sessions that shook the ground.</p>
     <p class="hero-date">RECORDED OCT 2026 // NOW STREAMING</p>
-
     <!-- SVG seismic waveform -->
     <svg width="400" height="80" viewBox="0 0 400 80" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto 0; display: block;">
       <!-- Primary wave - strong -->
