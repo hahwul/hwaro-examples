@@ -72,7 +72,7 @@ tags = ["event", "theater", "drama", "production", "heavy"]
 <h3>The Garden Gate</h3>
 <p class="act-setting">A walled garden at dawn. Smoke on the horizon.</p>
 <p>Helene prepares tea for a sister she has not seen in seven years. The house staff are sent away. The ash falls thicker as the act proceeds.</p>
-<a href="/acts/i-the-garden-gate/">Read the Act &rarr;</a>
+<a href="{{ base_url }}/acts/i-the-garden-gate/">Read the Act &rarr;</a>
 </article>
 
 <article class="act-card">
@@ -86,7 +86,7 @@ tags = ["event", "theater", "drama", "production", "heavy"]
 <h3>The Sealed Parlour</h3>
 <p class="act-setting">Afternoon. The front parlour, curtains drawn.</p>
 <p>The sisters speak of the will. The parlour does not contain what was promised. A third voice is heard from a room that should be empty.</p>
-<a href="/acts/ii-the-sealed-parlour/">Read the Act &rarr;</a>
+<a href="{{ base_url }}/acts/ii-the-sealed-parlour/">Read the Act &rarr;</a>
 </article>
 
 <article class="act-card">
@@ -100,7 +100,7 @@ tags = ["event", "theater", "drama", "production", "heavy"]
 <h3>The Last Door</h3>
 <p class="act-setting">Midnight. The hallway, the door at the far end.</p>
 <p>The caldera crests the hill. The door that has been closed for a generation must now be opened. The tragedy is not in what leaves but in what stays.</p>
-<a href="/acts/iii-the-last-door/">Read the Act &rarr;</a>
+<a href="{{ base_url }}/acts/iii-the-last-door/">Read the Act &rarr;</a>
 </article>
 
 </div>

@@ -32,7 +32,7 @@ tags = ["event", "punk", "hardcore", "show", "chaotic"]
 <h3>RIB CAGE COLUMN</h3>
 <p class="set-time">13:15 - 13:45</p>
 <p>Local three-piece, first show. Eight songs. Please show up early; a half-empty room on band one sets the tone for the day.</p>
-<a href="/bands/rib-cage-column/">READ ZINE</a>
+<a href="{{ base_url }}/bands/rib-cage-column/">READ ZINE</a>
 </article>
 
 <article class="band-card">
@@ -46,7 +46,7 @@ tags = ["event", "punk", "hardcore", "show", "chaotic"]
 <h3>BURN PILE</h3>
 <p class="set-time">14:00 - 14:30</p>
 <p>Philly via Dayton. Four records deep. Brings their own kick pedal. Will end with the wall of death but it will be polite.</p>
-<a href="/bands/burn-pile/">READ ZINE</a>
+<a href="{{ base_url }}/bands/burn-pile/">READ ZINE</a>
 </article>
 
 <article class="band-card">
@@ -60,7 +60,7 @@ tags = ["event", "punk", "hardcore", "show", "chaotic"]
 <h3>EVEN HANDS</h3>
 <p class="set-time">14:45 - 15:20</p>
 <p>Four song split with Burn Pile last spring. Bassist is Dina who co-books this space. Please tip.</p>
-<a href="/bands/even-hands/">READ ZINE</a>
+<a href="{{ base_url }}/bands/even-hands/">READ ZINE</a>
 </article>
 
 <article class="band-card">
@@ -74,7 +74,7 @@ tags = ["event", "punk", "hardcore", "show", "chaotic"]
 <h3>GRAVEL HARVEST</h3>
 <p class="set-time">15:45 - 16:20</p>
 <p>Chicago via Gary. Saxophone over d-beat. Thirty minutes flat. Stay for the closer - it's the point.</p>
-<a href="/bands/gravel-harvest/">READ ZINE</a>
+<a href="{{ base_url }}/bands/gravel-harvest/">READ ZINE</a>
 </article>
 
 <article class="band-card">
@@ -88,7 +88,7 @@ tags = ["event", "punk", "hardcore", "show", "chaotic"]
 <h3>DOWN THE DRAIN</h3>
 <p class="set-time">16:40 - 17:20</p>
 <p>Cleveland all-womxn four-piece. Third time at this basement. New LP due in August. Merch in a suitcase, no credit cards.</p>
-<a href="/bands/down-the-drain/">READ ZINE</a>
+<a href="{{ base_url }}/bands/down-the-drain/">READ ZINE</a>
 </article>
 
 <article class="band-card">
@@ -102,7 +102,7 @@ tags = ["event", "punk", "hardcore", "show", "chaotic"]
 <h3>LAST OPEN WINDOW</h3>
 <p class="set-time">17:40 - 18:30</p>
 <p>Richmond powerviolence, reunion set. 40 minutes because they hauled twelve hours. Load-out starts the second the last note ends.</p>
-<a href="/bands/last-open-window/">READ ZINE</a>
+<a href="{{ base_url }}/bands/last-open-window/">READ ZINE</a>
 </article>
 
 </div>
