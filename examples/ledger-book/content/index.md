@@ -19,25 +19,25 @@ The present folio contains postings for the first quarter. Selected entries foll
 <h2 data-acct="110">Recent Postings</h2>
 
 <div class="entry-list">
-  <a class="entry-card" href="{{ base_url }}/entries/the-trial-balance/">
+  <a class="entry-card" href="/entries/the-trial-balance/">
     <div class="entry-card-acct">ACC 410 / REF 2026-0417</div>
     <div class="entry-card-title">The Trial Balance</div>
     <div class="entry-card-body">Why every ledger, at the close of the quarter, must reconcile to zero &#8212; and the small shocks that follow when it fails.</div>
     <div class="entry-card-date">POSTED 2026-04-11</div>
   </a>
-  <a class="entry-card" href="{{ base_url }}/entries/accrual-basis/">
+  <a class="entry-card" href="/entries/accrual-basis/">
     <div class="entry-card-acct">ACC 420 / REF 2026-0412</div>
     <div class="entry-card-title">Accrual Basis</div>
     <div class="entry-card-body">On recognising income when it is earned, not when it is paid, and the moral consequences of the distinction.</div>
     <div class="entry-card-date">POSTED 2026-04-03</div>
   </a>
-  <a class="entry-card" href="{{ base_url }}/entries/the-t-account/">
+  <a class="entry-card" href="/entries/the-t-account/">
     <div class="entry-card-acct">ACC 405 / REF 2026-0388</div>
     <div class="entry-card-title">The T-Account</div>
     <div class="entry-card-body">A diagram so simple that generations of apprentice clerks have learned the entire craft of double-entry from it.</div>
     <div class="entry-card-date">POSTED 2026-03-26</div>
   </a>
-  <a class="entry-card" href="{{ base_url }}/entries/sundries/">
+  <a class="entry-card" href="/entries/sundries/">
     <div class="entry-card-acct">ACC 480 / REF 2026-0342</div>
     <div class="entry-card-title">Sundries</div>
     <div class="entry-card-body">On the line that appears at the bottom of every ledger, and what it is honest to admit to oneself about what goes there.</div>
@@ -117,11 +117,11 @@ The present folio contains postings for the first quarter. Selected entries foll
 
 <div class="register">
 <ul>
-  <li><a href="{{ base_url }}/tags/theoretical/">Theoretical</a></li>
-  <li><a href="{{ base_url }}/tags/practical/">Practical</a></li>
-  <li><a href="{{ base_url }}/tags/ethical/">Ethical</a></li>
-  <li><a href="{{ base_url }}/tags/method/">Method</a></li>
-  <li><a href="{{ base_url }}/tags/history/">History</a></li>
-  <li><a href="{{ base_url }}/tags/audit/">Audit</a></li>
+  <li><a href="/tags/theoretical/">Theoretical</a></li>
+  <li><a href="/tags/practical/">Practical</a></li>
+  <li><a href="/tags/ethical/">Ethical</a></li>
+  <li><a href="/tags/method/">Method</a></li>
+  <li><a href="/tags/history/">History</a></li>
+  <li><a href="/tags/audit/">Audit</a></li>
 </ul>
 </div>
