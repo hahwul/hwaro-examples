@@ -19,5 +19,5 @@ We believe in pure design. No distractions, just clean lines, solid aesthetics, 
 
 Delve into our curated selections:
 
-- [View Tags](/tags/)
-- [View Categories](/categories/)
+- [View Tags]({{ base_url }}/tags/)
+- [View Categories]({{ base_url }}/categories/)
