@@ -27,36 +27,30 @@ template = "page"
           <polygon points="210,60 240,80 210,100 180,80" fill="#00c8ff" opacity="0.65"/>
           <polygon points="120,40 150,60 120,80 90,60" fill="#0082b5" opacity="0.7"/>
           <polygon points="90,60 120,80 90,100 60,80" fill="#00c8ff" opacity="0.65"/>
-
           <polygon points="150,60 180,80 150,100 120,80" fill="#8d3bff" opacity="0.7"/>
           <polygon points="180,80 210,100 180,120 150,100" fill="#00c8ff" opacity="0.6"/>
           <polygon points="210,100 240,120 210,140 180,120" fill="#0082b5" opacity="0.7"/>
           <polygon points="120,80 150,100 120,120 90,100" fill="#00c8ff" opacity="0.6"/>
           <polygon points="90,100 120,120 90,140 60,120" fill="#0082b5" opacity="0.75"/>
-
           <polygon points="60,120 90,140 60,160 30,140" fill="#00c8ff" opacity="0.55"/>
           <polygon points="30,140 60,160 30,180" fill="#0082b5" opacity="0.6"/>
           <polygon points="240,140 270,160 240,180" fill="#0082b5" opacity="0.6"/>
           <polygon points="210,140 240,160 210,180 180,160" fill="#00c8ff" opacity="0.55"/>
-
           <polygon points="150,100 180,120 150,140 120,120" fill="#ff2bac" opacity="0.7"/>
           <polygon points="180,120 210,140 180,160 150,140" fill="#8d3bff" opacity="0.65"/>
           <polygon points="120,120 150,140 120,160 90,140" fill="#8d3bff" opacity="0.65"/>
           <polygon points="150,140 180,160 150,180 120,160" fill="#00c8ff" opacity="0.9"/>
-
           <polygon points="90,140 120,160 90,180 60,160" fill="#00c8ff" opacity="0.7"/>
           <polygon points="180,160 210,180 180,200 150,180" fill="#0082b5" opacity="0.7"/>
           <polygon points="120,160 150,180 120,200 90,180" fill="#0082b5" opacity="0.7"/>
           <polygon points="60,160 90,180 60,200 30,180" fill="#00c8ff" opacity="0.6"/>
           <polygon points="210,160 240,180 210,200 180,180" fill="#00c8ff" opacity="0.6"/>
-
           <polygon points="150,180 180,200 150,220 120,200" fill="#ff2bac" opacity="0.6"/>
           <polygon points="180,200 210,220 180,240 150,220" fill="#8d3bff" opacity="0.55"/>
           <polygon points="120,200 150,220 120,240 90,220" fill="#8d3bff" opacity="0.55"/>
           <polygon points="90,180 120,200 90,220 60,200" fill="#0082b5" opacity="0.55"/>
           <polygon points="60,200 90,220 60,240" fill="#00c8ff" opacity="0.5"/>
           <polygon points="210,200 240,220 210,240" fill="#00c8ff" opacity="0.5"/>
-
           <polygon points="150,220 180,240 150,260 120,240" fill="#00c8ff" opacity="0.55"/>
           <polygon points="180,240 210,260 180,280" fill="#0082b5" opacity="0.45"/>
           <polygon points="120,240 150,260 120,280 90,260" fill="#0082b5" opacity="0.5"/>

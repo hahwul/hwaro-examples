@@ -7,7 +7,6 @@ description = "A friendly and modern mobile app showcase landing page."
 <section class="relative pt-20 pb-32 overflow-hidden bg-brand-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="lg:grid lg:grid-cols-12 lg:gap-16 items-center">
-
             <div class="lg:col-span-6 text-center lg:text-left mb-16 lg:mb-0">
                 <div class="inline-flex items-center px-4 py-2 rounded-full bg-white border border-brand-100 text-brand-600 font-semibold text-sm mb-8 shadow-sm">
                     <span class="flex w-2 h-2 rounded-full bg-brand-500 mr-2"></span>
@@ -37,7 +36,6 @@ description = "A friendly and modern mobile app showcase landing page."
                     Joined by 10,000+ happy users
                 </div>
             </div>
-
             <div class="lg:col-span-6 relative">
                 <!-- Large Phone Mockup Area -->
                 <div class="mockup-container">
@@ -57,7 +55,6 @@ description = "A friendly and modern mobile app showcase landing page."
                         </div>
                         <div class="mockup-body">
                             <div class="text-sm font-semibold text-slate-500 uppercase tracking-wider pl-2 mt-2">Up Next</div>
-
                             <div class="mockup-card border-l-4 border-l-brand-500">
                                 <div class="font-bold text-slate-800 mb-1">Design Review</div>
                                 <div class="text-sm text-slate-500 flex items-center gap-1">
@@ -65,7 +62,6 @@ description = "A friendly and modern mobile app showcase landing page."
                                     10:00 AM - 11:30 AM
                                 </div>
                             </div>
-
                             <div class="mockup-card border-l-4 border-l-amber-500">
                                 <div class="font-bold text-slate-800 mb-1">Lunch with Sarah</div>
                                 <div class="text-sm text-slate-500 flex items-center gap-1">
@@ -73,13 +69,11 @@ description = "A friendly and modern mobile app showcase landing page."
                                     Cafe Downtown
                                 </div>
                             </div>
-
                             <div class="mockup-card border-l-4 border-l-blue-500 opacity-60">
                                 <div class="font-bold text-slate-800 mb-1 line-through">Team Sync</div>
                                 <div class="text-sm text-slate-500">Completed</div>
                             </div>
                         </div>
-
                         <!-- Mockup Bottom Tab Bar -->
                         <div class="bg-white px-6 py-4 flex justify-between items-center border-t border-slate-100 mt-auto rounded-b-2xl">
                             <div class="text-brand-600 flex flex-col items-center">
@@ -119,7 +113,6 @@ description = "A friendly and modern mobile app showcase landing page."
                 We've stripped away the clutter to give you a focused, powerful tool that helps you achieve your goals without getting in the way.
             </p>
         </div>
-
         <div class="grid md:grid-cols-3 gap-12">
             <!-- Feature 1 -->
             <div class="text-center group">
@@ -129,7 +122,6 @@ description = "A friendly and modern mobile app showcase landing page."
                 <h4 class="text-xl font-bold text-slate-900 mb-3">Lightning Fast</h4>
                 <p class="text-slate-600 leading-relaxed">Built on a native framework to ensure interactions are smooth, instant, and reliable even offline.</p>
             </div>
-
             <!-- Feature 2 -->
             <div class="text-center group">
                 <div class="w-16 h-16 mx-auto bg-slate-100 rounded-2xl flex items-center justify-center text-slate-700 mb-6 group-hover:-translate-y-1 transition-transform duration-300">
@@ -138,7 +130,6 @@ description = "A friendly and modern mobile app showcase landing page."
                 <h4 class="text-xl font-bold text-slate-900 mb-3">Bank-grade Security</h4>
                 <p class="text-slate-600 leading-relaxed">Your data is encrypted end-to-end. We don't sell your data, and we don't track your every move.</p>
             </div>
-
             <!-- Feature 3 -->
             <div class="text-center group">
                 <div class="w-16 h-16 mx-auto bg-brand-50 rounded-2xl flex items-center justify-center text-brand-500 mb-6 group-hover:-translate-y-1 transition-transform duration-300">
@@ -154,7 +145,6 @@ description = "A friendly and modern mobile app showcase landing page."
 <!-- Detailed Feature Rows -->
 <section class="py-24 bg-surface border-y border-slate-100">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
         <!-- Row 1 -->
         <div class="flex flex-col md:flex-row items-center gap-16 mb-24">
             <div class="md:w-1/2">
@@ -207,7 +197,6 @@ description = "A friendly and modern mobile app showcase landing page."
                 </ul>
             </div>
         </div>
-
     </div>
 </section>
 
@@ -220,9 +209,7 @@ description = "A friendly and modern mobile app showcase landing page."
                 Don't just take our word for it. Here's what our community has to say about using AppSite every day.
             </p>
         </div>
-
         <div class="testimonial-slider pb-8 px-4 -mx-4">
-
             <!-- Card 1 -->
             <div class="testimonial-card bg-surface border border-slate-100 p-8 rounded-3xl shadow-sm">
                 <div class="flex text-amber-400 mb-6">
@@ -242,7 +229,6 @@ description = "A friendly and modern mobile app showcase landing page."
                     </div>
                 </div>
             </div>
-
             <!-- Card 2 -->
             <div class="testimonial-card bg-surface border border-slate-100 p-8 rounded-3xl shadow-sm">
                 <div class="flex text-amber-400 mb-6">
@@ -262,7 +248,6 @@ description = "A friendly and modern mobile app showcase landing page."
                     </div>
                 </div>
             </div>
-
             <!-- Card 3 -->
             <div class="testimonial-card bg-surface border border-slate-100 p-8 rounded-3xl shadow-sm">
                 <div class="flex text-amber-400 mb-6">
@@ -282,7 +267,6 @@ description = "A friendly and modern mobile app showcase landing page."
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </section>
@@ -294,13 +278,11 @@ description = "A friendly and modern mobile app showcase landing page."
         <div class="w-[800px] h-[800px] bg-white rounded-full translate-x-1/4 -translate-y-1/4"></div>
         <div class="w-[600px] h-[600px] bg-slate-900 rounded-full -translate-x-1/4 translate-y-1/4"></div>
     </div>
-
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
         <h2 class="text-4xl md:text-5xl font-bold font-display text-white mb-8">Ready to take control?</h2>
         <p class="text-xl text-brand-50 mb-12 leading-relaxed max-w-2xl mx-auto">
             Join thousands of users who are organizing their lives better with AppSite. Download free today.
         </p>
-
         <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
             <a href="#" class="w-full sm:w-auto px-8 py-4 border border-transparent text-lg font-bold rounded-2xl text-slate-900 bg-white hover:bg-slate-50 transition-colors shadow-xl shadow-slate-900/10 flex items-center justify-center gap-3">
                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
