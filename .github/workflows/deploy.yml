@@ -353,7 +353,15 @@ jobs:
             .sidebar-section { display: flex; flex-direction: column; gap: 0.5rem; }
             .sidebar-section + .sidebar-section { border-top: 1px solid #1a1a1a; padding-top: 1rem; }
             .sidebar-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.08em; color: #555; font-weight: 600; }
+            .tag-search-wrap { position: relative; width: 100%; margin-bottom: 0.1rem; }
+            .tag-search-wrap svg { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 12px; height: 12px; fill: #555; pointer-events: none; }
+            .tag-search-input { width: 100%; padding: 0.4rem 0.5rem 0.4rem 1.9rem; background: #111; border: 1px solid #222; border-radius: 6px; color: #e0e0e0; font-size: 0.75rem; outline: none; transition: border-color 0.2s; }
+            .tag-search-input::placeholder { color: #555; }
+            .tag-search-input:focus { border-color: #444; }
+            .tag-btn.hidden { display: none; }
             .tag-bar { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: flex-start; max-height: 18rem; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #333 transparent; }
+            .tag-empty { font-size: 0.7rem; color: #555; padding: 0.3rem 0.1rem; display: none; }
+            .tag-empty.visible { display: block; }
             .tag-bar::-webkit-scrollbar { width: 4px; }
             .tag-bar::-webkit-scrollbar-track { background: transparent; }
             .tag-bar::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
@@ -478,7 +486,12 @@ jobs:
               </div>
               <div class="sidebar-section">
                 <span class="sidebar-label">Tags</span>
+                <div class="tag-search-wrap">
+                  <svg viewBox="0 0 16 16"><path d="M11.5 7a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zm-.82 4.74a6 6 0 111.06-1.06l3.04 3.04a.75.75 0 11-1.06 1.06l-3.04-3.04z"></path></svg>
+                  <input type="text" class="tag-search-input" id="tagSearch" placeholder="Filter tags..." autocomplete="off">
+                </div>
                 <div class="tag-bar" id="tagBar">${TAG_BUTTONS}</div>
+                <div class="tag-empty" id="tagEmpty">No tags match.</div>
               </div>
             </div>
           </aside>
@@ -577,6 +590,17 @@ jobs:
               reorderTags();
               filterCards();
             });
+          });
+          document.getElementById('tagSearch').addEventListener('input', function() {
+            var q = this.value.trim().toLowerCase();
+            var btns = document.querySelectorAll('.tag-btn');
+            var visible = 0;
+            btns.forEach(function(btn) {
+              var match = !q || (btn.dataset.tag || '').toLowerCase().indexOf(q) !== -1;
+              btn.classList.toggle('hidden', !match);
+              if (match) visible++;
+            });
+            document.getElementById('tagEmpty').classList.toggle('visible', visible === 0);
           });
           document.getElementById('gridSize').addEventListener('input', function() {
             document.getElementById('grid').style.setProperty('--card-size', this.value + 'px');
