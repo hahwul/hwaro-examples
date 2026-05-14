@@ -7,7 +7,6 @@ description = "Emergency response protocols and crisis escalation procedures"
   <div class="section-label">Response Framework</div>
   <h2>Crisis Protocol</h2>
   <p style="color: var(--text-secondary); line-height: 1.8; max-width: 720px;">Every crisis follows a predictable escalation pattern. Red Alert establishes clear protocols for each level -- from baseline monitoring at GREEN to full incident command at RED. The framework ensures coordinated response across all participating agencies.</p>
-
   <!-- SVG emergency broadcast test pattern frame -->
   <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto; display: block;">
     <!-- Outer frame -->

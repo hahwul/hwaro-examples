@@ -55,7 +55,6 @@ tags = ["paper", "dark", "experimental", "sequential", "iterative"]
         <path d="M 0 0 L 10 5 L 0 10 z" fill="#5cba7d"/>
       </marker>
     </defs>
-
     <!-- EXP-01 node -->
     <circle cx="80" cy="90" r="36" fill="none" stroke="#c9a84b" stroke-width="2"/>
     <text x="80" y="85" text-anchor="middle" font-family="IBM Plex Mono" font-weight="700" font-size="11" fill="#c9a84b" letter-spacing="0.5">EXP</text>
@@ -63,25 +62,20 @@ tags = ["paper", "dark", "experimental", "sequential", "iterative"]
     <text x="80" y="145" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#8b95a5">Pd:Cu 3:1</text>
     <text x="80" y="158" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#8b95a5">120 C</text>
     <text x="80" y="175" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#c9a84b">S = 72.4 pct</text>
-
     <!-- Arrow EXP-01 to Decision 1 -->
     <line x1="116" y1="90" x2="195" y2="90" stroke="#6a8a9c" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
-
     <!-- Decision 1 diamond -->
     <polygon points="230,90 260,60 290,90 260,120" fill="none" stroke="#6a8a9c" stroke-width="2"/>
     <text x="260" y="88" text-anchor="middle" font-family="IBM Plex Mono" font-weight="700" font-size="8" fill="#6a8a9c">D1</text>
     <text x="260" y="98" text-anchor="middle" font-family="IBM Plex Mono" font-size="7" fill="#6a8a9c">DECIDE</text>
-
     <!-- Decision 1 annotation -->
     <line x1="260" y1="120" x2="260" y2="200" stroke="#6a8a9c" stroke-width="1" stroke-dasharray="4 3"/>
     <rect x="185" y="200" width="150" height="46" fill="none" stroke="#6a8a9c" stroke-width="1" stroke-dasharray="4 3"/>
     <text x="260" y="218" text-anchor="middle" font-family="IBM Plex Mono" font-size="8" fill="#6a8a9c">ACTION: Increase Cu</text>
     <text x="260" y="232" text-anchor="middle" font-family="IBM Plex Mono" font-size="8" fill="#6a8a9c">Pd:Cu 3:1 --&gt; 2:1</text>
     <text x="260" y="244" text-anchor="middle" font-family="IBM Plex Mono" font-size="7" fill="#8b95a5">Temp held at 120 C</text>
-
     <!-- Arrow Decision 1 to EXP-02 -->
     <line x1="290" y1="90" x2="344" y2="90" stroke="#c9a84b" stroke-width="1.5" marker-end="url(#arrowAmber)"/>
-
     <!-- EXP-02 node -->
     <circle cx="380" cy="90" r="36" fill="none" stroke="#c9a84b" stroke-width="2"/>
     <text x="380" y="85" text-anchor="middle" font-family="IBM Plex Mono" font-weight="700" font-size="11" fill="#c9a84b" letter-spacing="0.5">EXP</text>
@@ -89,25 +83,20 @@ tags = ["paper", "dark", "experimental", "sequential", "iterative"]
     <text x="380" y="145" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#8b95a5">Pd:Cu 2:1</text>
     <text x="380" y="158" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#8b95a5">120 C</text>
     <text x="380" y="175" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#c9a84b">S = 84.6 pct</text>
-
     <!-- Arrow EXP-02 to Decision 2 -->
     <line x1="416" y1="90" x2="495" y2="90" stroke="#6a8a9c" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
-
     <!-- Decision 2 diamond -->
     <polygon points="530,90 560,60 590,90 560,120" fill="none" stroke="#6a8a9c" stroke-width="2"/>
     <text x="560" y="88" text-anchor="middle" font-family="IBM Plex Mono" font-weight="700" font-size="8" fill="#6a8a9c">D2</text>
     <text x="560" y="98" text-anchor="middle" font-family="IBM Plex Mono" font-size="7" fill="#6a8a9c">DECIDE</text>
-
     <!-- Decision 2 annotation -->
     <line x1="560" y1="120" x2="560" y2="200" stroke="#6a8a9c" stroke-width="1" stroke-dasharray="4 3"/>
     <rect x="485" y="200" width="150" height="46" fill="none" stroke="#6a8a9c" stroke-width="1" stroke-dasharray="4 3"/>
     <text x="560" y="218" text-anchor="middle" font-family="IBM Plex Mono" font-size="8" fill="#6a8a9c">ACTION: Reduce temp</text>
     <text x="560" y="232" text-anchor="middle" font-family="IBM Plex Mono" font-size="8" fill="#6a8a9c">120 C --&gt; 95 C</text>
     <text x="560" y="244" text-anchor="middle" font-family="IBM Plex Mono" font-size="7" fill="#8b95a5">Pd:Cu held at 2:1</text>
-
     <!-- Arrow Decision 2 to EXP-03 -->
     <line x1="590" y1="90" x2="644" y2="90" stroke="#5cba7d" stroke-width="1.5" marker-end="url(#arrowGreen)"/>
-
     <!-- EXP-03 node (green for success) -->
     <circle cx="680" cy="90" r="36" fill="none" stroke="#5cba7d" stroke-width="2.5"/>
     <text x="680" y="85" text-anchor="middle" font-family="IBM Plex Mono" font-weight="700" font-size="11" fill="#5cba7d" letter-spacing="0.5">EXP</text>
@@ -115,7 +104,6 @@ tags = ["paper", "dark", "experimental", "sequential", "iterative"]
     <text x="680" y="145" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#8b95a5">Pd:Cu 2:1</text>
     <text x="680" y="158" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#8b95a5">95 C</text>
     <text x="680" y="175" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#5cba7d">S = 91.2 pct</text>
-
     <!-- Optimum label -->
     <rect x="645" y="25" width="70" height="20" fill="none" stroke="#5cba7d" stroke-width="1.5"/>
     <text x="680" y="39" text-anchor="middle" font-family="IBM Plex Mono" font-weight="700" font-size="8" fill="#5cba7d" letter-spacing="1">OPTIMUM</text>

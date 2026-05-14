@@ -9,7 +9,6 @@ description = "Rapid-fire lightning talks -- 5 minutes, one idea, maximum impact
     <h1>POWDER BURN</h1>
     <p class="hero-subtitle">Five minutes. One idea. No filler. Twenty speakers fire in rapid succession. Blink and you miss it.</p>
     <p class="hero-date">2027.01.24 // FLASH HALL, SEOUL</p>
-
     <!-- SVG muzzle flash starburst -->
     <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto 0; display: block;">
       <!-- Outer burst rays -->
@@ -46,7 +45,6 @@ description = "Rapid-fire lightning talks -- 5 minutes, one idea, maximum impact
 <div class="section-block">
   <div class="section-label">Session Blocks</div>
   <h2>Rapid Fire Lineup</h2>
-
   <div class="talk-block">
     <div class="talk-timer">5:00</div>
     <div class="talk-info">
@@ -55,7 +53,6 @@ description = "Rapid-fire lightning talks -- 5 minutes, one idea, maximum impact
     </div>
     <div class="talk-badge-slot"><span class="flash-badge">FLASH TALK</span></div>
   </div>
-
   <div class="talk-block">
     <div class="talk-timer">5:00</div>
     <div class="talk-info">
@@ -64,7 +61,6 @@ description = "Rapid-fire lightning talks -- 5 minutes, one idea, maximum impact
     </div>
     <div class="talk-badge-slot"><span class="flash-badge">FLASH TALK</span></div>
   </div>
-
   <div class="talk-block">
     <div class="talk-timer">10:00</div>
     <div class="talk-info">
@@ -73,7 +69,6 @@ description = "Rapid-fire lightning talks -- 5 minutes, one idea, maximum impact
     </div>
     <div class="talk-badge-slot"><span class="flash-badge-outline">10 MIN</span></div>
   </div>
-
   <div class="talk-block">
     <div class="talk-timer">5:00</div>
     <div class="talk-info">
@@ -82,7 +77,6 @@ description = "Rapid-fire lightning talks -- 5 minutes, one idea, maximum impact
     </div>
     <div class="talk-badge-slot"><span class="flash-badge">FLASH TALK</span></div>
   </div>
-
   <div class="talk-block">
     <div class="talk-timer">5:00</div>
     <div class="talk-info">
@@ -91,7 +85,6 @@ description = "Rapid-fire lightning talks -- 5 minutes, one idea, maximum impact
     </div>
     <div class="talk-badge-slot"><span class="flash-badge">FLASH TALK</span></div>
   </div>
-
   <div class="talk-block">
     <div class="talk-timer">10:00</div>
     <div class="talk-info">
@@ -105,7 +98,6 @@ description = "Rapid-fire lightning talks -- 5 minutes, one idea, maximum impact
 <div class="section-block">
   <div class="section-label">Stopwatch</div>
   <h2>Session Timers</h2>
-
   <div class="stopwatch-row">
     <div class="stopwatch-block">
       <!-- SVG stopwatch 5-min -->
@@ -138,7 +130,6 @@ description = "Rapid-fire lightning talks -- 5 minutes, one idea, maximum impact
 <div class="section-block">
   <div class="section-label">Powder Traces</div>
   <h2>Burn Pattern</h2>
-
   <!-- SVG powder burn trace pattern -->
   <svg width="100%" height="100" viewBox="0 0 600 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 24px auto; display: block; max-width: 600px;">
     <!-- Trace lines radiating from left - simulating powder burn -->
@@ -168,7 +159,6 @@ description = "Rapid-fire lightning talks -- 5 minutes, one idea, maximum impact
     <text x="400" y="85" text-anchor="middle" fill="#6a5c48" font-family="Roboto Condensed, sans-serif" font-weight="700" font-size="8" letter-spacing="2">TALK 6-12</text>
     <text x="530" y="85" text-anchor="middle" fill="#6a5c48" font-family="Roboto Condensed, sans-serif" font-weight="700" font-size="8" letter-spacing="2">TALK 13-20</text>
   </svg>
-
   <p style="text-align: center; font-family: 'Roboto Condensed', sans-serif; font-weight: 700; font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.2em; text-transform: uppercase;">20 talks // 2 hours // zero filler</p>
 </div>
 

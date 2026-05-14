@@ -7,7 +7,6 @@ description = "Grand Concert Hall, Vienna -- the stage for Overture"
   <div class="section-label">Location</div>
   <h2>Grand Concert Hall</h2>
   <p style="color: var(--text-secondary); line-height: 1.8; max-width: 720px; font-family: 'Crimson Pro', serif;">The Grand Concert Hall in Vienna seats 1,200 across three tiers. Designed in 1891 with acoustics that carry a whisper from stage to gallery. Every seat hears the same performance.</p>
-
   <!-- SVG concert hall cross-section -->
   <svg width="100%" height="160" viewBox="0 0 500 160" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto; display: block; max-width: 500px;">
     <!-- Outer shell -->
@@ -28,6 +27,5 @@ description = "Grand Concert Hall, Vienna -- the stage for Overture"
     <text x="460" y="105" text-anchor="end" fill="#6a6058" font-family="Cormorant, serif" font-weight="600" font-style="italic" font-size="7" letter-spacing="1">CIRCLE</text>
     <text x="460" y="80" text-anchor="end" fill="#6a6058" font-family="Cormorant, serif" font-weight="600" font-style="italic" font-size="7" letter-spacing="1">GALLERY</text>
   </svg>
-
   <p style="text-align: center; font-family: 'Cormorant', serif; font-weight: 700; font-style: italic; font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.15em;">1,200 SEATS // THREE TIERS // BUILT 1891</p>
 </div>

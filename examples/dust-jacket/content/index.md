@@ -13,14 +13,12 @@ hide_title = true
     <p>The author lives in a small seaside town and does not give interviews.</p>
     <p style="margin-top:1.2rem; font-style:italic;">Jacket design by the house. Typography set in Abril Fatface &amp; Playfair.</p>
   </div>
-
   <div class="jacket-panel back" aria-label="Back cover">
     <div class="flap-header">Praise for the Dust Jacket</div>
     <p class="pulls">A splendid piece of book design &mdash; the jacket is itself the argument. The body of the book is almost an afterthought.<span class="attrib">&mdash; The Quarterly Review</span></p>
     <p class="pulls">Rarely has a cover promised so much and a text delivered so plainly. The combination is the book.<span class="attrib">&mdash; The Critic, March Issue</span></p>
     <p class="pulls">A study in restraint. The type is the loudest thing on the shelf, and yet it is a very quiet thing.<span class="attrib">&mdash; Bookbinder's Monthly</span></p>
   </div>
-
   <div class="jacket-panel spine" aria-label="Spine">
     <div class="spine-inner">
       <div class="spine-mark" aria-hidden="true">
@@ -39,7 +37,6 @@ hide_title = true
       </div>
     </div>
   </div>
-
   <div class="jacket-panel front" aria-label="Front cover">
     <div class="pub-mark">The House &bull; MMXXVI</div>
     <h1>Dust<br>Jacket</h1>
@@ -52,7 +49,6 @@ hide_title = true
       </svg>
     </div>
   </div>
-
   <div class="jacket-panel flap" aria-label="Front flap">
     <div class="flap-header">From the front flap</div>
     <p>Every book opens with its wrapper. The eye meets the jacket before the first word; the hand measures the book by the weight of its cover.</p>

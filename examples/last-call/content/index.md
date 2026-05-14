@@ -9,7 +9,6 @@ description = "Closing session event with last-call urgency -- the clock is runn
     <h1>LAST CALL</h1>
     <p class="hero-subtitle">The lights are dimming. Three final sessions before the doors close for good. Every minute counts. This is your last chance.</p>
     <p class="hero-date">2027.04.18 // CLOSING AT 22:00 // SIGNAL HALL, BERLIN</p>
-
     <!-- SVG closing time clock -->
     <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto 0; display: block;">
       <!-- Clock face -->
@@ -45,7 +44,6 @@ description = "Closing session event with last-call urgency -- the clock is runn
 <div class="section-block">
   <div class="section-label">Countdown to Close</div>
   <h2>Final Sessions</h2>
-
   <div class="countdown-block-item">
     <div class="countdown-number">FINAL HOUR</div>
     <div class="countdown-info">
@@ -54,7 +52,6 @@ description = "Closing session event with last-call urgency -- the clock is runn
     </div>
     <div class="countdown-badge"><span class="urgency-badge">LAST CALL</span></div>
   </div>
-
   <div class="countdown-block-item">
     <div class="countdown-number" style="color: var(--accent-amber);">LAST 30 MIN</div>
     <div class="countdown-info">
@@ -63,7 +60,6 @@ description = "Closing session event with last-call urgency -- the clock is runn
     </div>
     <div class="countdown-badge"><span class="urgency-badge-outline">CLOSING</span></div>
   </div>
-
   <div class="countdown-block-item">
     <div class="countdown-number" style="color: var(--accent-dim);">LAST CALL</div>
     <div class="countdown-info">
@@ -77,7 +73,6 @@ description = "Closing session event with last-call urgency -- the clock is runn
 <div class="section-block">
   <div class="section-label">Time Remaining</div>
   <h2>Countdown</h2>
-
   <div class="timer-row">
     <div class="timer-block">
       <!-- SVG dimming lights -->
@@ -119,7 +114,6 @@ description = "Closing session event with last-call urgency -- the clock is runn
 <div class="section-block">
   <div class="section-label">Curtain</div>
   <h2>Closing Edge</h2>
-
   <!-- SVG curtain-closing edge pattern -->
   <svg width="100%" height="120" viewBox="0 0 600 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 24px auto; display: block; max-width: 600px;">
     <!-- Left curtain -->
@@ -141,7 +135,6 @@ description = "Closing session event with last-call urgency -- the clock is runn
     <!-- Center label -->
     <text x="300" y="100" text-anchor="middle" fill="#605048" font-family="Oswald, sans-serif" font-weight="700" font-size="8" letter-spacing="3">CURTAIN CLOSING</text>
   </svg>
-
   <p style="text-align: center; font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.2em; text-transform: uppercase;">3 final sessions // 1 hour remaining // doors close at 22:00</p>
 </div>
 

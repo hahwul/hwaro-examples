@@ -31,22 +31,18 @@ tags = ["paper", "light", "working", "in-progress", "honest"]
   <dd>
     Automated hiring systems are increasingly deployed across industries to screen, rank, and shortlist candidates. While these systems promise efficiency and consistency, growing evidence suggests that algorithmic decision-making can reproduce and amplify existing patterns of discrimination across protected classes including race, gender, age, and disability status. Despite regulatory attention, few systematic audit frameworks exist that can be applied across platforms and jurisdictions.
   </dd>
-
   <dt>Methods</dt>
   <dd>
     We develop a three-stage audit framework comprising (i) input analysis of training data representativeness, (ii) process auditing via algorithmic inspection and counterfactual testing, and (iii) outcome measurement through disparate impact ratio calculations across protected classes. The framework is applied to three commercial hiring platforms (Platform A, Platform B, and Platform C) using a synthetic applicant pool of 12,000 profiles with controlled demographic variation. <span class="todo-marker">[TODO]</span> Complete description of audit protocol for Platform C.
   </dd>
-
   <dt>Results</dt>
   <dd>
     Audits of Platform A reveal statistically significant disparate impact against candidates over 45 years of age (DIR = 0.71, p < 0.001) and female candidates for technical roles (DIR = 0.78, p < 0.01). Platform B shows more uniform outcomes across demographic groups, though racial disparities emerge in the interview-recommendation stage (DIR = 0.82 for Black candidates, p < 0.05). <span class="todo-marker">[TODO]</span> Add results for Platform C audit.
   </dd>
-
   <dt>Conclusion</dt>
   <dd>
     Our framework provides a reproducible, platform-agnostic methodology for identifying disparate impact in automated hiring. Preliminary results indicate that algorithmic bias is neither universal nor uniform: it varies by platform architecture, job category, and the specific stage of the hiring pipeline. <span class="todo-marker">[TODO]</span> Revise after Platform C results are available.
   </dd>
-
   <dt>Keywords</dt>
   <dd>algorithmic fairness, automated hiring, disparate impact, audit framework, protected classes, employment discrimination</dd>
 </dl>
@@ -61,7 +57,6 @@ tags = ["paper", "light", "working", "in-progress", "honest"]
   <!-- Title -->
   <text x="340" y="24" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="12" fill="#1a2030" letter-spacing="0.08em">PAPER STRUCTURE</text>
   <line x1="40" y1="34" x2="640" y2="34" stroke="#d4cfc2" stroke-width="1"/>
-
   <!-- Section 1 - Complete -->
   <rect x="40" y="50" width="600" height="28" fill="#ffffff" stroke="#d4cfc2" stroke-width="1" rx="2"/>
   <rect x="41" y="51" width="598" height="26" fill="#eaf5ef" rx="1"/>
@@ -69,7 +64,6 @@ tags = ["paper", "light", "working", "in-progress", "honest"]
   <text x="590" y="68" text-anchor="end" font-family="IBM Plex Mono, monospace" font-weight="700" font-size="10" fill="#3a7d5c">COMPLETE</text>
   <rect x="460" y="57" width="80" height="8" fill="#d4cfc2" rx="2"/>
   <rect x="460" y="57" width="80" height="8" fill="#4a9e72" rx="2"/>
-
   <!-- Section 2 - Complete -->
   <rect x="40" y="86" width="600" height="28" fill="#ffffff" stroke="#d4cfc2" stroke-width="1" rx="2"/>
   <rect x="41" y="87" width="598" height="26" fill="#eaf5ef" rx="1"/>
@@ -77,7 +71,6 @@ tags = ["paper", "light", "working", "in-progress", "honest"]
   <text x="590" y="104" text-anchor="end" font-family="IBM Plex Mono, monospace" font-weight="700" font-size="10" fill="#3a7d5c">COMPLETE</text>
   <rect x="460" y="93" width="80" height="8" fill="#d4cfc2" rx="2"/>
   <rect x="460" y="93" width="80" height="8" fill="#4a9e72" rx="2"/>
-
   <!-- Section 3 - Complete -->
   <rect x="40" y="122" width="600" height="28" fill="#ffffff" stroke="#d4cfc2" stroke-width="1" rx="2"/>
   <rect x="41" y="123" width="598" height="26" fill="#eaf5ef" rx="1"/>
@@ -85,7 +78,6 @@ tags = ["paper", "light", "working", "in-progress", "honest"]
   <text x="590" y="140" text-anchor="end" font-family="IBM Plex Mono, monospace" font-weight="700" font-size="10" fill="#3a7d5c">COMPLETE</text>
   <rect x="460" y="129" width="80" height="8" fill="#d4cfc2" rx="2"/>
   <rect x="460" y="129" width="80" height="8" fill="#4a9e72" rx="2"/>
-
   <!-- Section 4 - Partial -->
   <rect x="40" y="158" width="600" height="28" fill="#ffffff" stroke="#d4782a" stroke-width="1.5" rx="2"/>
   <rect x="41" y="159" width="598" height="26" fill="#fdf3e8" rx="1"/>
@@ -93,7 +85,6 @@ tags = ["paper", "light", "working", "in-progress", "honest"]
   <text x="590" y="176" text-anchor="end" font-family="IBM Plex Mono, monospace" font-weight="700" font-size="10" fill="#b85c1a">~20%</text>
   <rect x="460" y="165" width="80" height="8" fill="#d4cfc2" rx="2"/>
   <rect x="460" y="165" width="16" height="8" fill="#d4782a" rx="2"/>
-
   <!-- Section 5 - Partial -->
   <rect x="40" y="194" width="600" height="28" fill="#ffffff" stroke="#d4782a" stroke-width="1" rx="2"/>
   <rect x="41" y="195" width="598" height="26" fill="#fef7f0" rx="1"/>
@@ -132,24 +123,20 @@ tags = ["paper", "light", "working", "in-progress", "honest"]
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 160" width="680" height="160">
   <rect x="0" y="0" width="680" height="160" fill="#fafaf7"/>
   <text x="340" y="22" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="12" fill="#1a2030" letter-spacing="0.08em">REVISION TIMELINE</text>
-
   <!-- Timeline axis -->
   <line x1="80" y1="70" x2="600" y2="70" stroke="#d4cfc2" stroke-width="2"/>
-
   <!-- v0.1 -->
   <circle cx="140" cy="70" r="8" fill="#4a9e72" stroke="#ffffff" stroke-width="2"/>
   <text x="140" y="56" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-weight="700" font-size="11" fill="#3a7d5c">v0.1</text>
   <text x="140" y="94" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600" font-size="9" fill="#5c6170">2026-01-15</text>
   <text x="140" y="108" text-anchor="middle" font-family="Inter, sans-serif" font-weight="400" font-size="9" fill="#8a8d96">Initial framework</text>
   <text x="140" y="120" text-anchor="middle" font-family="Inter, sans-serif" font-weight="400" font-size="9" fill="#8a8d96">and literature review</text>
-
   <!-- v0.2 -->
   <circle cx="370" cy="70" r="8" fill="#4a9e72" stroke="#ffffff" stroke-width="2"/>
   <text x="370" y="56" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-weight="700" font-size="11" fill="#3a7d5c">v0.2</text>
   <text x="370" y="94" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600" font-size="9" fill="#5c6170">2026-03-02</text>
   <text x="370" y="108" text-anchor="middle" font-family="Inter, sans-serif" font-weight="400" font-size="9" fill="#8a8d96">Added Platform A</text>
   <text x="370" y="120" text-anchor="middle" font-family="Inter, sans-serif" font-weight="400" font-size="9" fill="#8a8d96">and B audit results</text>
-
   <!-- v0.3 (current) -->
   <circle cx="540" cy="70" r="10" fill="#d4782a" stroke="#ffffff" stroke-width="2"/>
   <text x="540" y="54" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-weight="700" font-size="11" fill="#b85c1a">v0.3</text>

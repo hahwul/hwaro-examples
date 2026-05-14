@@ -19,7 +19,6 @@ This document outlines the core principles and cultural values that guide our en
     <h3 class="text-xl font-bold mb-4">Speed through Simplicity</h3>
     <p class="text-warmgray-600 text-base mb-0">We prioritize simple solutions that are easy to reason about. Complexity is a debt that we only take on when absolutely necessary.</p>
   </div>
-  
   <div class="bg-white border border-warmgray-200 p-8 shadow-sm">
     <div class="w-12 h-12 bg-warmgray-100 flex items-center justify-center mb-6">
       <svg class="w-6 h-6 text-coral" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04default_api:6m0 0l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -27,7 +26,6 @@ This document outlines the core principles and cultural values that guide our en
     <h3 class="text-xl font-bold mb-4">Reliability by Design</h3>
     <p class="text-warmgray-600 text-base mb-0">System resilience is built into every layer. We design for failure and automate our recovery processes.</p>
   </div>
-
   <div class="bg-white border border-warmgray-200 p-8 shadow-sm">
     <div class="w-12 h-12 bg-warmgray-100 flex items-center justify-center mb-6">
       <svg class="w-6 h-6 text-coral" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
@@ -35,7 +33,6 @@ This document outlines the core principles and cultural values that guide our en
     <h3 class="text-xl font-bold mb-4">Radical Transparency</h3>
     <p class="text-warmgray-600 text-base mb-0">We share our successes and failures openly. Information silos are the enemy of a healthy engineering culture.</p>
   </div>
-
   <div class="bg-white border border-warmgray-200 p-8 shadow-sm">
     <div class="w-12 h-12 bg-warmgray-100 flex items-center justify-center mb-6">
       <svg class="w-6 h-6 text-coral" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>

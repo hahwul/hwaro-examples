@@ -34,7 +34,6 @@ template = "index"
       <span>6 events</span>
     </div>
   </a>
-
   <a class="tier-card" href="{{ base_url }}/tiers/the-lacquer-circle/">
     <div class="tier-crown">
       <svg width="28" height="20" viewBox="0 0 52 28" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -60,7 +59,6 @@ template = "index"
       <span>12 events</span>
     </div>
   </a>
-
   <a class="tier-card" href="{{ base_url }}/tiers/the-vermilion-circle/">
     <div class="tier-crown">
       <svg width="36" height="20" viewBox="0 0 64 28" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -86,7 +84,6 @@ template = "index"
       <span>All events</span>
     </div>
   </a>
-
   <a class="tier-card" href="{{ base_url }}/tiers/the-imperial-circle/">
     <div class="tier-crown">
       <svg width="40" height="22" viewBox="0 0 76 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">

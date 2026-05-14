@@ -7,7 +7,6 @@ description = "The origin story -- why Ground Zero exists"
   <div class="section-label">Genesis</div>
   <h2>The Origin Point</h2>
   <p style="color: var(--text-secondary); line-height: 1.8; max-width: 720px;">Every transformation has an epicenter. Ground Zero marks the exact point where ideas collide with enough force to reshape an entire field. This event is designed around that principle: maximum impact at the center, rippling outward through every zone.</p>
-
   <!-- SVG concentric distance ring measurement -->
   <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto; display: block;">
     <circle cx="100" cy="100" r="90" stroke="#22d3ee" stroke-width="0.5" fill="none" opacity="0.1"/>

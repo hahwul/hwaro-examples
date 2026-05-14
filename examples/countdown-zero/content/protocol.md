@@ -7,7 +7,6 @@ description = "Mission protocol and countdown procedures"
   <div class="section-label">Mission Protocol</div>
   <h2>Countdown Procedures</h2>
   <p style="color: var(--text-secondary); line-height: 1.8; max-width: 720px;">The countdown follows a strict sequence of milestones measured in negative time relative to T-0. Each milestone has a designated hold point where the clock can be paused for unresolved issues. Once a hold is cleared, the countdown resumes and the next milestone becomes the focus. There is no going backward.</p>
-
   <!-- SVG countdown milestone markers -->
   <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto; display: block;">
     <!-- Vertical timeline -->

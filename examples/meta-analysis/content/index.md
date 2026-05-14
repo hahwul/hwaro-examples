@@ -86,7 +86,6 @@ tags = ["paper", "light", "statistical", "synthesis", "evidence"]
   <rect x="485" y="74" width="10" height="8" fill="#2e4a6b"/>
   <text x="560" y="78" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#1a1e28">0.70 (0.58-0.85)</text>
   <text x="760" y="78" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#5a6070">4.2%</text>
-
   <text x="12" y="100" font-family="'Crimson Pro',serif" font-size="10" fill="#1a1e28">WOSCOPS</text>
   <text x="180" y="100" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#5a6070">6,595</text>
   <text x="250" y="100" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#5a6070">74/135</text>
@@ -94,7 +93,6 @@ tags = ["paper", "light", "statistical", "synthesis", "evidence"]
   <rect x="503" y="96" width="10" height="8" fill="#2e4a6b"/>
   <text x="560" y="100" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#1a1e28">0.78 (0.65-0.93)</text>
   <text x="760" y="100" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#5a6070">3.8%</text>
-
   <text x="12" y="122" font-family="'Crimson Pro',serif" font-size="10" fill="#1a1e28">CARE</text>
   <text x="180" y="122" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#5a6070">4,159</text>
   <text x="250" y="122" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#5a6070">96/119</text>
@@ -102,7 +100,6 @@ tags = ["paper", "light", "statistical", "synthesis", "evidence"]
   <rect x="508" y="118" width="10" height="8" fill="#2e4a6b"/>
   <text x="560" y="122" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#1a1e28">0.82 (0.69-0.98)</text>
   <text x="760" y="122" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#5a6070">3.6%</text>
-
   <text x="12" y="144" font-family="'Crimson Pro',serif" font-size="10" fill="#1a1e28">LIPID</text>
   <text x="180" y="144" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#5a6070">9,014</text>
   <text x="250" y="144" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#5a6070">216/284</text>
@@ -110,7 +107,6 @@ tags = ["paper", "light", "statistical", "synthesis", "evidence"]
   <rect x="493" y="140" width="12" height="8" fill="#2e4a6b"/>
   <text x="560" y="144" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#1a1e28">0.75 (0.65-0.87)</text>
   <text x="760" y="144" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#5a6070">5.1%</text>
-
   <text x="12" y="166" font-family="'Crimson Pro',serif" font-size="10" fill="#1a1e28">HPS (Heart Protection)</text>
   <text x="180" y="166" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#5a6070">20,536</text>
   <text x="250" y="166" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#5a6070">587/707</text>
@@ -118,7 +114,6 @@ tags = ["paper", "light", "statistical", "synthesis", "evidence"]
   <rect x="514" y="161" width="14" height="10" fill="#2e4a6b"/>
   <text x="560" y="166" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#1a1e28">0.83 (0.75-0.91)</text>
   <text x="760" y="166" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#5a6070">8.3%</text>
-
   <text x="12" y="188" font-family="'Crimson Pro',serif" font-size="10" fill="#1a1e28">PROSPER</text>
   <text x="180" y="188" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#5a6070">5,804</text>
   <text x="250" y="188" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#5a6070">217/241</text>
@@ -126,7 +121,6 @@ tags = ["paper", "light", "statistical", "synthesis", "evidence"]
   <rect x="537" y="184" width="10" height="8" fill="#2e4a6b"/>
   <text x="560" y="188" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#1a1e28">0.90 (0.78-1.04)</text>
   <text x="760" y="188" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#5a6070">4.8%</text>
-
   <text x="12" y="210" font-family="'Crimson Pro',serif" font-size="10" fill="#1a1e28">ASCOT-LLA</text>
   <text x="180" y="210" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#5a6070">10,305</text>
   <text x="250" y="210" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#5a6070">74/82</text>
@@ -134,7 +128,6 @@ tags = ["paper", "light", "statistical", "synthesis", "evidence"]
   <rect x="467" y="206" width="10" height="8" fill="#2e4a6b"/>
   <text x="560" y="210" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#1a1e28">0.64 (0.50-0.83)</text>
   <text x="760" y="210" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#5a6070">3.1%</text>
-
   <text x="12" y="232" font-family="'Crimson Pro',serif" font-size="10" fill="#1a1e28">TNT</text>
   <text x="180" y="232" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#5a6070">10,001</text>
   <text x="250" y="232" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#5a6070">149/185</text>
@@ -142,7 +135,6 @@ tags = ["paper", "light", "statistical", "synthesis", "evidence"]
   <rect x="508" y="228" width="12" height="8" fill="#2e4a6b"/>
   <text x="560" y="232" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#1a1e28">0.81 (0.71-0.93)</text>
   <text x="760" y="232" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#5a6070">5.7%</text>
-
   <text x="12" y="254" font-family="'Crimson Pro',serif" font-size="10" fill="#1a1e28">JUPITER</text>
   <text x="180" y="254" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#5a6070">17,802</text>
   <text x="250" y="254" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#5a6070">247/247</text>
@@ -150,7 +142,6 @@ tags = ["paper", "light", "statistical", "synthesis", "evidence"]
   <rect x="505" y="250" width="12" height="8" fill="#2e4a6b"/>
   <text x="560" y="254" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#1a1e28">0.80 (0.67-0.97)</text>
   <text x="760" y="254" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#5a6070">3.9%</text>
-
   <text x="12" y="276" font-family="'Crimson Pro',serif" font-size="10" fill="#1a1e28">SHARP</text>
   <text x="180" y="276" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#5a6070">9,270</text>
   <text x="250" y="276" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#5a6070">230/274</text>
@@ -158,7 +149,6 @@ tags = ["paper", "light", "statistical", "synthesis", "evidence"]
   <rect x="514" y="272" width="10" height="8" fill="#2e4a6b"/>
   <text x="560" y="276" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#1a1e28">0.84 (0.72-0.99)</text>
   <text x="760" y="276" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#5a6070">4.6%</text>
-
   <text x="12" y="298" font-family="'Crimson Pro',serif" font-size="10" fill="#1a1e28">IMPROVE-IT</text>
   <text x="180" y="298" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#5a6070">18,144</text>
   <text x="250" y="298" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#5a6070">537/572</text>
@@ -166,7 +156,6 @@ tags = ["paper", "light", "statistical", "synthesis", "evidence"]
   <rect x="548" y="293" width="14" height="10" fill="#2e4a6b"/>
   <text x="560" y="298" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#1a1e28">0.94 (0.86-1.03)</text>
   <text x="760" y="298" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#5a6070">7.9%</text>
-
   <text x="12" y="320" font-family="'Crimson Pro',serif" font-size="10" fill="#1a1e28">STAREE (elderly)</text>
   <text x="180" y="320" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#5a6070">9,971</text>
   <text x="250" y="320" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#5a6070">178/234</text>
@@ -174,7 +163,6 @@ tags = ["paper", "light", "statistical", "synthesis", "evidence"]
   <rect x="498" y="316" width="10" height="8" fill="#2e4a6b"/>
   <text x="560" y="320" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#1a1e28">0.76 (0.62-0.93)</text>
   <text x="760" y="320" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#5a6070">3.4%</text>
-
   <!-- Summary separator -->
   <line x1="10" y1="340" x2="810" y2="340" stroke="#1a1e28" stroke-width="1"/>
   <!-- Summary diamond -->
@@ -184,7 +172,6 @@ tags = ["paper", "light", "statistical", "synthesis", "evidence"]
   <path d="M495,365 L530,358 L565,365 L530,372 Z" fill="#c0392b" stroke="#8e2010" stroke-width="1"/>
   <text x="560" y="365" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="10" font-weight="700" fill="#1a1e28">0.79 (0.75-0.83)</text>
   <text x="760" y="365" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="10" fill="#1a1e28" font-weight="700">100%</text>
-
   <!-- X axis -->
   <line x1="380" y1="390" x2="720" y2="390" stroke="#1a1e28" stroke-width="1.5"/>
   <line x1="420" y1="388" x2="420" y2="394" stroke="#1a1e28" stroke-width="1"/>

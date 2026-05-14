@@ -15,13 +15,10 @@ Colophon is an exploration of the technical systems that make the site possible.
 <div class="spec-grid">
     <div class="spec-label">Engine</div>
     <div class="spec-value">Hwaro v0.11.0 (Crystal)</div>
-    
     <div class="spec-label">Templates</div>
     <div class="spec-value">Crinja / Jinja2 Hybrid</div>
-    
     <div class="spec-label">Typography</div>
     <div class="spec-value">IBM Plex Mono</div>
-    
     <div class="spec-label">Environment</div>
     <div class="spec-value">Darwin / Static Generation</div>
 </div>

@@ -9,7 +9,6 @@ description = "Opening ceremony with orchestral grandeur -- the curtain rises"
     <h1>Overture</h1>
     <p class="hero-subtitle">The curtain rises. Four movements chart the arc of a single evening -- from orchestral grandeur to standing ovation. Every session is a score.</p>
     <p class="hero-date">2027.03.15 // Grand Concert Hall, Vienna</p>
-
     <!-- SVG musical staff lines -->
     <svg width="360" height="100" viewBox="0 0 360 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto 0; display: block;">
       <!-- Five staff lines -->
@@ -44,7 +43,6 @@ description = "Opening ceremony with orchestral grandeur -- the curtain rises"
 <div class="section-block">
   <div class="section-label">Programme</div>
   <h2>Movement Structure</h2>
-
   <div class="movement-block">
     <div class="movement-number">I</div>
     <div class="movement-info">
@@ -53,7 +51,6 @@ description = "Opening ceremony with orchestral grandeur -- the curtain rises"
     </div>
     <div class="movement-badge-slot"><span class="tempo-badge">Allegro</span></div>
   </div>
-
   <div class="movement-block">
     <div class="movement-number">II</div>
     <div class="movement-info">
@@ -62,7 +59,6 @@ description = "Opening ceremony with orchestral grandeur -- the curtain rises"
     </div>
     <div class="movement-badge-slot"><span class="tempo-badge">Andante</span></div>
   </div>
-
   <div class="movement-block">
     <div class="movement-number">III</div>
     <div class="movement-info">
@@ -71,7 +67,6 @@ description = "Opening ceremony with orchestral grandeur -- the curtain rises"
     </div>
     <div class="movement-badge-slot"><span class="tempo-badge-outline">Adagio</span></div>
   </div>
-
   <div class="movement-block">
     <div class="movement-number">IV</div>
     <div class="movement-info">
@@ -85,7 +80,6 @@ description = "Opening ceremony with orchestral grandeur -- the curtain rises"
 <div class="section-block">
   <div class="section-label">Tempo Markings</div>
   <h2>Session Pacing</h2>
-
   <div class="programme-row">
     <div class="programme-block">
       <!-- SVG conductor baton gesture -->
@@ -122,7 +116,6 @@ description = "Opening ceremony with orchestral grandeur -- the curtain rises"
 <div class="section-block">
   <div class="section-label">Concert Hall</div>
   <h2>The Venue</h2>
-
   <!-- SVG concert hall architecture -->
   <svg width="100%" height="140" viewBox="0 0 600 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 24px auto; display: block; max-width: 600px;">
     <!-- Arch roof -->
@@ -144,7 +137,6 @@ description = "Opening ceremony with orchestral grandeur -- the curtain rises"
     <!-- Labels -->
     <text x="300" y="135" text-anchor="middle" fill="#6a6058" font-family="Cormorant, serif" font-weight="700" font-style="italic" font-size="9" letter-spacing="3">GRAND CONCERT HALL</text>
   </svg>
-
   <p style="text-align: center; font-family: 'Cormorant', serif; font-weight: 700; font-style: italic; font-size: 0.85rem; color: var(--text-muted); letter-spacing: 0.2em; text-transform: uppercase;">Four movements // One evening // Standing ovation</p>
 </div>
 

@@ -6,7 +6,6 @@ description = "Register for one or both events"
 <div class="section-block">
   <div class="section-label">Registration</div>
   <h2>Choose Your Track</h2>
-
   <div class="clock-row">
     <div class="clock-block clock-a">
       <div class="clock-label">Event A Only</div>
@@ -19,10 +18,8 @@ description = "Register for one or both events"
       <div class="clock-period">Code Forge // 14:00-17:30</div>
     </div>
   </div>
-
   <div style="text-align: center; margin-top: 32px;">
     <span class="event-badge event-badge-vs" style="font-size: 0.85rem; padding: 8px 24px;">DOUBLE HEADER PASS -- BOTH EVENTS</span>
   </div>
-
   <p style="color: var(--text-secondary); margin-top: 24px; text-align: center; font-size: 0.9rem;">2026.10.18 // Meridian Hall, Toronto</p>
 </div>

@@ -13,7 +13,6 @@ This guide will walk you through the absolute basics of getting your environment
     <div class="step-number">1</div>
     <h2 class="step-title" style="border: none; margin-top: 0;">Install Prerequisites</h2>
     <p>Before beginning, ensure you have all the necessary software installed on your system. This includes the core dependencies and any recommended extensions.</p>
-
     <pre><code># Install via package manager
 apt-get install prerequisites-package</code></pre>
 </div>
@@ -22,7 +21,6 @@ apt-get install prerequisites-package</code></pre>
     <div class="step-number">2</div>
     <h2 class="step-title" style="border: none; margin-top: 0;">Configure Your Workspace</h2>
     <p>Open your settings file and apply the basic configuration. This ensures that your local setup matches our recommended defaults.</p>
-
     <figure>
         <div class="image-placeholder">Configuration Screen Screenshot</div>
         <figcaption>Figure 1: The standard configuration panel with default settings applied.</figcaption>

@@ -41,7 +41,6 @@ description = "Welcome to Spotlight Hour, where authority meets elegance."
     <p class="talk-title">The Architecture of Silence</p>
     <p class="talk-abstract">Exploring how minimalist design principles in digital spaces can foster deeper human connections and cognitive clarity.</p>
   </div>
-
   <!-- Speaker 2 -->
   <div class="speaker-card">
     <div class="spotlight-halo">
@@ -65,7 +64,6 @@ description = "Welcome to Spotlight Hour, where authority meets elegance."
     <p class="talk-title">Synthetic Authority</p>
     <p class="talk-abstract">Critical analysis of trust frameworks in the age of generative AI and the shifting landscape of intellectual ownership.</p>
   </div>
-
   <!-- Speaker 3 -->
   <div class="speaker-card">
     <div class="spotlight-halo">

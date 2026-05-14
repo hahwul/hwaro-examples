@@ -50,7 +50,6 @@ Each section carries one of three stamps. **APPROVED** means the section has bee
       <text x="80" y="52" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="6" fill="#b01818" letter-spacing="1.5">EDITOR &middot; 15 V 26</text>
     </g>
   </svg>
-
   <svg viewBox="0 0 160 70" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" aria-label="REVISE stamp">
     <g transform="rotate(2 80 35)">
       <rect x="4" y="6" width="152" height="58" fill="none" stroke="#c97410" stroke-width="1.8" stroke-dasharray="6 3"/>
@@ -58,7 +57,6 @@ Each section carries one of three stamps. **APPROVED** means the section has bee
       <text x="80" y="52" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="6" fill="#c97410" letter-spacing="1.5">AUTHOR &middot; SEE MARGIN</text>
     </g>
   </svg>
-
   <svg viewBox="0 0 160 70" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" aria-label="STET stamp">
     <g transform="rotate(-1 80 35)">
       <circle cx="80" cy="35" r="28" fill="none" stroke="#1e4a7a" stroke-width="1.8"/>

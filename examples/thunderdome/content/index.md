@@ -9,7 +9,6 @@ description = "Arena battle competition event -- the ultimate elimination tourna
     <h1>THUNDERDOME</h1>
     <p class="hero-subtitle">The cage is sealed. The dome is closed. Only the strongest ideas survive the arena. An elimination tournament where concepts fight to the last.</p>
     <p class="hero-date">2027.11.08 // THE ARENA COMPLEX, BERLIN</p>
-
     <!-- SVG dome structural framework pattern -->
     <svg width="260" height="180" viewBox="0 0 260 180" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto 0; display: block;">
       <!-- Dome arcs -->
@@ -42,7 +41,6 @@ description = "Arena battle competition event -- the ultimate elimination tourna
 <div class="section-block">
   <div class="section-label">Elimination Rounds</div>
   <h2>Tournament Bracket</h2>
-
   <div class="arena-block">
     <div class="round-number">I</div>
     <div class="arena-info">
@@ -51,7 +49,6 @@ description = "Arena battle competition event -- the ultimate elimination tourna
     </div>
     <div class="arena-badge-slot"><span class="dome-badge">Elimination</span></div>
   </div>
-
   <div class="arena-block">
     <div class="round-number">II</div>
     <div class="arena-info">
@@ -60,7 +57,6 @@ description = "Arena battle competition event -- the ultimate elimination tourna
     </div>
     <div class="arena-badge-slot"><span class="dome-badge-outline">Semifinal</span></div>
   </div>
-
   <div class="arena-block">
     <div class="round-number">III</div>
     <div class="arena-info">
@@ -74,7 +70,6 @@ description = "Arena battle competition event -- the ultimate elimination tourna
 <div class="section-block">
   <div class="section-label">Arsenal</div>
   <h2>Weapons of Choice</h2>
-
   <div class="weapon-row">
     <div class="weapon-block">
       <!-- SVG gladiator sword silhouette -->
@@ -115,7 +110,6 @@ description = "Arena battle competition event -- the ultimate elimination tourna
 <div class="section-block">
   <div class="section-label">Boundary</div>
   <h2>Arena Cage Pattern</h2>
-
   <!-- SVG arena cage/fence boundary pattern -->
   <svg width="100%" height="120" viewBox="0 0 600 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 24px auto; display: block; max-width: 600px;">
     <!-- Cage fence lines -->
@@ -143,7 +137,6 @@ description = "Arena battle competition event -- the ultimate elimination tourna
     <!-- Center text -->
     <text x="300" y="65" text-anchor="middle" fill="#585858" font-family="Anton, sans-serif" font-size="11" letter-spacing="6">TWO ENTER ONE LEAVES</text>
   </svg>
-
   <p style="text-align: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.2em; text-transform: uppercase;">3 rounds // 8 contenders // 1 champion</p>
 </div>
 

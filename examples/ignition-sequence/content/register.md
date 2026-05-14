@@ -13,7 +13,6 @@ description = "Register for the Ignition Sequence launch event"
     </svg>
     <h2>Mission Registration</h2>
     <p style="color: var(--text-secondary); max-width: 500px; margin: 16px auto 40px;">Secure your position in the launch sequence. All participants must complete pre-flight registration prior to T-0.</p>
-
     <div style="max-width: 400px; margin: 0 auto; text-align: left;">
       <div style="margin-bottom: 24px;">
         <div style="font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 8px;">Callsign</div>

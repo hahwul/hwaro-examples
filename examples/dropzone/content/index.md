@@ -30,7 +30,6 @@ template = "page"
     <p class="dropzone-text">or click to browse from your computer</p>
     <button class="btn btn-primary">Select Files</button>
   </div>
-
   <div class="upload-progress-container">
     <div class="file-item">
       <div class="file-icon">
@@ -56,7 +55,6 @@ template = "page"
         </svg>
       </div>
     </div>
-
     <div class="file-item finished">
       <div class="file-icon" style="color: var(--success); background: color-mix(in srgb, var(--success) 10%, transparent);">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -92,7 +90,6 @@ template = "page"
     <h3 class="tier-name">Basic</h3>
     <div class="tier-price">$0<span class="tier-period">/mo</span></div>
     <p class="tier-desc">Perfect for individuals starting out with cloud storage.</p>
-
     <ul class="feature-list">
       <li>
         <svg class="feature-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
@@ -111,16 +108,13 @@ template = "page"
         <span>Advanced permission controls</span>
       </li>
     </ul>
-
     <button class="btn btn-outline" style="width: 100%;">Get Started</button>
   </div>
-
   <div class="pricing-card featured">
     <div class="featured-badge">Most Popular</div>
     <h3 class="tier-name">Pro</h3>
     <div class="tier-price">$12<span class="tier-period">/mo</span></div>
     <p class="tier-desc">Ideal for professionals who need more space and tools.</p>
-
     <ul class="feature-list">
       <li>
         <svg class="feature-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
@@ -139,15 +133,12 @@ template = "page"
         <span>Password protected links</span>
       </li>
     </ul>
-
     <button class="btn btn-primary" style="width: 100%;">Start Free Trial</button>
   </div>
-
   <div class="pricing-card">
     <h3 class="tier-name">Team</h3>
     <div class="tier-price">$24<span class="tier-period">/mo</span></div>
     <p class="tier-desc">For organizations requiring collaborative storage solutions.</p>
-
     <ul class="feature-list">
       <li>
         <svg class="feature-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
@@ -166,7 +157,6 @@ template = "page"
         <span>Priority support</span>
       </li>
     </ul>
-
     <button class="btn btn-outline" style="width: 100%;">Contact Sales</button>
   </div>
 </div>

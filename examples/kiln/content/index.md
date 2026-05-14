@@ -16,7 +16,6 @@ description: "A showcase of ceramics and the process behind the work."
     <p class="text-stone-600 mb-6">Explore the latest ceramic pieces, finished with custom glazes and fired to perfection.</p>
     <a href="/works/" class="inline-block border border-clay-300 rounded px-6 py-2 text-stone-700 hover:bg-clay-100 transition-colors no-underline font-medium">View Gallery</a>
   </div>
-
   <div>
     <h2 class="text-2xl font-serif text-stone-900 mb-4 pb-2 border-b border-clay-200">Process Log</h2>
     <p class="text-stone-600 mb-6">Notes from the studio: throwing, drying, trimming, glazing, and firing.</p>

@@ -10,7 +10,6 @@ tags = ["event", "dark", "military", "assembly", "urgent"]
     <h1>REVEILLE</h1>
     <p class="hero-subtitle">All personnel report for dawn formation. Four assembly stages from pre-dawn muster through full parade. Unit sections form by designation. Report times in Zulu. No exceptions. No delays.</p>
     <p class="hero-date">ASSEMBLY: 120430ZAPR2026 // PARADE GROUND ALPHA</p>
-
     <!-- SVG bugle / trumpet call illustration -->
     <svg width="300" height="100" viewBox="0 0 300 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto 0; display: block;">
       <!-- Bugle body -->
@@ -36,7 +35,6 @@ tags = ["event", "dark", "military", "assembly", "urgent"]
 <div class="section-block">
   <div class="section-label">Assembly Schedule</div>
   <h2>Formation Sequence</h2>
-
   <div class="formation-block formation-0430">
     <div class="formation-time">0430Z</div>
     <div class="formation-info">
@@ -47,7 +45,6 @@ tags = ["event", "dark", "military", "assembly", "urgent"]
       <span class="rev-badge-outline">PLT</span>
     </div>
   </div>
-
   <div class="formation-block formation-0500">
     <div class="formation-time">0500Z</div>
     <div class="formation-info">
@@ -58,7 +55,6 @@ tags = ["event", "dark", "military", "assembly", "urgent"]
       <span class="rev-badge-outline">CO</span>
     </div>
   </div>
-
   <div class="formation-block formation-0530">
     <div class="formation-time">0530Z</div>
     <div class="formation-info">
@@ -69,7 +65,6 @@ tags = ["event", "dark", "military", "assembly", "urgent"]
       <span class="rev-badge">BN</span>
     </div>
   </div>
-
   <div class="formation-block formation-0600">
     <div class="formation-time">0600Z</div>
     <div class="formation-info">
@@ -85,7 +80,6 @@ tags = ["event", "dark", "military", "assembly", "urgent"]
 <div class="section-block">
   <div class="section-label">Formation Grid</div>
   <h2>Unit Disposition</h2>
-
   <!-- SVG formation grid pattern -->
   <svg width="100%" height="200" viewBox="0 0 600 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 24px auto; display: block; max-width: 600px;">
     <!-- Grid lines -->
@@ -152,7 +146,6 @@ tags = ["event", "dark", "military", "assembly", "urgent"]
 <div class="section-block">
   <div class="section-label">Time Zones</div>
   <h2>Zulu Clock</h2>
-
   <!-- SVG military time zone clock display -->
   <svg width="280" height="280" viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 24px auto; display: block;">
     <!-- Outer ring -->
@@ -189,7 +182,6 @@ tags = ["event", "dark", "military", "assembly", "urgent"]
     <!-- Clock label -->
     <text x="140" y="275" text-anchor="middle" fill="#607048" font-family="Barlow Condensed, sans-serif" font-weight="700" font-size="7" letter-spacing="3">ZULU TIME // 24HR DISPLAY</text>
   </svg>
-
   <p style="text-align: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.2em; text-transform: uppercase;">0430z > 0500z > 0530z > 0600z</p>
 </div>
 

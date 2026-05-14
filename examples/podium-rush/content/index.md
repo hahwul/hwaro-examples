@@ -16,7 +16,6 @@ tags = ["event", "competition", "awards", "victory", "podium"]
       <div class="hero-stat"><span class="hero-stat-val">3</span><span class="hero-stat-label">Medals</span></div>
     </div>
   </div>
-
   <div class="podium-svg-wrap">
     <svg class="podium-svg" viewBox="0 0 1100 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three tier podium with gold silver and bronze blocks">
       <g stroke="#1d222a" stroke-width="1">
@@ -28,7 +27,6 @@ tags = ["event", "competition", "awards", "victory", "podium"]
       <polygon points="200,0 340,0 300,420 240,420" fill="#14181c" opacity="0.6"/>
       <polygon points="470,0 630,0 600,420 500,420" fill="#14181c" opacity="0.8"/>
       <polygon points="760,0 900,0 860,420 800,420" fill="#14181c" opacity="0.6"/>
-
       <!-- SECOND PLACE - SILVER -->
       <g>
         <rect x="200" y="240" width="220" height="220" fill="#9ca3af"/>
@@ -36,7 +34,6 @@ tags = ["event", "competition", "awards", "victory", "podium"]
         <rect x="200" y="446" width="220" height="14" fill="#6b7280"/>
         <text x="310" y="370" font-family="Saira Stencil One, sans-serif" font-size="120" fill="#0b0d10" text-anchor="middle" font-weight="400">2</text>
       </g>
-
       <!-- FIRST PLACE - GOLD -->
       <g>
         <rect x="440" y="160" width="220" height="300" fill="#d4af37"/>
@@ -51,7 +48,6 @@ tags = ["event", "competition", "awards", "victory", "podium"]
           <text x="0" y="14" font-family="Saira Stencil One, sans-serif" font-size="22" fill="#0b0d10" text-anchor="middle">1</text>
         </g>
       </g>
-
       <!-- THIRD PLACE - BRONZE -->
       <g>
         <rect x="680" y="280" width="220" height="180" fill="#b87333"/>
@@ -59,9 +55,7 @@ tags = ["event", "competition", "awards", "victory", "podium"]
         <rect x="680" y="446" width="220" height="14" fill="#8a5626"/>
         <text x="790" y="400" font-family="Saira Stencil One, sans-serif" font-size="110" fill="#0b0d10" text-anchor="middle" font-weight="400">3</text>
       </g>
-
       <line x1="0" y1="460" x2="1100" y2="460" stroke="#3a4250" stroke-width="2"/>
-
       <text x="310" y="500" font-family="Exo 2, sans-serif" font-size="18" font-weight="800" fill="#8a93a0" text-anchor="middle" letter-spacing="0.2em">LANE 3</text>
       <text x="550" y="500" font-family="Exo 2, sans-serif" font-size="18" font-weight="800" fill="#8a93a0" text-anchor="middle" letter-spacing="0.2em">LANE 4</text>
       <text x="790" y="500" font-family="Exo 2, sans-serif" font-size="18" font-weight="800" fill="#8a93a0" text-anchor="middle" letter-spacing="0.2em">LANE 5</text>
@@ -86,7 +80,6 @@ tags = ["event", "competition", "awards", "victory", "podium"]
     <p class="winner-time">9.58</p>
     <p class="winner-delta">WORLD RECORD</p>
   </div>
-
   <div class="winner-card" data-place="2">
     <svg class="winner-medal" viewBox="0 0 88 128" xmlns="http://www.w3.org/2000/svg" aria-label="Silver medal with ribbon">
       <path d="M18,0 L30,0 L38,50 L30,60 L20,50 Z" fill="#c41e3a"/>
@@ -103,7 +96,6 @@ tags = ["event", "competition", "awards", "victory", "podium"]
     <p class="winner-time">9.62</p>
     <p class="winner-delta">+0.04</p>
   </div>
-
   <div class="winner-card" data-place="3">
     <svg class="winner-medal" viewBox="0 0 88 128" xmlns="http://www.w3.org/2000/svg" aria-label="Bronze medal with ribbon">
       <path d="M18,0 L30,0 L38,50 L30,60 L20,50 Z" fill="#c41e3a"/>

@@ -8,7 +8,6 @@ template = "home"
   <p class="hero-prelude">— Festival Nº 09 · Anvil Fields · Two Days ·</p>
   <h1 class="hero-title">Iron&nbsp;Stage</h1>
   <div class="hero-subtitle">Forged in Black · Struck in Red</div>
-
   <div class="hero-meta">
     <div><strong>Days</strong>Fri Oct 10 / Sat Oct 11 / 2025</div>
     <div><strong>Gates</strong>14:00 Daily / Close 02:00</div>
@@ -22,7 +21,6 @@ template = "home"
     <h2>Iron Lineup</h2>
     <div class="block-tag">18 Bands · 2 Days</div>
   </div>
-
   <div class="skull-divider" aria-hidden="true">
     <span class="line"></span>
     <svg width="44" height="44" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
@@ -41,7 +39,6 @@ template = "home"
     </svg>
     <span class="line"></span>
   </div>
-
   <div class="bands">
     <div class="band">
       <div class="slot">Fri / Headline / 23:00</div>
@@ -123,7 +120,6 @@ template = "home"
     <h2>Stage Grid</h2>
     <div class="block-tag">Fri / Sat Running Order</div>
   </div>
-
   <div class="schedule">
     <div class="schedule-row">
       <span class="t">Fri / 15:30</span>

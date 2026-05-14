@@ -7,7 +7,6 @@ description = "Competition rules and gong judgment criteria"
   <div class="section-label">Competition Rules</div>
   <h2>The Gong Decides</h2>
   <p style="color: var(--text-secondary); line-height: 1.8; max-width: 720px;">Every act gets a timer. Impress the judges and the clock runs out -- you survive. Fail to convince, and the gong sounds. One strike. It reverberates. Your act is over. The judges hold their paddles; the gong holds the final word.</p>
-
   <!-- SVG gong with vibration waves -->
   <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto; display: block;">
     <!-- Gong disc -->

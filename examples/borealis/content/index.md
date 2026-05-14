@@ -16,7 +16,6 @@ tags = ["home", "aurora", "nordic"]
 <section class="featured-section">
   <h2 class="section-title">From the Northern Sky</h2>
   <p class="section-intro">Each piece is a window into the Arctic world -- the science of dancing lights, the myths whispered by firelight, and the creatures that endure the long polar night.</p>
-
   <div class="card-grid">
     <div class="card">
       <div class="card-glow card-glow--green"></div>

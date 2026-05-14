@@ -9,7 +9,6 @@ description = "Formal assembly event with military roll call precision"
     <h1>ROLL CALL</h1>
     <p class="hero-subtitle">Annual Formation Assembly -- All units report for attendance verification. Precision. Discipline. Accountability.</p>
     <p class="hero-date">15 MARCH 2026 // 0600 HRS -- MAIN PARADE GROUND</p>
-
     <svg width="320" height="120" viewBox="0 0 320 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto 0; display: block;">
       <!-- Formation Grid: 8x3 with leader position -->
       <!-- Row 1 -->
@@ -73,7 +72,6 @@ description = "Formal assembly event with military roll call precision"
 <div class="section-block">
   <div class="section-label">Assembly Points</div>
   <h2>Designated Stations</h2>
-
   <div class="assembly-points">
     <div class="assembly-marker">
       <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -113,7 +111,6 @@ description = "Formal assembly event with military roll call precision"
 <div class="section-block">
   <div class="section-label">Unit Banners</div>
   <h2>Participating Units</h2>
-
   <div class="unit-grid">
     <div class="unit-card">
       <svg width="60" height="72" viewBox="0 0 60 72" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -157,7 +154,6 @@ description = "Formal assembly event with military roll call precision"
 <div class="section-block">
   <div class="section-label">Attendance Register</div>
   <h2>Morning Formation -- Alpha Company</h2>
-
   <table class="attendance-table">
     <thead>
       <tr>
@@ -255,7 +251,6 @@ description = "Formal assembly event with military roll call precision"
       </tr>
     </tbody>
   </table>
-
   <div style="margin-top: 20px; display: flex; gap: 32px; font-family: 'IBM Plex Sans', sans-serif; font-size: 0.8rem;">
     <div>
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle; margin-right: 6px;">
@@ -279,7 +274,6 @@ description = "Formal assembly event with military roll call precision"
 <div class="section-block">
   <div class="section-label">Daily Schedule</div>
   <h2>Assembly Timetable</h2>
-
   <div class="schedule-item">
     <span class="schedule-time">05:30</span>
     <div>

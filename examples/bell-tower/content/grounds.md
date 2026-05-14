@@ -7,7 +7,6 @@ description = "The tower grounds, courtyard, and surrounding architecture"
   <div class="section-label">Tower Grounds</div>
   <h2>The Campanile Courtyard</h2>
   <p style="color: var(--text-secondary); line-height: 1.8; max-width: 720px;">The bell tower stands at the center of a walled courtyard paved in limestone worn smooth by centuries of passage. From the north approach, the tower rises above the roofline of the cloister, its belfry arches open to the wind. The courtyard offers four listening positions, each with a distinct acoustic character shaped by the surrounding walls and the angle of the bell's swing.</p>
-
   <!-- SVG courtyard plan view -->
   <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto; display: block;">
     <!-- Courtyard walls -->
@@ -33,14 +32,9 @@ description = "The tower grounds, courtyard, and surrounding architecture"
     <!-- Gate -->
     <line x1="90" y1="180" x2="110" y2="180" stroke="#8b6914" stroke-width="2" opacity="0.2"/>
   </svg>
-
   <h3>Acoustic Positions</h3>
-
   <p style="color: var(--text-secondary); line-height: 1.8; max-width: 720px;"><strong style="color: var(--text-primary);">North Approach</strong> -- The bell sound arrives first here, direct and unobstructed. The clapper's initial strike is clearest from this position. Recommended for those attending Hour IX.</p>
-
   <p style="color: var(--text-secondary); line-height: 1.8; max-width: 720px;"><strong style="color: var(--text-primary);">East Cloister</strong> -- The stone arcade creates a natural reverberation chamber. Each chime lingers two beats longer than from other positions. Suited to the steady rhythm of Hour X.</p>
-
   <p style="color: var(--text-secondary); line-height: 1.8; max-width: 720px;"><strong style="color: var(--text-primary);">South Garden</strong> -- Open to the sky, the sound expands here. The eleventh hour chimes seem to rise rather than fall. Best for experiencing Hour XI's anticipation.</p>
-
   <p style="color: var(--text-secondary); line-height: 1.8; max-width: 720px;"><strong style="color: var(--text-primary);">West Gallery</strong> -- The gallery's vaulted ceiling captures the full harmonic spectrum of the great bell. Reserved for the twelfth hour grand carillon. The twelve strokes fill this space completely.</p>
 </div>

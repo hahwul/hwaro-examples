@@ -11,26 +11,22 @@ title = "Home"
 
 <section class="principles-grid">
   <h2 class="principles-grid__title">Design Principles</h2>
-
   <div class="principle-cards">
     <div class="principle-card">
       <div class="principle-card__marker">+</div>
       <h3 class="principle-card__title">Intersection-First</h3>
       <p class="principle-card__text">Every element originates from where grid lines cross. Content does not float -- it anchors to precise coordinate points defined by the underlying structure.</p>
     </div>
-
     <div class="principle-card">
       <div class="principle-card__marker">+</div>
       <h3 class="principle-card__title">Visible Structure</h3>
       <p class="principle-card__text">The grid is not hidden infrastructure. Lines are rendered, intersections are marked, and the skeleton of the layout participates in the visual language.</p>
     </div>
-
     <div class="principle-card">
       <div class="principle-card__marker">+</div>
       <h3 class="principle-card__title">Swiss Precision</h3>
       <p class="principle-card__text">Rooted in the International Typographic Style. Helvetica. Rational spacing. Asymmetric balance. Information hierarchy through weight and scale, never decoration.</p>
     </div>
-
     <div class="principle-card">
       <div class="principle-card__marker">+</div>
       <h3 class="principle-card__title">Expand / Contract</h3>

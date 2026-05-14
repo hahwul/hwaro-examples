@@ -11,9 +11,7 @@ description = "Welcome to Obsidian Shores. A dark, volcanic glassmorphism experi
 <div class="glass-panel content-area">
   <h2>The Aesthetic</h2>
   <p>Obsidian Shores combines deep, dark volcanic blacks with glowing molten lava accents and bioluminescent teal highlights. Built with a robust glassmorphism design system using <code>backdrop-filter</code>, it provides a sense of depth and elegance.</p>
-
   <blockquote>"Where the molten earth meets the glowing sea."</blockquote>
-
   <h3>Features</h3>
   <ul>
     <li><strong>Deep Backgrounds:</strong> A palette rooted in #0a0a0a and #111111.</li>

@@ -9,7 +9,6 @@ description = "Competitive debate and battle event in the enclosed arena"
     <h1>CAGE MATCH</h1>
     <p class="hero-subtitle">Two enter. One wins. Four rounds of head-to-head debate inside the chain-link arena. No escape. No mercy. The bell decides everything.</p>
     <p class="hero-date">FIGHT NIGHT // 2027.10.18 // THE OCTAGON, LAS VEGAS</p>
-
     <!-- SVG chain-link fence pattern -->
     <svg width="320" height="80" viewBox="0 0 320 80" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto 0; display: block;">
       <!-- Chain-link diamond pattern -->
@@ -47,7 +46,6 @@ description = "Competitive debate and battle event in the enclosed arena"
 <div class="section-block">
   <div class="section-label">Fight Card</div>
   <h2>VS Matchups</h2>
-
   <!-- SVG octagon ring outline for matchup frames -->
   <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 24px auto; display: block;">
     <!-- Octagon outline -->
@@ -65,7 +63,6 @@ description = "Competitive debate and battle event in the enclosed arena"
     <circle cx="25" cy="125" r="3" fill="#c03030" opacity="0.2"/>
     <circle cx="25" cy="55" r="3" fill="#c03030" opacity="0.2"/>
   </svg>
-
   <div class="bout-block">
     <div class="bout-round">ROUND 1</div>
     <div class="bout-matchup">
@@ -80,7 +77,6 @@ description = "Competitive debate and battle event in the enclosed arena"
       </div>
     </div>
   </div>
-
   <div class="bout-block">
     <div class="bout-round">ROUND 2</div>
     <div class="bout-matchup">
@@ -95,7 +91,6 @@ description = "Competitive debate and battle event in the enclosed arena"
       </div>
     </div>
   </div>
-
   <div class="bout-block">
     <div class="bout-round">ROUND 3</div>
     <div class="bout-matchup">
@@ -110,7 +105,6 @@ description = "Competitive debate and battle event in the enclosed arena"
       </div>
     </div>
   </div>
-
   <div class="bout-block">
     <div class="bout-round">CHAMPIONSHIP</div>
     <div class="bout-matchup">
@@ -130,7 +124,6 @@ description = "Competitive debate and battle event in the enclosed arena"
 <div class="section-block">
   <div class="section-label">Tale of the Tape</div>
   <h2>Competitor Stats</h2>
-
   <!-- SVG tale-of-the-tape comparison bar charts -->
   <svg width="100%" height="160" viewBox="0 0 600 160" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 24px auto; display: block; max-width: 600px;">
     <!-- Labels -->
@@ -139,19 +132,16 @@ description = "Competitive debate and battle event in the enclosed arena"
     <rect x="310" y="28" width="160" height="12" fill="#c03030" opacity="0.15"/>
     <text x="95" y="38" text-anchor="end" fill="#888" font-family="Barlow Condensed, sans-serif" font-size="8">ALPHA</text>
     <text x="475" y="38" fill="#888" font-family="Barlow Condensed, sans-serif" font-size="8">OMEGA</text>
-
     <text x="300" y="65" text-anchor="middle" fill="#c03030" font-family="Anton, sans-serif" font-size="10" letter-spacing="2" opacity="0.4">STRATEGY</text>
     <rect x="130" y="73" width="160" height="12" fill="#c03030" opacity="0.15"/>
     <rect x="310" y="73" width="180" height="12" fill="#c03030" opacity="0.2"/>
     <text x="125" y="83" text-anchor="end" fill="#888" font-family="Barlow Condensed, sans-serif" font-size="8">ALPHA</text>
     <text x="495" y="83" fill="#888" font-family="Barlow Condensed, sans-serif" font-size="8">OMEGA</text>
-
     <text x="300" y="110" text-anchor="middle" fill="#c03030" font-family="Anton, sans-serif" font-size="10" letter-spacing="2" opacity="0.4">ENDURANCE</text>
     <rect x="110" y="118" width="180" height="12" fill="#c03030" opacity="0.18"/>
     <rect x="310" y="118" width="170" height="12" fill="#c03030" opacity="0.17"/>
     <text x="105" y="128" text-anchor="end" fill="#888" font-family="Barlow Condensed, sans-serif" font-size="8">ALPHA</text>
     <text x="485" y="128" fill="#888" font-family="Barlow Condensed, sans-serif" font-size="8">OMEGA</text>
-
     <!-- Center line -->
     <line x1="300" y1="10" x2="300" y2="145" stroke="#c03030" stroke-width="1" opacity="0.15"/>
   </svg>
@@ -160,7 +150,6 @@ description = "Competitive debate and battle event in the enclosed arena"
 <div class="section-block">
   <div class="section-label">The Bell</div>
   <h2>Round Markers</h2>
-
   <!-- SVG bell and round marker illustrations -->
   <svg width="200" height="100" viewBox="0 0 200 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 24px auto; display: block;">
     <!-- Bell shape -->
@@ -176,7 +165,6 @@ description = "Competitive debate and battle event in the enclosed arena"
     <text x="120" y="80" text-anchor="middle" fill="#c03030" font-family="Anton, sans-serif" font-size="10" opacity="0.3">R3</text>
     <text x="160" y="80" text-anchor="middle" fill="#c03030" font-family="Anton, sans-serif" font-size="12" opacity="0.35">FINAL</text>
   </svg>
-
   <p style="text-align: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.2em; text-transform: uppercase;">round 1 > round 2 > round 3 > championship</p>
 </div>
 

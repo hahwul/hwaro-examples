@@ -10,7 +10,6 @@ tags = ["paper", "light", "preprint", "urgent", "draft"]
 
 <header class="paper-header">
   <p class="paper-eyebrow">Preprint &middot; Epidemiology &middot; Posted 2026-04-12</p>
-
   <!-- Version badge stamp SVG -->
   <svg viewBox="0 0 280 32" xmlns="http://www.w3.org/2000/svg" aria-label="Version v3 badge" style="display:block;margin:0 0 0.8rem;">
     <rect x="0" y="2" width="55" height="28" rx="3" fill="#e63946"/>
@@ -18,7 +17,6 @@ tags = ["paper", "light", "preprint", "urgent", "draft"]
     <rect x="57" y="2" width="220" height="28" rx="3" fill="none" stroke="#e63946" stroke-width="1.2"/>
     <text x="167" y="21" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="10" fill="#e63946">2026-04-12 | Rev. 3 of 3</text>
   </svg>
-
   <h1 class="paper-title">Temporal Graph Transformers for Real-Time Epidemic Forecasting: A Multi-Pathogen Framework Validated on Respiratory Surveillance Networks</h1>
   <p class="paper-authors">
     <strong>Amara Osei-Mensah</strong><sup>1,*</sup>, Lukas Brenner<sup>2</sup>, Priya Venkatesh<sup>3</sup>, Carlos Medina-Rios<sup>4</sup>, Hana Kobayashi<sup>5</sup>

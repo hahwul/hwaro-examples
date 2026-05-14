@@ -34,7 +34,6 @@ hide_title = true
       <a href="#" class="btn btn-outline btn-block">Get Started</a>
     </div>
   </div>
-
   <!-- Pro Plan -->
   <div class="card card-recommended">
     <div class="card-badge">Most Popular</div>
@@ -58,7 +57,6 @@ hide_title = true
       <a href="#" class="btn btn-primary btn-block">Start Free Trial</a>
     </div>
   </div>
-
   <!-- Enterprise Plan -->
   <div class="card">
     <div class="card-header">

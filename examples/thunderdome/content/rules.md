@@ -7,7 +7,6 @@ description = "The rules of the Thunderdome arena competition"
   <div class="section-label">Code of Combat</div>
   <h2>Arena Rules</h2>
   <p style="color: var(--text-secondary); line-height: 1.8; max-width: 720px;">The Thunderdome operates on one principle: two enter, one leaves. Every round is an elimination. No draws, no mercy rounds, no second chances. The dome is sealed until a winner stands alone.</p>
-
   <!-- SVG champion laurel wreath -->
   <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto; display: block;">
     <!-- Left branch -->

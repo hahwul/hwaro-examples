@@ -7,7 +7,6 @@ description = "How the chain reaction trigger system works"
   <div class="section-label">Mechanism</div>
   <h2>How Triggers Work</h2>
   <p style="color: var(--text-secondary); line-height: 1.8; max-width: 720px;">Each stage has a trigger condition -- a specific outcome that must be achieved before the next stage unlocks. Dependency arrows show which stages must complete first. Some stages branch into parallel tracks that reconverge later. The sequence is strict. No stage can be skipped.</p>
-
   <!-- SVG domino chain with connection lines -->
   <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto; display: block;">
     <!-- Vertical chain -->

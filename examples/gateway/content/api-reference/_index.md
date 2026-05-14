@@ -18,7 +18,6 @@ Select your preferred integration method to see example code.
     <button class="tab-btn">Node.js</button>
     <button class="tab-btn">Python</button>
   </div>
-  
   <div class="tab-content" id="curl-example">
     <pre><code>curl -X GET "https://api.gateway.local/v1/health" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \

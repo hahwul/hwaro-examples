@@ -13,7 +13,6 @@ This guide covers the practical skills you need to move through unfamiliar groun
     <div class="step-number">1</div>
     <h2 class="step-title" style="border: none; margin-top: 0;">Orient the Map</h2>
     <p>Lay the map flat. Place the compass on the map with its direction-of-travel arrow pointing toward the top of the sheet. Rotate map and compass together until the magnetic needle aligns with the orienting lines on the map. The map is now matched to the ground around you.</p>
-
     <figure>
         <div class="image-placeholder">Map &amp; Compass Diagram</div>
         <figcaption>Figure 1: A baseplate compass set against a topographic sheet.</figcaption>
@@ -24,7 +23,6 @@ This guide covers the practical skills you need to move through unfamiliar groun
     <div class="step-number">2</div>
     <h2 class="step-title" style="border: none; margin-top: 0;">Read Handrails and Catching Features</h2>
     <p>A handrail is a linear feature you can follow without checking bearings constantly: a ridge, a stream, a fence line, a road. A catching feature is a landmark beyond your destination that tells you when you have gone too far. Identify both before you start walking.</p>
-
     <ul>
         <li>Pick a handrail that runs roughly parallel to your route</li>
         <li>Mark the catching feature on the map with a soft pencil</li>

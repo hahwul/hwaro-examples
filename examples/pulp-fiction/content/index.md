@@ -9,7 +9,6 @@ tags = ["book", "dark", "pulp", "lurid", "cheap"]
 <svg class="hero-cover-svg" viewBox="0 0 800 1000" xmlns="http://www.w3.org/2000/svg" aria-label="Pulp magazine cover illustration" role="img">
   <!-- Yellow cover background -->
   <rect width="800" height="1000" fill="#f2c80c"/>
-
   <!-- Halftone dot pattern overlay, sparse -->
   <g opacity="0.12" fill="#111111">
     <circle cx="40" cy="40" r="4"/>
@@ -27,22 +26,18 @@ tags = ["book", "dark", "pulp", "lurid", "cheap"]
     <circle cx="580" cy="940" r="4"/>
     <circle cx="720" cy="960" r="3"/>
   </g>
-
   <!-- Top masthead band, red -->
   <rect x="0" y="0" width="800" height="150" fill="#d92820"/>
   <rect x="0" y="148" width="800" height="6" fill="#111111"/>
-
   <!-- Magazine title (masthead) -->
   <text x="400" y="85" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-weight="700" font-size="90" fill="#f2c80c" letter-spacing="8">PULP FICTION</text>
   <text x="400" y="125" text-anchor="middle" font-family="Oswald, sans-serif" font-size="18" fill="#f2c80c" letter-spacing="8">MAY 1952 &middot; VOL. IX NO. 5 &middot; 10 CENTS</text>
-
   <!-- Price tag (upper right corner) -->
   <g transform="translate(680 190) rotate(15)">
     <polygon points="0,0 100,0 110,40 100,80 0,80 -10,40" fill="#d92820" stroke="#111111" stroke-width="3"/>
     <text x="50" y="40" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="36" fill="#f2c80c">10c</text>
     <text x="50" y="62" text-anchor="middle" font-family="Oswald, sans-serif" font-size="12" fill="#f2c80c" letter-spacing="2">THE COPY</text>
   </g>
-
   <!-- Central cover illustration: a hand gripping a telegram; stylized, flat -->
   <g transform="translate(400 480)">
     <!-- Back silhouette shape -->
@@ -68,25 +63,21 @@ tags = ["book", "dark", "pulp", "lurid", "cheap"]
     <polygon points="-260,-120 -250,-95 -225,-95 -245,-78 -235,-52 -260,-68 -285,-52 -275,-78 -295,-95 -270,-95" fill="#f2c80c" stroke="#111111" stroke-width="2"/>
     <polygon points="240,-100 248,-80 270,-80 252,-66 260,-45 240,-58 220,-45 228,-66 210,-80 232,-80" fill="#f2c80c" stroke="#111111" stroke-width="2"/>
   </g>
-
   <!-- Teaser headline band (middle-lower) -->
   <g transform="translate(0 760)">
     <rect x="30" y="0" width="740" height="58" fill="#111111"/>
     <text x="400" y="40" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="44" fill="#f2c80c" letter-spacing="3">SHE KNEW TOO MUCH!</text>
   </g>
-
   <!-- Secondary teasers -->
   <g transform="translate(0 830)">
     <text x="400" y="36" text-anchor="middle" font-family="Oswald, sans-serif" font-weight="700" font-size="24" fill="#111111" letter-spacing="3">AND SIX MORE FULL-LENGTH YARNS INSIDE</text>
   </g>
-
   <!-- Author byline list, lower left -->
   <g transform="translate(50 880)">
     <text x="0" y="0" font-family="Oswald, sans-serif" font-size="14" fill="#111111" letter-spacing="2">FEATURING</text>
     <text x="0" y="22" font-family="Bebas Neue, Impact, sans-serif" font-size="22" fill="#d92820" letter-spacing="1">CLEMENS &middot; ORDWAY &middot; NAKADA</text>
     <text x="0" y="44" font-family="Bebas Neue, Impact, sans-serif" font-size="22" fill="#d92820" letter-spacing="1">GREVILLE &middot; McCARTY</text>
   </g>
-
   <!-- Lower corner: "complete in this issue" -->
   <g transform="translate(620 890) rotate(-10)">
     <circle cx="0" cy="0" r="60" fill="#d92820" stroke="#111111" stroke-width="3"/>

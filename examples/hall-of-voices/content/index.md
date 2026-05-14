@@ -9,10 +9,8 @@ tags = ["event", "poetry", "spoken-word", "slam", "voices"]
 <svg class="hero-svg" viewBox="0 0 1200 680" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
   <!-- Paper background -->
   <rect width="1200" height="680" fill="#f7efde"/>
-
   <!-- Center point (the mouth, the microphone) -->
   <circle cx="600" cy="340" r="6" fill="#c9472b"/>
-
   <!-- Concentric sound wave arcs emanating from the center -->
   <!-- Inner rings -->
   <circle cx="600" cy="340" r="28" fill="none" stroke="#c9472b" stroke-width="1.5" opacity="0.85"/>
@@ -29,7 +27,6 @@ tags = ["event", "poetry", "spoken-word", "slam", "voices"]
   <circle cx="600" cy="340" r="424" fill="none" stroke="#c9472b" stroke-width="0.7" opacity="0.1"/>
   <circle cx="600" cy="340" r="472" fill="none" stroke="#c9472b" stroke-width="0.7" opacity="0.08"/>
   <circle cx="600" cy="340" r="522" fill="none" stroke="#c9472b" stroke-width="0.6" opacity="0.06"/>
-
   <!-- Subtle interior arc details -->
   <path d="M 450 340 Q 600 200 750 340" fill="none" stroke="#c9472b" stroke-width="0.5" opacity="0.15"/>
   <path d="M 400 340 Q 600 150 800 340" fill="none" stroke="#c9472b" stroke-width="0.5" opacity="0.12"/>
@@ -92,12 +89,10 @@ The voices carry. The room is plaster and wood and very old. You will hear what 
   <line x1="60" y1="200" x2="370" y2="200" stroke="#e6d8bd" stroke-width="0.5"/>
   <line x1="60" y1="230" x2="360" y2="230" stroke="#e6d8bd" stroke-width="0.5"/>
   <line x1="60" y1="260" x2="340" y2="260" stroke="#e6d8bd" stroke-width="0.5"/>
-
   <!-- Spine in the middle -->
   <line x1="400" y1="30" x2="400" y2="290" stroke="#c9b892" stroke-width="1.2"/>
   <line x1="398" y1="20" x2="398" y2="310" stroke="#c9b892" stroke-width="0.5" opacity="0.5"/>
   <line x1="402" y1="20" x2="402" y2="310" stroke="#c9b892" stroke-width="0.5" opacity="0.5"/>
-
   <!-- Right page -->
   <path d="M 400 30 L 410 10 L 760 10 Q 770 10 770 20 L 770 300 Q 770 310 760 310 L 410 310 L 400 290 Z"
         fill="#faf2e0" stroke="#c9b892" stroke-width="1"/>
@@ -110,7 +105,6 @@ The voices carry. The room is plaster and wood and very old. You will hear what 
   <line x1="430" y1="200" x2="740" y2="200" stroke="#e6d8bd" stroke-width="0.5"/>
   <line x1="430" y1="230" x2="730" y2="230" stroke="#e6d8bd" stroke-width="0.5"/>
   <line x1="430" y1="260" x2="710" y2="260" stroke="#e6d8bd" stroke-width="0.5"/>
-
   <!-- Page corner decorations -->
   <path d="M 30 20 Q 40 15 50 20" fill="none" stroke="#c9b892" stroke-width="0.5"/>
   <path d="M 770 20 Q 760 15 750 20" fill="none" stroke="#c9b892" stroke-width="0.5"/>

@@ -46,7 +46,6 @@ tags = ["event", "tickets", "sales", "urgency", "countdown"]
       <text x="48" y="150" font-family="Archivo Black, sans-serif" font-size="22" fill="#0a0a0a" text-anchor="middle">9</text>
     </svg>
   </div>
-
   <div class="countdown-stats">
     <div class="countdown-stat is-critical">
       <span class="countdown-val">00</span>
@@ -85,7 +84,6 @@ tags = ["event", "tickets", "sales", "urgency", "countdown"]
       </div>
     </div>
   </div>
-
   <!-- FLOOR -->
   <div class="ticket" data-tier="floor">
     <div class="ticket-svg-wrap">
@@ -107,7 +105,6 @@ tags = ["event", "tickets", "sales", "urgency", "countdown"]
       </div>
     </div>
   </div>
-
   <!-- MEZZANINE -->
   <div class="ticket" data-tier="mezz">
     <div class="ticket-svg-wrap">

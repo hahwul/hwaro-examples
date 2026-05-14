@@ -31,11 +31,9 @@ We present a large-scale citation network analysis of 47,218 publications in com
 <figure>
 <svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" aria-label="Citation network graph showing major nodes and directional edges" style="width:100%;max-width:800px;display:block;margin:1rem auto;">
   <text x="400" y="20" text-anchor="middle" font-family="'IBM Plex Sans',sans-serif" font-size="11" font-weight="700" fill="#e6edf3" letter-spacing="0.08em">CITATION NETWORK -- TOP 60 NODES BY PAGERANK</text>
-
   <!-- Background grid -->
   <line x1="0" y1="480" x2="800" y2="480" stroke="#1e2533" stroke-width="0.5"/>
   <line x1="0" y1="40" x2="800" y2="40" stroke="#1e2533" stroke-width="0.5"/>
-
   <!-- Cluster A: Neural Coding (top-left, cyan) -->
   <circle cx="180" cy="140" r="45" fill="none" stroke="#5ec4e8" stroke-width="0.5" stroke-dasharray="4,4" opacity="0.3"/>
   <text x="180" y="200" text-anchor="middle" font-family="'IBM Plex Sans',sans-serif" font-size="8" fill="#5ec4e8" opacity="0.6">CLUSTER A</text>
@@ -49,7 +47,6 @@ We present a large-scale citation network analysis of 47,218 publications in com
   <circle cx="145" cy="148" r="7" fill="#0d1117" stroke="#5ec4e8" stroke-width="1"/>
   <text x="145" y="151" text-anchor="middle" font-family="'IBM Plex Sans',sans-serif" font-size="5" fill="#5ec4e8">S04</text>
   <circle cx="210" cy="145" r="6" fill="#0d1117" stroke="#5ec4e8" stroke-width="0.8"/>
-
   <!-- Cluster B: Connectomics (top-right, orange) -->
   <circle cx="580" cy="130" r="50" fill="none" stroke="#e8a85e" stroke-width="0.5" stroke-dasharray="4,4" opacity="0.3"/>
   <text x="580" y="195" text-anchor="middle" font-family="'IBM Plex Sans',sans-serif" font-size="8" fill="#e8a85e" opacity="0.6">CLUSTER B</text>
@@ -61,7 +58,6 @@ We present a large-scale citation network analysis of 47,218 publications in com
   <text x="575" y="158" text-anchor="middle" font-family="'IBM Plex Sans',sans-serif" font-size="6" font-weight="600" fill="#e8a85e">C03</text>
   <circle cx="615" cy="100" r="6" fill="#0d1117" stroke="#e8a85e" stroke-width="0.8"/>
   <circle cx="545" cy="140" r="6" fill="#0d1117" stroke="#e8a85e" stroke-width="0.8"/>
-
   <!-- Cluster C: Spiking Networks (bottom-left, purple) -->
   <circle cx="220" cy="350" r="48" fill="none" stroke="#a85ee8" stroke-width="0.5" stroke-dasharray="4,4" opacity="0.3"/>
   <text x="220" y="410" text-anchor="middle" font-family="'IBM Plex Sans',sans-serif" font-size="8" fill="#a85ee8" opacity="0.6">CLUSTER C</text>
@@ -72,7 +68,6 @@ We present a large-scale citation network analysis of 47,218 publications in com
   <circle cx="195" cy="370" r="7" fill="#0d1117" stroke="#a85ee8" stroke-width="1"/>
   <text x="195" y="373" text-anchor="middle" font-family="'IBM Plex Sans',sans-serif" font-size="5" fill="#a85ee8">N03</text>
   <circle cx="255" cy="330" r="6" fill="#0d1117" stroke="#a85ee8" stroke-width="0.8"/>
-
   <!-- Cluster D: ML Decoding (bottom-right, green) -->
   <circle cx="600" cy="360" r="50" fill="none" stroke="#5ee88a" stroke-width="0.5" stroke-dasharray="4,4" opacity="0.3"/>
   <text x="600" y="425" text-anchor="middle" font-family="'IBM Plex Sans',sans-serif" font-size="8" fill="#5ee88a" opacity="0.6">CLUSTER D</text>
@@ -83,7 +78,6 @@ We present a large-scale citation network analysis of 47,218 publications in com
   <circle cx="575" cy="380" r="7" fill="#0d1117" stroke="#5ee88a" stroke-width="1"/>
   <text x="575" y="383" text-anchor="middle" font-family="'IBM Plex Sans',sans-serif" font-size="5" fill="#5ee88a">M03</text>
   <circle cx="630" cy="340" r="5" fill="#0d1117" stroke="#5ee88a" stroke-width="0.8"/>
-
   <!-- Directional edges (inter-cluster) with arrowheads -->
   <defs>
     <marker id="arrow-cyan" markerWidth="6" markerHeight="4" refX="5" refY="2" orient="auto">
@@ -102,7 +96,6 @@ We present a large-scale citation network analysis of 47,218 publications in com
       <path d="M0,0 L6,2 L0,4" fill="none" stroke="#c9d1d9" stroke-width="0.8"/>
     </marker>
   </defs>
-
   <!-- Intra-cluster edges -->
   <line x1="170" y1="125" x2="195" y2="113" stroke="#5ec4e8" stroke-width="0.6" opacity="0.4" marker-end="url(#arrow-cyan)"/>
   <line x1="162" y1="132" x2="170" y2="155" stroke="#5ec4e8" stroke-width="0.6" opacity="0.4"/>
@@ -110,7 +103,6 @@ We present a large-scale citation network analysis of 47,218 publications in com
   <line x1="558" y1="124" x2="572" y2="150" stroke="#e8a85e" stroke-width="0.6" opacity="0.4"/>
   <line x1="218" y1="335" x2="236" y2="350" stroke="#a85ee8" stroke-width="0.6" opacity="0.4" marker-end="url(#arrow-purple)"/>
   <line x1="598" y1="350" x2="616" y2="360" stroke="#5ee88a" stroke-width="0.6" opacity="0.4" marker-end="url(#arrow-green)"/>
-
   <!-- Inter-cluster bridge edges -->
   <!-- A -> B -->
   <path d="M212,120 Q400,60 548,112" fill="none" stroke="#c9d1d9" stroke-width="0.8" opacity="0.25" marker-end="url(#arrow-bridge)"/>
@@ -124,7 +116,6 @@ We present a large-scale citation network analysis of 47,218 publications in com
   <path d="M205,155 Q400,280 580,345" fill="none" stroke="#c9d1d9" stroke-width="0.6" opacity="0.15" stroke-dasharray="4,3" marker-end="url(#arrow-bridge)"/>
   <!-- B -> C (long bridge) -->
   <path d="M548,148 Q380,260 245,335" fill="none" stroke="#c9d1d9" stroke-width="0.6" opacity="0.15" stroke-dasharray="4,3" marker-end="url(#arrow-bridge)"/>
-
   <!-- Bridge node in center -->
   <circle cx="400" cy="240" r="10" fill="#0d1117" stroke="#c9d1d9" stroke-width="1.5"/>
   <text x="400" y="244" text-anchor="middle" font-family="'IBM Plex Sans',sans-serif" font-size="7" font-weight="700" fill="#c9d1d9">BR</text>
@@ -133,7 +124,6 @@ We present a large-scale citation network analysis of 47,218 publications in com
   <line x1="560" y1="122" x2="408" y2="235" stroke="#c9d1d9" stroke-width="0.6" opacity="0.2"/>
   <line x1="220" y1="330" x2="394" y2="248" stroke="#c9d1d9" stroke-width="0.6" opacity="0.2"/>
   <line x1="590" y1="340" x2="408" y2="248" stroke="#c9d1d9" stroke-width="0.6" opacity="0.2"/>
-
   <!-- Legend -->
   <rect x="20" y="440" width="760" height="40" fill="#161b26" rx="3"/>
   <circle cx="50" cy="460" r="5" fill="none" stroke="#5ec4e8" stroke-width="1.2"/>
@@ -203,31 +193,26 @@ We present a large-scale citation network analysis of 47,218 publications in com
 <figure>
 <svg viewBox="0 0 800 380" xmlns="http://www.w3.org/2000/svg" aria-label="Co-citation cluster diagram showing inter-cluster relationships" style="width:100%;max-width:800px;display:block;margin:1rem auto;">
   <text x="400" y="20" text-anchor="middle" font-family="'IBM Plex Sans',sans-serif" font-size="11" font-weight="700" fill="#e6edf3" letter-spacing="0.08em">CO-CITATION CLUSTER TOPOLOGY</text>
-
   <!-- Cluster A: large circle top-left -->
   <circle cx="200" cy="130" r="70" fill="rgba(94,196,232,0.06)" stroke="#5ec4e8" stroke-width="1"/>
   <text x="200" y="120" text-anchor="middle" font-family="'IBM Plex Sans',sans-serif" font-size="12" font-weight="700" fill="#5ec4e8">A</text>
   <text x="200" y="138" text-anchor="middle" font-family="'IBM Plex Sans',sans-serif" font-size="8" fill="#5ec4e8" opacity="0.7">Neural Coding</text>
   <text x="200" y="150" text-anchor="middle" font-family="'Crimson Pro',serif" font-size="8" fill="#6e7a8a">11,842 papers</text>
-
   <!-- Cluster B: large circle top-right -->
   <circle cx="580" cy="120" r="65" fill="rgba(232,168,94,0.06)" stroke="#e8a85e" stroke-width="1"/>
   <text x="580" y="112" text-anchor="middle" font-family="'IBM Plex Sans',sans-serif" font-size="12" font-weight="700" fill="#e8a85e">B</text>
   <text x="580" y="128" text-anchor="middle" font-family="'IBM Plex Sans',sans-serif" font-size="8" fill="#e8a85e" opacity="0.7">Connectomics</text>
   <text x="580" y="140" text-anchor="middle" font-family="'Crimson Pro',serif" font-size="8" fill="#6e7a8a">9,614 papers</text>
-
   <!-- Cluster C: large circle bottom-left -->
   <circle cx="220" cy="300" r="60" fill="rgba(168,94,232,0.06)" stroke="#a85ee8" stroke-width="1"/>
   <text x="220" y="292" text-anchor="middle" font-family="'IBM Plex Sans',sans-serif" font-size="12" font-weight="700" fill="#a85ee8">C</text>
   <text x="220" y="308" text-anchor="middle" font-family="'IBM Plex Sans',sans-serif" font-size="8" fill="#a85ee8" opacity="0.7">Spiking Models</text>
   <text x="220" y="320" text-anchor="middle" font-family="'Crimson Pro',serif" font-size="8" fill="#6e7a8a">13,206 papers</text>
-
   <!-- Cluster D: large circle bottom-right -->
   <circle cx="560" cy="290" r="68" fill="rgba(94,232,138,0.06)" stroke="#5ee88a" stroke-width="1"/>
   <text x="560" y="282" text-anchor="middle" font-family="'IBM Plex Sans',sans-serif" font-size="12" font-weight="700" fill="#5ee88a">D</text>
   <text x="560" y="298" text-anchor="middle" font-family="'IBM Plex Sans',sans-serif" font-size="8" fill="#5ee88a" opacity="0.7">ML Decoding</text>
   <text x="560" y="310" text-anchor="middle" font-family="'Crimson Pro',serif" font-size="8" fill="#6e7a8a">12,556 papers</text>
-
   <!-- Inter-cluster coupling edges with weights -->
   <!-- A-B -->
   <line x1="268" y1="118" x2="516" y2="112" stroke="#c9d1d9" stroke-width="2.5" opacity="0.3"/>
@@ -247,7 +232,6 @@ We present a large-scale citation network analysis of 47,218 publications in com
   <!-- C-D -->
   <line x1="278" y1="308" x2="494" y2="296" stroke="#c9d1d9" stroke-width="4" opacity="0.3"/>
   <text x="386" y="294" text-anchor="middle" font-family="'IBM Plex Sans',sans-serif" font-size="9" fill="#c9d1d9" opacity="0.6">0.31</text>
-
   <!-- Label -->
   <text x="400" y="370" text-anchor="middle" font-family="'IBM Plex Sans',sans-serif" font-size="8" fill="#484f5a">Edge width proportional to bibliographic coupling strength (Jaccard index)</text>
 </svg>

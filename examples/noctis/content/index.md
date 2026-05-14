@@ -14,12 +14,10 @@ template = "page"
     <h3>Refined Aesthetics</h3>
     <p>Elegant dark mode design crafted with meticulous attention to typography, spacing, and contrast.</p>
   </div>
-
   <div class="feature-card glass">
     <h3>Glassmorphism</h3>
     <p>Subtle frosted glass effects create depth and hierarchy without overwhelming the visual experience.</p>
   </div>
-
   <div class="feature-card glass">
     <h3>Neon Accents</h3>
     <p>Carefully placed luminescent details guide the eye and highlight key interactions seamlessly.</p>

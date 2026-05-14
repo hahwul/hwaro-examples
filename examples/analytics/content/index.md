@@ -37,7 +37,6 @@ description = "Key metrics and website performance."
       </span>
     </div>
   </div>
-
   <div class="card">
     <div class="flex items-center justify-between mb-2">
       <h3 class="stat-label">Pageviews</h3>
@@ -54,7 +53,6 @@ description = "Key metrics and website performance."
       </span>
     </div>
   </div>
-
   <div class="card">
     <div class="flex items-center justify-between mb-2">
       <h3 class="stat-label">Bounce Rate</h3>
@@ -126,12 +124,10 @@ description = "Key metrics and website performance."
       </table>
     </div>
   </div>
-
   <!-- Traffic Sources -->
   <div class="card">
     <h3 class="text-lg font-medium text-gray-900 mb-4">Traffic Sources</h3>
     <div class="space-y-4">
-
       <div>
         <div class="flex justify-between text-sm mb-1">
           <span class="font-medium text-gray-700">Direct</span>
@@ -141,7 +137,6 @@ description = "Key metrics and website performance."
           <div class="progress-bar-fill" style="width: 45%;"></div>
         </div>
       </div>
-
       <div>
         <div class="flex justify-between text-sm mb-1">
           <span class="font-medium text-gray-700">Organic Search</span>
@@ -151,7 +146,6 @@ description = "Key metrics and website performance."
           <div class="progress-bar-fill" style="width: 32%;"></div>
         </div>
       </div>
-
       <div>
         <div class="flex justify-between text-sm mb-1">
           <span class="font-medium text-gray-700">Referral</span>
@@ -161,7 +155,6 @@ description = "Key metrics and website performance."
           <div class="progress-bar-fill" style="width: 15%;"></div>
         </div>
       </div>
-
       <div>
         <div class="flex justify-between text-sm mb-1">
           <span class="font-medium text-gray-700">Social</span>
@@ -171,7 +164,6 @@ description = "Key metrics and website performance."
           <div class="progress-bar-fill" style="width: 8%;"></div>
         </div>
       </div>
-
     </div>
   </div>
 </div>

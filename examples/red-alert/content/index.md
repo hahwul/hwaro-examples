@@ -9,7 +9,6 @@ description = "Emergency crisis summit -- threat assessment, response coordinati
     <h1>RED ALERT</h1>
     <p class="hero-subtitle">This is not a drill. A crisis summit dedicated to emergency response, threat escalation, and coordinated action across all alert levels.</p>
     <p class="hero-date">2027.08.20 // COMMAND CENTER, WASHINGTON D.C.</p>
-
     <!-- SVG rotating beacon light pattern -->
     <svg width="220" height="220" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto 0; display: block;">
       <!-- Outer beacon sweep -->
@@ -43,7 +42,6 @@ description = "Emergency crisis summit -- threat assessment, response coordinati
 <div class="section-block">
   <div class="section-label">THIS IS NOT A DRILL</div>
   <h2>Alert Level Briefings</h2>
-
   <div class="alert-block alert-green">
     <div class="alert-level">GREEN</div>
     <div class="alert-info">
@@ -52,7 +50,6 @@ description = "Emergency crisis summit -- threat assessment, response coordinati
     </div>
     <div class="alert-badge-slot"><span class="level-badge level-green">Low</span></div>
   </div>
-
   <div class="alert-block alert-yellow">
     <div class="alert-level">YELLOW</div>
     <div class="alert-info">
@@ -61,7 +58,6 @@ description = "Emergency crisis summit -- threat assessment, response coordinati
     </div>
     <div class="alert-badge-slot"><span class="level-badge level-yellow">Elevated</span></div>
   </div>
-
   <div class="alert-block alert-orange">
     <div class="alert-level">ORANGE</div>
     <div class="alert-info">
@@ -70,7 +66,6 @@ description = "Emergency crisis summit -- threat assessment, response coordinati
     </div>
     <div class="alert-badge-slot"><span class="level-badge level-orange">High</span></div>
   </div>
-
   <div class="alert-block alert-red">
     <div class="alert-level">RED</div>
     <div class="alert-info">
@@ -84,7 +79,6 @@ description = "Emergency crisis summit -- threat assessment, response coordinati
 <div class="section-block">
   <div class="section-label">Severity Gauge</div>
   <h2>Alert Level Indicators</h2>
-
   <div class="gauge-row">
     <div class="gauge-block">
       <!-- SVG alert gauge GREEN -->
@@ -122,7 +116,6 @@ description = "Emergency crisis summit -- threat assessment, response coordinati
 <div class="section-block">
   <div class="section-label">Crisis Timeline</div>
   <h2>Escalation Sequence</h2>
-
   <!-- SVG crisis timeline diagram -->
   <svg width="100%" height="120" viewBox="0 0 600 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 24px auto; display: block; max-width: 600px;">
     <!-- Timeline base -->
@@ -151,7 +144,6 @@ description = "Emergency crisis summit -- threat assessment, response coordinati
     <polygon points="290,57 300,60 290,63" fill="#505050" opacity="0.2"/>
     <polygon points="445,57 455,60 445,63" fill="#505050" opacity="0.25"/>
   </svg>
-
   <p style="text-align: center; font-family: 'IBM Plex Sans', sans-serif; font-weight: 700; font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.2em; text-transform: uppercase;">green > yellow > orange > red // this is not a drill</p>
 </div>
 

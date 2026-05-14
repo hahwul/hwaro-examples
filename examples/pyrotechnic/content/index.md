@@ -58,11 +58,9 @@ template = "home"
     <circle cx="450" cy="450" r="110" fill="none" stroke="#3A86FF" stroke-width="1" opacity="0.35"/>
     <circle cx="450" cy="450" r="180" fill="none" stroke="#3A86FF" stroke-width="1" opacity="0.25"/>
   </svg>
-
   <div class="hero-content">
     <p class="hero-prelude">— Display #17 · Harbour Pier · One Night —</p>
     <h1 class="hero-title">BIG <span class="fire">BANG</span></h1>
-
     <div class="hero-meta">
       <div><strong>When</strong>Sat / Jul 04 / 2025 / 22:00</div>
       <div><strong>Where</strong>Harbour Pier / Zone 07</div>
@@ -77,7 +75,6 @@ template = "home"
     <h2>Show Segments</h2>
     <div class="block-tag">12 Segments · 90 Min</div>
   </div>
-
   <div class="segments">
     <div class="segment">
       <svg class="mortar" viewBox="0 0 56 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -95,7 +92,6 @@ template = "home"
         <p class="desc">Opening 12-cue sequence. Red comet peonies from four low mortars, brief pause, ground-level flare walk across the pier.</p>
       </div>
     </div>
-
     <div class="segment">
       <svg class="mortar" viewBox="0 0 56 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <rect x="8" y="20" width="40" height="80" fill="none" stroke="#3A86FF" stroke-width="2"/>
@@ -112,7 +108,6 @@ template = "home"
         <p class="desc">Deep blue chrysanthemums with silver strobe cores. Four cue pairs, 10 seconds between shells, fifty-metre altitude.</p>
       </div>
     </div>
-
     <div class="segment">
       <svg class="mortar" viewBox="0 0 56 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <rect x="8" y="20" width="40" height="80" fill="none" stroke="#8AC926" stroke-width="2"/>
@@ -129,7 +124,6 @@ template = "home"
         <p class="desc">Emerald willow shells with long trailing tails. Three wave patterns from mortars 14 through 22.</p>
       </div>
     </div>
-
     <div class="segment">
       <svg class="mortar" viewBox="0 0 56 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <rect x="8" y="20" width="40" height="80" fill="none" stroke="#FFCA3A" stroke-width="2"/>
@@ -146,7 +140,6 @@ template = "home"
         <p class="desc">Gold brocade shells with crackle cores. The pier's longest cascade runs west to east for a full thirty seconds.</p>
       </div>
     </div>
-
     <div class="segment">
       <svg class="mortar" viewBox="0 0 56 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <rect x="8" y="20" width="40" height="80" fill="none" stroke="#FF4500" stroke-width="2"/>
@@ -163,7 +156,6 @@ template = "home"
         <p class="desc">Double-rise red peonies, sixty shells in eighty seconds. Cue pattern: 0-0-2, 0-0-2, 0-0-2 through the full segment.</p>
       </div>
     </div>
-
     <div class="segment">
       <svg class="mortar" viewBox="0 0 56 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <rect x="8" y="20" width="40" height="80" fill="none" stroke="#3A86FF" stroke-width="2"/>
@@ -213,7 +205,6 @@ template = "home"
     <h2>Viewing Zones</h2>
     <div class="block-tag">Pick your range</div>
   </div>
-
   <div class="seating">
     <div class="zone">
       <h3>Pier West</h3>

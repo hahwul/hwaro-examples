@@ -10,7 +10,6 @@ description = "Hackathon and intensive workshop -- pressure builds to max, then 
     <div class="hero-deadline">DEADLINE</div>
     <p class="hero-subtitle">The clock is ticking. The pressure is rising. Build something real before the valve blows.</p>
     <p class="hero-date">2026.12.06-08 // FOUNDRY LABS, BERLIN</p>
-
     <!-- SVG pressure gauge -->
     <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto 0; display: block;">
       <!-- Gauge body -->
@@ -43,7 +42,6 @@ description = "Hackathon and intensive workshop -- pressure builds to max, then 
 <div class="section-block">
   <div class="section-label">Pressure Levels</div>
   <h2>Stage Progression</h2>
-
   <div class="pressure-levels">
     <div class="pressure-row">
       <span class="pressure-stage">STAGE 01</span>
@@ -66,7 +64,6 @@ description = "Hackathon and intensive workshop -- pressure builds to max, then 
       <span class="pressure-indicator pressure-max">MAX</span>
     </div>
   </div>
-
   <div style="display: flex; gap: 16px; margin-top: 24px; align-items: center; flex-wrap: wrap;">
     <span class="deadline-stamp">DEADLINE</span>
     <span style="font-family: 'Roboto', sans-serif; font-weight: 700; font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.1em;">SUNDAY 18:00 // NO EXTENSIONS</span>
@@ -76,7 +73,6 @@ description = "Hackathon and intensive workshop -- pressure builds to max, then 
 <div class="section-block">
   <div class="section-label">Countdown</div>
   <h2>Time Remaining</h2>
-
   <div class="countdown-row">
     <div class="countdown-unit">
       <div class="countdown-number">48</div>
@@ -96,7 +92,6 @@ description = "Hackathon and intensive workshop -- pressure builds to max, then 
 <div class="section-block">
   <div class="section-label">Pressure Vessel</div>
   <h2>System Architecture</h2>
-
   <!-- SVG pressure vessel cross-section -->
   <svg width="100%" height="200" viewBox="0 0 600 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 24px auto; display: block; max-width: 600px;">
     <!-- Vessel body -->
@@ -132,9 +127,7 @@ description = "Hackathon and intensive workshop -- pressure builds to max, then 
 <div class="section-block">
   <div class="section-label">Steam Release</div>
   <h2>Mentorship Windows</h2>
-
   <p style="color: var(--text-secondary); margin-bottom: 20px;">Scheduled breaks where senior engineers review progress and release pressure through guided feedback.</p>
-
   <!-- SVG steam release valves -->
   <svg width="100%" height="100" viewBox="0 0 600 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 16px auto; display: block; max-width: 600px;">
     <!-- Valve 1 -->
@@ -143,21 +136,18 @@ description = "Hackathon and intensive workshop -- pressure builds to max, then 
     <line x1="80" y1="35" x2="80" y2="10" stroke="#dd6b20" stroke-width="1.5" opacity="0.5"/>
     <line x1="92" y1="35" x2="100" y2="15" stroke="#dd6b20" stroke-width="1.5" opacity="0.4"/>
     <text x="80" y="88" text-anchor="middle" fill="#6a5050" font-family="Roboto, sans-serif" font-weight="700" font-size="8">SAT 12:00</text>
-
     <!-- Valve 2 -->
     <rect x="220" y="40" width="40" height="30" fill="#140e0e" stroke="#dd6b20" stroke-width="2"/>
     <line x1="228" y1="35" x2="220" y2="15" stroke="#dd6b20" stroke-width="1.5" opacity="0.4"/>
     <line x1="240" y1="35" x2="240" y2="10" stroke="#dd6b20" stroke-width="1.5" opacity="0.5"/>
     <line x1="252" y1="35" x2="260" y2="15" stroke="#dd6b20" stroke-width="1.5" opacity="0.4"/>
     <text x="240" y="88" text-anchor="middle" fill="#6a5050" font-family="Roboto, sans-serif" font-weight="700" font-size="8">SAT 20:00</text>
-
     <!-- Valve 3 -->
     <rect x="380" y="40" width="40" height="30" fill="#140e0e" stroke="#dd6b20" stroke-width="2"/>
     <line x1="388" y1="35" x2="380" y2="15" stroke="#dd6b20" stroke-width="1.5" opacity="0.4"/>
     <line x1="400" y1="35" x2="400" y2="10" stroke="#dd6b20" stroke-width="1.5" opacity="0.5"/>
     <line x1="412" y1="35" x2="420" y2="15" stroke="#dd6b20" stroke-width="1.5" opacity="0.4"/>
     <text x="400" y="88" text-anchor="middle" fill="#6a5050" font-family="Roboto, sans-serif" font-weight="700" font-size="8">SUN 10:00</text>
-
     <!-- Connecting pipe -->
     <line x1="100" y1="55" x2="220" y2="55" stroke="#2a1e1e" stroke-width="2"/>
     <line x1="260" y1="55" x2="380" y2="55" stroke="#2a1e1e" stroke-width="2"/>

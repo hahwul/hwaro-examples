@@ -17,9 +17,7 @@ description = "The Headline Act: Thorne vs Vance"
         </svg>
     </div>
   </div>
-  
   <div class="vs-separator">VS</div>
-  
   <div class="fighter fighter-blue">
     <div class="fighter-stats">22-1-0 (15 KO)</div>
     <h1 class="fighter-name">Elena<br>Vance</h1>
@@ -47,11 +45,9 @@ description = "The Headline Act: Thorne vs Vance"
   <div style="text-align: right; font-size: 32px;">32</div>
   <div class="tape-label">AGE</div>
   <div style="text-align: left; font-size: 32px;">29</div>
-  
   <div style="text-align: right; font-size: 32px;">6'4"</div>
   <div class="tape-label">HEIGHT</div>
   <div style="text-align: left; font-size: 32px;">6'2"</div>
-  
   <div style="text-align: right; font-size: 32px;">80"</div>
   <div class="tape-label">REACH</div>
   <div style="text-align: left; font-size: 32px;">78"</div>

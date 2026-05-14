@@ -9,7 +9,6 @@ description = "Embargoed content release event -- locked until the moment arrive
     <h1>EMBARGO LIFT</h1>
     <p class="hero-subtitle">Five announcements. One synchronized release. Every second counts down to the moment the seal breaks and the content goes live.</p>
     <p class="hero-date">EMBARGOED UNTIL 2027.06.01 // 09:00 UTC</p>
-
     <!-- SVG padlock locked/unlocked -->
     <svg width="300" height="120" viewBox="0 0 300 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto 0; display: block;">
       <!-- Locked padlock -->
@@ -36,7 +35,6 @@ description = "Embargoed content release event -- locked until the moment arrive
 <div class="section-block">
   <div class="section-label">Embargo Status</div>
   <h2>Release Queue</h2>
-
   <div class="embargo-block">
     <div class="embargo-status embargo-locked">LOCKED</div>
     <div class="embargo-info">
@@ -45,7 +43,6 @@ description = "Embargoed content release event -- locked until the moment arrive
     </div>
     <div class="embargo-time">2027.06.01 09:00 UTC</div>
   </div>
-
   <div class="embargo-block">
     <div class="embargo-status embargo-locked">LOCKED</div>
     <div class="embargo-info">
@@ -54,7 +51,6 @@ description = "Embargoed content release event -- locked until the moment arrive
     </div>
     <div class="embargo-time">2027.06.01 09:00 UTC</div>
   </div>
-
   <div class="embargo-block">
     <div class="embargo-status embargo-unlocked">LIVE</div>
     <div class="embargo-info">
@@ -63,7 +59,6 @@ description = "Embargoed content release event -- locked until the moment arrive
     </div>
     <div class="embargo-time">RELEASED</div>
   </div>
-
   <div class="embargo-block">
     <div class="embargo-status embargo-locked">LOCKED</div>
     <div class="embargo-info">
@@ -72,7 +67,6 @@ description = "Embargoed content release event -- locked until the moment arrive
     </div>
     <div class="embargo-time">2027.06.01 12:00 UTC</div>
   </div>
-
   <div class="embargo-block">
     <div class="embargo-status embargo-locked">LOCKED</div>
     <div class="embargo-info">
@@ -86,7 +80,6 @@ description = "Embargoed content release event -- locked until the moment arrive
 <div class="section-block">
   <div class="section-label">Countdown</div>
   <h2>Time to Lift</h2>
-
   <div class="countdown-row">
     <div class="countdown-block">
       <!-- SVG countdown timer -->
@@ -123,7 +116,6 @@ description = "Embargoed content release event -- locked until the moment arrive
 <div class="section-block">
   <div class="section-label">Seal</div>
   <h2>Embargo Seal</h2>
-
   <!-- SVG embargo seal stamp -->
   <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 24px auto; display: block;">
     <!-- Outer ring -->
@@ -144,7 +136,6 @@ description = "Embargoed content release event -- locked until the moment arrive
     <line x1="15" y1="100" x2="22" y2="100" stroke="#c03030" stroke-width="1.5" opacity="0.3"/>
     <line x1="178" y1="100" x2="185" y2="100" stroke="#c03030" stroke-width="1.5" opacity="0.3"/>
   </svg>
-
   <p style="text-align: center; font-family: 'IBM Plex Sans', sans-serif; font-weight: 700; font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.2em; text-transform: uppercase;">5 releases // 1 synchronized lift // zero leaks</p>
 </div>
 

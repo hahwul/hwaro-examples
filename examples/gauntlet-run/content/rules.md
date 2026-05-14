@@ -7,7 +7,6 @@ description = "Course rules and station protocol"
   <div class="section-label">Protocol</div>
   <h2>Course Rules</h2>
   <p style="color: var(--text-secondary); line-height: 1.8; max-width: 720px;">Stations must be completed in order. No skipping. No backtracking. Failed stations can be retried once. If you fail twice, you are marked DNF at that station and proceed to the next. Time penalties apply for each retry.</p>
-
   <!-- SVG obstacle course station diagram -->
   <svg width="100%" height="80" viewBox="0 0 400 80" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto; display: block; max-width: 400px;">
     <!-- Wall obstacle diagram -->

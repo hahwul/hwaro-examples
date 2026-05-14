@@ -11,7 +11,6 @@ description = "A deep and elegant exploration of geometric design."
 <div class="glass-panel">
   <h2>The Philosophy</h2>
   <p>The <strong>Aurelian Tapestry</strong> design language marries the boundless depth of space with the precision of classic geometry. It creates a space that feels both ancient and futuristic, using subtle glowing accents and frosted glass effects.</p>
-
   <h3>Design Elements</h3>
   <ul class="section-list">
     <li><a href="#">Deep Void Backgrounds</a> A foundation of #0b1325 for contrast and depth.</li>

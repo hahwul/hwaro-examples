@@ -30,7 +30,6 @@ Our framework comprises three stages, each targeting a different aspect of the h
   <rect x="0" y="0" width="680" height="200" fill="#fafaf7"/>
   <text x="340" y="22" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="12" fill="#1a2030" letter-spacing="0.08em">THREE-STAGE AUDIT FRAMEWORK</text>
   <line x1="40" y1="34" x2="640" y2="34" stroke="#d4cfc2" stroke-width="1"/>
-
   <!-- Stage 1 -->
   <rect x="40" y="50" width="180" height="110" fill="#ffffff" stroke="#d4cfc2" stroke-width="1.5" rx="3"/>
   <rect x="40" y="50" width="180" height="26" fill="#eaf5ef" rx="3"/>
@@ -41,11 +40,9 @@ Our framework comprises three stages, each targeting a different aspect of the h
   <text x="55" y="124" font-family="Crimson Pro, serif" font-size="10" fill="#3a3f4c">Feature encoding</text>
   <text x="55" y="138" font-family="Crimson Pro, serif" font-size="10" fill="#3a3f4c">Proxy variable</text>
   <text x="55" y="152" font-family="Crimson Pro, serif" font-size="10" fill="#3a3f4c">identification</text>
-
   <!-- Arrow 1-2 -->
   <line x1="224" y1="105" x2="246" y2="105" stroke="#d4cfc2" stroke-width="1.5"/>
   <polygon points="246,100 256,105 246,110" fill="#d4cfc2"/>
-
   <!-- Stage 2 -->
   <rect x="260" y="50" width="180" height="110" fill="#ffffff" stroke="#d4cfc2" stroke-width="1.5" rx="3"/>
   <rect x="260" y="50" width="180" height="26" fill="#eaf5ef" rx="3"/>
@@ -55,11 +52,9 @@ Our framework comprises three stages, each targeting a different aspect of the h
   <text x="275" y="106" font-family="Crimson Pro, serif" font-size="10" fill="#3a3f4c">(where accessible)</text>
   <text x="275" y="124" font-family="Crimson Pro, serif" font-size="10" fill="#3a3f4c">Counterfactual testing</text>
   <text x="275" y="138" font-family="Crimson Pro, serif" font-size="10" fill="#3a3f4c">Sensitivity analysis</text>
-
   <!-- Arrow 2-3 -->
   <line x1="444" y1="105" x2="466" y2="105" stroke="#d4cfc2" stroke-width="1.5"/>
   <polygon points="466,100 476,105 466,110" fill="#d4cfc2"/>
-
   <!-- Stage 3 -->
   <rect x="480" y="50" width="180" height="110" fill="#ffffff" stroke="#d4cfc2" stroke-width="1.5" rx="3"/>
   <rect x="480" y="50" width="180" height="26" fill="#eaf5ef" rx="3"/>
@@ -69,7 +64,6 @@ Our framework comprises three stages, each targeting a different aspect of the h
   <text x="495" y="106" font-family="Crimson Pro, serif" font-size="10" fill="#3a3f4c">Statistical significance</text>
   <text x="495" y="124" font-family="Crimson Pro, serif" font-size="10" fill="#3a3f4c">Bootstrap CIs</text>
   <text x="495" y="138" font-family="Crimson Pro, serif" font-size="10" fill="#3a3f4c">Intersectional analysis</text>
-
   <!-- Bottom note -->
   <text x="340" y="185" text-anchor="middle" font-family="Inter, sans-serif" font-weight="400" font-size="9" fill="#8a8d96">Each stage produces independent findings and can be applied separately if full access is not available.</text>
 </svg>

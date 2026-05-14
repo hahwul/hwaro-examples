@@ -90,7 +90,6 @@ description = "Multi-phase launch event with rocket ignition sequence precision"
       </div>
     </div>
   </div>
-
   <div class="section-block">
     <div class="section-label">// Engine Status Array</div>
     <h2>Engine Cluster</h2>
@@ -143,7 +142,6 @@ description = "Multi-phase launch event with rocket ignition sequence precision"
       </div>
     </div>
   </div>
-
   <div class="section-block">
     <div class="section-label">// Mission Timeline</div>
     <h2>Launch Sequence</h2>
@@ -170,7 +168,6 @@ description = "Multi-phase launch event with rocket ignition sequence precision"
       </div>
     </div>
   </div>
-
   <div class="section-block">
     <div class="section-label">// Keynote Sessions</div>
     <h2>Mission Briefings</h2>

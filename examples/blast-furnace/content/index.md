@@ -9,7 +9,6 @@ description = "High-intensity forge workshop where ideas are smelted into realit
     <h1>BLAST FURNACE</h1>
     <p class="hero-subtitle">Raw ideas enter. Refined products emerge. Four stages of industrial-grade workshopping that will melt, mold, and temper your concepts into unbreakable form.</p>
     <p class="hero-date">2027.11.15 // THE FOUNDRY, PITTSBURGH</p>
-
     <!-- SVG blast furnace cross-section diagram -->
     <svg width="220" height="280" viewBox="0 0 220 280" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto 0; display: block;">
       <!-- Furnace outer shell -->
@@ -47,7 +46,6 @@ description = "High-intensity forge workshop where ideas are smelted into realit
 <div class="section-block">
   <div class="section-label">Process Flow</div>
   <h2>Workshop Stages</h2>
-
   <div class="stage-block">
     <div class="stage-number">CHARGE</div>
     <div class="stage-info">
@@ -56,7 +54,6 @@ description = "High-intensity forge workshop where ideas are smelted into realit
     </div>
     <div class="stage-badge-slot"><span class="furnace-badge">800C</span></div>
   </div>
-
   <div class="stage-block">
     <div class="stage-number">MELT</div>
     <div class="stage-info">
@@ -65,7 +62,6 @@ description = "High-intensity forge workshop where ideas are smelted into realit
     </div>
     <div class="stage-badge-slot"><span class="furnace-badge">1200C</span></div>
   </div>
-
   <div class="stage-block">
     <div class="stage-number">POUR</div>
     <div class="stage-info">
@@ -74,7 +70,6 @@ description = "High-intensity forge workshop where ideas are smelted into realit
     </div>
     <div class="stage-badge-slot"><span class="furnace-badge">1600C</span></div>
   </div>
-
   <div class="stage-block">
     <div class="stage-number">FORGE</div>
     <div class="stage-info">
@@ -88,7 +83,6 @@ description = "High-intensity forge workshop where ideas are smelted into realit
 <div class="section-block">
   <div class="section-label">Intensity</div>
   <h2>Temperature Gauges</h2>
-
   <!-- SVG temperature gauge displays -->
   <div class="gauge-row">
     <div class="gauge-block">
@@ -140,7 +134,6 @@ description = "High-intensity forge workshop where ideas are smelted into realit
 <div class="section-block">
   <div class="section-label">Equipment</div>
   <h2>Anvil and Tools</h2>
-
   <!-- SVG anvil and tool illustrations -->
   <svg width="100%" height="140" viewBox="0 0 600 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 24px auto; display: block; max-width: 600px;">
     <!-- Anvil -->
@@ -159,7 +152,6 @@ description = "High-intensity forge workshop where ideas are smelted into realit
     <text x="300" y="130" text-anchor="middle" fill="#664400" font-family="IBM Plex Sans, sans-serif" font-weight="700" font-size="8" letter-spacing="2">HAMMER</text>
     <text x="440" y="130" text-anchor="middle" fill="#664400" font-family="IBM Plex Sans, sans-serif" font-weight="700" font-size="8" letter-spacing="2">TONGS</text>
   </svg>
-
   <p style="text-align: center; font-family: 'IBM Plex Sans', sans-serif; font-weight: 700; font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.2em; text-transform: uppercase;">charge > melt > pour > forge</p>
 </div>
 

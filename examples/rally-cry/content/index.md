@@ -22,7 +22,6 @@ description = "Community movement and grassroots gathering."
     <p style="font-weight: 700; margin-bottom: 0.5rem;">"The Future of Urban Justice"</p>
     <p>A deep dive into community-led initiatives for sustainable city planning and equitable resource distribution.</p>
   </div>
-  
   <div>
     <h3 class="speaker-name">Sarah Vance</h3>
     <p style="font-weight: 700; margin-bottom: 0.5rem;">"Digital Sovereignty"</p>

@@ -7,7 +7,6 @@ description = "The Grand Theater venue details and seating information"
   <div class="section-label">The Venue</div>
   <h2>The Grand Theater</h2>
   <p style="color: var(--text-secondary); line-height: 1.8; max-width: 720px;">A historic 1,200-seat theater in the heart of New York's theater district. Gilt-framed boxes rise in tiers above the orchestra. The marquee outside has spelled legendary names for over a century. Tonight, it spells yours.</p>
-
   <!-- SVG theater architecture illustration -->
   <svg width="240" height="160" viewBox="0 0 240 160" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto; display: block;">
     <!-- Stage -->

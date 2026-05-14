@@ -21,7 +21,6 @@ title = "Home"
       <div class="tags"><span class="tag">Abstract</span><span class="tag">Digital</span></div>
     </div>
   </a>
-
   <a href="#" class="project-card">
     <img src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2670&auto=format&fit=crop" alt="Abstract Art 2">
     <div class="project-info">
@@ -30,7 +29,6 @@ title = "Home"
       <div class="tags"><span class="tag">Cyberpunk</span><span class="tag">Illustration</span></div>
     </div>
   </a>
-
   <a href="#" class="project-card">
     <img src="https://images.unsplash.com/photo-1604871000636-074fa5117945?q=80&w=2487&auto=format&fit=crop" alt="Abstract Art 3">
     <div class="project-info">

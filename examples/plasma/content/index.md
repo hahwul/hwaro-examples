@@ -31,7 +31,6 @@ description = "Fourth state of matter - real-time plasma physics observation and
     <div class="card-value">150,000,000 K</div>
     <p class="card-detail">Fifteen times hotter than the center of the Sun. At these temperatures, hydrogen nuclei possess enough kinetic energy to overcome Coulomb repulsion and undergo thermonuclear fusion.</p>
   </div>
-
   <div class="data-card glow-blue">
     <div class="card-header">
       <span class="card-indicator pulse-blue"></span>
@@ -40,7 +39,6 @@ description = "Fourth state of matter - real-time plasma physics observation and
     <div class="card-value">5.3 Tesla</div>
     <p class="card-detail">Toroidal magnetic confinement field strength. Superconducting magnets generate the field topology required to confine the plasma within the vacuum vessel.</p>
   </div>
-
   <div class="data-card glow-white">
     <div class="card-header">
       <span class="card-indicator pulse-white"></span>
@@ -49,7 +47,6 @@ description = "Fourth state of matter - real-time plasma physics observation and
     <div class="card-value">1.0 x 10^20 m^-3</div>
     <p class="card-detail">Particle density within the confinement region. Despite extreme temperatures, the plasma is actually less dense than air at sea level.</p>
   </div>
-
   <div class="data-card glow-magenta">
     <div class="card-header">
       <span class="card-indicator pulse-magenta"></span>
@@ -58,7 +55,6 @@ description = "Fourth state of matter - real-time plasma physics observation and
     <div class="card-value">400 seconds</div>
     <p class="card-detail">Duration of sustained plasma confinement in the current experimental run. The Lawson criterion demands sufficient confinement time for net energy gain.</p>
   </div>
-
   <div class="data-card glow-blue">
     <div class="card-header">
       <span class="card-indicator pulse-blue"></span>
@@ -67,7 +63,6 @@ description = "Fourth state of matter - real-time plasma physics observation and
     <div class="card-value">500 MW</div>
     <p class="card-detail">Projected thermal output from deuterium-tritium fusion reactions. The energy amplification factor Q exceeds 10, marking a milestone in fusion energy research.</p>
   </div>
-
   <div class="data-card glow-white">
     <div class="card-header">
       <span class="card-indicator pulse-white"></span>

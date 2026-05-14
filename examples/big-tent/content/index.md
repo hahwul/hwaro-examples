@@ -19,14 +19,12 @@ description = "Grand Gathering: Community Events Schedule"
     <p>Community mural painting for all ages.</p>
     <div style="font-family: 'DM Mono'; font-size: 12px; margin-top: 1rem;">ENTRY: FREE</div>
   </div>
-
   <div class="ticket-stub">
     <div class="booth-number">BOOTH 05</div>
     <h3 style="font-family: 'Lilita One'; font-size: 24px; text-transform: uppercase;">Tech Talk</h3>
     <p>The future of open-source in local communities.</p>
     <div style="font-family: 'DM Mono'; font-size: 12px; margin-top: 1rem;">ENTRY: TICKET A</div>
   </div>
-  
   <div class="ticket-stub">
     <div class="booth-number">BOOTH 21</div>
     <h3 style="font-family: 'Lilita One'; font-size: 24px; text-transform: uppercase;">Food Fair</h3>

@@ -28,24 +28,19 @@ Primary loadings ranged from 0.58 to 0.84. Cross-loadings were all below 0.30 ex
       <circle cx="140" cy="90" r="40" fill="#2a6dc4"/>
       <text x="140" y="88" text-anchor="middle">F1</text>
       <text x="140" y="104" text-anchor="middle" font-size="9">ACCESS</text>
-
       <circle cx="140" cy="180" r="40" fill="#2a6dc4"/>
       <text x="140" y="178" text-anchor="middle">F2</text>
       <text x="140" y="194" text-anchor="middle" font-size="9">COMM</text>
-
       <circle cx="140" cy="270" r="40" fill="#2a6dc4"/>
       <text x="140" y="268" text-anchor="middle">F3</text>
       <text x="140" y="284" text-anchor="middle" font-size="9">COMPR</text>
-
       <circle cx="140" cy="360" r="40" fill="#2a6dc4"/>
       <text x="140" y="358" text-anchor="middle">F4</text>
       <text x="140" y="374" text-anchor="middle" font-size="9">AUTON</text>
-
       <circle cx="440" cy="180" r="40" fill="#c4882a"/>
       <text x="440" y="178" text-anchor="middle">F5</text>
       <text x="440" y="194" text-anchor="middle" font-size="9">ENVIRON</text>
     </g>
-
     <!-- items -->
     <g font-family="JetBrains Mono" font-weight="700" font-size="10" fill="#181f2d">
       <!-- Access items Q1-Q5 -->
@@ -59,7 +54,6 @@ Primary loadings ranged from 0.58 to 0.84. Cross-loadings were all below 0.30 ex
       <text x="278" y="109" text-anchor="middle">Q04</text>
       <rect x="260" y="120" width="36" height="20" fill="#fafaf7" stroke="#181f2d"/>
       <text x="278" y="134" text-anchor="middle">Q05</text>
-
       <!-- Comm items Q6-Q10 -->
       <rect x="310" y="150" width="36" height="20" fill="#fafaf7" stroke="#181f2d"/>
       <text x="328" y="164" text-anchor="middle">Q06</text>
@@ -71,7 +65,6 @@ Primary loadings ranged from 0.58 to 0.84. Cross-loadings were all below 0.30 ex
       <text x="328" y="239" text-anchor="middle">Q09</text>
       <rect x="310" y="250" width="36" height="20" fill="#fafaf7" stroke="#181f2d"/>
       <text x="328" y="264" text-anchor="middle">Q10</text>
-
       <!-- Compr items Q11-Q15 -->
       <rect x="260" y="275" width="36" height="20" fill="#fafaf7" stroke="#181f2d"/>
       <text x="278" y="289" text-anchor="middle">Q11</text>
@@ -83,7 +76,6 @@ Primary loadings ranged from 0.58 to 0.84. Cross-loadings were all below 0.30 ex
       <text x="278" y="364" text-anchor="middle">Q14</text>
       <rect x="260" y="375" width="36" height="20" fill="#fafaf7" stroke="#181f2d"/>
       <text x="278" y="389" text-anchor="middle">Q15</text>
-
       <!-- Env items Q21-Q25 (right side) -->
       <rect x="560" y="80" width="36" height="20" fill="#fafaf7" stroke="#181f2d"/>
       <text x="578" y="94" text-anchor="middle">Q21</text>
@@ -95,12 +87,10 @@ Primary loadings ranged from 0.58 to 0.84. Cross-loadings were all below 0.30 ex
       <text x="578" y="214" text-anchor="middle">Q24</text>
       <rect x="560" y="240" width="36" height="20" fill="#fafaf7" stroke="#181f2d"/>
       <text x="578" y="254" text-anchor="middle">Q25</text>
-
       <!-- Auton items Q16-Q20 -->
       <rect x="260" y="400" width="36" height="20" fill="#fafaf7" stroke="#181f2d"/>
       <text x="278" y="414" text-anchor="middle">Q16</text>
     </g>
-
     <!-- Loadings (Access) -->
     <g stroke="#2a6dc4" stroke-width="1.2">
       <line x1="180" y1="90" x2="260" y2="30"/>
@@ -140,7 +130,6 @@ Primary loadings ranged from 0.58 to 0.84. Cross-loadings were all below 0.30 ex
     <!-- Cross-loading Q18 -> Comm -->
     <line x1="180" y1="180" x2="430" y2="405" stroke="#c43a2b" stroke-width="1" stroke-dasharray="3 3"/>
     <text x="400" y="400" font-family="JetBrains Mono" font-size="9" fill="#c43a2b" font-weight="700">Q18 cross = 0.31</text>
-
     <!-- Legend -->
     <g font-family="IBM Plex Sans" font-size="10" fill="#181f2d">
       <line x1="600" y1="370" x2="640" y2="370" stroke="#2a6dc4" stroke-width="1.4"/>

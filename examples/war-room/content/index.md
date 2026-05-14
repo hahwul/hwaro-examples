@@ -9,7 +9,6 @@ description = "Military strategy summit and command center"
     <h1>WAR ROOM</h1>
     <p class="hero-subtitle">Four operational briefings. One unified strategy. Command personnel assemble for a high-intensity summit that moves from strategic overview through intelligence analysis to full-scale operations planning. All stations report.</p>
     <p class="hero-date">DTG: 221400ZAUG2027 // COMMAND CENTER BRAVO</p>
-
     <!-- SVG situation map with unit position markers -->
     <svg width="320" height="200" viewBox="0 0 320 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto 0; display: block;">
       <!-- Map grid -->
@@ -55,7 +54,6 @@ description = "Military strategy summit and command center"
 <div class="section-block">
   <div class="section-label">Operations Order</div>
   <h2>Briefing Sequence</h2>
-
   <div class="briefing-block briefing-alpha">
     <div class="briefing-number">SITREP ALPHA</div>
     <div class="briefing-info">
@@ -66,7 +64,6 @@ description = "Military strategy summit and command center"
       <span class="war-badge-outline">CONF</span>
     </div>
   </div>
-
   <div class="briefing-block briefing-bravo">
     <div class="briefing-number">SITREP BRAVO</div>
     <div class="briefing-info">
@@ -77,7 +74,6 @@ description = "Military strategy summit and command center"
       <span class="war-badge-outline">SEC</span>
     </div>
   </div>
-
   <div class="briefing-block briefing-charlie">
     <div class="briefing-number">SITREP CHARLIE</div>
     <div class="briefing-info">
@@ -88,7 +84,6 @@ description = "Military strategy summit and command center"
       <span class="war-badge">SEC</span>
     </div>
   </div>
-
   <div class="briefing-block briefing-delta">
     <div class="briefing-number">SITREP DELTA</div>
     <div class="briefing-info">
@@ -104,7 +99,6 @@ description = "Military strategy summit and command center"
 <div class="section-block">
   <div class="section-label">Tactical Display</div>
   <h2>Force Readiness</h2>
-
   <!-- SVG tactical display panel -->
   <svg width="100%" height="160" viewBox="0 0 600 160" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 24px auto; display: block; max-width: 600px;">
     <!-- Panel frame -->
@@ -136,7 +130,6 @@ description = "Military strategy summit and command center"
 <div class="section-block">
   <div class="section-label">Comms Network</div>
   <h2>Communication Lines</h2>
-
   <!-- SVG communication line diagram -->
   <svg width="280" height="240" viewBox="0 0 280 240" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 24px auto; display: block;">
     <!-- Central command node -->
@@ -168,7 +161,6 @@ description = "Military strategy summit and command center"
     <circle cx="96" cy="156" r="3" fill="#30c060" opacity="0.12"/>
     <circle cx="184" cy="156" r="3" fill="#30c060" opacity="0.12"/>
   </svg>
-
   <p style="text-align: center; font-family: 'IBM Plex Sans', sans-serif; font-weight: 700; font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.2em; text-transform: uppercase;">alpha > bravo > charlie > delta</p>
 </div>
 

@@ -19,7 +19,6 @@ template = "home"
   <h2 class="section-title">The Evening Awaits</h2>
   <div class="section-divider"><span>✦</span></div>
   <p class="section-subtitle">An extraordinary night of dining, entertainment, and celebration under crystal chandeliers</p>
-
   <div class="event-grid">
     <div class="event-card">
       <div class="event-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="1em" height="1em" aria-hidden="true"><path d="M8 2 L6 9 a3 3 0 006 0 L10 2 Z"/><path d="M9 12 V21"/><path d="M6 21 H12"/><path d="M18 2 L16 9 a3 3 0 006 0 L20 2 Z" opacity=".5"/></svg></div>
@@ -51,7 +50,6 @@ template = "home"
 <section class="section highlights-section">
   <h2 class="section-title">An Unforgettable Night</h2>
   <div class="section-divider"><span>✦</span></div>
-
   <div class="highlights-grid">
     <div class="highlight-item">
       <div class="highlight-number">500+</div>

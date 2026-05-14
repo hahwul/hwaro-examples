@@ -6,7 +6,6 @@ description = "Team collaboration, reimagined"
 <div class="pt-32 pb-20 px-6 text-center relative overflow-hidden">
   <!-- Glow effect background -->
   <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] opacity-30 pointer-events-none" style="background: radial-gradient(circle at 50% 50%, #7c3aed 0%, transparent 60%); filter: blur(80px);"></div>
-
   <div class="max-w-4xl mx-auto relative z-10">
     <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-sm text-primary-light mb-8 backdrop-blur-md">
       <span class="flex h-2 w-2 rounded-full bg-accent animate-pulse"></span>
@@ -49,12 +48,10 @@ description = "Team collaboration, reimagined"
       <div class="text-sm text-gray-500 mt-2 font-medium uppercase tracking-wide">User rating</div>
     </div>
   </div>
-
   <div class="text-center max-w-2xl mx-auto mb-16">
     <h2 id="features" class="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight font-display">Everything your team needs</h2>
     <p class="text-gray-400 text-lg">Powerful tools designed to help your team build better products.</p>
   </div>
-
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
   {{ feature(icon="⚡", title="Real-time Sync", description="See changes instantly across your team. No refresh needed — every update appears in real-time.") }}
   {{ feature(icon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="1em" height="1em" aria-hidden="true"><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>', title="Smart Boards", description="Kanban, timeline, and list views. Organize work the way your team thinks, with drag-and-drop simplicity.") }}
@@ -63,12 +60,10 @@ description = "Team collaboration, reimagined"
   {{ feature(icon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="1em" height="1em" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>', title="Enterprise Security", description="SOC 2 Type II certified. SSO, SCIM provisioning, audit logs, and data encryption at rest.") }}
   {{ feature(icon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="1em" height="1em" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>', title="Global CDN", description="Lightning-fast performance worldwide. Your data is served from the edge, closest to your team.") }}
   </div>
-
   <div class="text-center max-w-2xl mx-auto mb-16 mt-32">
     <h2 id="pricing" class="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight font-display">Simple, transparent pricing</h2>
     <p class="text-gray-400 text-lg">Start for free, scale as you grow. No hidden fees.</p>
   </div>
-
   <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
   {{ pricing(name="Starter", price="$0", description="For individuals and small projects", f1="Up to 5 users", f2="10 projects", f3="Basic analytics", f4="Community support") }}
   {{ pricing(name="Pro", price="$12", description="For growing teams that need more", highlight="true", f1="Unlimited users", f2="Unlimited projects", f3="Advanced analytics", f4="Priority support", f5="Custom integrations") }}
