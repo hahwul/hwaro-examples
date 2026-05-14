@@ -8,7 +8,6 @@ template = "page"
   <p class="front-number">VOLUME I - PLATES I THROUGH XII</p>
   <h1>A Cabinet of Coloured Plates</h1>
   <p class="front-sub"><em>Impressed from the Stones, in the Year MDCCCLXXVIII</em></p>
-
   <div class="front-device" aria-hidden="true">
     <svg viewBox="0 0 240 96" xmlns="http://www.w3.org/2000/svg">
       <line x1="8" y1="48" x2="90" y2="48" stroke="#2a1d12" stroke-width="0.75"/>

@@ -53,7 +53,6 @@ template = "page"
     <h2 class="section-title">Upcoming Events</h2>
     <p class="section-description">Grand spectacles, orations, and celebrations curated for the discerning citizen of Rome.</p>
   </div>
-
   <div class="event-grid">
     <a href="{{ base_url }}/events/triumph-of-the-legions/" class="event-card">
       <div class="event-card-arch">
@@ -89,7 +88,6 @@ template = "page"
       </div>
     </a>
   </div>
-
   <div class="section-footer-link">
     <a href="{{ base_url }}/events/" class="link-decorated">View All Events in the Programme</a>
   </div>
@@ -107,7 +105,6 @@ template = "page"
     <h2 class="section-title">Venue Highlights</h2>
     <p class="section-description">The Colosseum stands as an enduring monument to Roman engineering and the pursuit of excellence.</p>
   </div>
-
   <div class="venue-grid">
     <div class="venue-card">
       <div class="venue-icon-wrap">
@@ -176,7 +173,6 @@ template = "page"
     <h2 class="section-title">Distinguished Orators</h2>
     <p class="section-description">Scholars, statesmen, and visionaries who carry the torch of Roman knowledge and eloquence.</p>
   </div>
-
   <div class="speakers-grid">
     <div class="speaker-card">
       <div class="speaker-avatar">M</div>

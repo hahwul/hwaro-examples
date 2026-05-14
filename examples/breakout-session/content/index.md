@@ -64,7 +64,6 @@ template = "index"
       </div>
     </div>
   </a>
-
   <a class="terminal" href="{{ base_url }}/tracks/data-track/">
     <div class="terminal-head">
       <div class="terminal-dots"><span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span></div>
@@ -86,7 +85,6 @@ template = "index"
       </div>
     </div>
   </a>
-
   <a class="terminal" href="{{ base_url }}/tracks/platform-track/">
     <div class="terminal-head">
       <div class="terminal-dots"><span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span></div>
@@ -108,7 +106,6 @@ template = "index"
       </div>
     </div>
   </a>
-
   <a class="terminal" href="{{ base_url }}/tracks/craft-track/">
     <div class="terminal-head">
       <div class="terminal-dots"><span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span></div>
@@ -130,7 +127,6 @@ template = "index"
       </div>
     </div>
   </a>
-
   <a class="terminal" href="{{ base_url }}/tracks/data-track/">
     <div class="terminal-head">
       <div class="terminal-dots"><span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span></div>
@@ -153,7 +149,6 @@ template = "index"
       </div>
     </div>
   </a>
-
   <a class="terminal" href="{{ base_url }}/tracks/systems-track/">
     <div class="terminal-head">
       <div class="terminal-dots"><span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span></div>

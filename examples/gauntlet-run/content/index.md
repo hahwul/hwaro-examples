@@ -9,7 +9,6 @@ description = "Endurance obstacle course event -- twelve stations, one path, no 
     <h1>GAUNTLET RUN</h1>
     <p class="hero-subtitle">Twelve stations. One sequential path. No shortcuts. Each station harder than the last. Only the completion rate tells the story.</p>
     <p class="hero-date">2027.05.10 // IRON GROUNDS, PORTLAND</p>
-
     <!-- SVG route map connecting stations -->
     <svg width="360" height="120" viewBox="0 0 360 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto 0; display: block;">
       <!-- Route path -->
@@ -44,7 +43,6 @@ description = "Endurance obstacle course event -- twelve stations, one path, no 
 <div class="section-block">
   <div class="section-label">Course Map</div>
   <h2>Station Lineup</h2>
-
   <div class="station-block">
     <div class="station-number">01/12</div>
     <div class="station-info">
@@ -53,7 +51,6 @@ description = "Endurance obstacle course event -- twelve stations, one path, no 
     </div>
     <div class="station-badge-slot"><span class="diff-badge diff-easy">Easy</span></div>
   </div>
-
   <div class="station-block">
     <div class="station-number">02/12</div>
     <div class="station-info">
@@ -62,7 +59,6 @@ description = "Endurance obstacle course event -- twelve stations, one path, no 
     </div>
     <div class="station-badge-slot"><span class="diff-badge diff-easy">Easy</span></div>
   </div>
-
   <div class="station-block">
     <div class="station-number">03/12</div>
     <div class="station-info">
@@ -71,7 +67,6 @@ description = "Endurance obstacle course event -- twelve stations, one path, no 
     </div>
     <div class="station-badge-slot"><span class="diff-badge diff-medium">Medium</span></div>
   </div>
-
   <div class="station-block">
     <div class="station-number">06/12</div>
     <div class="station-info">
@@ -80,7 +75,6 @@ description = "Endurance obstacle course event -- twelve stations, one path, no 
     </div>
     <div class="station-badge-slot"><span class="diff-badge diff-hard">Hard</span></div>
   </div>
-
   <div class="station-block">
     <div class="station-number">09/12</div>
     <div class="station-info">
@@ -89,7 +83,6 @@ description = "Endurance obstacle course event -- twelve stations, one path, no 
     </div>
     <div class="station-badge-slot"><span class="diff-badge diff-hard">Hard</span></div>
   </div>
-
   <div class="station-block">
     <div class="station-number">12/12</div>
     <div class="station-info">
@@ -103,7 +96,6 @@ description = "Endurance obstacle course event -- twelve stations, one path, no 
 <div class="section-block">
   <div class="section-label">Statistics</div>
   <h2>Completion Rates</h2>
-
   <div class="stats-row">
     <div class="stats-block">
       <!-- SVG checkpoint flag -->
@@ -139,7 +131,6 @@ description = "Endurance obstacle course event -- twelve stations, one path, no 
 <div class="section-block">
   <div class="section-label">Difficulty</div>
   <h2>Spike Chart</h2>
-
   <!-- SVG difficulty spike line chart -->
   <svg width="100%" height="120" viewBox="0 0 600 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 24px auto; display: block; max-width: 600px;">
     <!-- Baseline -->
@@ -166,7 +157,6 @@ description = "Endurance obstacle course event -- twelve stations, one path, no 
     <text x="455" y="115" text-anchor="middle" fill="#506048" font-family="Rajdhani, sans-serif" font-weight="700" font-size="8">10</text>
     <text x="545" y="115" text-anchor="middle" fill="#506048" font-family="Rajdhani, sans-serif" font-weight="700" font-size="8">12</text>
   </svg>
-
   <p style="text-align: center; font-family: 'Roboto Condensed', sans-serif; font-weight: 700; font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.2em; text-transform: uppercase;">12 stations // 5.2km total // 31% completion rate</p>
 </div>
 

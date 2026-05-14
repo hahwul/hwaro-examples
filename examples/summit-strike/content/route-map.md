@@ -24,26 +24,21 @@ Every session runs inside the Ridge Hall complex. The main hall, the four lab ro
   </defs>
   <rect x="0" y="0" width="1200" height="600" fill="#141b21"/>
   <rect x="0" y="0" width="1200" height="600" fill="url(#topo)"/>
-
   <!-- back mountain silhouette -->
   <polygon points="0,600 150,330 280,400 440,220 600,330 760,260 920,360 1060,280 1200,360 1200,600" fill="#1e2832" opacity="0.95"/>
   <polygon points="0,600 100,400 240,460 380,380 520,420 640,360 780,420 900,380 1040,440 1200,420 1200,600" fill="#141b21" opacity="0.9"/>
-
   <!-- The trail -->
   <path d="M120,540 Q200,500 260,480 Q320,460 380,440 Q440,420 500,390 Q570,350 620,310 Q680,280 720,260 Q760,240 800,220 Q840,200 880,190" fill="none" stroke="#d6ff4a" stroke-width="2.5" stroke-dasharray="6 5"/>
-
   <!-- Venue buildings / waypoints -->
   <!-- Base Camp -->
   <rect x="90" y="520" width="60" height="40" fill="#2a3540" stroke="#f4f6f4" stroke-width="1.5"/>
   <circle cx="120" cy="540" r="6" fill="#d6ff4a" stroke="#0c1014" stroke-width="2"/>
   <text x="165" y="545" font-family="Montserrat" font-weight="800" font-size="13" fill="#f4f6f4" letter-spacing="2">BASE CAMP</text>
   <text x="165" y="560" font-family="JetBrains Mono" font-size="10" fill="#d6ff4a" letter-spacing="2">1,600 M</text>
-
   <!-- Cafe / water stop -->
   <circle cx="260" cy="480" r="6" fill="#d6ff4a" stroke="#0c1014" stroke-width="2"/>
   <text x="278" y="476" font-family="Montserrat" font-weight="700" font-size="12" fill="#f4f6f4" letter-spacing="1">Cafe &middot; Hydration</text>
   <text x="278" y="492" font-family="JetBrains Mono" font-size="9" fill="#d6ff4a" letter-spacing="1">1,820 M</text>
-
   <!-- Lab rooms cluster -->
   <rect x="350" y="420" width="120" height="50" fill="#2a3540" stroke="#f4f6f4" stroke-width="1.5"/>
   <line x1="380" y1="420" x2="380" y2="470" stroke="#f4f6f4" stroke-width="1"/>
@@ -52,20 +47,17 @@ Every session runs inside the Ridge Hall complex. The main hall, the four lab ro
   <text x="410" y="412" text-anchor="middle" font-family="Montserrat" font-weight="800" font-size="12" fill="#f4f6f4" letter-spacing="2">LAB ROOMS 01 - 04</text>
   <text x="410" y="488" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#d6ff4a" letter-spacing="1">2,100 M</text>
   <circle cx="380" cy="440" r="5" fill="#d6ff4a" stroke="#0c1014" stroke-width="1.5"/>
-
   <!-- Main hall -->
   <rect x="540" y="340" width="180" height="70" fill="#2a3540" stroke="#f4f6f4" stroke-width="2"/>
   <text x="630" y="372" text-anchor="middle" font-family="Montserrat" font-weight="900" font-size="14" fill="#f4f6f4" letter-spacing="3">RIDGE HALL</text>
   <text x="630" y="390" text-anchor="middle" font-family="Inter" font-size="11" fill="#8aa0b5" letter-spacing="1">Main auditorium / 1,200 seats</text>
   <circle cx="630" cy="408" r="7" fill="#d6ff4a" stroke="#0c1014" stroke-width="2"/>
   <text x="630" y="425" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#d6ff4a" letter-spacing="1">2,500 M</text>
-
   <!-- Checkpoint pavilion -->
   <rect x="740" y="260" width="100" height="40" fill="#2a3540" stroke="#f4f6f4" stroke-width="1.5"/>
   <text x="790" y="284" text-anchor="middle" font-family="Montserrat" font-weight="700" font-size="11" fill="#f4f6f4" letter-spacing="1">CHECKPOINT</text>
   <circle cx="720" cy="260" r="6" fill="#d6ff4a" stroke="#0c1014" stroke-width="2"/>
   <text x="740" y="316" font-family="JetBrains Mono" font-size="10" fill="#d6ff4a" letter-spacing="1">2,940 M</text>
-
   <!-- Peak Pavilion -->
   <g transform="translate(880,190)">
     <polygon points="0,0 -26,30 26,30" fill="#d6ff4a" stroke="#0c1014" stroke-width="1.5"/>
@@ -74,7 +66,6 @@ Every session runs inside the Ridge Hall complex. The main hall, the four lab ro
   </g>
   <text x="880" y="250" text-anchor="middle" font-family="Montserrat" font-weight="900" font-size="14" fill="#d6ff4a" letter-spacing="3">SUMMIT</text>
   <text x="880" y="268" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#f4f6f4" letter-spacing="2">4,210 M</text>
-
   <!-- scale bar -->
   <g transform="translate(80,570)">
     <line x1="0" y1="0" x2="120" y2="0" stroke="#f4f6f4" stroke-width="2"/>
@@ -83,7 +74,6 @@ Every session runs inside the Ridge Hall complex. The main hall, the four lab ro
     <line x1="120" y1="-4" x2="120" y2="4" stroke="#f4f6f4" stroke-width="2"/>
     <text x="60" y="16" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#f4f6f4" letter-spacing="1">200 M</text>
   </g>
-
   <!-- compass -->
   <g transform="translate(1130,540)">
     <circle cx="0" cy="0" r="24" fill="#0c1014" stroke="#f4f6f4" stroke-width="1"/>

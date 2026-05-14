@@ -9,7 +9,6 @@ description = "Precision target skills event with competitive lane-based challen
     <h1>FIRING RANGE</h1>
     <p class="hero-subtitle">Four lanes. Escalating difficulty. Concentric scoring rings from X to 8. Prove your precision under pressure. Every shot counts.</p>
     <p class="hero-date">2027.10.20 // IRON SIGHTS COMPLEX, DENVER</p>
-
     <!-- SVG concentric ring target bullseye pattern -->
     <svg width="220" height="220" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto 0; display: block;">
       <!-- Outer ring 8 -->
@@ -43,7 +42,6 @@ description = "Precision target skills event with competitive lane-based challen
 <div class="section-block">
   <div class="section-label">Lane Assignments</div>
   <h2>Competition Lanes</h2>
-
   <div class="lane-block">
     <div class="lane-number">LANE 01</div>
     <div class="lane-info">
@@ -52,7 +50,6 @@ description = "Precision target skills event with competitive lane-based challen
     </div>
     <div class="lane-badge-slot"><span class="range-badge">X/10</span></div>
   </div>
-
   <div class="lane-block">
     <div class="lane-number">LANE 02</div>
     <div class="lane-info">
@@ -61,7 +58,6 @@ description = "Precision target skills event with competitive lane-based challen
     </div>
     <div class="lane-badge-slot"><span class="range-badge">10/9</span></div>
   </div>
-
   <div class="lane-block">
     <div class="lane-number">LANE 03</div>
     <div class="lane-info">
@@ -70,7 +66,6 @@ description = "Precision target skills event with competitive lane-based challen
     </div>
     <div class="lane-badge-slot"><span class="range-badge-outline">9/8</span></div>
   </div>
-
   <div class="lane-block">
     <div class="lane-number">LANE 04</div>
     <div class="lane-info">
@@ -84,7 +79,6 @@ description = "Precision target skills event with competitive lane-based challen
 <div class="section-block">
   <div class="section-label">Scoring</div>
   <h2>Scoring Zones</h2>
-
   <div class="score-row">
     <div class="score-block">
       <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 0 auto 12px; display: block;">
@@ -119,7 +113,6 @@ description = "Precision target skills event with competitive lane-based challen
 <div class="section-block">
   <div class="section-label">Range Layout</div>
   <h2>Lane Dividers</h2>
-
   <!-- SVG lane divider patterns for parallel tracks -->
   <svg width="100%" height="100" viewBox="0 0 600 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 24px auto; display: block; max-width: 600px;">
     <!-- Lane dividers -->
@@ -147,7 +140,6 @@ description = "Precision target skills event with competitive lane-based challen
     <!-- Safety label -->
     <text x="300" y="95" text-anchor="middle" fill="#551a1a" font-family="IBM Plex Mono, monospace" font-weight="700" font-size="7" letter-spacing="4">SAFETY BOUNDARY</text>
   </svg>
-
   <p style="text-align: center; font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.2em; text-transform: uppercase;">4 lanes // x/10/9/8 scoring // precision wins</p>
 </div>
 

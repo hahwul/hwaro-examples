@@ -20,7 +20,6 @@ tags = ["paper", "light", "review", "literature", "synthesis"]
     <sup>4</sup>National Center for Cognitive Behavior Therapy, Tokyo
   </p>
   <p class="paper-doi"><strong>DOI:</strong> <a href="#">10.41093/ebpr.2026.18.02.088</a> &middot; <strong>Registered:</strong> PROSPERO CRD42025012345 &middot; <strong>Accepted:</strong> 22 Mar 2026</p>
-
   <span class="prisma-badge">PRISMA 2020 Compliant</span>
 </header>
 

@@ -9,7 +9,6 @@ description = "Cascading momentum event that builds from whisper to roar"
     <h1>AVALANCHE</h1>
     <p class="hero-subtitle">It starts with a single crack in the snowfield. Then movement. Then mass. Four sessions that build from intimate whisper to overwhelming roar. The mountain does not stop.</p>
     <p class="hero-date">2027.12.20 // THE SUMMIT, CHAMONIX</p>
-
     <!-- SVG avalanche fracture line pattern -->
     <svg width="320" height="180" viewBox="0 0 320 180" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto 0; display: block;">
       <!-- Mountain outline -->
@@ -47,7 +46,6 @@ description = "Cascading momentum event that builds from whisper to roar"
 <div class="section-block">
   <div class="section-label">Momentum Build</div>
   <h2>Session Progression</h2>
-
   <div class="session-block session-sm">
     <div class="session-number">SESSION I</div>
     <div class="session-info">
@@ -58,7 +56,6 @@ description = "Cascading momentum event that builds from whisper to roar"
       <span class="avalanche-badge-outline">12</span>
     </div>
   </div>
-
   <div class="session-block session-md">
     <div class="session-number">SESSION II</div>
     <div class="session-info">
@@ -69,7 +66,6 @@ description = "Cascading momentum event that builds from whisper to roar"
       <span class="avalanche-badge-outline">48</span>
     </div>
   </div>
-
   <div class="session-block session-lg">
     <div class="session-number">SESSION III</div>
     <div class="session-info">
@@ -80,7 +76,6 @@ description = "Cascading momentum event that builds from whisper to roar"
       <span class="avalanche-badge">200</span>
     </div>
   </div>
-
   <div class="session-block session-xl">
     <div class="session-number">SESSION IV</div>
     <div class="session-info">
@@ -96,7 +91,6 @@ description = "Cascading momentum event that builds from whisper to roar"
 <div class="section-block">
   <div class="section-label">Scale</div>
   <h2>Attendee Growth</h2>
-
   <!-- SVG snowfield crack propagation showing exponential growth -->
   <svg width="100%" height="140" viewBox="0 0 600 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 24px auto; display: block; max-width: 600px;">
     <!-- Growth bars -->
@@ -125,7 +119,6 @@ description = "Cascading momentum event that builds from whisper to roar"
 <div class="section-block">
   <div class="section-label">Debris</div>
   <h2>Scatter Pattern</h2>
-
   <!-- SVG debris field scatter pattern -->
   <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 24px auto; display: block;">
     <!-- Central impact -->
@@ -148,7 +141,6 @@ description = "Cascading momentum event that builds from whisper to roar"
     <path d="M80,30 L100,10 L120,30" stroke="#8fb8d0" stroke-width="1" fill="none" opacity="0.15"/>
     <line x1="100" y1="30" x2="100" y2="72" stroke="#8fb8d0" stroke-width="0.8" opacity="0.12"/>
   </svg>
-
   <p style="text-align: center; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.2em; text-transform: uppercase;">whisper > rumble > roar > aftermath</p>
 </div>
 

@@ -13,7 +13,6 @@ description = "Logistics and assembly points."
   <h3 style="font-family: 'Bebas Neue'; font-size: 32px; margin-bottom: 1rem;">ASSEMBLY POINT: CENTRAL PLAZA</h3>
   <p>TIME: 06:00 AM SHARP</p>
   <p>BRING: WATER, COMFORTABLE SHOES, AND YOUR VOICE.</p>
-  
   <div style="margin-top: 2rem; border-top: 1px solid var(--black); padding-top: 2rem;">
     <h4 style="text-transform: uppercase; margin-bottom: 1rem;">Access Routes</h4>
     <p>1. SUBWAY: NORTH STATION (LINE 4) IS THE NEAREST STOP.</p>

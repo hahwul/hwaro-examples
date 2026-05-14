@@ -9,7 +9,6 @@ description = "Premiere opening night event with red carpet glamour and theater 
     <h1>OPENING NIGHT</h1>
     <p class="hero-subtitle">The lights dim. The curtain rises. Four acts of premiere presentations under the glow of marquee bulbs and the hush of velvet. This is the night everything begins.</p>
     <p class="hero-date">PREMIERE // 2027.11.14 // THE GRAND THEATER, NEW YORK</p>
-
     <!-- SVG marquee lightbulb border pattern -->
     <svg width="320" height="60" viewBox="0 0 320 60" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto 0; display: block;">
       <!-- Top row of bulbs -->
@@ -61,7 +60,6 @@ description = "Premiere opening night event with red carpet glamour and theater 
 <div class="section-block">
   <div class="section-label">The Program</div>
   <h2>Red Carpet Timeline</h2>
-
   <!-- SVG red carpet path diagram -->
   <svg width="100%" height="30" viewBox="0 0 600 30" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 20px auto 28px; display: block; max-width: 600px;">
     <rect x="0" y="10" width="600" height="10" fill="#8b2020" opacity="0.15"/>
@@ -78,7 +76,6 @@ description = "Premiere opening night event with red carpet glamour and theater 
     <path d="M304,15 Q375,8 446,15" stroke="#d4a843" stroke-width="1" fill="none" opacity="0.2"/>
     <path d="M454,15 Q520,8 586,15" stroke="#d4a843" stroke-width="1" fill="none" opacity="0.2"/>
   </svg>
-
   <div class="program-block">
     <div class="program-number">ACT I</div>
     <div class="program-info">
@@ -89,7 +86,6 @@ description = "Premiere opening night event with red carpet glamour and theater 
       <span class="premiere-badge">19:00</span>
     </div>
   </div>
-
   <div class="program-block">
     <div class="program-number">ACT II</div>
     <div class="program-info">
@@ -100,7 +96,6 @@ description = "Premiere opening night event with red carpet glamour and theater 
       <span class="premiere-badge">20:00</span>
     </div>
   </div>
-
   <div class="program-block">
     <div class="program-number">ACT III</div>
     <div class="program-info">
@@ -111,7 +106,6 @@ description = "Premiere opening night event with red carpet glamour and theater 
       <span class="premiere-badge">21:00</span>
     </div>
   </div>
-
   <div class="program-block">
     <div class="program-number">ACT IV</div>
     <div class="program-info">
@@ -127,7 +121,6 @@ description = "Premiere opening night event with red carpet glamour and theater 
 <div class="section-block">
   <div class="section-label">Venue</div>
   <h2>Theater Marquee</h2>
-
   <!-- SVG theater marquee frame -->
   <svg width="300" height="180" viewBox="0 0 300 180" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 24px auto; display: block;">
     <!-- Marquee outer frame -->
@@ -165,7 +158,6 @@ description = "Premiere opening night event with red carpet glamour and theater 
 <div class="section-block">
   <div class="section-label">Velvet Rope</div>
   <h2>VIP Access</h2>
-
   <!-- SVG velvet rope barrier pattern -->
   <svg width="100%" height="80" viewBox="0 0 600 80" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 24px auto; display: block; max-width: 600px;">
     <!-- Posts -->
@@ -186,7 +178,6 @@ description = "Premiere opening night event with red carpet glamour and theater 
     <text x="275" y="75" text-anchor="middle" fill="#d4a843" font-family="Playfair Display SC, serif" font-size="7" letter-spacing="3" opacity="0.35">VIP</text>
     <text x="425" y="75" text-anchor="middle" fill="#d4a843" font-family="Playfair Display SC, serif" font-size="7" letter-spacing="3" opacity="0.35">PREMIERE</text>
   </svg>
-
   <p style="text-align: center; font-family: 'Cormorant', serif; font-size: 0.9rem; color: var(--text-muted); letter-spacing: 0.2em; text-transform: uppercase;">arrival > red carpet > theater > gala</p>
 </div>
 

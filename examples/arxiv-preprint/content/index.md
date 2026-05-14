@@ -140,83 +140,64 @@ On the Long Range Arena (LRA) benchmark, SGA achieves **87.2% average accuracy**
 <svg viewBox="0 0 700 340" xmlns="http://www.w3.org/2000/svg" class="architecture-diagram" aria-label="Sparse Gated Attention architecture diagram">
   <!-- Background -->
   <rect x="0" y="0" width="700" height="340" fill="#fafaf8" rx="4"/>
-
   <!-- Input -->
   <rect x="280" y="10" width="140" height="32" rx="3" fill="none" stroke="#333" stroke-width="1.5"/>
   <text x="350" y="31" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#333">Input X (n x d)</text>
-
   <!-- Arrow down -->
   <line x1="350" y1="42" x2="350" y2="62" stroke="#666" stroke-width="1" marker-end="url(#arrowhead)"/>
-
   <!-- QKV Projections -->
   <rect x="120" y="64" width="100" height="28" rx="3" fill="none" stroke="#2a5a8a" stroke-width="1.5"/>
   <text x="170" y="83" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#2a5a8a">W_Q</text>
-
   <rect x="300" y="64" width="100" height="28" rx="3" fill="none" stroke="#2a5a8a" stroke-width="1.5"/>
   <text x="350" y="83" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#2a5a8a">W_K</text>
-
   <rect x="480" y="64" width="100" height="28" rx="3" fill="none" stroke="#2a5a8a" stroke-width="1.5"/>
   <text x="530" y="83" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#2a5a8a">W_V</text>
-
   <!-- Branching arrows from input -->
   <line x1="350" y1="52" x2="170" y2="64" stroke="#666" stroke-width="1"/>
   <line x1="350" y1="52" x2="350" y2="64" stroke="#666" stroke-width="1"/>
   <line x1="350" y1="52" x2="530" y2="64" stroke="#666" stroke-width="1"/>
-
   <!-- Q, K labels -->
   <text x="170" y="108" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#666">Q</text>
   <text x="350" y="108" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#666">K</text>
   <text x="530" y="108" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#666">V</text>
-
   <!-- Arrows down from QKV -->
   <line x1="170" y1="92" x2="170" y2="122" stroke="#666" stroke-width="1"/>
   <line x1="350" y1="92" x2="350" y2="122" stroke="#666" stroke-width="1"/>
   <line x1="530" y1="92" x2="530" y2="198" stroke="#666" stroke-width="1"/>
-
   <!-- Attention score computation -->
   <rect x="180" y="122" width="250" height="32" rx="3" fill="none" stroke="#333" stroke-width="1.5"/>
   <text x="305" y="143" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#333">A = softmax(QK^T / sqrt(d))</text>
-
   <!-- Arrows from Q,K into attention -->
   <line x1="170" y1="112" x2="250" y2="122" stroke="#666" stroke-width="1"/>
   <line x1="350" y1="112" x2="350" y2="122" stroke="#666" stroke-width="1"/>
-
   <!-- Gate Network (the novel part) - highlighted -->
   <rect x="16" y="110" width="130" height="64" rx="4" fill="#fff7f0" stroke="#c45a1a" stroke-width="2"/>
   <text x="81" y="130" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" font-weight="700" fill="#c45a1a">Gate Network</text>
   <text x="81" y="144" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" fill="#c45a1a">Low-rank proj.</text>
   <text x="81" y="158" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" fill="#c45a1a">+ Gumbel-sigmoid</text>
   <text x="81" y="170" text-anchor="middle" font-family="Inter, sans-serif" font-size="8" fill="#999">(+0.3% params)</text>
-
   <!-- Arrow from Q to Gate -->
   <line x1="170" y1="108" x2="146" y2="118" stroke="#c45a1a" stroke-width="1.5" stroke-dasharray="4,2"/>
-
   <!-- Gate mask output -->
   <rect x="36" y="194" width="90" height="28" rx="3" fill="none" stroke="#c45a1a" stroke-width="1.5"/>
   <text x="81" y="213" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" font-weight="600" fill="#c45a1a">G (mask)</text>
   <line x1="81" y1="174" x2="81" y2="194" stroke="#c45a1a" stroke-width="1.5" marker-end="url(#arrowhead-orange)"/>
-
   <!-- Hadamard product -->
   <rect x="180" y="178" width="250" height="32" rx="3" fill="#fff7f0" stroke="#c45a1a" stroke-width="2"/>
   <text x="305" y="199" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#c45a1a">A_sparse = A * G (element-wise)</text>
-
   <!-- Arrows into Hadamard -->
   <line x1="305" y1="154" x2="305" y2="178" stroke="#666" stroke-width="1" marker-end="url(#arrowhead)"/>
   <line x1="126" y1="208" x2="180" y2="198" stroke="#c45a1a" stroke-width="1.5"/>
-
   <!-- Output computation -->
   <rect x="220" y="234" width="220" height="32" rx="3" fill="none" stroke="#333" stroke-width="1.5"/>
   <text x="330" y="255" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#333">Output = A_sparse * V</text>
-
   <!-- Arrows from sparse attention and V -->
   <line x1="305" y1="210" x2="305" y2="234" stroke="#666" stroke-width="1" marker-end="url(#arrowhead)"/>
   <line x1="530" y1="208" x2="440" y2="240" stroke="#666" stroke-width="1"/>
-
   <!-- Final output -->
   <rect x="270" y="286" width="120" height="32" rx="3" fill="none" stroke="#333" stroke-width="1.5"/>
   <text x="330" y="307" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#333">Output (n x d)</text>
   <line x1="330" y1="266" x2="330" y2="286" stroke="#666" stroke-width="1" marker-end="url(#arrowhead)"/>
-
   <!-- Legend -->
   <rect x="530" y="250" width="155" height="76" rx="3" fill="#fafaf8" stroke="#ccc" stroke-width="0.75"/>
   <text x="540" y="266" font-family="Inter, sans-serif" font-size="9" font-weight="600" fill="#333">Legend</text>
@@ -226,7 +207,6 @@ On the Long Range Arena (LRA) benchmark, SGA achieves **87.2% average accuracy**
   <text x="566" y="300" font-family="Inter, sans-serif" font-size="8" fill="#666">SGA components</text>
   <line x1="540" y1="312" x2="560" y2="312" stroke="#c45a1a" stroke-width="1.5" stroke-dasharray="4,2"/>
   <text x="566" y="316" font-family="Inter, sans-serif" font-size="8" fill="#666">Gate input</text>
-
   <!-- Arrowhead markers -->
   <defs>
     <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">

@@ -6,7 +6,6 @@ description = "Talk formats and rules for lightning sessions"
 <div class="section-block">
   <div class="section-label">Rules</div>
   <h2>Talk Format</h2>
-
   <div class="stopwatch-row">
     <div class="stopwatch-block">
       <div class="stopwatch-display">5:00</div>
@@ -19,7 +18,6 @@ description = "Talk formats and rules for lightning sessions"
       <p style="color: var(--text-secondary); margin-top: 12px; font-size: 0.85rem;">For topics that need a demo. Ten minutes. Includes live coding or walkthrough.</p>
     </div>
   </div>
-
   <!-- SVG flash bulb pop illustration -->
   <svg width="100%" height="120" viewBox="0 0 600 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto; display: block; max-width: 600px;">
     <!-- Flash bulb 1 -->
@@ -31,7 +29,6 @@ description = "Talk formats and rules for lightning sessions"
     <line x1="70" y1="60" x2="62" y2="60" stroke="#f59e0b" stroke-width="1.5" opacity="0.4"/>
     <line x1="130" y1="60" x2="138" y2="60" stroke="#f59e0b" stroke-width="1.5" opacity="0.4"/>
     <text x="100" y="112" text-anchor="middle" fill="#6a5c48" font-family="Roboto Condensed, sans-serif" font-weight="700" font-size="8" letter-spacing="2">FLASH 1</text>
-
     <!-- Flash bulb 2 -->
     <circle cx="300" cy="60" r="30" fill="#f59e0b" opacity="0.08"/>
     <circle cx="300" cy="60" r="18" fill="#f59e0b" opacity="0.12"/>
@@ -41,7 +38,6 @@ description = "Talk formats and rules for lightning sessions"
     <line x1="264" y1="60" x2="254" y2="60" stroke="#f59e0b" stroke-width="2" opacity="0.5"/>
     <line x1="336" y1="60" x2="346" y2="60" stroke="#f59e0b" stroke-width="2" opacity="0.5"/>
     <text x="300" y="112" text-anchor="middle" fill="#6a5c48" font-family="Roboto Condensed, sans-serif" font-weight="700" font-size="8" letter-spacing="2">POP</text>
-
     <!-- Flash bulb 3 -->
     <circle cx="500" cy="60" r="20" fill="#f59e0b" opacity="0.04"/>
     <circle cx="500" cy="60" r="12" fill="#f59e0b" opacity="0.08"/>

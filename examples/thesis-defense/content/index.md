@@ -36,7 +36,6 @@ tags = ["paper", "dark", "thesis", "formal", "institutional"]
     <text x="115" y="115" text-anchor="middle" font-family="'Cinzel',serif" font-size="9" fill="#c4a35a">2026</text>
   </svg>
   </figure>
-
   <p class="paper-eyebrow">Doctoral Dissertation &middot; Department of Physics</p>
   <h1 class="paper-title">Topological Phases and Correlated States in Twisted Bilayer Graphene: Theory, Simulation, and Spectroscopic Evidence</h1>
   <p class="paper-subtitle">A dissertation submitted in partial fulfillment of the requirements for the degree of Doctor of Philosophy at the Massachusetts Institute of Technology</p>

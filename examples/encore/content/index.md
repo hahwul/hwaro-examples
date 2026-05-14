@@ -9,7 +9,6 @@ description = "Repeat performance event -- popular sessions get encores by audie
     <h1 class="display-font">Encore</h1>
     <p class="hero-subtitle">The best sessions deserve a second act. Audience votes decide which talks return to the stage.</p>
     <p class="hero-date">2026.11.22 // GRAND LYCEUM, VIENNA</p>
-
     <!-- SVG curtain-rise pattern -->
     <svg width="360" height="100" viewBox="0 0 360 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto 0; display: block;">
       <!-- Curtain drape left -->
@@ -37,7 +36,6 @@ description = "Repeat performance event -- popular sessions get encores by audie
 <div class="section-block">
   <div class="section-label">Audience Demand</div>
   <h2>Vote Tally</h2>
-
   <div class="demand-bar">
     <div class="demand-row">
       <div class="demand-title">The Art of Failure</div>
@@ -65,7 +63,6 @@ description = "Repeat performance event -- popular sessions get encores by audie
       <div class="demand-count">1,456</div>
     </div>
   </div>
-
   <div style="margin-top: 20px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
     <span class="encore-banner">ENCORE</span>
     <span style="font-family: 'Source Sans Pro', sans-serif; font-weight: 700; font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.1em;">TOP 3 SESSIONS RETURN TO STAGE</span>
@@ -75,7 +72,6 @@ description = "Repeat performance event -- popular sessions get encores by audie
 <div class="section-block">
   <div class="section-label">Applause Meter</div>
   <h2>Audience Response</h2>
-
   <!-- SVG applause wave lines -->
   <svg width="100%" height="120" viewBox="0 0 600 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 24px auto; display: block; max-width: 600px;">
     <!-- Wave 1 - strongest -->
@@ -102,14 +98,12 @@ description = "Repeat performance event -- popular sessions get encores by audie
     <circle cx="500" cy="104" r="4" fill="#5c5470"/>
     <circle cx="540" cy="107" r="3.5" fill="#5c5470"/>
   </svg>
-
   <p style="text-align: center; font-family: 'Source Sans Pro', sans-serif; font-weight: 600; font-size: 0.85rem; color: var(--text-muted); letter-spacing: 0.2em; text-transform: uppercase;">Standing ovation threshold: 2,000 votes</p>
 </div>
 
 <div class="section-block">
   <div class="section-label">Returning Sessions</div>
   <h2>Encore Lineup</h2>
-
   <div class="session-card is-encore">
     <div class="session-info">
       <div class="session-name">The Art of Failure</div>
@@ -118,7 +112,6 @@ description = "Repeat performance event -- popular sessions get encores by audie
     </div>
     <span class="encore-banner">ENCORE</span>
   </div>
-
   <div class="session-card is-encore">
     <div class="session-info">
       <div class="session-name">Systems at Scale</div>
@@ -127,7 +120,6 @@ description = "Repeat performance event -- popular sessions get encores by audie
     </div>
     <span class="encore-banner">ENCORE</span>
   </div>
-
   <div class="session-card is-encore">
     <div class="session-info">
       <div class="session-name">Design Under Pressure</div>
@@ -136,7 +128,6 @@ description = "Repeat performance event -- popular sessions get encores by audie
     </div>
     <span class="encore-banner">ENCORE</span>
   </div>
-
   <div class="session-card">
     <div class="session-info">
       <div class="session-name">Zero to Production</div>
@@ -149,7 +140,6 @@ description = "Repeat performance event -- popular sessions get encores by audie
 <div class="section-block">
   <div class="section-label">Spotlight Return</div>
   <h2>Back on Stage</h2>
-
   <!-- SVG spotlight return pattern -->
   <svg width="340" height="180" viewBox="0 0 340 180" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 24px auto; display: block;">
     <!-- Stage platform -->

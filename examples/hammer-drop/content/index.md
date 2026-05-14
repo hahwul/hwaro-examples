@@ -9,7 +9,6 @@ description = "Auction event -- where ideas go to the highest bidder"
     <h1>HAMMER DROP</h1>
     <p class="hero-subtitle">The gavel falls. The crowd holds its breath. Three lots, ascending bids, and one final strike. Going, going, gone.</p>
     <p class="hero-date">2027.10.12 // AUCTION HALL, LONDON</p>
-
     <!-- SVG gavel and sound block illustration -->
     <svg width="200" height="220" viewBox="0 0 200 220" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto 0; display: block;">
       <!-- Gavel head -->
@@ -38,7 +37,6 @@ description = "Auction event -- where ideas go to the highest bidder"
 <div class="section-block">
   <div class="section-label">Catalogue</div>
   <h2>Featured Lots</h2>
-
   <div class="lot-block">
     <div class="lot-number">LOT 01</div>
     <div class="lot-info">
@@ -47,7 +45,6 @@ description = "Auction event -- where ideas go to the highest bidder"
     </div>
     <div class="lot-badge-slot"><span class="bid-badge">Active</span></div>
   </div>
-
   <div class="lot-block">
     <div class="lot-number">LOT 02</div>
     <div class="lot-info">
@@ -56,7 +53,6 @@ description = "Auction event -- where ideas go to the highest bidder"
     </div>
     <div class="lot-badge-slot"><span class="bid-badge-outline">Upcoming</span></div>
   </div>
-
   <div class="lot-block">
     <div class="lot-number">LOT 03</div>
     <div class="lot-info">
@@ -70,7 +66,6 @@ description = "Auction event -- where ideas go to the highest bidder"
 <div class="section-block">
   <div class="section-label">Bidding</div>
   <h2>Ascending Bid Ladder</h2>
-
   <div class="bid-row">
     <div class="bid-block">
       <!-- SVG paddle raise indicator -->
@@ -106,7 +101,6 @@ description = "Auction event -- where ideas go to the highest bidder"
 <div class="section-block">
   <div class="section-label">The Call</div>
   <h2>Final Sequence</h2>
-
   <!-- SVG lot number plate and going-going-gone sequence -->
   <svg width="100%" height="120" viewBox="0 0 600 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 24px auto; display: block; max-width: 600px;">
     <!-- Lot plate -->
@@ -121,7 +115,6 @@ description = "Auction event -- where ideas go to the highest bidder"
     <line x1="530" y1="40" x2="570" y2="80" stroke="#1a1a1a" stroke-width="2" opacity="0.2"/>
     <text x="550" y="100" text-anchor="middle" fill="#1a1a1a" font-family="Playfair Display, serif" font-weight="900" font-size="12" opacity="0.35" letter-spacing="2">SOLD</text>
   </svg>
-
   <p style="text-align: center; font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.2em; text-transform: uppercase;">3 lots // ascending bids // hammer price final</p>
 </div>
 

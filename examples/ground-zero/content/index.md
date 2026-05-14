@@ -9,7 +9,6 @@ description = "Impact origin event -- where transformation begins at the epicent
     <h1>GROUND ZERO</h1>
     <p class="hero-subtitle">Everything radiates from the epicenter. Four concentric zones mark the distance from the point of impact. The closer you are, the greater the transformation.</p>
     <p class="hero-date">2027.07.22 // EPICENTER COMPLEX, TOKYO</p>
-
     <!-- SVG concentric blast ring pattern -->
     <svg width="240" height="240" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto 0; display: block;">
       <!-- Outer rings -->
@@ -40,7 +39,6 @@ description = "Impact origin event -- where transformation begins at the epicent
 <div class="section-block">
   <div class="section-label">Impact Zones</div>
   <h2>Concentric Layout</h2>
-
   <div class="zone-block">
     <div class="zone-distance">0-10m</div>
     <div class="zone-info">
@@ -49,7 +47,6 @@ description = "Impact origin event -- where transformation begins at the epicent
     </div>
     <div class="zone-badge-slot"><span class="impact-badge">Epicenter</span></div>
   </div>
-
   <div class="zone-block">
     <div class="zone-distance">10-50m</div>
     <div class="zone-info">
@@ -58,7 +55,6 @@ description = "Impact origin event -- where transformation begins at the epicent
     </div>
     <div class="zone-badge-slot"><span class="impact-badge-outline">Zone 1</span></div>
   </div>
-
   <div class="zone-block">
     <div class="zone-distance">50-150m</div>
     <div class="zone-info">
@@ -67,7 +63,6 @@ description = "Impact origin event -- where transformation begins at the epicent
     </div>
     <div class="zone-badge-slot"><span class="impact-badge-outline">Zone 2</span></div>
   </div>
-
   <div class="zone-block">
     <div class="zone-distance">150m+</div>
     <div class="zone-info">
@@ -81,7 +76,6 @@ description = "Impact origin event -- where transformation begins at the epicent
 <div class="section-block">
   <div class="section-label">Measurement</div>
   <h2>Distance from Center</h2>
-
   <div class="ring-row">
     <div class="ring-block">
       <!-- SVG epicenter crosshair -->
@@ -122,7 +116,6 @@ description = "Impact origin event -- where transformation begins at the epicent
 <div class="section-block">
   <div class="section-label">Shockwave</div>
   <h2>Propagation Pattern</h2>
-
   <!-- SVG shockwave propagation diagram -->
   <svg width="100%" height="120" viewBox="0 0 600 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 24px auto; display: block; max-width: 600px;">
     <!-- Epicenter -->
@@ -142,7 +135,6 @@ description = "Impact origin event -- where transformation begins at the epicent
     <text x="310" y="98" text-anchor="middle" fill="#585450" font-family="Source Sans 3, sans-serif" font-weight="700" font-size="7" letter-spacing="1">150m</text>
     <text x="500" y="98" text-anchor="middle" fill="#585450" font-family="Source Sans 3, sans-serif" font-weight="700" font-size="7" letter-spacing="1">300m+</text>
   </svg>
-
   <p style="text-align: center; font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.2em; text-transform: uppercase;">4 concentric zones // 1 epicenter // total transformation</p>
 </div>
 

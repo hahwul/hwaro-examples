@@ -7,7 +7,6 @@ description = "Demolition Derby rules and arena regulations"
   <div class="section-label">Regulations</div>
   <h2>Arena Rules</h2>
   <p style="color: var(--text-secondary); line-height: 1.8; max-width: 720px;">All competitors enter the arena fence. Collisions are mandatory -- no hiding, no stalling. If your machine stops moving for 30 seconds, you are eliminated. Last machine with a functioning engine wins. Driver doors must face inward. No targeting driver doors. Everything else is fair game.</p>
-
   <!-- SVG arena boundary -->
   <svg width="200" height="140" viewBox="0 0 200 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto; display: block;">
     <rect x="20" y="20" width="160" height="100" stroke="#e08020" stroke-width="2" fill="none" opacity="0.2"/>

@@ -5,7 +5,6 @@ title = "Home"
 <div class="pt-16 pb-20 max-w-4xl mx-auto text-center">
   <h1 class="text-5xl font-extrabold text-text tracking-tight mb-6">Remedy</h1>
   <p class="text-xl text-muted max-w-2xl mx-auto mb-12">A comprehensive troubleshooting and debugging guide. Diagnose issues faster with structured symptom analysis, error code references, and step-by-step resolution procedures.</p>
-
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left max-w-3xl mx-auto">
     <a href="/docs/common-issues/" class="block p-6 rounded-xl border border-border bg-white hover:border-primary/50 hover:bg-surface transition-all hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-0.5">
       <h3 class="text-lg font-bold text-text mb-2">Common Issues</h3>
@@ -16,7 +15,6 @@ title = "Home"
       <p class="text-sm text-muted">Searchable index of error codes with descriptions, root causes, and recommended actions.</p>
     </a>
   </div>
-
   <div class="mt-16 p-6 rounded-xl border border-border bg-surface-alt text-left max-w-3xl mx-auto">
     <h3 class="text-sm font-bold text-text uppercase tracking-wider mb-3">Troubleshooting Workflow</h3>
     <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-0">

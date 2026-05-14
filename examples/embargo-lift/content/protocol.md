@@ -7,7 +7,6 @@ description = "Embargo handling protocol and release procedures"
   <div class="section-label">Procedures</div>
   <h2>Embargo Protocol</h2>
   <p style="color: var(--text-secondary); line-height: 1.8; max-width: 720px;">All embargoed content follows strict release procedures. Content is sealed with cryptographic timestamps. No preview, no early access, no exceptions. When the clock hits zero, every channel fires simultaneously.</p>
-
   <!-- SVG broken chain pattern -->
   <svg width="100%" height="80" viewBox="0 0 500 80" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto; display: block; max-width: 500px;">
     <!-- Chain links -->

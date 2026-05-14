@@ -18,7 +18,6 @@ tags = ["paper", "light", "errata", "correction", "transparent"]
     <sup>3</sup>RIKEN Center for Emergent Matter Science
   </p>
   <p class="paper-doi"><strong>Original DOI:</strong> <a href="#">10.41093/jmsl.2025.40.08.1142</a> &middot; <strong>Erratum DOI:</strong> <a href="#">10.41093/jmsl.2026.41.04.e012</a></p>
-
   <div class="dates-display">
     <div class="date-box">
       <p class="date-label">Original published</p>

@@ -37,7 +37,6 @@ template = "index"
     <div class="panelist-stance">&ldquo;The firm without an office becomes a contract pool. I mean this descriptively, not as a criticism.&rdquo;</div>
     <div class="panelist-meta"><span>For the motion</span><span>Oppose 2, 4</span></div>
   </a>
-
   <a class="panelist" href="{{ base_url }}/panels/does-the-firm-need-the-office/">
     <div class="panelist-head">
       <svg class="panelist-mic" width="44" height="60" viewBox="0 0 44 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -63,7 +62,6 @@ template = "index"
     <div class="panelist-stance">&ldquo;An office is not a building. It is the decision to sit in the same room as your mistakes.&rdquo;</div>
     <div class="panelist-meta"><span>Against the motion</span><span>Oppose 1, 3</span></div>
   </a>
-
   <a class="panelist" href="{{ base_url }}/panels/does-the-firm-need-the-office/">
     <div class="panelist-head">
       <svg class="panelist-mic" width="44" height="60" viewBox="0 0 44 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -89,7 +87,6 @@ template = "index"
     <div class="panelist-stance">&ldquo;The office survives because labour law attaches to addresses. Remove the address, and the protection goes with it.&rdquo;</div>
     <div class="panelist-meta"><span>For the motion</span><span>Oppose 2, 4</span></div>
   </a>
-
   <a class="panelist" href="{{ base_url }}/panels/does-the-firm-need-the-office/">
     <div class="panelist-head">
       <svg class="panelist-mic" width="44" height="60" viewBox="0 0 44 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">

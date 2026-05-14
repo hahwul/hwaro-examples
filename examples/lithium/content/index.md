@@ -5,7 +5,6 @@ tags = ["energy", "technology", "batteries"]
 
 <section class="hero">
   <div class="container">
-
     <!-- Electric arc decorations -->
     <svg class="arc-decoration arc-left" viewBox="0 0 120 300">
       <polyline points="60,0 20,50 80,100 10,150 90,200 30,250 70,300"/>
@@ -13,7 +12,6 @@ tags = ["energy", "technology", "batteries"]
     <svg class="arc-decoration arc-right" viewBox="0 0 120 300">
       <polyline points="60,0 20,50 80,100 10,150 90,200 30,250 70,300"/>
     </svg>
-
     <div class="hero-badge">Series B Funded</div>
     <h1>Power the <span>Future</span></h1>
     <p class="hero-subtitle">Next-generation energy storage technology. Longer life, faster charging, safer design -- built for the world that runs on clean energy.</p>
@@ -21,7 +19,6 @@ tags = ["energy", "technology", "batteries"]
       <a href="#early-access" class="btn btn-primary">Get Early Access</a>
       <a href="#features" class="btn btn-outline">Learn More</a>
     </div>
-
     <!-- Spark line decoration -->
     <div class="spark-line">
       <span class="spark"></span>

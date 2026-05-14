@@ -19,7 +19,6 @@ tags = ["paper", "light", "protocol", "pre-registration", "rigorous"]
     <sup>3</sup>National Institute for Educational Research, Tokyo
   </p>
   <p class="paper-doi"><strong>DOI:</strong> <a href="#">10.41093/jctm.2026.12.04.201</a> &middot; <strong>Submitted:</strong> 18 Jan 2026 &middot; <strong>Accepted:</strong> 02 Apr 2026</p>
-
   <div class="registration-badge">
     <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <circle cx="10" cy="10" r="9" fill="none" stroke="#1a6b50" stroke-width="1.5"/>

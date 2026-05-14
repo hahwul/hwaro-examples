@@ -175,7 +175,6 @@ description = "A refined and trendy audio-centric platform"
     <h3>Lossless Audio</h3>
     <p>Experience music exactly as the artist intended with our premium lossless streaming quality.</p>
   </div>
-
   <div class="feature-card">
     <div class="mini-eq">
       <span></span><span></span><span></span><span></span><span></span>
@@ -183,7 +182,6 @@ description = "A refined and trendy audio-centric platform"
     <h3>Advanced Equalizer</h3>
     <p>Fine-tune your listening experience with our professional-grade 10-band parametric equalizer.</p>
   </div>
-
   <div class="feature-card">
     <div class="feature-icon">
       <svg viewBox="0 0 24 24">

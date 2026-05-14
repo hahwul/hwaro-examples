@@ -8,7 +8,6 @@ template = "home"
   <p class="hero-prelude">— Season 12 · Final Act · Three Nights Only —</p>
   <h1 class="hero-title">THE <span class="accent">GRAND</span><br><span class="gold">FINALE</span></h1>
   <p class="hero-sub">The loudest three days of the year. Twenty-two acts, two outdoor stages, one indoor hall, one confetti ceiling that drops exactly at midnight on Sunday.</p>
-
   <div class="countdown">
     <div class="countdown-unit"><div class="n">03</div><div class="l">Days</div></div>
     <div class="countdown-unit"><div class="n">22</div><div class="l">Acts</div></div>
@@ -22,7 +21,6 @@ template = "home"
     <h2>The Nights</h2>
     <div class="block-tag">Friday · Saturday · Sunday</div>
   </div>
-
   <div class="nights">
     <div class="night">
       <div class="no">Night 01</div>
@@ -50,7 +48,6 @@ template = "home"
     <h2>Programme</h2>
     <div class="block-tag">Twenty-two acts, three days</div>
   </div>
-
   <ul class="performances">
     <li>
       <span class="slot">Fri · 18:30</span>

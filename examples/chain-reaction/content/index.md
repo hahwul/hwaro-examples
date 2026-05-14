@@ -9,7 +9,6 @@ description = "Sequential trigger event where each session unlocks the next"
     <h1>CHAIN REACTION</h1>
     <p class="hero-subtitle">Each stage triggers the next. No skipping ahead. Complete the trigger condition and the next domino falls. Four stages of cascading consequence.</p>
     <p class="hero-date">2027.08.18 // KINETIC HALL, BERLIN</p>
-
     <!-- SVG domino chain falling sequence diagram -->
     <svg width="320" height="160" viewBox="0 0 320 160" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto 0; display: block;">
       <!-- Domino 1 - standing -->
@@ -50,7 +49,6 @@ description = "Sequential trigger event where each session unlocks the next"
 <div class="section-block">
   <div class="section-label">Trigger Sequence</div>
   <h2>Stage Progression</h2>
-
   <div class="trigger-block">
     <div class="trigger-number">STAGE 1</div>
     <div class="trigger-info">
@@ -59,7 +57,6 @@ description = "Sequential trigger event where each session unlocks the next"
     </div>
     <div class="trigger-badge-slot"><span class="chain-badge">ACTIVE</span></div>
   </div>
-
   <!-- SVG dependency arrow -->
   <div class="trigger-arrow">
     <svg width="40" height="30" viewBox="0 0 40 30" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: block; margin: 0 auto;">
@@ -67,7 +64,6 @@ description = "Sequential trigger event where each session unlocks the next"
       <polygon points="14,20 26,20 20,28" fill="#e67e22" opacity="0.2"/>
     </svg>
   </div>
-
   <div class="trigger-block">
     <div class="trigger-number">STAGE 2</div>
     <div class="trigger-info">
@@ -76,14 +72,12 @@ description = "Sequential trigger event where each session unlocks the next"
     </div>
     <div class="trigger-badge-slot"><span class="chain-badge-outline">LOCKED</span></div>
   </div>
-
   <div class="trigger-arrow">
     <svg width="40" height="30" viewBox="0 0 40 30" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: block; margin: 0 auto;">
       <line x1="20" y1="0" x2="20" y2="22" stroke="#e67e22" stroke-width="1.5" opacity="0.2"/>
       <polygon points="14,20 26,20 20,28" fill="#e67e22" opacity="0.2"/>
     </svg>
   </div>
-
   <div class="trigger-block">
     <div class="trigger-number">STAGE 3</div>
     <div class="trigger-info">
@@ -92,14 +86,12 @@ description = "Sequential trigger event where each session unlocks the next"
     </div>
     <div class="trigger-badge-slot"><span class="chain-badge-outline">LOCKED</span></div>
   </div>
-
   <div class="trigger-arrow">
     <svg width="40" height="30" viewBox="0 0 40 30" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: block; margin: 0 auto;">
       <line x1="20" y1="0" x2="20" y2="22" stroke="#e67e22" stroke-width="1.5" opacity="0.2"/>
       <polygon points="14,20 26,20 20,28" fill="#e67e22" opacity="0.2"/>
     </svg>
   </div>
-
   <div class="trigger-block">
     <div class="trigger-number">STAGE 4</div>
     <div class="trigger-info">
@@ -113,7 +105,6 @@ description = "Sequential trigger event where each session unlocks the next"
 <div class="section-block">
   <div class="section-label">Dependencies</div>
   <h2>Reaction Branching</h2>
-
   <!-- SVG chain reaction branching pattern -->
   <svg width="100%" height="160" viewBox="0 0 600 160" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 24px auto; display: block; max-width: 600px;">
     <!-- Root node -->
@@ -147,7 +138,6 @@ description = "Sequential trigger event where each session unlocks the next"
 <div class="section-block">
   <div class="section-label">Mechanism</div>
   <h2>Rube Goldberg Machine</h2>
-
   <!-- SVG Rube Goldberg machine illustration -->
   <svg width="100%" height="120" viewBox="0 0 600 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 24px auto; display: block; max-width: 600px;">
     <!-- Ball on ramp -->
@@ -180,7 +170,6 @@ description = "Sequential trigger event where each session unlocks the next"
     <!-- Labels -->
     <text x="300" y="110" text-anchor="middle" fill="#7a4010" font-family="Inter, sans-serif" font-weight="700" font-size="7" letter-spacing="4">CAUSE AND EFFECT</text>
   </svg>
-
   <p style="text-align: center; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.2em; text-transform: uppercase;">stage 1 > stage 2 > stage 3 > stage 4</p>
 </div>
 

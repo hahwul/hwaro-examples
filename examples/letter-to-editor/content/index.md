@@ -32,7 +32,6 @@ tags = ["paper", "light", "correspondence", "urgent", "brief"]
   <svg viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Letter and envelope frame motif showing the correspondence structure and reference link arrows between this letter and the original paper">
     <!-- Title -->
     <text x="360" y="18" text-anchor="middle" font-family="Libre Baskerville, serif" font-weight="700" font-size="11" fill="#2c2418">CORRESPONDENCE MAP: LETTER TO ORIGINAL PAPER</text>
-
     <!-- Original paper (envelope) -->
     <rect x="30" y="40" width="240" height="140" rx="3" fill="none" stroke="#c8bfb0" stroke-width="1.5"/>
     <polyline points="30,40 150,110 270,40" fill="none" stroke="#c8bfb0" stroke-width="1"/>
@@ -44,7 +43,6 @@ tags = ["paper", "light", "correspondence", "urgent", "brief"]
     <text x="150" y="136" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="6" fill="#7a7060">4 emergency departments</text>
     <text x="150" y="148" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="6" fill="#7a7060">AUROC 0.91 (claimed)</text>
     <text x="150" y="160" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="6" fill="#7a7060">Lancet Digit. Health 8(2)</text>
-
     <!-- Reference arrows -->
     <defs>
       <marker id="arrow-ref" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
@@ -54,7 +52,6 @@ tags = ["paper", "light", "correspondence", "urgent", "brief"]
         <polygon points="0 0, 8 3, 0 6" fill="#b83220"/>
       </marker>
     </defs>
-
     <!-- This letter (envelope) -->
     <rect x="390" y="40" width="300" height="140" rx="3" fill="none" stroke="#8b4513" stroke-width="1.5"/>
     <polyline points="390,40 540,110 690,40" fill="none" stroke="#8b4513" stroke-width="1"/>
@@ -66,35 +63,28 @@ tags = ["paper", "light", "correspondence", "urgent", "brief"]
     <text x="540" y="136" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="6" fill="#b83220">Concern 2: Outcome leakage</text>
     <text x="540" y="148" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="6" fill="#b83220">Concern 3: Subgroup analysis</text>
     <text x="540" y="160" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="6" fill="#b83220">Concern 4: Clinical utility</text>
-
     <!-- Reference arrows from letter to paper -->
     <line x1="390" y1="124" x2="270" y2="124" stroke="#2a6496" stroke-width="1.2" marker-end="url(#arrow-ref)"/>
     <text x="330" y="118" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="5.5" fill="#2a6496">references</text>
-
     <line x1="390" y1="148" x2="270" y2="148" stroke="#b83220" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#arrow-concern)"/>
     <text x="330" y="142" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="5.5" fill="#b83220">challenges</text>
-
     <!-- Urgency indicators -->
     <text x="360" y="210" text-anchor="middle" font-family="Libre Baskerville, serif" font-weight="700" font-size="9" fill="#2c2418">URGENCY LEVEL INDICATORS</text>
-
     <!-- High urgency -->
     <rect x="80" y="225" width="120" height="30" fill="none" stroke="#b83220" stroke-width="1.5" rx="2"/>
     <rect x="80" y="225" width="120" height="4" fill="#b83220" rx="2"/>
     <text x="140" y="248" text-anchor="middle" font-family="Crimson Pro, serif" font-weight="700" font-size="8" fill="#b83220">HIGH</text>
     <text x="140" y="268" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="5.5" fill="#7a7060">Patient safety risk</text>
-
     <!-- Moderate urgency -->
     <rect x="250" y="225" width="120" height="30" fill="none" stroke="#8b4513" stroke-width="1.5" rx="2"/>
     <rect x="250" y="225" width="120" height="4" fill="#8b4513" rx="2"/>
     <text x="310" y="248" text-anchor="middle" font-family="Crimson Pro, serif" font-weight="700" font-size="8" fill="#8b4513">MODERATE</text>
     <text x="310" y="268" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="5.5" fill="#7a7060">Methodological flaw</text>
-
     <!-- Standard urgency -->
     <rect x="420" y="225" width="120" height="30" fill="none" stroke="#7a7060" stroke-width="1.5" rx="2"/>
     <rect x="420" y="225" width="120" height="4" fill="#7a7060" rx="2"/>
     <text x="480" y="248" text-anchor="middle" font-family="Crimson Pro, serif" font-weight="700" font-size="8" fill="#7a7060">STANDARD</text>
     <text x="480" y="268" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="5.5" fill="#7a7060">Interpretive note</text>
-
     <!-- Response pending -->
     <rect x="590" y="225" width="100" height="30" fill="none" stroke="#3a7a4a" stroke-width="1.5" rx="2" stroke-dasharray="4 3"/>
     <text x="640" y="248" text-anchor="middle" font-family="Crimson Pro, serif" font-weight="700" font-size="8" fill="#3a7a4a">RESPONSE</text>

@@ -9,7 +9,6 @@ description = "Hourly chime schedule-driven event from a historic clock tower"
     <h1>BELL TOWER</h1>
     <p class="hero-subtitle">Four hours marked by the great bell. From the ninth hour to the twelfth, each chime reverberates through stone and sky. The tower keeps time. The bell speaks for all who listen.</p>
     <p class="hero-date">2027.09.14 // THE CAMPANILE, FLORENCE</p>
-
     <!-- SVG clock face dial -->
     <svg width="240" height="240" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto 0; display: block;">
       <!-- Clock face circle -->
@@ -46,7 +45,6 @@ description = "Hourly chime schedule-driven event from a historic clock tower"
 <div class="section-block">
   <div class="section-label">Hourly Schedule</div>
   <h2>Chime Sessions</h2>
-
   <div class="chime-block chime-ix">
     <div class="chime-numeral">IX</div>
     <div class="chime-info">
@@ -57,7 +55,6 @@ description = "Hourly chime schedule-driven event from a historic clock tower"
       <span class="bell-badge-outline">9</span>
     </div>
   </div>
-
   <div class="chime-block chime-x">
     <div class="chime-numeral">X</div>
     <div class="chime-info">
@@ -68,7 +65,6 @@ description = "Hourly chime schedule-driven event from a historic clock tower"
       <span class="bell-badge-outline">10</span>
     </div>
   </div>
-
   <div class="chime-block chime-xi">
     <div class="chime-numeral">XI</div>
     <div class="chime-info">
@@ -79,7 +75,6 @@ description = "Hourly chime schedule-driven event from a historic clock tower"
       <span class="bell-badge">11</span>
     </div>
   </div>
-
   <div class="chime-block chime-xii">
     <div class="chime-numeral">XII</div>
     <div class="chime-info">
@@ -95,7 +90,6 @@ description = "Hourly chime schedule-driven event from a historic clock tower"
 <div class="section-block">
   <div class="section-label">Bell</div>
   <h2>The Great Bell</h2>
-
   <!-- SVG bell silhouette icon -->
   <svg width="160" height="200" viewBox="0 0 160 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 24px auto; display: block;">
     <!-- Bell body -->
@@ -125,7 +119,6 @@ description = "Hourly chime schedule-driven event from a historic clock tower"
 <div class="section-block">
   <div class="section-label">Architecture</div>
   <h2>Tower Profile</h2>
-
   <!-- SVG tower architecture illustration -->
   <svg width="200" height="280" viewBox="0 0 200 280" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 24px auto; display: block;">
     <!-- Tower base -->
@@ -156,14 +149,12 @@ description = "Hourly chime schedule-driven event from a historic clock tower"
     <!-- Ground line -->
     <line x1="30" y1="260" x2="170" y2="260" stroke="#8b6914" stroke-width="1" opacity="0.1"/>
   </svg>
-
   <p style="text-align: center; font-family: 'Cormorant SC', serif; font-weight: 700; font-size: 0.85rem; color: var(--text-muted); letter-spacing: 0.25em; text-transform: uppercase;">IX . X . XI . XII -- the hours ring true</p>
 </div>
 
 <div class="section-block">
   <div class="section-label">Dial</div>
   <h2>Clock Hand Positions</h2>
-
   <!-- SVG clock hand positions for each session hour -->
   <svg width="100%" height="140" viewBox="0 0 560 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 24px auto; display: block; max-width: 560px;">
     <!-- IX o'clock -->

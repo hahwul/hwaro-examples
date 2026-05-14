@@ -23,7 +23,6 @@ Keynote Blast is invitation-only. If you are on the list you got a code in your 
       <input type="text" id="name" name="name" placeholder="name for the badge">
     </div>
   </div>
-
   <div class="form-row">
     <div class="form-group">
       <label for="email">email</label>
@@ -39,12 +38,10 @@ Keynote Blast is invitation-only. If you are on the list you got a code in your 
       </select>
     </div>
   </div>
-
   <div class="form-group">
     <label for="notes">access needs / questions for the channel</label>
     <textarea id="notes" name="notes" rows="3" placeholder="wheelchair, aisle, audio feed, first-timer, etc."></textarea>
   </div>
-
   <button type="submit" class="btn btn-primary btn-full">ARM MY SEAT</button>
 </form>
 

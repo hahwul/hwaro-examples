@@ -22,13 +22,11 @@ tags = ["event", "dark", "punk", "chaotic", "raw"]
     <line x1="8" y1="8" x2="32" y2="32" stroke="#0a0a0a" stroke-width="5" stroke-linecap="round"/>
     <line x1="32" y1="8" x2="8" y2="32" stroke="#0a0a0a" stroke-width="5" stroke-linecap="round"/>
   </svg>
-
   <h1 class="flyer-headline"><span class="red">MOSH</span> <span class="big">PIT</span><br>NITE</h1>
   <p class="flyer-tagline"><span class="cross">five</span> SEVEN bands, one basement, three hours of feedback and fracture. this is not a festival. this is a room.</p>
   <p class="flyer-when">FRI OCT 18 &middot; 8PM sharp</p>
   <span class="flyer-where">@ THE OLD WATER TANK</span>
   <p class="flyer-hype">DIY or DIE</p>
-
   <div class="hero-actions">
     <a href="/doors/" class="btn btn-primary">PAY AT THE DOOR</a>
     <a href="/lineup/" class="btn btn-outline">VIEW THE LINEUP</a>

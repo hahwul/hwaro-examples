@@ -6,7 +6,6 @@ description = "Hackathon rules and constraints"
 <div class="section-block">
   <div class="section-label">Constraints</div>
   <h2>Rules of Engagement</h2>
-
   <div class="pressure-levels">
     <div class="pressure-row">
       <span class="pressure-stage">RULE 01</span>

@@ -35,7 +35,6 @@ One pass covers all three days and every track. Early-bird pricing closes thirty
       </select>
     </div>
   </div>
-
   <div class="form-row">
     <div class="form-group">
       <label for="track">primary track</label>
@@ -50,12 +49,10 @@ One pass covers all three days and every track. Early-bird pricing closes thirty
       <input type="email" id="email" name="email" placeholder="for the confirmation packet">
     </div>
   </div>
-
   <div class="form-group">
     <label for="notes">dietary or access needs</label>
     <textarea id="notes" name="notes" rows="3" placeholder="allergies, accessibility, roommate request, etc."></textarea>
   </div>
-
   <button type="submit" class="btn btn-primary btn-full">LOCK MY SPOT</button>
 </form>
 

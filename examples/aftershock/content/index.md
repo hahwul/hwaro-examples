@@ -26,7 +26,6 @@ description = "Post-event retrospective -- seismic impact, diminishing waves, la
 <div class="section-block">
   <div class="section-label">Impact Metrics</div>
   <h2>By the Numbers</h2>
-
   <div class="metric-row">
     <div class="metric-block">
       <div class="metric-number">4,218</div>
@@ -50,7 +49,6 @@ description = "Post-event retrospective -- seismic impact, diminishing waves, la
 <div class="section-block">
   <div class="section-label">Ripple Impact</div>
   <h2>Diminishing Waves</h2>
-
   <!-- SVG ripple impact diagram -->
   <svg width="340" height="200" viewBox="0 0 340 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 24px auto; display: block;">
     <!-- Concentric ripple rings - diminishing -->
@@ -72,7 +70,6 @@ description = "Post-event retrospective -- seismic impact, diminishing waves, la
 <div class="section-block">
   <div class="section-label">Recordings</div>
   <h2>Session Replays</h2>
-
   <div class="recording-card">
     <div class="recording-icon">
       <!-- Replay icon SVG -->
@@ -87,7 +84,6 @@ description = "Post-event retrospective -- seismic impact, diminishing waves, la
     </div>
     <div class="recording-timestamp">01:12:34</div>
   </div>
-
   <div class="recording-card">
     <div class="recording-icon">
       <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -101,7 +97,6 @@ description = "Post-event retrospective -- seismic impact, diminishing waves, la
     </div>
     <div class="recording-timestamp">00:48:22</div>
   </div>
-
   <div class="recording-card">
     <div class="recording-icon">
       <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -120,7 +115,6 @@ description = "Post-event retrospective -- seismic impact, diminishing waves, la
 <div class="section-block">
   <div class="section-label">Impact Gauge</div>
   <h2>Seismograph Reading</h2>
-
   <!-- SVG seismograph / impact gauge -->
   <svg width="100%" height="120" viewBox="0 0 600 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 24px auto; display: block; max-width: 600px;">
     <!-- Baseline -->
@@ -135,7 +129,6 @@ description = "Post-event retrospective -- seismic impact, diminishing waves, la
     <!-- Peak label -->
     <text x="35" y="12" text-anchor="middle" fill="#b8944a" font-family="Anton, sans-serif" font-size="10">PEAK</text>
   </svg>
-
   <p style="text-align: center; font-family: 'Lora', serif; font-weight: 500; font-style: italic; font-size: 0.9rem; color: var(--text-muted);">Impact diminishes over time, but the aftershocks never fully stop.</p>
 </div>
 

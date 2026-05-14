@@ -46,7 +46,6 @@ template = "index"
     <div class="poster-cast">Tessa Rein, Marcus Abasi, Luz Okwe, Jin Oyelaran</div>
     <div class="poster-director">Dir. Vikram Saldana &#183; Nord Pictures</div>
   </a>
-
   <a class="poster" href="{{ base_url }}/films/stations-of-silver/">
     <div class="poster-rating">R / 131 MIN</div>
     <div class="poster-runtime">Feature &#183; Noir Thriller</div>
@@ -56,7 +55,6 @@ template = "index"
     <div class="poster-cast">Adele Porsche, Bram Kilian, Nora Amsel, Joseph Mirzai</div>
     <div class="poster-director">Dir. Oksana Tamblyn &#183; Blackline Studios</div>
   </a>
-
   <a class="poster" href="{{ base_url }}/films/the-hundred-year-rain/">
     <div class="poster-rating">PG / 116 MIN</div>
     <div class="poster-runtime">Feature &#183; Historical Drama</div>
@@ -66,7 +64,6 @@ template = "index"
     <div class="poster-cast">Priyanka Sankaran, Devi Antoine, Ishaan Rowan</div>
     <div class="poster-director">Dir. Mira Chandrasekhar &#183; Monsoon Pictures</div>
   </a>
-
   <a class="poster" href="{{ base_url }}/films/commissar/">
     <div class="poster-rating">R / 128 MIN</div>
     <div class="poster-runtime">Feature &#183; Political Thriller</div>

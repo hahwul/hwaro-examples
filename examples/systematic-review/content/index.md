@@ -21,7 +21,6 @@ template = "page"
     <sup>4</sup>Department of Clinical Neuroscience, Karolinska Institutet, Stockholm
   </p>
   <p class="paper-doi"><strong>DOI:</strong> <a href="#">10.41093/jahp.2026.12.02.084</a> &middot; <strong>PROSPERO:</strong> CRD42025012847 &middot; <strong>Submitted:</strong> 18 Nov 2025 &middot; <strong>Accepted:</strong> 02 Apr 2026</p>
-
   <div class="badge-row">
     <span class="badge badge-prisma">
       <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">

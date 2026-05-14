@@ -191,43 +191,35 @@ tags = ["paper", "light", "laboratory", "bench", "experimental"]
     <text x="70" y="62" text-anchor="middle" font-family="IBM Plex Sans" font-weight="700" font-size="9" fill="#2a6b4f" letter-spacing="0.5">STEP 1</text>
     <text x="70" y="78" text-anchor="middle" font-family="Noto Serif" font-size="9" fill="#1c2030">Cell culture</text>
     <text x="70" y="92" text-anchor="middle" font-family="Noto Serif" font-size="8" fill="#6b7085">HeLa, 24h seed</text>
-
     <rect x="155" y="40" width="120" height="65" fill="none" stroke="#2a6b4f" stroke-width="1.5" rx="2"/>
     <text x="215" y="62" text-anchor="middle" font-family="IBM Plex Sans" font-weight="700" font-size="9" fill="#2a6b4f" letter-spacing="0.5">STEP 2</text>
     <text x="215" y="78" text-anchor="middle" font-family="Noto Serif" font-size="9" fill="#1c2030">Compound treat</text>
     <text x="215" y="92" text-anchor="middle" font-family="Noto Serif" font-size="8" fill="#6b7085">1 uM, 4h, 37C</text>
-
     <rect x="300" y="40" width="120" height="65" fill="none" stroke="#4a6b8a" stroke-width="1.5" rx="2"/>
     <text x="360" y="62" text-anchor="middle" font-family="IBM Plex Sans" font-weight="700" font-size="9" fill="#4a6b8a" letter-spacing="0.5">STEP 3</text>
     <text x="360" y="78" text-anchor="middle" font-family="Noto Serif" font-size="9" fill="#1c2030">Lysis + SDS-PAGE</text>
     <text x="360" y="92" text-anchor="middle" font-family="Noto Serif" font-size="8" fill="#6b7085">RIPA, 10% gel</text>
-
     <rect x="445" y="40" width="120" height="65" fill="none" stroke="#4a6b8a" stroke-width="1.5" rx="2"/>
     <text x="505" y="62" text-anchor="middle" font-family="IBM Plex Sans" font-weight="700" font-size="9" fill="#4a6b8a" letter-spacing="0.5">STEP 4</text>
     <text x="505" y="78" text-anchor="middle" font-family="Noto Serif" font-size="9" fill="#1c2030">Western blot</text>
     <text x="505" y="92" text-anchor="middle" font-family="Noto Serif" font-size="8" fill="#6b7085">anti-pRb, ECL</text>
-
     <rect x="590" y="40" width="120" height="65" fill="none" stroke="#b85c2a" stroke-width="1.5" rx="2"/>
     <text x="650" y="62" text-anchor="middle" font-family="IBM Plex Sans" font-weight="700" font-size="9" fill="#b85c2a" letter-spacing="0.5">STEP 5</text>
     <text x="650" y="78" text-anchor="middle" font-family="Noto Serif" font-size="9" fill="#1c2030">Densitometry</text>
     <text x="650" y="92" text-anchor="middle" font-family="Noto Serif" font-size="8" fill="#6b7085">ImageJ, IC50</text>
-
     <!-- Arrows -->
     <line x1="130" y1="72" x2="155" y2="72" stroke="#c8c4b8" stroke-width="1.5" marker-end="url(#arrowR)"/>
     <line x1="275" y1="72" x2="300" y2="72" stroke="#c8c4b8" stroke-width="1.5" marker-end="url(#arrowR)"/>
     <line x1="420" y1="72" x2="445" y2="72" stroke="#c8c4b8" stroke-width="1.5" marker-end="url(#arrowR)"/>
     <line x1="565" y1="72" x2="590" y2="72" stroke="#c8c4b8" stroke-width="1.5" marker-end="url(#arrowR)"/>
-
     <!-- Time annotations -->
     <text x="70" y="125" text-anchor="middle" font-family="Roboto Mono" font-size="8" fill="#9095a5">Day 1</text>
     <text x="215" y="125" text-anchor="middle" font-family="Roboto Mono" font-size="8" fill="#9095a5">Day 2</text>
     <text x="360" y="125" text-anchor="middle" font-family="Roboto Mono" font-size="8" fill="#9095a5">Day 2</text>
     <text x="505" y="125" text-anchor="middle" font-family="Roboto Mono" font-size="8" fill="#9095a5">Day 3</text>
     <text x="650" y="125" text-anchor="middle" font-family="Roboto Mono" font-size="8" fill="#9095a5">Day 4</text>
-
     <!-- Experiment ID -->
     <text x="360" y="160" text-anchor="middle" font-family="IBM Plex Sans" font-weight="700" font-size="10" fill="#6b7085" letter-spacing="1">EXP-2026-0847 WORKFLOW PIPELINE</text>
-
     <defs>
       <marker id="arrowR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
         <path d="M 0 0 L 10 5 L 0 10 z" fill="#c8c4b8"/>

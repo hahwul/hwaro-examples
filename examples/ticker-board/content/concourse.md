@@ -7,7 +7,6 @@ description = "Conference concourse and venue navigation"
   <div class="section-label">Navigation</div>
   <h2>Terminal Map</h2>
   <p style="color: var(--text-secondary); line-height: 1.8; max-width: 720px;">The conference center operates like an airport terminal. Gates are arranged along the main concourse. Follow the amber signage to your departure gate. Refreshments available at the central hub between Gates B and C.</p>
-
   <!-- SVG terminal layout -->
   <svg width="240" height="140" viewBox="0 0 240 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto; display: block;">
     <!-- Main concourse -->

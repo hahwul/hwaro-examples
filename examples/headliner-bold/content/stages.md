@@ -22,7 +22,6 @@ tags = ["event", "festival", "stages"]
       <li><strong>SUPP</strong> The Abacus &middot; Saturday 20:15</li>
     </ul>
   </div>
-
   <div class="stage-card">
     <p class="stage-label">Stage Two</p>
     <h3 class="stage-name">North Tent</h3>
@@ -35,7 +34,6 @@ tags = ["event", "festival", "stages"]
       <li><strong>SUPP</strong> Moonsaw &middot; Saturday 18:30</li>
     </ul>
   </div>
-
   <div class="stage-card">
     <p class="stage-label">Stage Three</p>
     <h3 class="stage-name">Sunset</h3>
@@ -48,7 +46,6 @@ tags = ["event", "festival", "stages"]
       <li><strong>SUPP</strong> Paperchase &middot; Sunday 15:45</li>
     </ul>
   </div>
-
   <div class="stage-card">
     <p class="stage-label">Stage Four</p>
     <h3 class="stage-name">Late Night Pavilion</h3>

@@ -7,7 +7,6 @@ description = "Operational protocols and standing orders for the War Room strate
   <div class="section-label">Standing Orders</div>
   <h2>Operational Protocols</h2>
   <p style="color: var(--text-secondary); line-height: 1.8; max-width: 720px;">The War Room operates under strict operational security protocols. All attendees are briefed on classification handling, communication procedures, and conduct requirements before entering the command center. These protocols ensure the integrity of the summit and the security of all strategic discussions.</p>
-
   <!-- SVG briefing screen frame -->
   <svg width="260" height="180" viewBox="0 0 260 180" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto; display: block;">
     <!-- Outer frame -->
@@ -31,12 +30,10 @@ description = "Operational protocols and standing orders for the War Room strate
     <!-- Classification stamp -->
     <text x="130" y="155" text-anchor="middle" fill="#408040" font-family="Orbitron, sans-serif" font-size="6" font-weight="700" letter-spacing="3" opacity="0.25">UNCLASSIFIED // FOUO</text>
   </svg>
-
   <div style="margin-top: 32px;">
     <span class="war-badge-outline" style="font-size: 0.75rem; padding: 5px 16px; margin-right: 8px;">OPSEC</span>
     <span class="war-badge-outline" style="font-size: 0.75rem; padding: 5px 16px; margin-right: 8px;">COMSEC</span>
     <span class="war-badge-outline" style="font-size: 0.75rem; padding: 5px 16px;">PHYSEC</span>
   </div>
-
   <p style="color: var(--text-muted); margin-top: 24px; font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.15em;">DTG: 221400ZAUG2027 // COMMAND CENTER BRAVO</p>
 </div>

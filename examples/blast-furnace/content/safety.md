@@ -7,7 +7,6 @@ description = "Forge safety protocols and heat management guidelines"
   <div class="section-label">Safety Protocol</div>
   <h2>Heat Management</h2>
   <p style="color: var(--text-secondary); line-height: 1.8; max-width: 720px;">Working at these temperatures demands respect for the process. Every participant receives heat-rated protective gear. Facilitators monitor intensity levels throughout. If the temperature exceeds safe operating parameters, emergency quench protocols activate immediately.</p>
-
   <!-- SVG blast furnace cross-section with safety zones -->
   <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto; display: block;">
     <!-- Outer safety boundary -->

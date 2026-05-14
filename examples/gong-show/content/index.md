@@ -9,7 +9,6 @@ description = "Talent and pitch competition with dramatic gong judgment"
     <h1>GONG SHOW</h1>
     <p class="hero-subtitle">Take the stage. Impress the judges. Beat the clock. One strike of the gong ends it all. Survive to the final score.</p>
     <p class="hero-date">2027.12.05 // THE GRAND THEATER, TOKYO</p>
-
     <!-- SVG gong instrument illustration -->
     <svg width="220" height="240" viewBox="0 0 220 240" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto 0; display: block;">
       <!-- Gong stand frame -->
@@ -45,7 +44,6 @@ description = "Talent and pitch competition with dramatic gong judgment"
 <div class="section-block">
   <div class="section-label">Performance Lineup</div>
   <h2>Competition Acts</h2>
-
   <div class="act-block">
     <div class="act-number">ACT I</div>
     <div class="act-info">
@@ -54,7 +52,6 @@ description = "Talent and pitch competition with dramatic gong judgment"
     </div>
     <div class="act-badge-slot"><span class="gong-badge">Live</span></div>
   </div>
-
   <div class="act-block">
     <div class="act-number">ACT II</div>
     <div class="act-info">
@@ -63,7 +60,6 @@ description = "Talent and pitch competition with dramatic gong judgment"
     </div>
     <div class="act-badge-slot"><span class="gong-badge-outline">Upcoming</span></div>
   </div>
-
   <div class="act-block">
     <div class="act-number">ACT III</div>
     <div class="act-info">
@@ -77,7 +73,6 @@ description = "Talent and pitch competition with dramatic gong judgment"
 <div class="section-block">
   <div class="section-label">Judgment</div>
   <h2>Judge Score Paddles</h2>
-
   <div class="score-row">
     <div class="score-block">
       <!-- SVG judge score paddle -->
@@ -115,7 +110,6 @@ description = "Talent and pitch competition with dramatic gong judgment"
 <div class="section-block">
   <div class="section-label">Countdown</div>
   <h2>Timer Bars</h2>
-
   <!-- SVG timer countdown bar displays -->
   <svg width="100%" height="120" viewBox="0 0 600 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 24px auto; display: block; max-width: 600px;">
     <!-- Timer bar 1: 3 min (full) -->
@@ -134,7 +128,6 @@ description = "Talent and pitch competition with dramatic gong judgment"
     <text x="20" y="93" text-anchor="end" fill="#706048" font-family="Inter, sans-serif" font-weight="700" font-size="7">III</text>
     <text x="155" y="93" fill="#c8a050" font-family="Playfair Display, serif" font-weight="900" font-size="11" opacity="0.4">GONG</text>
   </svg>
-
   <p style="text-align: center; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.2em; text-transform: uppercase;">3 acts // beat the clock // survive the gong</p>
 </div>
 

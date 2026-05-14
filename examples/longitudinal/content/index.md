@@ -52,41 +52,35 @@ tags = ["paper", "dark", "longitudinal", "temporal", "tracking"]
     <text x="100" y="115" text-anchor="middle" font-family="IBM Plex Mono" font-weight="700" font-size="13" fill="#f5a673">T1</text>
     <text x="100" y="60" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#7e889e">Baseline</text>
     <text x="100" y="135" text-anchor="middle" font-family="Crimson Pro" font-size="9" fill="#7e889e">Year 0</text>
-
     <line x1="240" y1="72" x2="240" y2="88" stroke="#525b72" stroke-width="1.5"/>
     <circle cx="240" cy="80" r="10" fill="none" stroke="#e8d45a" stroke-width="2.5"/>
     <circle cx="240" cy="80" r="4" fill="#e8d45a"/>
     <text x="240" y="115" text-anchor="middle" font-family="IBM Plex Mono" font-weight="700" font-size="13" fill="#e8d45a">T2</text>
     <text x="240" y="60" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#7e889e">Wave 2</text>
     <text x="240" y="135" text-anchor="middle" font-family="Crimson Pro" font-size="9" fill="#7e889e">Year 3</text>
-
     <line x1="380" y1="72" x2="380" y2="88" stroke="#525b72" stroke-width="1.5"/>
     <circle cx="380" cy="80" r="10" fill="none" stroke="#73d4a0" stroke-width="2.5"/>
     <circle cx="380" cy="80" r="4" fill="#73d4a0"/>
     <text x="380" y="115" text-anchor="middle" font-family="IBM Plex Mono" font-weight="700" font-size="13" fill="#73d4a0">T3</text>
     <text x="380" y="60" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#7e889e">Wave 3</text>
     <text x="380" y="135" text-anchor="middle" font-family="Crimson Pro" font-size="9" fill="#7e889e">Year 6</text>
-
     <line x1="520" y1="72" x2="520" y2="88" stroke="#525b72" stroke-width="1.5"/>
     <circle cx="520" cy="80" r="10" fill="none" stroke="#5ab8e8" stroke-width="2.5"/>
     <circle cx="520" cy="80" r="4" fill="#5ab8e8"/>
     <text x="520" y="115" text-anchor="middle" font-family="IBM Plex Mono" font-weight="700" font-size="13" fill="#5ab8e8">T4</text>
     <text x="520" y="60" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#7e889e">Wave 4</text>
     <text x="520" y="135" text-anchor="middle" font-family="Crimson Pro" font-size="9" fill="#7e889e">Year 9</text>
-
     <line x1="640" y1="72" x2="640" y2="88" stroke="#525b72" stroke-width="1.5"/>
     <circle cx="640" cy="80" r="10" fill="none" stroke="#b285e8" stroke-width="2.5"/>
     <circle cx="640" cy="80" r="4" fill="#b285e8"/>
     <text x="640" y="115" text-anchor="middle" font-family="IBM Plex Mono" font-weight="700" font-size="13" fill="#b285e8">T5</text>
     <text x="640" y="60" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#7e889e">Wave 5</text>
     <text x="640" y="135" text-anchor="middle" font-family="Crimson Pro" font-size="9" fill="#7e889e">Year 12</text>
-
     <!-- Inter-wave arrows -->
     <line x1="115" y1="80" x2="225" y2="80" stroke="#282e40" stroke-width="1" stroke-dasharray="4 3"/>
     <line x1="255" y1="80" x2="365" y2="80" stroke="#282e40" stroke-width="1" stroke-dasharray="4 3"/>
     <line x1="395" y1="80" x2="505" y2="80" stroke="#282e40" stroke-width="1" stroke-dasharray="4 3"/>
     <line x1="535" y1="80" x2="625" y2="80" stroke="#282e40" stroke-width="1" stroke-dasharray="4 3"/>
-
     <!-- N labels -->
     <text x="100" y="22" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#dfe4ed">N=1842</text>
     <text x="240" y="22" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#dfe4ed">N=1694</text>
@@ -186,31 +180,23 @@ tags = ["paper", "dark", "longitudinal", "temporal", "tracking"]
     <circle cx="250" cy="60" r="40" fill="none" stroke="#8a9ff5" stroke-width="2"/>
     <text x="250" y="55" text-anchor="middle" font-family="IBM Plex Mono" font-weight="700" font-size="11" fill="#dfe4ed">INTERCEPT</text>
     <text x="250" y="70" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#7e889e">(i)</text>
-
     <circle cx="470" cy="60" r="40" fill="none" stroke="#b285e8" stroke-width="2"/>
     <text x="470" y="55" text-anchor="middle" font-family="IBM Plex Mono" font-weight="700" font-size="11" fill="#dfe4ed">SLOPE</text>
     <text x="470" y="70" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#7e889e">(s)</text>
-
     <!-- Covariance arc -->
     <path d="M 290 55 Q 360 10 430 55" fill="none" stroke="#525b72" stroke-width="1.5" stroke-dasharray="4 3"/>
     <text x="360" y="20" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#7e889e">cov(i,s)</text>
-
     <!-- Observed variables (boxes) -->
     <rect x="60" y="220" width="60" height="40" fill="none" stroke="#f5a673" stroke-width="1.5"/>
     <text x="90" y="244" text-anchor="middle" font-family="IBM Plex Mono" font-weight="700" font-size="11" fill="#f5a673">T1</text>
-
     <rect x="190" y="220" width="60" height="40" fill="none" stroke="#e8d45a" stroke-width="1.5"/>
     <text x="220" y="244" text-anchor="middle" font-family="IBM Plex Mono" font-weight="700" font-size="11" fill="#e8d45a">T2</text>
-
     <rect x="320" y="220" width="60" height="40" fill="none" stroke="#73d4a0" stroke-width="1.5"/>
     <text x="350" y="244" text-anchor="middle" font-family="IBM Plex Mono" font-weight="700" font-size="11" fill="#73d4a0">T3</text>
-
     <rect x="460" y="220" width="60" height="40" fill="none" stroke="#5ab8e8" stroke-width="1.5"/>
     <text x="490" y="244" text-anchor="middle" font-family="IBM Plex Mono" font-weight="700" font-size="11" fill="#5ab8e8">T4</text>
-
     <rect x="590" y="220" width="60" height="40" fill="none" stroke="#b285e8" stroke-width="1.5"/>
     <text x="620" y="244" text-anchor="middle" font-family="IBM Plex Mono" font-weight="700" font-size="11" fill="#b285e8">T5</text>
-
     <!-- Factor loadings from intercept (all = 1) -->
     <line x1="230" y1="98" x2="90" y2="220" stroke="#8a9ff5" stroke-width="1"/>
     <line x1="240" y1="98" x2="220" y2="220" stroke="#8a9ff5" stroke-width="1"/>
@@ -222,7 +208,6 @@ tags = ["paper", "dark", "longitudinal", "temporal", "tracking"]
     <text x="298" y="160" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#8a9ff5">1</text>
     <text x="380" y="160" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#8a9ff5">1</text>
     <text x="458" y="155" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#8a9ff5">1</text>
-
     <!-- Factor loadings from slope (0, 1, 2, 3, 4) -->
     <line x1="450" y1="98" x2="90" y2="220" stroke="#b285e8" stroke-width="1" stroke-dasharray="3 2"/>
     <line x1="455" y1="98" x2="220" y2="220" stroke="#b285e8" stroke-width="1" stroke-dasharray="3 2"/>
@@ -234,14 +219,12 @@ tags = ["paper", "dark", "longitudinal", "temporal", "tracking"]
     <text x="408" y="168" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#b285e8">2</text>
     <text x="490" y="168" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#b285e8">3</text>
     <text x="562" y="162" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#b285e8">4</text>
-
     <!-- Error terms -->
     <text x="90" y="280" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#525b72">e1</text>
     <text x="220" y="280" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#525b72">e2</text>
     <text x="350" y="280" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#525b72">e3</text>
     <text x="490" y="280" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#525b72">e4</text>
     <text x="620" y="280" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#525b72">e5</text>
-
     <!-- Legend -->
     <rect x="60" y="300" width="600" height="1" fill="#282e40"/>
     <circle cx="100" cy="315" r="5" fill="none" stroke="#8a9ff5" stroke-width="1.5"/>
@@ -264,63 +247,51 @@ tags = ["paper", "dark", "longitudinal", "temporal", "tracking"]
     <rect x="20" y="30" width="120" height="55" fill="none" stroke="#f5a673" stroke-width="2"/>
     <text x="80" y="52" text-anchor="middle" font-family="IBM Plex Mono" font-weight="700" font-size="11" fill="#f5a673">T1</text>
     <text x="80" y="70" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#dfe4ed">N = 1,842</text>
-
     <rect x="170" y="30" width="120" height="55" fill="none" stroke="#e8d45a" stroke-width="2"/>
     <text x="230" y="52" text-anchor="middle" font-family="IBM Plex Mono" font-weight="700" font-size="11" fill="#e8d45a">T2</text>
     <text x="230" y="70" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#dfe4ed">N = 1,694</text>
-
     <rect x="320" y="30" width="120" height="55" fill="none" stroke="#73d4a0" stroke-width="2"/>
     <text x="380" y="52" text-anchor="middle" font-family="IBM Plex Mono" font-weight="700" font-size="11" fill="#73d4a0">T3</text>
     <text x="380" y="70" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#dfe4ed">N = 1,561</text>
-
     <rect x="470" y="30" width="120" height="55" fill="none" stroke="#5ab8e8" stroke-width="2"/>
     <text x="530" y="52" text-anchor="middle" font-family="IBM Plex Mono" font-weight="700" font-size="11" fill="#5ab8e8">T4</text>
     <text x="530" y="70" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#dfe4ed">N = 1,418</text>
-
     <rect x="620" y="30" width="80" height="55" fill="none" stroke="#b285e8" stroke-width="2"/>
     <text x="660" y="52" text-anchor="middle" font-family="IBM Plex Mono" font-weight="700" font-size="11" fill="#b285e8">T5</text>
     <text x="660" y="70" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#dfe4ed">N = 1,315</text>
-
     <!-- Arrows between waves -->
     <line x1="140" y1="57" x2="170" y2="57" stroke="#525b72" stroke-width="1.5" marker-end="url(#arrowGray)"/>
     <line x1="290" y1="57" x2="320" y2="57" stroke="#525b72" stroke-width="1.5" marker-end="url(#arrowGray)"/>
     <line x1="440" y1="57" x2="470" y2="57" stroke="#525b72" stroke-width="1.5" marker-end="url(#arrowGray)"/>
     <line x1="590" y1="57" x2="620" y2="57" stroke="#525b72" stroke-width="1.5" marker-end="url(#arrowGray)"/>
-
     <!-- Dropout arrows (downward) -->
     <line x1="155" y1="85" x2="155" y2="140" stroke="#525b72" stroke-width="1" stroke-dasharray="3 2"/>
     <rect x="110" y="140" width="90" height="40" fill="none" stroke="#525b72" stroke-width="1"/>
     <text x="155" y="157" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#7e889e">DROPPED</text>
     <text x="155" y="170" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#7e889e">n = 148</text>
-
     <line x1="305" y1="85" x2="305" y2="140" stroke="#525b72" stroke-width="1" stroke-dasharray="3 2"/>
     <rect x="260" y="140" width="90" height="40" fill="none" stroke="#525b72" stroke-width="1"/>
     <text x="305" y="157" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#7e889e">DROPPED</text>
     <text x="305" y="170" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#7e889e">n = 133</text>
-
     <line x1="455" y1="85" x2="455" y2="140" stroke="#525b72" stroke-width="1" stroke-dasharray="3 2"/>
     <rect x="410" y="140" width="90" height="40" fill="none" stroke="#525b72" stroke-width="1"/>
     <text x="455" y="157" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#7e889e">DROPPED</text>
     <text x="455" y="170" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#7e889e">n = 143</text>
-
     <line x1="605" y1="85" x2="605" y2="140" stroke="#525b72" stroke-width="1" stroke-dasharray="3 2"/>
     <rect x="560" y="140" width="90" height="40" fill="none" stroke="#525b72" stroke-width="1"/>
     <text x="605" y="157" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#7e889e">DROPPED</text>
     <text x="605" y="170" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#7e889e">n = 103</text>
-
     <!-- Dropout reasons -->
     <text x="155" y="200" text-anchor="middle" font-family="Crimson Pro" font-size="8" fill="#525b72">Moved: 62</text>
     <text x="155" y="212" text-anchor="middle" font-family="Crimson Pro" font-size="8" fill="#525b72">Refused: 51</text>
     <text x="155" y="224" text-anchor="middle" font-family="Crimson Pro" font-size="8" fill="#525b72">Deceased: 14</text>
     <text x="155" y="236" text-anchor="middle" font-family="Crimson Pro" font-size="8" fill="#525b72">Health: 21</text>
-
     <!-- Arrow marker -->
     <defs>
       <marker id="arrowGray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
         <path d="M 0 0 L 10 5 L 0 10 z" fill="#525b72"/>
       </marker>
     </defs>
-
     <!-- Retention summary -->
     <text x="360" y="265" text-anchor="middle" font-family="IBM Plex Mono" font-weight="700" font-size="10" fill="#7e889e" letter-spacing="0.5">CUMULATIVE ATTRITION: 28.6 PCT BY T5 (527 OF 1,842)</text>
   </svg>

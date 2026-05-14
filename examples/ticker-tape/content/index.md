@@ -61,19 +61,15 @@ tags = ["event", "light", "celebration", "parade", "festive"]
   <svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" class="podium-stage-svg" aria-hidden="true">
     <rect x="40" y="260" width="560" height="50" fill="#1a1a1a"/>
     <line x1="40" y1="260" x2="600" y2="260" stroke="#f2b50b" stroke-width="3"/>
-
     <rect x="220" y="130" width="200" height="130" fill="#e33b3b" stroke="#1a1a1a" stroke-width="3"/>
     <rect x="230" y="140" width="180" height="110" fill="none" stroke="#f2b50b" stroke-width="2"/>
     <text x="320" y="210" text-anchor="middle" font-family="Oswald, sans-serif" font-size="70" font-weight="700" fill="#f2b50b">1</text>
-
     <rect x="60" y="180" width="160" height="80" fill="#2a6edc" stroke="#1a1a1a" stroke-width="3"/>
     <rect x="70" y="190" width="140" height="60" fill="none" stroke="#f2b50b" stroke-width="2"/>
     <text x="140" y="240" text-anchor="middle" font-family="Oswald, sans-serif" font-size="50" font-weight="700" fill="#f2b50b">2</text>
-
     <rect x="420" y="205" width="160" height="55" fill="#2c9c55" stroke="#1a1a1a" stroke-width="3"/>
     <rect x="430" y="215" width="140" height="35" fill="none" stroke="#f2b50b" stroke-width="2"/>
     <text x="500" y="250" text-anchor="middle" font-family="Oswald, sans-serif" font-size="40" font-weight="700" fill="#f2b50b">3</text>
-
     <g transform="translate(320 40)">
       <rect x="-6" y="35" width="12" height="40" fill="#8a5a1a"/>
       <ellipse cx="0" cy="20" rx="28" ry="25" fill="#f2b50b" stroke="#1a1a1a" stroke-width="2"/>

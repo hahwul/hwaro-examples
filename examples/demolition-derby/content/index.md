@@ -9,7 +9,6 @@ description = "Competitive destruction event with impact collisions and wreckage
     <h1>DEMOLITION DERBY</h1>
     <p class="hero-subtitle">Last machine standing wins. Four competitors enter the arena. Collisions are mandatory. Survival is optional. The wreckage tells the story.</p>
     <p class="hero-date">IMPACT NIGHT // 2027.08.30 // THE ARENA, DETROIT</p>
-
     <!-- SVG impact collision pattern -->
     <svg width="320" height="100" viewBox="0 0 320 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto 0; display: block;">
       <!-- Impact starburst -->
@@ -42,7 +41,6 @@ description = "Competitive destruction event with impact collisions and wreckage
 <div class="section-block">
   <div class="section-label">Competitors</div>
   <h2>Elimination Bracket</h2>
-
   <!-- SVG demolition arena boundary fence -->
   <svg width="100%" height="40" viewBox="0 0 600 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 16px auto 24px; display: block; max-width: 600px;">
     <!-- Fence posts -->
@@ -66,7 +64,6 @@ description = "Competitive destruction event with impact collisions and wreckage
     <!-- Dent in fence -->
     <path d="M260,12 Q265,18 260,24" stroke="#e08020" stroke-width="1.5" fill="none" opacity="0.2"/>
   </svg>
-
   <div class="competitor-block">
     <div class="competitor-number">#01</div>
     <div class="competitor-info">
@@ -77,7 +74,6 @@ description = "Competitive destruction event with impact collisions and wreckage
       <span class="derby-badge">ACTIVE</span>
     </div>
   </div>
-
   <div class="competitor-block">
     <div class="competitor-number">#02</div>
     <div class="competitor-info">
@@ -88,7 +84,6 @@ description = "Competitive destruction event with impact collisions and wreckage
       <span class="derby-badge">ACTIVE</span>
     </div>
   </div>
-
   <div class="competitor-block">
     <div class="competitor-number">#03</div>
     <div class="competitor-info">
@@ -99,7 +94,6 @@ description = "Competitive destruction event with impact collisions and wreckage
       <span class="derby-badge-eliminated">X ELIMINATED</span>
     </div>
   </div>
-
   <div class="competitor-block">
     <div class="competitor-number">#04</div>
     <div class="competitor-info">
@@ -115,7 +109,6 @@ description = "Competitive destruction event with impact collisions and wreckage
 <div class="section-block">
   <div class="section-label">Damage Report</div>
   <h2>Wreckage Assessment</h2>
-
   <!-- SVG dent and wreckage texture effects -->
   <svg width="300" height="120" viewBox="0 0 300 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 24px auto; display: block;">
     <!-- Vehicle outline with dents -->
@@ -142,7 +135,6 @@ description = "Competitive destruction event with impact collisions and wreckage
 <div class="section-block">
   <div class="section-label">Trophy</div>
   <h2>Last Machine Standing</h2>
-
   <!-- SVG trophy from wreckage illustration -->
   <svg width="200" height="160" viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 24px auto; display: block;">
     <!-- Trophy cup shape made from wreckage -->
@@ -162,7 +154,6 @@ description = "Competitive destruction event with impact collisions and wreckage
     <text x="100" y="135" text-anchor="middle" fill="#a06020" font-family="Work Sans, sans-serif" font-size="7" font-weight="700" letter-spacing="2" opacity="0.25">CHAMPION</text>
     <text x="100" y="148" text-anchor="middle" fill="#e08020" font-family="Impact, sans-serif" font-size="8" letter-spacing="1" opacity="0.2">LAST STANDING</text>
   </svg>
-
   <p style="text-align: center; font-family: 'Work Sans', sans-serif; font-weight: 700; font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.2em; text-transform: uppercase;">enter > collide > survive > champion</p>
 </div>
 

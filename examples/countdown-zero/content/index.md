@@ -9,7 +9,6 @@ description = "Zero hour convergence event where all paths lead to T-0"
     <h1>COUNTDOWN ZERO</h1>
     <p class="hero-subtitle">All sessions converge on a single moment. The clock counts backward. When it hits zero, everything changes. Every minute before T-0 is preparation. T-0 is the point of no return.</p>
     <p class="hero-date">2027.09.12 // MISSION CONTROL, HOUSTON</p>
-
     <!-- SVG mission clock display -->
     <svg width="320" height="120" viewBox="0 0 320 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto 0; display: block;">
       <!-- Clock housing -->
@@ -44,7 +43,6 @@ description = "Zero hour convergence event where all paths lead to T-0"
 <div class="section-block">
   <div class="section-label">Mission Timeline</div>
   <h2>Countdown Schedule</h2>
-
   <div class="countdown-block">
     <div class="countdown-time">T-4h</div>
     <div class="countdown-info">
@@ -53,7 +51,6 @@ description = "Zero hour convergence event where all paths lead to T-0"
     </div>
     <div class="countdown-badge-slot"><span class="zero-badge">HOLD</span></div>
   </div>
-
   <div class="countdown-block">
     <div class="countdown-time">T-2h</div>
     <div class="countdown-info">
@@ -62,7 +59,6 @@ description = "Zero hour convergence event where all paths lead to T-0"
     </div>
     <div class="countdown-badge-slot"><span class="zero-badge">ACTIVE</span></div>
   </div>
-
   <div class="countdown-block">
     <div class="countdown-time">T-30m</div>
     <div class="countdown-info">
@@ -71,7 +67,6 @@ description = "Zero hour convergence event where all paths lead to T-0"
     </div>
     <div class="countdown-badge-slot"><span class="zero-badge-outline">ARMED</span></div>
   </div>
-
   <div class="countdown-block t-zero">
     <div class="countdown-time t-zero-time">T-0</div>
     <div class="countdown-info">
@@ -85,7 +80,6 @@ description = "Zero hour convergence event where all paths lead to T-0"
 <div class="section-block">
   <div class="section-label">Convergence</div>
   <h2>Convergence Lines</h2>
-
   <!-- SVG convergence line patterns pointing to T-0 -->
   <svg width="100%" height="160" viewBox="0 0 600 160" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 24px auto; display: block; max-width: 600px;">
     <!-- Convergence lines from multiple origins to center point -->
@@ -118,7 +112,6 @@ description = "Zero hour convergence event where all paths lead to T-0"
 <div class="section-block">
   <div class="section-label">Zero Hour</div>
   <h2>T-0 Burst</h2>
-
   <!-- SVG zero-hour burst pattern -->
   <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 24px auto; display: block;">
     <!-- Burst rays from center -->
@@ -138,7 +131,6 @@ description = "Zero hour convergence event where all paths lead to T-0"
     <circle cx="100" cy="100" r="8" fill="#00ff88" opacity="0.2"/>
     <text x="100" y="104" text-anchor="middle" fill="#0a1a10" font-family="Orbitron, sans-serif" font-weight="900" font-size="8">0</text>
   </svg>
-
   <p style="text-align: center; font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.2em; text-transform: uppercase;">t-4h > t-2h > t-30m > t-0</p>
 </div>
 

@@ -37,10 +37,8 @@ template = "home"
       </g>
     </g>
   </svg>
-
   <p class="hero-prelude">— By Invitation · Autumn Gala · MMXXV —</p>
   <h1 class="hero-title">The <em>Velvet</em><br>Rope</h1>
-
   <div class="hero-meta">
     <div><strong>Evening</strong>Saturday · Oct 18 · 2025</div>
     <div><strong>Doors</strong>19:30 · Sharp</div>
@@ -61,7 +59,6 @@ template = "home"
     <h2>Evening Programme</h2>
     <div class="block-tag">Seven Movements · Four Hours</div>
   </div>
-
   <div class="programme">
     <div class="programme-row">
       <span class="time">19:30 &mdash; 20:00</span>
@@ -106,7 +103,6 @@ template = "home"
     <h2>The Guest List</h2>
     <div class="block-tag">One Hundred &amp; Twenty — By Name</div>
   </div>
-
   <ul class="guestlist">
     <li>Adelaide Quinn</li>
     <li>Alejandro Cortés</li>
@@ -163,7 +159,6 @@ template = "home"
     <h2>RSVP</h2>
     <div class="block-tag">Please Reply Before October Fifth</div>
   </div>
-
   <div class="envelopes">
     <div class="envelope">
       <h3>Single Invitation</h3>

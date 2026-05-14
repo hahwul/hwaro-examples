@@ -7,7 +7,6 @@ description = "Understanding the avalanche terrain and momentum dynamics"
   <div class="section-label">Terrain Analysis</div>
   <h2>The Snowfield</h2>
   <p style="color: var(--text-secondary); line-height: 1.8; max-width: 720px;">Avalanches require specific conditions: a steep slope, a weak layer in the snowpack, and a trigger. Our event replicates this dynamic. The slope is the progression curve. The weak layer is complacency. The trigger is the first session. Once it releases, momentum is physics -- mass times velocity, growing with every meter of descent.</p>
-
   <!-- SVG snowfield crack propagation diagram -->
   <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto; display: block;">
     <!-- Snowfield layers -->

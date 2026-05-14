@@ -44,7 +44,6 @@ tags = ["event", "premiere", "celebrity", "glamour", "fashion"]
       </g>
     </svg>
   </div>
-
   <div class="hero-inner">
     <p class="hero-eyebrow">THE PALATINE &middot; WORLD PREMIERE</p>
     <h1 class="event-name">The Gilded Hour</h1>
@@ -86,7 +85,6 @@ tags = ["event", "premiere", "celebrity", "glamour", "fashion"]
     </div>
     <p class="arrival-look">Archival Couture 1971</p>
   </div>
-
   <div class="arrival-row">
     <span class="arrival-time">18:41</span>
     <div>
@@ -95,7 +93,6 @@ tags = ["event", "premiere", "celebrity", "glamour", "fashion"]
     </div>
     <p class="arrival-look">Savile Row Black Tie</p>
   </div>
-
   <div class="arrival-row">
     <span class="arrival-time">18:48</span>
     <div>
@@ -104,7 +101,6 @@ tags = ["event", "premiere", "celebrity", "glamour", "fashion"]
     </div>
     <p class="arrival-look">Emerald Mermaid Gown</p>
   </div>
-
   <div class="arrival-row">
     <span class="arrival-time">18:55</span>
     <div>
@@ -113,7 +109,6 @@ tags = ["event", "premiere", "celebrity", "glamour", "fashion"]
     </div>
     <p class="arrival-look">Navy Three-Piece</p>
   </div>
-
   <div class="arrival-row">
     <span class="arrival-time">19:02</span>
     <div>
@@ -122,7 +117,6 @@ tags = ["event", "premiere", "celebrity", "glamour", "fashion"]
     </div>
     <p class="arrival-look">Gold Brocade Cape</p>
   </div>
-
   <div class="arrival-row">
     <span class="arrival-time">19:12</span>
     <div>
@@ -131,7 +125,6 @@ tags = ["event", "premiere", "celebrity", "glamour", "fashion"]
     </div>
     <p class="arrival-look">Ivory Silk Column</p>
   </div>
-
   <div class="arrival-row">
     <span class="arrival-time">19:23</span>
     <div>
@@ -140,7 +133,6 @@ tags = ["event", "premiere", "celebrity", "glamour", "fashion"]
     </div>
     <p class="arrival-look">Midnight Velvet Tuxedo</p>
   </div>
-
   <div class="arrival-row">
     <span class="arrival-time">19:38</span>
     <div>

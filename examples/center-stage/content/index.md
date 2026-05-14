@@ -9,25 +9,21 @@ tags = ["event", "solo", "show", "spotlight", "centered"]
 <svg class="spotlight-svg" viewBox="0 0 1200 720" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
   <!-- Black stage background -->
   <rect width="1200" height="720" fill="#050505"/>
-
   <!-- Floor suggestion -->
   <rect x="0" y="600" width="1200" height="120" fill="#0a0a0a"/>
   <line x1="0" y1="600" x2="1200" y2="600" stroke="#1a1a1a" stroke-width="1"/>
-
   <!-- Spotlight beam from above (traced rays, solid lines, no gradient) -->
   <!-- Outer spotlight rays -->
   <polygon points="600,0 480,720 720,720" fill="#f4d35e" opacity="0.03"/>
   <polygon points="600,0 505,720 695,720" fill="#f4d35e" opacity="0.05"/>
   <polygon points="600,0 530,720 670,720" fill="#f4d35e" opacity="0.07"/>
   <polygon points="600,0 555,720 645,720" fill="#f4d35e" opacity="0.1"/>
-
   <!-- THE single large spotlight circle -->
   <circle cx="600" cy="440" r="260" fill="#f4d35e" opacity="0.08"/>
   <circle cx="600" cy="440" r="220" fill="#f4d35e" opacity="0.11"/>
   <circle cx="600" cy="440" r="180" fill="#f4d35e" opacity="0.15"/>
   <circle cx="600" cy="440" r="140" fill="#f4d35e" opacity="0.22"/>
   <circle cx="600" cy="440" r="100" fill="#f4d35e" opacity="0.3"/>
-
   <!-- Solo figure silhouette standing in the light -->
   <g transform="translate(600,600)">
     <!-- Head -->
@@ -40,7 +36,6 @@ tags = ["event", "solo", "show", "spotlight", "centered"]
     <rect x="-16" y="-5" width="12" height="5" fill="#000000"/>
     <rect x="4" y="-5" width="12" height="5" fill="#000000"/>
   </g>
-
   <!-- Spotlight rim -->
   <circle cx="600" cy="440" r="260" fill="none" stroke="#f4d35e" stroke-width="0.5" opacity="0.3"/>
 </svg>

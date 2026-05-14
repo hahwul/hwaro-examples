@@ -18,9 +18,7 @@ template = "page"
                 <span class="byline">By <strong>Eleanor Rigby</strong></span> &middot; <span class="pubdate">Oct 24, 2023</span>
             </div>
         </article>
-
         <div class="section-divider"><span>Business & Economy</span></div>
-
         <div class="articles-grid">
             <article class="grid-item">
                 <a href="{{ base_url }}/posts/post2/" class="grid-image-link">
@@ -36,7 +34,6 @@ template = "page"
                     </div>
                 </div>
             </article>
-
             <article class="grid-item">
                 <a href="{{ base_url }}/posts/post3/" class="grid-image-link">
                     <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Team collaborating" class="grid-image" loading="lazy">
@@ -53,7 +50,6 @@ template = "page"
             </article>
         </div>
     </div>
-
     <aside class="sidebar-column">
         <div class="sidebar-stories">
             <article class="secondary-story">
@@ -63,7 +59,6 @@ template = "page"
                     <span class="byline">By <strong>David Chen</strong></span> &middot; <span class="pubdate">Oct 24, 2023</span>
                 </div>
             </article>
-
             <article class="secondary-story">
                 <h3 class="secondary-story-title"><a href="#">Opinion: The Cost of Convenience in the Digital Age</a></h3>
                 <p class="secondary-story-excerpt">We are trading our most fundamental right to privacy for faster delivery times and personalized advertisements. Is it worth the price?</p>
@@ -71,7 +66,6 @@ template = "page"
                     <span class="byline">By <strong>Editorial Board</strong></span> &middot; <span class="pubdate">Oct 23, 2023</span>
                 </div>
             </article>
-
             <article class="secondary-story">
                 <h3 class="secondary-story-title"><a href="#">City Council Approves New Downtown Transit Hub</a></h3>
                 <p class="secondary-story-excerpt">The multi-million dollar project promises to reduce congestion and revitalize the historic district, but local business owners remain skeptical.</p>

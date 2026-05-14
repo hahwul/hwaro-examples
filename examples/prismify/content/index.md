@@ -22,7 +22,6 @@ template = "page"
     <h3>Lightning Fast</h3>
     <p>Engineered for speed, so you can focus on what matters most without any interruptions.</p>
   </div>
-
   <div class="card glass">
     <div class="icon-wrapper">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -32,7 +31,6 @@ template = "page"
     <h3>Secure by Design</h3>
     <p>Your data is protected with enterprise-grade security protocols out of the box.</p>
   </div>
-
   <div class="card glass">
     <div class="icon-wrapper">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -47,7 +45,6 @@ template = "page"
 <div class="pricing-section" style="margin-top: 6rem;">
   <h2 style="text-align: center;">Simple, Transparent Pricing</h2>
   <p style="text-align: center; max-width: 500px; margin: 0 auto;">Choose the plan that fits your team's needs.</p>
-
   <div class="pricing-table">
     <div class="pricing-card glass">
       <h3>Starter</h3>
@@ -59,7 +56,6 @@ template = "page"
       </ul>
       <a href="#" class="btn btn-outline" style="width: 100%;">Choose Starter</a>
     </div>
-
     <div class="pricing-card glass popular">
       <div class="popular-badge">Most Popular</div>
       <h3>Pro</h3>
@@ -71,7 +67,6 @@ template = "page"
       </ul>
       <a href="#" class="btn" style="width: 100%;">Choose Pro</a>
     </div>
-
     <div class="pricing-card glass">
       <h3>Enterprise</h3>
       <div class="price">$99<span>/mo</span></div>

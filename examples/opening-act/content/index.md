@@ -29,12 +29,10 @@ template = "home"
       <line x1="320" y1="50"  x2="305" y2="75"/>
     </g>
   </svg>
-
   <p class="hero-prelude">Season 07 / First Light Series</p>
   <div class="hero-title-row">
     <h1 class="hero-title">First<br>Light<span class="accent">.</span></h1>
   </div>
-
   <div class="hero-meta">
     <div>
       <strong>Opening Night</strong>
@@ -60,7 +58,6 @@ template = "home"
     <h2>Premiere Lineup</h2>
     <div class="block-tag">06 Acts · One Night</div>
   </div>
-
   <div class="lineup">
     <div class="act">
       <div class="act-no">Act 01</div>
@@ -136,7 +133,6 @@ template = "home"
     <h2>Season Nights</h2>
     <div class="block-tag">06 Dates</div>
   </div>
-
   <div class="calendar-wrap">
     <svg viewBox="0 0 400 440" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="100%">
       <rect x="8" y="8" width="384" height="424" fill="#141A26" stroke="#00B4D8" stroke-width="3"/>
@@ -166,7 +162,6 @@ template = "home"
       <rect x="8" y="392" width="384" height="40" fill="#0A0E17"/>
       <text x="28" y="418" font-family="Red Hat Mono, monospace" font-size="12" fill="#00B4D8" letter-spacing="2">FIRST LIGHT SERIES  ·  S07</text>
     </svg>
-
     <ul class="night-list">
       <li>
         <span class="date">Sep 05 / Fri</span>
@@ -207,7 +202,6 @@ template = "home"
     <h2>Tickets</h2>
     <div class="block-tag">On Sale · Aug 12</div>
   </div>
-
   <div class="ticket-row">
     <div class="ticket">
       <h3>Standing</h3>

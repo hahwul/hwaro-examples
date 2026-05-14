@@ -7,7 +7,6 @@ description = "Report for the Reveille dawn assembly"
   <div class="section-label">Personnel</div>
   <h2>Report for Duty</h2>
   <p style="color: var(--text-secondary); line-height: 1.8; max-width: 720px;">All personnel must report for the dawn assembly formation. Report your unit designation and confirm your formation stage assignment. Pre-dawn muster begins at 0430 Zulu. Full parade concludes at 0600 Zulu. Late arrivals will be noted in the duty log and reported to the Company Commander.</p>
-
   <!-- SVG dog tag / ID icon -->
   <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 24px 0;">
     <!-- Dog tag shape -->
@@ -23,12 +22,10 @@ description = "Report for the Reveille dawn assembly"
     <!-- Chain -->
     <path d="M50,16 Q50,10 45,8 Q35,5 30,10" stroke="#a0b060" stroke-width="0.8" fill="none" opacity="0.15"/>
   </svg>
-
   <div style="margin-top: 32px; display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
     <span class="rev-badge" style="font-size: 0.85rem; padding: 6px 20px;">ENLISTED</span>
     <span class="rev-badge-outline" style="font-size: 0.85rem; padding: 6px 20px;">OFFICERS</span>
   </div>
-
   <div class="zulu-clock" style="margin-top: 32px;">
     <div class="zulu-time-block">
       <div class="zulu-time-value">0430Z</div>
@@ -47,6 +44,5 @@ description = "Report for the Reveille dawn assembly"
       <div class="zulu-time-label">Reveille</div>
     </div>
   </div>
-
   <p style="color: var(--text-muted); margin-top: 24px; font-family: 'Allerta Stencil', sans-serif; font-size: 0.85rem; letter-spacing: 0.15em;">ASSEMBLY: 120430ZAPR2026 // PARADE GROUND ALPHA</p>
 </div>

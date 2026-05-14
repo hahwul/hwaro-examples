@@ -9,7 +9,6 @@ description = "Warning system event -- civil defense preparedness and emergency 
     <h1>FAULT SIREN</h1>
     <p class="hero-subtitle">When the sirens sound, preparedness is everything. A civil defense event dedicated to warning systems, emergency protocols, and crisis readiness.</p>
     <p class="hero-date">2027.09.15 // CIVIL DEFENSE CENTER, OSLO</p>
-
     <!-- SVG warning siren tower illustration -->
     <svg width="200" height="240" viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto 0; display: block;">
       <!-- Tower base -->
@@ -42,7 +41,6 @@ description = "Warning system event -- civil defense preparedness and emergency 
 <div class="section-block">
   <div class="section-label">Alert Status</div>
   <h2>Session Tracks</h2>
-
   <div class="status-block">
     <div class="status-indicator status-alert">ALERT</div>
     <div class="status-info">
@@ -51,7 +49,6 @@ description = "Warning system event -- civil defense preparedness and emergency 
     </div>
     <div class="status-badge-slot"><span class="siren-badge">Critical</span></div>
   </div>
-
   <div class="status-block">
     <div class="status-indicator status-warning">WARNING</div>
     <div class="status-info">
@@ -60,7 +57,6 @@ description = "Warning system event -- civil defense preparedness and emergency 
     </div>
     <div class="status-badge-slot"><span class="siren-badge-outline">Elevated</span></div>
   </div>
-
   <div class="status-block">
     <div class="status-indicator status-clear">ALL CLEAR</div>
     <div class="status-info">
@@ -74,7 +70,6 @@ description = "Warning system event -- civil defense preparedness and emergency 
 <div class="section-block">
   <div class="section-label">Sound Levels</div>
   <h2>Urgency Ratings</h2>
-
   <div class="siren-row">
     <div class="siren-block">
       <!-- SVG sound wave pattern -->
@@ -107,7 +102,6 @@ description = "Warning system event -- civil defense preparedness and emergency 
 <div class="section-block">
   <div class="section-label">Civil Defense</div>
   <h2>Emergency Procedure Flow</h2>
-
   <!-- SVG emergency procedure flow diagram -->
   <svg width="100%" height="120" viewBox="0 0 600 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 24px auto; display: block; max-width: 600px;">
     <!-- Shelter sign -->
@@ -140,7 +134,6 @@ description = "Warning system event -- civil defense preparedness and emergency 
     <polyline points="512,55 518,61 530,49" stroke="#eab308" stroke-width="2" fill="none" opacity="0.3"/>
     <text x="520" y="85" text-anchor="middle" fill="#787060" font-family="Barlow Condensed, sans-serif" font-weight="700" font-size="8" letter-spacing="1">ALL CLEAR</text>
   </svg>
-
   <p style="text-align: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.2em; text-transform: uppercase;">detect // alert // shelter // all clear</p>
 </div>
 

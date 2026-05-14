@@ -32,14 +32,12 @@ tags = ["event", "talent", "open-call", "audition", "stage"]
   <circle cx="320" cy="238" r="18" fill="#FFD60A"/>
   <circle cx="320" cy="238" r="10" fill="#000000"/>
   <text x="320" y="244" text-anchor="middle" font-family="Ubuntu Mono, monospace" font-weight="700" font-size="10" fill="#FFD60A">X</text>
-
   <!-- Spotlight cone from above -->
   <polygon points="320,20 420,210 220,210" fill="#ffffff" opacity="0.08"/>
   <polygon points="320,20 370,210 270,210" fill="#FFD60A" opacity="0.2"/>
   <!-- Spotlight housing -->
   <rect x="300" y="8" width="40" height="18" fill="#ffffff" stroke="#FFD60A" stroke-width="1.5"/>
   <circle cx="320" cy="18" r="4" fill="#FFD60A"/>
-
   <!-- Directional arrows pointing to center -->
   <!-- From left -->
   <polygon points="20,130 60,100 60,118 130,118 130,142 60,142 60,160" fill="#FFD60A"/>
@@ -51,7 +49,6 @@ tags = ["event", "talent", "open-call", "audition", "stage"]
   <polygon points="40,40 100,60 86,72 160,120 148,132 74,84 60,96" fill="#ffffff"/>
   <!-- From top-right -->
   <polygon points="600,40 540,60 554,72 480,120 492,132 566,84 580,96" fill="#ffffff"/>
-
   <!-- Labels -->
   <text x="10" y="250" font-family="Ubuntu Mono, monospace" font-weight="700" font-size="11" fill="#FFD60A" letter-spacing="0.14em">STAGE LEFT</text>
   <text x="550" y="250" font-family="Ubuntu Mono, monospace" font-weight="700" font-size="11" fill="#FFD60A" letter-spacing="0.14em">STAGE RIGHT</text>
@@ -210,7 +207,6 @@ tags = ["event", "talent", "open-call", "audition", "stage"]
   <rect x="20" y="80" width="60" height="100" fill="none" stroke="#ffffff" stroke-width="2"/>
   <circle cx="70" cy="130" r="3" fill="#FFD60A"/>
   <text x="50" y="200" text-anchor="middle" font-family="Ubuntu Mono, monospace" font-weight="700" font-size="11" fill="#ffffff" letter-spacing="0.14em">DOOR</text>
-
   <!-- Footprints along a curved path -->
   <g>
     <!-- Footprint group: oval + rounded small toes -->
@@ -271,19 +267,16 @@ tags = ["event", "talent", "open-call", "audition", "stage"]
       <circle cx="7" cy="-15" r="2" fill="#ffffff"/>
     </g>
   </g>
-
   <!-- Spotlight cone illuminating the X -->
   <polygon points="820,10 920,160 720,160" fill="#FFD60A" opacity="0.2"/>
   <polygon points="820,10 870,160 770,160" fill="#FFD60A" opacity="0.35"/>
   <rect x="800" y="0" width="40" height="16" fill="#ffffff" stroke="#FFD60A" stroke-width="1.5"/>
-
   <!-- Center X mark -->
   <rect x="760" y="150" width="120" height="50" fill="none" stroke="#ffffff" stroke-width="2"/>
   <line x1="760" y1="200" x2="880" y2="200" stroke="#FFD60A" stroke-width="3"/>
   <line x1="780" y1="170" x2="860" y2="190" stroke="#FFD60A" stroke-width="4" stroke-linecap="round"/>
   <line x1="860" y1="170" x2="780" y2="190" stroke="#FFD60A" stroke-width="4" stroke-linecap="round"/>
   <text x="820" y="216" text-anchor="middle" font-family="Ubuntu Mono, monospace" font-weight="700" font-size="11" fill="#FFD60A" letter-spacing="0.14em">CENTER X</text>
-
   <!-- Stage-right wing marker -->
   <rect x="1000" y="80" width="60" height="100" fill="none" stroke="#ffffff" stroke-width="2" stroke-dasharray="3,3"/>
   <text x="1030" y="200" text-anchor="middle" font-family="Ubuntu Mono, monospace" font-weight="700" font-size="11" fill="#ffffff" letter-spacing="0.14em">WING</text>
@@ -298,30 +291,23 @@ tags = ["event", "talent", "open-call", "audition", "stage"]
   <!-- Board -->
   <rect x="20" y="24" width="160" height="220" rx="6" fill="#ffffff" stroke="#FFD60A" stroke-width="2"/>
   <rect x="28" y="36" width="144" height="200" fill="#0a0a0a"/>
-
   <!-- Checklist lines -->
   <g>
     <rect x="36" y="48" width="12" height="12" fill="none" stroke="#FFD60A" stroke-width="2"/>
     <polyline points="38,54 42,58 46,50" fill="none" stroke="#FFD60A" stroke-width="2"/>
     <line x1="56" y1="54" x2="160" y2="54" stroke="#ffffff" stroke-width="1.5"/>
-
     <rect x="36" y="72" width="12" height="12" fill="none" stroke="#FFD60A" stroke-width="2"/>
     <polyline points="38,78 42,82 46,74" fill="none" stroke="#FFD60A" stroke-width="2"/>
     <line x1="56" y1="78" x2="160" y2="78" stroke="#ffffff" stroke-width="1.5"/>
-
     <rect x="36" y="96" width="12" height="12" fill="none" stroke="#FFD60A" stroke-width="2"/>
     <polyline points="38,102 42,106 46,98" fill="none" stroke="#FFD60A" stroke-width="2"/>
     <line x1="56" y1="102" x2="160" y2="102" stroke="#ffffff" stroke-width="1.5"/>
-
     <rect x="36" y="120" width="12" height="12" fill="none" stroke="#FFD60A" stroke-width="2"/>
     <line x1="56" y1="126" x2="160" y2="126" stroke="#ffffff" stroke-width="1.5"/>
-
     <rect x="36" y="144" width="12" height="12" fill="none" stroke="#FFD60A" stroke-width="2"/>
     <line x1="56" y1="150" x2="160" y2="150" stroke="#ffffff" stroke-width="1.5"/>
-
     <rect x="36" y="168" width="12" height="12" fill="none" stroke="#FFD60A" stroke-width="2"/>
     <line x1="56" y1="174" x2="160" y2="174" stroke="#ffffff" stroke-width="1.5"/>
-
     <rect x="36" y="192" width="12" height="12" fill="none" stroke="#FFD60A" stroke-width="2"/>
     <line x1="56" y1="198" x2="160" y2="198" stroke="#ffffff" stroke-width="1.5"/>
   </g>

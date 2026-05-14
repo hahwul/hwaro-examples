@@ -77,7 +77,6 @@ template = "page"
       <div class="tf-planet-status tf-status-active">PHASE 2 - ACTIVE</div>
     </div>
   </div>
-
   <div class="tf-planet-card">
     <div class="tf-planet-view">
       <div class="tf-planet-body tf-planet-kepler">
@@ -124,7 +123,6 @@ template = "page"
       <div class="tf-planet-status tf-status-warn">PHASE 4 - THERMAL ALERT</div>
     </div>
   </div>
-
   <div class="tf-planet-card">
     <div class="tf-planet-view">
       <div class="tf-planet-body tf-planet-proxima">
@@ -223,7 +221,6 @@ template = "page"
       </div>
     </div>
   </div>
-
   <div class="tf-metrics-col">
     <div class="tf-metric-card">
       <div class="tf-panel-header">
@@ -265,7 +262,6 @@ template = "page"
         </tbody>
       </table>
     </div>
-
     <div class="tf-metric-card" style="margin-top: 1rem;">
       <div class="tf-panel-header">
         <span class="tf-panel-tag">SAT</span>

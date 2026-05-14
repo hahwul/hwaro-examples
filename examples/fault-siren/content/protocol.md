@@ -7,7 +7,6 @@ description = "Emergency response protocols and civil defense procedures"
   <div class="section-label">Procedures</div>
   <h2>Emergency Protocol</h2>
   <p style="color: var(--text-secondary); line-height: 1.8; max-width: 720px;">Every warning system is only as effective as its protocol. Fault Siren establishes clear procedures for detection, notification, sheltering, and all-clear confirmation. When the siren sounds, every second of preparation counts.</p>
-
   <!-- SVG civil defense shelter sign -->
   <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 32px auto; display: block;">
     <rect x="20" y="20" width="160" height="160" stroke="#eab308" stroke-width="2" fill="none" opacity="0.25"/>

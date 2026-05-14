@@ -31,15 +31,12 @@ tags = ["book", "dark", "letterpress", "mechanical", "craft"]
 <svg class="qf-diagram" viewBox="0 0 900 420" xmlns="http://www.w3.org/2000/svg" aria-label="Diagram of a chase frame with quoin and furniture locking the type forme">
   <!-- Background -->
   <rect width="900" height="420" fill="#1f1a12"/>
-
   <!-- Outer chase frame -->
   <rect x="20" y="20" width="860" height="380" fill="none" stroke="#c7c0b3" stroke-width="8"/>
   <rect x="28" y="28" width="844" height="364" fill="none" stroke="#868075" stroke-width="2"/>
-
   <!-- Inner frame guide lines -->
   <line x1="32" y1="32" x2="868" y2="32" stroke="#555049" stroke-width="0.5"/>
   <line x1="32" y1="388" x2="868" y2="388" stroke="#555049" stroke-width="0.5"/>
-
   <!-- Top furniture (wooden blocks at top) -->
   <g>
     <rect x="40" y="40" width="190" height="40" fill="#5a4a38" stroke="#3f3225" stroke-width="1.5"/>
@@ -48,7 +45,6 @@ tags = ["book", "dark", "letterpress", "mechanical", "craft"]
     <line x1="180" y1="40" x2="180" y2="80" stroke="#2a2218" stroke-width="0.6"/>
     <text x="135" y="66" text-anchor="middle" font-family="Fira Mono, monospace" font-size="11" fill="#c7c0b3" letter-spacing="3">FURNITURE</text>
   </g>
-
   <!-- Top quoin block -->
   <g>
     <rect x="240" y="40" width="80" height="40" fill="#c9a374" stroke="#8a6535" stroke-width="1.5"/>
@@ -58,7 +54,6 @@ tags = ["book", "dark", "letterpress", "mechanical", "craft"]
     <polygon points="245,50 255,60 245,70" fill="#8a6535"/>
     <polygon points="315,50 305,60 315,70" fill="#8a6535"/>
   </g>
-
   <!-- Top right furniture -->
   <g>
     <rect x="330" y="40" width="530" height="40" fill="#5a4a38" stroke="#3f3225" stroke-width="1.5"/>
@@ -68,7 +63,6 @@ tags = ["book", "dark", "letterpress", "mechanical", "craft"]
     <line x1="800" y1="40" x2="800" y2="80" stroke="#2a2218" stroke-width="0.6"/>
     <text x="595" y="66" text-anchor="middle" font-family="Fira Mono, monospace" font-size="11" fill="#c7c0b3" letter-spacing="3">FURNITURE</text>
   </g>
-
   <!-- Left vertical furniture -->
   <g>
     <rect x="40" y="90" width="40" height="240" fill="#5a4a38" stroke="#3f3225" stroke-width="1.5"/>
@@ -77,7 +71,6 @@ tags = ["book", "dark", "letterpress", "mechanical", "craft"]
     <line x1="40" y1="260" x2="80" y2="260" stroke="#2a2218" stroke-width="0.6"/>
     <line x1="40" y1="320" x2="80" y2="320" stroke="#2a2218" stroke-width="0.6"/>
   </g>
-
   <!-- Central locked type forme (light cream block) -->
   <g>
     <rect x="90" y="90" width="680" height="240" fill="#f2ede0" stroke="#14110d" stroke-width="2"/>
@@ -95,7 +88,6 @@ tags = ["book", "dark", "letterpress", "mechanical", "craft"]
     <!-- Label inside type area -->
     <text x="430" y="320" text-anchor="middle" font-family="Roboto Slab, serif" font-weight="700" font-size="14" fill="#14110d" letter-spacing="6">TYPE FORME</text>
   </g>
-
   <!-- Right vertical furniture -->
   <g>
     <rect x="780" y="90" width="40" height="240" fill="#5a4a38" stroke="#3f3225" stroke-width="1.5"/>
@@ -104,7 +96,6 @@ tags = ["book", "dark", "letterpress", "mechanical", "craft"]
     <line x1="780" y1="260" x2="820" y2="260" stroke="#2a2218" stroke-width="0.6"/>
     <line x1="780" y1="320" x2="820" y2="320" stroke="#2a2218" stroke-width="0.6"/>
   </g>
-
   <!-- Right side quoin -->
   <g>
     <rect x="820" y="150" width="40" height="100" fill="#c9a374" stroke="#8a6535" stroke-width="1.5"/>
@@ -113,7 +104,6 @@ tags = ["book", "dark", "letterpress", "mechanical", "craft"]
     <polygon points="830,160 840,170 850,160" fill="#8a6535"/>
     <polygon points="830,240 840,230 850,240" fill="#8a6535"/>
   </g>
-
   <!-- Bottom furniture -->
   <g>
     <rect x="40" y="340" width="820" height="40" fill="#5a4a38" stroke="#3f3225" stroke-width="1.5"/>
@@ -124,7 +114,6 @@ tags = ["book", "dark", "letterpress", "mechanical", "craft"]
     <line x1="720" y1="340" x2="720" y2="380" stroke="#2a2218" stroke-width="0.6"/>
     <text x="450" y="366" text-anchor="middle" font-family="Fira Mono, monospace" font-size="11" fill="#c7c0b3" letter-spacing="3">FURNITURE &middot; LOWER EDGE</text>
   </g>
-
   <!-- Corner labels -->
   <text x="40" y="18" font-family="Fira Mono, monospace" font-size="10" fill="#868075" letter-spacing="2">CHASE</text>
   <text x="818" y="18" font-family="Fira Mono, monospace" font-size="10" fill="#868075" letter-spacing="2">FRAME</text>

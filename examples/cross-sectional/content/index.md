@@ -20,7 +20,6 @@ tags = ["paper", "light", "cross-sectional", "snapshot", "population"]
     <sup>4</sup>National Institute for Longevity Sciences, Nagoya
   </p>
   <p class="paper-doi"><strong>DOI:</strong> <a href="#">10.41093/jphr.2026.22.01.034</a> &middot; <strong>Accepted:</strong> 18 Mar 2026</p>
-
   <div class="snapshot-stamp">
     <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <circle cx="10" cy="10" r="9" fill="none" stroke="#7a2a5a" stroke-width="1.5"/>

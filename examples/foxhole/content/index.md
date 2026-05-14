@@ -43,7 +43,6 @@ template = "page"
     </div>
     <p class="summary">Exploiting a time-based blind SQL injection in a login form to extract admin credentials and bypass authentication.</p>
   </a>
-
   <a href="writeups/heap-overflow-tcache/" class="writeup-card">
     <div class="writeup-card-header">
       <h3>Heap Overflow via Tcache Poisoning</h3>
@@ -59,7 +58,6 @@ template = "page"
     </div>
     <p class="summary">Tcache poisoning attack on a custom allocator to gain arbitrary write and redirect execution flow.</p>
   </a>
-
   <a href="writeups/jwt-none-algorithm/" class="writeup-card">
     <div class="writeup-card-header">
       <h3>JWT None Algorithm Attack</h3>

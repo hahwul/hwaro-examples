@@ -65,7 +65,6 @@ description = "The premier tech conference for developers and engineering leader
       <h2 class="section-title">Schedule</h2>
       <p class="section-subtitle">Three days packed with talks, workshops, and networking</p>
     </div>
-
     <!-- Day 1 -->
     <div class="mb-16">
       <div class="flex items-center gap-4 mb-8">
@@ -84,7 +83,6 @@ description = "The premier tech conference for developers and engineering leader
         {{ session(time="16:00", track="c", track_name="Workshop", title="Hands-on: Terraform for Multi-Cloud Deployments", speaker="Workshop Team", org="HashiCorp") }}
       </div>
     </div>
-
     <!-- Day 2 -->
     <div class="mb-16">
       <div class="flex items-center gap-4 mb-8">
@@ -102,7 +100,6 @@ description = "The premier tech conference for developers and engineering leader
         {{ session(time="16:30", track="a", track_name="Platform", title="Lightning Talks: Community Spotlight", speaker="Community", org="Summit") }}
       </div>
     </div>
-
     <!-- Day 3 -->
     <div>
       <div class="flex items-center gap-4 mb-8">
@@ -152,7 +149,6 @@ description = "The premier tech conference for developers and engineering leader
       <h2 class="section-title">Sponsors</h2>
       <p class="section-subtitle">Summit 2026 is made possible by our partners</p>
     </div>
-
     <div class="mb-12">
       <p class="text-xs font-bold uppercase tracking-widest text-gray-500 text-center mb-6">Platinum</p>
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -161,7 +157,6 @@ description = "The premier tech conference for developers and engineering leader
         {{ sponsor(name="CloudBase") }}
       </div>
     </div>
-
     <div class="mb-12">
       <p class="text-xs font-bold uppercase tracking-widest text-gray-500 text-center mb-6">Gold</p>
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -171,7 +166,6 @@ description = "The premier tech conference for developers and engineering leader
         {{ sponsor(name="SecureNet") }}
       </div>
     </div>
-
     <div>
       <p class="text-xs font-bold uppercase tracking-widest text-gray-500 text-center mb-6">Community</p>
       <div class="grid grid-cols-2 sm:grid-cols-5 gap-4">

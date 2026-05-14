@@ -22,7 +22,6 @@ template = "page"
     <sup>4</sup>Center for Quantitative Biology, Universidad Nacional Autonoma de Mexico
   </p>
   <p class="paper-doi"><strong>DOI:</strong> <a href="#">10.41093/jmm.2026.38.04.112</a> &middot; <strong>Submitted:</strong> 22 Jan 2026 &middot; <strong>Accepted:</strong> 08 Apr 2026</p>
-
   <div class="badge-row">
     <span class="badge badge-protocol">
       <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">

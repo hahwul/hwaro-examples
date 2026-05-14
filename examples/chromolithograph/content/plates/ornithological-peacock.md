@@ -52,7 +52,6 @@ figure_svg = '''
   <line x1="238" y1="340" x2="228" y2="348" stroke="#2a1d12" stroke-width="1.5"/>
   <line x1="238" y1="340" x2="238" y2="350" stroke="#2a1d12" stroke-width="1.5"/>
   <line x1="238" y1="340" x2="249" y2="348" stroke="#2a1d12" stroke-width="1.5"/>
-
   <!-- Tail train - green base -->
   <path d="M 260 240 Q 420 140 560 220 Q 420 300 260 240 Z" fill="#3c8a68"/>
   <!-- Eyes of the feathers: yellow rings with red/blue centres -->

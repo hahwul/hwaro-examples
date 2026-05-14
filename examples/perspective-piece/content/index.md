@@ -46,95 +46,72 @@ tags = ["paper", "dark", "opinion", "viewpoint", "argumentative"]
   <svg viewBox="0 0 720 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Argument structure tree showing how premises lead through inference to the central conclusion about algorithmic monoculture">
     <!-- Title -->
     <text x="360" y="18" text-anchor="middle" font-family="Playfair Display, serif" font-weight="700" font-size="11" fill="#e8e2d8">ARGUMENT STRUCTURE: PREMISES TO CONCLUSION</text>
-
     <!-- Conclusion (top) -->
     <rect x="210" y="30" width="300" height="40" fill="none" stroke="#c9a84c" stroke-width="2" rx="3"/>
     <text x="360" y="48" text-anchor="middle" font-family="Playfair Display, serif" font-weight="700" font-size="9" fill="#c9a84c">CONCLUSION</text>
     <text x="360" y="62" text-anchor="middle" font-family="Cormorant, serif" font-size="8" fill="#e8e2d8">Methodological pluralism is epistemically necessary</text>
-
     <!-- Inference arrows -->
     <line x1="280" y1="70" x2="160" y2="100" stroke="#b07a4a" stroke-width="1.2" stroke-dasharray="4 3"/>
     <line x1="360" y1="70" x2="360" y2="100" stroke="#b07a4a" stroke-width="1.2" stroke-dasharray="4 3"/>
     <line x1="440" y1="70" x2="560" y2="100" stroke="#b07a4a" stroke-width="1.2" stroke-dasharray="4 3"/>
-
     <!-- Inference label -->
     <text x="360" y="90" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="6" fill="#b07a4a">INFERENCE</text>
-
     <!-- Intermediate claims -->
     <rect x="60" y="100" width="200" height="36" fill="#b07a4a" fill-opacity="0.08" stroke="#b07a4a" stroke-width="1.2" rx="2"/>
     <text x="160" y="116" text-anchor="middle" font-family="Cormorant, serif" font-weight="700" font-size="8" fill="#b07a4a">I1: Monoculture creates</text>
     <text x="160" y="128" text-anchor="middle" font-family="Cormorant, serif" font-size="7.5" fill="#d0c8b8">undetectable blind spots</text>
-
     <rect x="270" y="100" width="180" height="36" fill="#b07a4a" fill-opacity="0.08" stroke="#b07a4a" stroke-width="1.2" rx="2"/>
     <text x="360" y="116" text-anchor="middle" font-family="Cormorant, serif" font-weight="700" font-size="8" fill="#b07a4a">I2: Historical precedent</text>
     <text x="360" y="128" text-anchor="middle" font-family="Cormorant, serif" font-size="7.5" fill="#d0c8b8">shows systemic risk</text>
-
     <rect x="460" y="100" width="200" height="36" fill="#b07a4a" fill-opacity="0.08" stroke="#b07a4a" stroke-width="1.2" rx="2"/>
     <text x="560" y="116" text-anchor="middle" font-family="Cormorant, serif" font-weight="700" font-size="8" fill="#b07a4a">I3: Incentive structures</text>
     <text x="560" y="128" text-anchor="middle" font-family="Cormorant, serif" font-size="7.5" fill="#d0c8b8">reinforce convergence</text>
-
     <!-- Premise lines -->
     <line x1="120" y1="136" x2="80" y2="160" stroke="#6a8ab0" stroke-width="0.8"/>
     <line x1="160" y1="136" x2="160" y2="160" stroke="#6a8ab0" stroke-width="0.8"/>
     <line x1="200" y1="136" x2="240" y2="160" stroke="#6a8ab0" stroke-width="0.8"/>
-
     <line x1="330" y1="136" x2="300" y2="160" stroke="#6a8ab0" stroke-width="0.8"/>
     <line x1="390" y1="136" x2="420" y2="160" stroke="#6a8ab0" stroke-width="0.8"/>
-
     <line x1="520" y1="136" x2="490" y2="160" stroke="#6a8ab0" stroke-width="0.8"/>
     <line x1="560" y1="136" x2="560" y2="160" stroke="#6a8ab0" stroke-width="0.8"/>
     <line x1="600" y1="136" x2="630" y2="160" stroke="#6a8ab0" stroke-width="0.8"/>
-
     <!-- Premises row 1 -->
     <rect x="40" y="160" width="80" height="30" fill="#6a8ab0" fill-opacity="0.08" stroke="#6a8ab0" stroke-width="0.8" rx="2"/>
     <text x="80" y="174" text-anchor="middle" font-family="Cormorant, serif" font-size="6.5" fill="#6a8ab0">P1: Paradigm</text>
     <text x="80" y="184" text-anchor="middle" font-family="Cormorant, serif" font-size="6" fill="#a09888">lock-in observed</text>
-
     <rect x="125" y="160" width="70" height="30" fill="#6a8ab0" fill-opacity="0.08" stroke="#6a8ab0" stroke-width="0.8" rx="2"/>
     <text x="160" y="174" text-anchor="middle" font-family="Cormorant, serif" font-size="6.5" fill="#6a8ab0">P2: 87% of</text>
     <text x="160" y="184" text-anchor="middle" font-family="Cormorant, serif" font-size="6" fill="#a09888">top venues use T</text>
-
     <rect x="200" y="160" width="80" height="30" fill="#6a8ab0" fill-opacity="0.08" stroke="#6a8ab0" stroke-width="0.8" rx="2"/>
     <text x="240" y="174" text-anchor="middle" font-family="Cormorant, serif" font-size="6.5" fill="#6a8ab0">P3: Kuhnian</text>
     <text x="240" y="184" text-anchor="middle" font-family="Cormorant, serif" font-size="6" fill="#a09888">normal science</text>
-
     <rect x="265" y="160" width="70" height="30" fill="#6a8ab0" fill-opacity="0.08" stroke="#6a8ab0" stroke-width="0.8" rx="2"/>
     <text x="300" y="174" text-anchor="middle" font-family="Cormorant, serif" font-size="6.5" fill="#6a8ab0">P4: Agriculture</text>
     <text x="300" y="184" text-anchor="middle" font-family="Cormorant, serif" font-size="6" fill="#a09888">monoculture risk</text>
-
     <rect x="385" y="160" width="70" height="30" fill="#6a8ab0" fill-opacity="0.08" stroke="#6a8ab0" stroke-width="0.8" rx="2"/>
     <text x="420" y="174" text-anchor="middle" font-family="Cormorant, serif" font-size="6.5" fill="#6a8ab0">P5: Financial</text>
     <text x="420" y="184" text-anchor="middle" font-family="Cormorant, serif" font-size="6" fill="#a09888">crisis parallel</text>
-
     <rect x="455" y="160" width="70" height="30" fill="#6a8ab0" fill-opacity="0.08" stroke="#6a8ab0" stroke-width="0.8" rx="2"/>
     <text x="490" y="174" text-anchor="middle" font-family="Cormorant, serif" font-size="6.5" fill="#6a8ab0">P6: Benchmark</text>
     <text x="490" y="184" text-anchor="middle" font-family="Cormorant, serif" font-size="6" fill="#a09888">culture narrows</text>
-
     <rect x="525" y="160" width="70" height="30" fill="#6a8ab0" fill-opacity="0.08" stroke="#6a8ab0" stroke-width="0.8" rx="2"/>
     <text x="560" y="174" text-anchor="middle" font-family="Cormorant, serif" font-size="6.5" fill="#6a8ab0">P7: Peer review</text>
     <text x="560" y="184" text-anchor="middle" font-family="Cormorant, serif" font-size="6" fill="#a09888">favours familiar</text>
-
     <rect x="595" y="160" width="80" height="30" fill="#6a8ab0" fill-opacity="0.08" stroke="#6a8ab0" stroke-width="0.8" rx="2"/>
     <text x="635" y="174" text-anchor="middle" font-family="Cormorant, serif" font-size="6.5" fill="#6a8ab0">P8: Compute</text>
     <text x="635" y="184" text-anchor="middle" font-family="Cormorant, serif" font-size="6" fill="#a09888">cost barrier</text>
-
     <!-- Evidence layer -->
     <text x="360" y="210" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="6" fill="#a09888">SUPPORTING EVIDENCE</text>
     <line x1="100" y1="215" x2="620" y2="215" stroke="#3a3632" stroke-width="0.5"/>
-
     <!-- Evidence boxes -->
     <rect x="40" y="220" width="130" height="24" fill="none" stroke="#3a3632" stroke-width="0.5" rx="1"/>
     <text x="105" y="235" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="5" fill="#7a7268">Bibliometric data 2018-2025</text>
-
     <rect x="180" y="220" width="130" height="24" fill="none" stroke="#3a3632" stroke-width="0.5" rx="1"/>
     <text x="245" y="235" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="5" fill="#7a7268">Feyerabend 1975, Kuhn 1962</text>
-
     <rect x="320" y="220" width="130" height="24" fill="none" stroke="#3a3632" stroke-width="0.5" rx="1"/>
     <text x="385" y="235" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="5" fill="#7a7268">Irish famine, 2008 crisis</text>
-
     <rect x="460" y="220" width="130" height="24" fill="none" stroke="#3a3632" stroke-width="0.5" rx="1"/>
     <text x="525" y="235" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="5" fill="#7a7268">NeurIPS/ICML review data</text>
-
     <!-- Legend -->
     <rect x="200" y="260" width="10" height="10" fill="#c9a84c" fill-opacity="0.3" stroke="#c9a84c" stroke-width="0.8"/>
     <text x="215" y="269" font-family="Cormorant, serif" font-size="7" fill="#a09888">Conclusion</text>
@@ -154,7 +131,6 @@ tags = ["paper", "dark", "opinion", "viewpoint", "argumentative"]
   <svg viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Dialectic flow diagram showing thesis, antithesis, and synthesis positions on algorithmic monoculture">
     <!-- Title -->
     <text x="360" y="18" text-anchor="middle" font-family="Playfair Display, serif" font-weight="700" font-size="11" fill="#e8e2d8">DIALECTIC FLOW: MONOCULTURE DEBATE</text>
-
     <!-- Thesis box -->
     <rect x="30" y="40" width="200" height="100" fill="#c9a84c" fill-opacity="0.06" stroke="#c9a84c" stroke-width="1.5" rx="3"/>
     <text x="130" y="58" text-anchor="middle" font-family="Playfair Display, serif" font-weight="700" font-size="10" fill="#c9a84c">THESIS</text>
@@ -164,11 +140,9 @@ tags = ["paper", "dark", "opinion", "viewpoint", "argumentative"]
     <text x="130" y="102" text-anchor="middle" font-family="Cormorant, serif" font-size="8" fill="#e8e2d8">that limits discovery and</text>
     <text x="130" y="114" text-anchor="middle" font-family="Cormorant, serif" font-size="8" fill="#e8e2d8">amplifies systemic risk.</text>
     <text x="130" y="132" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="6" fill="#a09888">Confidence: 0.82</text>
-
     <!-- Arrow thesis to antithesis -->
     <line x1="230" y1="90" x2="260" y2="90" stroke="#e8e2d8" stroke-width="1" marker-end="url(#arrowhead)"/>
     <text x="245" y="82" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="5" fill="#a09888">challenges</text>
-
     <!-- Antithesis box -->
     <rect x="260" y="40" width="200" height="100" fill="#a05050" fill-opacity="0.06" stroke="#a05050" stroke-width="1.5" rx="3"/>
     <text x="360" y="58" text-anchor="middle" font-family="Playfair Display, serif" font-weight="700" font-size="10" fill="#a05050">ANTITHESIS</text>
@@ -178,11 +152,9 @@ tags = ["paper", "dark", "opinion", "viewpoint", "argumentative"]
     <text x="360" y="102" text-anchor="middle" font-family="Cormorant, serif" font-size="8" fill="#e8e2d8">on merit; diversity for its</text>
     <text x="360" y="114" text-anchor="middle" font-family="Cormorant, serif" font-size="8" fill="#e8e2d8">own sake is wasteful.</text>
     <text x="360" y="132" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="6" fill="#a09888">Confidence: 0.58</text>
-
     <!-- Arrow antithesis to synthesis -->
     <line x1="460" y1="90" x2="490" y2="90" stroke="#e8e2d8" stroke-width="1" marker-end="url(#arrowhead)"/>
     <text x="475" y="82" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="5" fill="#a09888">resolves</text>
-
     <!-- Synthesis box -->
     <rect x="490" y="40" width="200" height="100" fill="#5a8a6a" fill-opacity="0.06" stroke="#5a8a6a" stroke-width="1.5" rx="3"/>
     <text x="590" y="58" text-anchor="middle" font-family="Playfair Display, serif" font-weight="700" font-size="10" fill="#5a8a6a">SYNTHESIS</text>
@@ -192,18 +164,15 @@ tags = ["paper", "dark", "opinion", "viewpoint", "argumentative"]
     <text x="590" y="102" text-anchor="middle" font-family="Cormorant, serif" font-size="8" fill="#e8e2d8">alternatives. Structured pluralism</text>
     <text x="590" y="114" text-anchor="middle" font-family="Cormorant, serif" font-size="8" fill="#e8e2d8">reduces risk without waste.</text>
     <text x="590" y="132" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="6" fill="#a09888">Confidence: 0.91</text>
-
     <!-- Arrowhead definition -->
     <defs>
       <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
         <polygon points="0 0, 8 3, 0 6" fill="#e8e2d8"/>
       </marker>
     </defs>
-
     <!-- Feedback loop -->
     <path d="M 590 140 L 590 170 Q 590 185 575 185 L 145 185 Q 130 185 130 170 L 130 140" fill="none" stroke="#a09888" stroke-width="0.8" stroke-dasharray="4 3"/>
     <text x="360" y="195" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="6" fill="#7a7268">dialectic refinement loop</text>
-
     <!-- Legend -->
     <rect x="220" y="220" width="10" height="10" fill="#c9a84c" fill-opacity="0.15" stroke="#c9a84c" stroke-width="0.8"/>
     <text x="236" y="229" font-family="Cormorant, serif" font-size="7" fill="#a09888">Thesis</text>
@@ -221,7 +190,6 @@ tags = ["paper", "dark", "opinion", "viewpoint", "argumentative"]
   <svg viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Viewpoint strength gauge displays showing confidence levels for key claims in the argument">
     <!-- Title -->
     <text x="360" y="18" text-anchor="middle" font-family="Playfair Display, serif" font-weight="700" font-size="11" fill="#e8e2d8">CLAIM CONFIDENCE GAUGES</text>
-
     <!-- Gauge 1: Monoculture exists -->
     <text x="120" y="50" text-anchor="middle" font-family="Cormorant, serif" font-weight="700" font-size="8" fill="#e8e2d8">Monoculture exists</text>
     <!-- Background track -->
@@ -230,42 +198,36 @@ tags = ["paper", "dark", "opinion", "viewpoint", "argumentative"]
     <rect x="41" y="59" width="150" height="10" fill="#c9a84c" fill-opacity="0.7" rx="1"/>
     <text x="120" y="82" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" fill="#c9a84c">0.95 -- Very High</text>
     <text x="120" y="94" text-anchor="middle" font-family="Cormorant, serif" font-size="6.5" fill="#a09888">Bibliometric evidence unambiguous</text>
-
     <!-- Gauge 2: Monoculture is harmful -->
     <text x="360" y="50" text-anchor="middle" font-family="Cormorant, serif" font-weight="700" font-size="8" fill="#e8e2d8">Monoculture is harmful</text>
     <rect x="280" y="58" width="160" height="12" fill="none" stroke="#3a3632" stroke-width="1" rx="2"/>
     <rect x="281" y="59" width="131" height="10" fill="#c9a84c" fill-opacity="0.7" rx="1"/>
     <text x="360" y="82" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" fill="#c9a84c">0.82 -- High</text>
     <text x="360" y="94" text-anchor="middle" font-family="Cormorant, serif" font-size="6.5" fill="#a09888">Strong analogy, limited direct evidence</text>
-
     <!-- Gauge 3: Alternatives viable -->
     <text x="600" y="50" text-anchor="middle" font-family="Cormorant, serif" font-weight="700" font-size="8" fill="#e8e2d8">Alternatives are viable</text>
     <rect x="520" y="58" width="160" height="12" fill="none" stroke="#3a3632" stroke-width="1" rx="2"/>
     <rect x="521" y="59" width="112" height="10" fill="#b07a4a" fill-opacity="0.7" rx="1"/>
     <text x="600" y="82" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" fill="#b07a4a">0.70 -- Moderate-High</text>
     <text x="600" y="94" text-anchor="middle" font-family="Cormorant, serif" font-size="6.5" fill="#a09888">Emerging results but not yet at scale</text>
-
     <!-- Gauge 4: Incentives fixable -->
     <text x="120" y="130" text-anchor="middle" font-family="Cormorant, serif" font-weight="700" font-size="8" fill="#e8e2d8">Incentives are fixable</text>
     <rect x="40" y="138" width="160" height="12" fill="none" stroke="#3a3632" stroke-width="1" rx="2"/>
     <rect x="41" y="139" width="96" height="10" fill="#b07a4a" fill-opacity="0.7" rx="1"/>
     <text x="120" y="162" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" fill="#b07a4a">0.60 -- Moderate</text>
     <text x="120" y="174" text-anchor="middle" font-family="Cormorant, serif" font-size="6.5" fill="#a09888">Institutional inertia is significant</text>
-
     <!-- Gauge 5: Pluralism reduces risk -->
     <text x="360" y="130" text-anchor="middle" font-family="Cormorant, serif" font-weight="700" font-size="8" fill="#e8e2d8">Pluralism reduces risk</text>
     <rect x="280" y="138" width="160" height="12" fill="none" stroke="#3a3632" stroke-width="1" rx="2"/>
     <rect x="281" y="139" width="144" height="10" fill="#5a8a6a" fill-opacity="0.7" rx="1"/>
     <text x="360" y="162" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" fill="#5a8a6a">0.91 -- Very High</text>
     <text x="360" y="174" text-anchor="middle" font-family="Cormorant, serif" font-size="6.5" fill="#a09888">Cross-domain evidence robust</text>
-
     <!-- Gauge 6: Convergence reflects merit -->
     <text x="600" y="130" text-anchor="middle" font-family="Cormorant, serif" font-weight="700" font-size="8" fill="#e8e2d8">Convergence = merit</text>
     <rect x="520" y="138" width="160" height="12" fill="none" stroke="#3a3632" stroke-width="1" rx="2"/>
     <rect x="521" y="139" width="93" height="10" fill="#a05050" fill-opacity="0.7" rx="1"/>
     <text x="600" y="162" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" fill="#a05050">0.58 -- Moderate</text>
     <text x="600" y="174" text-anchor="middle" font-family="Cormorant, serif" font-size="6.5" fill="#a09888">Partly true but overstated</text>
-
     <!-- Scale legend -->
     <text x="360" y="210" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="6" fill="#7a7268">CONFIDENCE SCALE</text>
     <rect x="160" y="218" width="400" height="8" fill="none" stroke="#3a3632" stroke-width="0.5" rx="1"/>

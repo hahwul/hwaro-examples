@@ -36,7 +36,6 @@ template = "index"
     <div class="bulletin-body">Range safety lifts the hold; press pool gathers at Pad 4 from 13:15. Three-stage vehicle, polar orbit, 42-minute window.</div>
     <div class="bulletin-meta"><span>Pad 4</span><span>Wire 214.02</span></div>
   </a>
-
   <a class="bulletin" href="{{ base_url }}/bulletins/kestrel-spec-sheet/">
     <span class="bulletin-ribbon">Embargo lifted</span>
     <div class="bulletin-kicker">09:35 &#183; Release</div>
@@ -44,7 +43,6 @@ template = "index"
     <div class="bulletin-body">Twenty-four pages, including the restart envelope and the single-fault tolerance analysis. Distributed to the wire at 09:35; public at 10:00.</div>
     <div class="bulletin-meta"><span>North Station</span><span>Wire 214.03</span></div>
   </a>
-
   <a class="bulletin" href="{{ base_url }}/bulletins/q2-roadmap/">
     <span class="bulletin-ribbon">New</span>
     <div class="bulletin-kicker">09:48 &#183; Roadmap</div>
@@ -52,7 +50,6 @@ template = "index"
     <div class="bulletin-body">Six new programme additions and two retirements, with range-availability and staffing notes. A precis is on the front of the wire; the bulletin itself is on page 11.</div>
     <div class="bulletin-meta"><span>Programmes</span><span>Wire 214.04</span></div>
   </a>
-
   <a class="bulletin" href="{{ base_url }}/bulletins/press-pool-badges/">
     <span class="bulletin-ribbon urgent">Urgent</span>
     <div class="bulletin-kicker">09:22 &#183; Access</div>
@@ -60,7 +57,6 @@ template = "index"
     <div class="bulletin-body">Badge check at the North gate from 12:00. Members without a current press laminate will not be admitted. Issuance at the media desk until 11:00.</div>
     <div class="bulletin-meta"><span>Pad 4 gate</span><span>Wire 214.05</span></div>
   </a>
-
   <a class="bulletin" href="{{ base_url }}/bulletins/weather-call/">
     <span class="bulletin-ribbon">Hold watch</span>
     <div class="bulletin-kicker">09:54 &#183; Weather</div>
@@ -68,7 +64,6 @@ template = "index"
     <div class="bulletin-body">The 09:45 balloon shows winds within the 18-knot envelope at altitude. Hold watch lifted; next call at 12:00.</div>
     <div class="bulletin-meta"><span>Range Met</span><span>Wire 214.06</span></div>
   </a>
-
   <a class="bulletin" href="{{ base_url }}/bulletins/retraction-vance/">
     <span class="bulletin-ribbon">Retraction</span>
     <div class="bulletin-kicker">08:58 &#183; Correction</div>
