@@ -1,0 +1,55 @@
+{% include "header.html" %}
+
+{% set posts = site.pages | sort_by(attribute="date") | reverse %}
+{% set featured = posts | first %}
+
+{% if featured %}
+<section class="hero">
+  <div class="marker"><span class="rule"></span><span>The Lead</span><span class="rule"></span></div>
+  <a href="{{ base_url }}{{ featured.url }}">
+    <h1>{{ featured.title | replace(from=" ", to=" ") }}</h1>
+  </a>
+  {% if featured.description %}<p class="deck">{{ featured.description }}</p>{% endif %}
+  <div class="meta">
+    {% if featured.date %}<span>{{ featured.date | date(format="%B %d, %Y") }}</span>{% endif %}
+    <span class="sep"></span>
+    <span>{{ featured.reading_time | default(value=5) }} min read</span>
+    {% if featured.extra.author %}<span class="sep"></span><span>by {{ featured.extra.author }}</span>{% endif %}
+  </div>
+</section>
+{% endif %}
+
+<section class="latest">
+  <div class="wrap">
+    <div class="section-title">
+      <h2>From the journal</h2>
+      <div class="sub">Latest entries</div>
+      <div class="ornament"></div>
+    </div>
+
+    <div class="cards">
+      {% for post in posts %}
+        {% if not loop.first and loop.index <= 7 %}
+          <article class="card">
+            <div class="num">{{ loop.index0 }}<span class="rule"></span></div>
+            {% if post.tags %}<div class="cat">{{ post.tags | first }}</div>{% endif %}
+            <a href="{{ base_url }}{{ post.url }}"><h3>{{ post.title }}</h3></a>
+            {% if post.description %}<p>{{ post.description }}</p>{% endif %}
+            <a href="{{ base_url }}{{ post.url }}" class="read">Read</a>
+          </article>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="feature-row wrap">
+  <div class="ill"><span class="label">A Letter from the Editor</span></div>
+  <div class="copy">
+    <div class="eyebrow">From the Editor</div>
+    <h2>A small, <em>quiet</em> journal for the unhurried hour.</h2>
+    <p>Velour is a publication that prefers a long afternoon to a long thread. We write about craft, attention, slow rooms, and the patient pleasures that the news cycle has no time for. New entries on the first and fifteenth of each month.</p>
+  </div>
+</section>
+
+{% include "footer.html" %}
