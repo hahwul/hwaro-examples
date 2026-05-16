@@ -3,6 +3,8 @@ title = "Notes on the long shift"
 date = "2026-02-05"
 description = "Why we structure our engagements around quarters, not weeks, and what we have learned from four years of running the studio this way."
 tags = ["Studio"]
+[extra]
+monogram = "LNG"
 +++
 
 We take a small number of engagements per quarter. We have done this since 2021. People ask us why, often. Here are the four reasons.

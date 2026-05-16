@@ -3,6 +3,8 @@ title = "Atlas — a continent-spanning identity"
 date = "2026-05-04"
 description = "A case study from a year-long project building an identity system for a logistics company that had grown faster than its brand could keep up."
 tags = ["Identity"]
+[extra]
+monogram = "ATL"
 +++
 
 Atlas had grown from one warehouse to forty across nine countries in three years. By the time they came to us, they had four logos, six color palettes in active use, and an internal style guide written by an enthusiastic intern in 2021. The company knew it had a problem. They were not sure if it was a brand problem or an operations problem. It was both.

@@ -3,6 +3,8 @@ title = "Sable — a quieter portfolio app"
 date = "2026-03-18"
 description = "Designing and building a calm web app for solo investors, with a clarity-first interface and a refusal to gamify."
 tags = ["Product"]
+[extra]
+monogram = "SBL"
 +++
 
 Sable came to us with a deck and a working prototype. The deck was good. The prototype was a feature-laden, brightly colored, alarmingly cheerful piece of software that none of the team actually wanted to use themselves.
