@@ -1,0 +1,59 @@
+{% include "header.html" %}
+
+{% set posts = site.pages | sort_by(attribute="date") | reverse %}
+{% set featured = posts | first %}
+
+{% if featured %}
+<section class="lead">
+  <div class="col">
+    <span class="eyebrow">Lead Story</span>
+    <a href="{{ base_url }}{{ featured.url }}">
+      <h1 class="lead-title">{{ featured.title }}</h1>
+    </a>
+    {% if featured.description %}<p class="lead-deck">{{ featured.description }}</p>{% endif %}
+    <div class="meta">
+      {% if featured.date %}<span>{{ featured.date | date(format="%b %d, %Y") }}</span>{% endif %}
+      <span class="sep"></span>
+      <span>{{ featured.reading_time | default(value=5) }} min read</span>
+      {% if featured.extra.author %}<span class="sep"></span><span>By {{ featured.extra.author }}</span>{% endif %}
+    </div>
+  </div>
+  <div class="col" style="background:#111;color:#f4f1ec;">
+    <span class="eyebrow" style="color:#f4f1ec;border-color:#f4f1ec;">In This Issue</span>
+    <h2 style="font-family:'Fraunces',serif;font-size:46px;line-height:1.05;letter-spacing:-0.02em;margin:0 0 28px;">
+      Eight notes on building things that outlive the news cycle.
+    </h2>
+    <p style="color:#d6d3cd;font-size:16px;line-height:1.55;max-width:48ch;">
+      A selection of recent essays, field notes, and one extremely long interview with a typeface designer who refuses to retire.
+    </p>
+  </div>
+</section>
+{% endif %}
+
+<section class="issue">
+  <div class="cell"><strong>04</strong> · Essays</div>
+  <div class="cell"><strong>12</strong> · Field Notes</div>
+  <div class="cell"><strong>03</strong> · Interviews</div>
+  <div class="cell"><strong>{{ current_date }}</strong></div>
+</section>
+
+<section class="grid">
+  {% for post in posts %}
+    {% if not loop.first %}
+      <article class="card {% if loop.index0 == 1 %}wide{% endif %}{% if loop.index0 == 4 %} invert{% endif %}">
+        <div class="num">No. {{ loop.index0 }} / {{ post.section | default(value="Posts") | upper }}</div>
+        <a href="{{ base_url }}{{ post.url }}">
+          <h3>{{ post.title }}</h3>
+        </a>
+        {% if post.description %}
+          <p class="{% if loop.index0 == 1 %}deck{% endif %}">{{ post.description }}</p>
+        {% endif %}
+        {% if post.tags %}
+          <span class="tag">{{ post.tags | first }}</span>
+        {% endif %}
+      </article>
+    {% endif %}
+  {% endfor %}
+</section>
+
+{% include "footer.html" %}
