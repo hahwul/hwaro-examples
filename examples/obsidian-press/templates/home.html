@@ -1,6 +1,6 @@
 {% include "header.html" %}
 
-{% set all_sorted = site.pages | sort_by(attribute="date") | reverse %}
+{% set features = site.pages | where("section", "features") | sort_by(attribute="date") | reverse %}
 
 <main class="cover">
 
@@ -20,8 +20,8 @@
   <section class="cover-lead">
     <div class="lead-frame">
       <div class="lead-label"><span class="num">&#8470;&nbsp;01</span><span class="lead-kicker">The Lead Feature</span></div>
-      {% for post in all_sorted %}
-        {% if post.section == "features" and loop.index0 == 0 %}
+      {% for post in features %}
+        {% if loop.first %}
       <a class="lead-link" href="{{ base_url }}{{ post.url }}">
         <h2 class="lead-title">{{ post.title | e }}</h2>
       </a>
@@ -43,10 +43,10 @@
       <span class="grid-rule"></span>
     </div>
     <div class="grid-rows">
-      {% for post in all_sorted %}
-        {% if post.section == "features" and loop.index0 > 0 %}
+      {% for post in features %}
+        {% if not loop.first %}
         <article class="grid-row">
-          <div class="row-num"><span class="num">&#8470;&nbsp;0{{ loop.index0 + 1 }}</span></div>
+          <div class="row-num"><span class="num">&#8470;&nbsp;{{ "%02d" | format(loop.index) }}</span></div>
           <div class="row-body">
             <a href="{{ base_url }}{{ post.url }}"><h4 class="row-title">{{ post.title | e }}</h4></a>
             {% if post.extra.deck %}<p class="row-deck">{{ post.extra.deck | e }}</p>{% elif post.description %}<p class="row-deck">{{ post.description | e }}</p>{% endif %}
