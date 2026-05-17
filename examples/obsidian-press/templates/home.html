@@ -1,0 +1,77 @@
+{% include "header.html" %}
+
+{% set features = site.pages | where("section", "features") | sort_by(attribute="date") | reverse %}
+
+<main class="cover">
+
+  <section class="cover-masthead">
+    <div class="cover-tagline">An editorial journal on design, culture, and the long form.</div>
+    <h1 class="cover-title">Obsidian<br>Press</h1>
+    <div class="cover-dateline">
+      <span>Winter 2026</span>
+      <span class="dot">&middot;</span>
+      <span>Five Features</span>
+      <span class="dot">&middot;</span>
+      <span>One Interview</span>
+    </div>
+  </section>
+
+  {# Lead feature: the newest features-section page #}
+  <section class="cover-lead">
+    <div class="lead-frame">
+      <div class="lead-label"><span class="num">&#8470;&nbsp;01</span><span class="lead-kicker">The Lead Feature</span></div>
+      {% for post in features %}
+        {% if loop.first %}
+      <a class="lead-link" href="{{ base_url }}{{ post.url }}">
+        <h2 class="lead-title">{{ post.title | e }}</h2>
+      </a>
+      {% if post.extra.deck %}<p class="lead-deck">{{ post.extra.deck | e }}</p>{% endif %}
+      <div class="lead-meta">
+        {% if post.extra.author %}<span class="byline">By {{ post.extra.author | e }}</span><span class="sep">&middot;</span>{% endif %}
+        {% if post.date %}<span class="dateline">{{ post.date | date(format="%B %d, %Y") }}</span>{% endif %}
+      </div>
+      <a class="lead-cta" href="{{ base_url }}{{ post.url }}">Read the essay</a>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="cover-grid">
+    <div class="grid-heading">
+      <span class="grid-rule"></span>
+      <h3 class="grid-title">Also in this issue</h3>
+      <span class="grid-rule"></span>
+    </div>
+    <div class="grid-rows">
+      {% for post in features %}
+        {% if not loop.first %}
+        <article class="grid-row">
+          <div class="row-num"><span class="num">&#8470;&nbsp;{{ "%02d" | format(loop.index) }}</span></div>
+          <div class="row-body">
+            <a href="{{ base_url }}{{ post.url }}"><h4 class="row-title">{{ post.title | e }}</h4></a>
+            {% if post.extra.deck %}<p class="row-deck">{{ post.extra.deck | e }}</p>{% elif post.description %}<p class="row-deck">{{ post.description | e }}</p>{% endif %}
+            <div class="row-meta">
+              {% if post.extra.author %}<span>{{ post.extra.author | e }}</span><span class="sep">&middot;</span>{% endif %}
+              {% if post.date %}<span>{{ post.date | date(format="%b %d, %Y") }}</span>{% endif %}
+              {% if post.tags %}<span class="sep">&middot;</span><span class="row-tag">{{ post.tags | first | e }}</span>{% endif %}
+            </div>
+          </div>
+        </article>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="cover-editors">
+    <div class="editors-rule"></div>
+    <div class="editors-label">From the Editors</div>
+    <blockquote class="editors-quote">
+      The essay is not a museum for sentences the writer was proud of. It is the argument. The sentence either serves the argument or it goes.
+    </blockquote>
+    <div class="editors-attribution">&mdash; Margaret Lowell, <em>The Second Draft</em></div>
+    <div class="editors-rule"></div>
+  </section>
+
+</main>
+
+{% include "footer.html" %}
