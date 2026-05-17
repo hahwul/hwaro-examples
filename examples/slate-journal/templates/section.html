@@ -1,0 +1,47 @@
+{% include "header.html" %}
+
+<main class="section-page">
+  <header class="section-head">
+    <p class="kicker">The Archive</p>
+    <h1 class="section-title"><em>{{ section.title }}</em></h1>
+    {% if section.description %}
+      <p class="section-deck">{{ section.description }}</p>
+    {% endif %}
+  </header>
+
+  {% if content %}
+    <div class="section-intro">
+      {{ content | safe }}
+    </div>
+  {% endif %}
+
+  <ol class="essay-list">
+    {% for p in section.pages | sort(attribute="date") | reverse %}
+      <li class="essay-list-item">
+        <div class="essay-list-rail">
+          <time class="rail-date">{{ p.date | date(format="%Y") }}</time>
+          <span class="rail-month">{{ p.date | date(format="%b %-d") }}</span>
+        </div>
+        <div class="essay-list-body">
+          <h2 class="essay-list-title">
+            <a href="{{ base_url }}{{ p.url }}">{{ p.title }}</a>
+          </h2>
+          {% if p.description %}
+            <p class="essay-list-deck"><em>{{ p.description }}</em></p>
+          {% endif %}
+          <p class="essay-list-meta">
+            {% if p.reading_time %}{{ p.reading_time }} min read{% endif %}
+            {% if p.tags %}
+              <span class="dot">&middot;</span>
+              {% for tag in p.tags %}<a href="{{ base_url }}/tags/{{ tag | slugify }}/">{{ tag }}</a>{% if not loop.last %}, {% endif %}{% endfor %}
+            {% endif %}
+          </p>
+        </div>
+      </li>
+    {% endfor %}
+  </ol>
+
+  {{ pagination }}
+</main>
+
+{% include "footer.html" %}

@@ -1,0 +1,86 @@
+{% include "header.html" %}
+{% set essays = get_section(path="essays/_index.md") %}
+{% set pages = essays.pages | sort(attribute="date") | reverse %}
+
+<main class="home">
+  {% if pages | length > 0 %}
+    {% set lead = pages | first %}
+    <section class="lead-grid">
+      <article class="lead">
+        <p class="kicker">The Lead Essay <span class="bullet">&middot;</span> {{ lead.date | date(format="%B %Y") }}</p>
+        <h1 class="lead-headline">
+          <a href="{{ base_url }}{{ lead.url }}">
+            {{ lead.title }}
+          </a>
+        </h1>
+        {% if lead.description %}
+          <p class="lead-deck"><em>{{ lead.description }}</em></p>
+        {% endif %}
+        <p class="lead-meta">
+          <span class="byline">By Augustin Park</span>
+          <span class="bullet">&middot;</span>
+          <time>{{ lead.date | date(format="%B %-d, %Y") }}</time>
+          {% if lead.reading_time %}
+            <span class="bullet">&middot;</span>
+            <span>{{ lead.reading_time }} min read</span>
+          {% endif %}
+        </p>
+        <p class="lead-cta"><a href="{{ base_url }}{{ lead.url }}">Read the essay &rarr;</a></p>
+      </article>
+
+      <aside class="lead-side">
+        <p class="kicker">Recent</p>
+        <ol class="recent-list">
+          {% for p in pages | slice(start=1, end=3) %}
+            <li class="recent-item">
+              <time class="recent-date">{{ p.date | date(format="%b %-d, %Y") }}</time>
+              <h2 class="recent-title">
+                <a href="{{ base_url }}{{ p.url }}">{{ p.title }}</a>
+              </h2>
+              {% if p.description %}
+                <p class="recent-excerpt">{{ p.description }}</p>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ol>
+      </aside>
+    </section>
+
+    {% if pages | length > 3 %}
+      <section class="below-grid">
+        <p class="kicker section-rule">Further Reading</p>
+        <div class="below-row">
+          {% for p in pages | slice(start=3, end=6) %}
+            <article class="below-item">
+              <time class="below-date">{{ p.date | date(format="%b %-d, %Y") }}</time>
+              <h3 class="below-title">
+                <a href="{{ base_url }}{{ p.url }}"><em>{{ p.title }}</em></a>
+              </h3>
+              {% if p.description %}
+                <p class="below-excerpt">{{ p.description }}</p>
+              {% endif %}
+            </article>
+          {% endfor %}
+        </div>
+      </section>
+    {% endif %}
+
+    <section class="archive-quote">
+      <p class="kicker section-rule">From the Archive</p>
+      <blockquote class="pull-quote-display">
+        A slow protocol is one that waits for the reader, and trusts the reader's pace. A loud protocol is one that interrupts the reader, and distrusts the reader's pace.
+      </blockquote>
+      <p class="quote-attribution">
+        &mdash; <a href="{{ base_url }}/essays/the-quiet-protocols/">The Quiet Protocols</a>, May 2026
+      </p>
+    </section>
+
+    <section class="all-essays-link">
+      <a href="{{ base_url }}/essays/">All essays in the archive &rarr;</a>
+    </section>
+  {% else %}
+    <p>No essays yet.</p>
+  {% endif %}
+</main>
+
+{% include "footer.html" %}

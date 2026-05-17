@@ -1,0 +1,37 @@
+{% include "header.html" %}
+<main class="section">
+  <header class="section__header">
+    <p class="eyebrow">Index</p>
+    <h1 class="section__title"><em>{{ page.title | e }}</em></h1>
+    {% if page.description is defined %}
+      <p class="section__desc">{{ page.description | e }}</p>
+    {% endif %}
+    <div class="section__intro">{{ content | safe }}</div>
+  </header>
+
+  {% if section is defined and section.pages is defined %}
+    {% set total = section.pages | length %}
+    <ol class="works works--grid">
+      {% for post in section.pages %}
+        <li class="work">
+          <a class="work__link" href="{{ base_url }}{{ post.url }}">
+            <div class="work__meta">
+              <span class="work__num">{% if loop.index < 10 %}0{% endif %}{{ loop.index }} / {% if total < 10 %}0{% endif %}{{ total }}</span>
+              {% if post.extra.year is defined %}<span class="work__year">{{ post.extra.year }}</span>{% endif %}
+            </div>
+            <h2 class="work__title"><em>{{ post.title | e }}</em></h2>
+            {% if post.extra.discipline is defined %}
+              <p class="work__discipline"><em>{{ post.extra.discipline }}</em>{% if post.extra.client is defined %} &mdash; {{ post.extra.client | e }}{% endif %}</p>
+            {% endif %}
+            {% if post.extra.swatch is defined %}
+              <div class="work__swatch" style="background-color: {{ post.extra.swatch }};" aria-hidden="true"></div>
+            {% endif %}
+          </a>
+        </li>
+      {% endfor %}
+    </ol>
+  {% endif %}
+
+  {{ pagination }}
+</main>
+{% include "footer.html" %}
