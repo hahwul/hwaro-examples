@@ -331,7 +331,7 @@ Adding a new subdirectory under `examples/` with a valid `config.toml` + `tags.j
 3. **`base_url` stays `http://localhost:3000`.** CI overrides it at build time. Do not hardcode production URLs.
 4. **Use `{{ base_url }}` in templates** for all asset/link references (e.g., `{{ base_url }}/css/style.css`). Never use absolute paths without the prefix.
 5. **Preserve TOML front matter.** Always keep `+++` delimiters and valid TOML syntax when editing content files.
-6. **Templates use Jinja2 (Crinja).** Use `{% include %}`, `{% extends %}`, `{% block %}`, `{{ var | filter }}` syntax.
+6. **Templates use Jinja2 (Crinja).** Use `{% include %}`, `{% extends %}`, `{% block %}`, `{{ var | filter }}` syntax. **Crinja's `in` operator does not accept array literals** — `{% if x in [1, 2, 3] %}` will fail to parse. Use `{% if x == 1 or x == 2 or x == 3 %}` instead.
 7. **`public/` is build output.** It is gitignored. Never commit or edit files in `public/`.
 8. **Keep sites minimal and focused.** Each example should demonstrate a specific use case or design pattern clearly.
 9. **Use `hwaro serve` for local preview.** Default port is 3000. Use `-p` to change.
