@@ -3,7 +3,6 @@ title = "Third shuttle, found"
 description = "A reconstruction of a 19th-century band-loom piece from a single surviving fragment held at the Nordiska museet."
 date = "2026-04-19"
 weight = 4
-loom = 4
 tags = ["weaving", "historical", "reconstruction"]
 [extra]
 artist = "Märit Lindqvist"

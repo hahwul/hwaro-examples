@@ -3,7 +3,6 @@ title = "Grid of knots"
 description = "A sampler of one hundred macramé knots arranged on a ten-by-ten grid, each knot tied from a different working length."
 date = "2026-04-03"
 weight = 3
-loom = 3
 tags = ["macrame", "sampler", "rope"]
 [extra]
 artist = "Lin Kvist"

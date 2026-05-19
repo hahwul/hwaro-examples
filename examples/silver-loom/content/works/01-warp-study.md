@@ -3,7 +3,6 @@ title = "Warp Study, 04 Tensions"
 description = "A linen wall-piece woven at four progressively slackened warp tensions, joined edge-to-edge across a single 220 cm bolt."
 date = "2026-03-12"
 weight = 1
-loom = 1
 tags = ["weaving", "linen", "tension"]
 [extra]
 artist = "Astrid Solberg"

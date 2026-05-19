@@ -3,7 +3,6 @@ title = "River pattern, after Götaälv"
 description = "A double-cloth study taking its rhythm from the surface of the Göta älv river, woven from twelve photographs and a single sketch."
 date = "2026-03-22"
 weight = 2
-loom = 2
 tags = ["weaving", "wool", "drawing"]
 [extra]
 artist = "Henrik Borg"
