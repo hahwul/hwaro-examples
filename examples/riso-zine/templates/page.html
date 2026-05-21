@@ -1,0 +1,67 @@
+{% include "header.html" %}
+<article class="page-article">
+  <header class="article-header">
+    {% if page.extra is defined and page.extra.kicker is defined %}
+      <p class="article-kicker">{{ page.extra.kicker }}</p>
+    {% elif page_section %}
+      <p class="article-kicker">{{ page_section | replace("/", " ") | upper }}</p>
+    {% endif %}
+    {% if page.title is present %}
+      <h1 class="article-title">
+        <span class="title-stack" data-text="{{ page.title | e }}">
+          <span class="title-block" aria-hidden="true"></span>
+          <span class="title-base">{{ page.title | e }}</span>
+          <span class="title-red" aria-hidden="true">{{ page.title | e }}</span>
+        </span>
+      </h1>
+    {% endif %}
+    <div class="article-meta">
+      {% if page.date is present %}
+        <time datetime="{{ page.date | date('%Y-%m-%d') }}">{{ page.date | date("%B %d, %Y") }}</time>
+        <span class="meta-sep" aria-hidden="true">//</span>
+      {% endif %}
+      {% if page.word_count is defined %}
+        <span>{{ page.word_count }} words</span>
+        <span class="meta-sep" aria-hidden="true">//</span>
+        <span>{{ page.reading_time }} min read</span>
+      {% endif %}
+    </div>
+    <div class="article-divider" aria-hidden="true">
+      <span class="div-mark mark-blue">*</span>
+      <span class="div-mark mark-red">/</span>
+      <span class="div-mark mark-blue">+</span>
+      <span class="div-mark mark-red">*</span>
+      <span class="div-mark mark-blue">/</span>
+      <span class="div-mark mark-red">+</span>
+      <span class="div-mark mark-blue">*</span>
+    </div>
+  </header>
+  <div class="article-body">
+    {{ content | safe }}
+  </div>
+  {% if page.tags is defined and page.tags | length > 0 %}
+    <footer class="article-footer">
+      <span class="meta-label">Filed under</span>
+      <ul class="tag-pills">
+        {% for tag in page.tags %}
+          <li><a class="tag-pill" href="{{ base_url }}/tags/{{ tag | slugify }}/">{{ tag }}</a></li>
+        {% endfor %}
+      </ul>
+    </footer>
+  {% endif %}
+  <nav class="article-nav" aria-label="Adjacent articles">
+    {% if page.lower is defined and page.lower %}
+      <a class="article-nav-prev" href="{{ page.lower.url }}">
+        <span class="meta-label">&larr; Previous</span>
+        <span class="article-nav-title">{{ page.lower.title }}</span>
+      </a>
+    {% endif %}
+    {% if page.higher is defined and page.higher %}
+      <a class="article-nav-next" href="{{ page.higher.url }}">
+        <span class="meta-label">Next &rarr;</span>
+        <span class="article-nav-title">{{ page.higher.title }}</span>
+      </a>
+    {% endif %}
+  </nav>
+</article>
+{% include "footer.html" %}
