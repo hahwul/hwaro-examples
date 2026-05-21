@@ -1,0 +1,92 @@
+{% include "header.html" %}
+
+<div class="body">
+
+  <div class="prompt"><span class="u">root</span><span class="at">@</span><span class="h">bastion-0</span><span class="p">:~</span><span class="c">#</span></div>
+  <div class="cmd">./<span class="arg">null</span> deploy <span class="flag">--zero-trust</span> <span class="flag">--pinned</span> ./payload.tar<span class="cur"></span></div>
+
+  <section class="banner">
+    <pre>
+ _   _  _   _  _      _      ____   ____   ___ _____ ___   ____ ___  _
+| \ | || | | || |    | |    |  _ \ |  _ \ / _ \_   _/ _ \ / ___/ _ \| |
+|  \| || | | || |    | |    | |_) || |_) | | | || || | | | |  | | | | |
+| |\  || |_| || |___ | |___ |  __/ |  _ < |_| || || |_| | |__| |_| | |___
+|_| \_| \___/ |_____||_____||_|    |_| \_\\___/ |_| \___/ \____\___/|_____|</pre>
+    <h1>SHIP <span class="strike">FAST</span> <span class="accent">SAFE.</span><br>VERIFY EVERYTHING ELSE.</h1>
+    <p class="lede">null.protocol is a zero-trust deployment runtime for teams who treat production like a vault. Every artifact is pinned, every signer is enrolled, every packet is logged &mdash; before the first byte leaves the host.</p>
+    <div class="cta-row">
+      <a class="btn primary" href="#docs"><span class="pfx">$</span>install null</a>
+      <a class="btn" href="{{ base_url }}/about/"><span class="pfx">&gt;</span>read the spec</a>
+      <a class="btn" href="#log"><span class="pfx">&#x25CB;</span>tail -f log</a>
+    </div>
+  </section>
+
+  <section class="section" id="log">
+    <div class="label">[&bull;] <b>BOOT</b> &middot; LIVE TRANSCRIPT</div>
+    <div class="log">
+      <div class="row"><span class="ts">00:00.014</span><span class="lv ok">OK</span><span class="ms">handshake established with <b>bastion-0</b> via <b>noise_xk_25519</b></span></div>
+      <div class="row"><span class="ts">00:00.052</span><span class="lv in">INFO</span><span class="ms">pulled artifact <b>payload.tar</b> &middot; 11.4 MiB &middot; sha-256 verified</span></div>
+      <div class="row"><span class="ts">00:00.108</span><span class="lv ok">OK</span><span class="ms">signer <b>p.h@kakaocorp</b> matched enrolled key <b>ssh-ed25519 AAAA&hellip;jX</b></span></div>
+      <div class="row"><span class="ts">00:00.214</span><span class="lv wn">WARN</span><span class="ms">artifact references network egress &mdash; opening pinned tunnel <b>egress-37</b></span></div>
+      <div class="row"><span class="ts">00:00.318</span><span class="lv ok">OK</span><span class="ms">policy <b>null.kr/prod-eu</b> approved &mdash; 3 of 3 reviewers signed</span></div>
+      <div class="row"><span class="ts">00:00.452</span><span class="lv ok">OK</span><span class="ms">runtime sealed &middot; <b>deploy=42b9c1</b> &middot; <b>exit 0</b></span></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="label">[&bull;] <b>MODULES</b> &middot; SHIPPED IN THE CORE</div>
+    <div class="grid3">
+      <article class="cell">
+        <div class="tag">// 01 PIN</div>
+        <h3>Reproducible artifacts</h3>
+        <p>Lockfiles by default. Every dependency, every layer, every binary blob is content-addressed and pinned to a Merkle root you can verify offline.</p>
+        <pre class="ascii">[#######] verified
+[ root  ] 7afdd6&hellip;c8d9
+[ bytes ] 11.4 MiB</pre>
+      </article>
+      <article class="cell">
+        <div class="tag">// 02 SIGN</div>
+        <h3>Enrolled signers, no exceptions</h3>
+        <p>Hardware keys, mTLS, or short-lived OIDC tokens. We do not accept anonymous deploys &mdash; not even from the founder, not even at 3 a.m.</p>
+        <pre class="ascii">[ p.h@kakaocorp ]
+  ssh-ed25519
+  enrolled 2024-11
+  rotates 90d</pre>
+      </article>
+      <article class="cell">
+        <div class="tag">// 03 LOG</div>
+        <h3>Tamper-evident audit</h3>
+        <p>Every transition is appended to a notarized log streamed to two regions and a cold archive. Subpoena-safe. Auditor-safe. Postmortem-safe.</p>
+        <pre class="ascii">[ region eu-1 ] OK
+[ region ap-2 ] OK
+[ cold        ] OK</pre>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="label">[&bull;] <b>POLICY</b> &middot; WHAT THE RUNTIME REJECTS</div>
+    <table class="tbl">
+      <thead><tr><th>RULE</th><th>SCOPE</th><th>RESULT</th></tr></thead>
+      <tbody>
+        <tr><td>unsigned artifact</td><td>global</td><td class="er">DENY &middot; halt</td></tr>
+        <tr><td>signer not in enrollment ledger</td><td>global</td><td class="er">DENY &middot; halt</td></tr>
+        <tr><td>policy diff requires review</td><td>prod, prod-eu</td><td class="wn">HOLD &middot; pending</td></tr>
+        <tr><td>egress to unpinned host</td><td>prod</td><td class="er">DENY &middot; quarantine</td></tr>
+        <tr><td>matched pinned artifact + signer</td><td>global</td><td class="ok">ALLOW &middot; sealed</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section" id="docs">
+    <div class="label">[&bull;] <b>INSTALL</b> &middot; 30 SECONDS</div>
+    <pre class="code-block"><span class="c"># bootstrap the runtime — single static binary, no daemons</span>
+<span class="ln">1</span><span class="k">$</span> curl -fsSL <span class="s">https://null.protocol/install.sh</span> | sh
+<span class="ln">2</span><span class="k">$</span> null enroll <span class="s">--name "p.h@kakaocorp"</span> --device yubikey
+<span class="ln">3</span><span class="k">$</span> null deploy <span class="s">./payload.tar</span> --to prod-eu
+<span class="ln">4</span><span class="k">$</span> null tail --since 1h</pre>
+  </section>
+
+</div>
+
+{% include "footer.html" %}
