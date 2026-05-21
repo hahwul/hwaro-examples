@@ -1,0 +1,589 @@
+/* =========================================================================
+   Folded — origami architecture journal
+   Palette is committed: no gradients anywhere. Depth comes from
+   solid colors, clip-path geometry, and quiet box-shadows.
+   ========================================================================= */
+
+:root {
+  --paper:        #FAF6EC;
+  --shadow:       #E9E1CC;
+  --shadow-deep: #D8CFB5;
+  --ink:          #1F2329;
+  --ink-soft:     #3A3F47;
+  --rust:         #C66B3D;
+  --sage:         #7C8B82;
+
+  --serif: "DM Serif Display", "Cormorant Garamond", Georgia, serif;
+  --sans:  "Manrope", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+
+  --measure: 64ch;
+  --gutter:  clamp(1.25rem, 4vw, 3rem);
+  --fold-skew: 5deg;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700&display=swap");
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ---------------- Typography ---------------- */
+h1, h2, h3, h4 {
+  font-family: var(--serif);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  line-height: 1.08;
+  margin: 0 0 0.6em;
+}
+h1 { font-size: clamp(2.6rem, 5vw, 5rem); }
+h2 { font-size: clamp(1.9rem, 3vw, 2.8rem); }
+h3 { font-size: 1.4rem; letter-spacing: -0.01em; }
+
+p, li { color: var(--ink-soft); }
+p { margin: 0 0 1.2em; }
+
+a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rust);
+  padding-bottom: 1px;
+  transition: color 160ms ease-out;
+}
+a:hover { color: var(--rust); }
+
+.meta {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--sage);
+}
+
+/* ---------------- Page frame ---------------- */
+.wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.narrow {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* ---------------- Header ---------------- */
+.site-header {
+  background: var(--paper);
+  padding: 2rem 0 1.4rem;
+  position: relative;
+  z-index: 5;
+}
+.site-header .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  border: none;
+  font-family: var(--serif);
+  font-size: 1.55rem;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.brand:hover { color: var(--ink); }
+.brand .plane {
+  width: 34px;
+  height: 34px;
+  display: block;
+  animation: plane-idle 6s ease-in-out infinite;
+  transform-origin: 50% 60%;
+}
+@keyframes plane-idle {
+  0%, 100% { transform: rotate(-2deg); }
+  50%      { transform: rotate(2deg); }
+}
+
+.nav {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+.nav a {
+  border: none;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--ink);
+  position: relative;
+  padding-bottom: 4px;
+}
+.nav a::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: var(--rust);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 180ms ease-out;
+}
+.nav a:hover::after { transform: scaleX(1); }
+
+/* ---------------- Fold sections ---------------- */
+/* Pages are built from alternating bands: paper face, shadow underside.
+   The bottom of each band is sheared 5deg to suggest a folded edge.
+   No gradients — solid colors with clip-path only. */
+
+.fold {
+  position: relative;
+  padding: clamp(4rem, 8vw, 7rem) 0 clamp(6rem, 10vw, 9rem);
+}
+.fold.face   { background: var(--paper); }
+.fold.under  { background: var(--shadow); }
+.fold.deep   { background: var(--shadow-deep); }
+
+/* Bottom diagonal fold edge */
+.fold.fold-down {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 80px), 0 100%);
+}
+.fold.fold-up {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 80px));
+}
+/* Top-cut so the next band slides under cleanly */
+.fold.cut-top-down {
+  clip-path: polygon(0 80px, 100% 0, 100% 100%, 0 100%);
+  margin-top: -80px;
+}
+.fold.cut-top-up {
+  clip-path: polygon(0 0, 100% 80px, 100% 100%, 0 100%);
+  margin-top: -80px;
+}
+
+/* Fold marker — rust dot + diagonal hairline */
+.fold-marker {
+  position: absolute;
+  left: var(--gutter);
+  top: -8px;
+  width: 80px;
+  height: 16px;
+  pointer-events: none;
+  z-index: 3;
+}
+.fold-marker::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 6px;
+  width: 6px; height: 6px;
+  background: var(--rust);
+  border-radius: 50%;
+}
+.fold-marker::after {
+  content: "";
+  position: absolute;
+  left: 16px; top: 9px;
+  width: 60px; height: 1px;
+  background: var(--rust);
+  transform: rotate(-5deg);
+  transform-origin: left;
+}
+
+/* ---------------- Hero ---------------- */
+.hero {
+  padding: clamp(4rem, 9vw, 8rem) 0 clamp(7rem, 12vw, 10rem);
+}
+.hero .meta { margin-bottom: 1.6rem; }
+.hero h1 {
+  font-size: clamp(3.2rem, 6.4vw, 5rem);
+  letter-spacing: -0.02em;
+  max-width: 16ch;
+  margin-bottom: 1.6rem;
+}
+.hero h1 .line-two {
+  display: block;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+.hero p.lede {
+  max-width: 52ch;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: var(--ink-soft);
+}
+
+/* ---------------- Section heading bar ---------------- */
+.section-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+.section-title h2 { margin: 0; }
+.section-title .meta { white-space: nowrap; }
+
+/* ---------------- Post cards (folded-corner) ---------------- */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.6rem;
+}
+.card {
+  position: relative;
+  background: var(--paper);
+  padding: 2rem 1.8rem 1.8rem;
+  border: 1px solid var(--shadow-deep);
+  box-shadow: 2px 2px 0 0 var(--shadow);
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  overflow: hidden;
+  transition: transform 200ms ease-out, box-shadow 200ms ease-out;
+}
+.card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 0 var(--shadow);
+  color: inherit;
+}
+
+/* Folded corner — pure clip-path triangle, no gradient */
+.card .corner {
+  position: absolute;
+  top: 0; right: 0;
+  width: 36px;
+  height: 36px;
+  background: var(--shadow);
+  clip-path: polygon(100% 0, 100% 100%, 0 0);
+  transition: width 180ms ease-out, height 180ms ease-out, background 180ms ease-out;
+}
+.card:hover .corner {
+  width: 60px;
+  height: 60px;
+  background: var(--shadow-deep);
+}
+.card .corner::after {
+  content: "";
+  position: absolute;
+  top: 0; right: 0;
+  width: 100%; height: 100%;
+  border-top: 1px solid var(--rust);
+  border-right: 1px solid var(--rust);
+  clip-path: polygon(100% 0, 100% 100%, 0 0);
+  opacity: 0.5;
+}
+
+.card .card-meta {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--sage);
+  margin-bottom: 0.75rem;
+}
+.card h3 {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  margin: 0 0 0.8rem;
+  max-width: 22ch;
+}
+.card p {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  margin: 0;
+  color: var(--ink-soft);
+}
+.card .tags {
+  margin-top: 1.4rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+.card .tags span {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--rust);
+}
+
+/* ---------------- Article ---------------- */
+.article-head {
+  padding: clamp(3rem, 7vw, 6rem) 0 clamp(2.5rem, 5vw, 4rem);
+}
+.article-head .meta { margin-bottom: 1.4rem; }
+.article-head h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  max-width: 22ch;
+  margin: 0 0 1.4rem;
+}
+.article-head h1 em { color: var(--ink-soft); }
+.article-head .lede {
+  max-width: 56ch;
+  font-size: 1.1rem;
+  color: var(--ink-soft);
+}
+
+.article-body {
+  padding: 0 0 clamp(4rem, 8vw, 7rem);
+}
+.article-body h2,
+.article-body h3 { margin-top: 2.2em; }
+.article-body p,
+.article-body li { font-size: 17px; line-height: 1.8; }
+.article-body blockquote {
+  margin: 2rem 0;
+  padding: 0.3rem 0 0.3rem 1.4rem;
+  border-left: 2px solid var(--rust);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.4rem;
+  line-height: 1.4;
+  color: var(--ink);
+}
+.article-body code {
+  font-family: "JetBrains Mono", "SF Mono", Menlo, monospace;
+  font-size: 0.9em;
+  background: var(--shadow);
+  padding: 0.1em 0.4em;
+}
+.article-body pre {
+  background: var(--shadow);
+  padding: 1.25rem 1.4rem;
+  overflow-x: auto;
+  font-size: 0.88rem;
+}
+.article-body pre code {
+  background: transparent;
+  padding: 0;
+}
+.article-body hr {
+  border: none;
+  height: 1px;
+  background: var(--shadow-deep);
+  margin: 3rem 0;
+}
+
+/* ---------------- TOC ---------------- */
+.toc {
+  margin: 2.5rem 0 3rem;
+  padding-left: 1.4rem;
+  border-left: 1px solid var(--rust);
+}
+.toc .toc-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--rust);
+  margin-bottom: 0.85rem;
+}
+.toc ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.toc li {
+  position: relative;
+  padding: 0.25rem 0;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+.toc li ul { padding-left: 1.2rem; }
+.toc li a {
+  border: none;
+  color: var(--ink-soft);
+}
+.toc li a:hover { color: var(--rust); }
+.toc li.is-active::before {
+  content: "";
+  position: absolute;
+  left: -1.85rem;
+  top: 0.7rem;
+  width: 6px; height: 6px;
+  background: var(--rust);
+  border-radius: 50%;
+}
+
+/* ---------------- Back to top ---------------- */
+.back-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin: 3rem 0 1rem;
+  border: none;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--sage);
+}
+.back-top:hover { color: var(--rust); }
+.back-top svg { width: 22px; height: 22px; }
+
+/* ---------------- Footer ---------------- */
+.site-footer {
+  background: var(--shadow);
+  color: var(--ink);
+  padding: 5rem 0 3rem;
+  position: relative;
+}
+.site-footer .wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+.site-footer h4 {
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.015em;
+}
+.site-footer p {
+  color: var(--ink-soft);
+  font-size: 14px;
+  line-height: 1.7;
+  margin: 0;
+}
+.site-footer .colophon { text-align: right; }
+.site-footer .colophon .meta { color: var(--ink-soft); margin-bottom: 0.6rem; }
+.site-footer a { color: var(--ink); border-color: var(--rust); }
+
+@media (max-width: 640px) {
+  .site-footer .wrap { grid-template-columns: 1fr; }
+  .site-footer .colophon { text-align: left; }
+  .nav { gap: 1.2rem; }
+}
+
+/* ---------------- Reveal animation ---------------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 320ms ease-out, transform 320ms ease-out;
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------------- 404 ---------------- */
+.notfound {
+  text-align: center;
+  padding: clamp(5rem, 10vw, 9rem) 0;
+}
+.notfound .plane-big {
+  width: 140px;
+  height: 140px;
+  margin: 0 auto 2rem;
+  display: block;
+  animation: plane-fly 8s ease-in-out infinite;
+}
+@keyframes plane-fly {
+  0%   { transform: translate(0, 0) rotate(-6deg); }
+  50%  { transform: translate(40px, -10px) rotate(8deg); }
+  100% { transform: translate(0, 0) rotate(-6deg); }
+}
+.notfound h1 { font-size: clamp(3rem, 6vw, 5rem); margin-bottom: 1rem; }
+.notfound p { max-width: 40ch; margin: 0 auto 2rem; color: var(--ink-soft); }
+
+/* ---------------- Tag pages ---------------- */
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.tag-list a {
+  display: inline-block;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--shadow-deep);
+  background: var(--paper);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--ink);
+}
+.tag-list a:hover {
+  border-color: var(--rust);
+  color: var(--rust);
+}
+.tag-list a .count {
+  color: var(--sage);
+  margin-left: 0.6rem;
+}
+
+/* ---------------- Post list (section page) ---------------- */
+.post-row {
+  display: grid;
+  grid-template-columns: 130px 1fr auto;
+  gap: 2.5rem;
+  align-items: baseline;
+  padding: 1.6rem 0;
+  border-bottom: 1px solid var(--shadow-deep);
+}
+.post-row:last-child { border-bottom: none; }
+.post-row .date {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--sage);
+}
+.post-row h3 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 1.45rem;
+  letter-spacing: -0.015em;
+}
+.post-row h3 a { border: none; color: var(--ink); }
+.post-row h3 a:hover { color: var(--rust); }
+.post-row .row-tag {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--rust);
+}
+@media (max-width: 700px) {
+  .post-row { grid-template-columns: 1fr; gap: 0.4rem; }
+}
+
+/* ---------------- Pagination ---------------- */
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 3rem 0 0;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+}
+.pagination a { border: none; color: var(--ink); }
+.pagination a:hover { color: var(--rust); }
+.pagination .spacer { color: var(--sage); }

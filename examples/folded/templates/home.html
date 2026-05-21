@@ -1,0 +1,60 @@
+{% include "header.html" %}
+
+<main>
+  <section class="fold face fold-down">
+    <div class="wrap hero">
+      <div class="meta reveal">A studio journal &mdash; vol. {{ current_year }}</div>
+      <h1 class="reveal">
+        Architecture begins
+        <span class="line-two"><em>where the paper folds.</em></span>
+      </h1>
+      <p class="lede reveal">{{ site.description }} Folded is a working notebook from a small design and architecture practice &mdash; field notes on material, geometry, and the quiet authority of restraint.</p>
+    </div>
+  </section>
+
+  <section class="fold under cut-top-down">
+    <span class="fold-marker" aria-hidden="true"></span>
+    <div class="wrap">
+      <div class="section-title reveal">
+        <h2>Recent entries</h2>
+        <span class="meta">Journal</span>
+      </div>
+
+      <div class="cards">
+        {% set posts_section = get_section(path="posts/_index.md") %}
+        {% if posts_section %}
+          {% for post in posts_section.pages | sort_by("date", reverse=true) %}
+            {% if loop.index <= 6 %}
+              <a class="card reveal" href="{{ post.url }}">
+                <span class="corner" aria-hidden="true"></span>
+                <div class="card-meta">{{ post.date | date("%b %d, %Y") }}</div>
+                <h3>{{ post.title }}</h3>
+                {% if post.description %}<p>{{ post.description }}</p>{% endif %}
+                {% if post.taxonomies and post.taxonomies.tags %}
+                  <div class="tags">
+                    {% for t in post.taxonomies.tags %}<span>{{ t }}</span>{% endfor %}
+                  </div>
+                {% endif %}
+              </a>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+  <section class="fold face cut-top-up">
+    <span class="fold-marker" aria-hidden="true"></span>
+    <div class="narrow">
+      <div class="section-title reveal">
+        <h2>From the studio</h2>
+        <span class="meta">Colophon</span>
+      </div>
+      <div class="reveal">
+        {{ content | safe }}
+      </div>
+    </div>
+  </section>
+</main>
+
+{% include "footer.html" %}

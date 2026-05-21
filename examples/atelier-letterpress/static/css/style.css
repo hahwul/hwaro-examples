@@ -1,0 +1,724 @@
+/* ============================================================
+   Atelier Letterpress — a 19th-century catalogue, printed slowly
+   ============================================================ */
+
+:root {
+  --paper: #EFE4D2;
+  --paper-edge: #D8C8AA;
+  --paper-edge-deep: #C7B58F;
+  --ink: #3A2014;
+  --ink-soft: #5A3A2A;
+  --gold: #B7894B;
+  --gold-dim: #8C6735;
+  --off-cream: #F8F0DC;
+  --rule: #C7B58F;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+body {
+  font-family: "Cormorant Garamond", "Garamond", Georgia, serif;
+  font-size: 19px;
+  line-height: 1.7;
+  font-weight: 400;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
+  padding: 48px 24px 96px;
+}
+
+/* ---------- Page frame: deckled-edge feel via solid box-shadows ---------- */
+.page-frame {
+  max-width: 760px;
+  margin: 0 auto;
+  background: var(--off-cream);
+  border: 1px solid var(--paper-edge);
+  box-shadow:
+    0 0 0 1px var(--paper),
+    0 0 0 2px var(--paper-edge),
+    0 0 0 6px var(--off-cream),
+    0 0 0 7px var(--paper-edge-deep);
+  padding: 56px 64px 64px;
+  position: relative;
+}
+
+.content-frame {
+  display: block;
+}
+
+/* ---------- SVG fleurons ---------- */
+.fleuron {
+  display: inline-block;
+  vertical-align: middle;
+  color: var(--gold);
+  fill: currentColor;
+  stroke: currentColor;
+}
+.fleuron-sm { width: 36px; height: 12px; }
+.fleuron-md { width: 80px; height: 24px; }
+.fleuron-lg { width: 140px; height: 28px; }
+.fleuron-xl { width: 64px; height: 64px; }
+
+/* Animated rule that draws in on scroll */
+.fleuron-rule {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin: 36px 0;
+  color: var(--gold);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 700ms ease-out, transform 700ms ease-out;
+}
+.fleuron-rule::before,
+.fleuron-rule::after {
+  content: "";
+  display: block;
+  height: 1px;
+  background: var(--gold);
+  flex: 0 1 80px;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 700ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.fleuron-rule.drawn {
+  opacity: 1;
+  transform: translateY(0);
+}
+.fleuron-rule.drawn::before,
+.fleuron-rule.drawn::after {
+  transform: scaleX(1);
+}
+
+/* ---------- Masthead ---------- */
+.masthead {
+  text-align: center;
+  margin-bottom: 48px;
+}
+.masthead-rule {
+  height: 0;
+  border-top: 2px solid var(--ink);
+  position: relative;
+}
+.masthead-rule + .masthead-inner { padding-top: 28px; }
+.masthead-rule::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  border-top: 1px solid var(--gold);
+}
+.masthead-inner { padding: 0 0 28px; }
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  text-decoration: none;
+  color: var(--ink);
+}
+.wordmark-ornament { color: var(--gold); display: inline-flex; }
+.wordmark-text {
+  font-family: "Bodoni Moda", "Didot", Georgia, serif;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  line-height: 0.95;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+}
+.wordmark-line-1 {
+  font-family: "Italiana", "Bodoni Moda", serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: 1.6rem;
+  color: var(--ink-soft);
+  letter-spacing: 0.12em;
+}
+.wordmark-line-2 {
+  font-size: 2.4rem;
+  text-shadow:
+    0 1px 0 var(--paper-edge),
+    0 2px 0 var(--paper-edge-deep);
+}
+
+.masthead-tagline {
+  font-family: "Cormorant SC", "Cormorant Garamond", serif;
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 18px 0 22px;
+}
+
+.masthead-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  font-family: "Cormorant SC", serif;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.masthead-nav a {
+  color: var(--ink);
+  text-decoration: none;
+  position: relative;
+  padding: 4px 2px;
+}
+.masthead-nav a::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  bottom: 0;
+  height: 1px;
+  background: var(--gold);
+  transition: left 200ms ease-out, right 200ms ease-out;
+}
+.masthead-nav a:hover::after { left: 0; right: 0; }
+.nav-sep { color: var(--gold); }
+
+/* ---------- Hero (cover) ---------- */
+.cover { text-align: center; padding: 24px 0; }
+.cover-eyebrow,
+.catalogue-eyebrow,
+.lost-eyebrow {
+  font-family: "Cormorant SC", serif;
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  margin: 0 0 20px;
+}
+.cover-title,
+.catalogue-title,
+.lost-title,
+.prose-title {
+  font-family: "Bodoni Moda", "Didot", serif;
+  font-weight: 900;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+  line-height: 1.02;
+  margin: 0 0 26px;
+}
+.cover-title { font-size: 5.6rem; }
+.catalogue-title { font-size: 4.4rem; }
+.lost-title { font-size: 4.6rem; }
+.prose-title { font-size: 3.6rem; text-align: center; }
+
+.cover-title,
+.catalogue-title,
+.lost-title,
+.prose-title {
+  text-shadow:
+    0 1px 0 var(--paper-edge),
+    0 2px 0 var(--paper-edge-deep);
+}
+
+/* Letter stagger animation */
+.letter {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(-2px);
+  animation: letter-settle 260ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+@keyframes letter-settle {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.cover-italic,
+.prose-subtitle,
+.catalogue-subtitle,
+.lost-subtitle {
+  font-family: "Italiana", "Bodoni Moda", serif;
+  font-style: italic;
+  font-size: 1.5rem;
+  color: var(--ink-soft);
+  text-align: center;
+  margin: 0 auto 18px;
+  max-width: 540px;
+  line-height: 1.4;
+}
+
+.cover-volume {
+  font-family: "Cormorant SC", serif;
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  margin: 12px 0 24px;
+}
+
+.cover-intro {
+  max-width: 520px;
+  margin: 28px auto 32px;
+  text-align: center;
+  color: var(--ink);
+  font-size: 1.05rem;
+}
+.cover-intro p { margin: 0 0 14px; }
+
+.cover-section-title {
+  font-family: "Bodoni Moda", serif;
+  font-weight: 900;
+  font-size: 1.6rem;
+  text-align: center;
+  margin: 28px 0 24px;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+}
+
+/* ---------- Catalogue list ---------- */
+.catalogue-list {
+  list-style: none;
+  padding: 0;
+  margin: 24px 0;
+  counter-reset: catalogue;
+  border-top: 1px solid var(--rule);
+}
+.catalogue-item { border-bottom: 1px solid var(--rule); }
+.catalogue-row {
+  display: grid;
+  grid-template-columns: 90px 1fr 32px;
+  align-items: center;
+  gap: 24px;
+  padding: 22px 8px;
+  text-decoration: none;
+  color: var(--ink);
+  transition: background 200ms ease-out;
+}
+.catalogue-row:hover { background: var(--paper); }
+
+.catalogue-no {
+  font-family: "Cormorant SC", serif;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-align: left;
+}
+.catalogue-body { display: flex; flex-direction: column; gap: 6px; }
+.catalogue-row-title {
+  font-family: "Bodoni Moda", serif;
+  font-weight: 900;
+  font-size: 1.55rem;
+  line-height: 1.1;
+  color: var(--ink);
+}
+.catalogue-row-desc {
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--ink-soft);
+  line-height: 1.4;
+}
+.catalogue-row-meta {
+  font-family: "Cormorant SC", serif;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+}
+.catalogue-arrow {
+  font-family: "Bodoni Moda", serif;
+  font-size: 1.4rem;
+  color: var(--gold);
+  text-align: right;
+  transition: transform 200ms ease-out;
+}
+.catalogue-row:hover .catalogue-arrow { transform: translateX(4px); }
+
+.cover-cta { text-align: center; margin: 28px 0 12px; }
+.cover-cta-link,
+.lost-return-link,
+.taxonomy-return-link {
+  font-family: "Cormorant SC", serif;
+  font-size: 12px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--gold);
+  padding: 4px 2px;
+}
+.cover-cta-link:hover,
+.lost-return-link:hover,
+.taxonomy-return-link:hover { color: var(--gold); }
+
+/* ---------- Catalogue page (section.html) header ---------- */
+.catalogue-head { text-align: center; padding: 16px 0 8px; }
+.catalogue-intro {
+  max-width: 520px;
+  margin: 18px auto 0;
+  color: var(--ink);
+  font-size: 1.05rem;
+}
+
+/* ---------- Prose (page.html / single post) ---------- */
+.catalogue-line {
+  font-family: "Cormorant SC", serif;
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-align: center;
+  margin: 0 0 18px;
+}
+.prose-head { text-align: center; padding: 8px 0 12px; }
+.prose-meta {
+  font-family: "Cormorant SC", serif;
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  margin: 14px 0 0;
+}
+
+.prose-body {
+  max-width: 620px;
+  margin: 24px auto 0;
+  font-size: 19px;
+  line-height: 1.78;
+  color: var(--ink);
+}
+.prose-body p {
+  margin: 0 0 22px;
+  text-align: justify;
+  hyphens: auto;
+}
+
+/* Drop-cap roundel — first letter of the first paragraph after the head */
+.prose-body > p:first-of-type::first-letter {
+  font-family: "Bodoni Moda", "Didot", serif;
+  font-weight: 900;
+  font-size: 5.5rem;
+  line-height: 0.85;
+  float: left;
+  padding: 6px 14px 0 0;
+  margin: 6px 4px 0 0;
+  color: var(--ink);
+  text-shadow:
+    0 1px 0 var(--paper-edge),
+    0 2px 0 var(--paper-edge-deep);
+}
+
+/* Drop-cap roundel (SVG) — alternate marker if author wraps in span */
+.drop-cap-roundel {
+  position: relative;
+  display: inline-block;
+  width: 5.5rem;
+  height: 5.5rem;
+  float: left;
+  margin: 4px 18px 0 0;
+  transition: transform 180ms ease-out;
+}
+.drop-cap-roundel:hover { transform: rotate(0.5deg); }
+.drop-cap-roundel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--gold);
+  border-radius: 51% 49% 48% 52% / 49% 52% 48% 51%;
+  background: var(--gold);
+  opacity: 0.18;
+}
+.drop-cap-roundel span {
+  position: relative;
+  z-index: 1;
+  font-family: "Bodoni Moda", serif;
+  font-weight: 900;
+  font-size: 4.4rem;
+  line-height: 5.5rem;
+  text-align: center;
+  display: block;
+  color: var(--ink);
+}
+
+.prose-body h2 {
+  font-family: "Bodoni Moda", serif;
+  font-weight: 900;
+  font-size: 2rem;
+  letter-spacing: 0.005em;
+  color: var(--ink);
+  text-align: center;
+  margin: 44px 0 18px;
+}
+.prose-body h3 {
+  font-family: "Italiana", serif;
+  font-style: italic;
+  font-size: 1.45rem;
+  color: var(--ink-soft);
+  text-align: center;
+  margin: 32px 0 14px;
+}
+.prose-body a {
+  color: var(--ink);
+  text-decoration: none;
+  background-image: none;
+  position: relative;
+  border-bottom: 1px solid var(--gold);
+}
+.prose-body a:hover { color: var(--gold); }
+
+.prose-body blockquote {
+  margin: 36px 0;
+  padding: 18px 0;
+  border: none;
+  position: relative;
+  text-align: center;
+}
+.prose-body blockquote::before,
+.prose-body blockquote::after {
+  content: "";
+  display: block;
+  height: 0;
+  border-top: 2px solid var(--ink);
+  border-bottom: 1px solid var(--gold);
+  padding-bottom: 4px;
+  margin: 0 auto;
+  width: 60%;
+}
+.prose-body blockquote::before { margin-bottom: 18px; }
+.prose-body blockquote::after { margin-top: 18px; }
+.prose-body blockquote p {
+  font-family: "Italiana", "Bodoni Moda", serif;
+  font-style: italic;
+  font-size: 1.7rem;
+  line-height: 1.4;
+  color: var(--ink);
+  margin: 0;
+  text-align: center;
+}
+
+.prose-body code {
+  font-family: "Courier New", monospace;
+  background: var(--paper);
+  padding: 1px 6px;
+  border: 1px solid var(--rule);
+  font-size: 0.9em;
+}
+.prose-body pre {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  padding: 16px 18px;
+  overflow-x: auto;
+  font-size: 0.85em;
+  line-height: 1.5;
+}
+.prose-body pre code { background: none; border: none; padding: 0; }
+
+.prose-body hr {
+  border: none;
+  height: 0;
+  border-top: 1px solid var(--rule);
+  margin: 36px auto;
+  width: 50%;
+}
+
+.prose-body ul,
+.prose-body ol {
+  padding-left: 1.6em;
+  margin: 0 0 22px;
+}
+.prose-body li { margin: 0 0 8px; }
+
+.prose-tags {
+  text-align: center;
+  margin: 18px 0 0;
+  font-family: "Cormorant SC", serif;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.tags-label { color: var(--gold-dim); margin-right: 10px; }
+.tag-link {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--gold);
+  padding-bottom: 1px;
+}
+.tag-link:hover { color: var(--gold); }
+.tag-sep { color: var(--gold); margin: 0 4px; }
+
+.prose-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 48px 0 0;
+  padding: 24px 0 0;
+  border-top: 1px solid var(--rule);
+}
+.prose-nav-prev,
+.prose-nav-next {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-decoration: none;
+  color: var(--ink);
+}
+.prose-nav-next { text-align: right; }
+.prose-nav-label {
+  font-family: "Cormorant SC", serif;
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+}
+.prose-nav-title {
+  font-family: "Bodoni Moda", serif;
+  font-weight: 900;
+  font-size: 1.05rem;
+  line-height: 1.2;
+}
+.prose-nav-prev:hover .prose-nav-title,
+.prose-nav-next:hover .prose-nav-title { color: var(--gold); }
+
+/* ---------- 404 ---------- */
+.lost-specimen { text-align: center; padding: 32px 0 16px; }
+.lost-body {
+  max-width: 480px;
+  margin: 8px auto 28px;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.05rem;
+  color: var(--ink-soft);
+}
+.lost-mark { margin: 16px 0 32px; color: var(--gold); }
+.lost-return { margin: 0; }
+
+/* ---------- Taxonomy ---------- */
+.term-cloud {
+  list-style: none;
+  padding: 0;
+  margin: 24px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+.term-link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 8px 16px;
+  text-decoration: none;
+  border: 1px solid var(--rule);
+  color: var(--ink);
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1rem;
+}
+.term-link:hover { border-color: var(--gold); color: var(--gold); }
+.term-name { letter-spacing: 0.02em; }
+.term-count {
+  font-family: "Cormorant SC", serif;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--gold);
+}
+.taxonomy-return { text-align: center; margin: 32px 0 0; }
+
+/* ---------- Pagination ---------- */
+.pagination {
+  text-align: center;
+  margin: 32px 0 16px;
+  font-family: "Cormorant SC", serif;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.pagination a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--gold);
+  margin: 0 8px;
+  padding-bottom: 1px;
+}
+.pagination a:hover { color: var(--gold); }
+.pagination .current { color: var(--gold); margin: 0 8px; }
+
+/* ---------- Shortcode: fleuron ---------- */
+.fleuron-shortcode {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin: 32px 0;
+  color: var(--gold);
+}
+.fleuron-rule-line {
+  height: 1px;
+  background: var(--gold);
+  flex: 0 1 80px;
+}
+
+/* ---------- Colophon (footer) ---------- */
+.colophon {
+  text-align: center;
+  margin: 56px 0 0;
+  padding: 24px 0 0;
+  font-family: "Cormorant SC", serif;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+}
+.colophon-rule {
+  height: 0;
+  border-top: 1px solid var(--gold);
+  margin: 0 0 12px;
+}
+.colophon-rule + .colophon-ornament { margin-top: -12px; }
+.colophon-ornament {
+  display: flex;
+  justify-content: center;
+  margin: 18px 0 14px;
+  color: var(--gold);
+}
+.colophon-line-1,
+.colophon-line-2,
+.colophon-line-3 {
+  margin: 4px 0;
+}
+.colophon-line-2 {
+  font-family: "Italiana", serif;
+  font-style: italic;
+  text-transform: none;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+}
+.colophon > .colophon-rule:last-child {
+  margin: 14px 0 0;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 720px) {
+  body { padding: 24px 12px 64px; }
+  .page-frame { padding: 36px 24px 40px; }
+  .cover-title { font-size: 3.6rem; }
+  .catalogue-title, .lost-title { font-size: 2.8rem; }
+  .prose-title { font-size: 2.4rem; }
+  .wordmark-line-2 { font-size: 1.8rem; }
+  .wordmark-line-1 { font-size: 1.1rem; }
+  .catalogue-row {
+    grid-template-columns: 60px 1fr 20px;
+    gap: 14px;
+    padding: 18px 4px;
+  }
+  .catalogue-row-title { font-size: 1.2rem; }
+  .prose-body { font-size: 17px; }
+  .prose-body > p:first-of-type::first-letter { font-size: 4rem; padding-right: 10px; }
+  .prose-body blockquote p { font-size: 1.3rem; }
+  .prose-nav { grid-template-columns: 1fr; }
+  .prose-nav-next { text-align: left; }
+}
