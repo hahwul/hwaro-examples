@@ -1,0 +1,31 @@
+{% include "header.html" %}
+
+<section class="archive">
+  <div class="archive-folio">
+    <div class="folio-roman">&sect;</div>
+    <div class="folio-label">{{ taxonomy_name | capitalize }}</div>
+  </div>
+  <h1 class="archive-title">{{ taxonomy_term | capitalize }}</h1>
+  <p class="archive-deck">{{ taxonomy_pages | length }} essay{% if taxonomy_pages | length != 1 %}s{% endif %} filed under this subject.</p>
+  <div class="archive-rule"></div>
+
+  <ol class="archive-list">
+    {% for essay in taxonomy_pages %}
+    <li class="archive-row">
+      <div class="archive-num">{{ "%02d" | format(loop.index) }}</div>
+      <div class="archive-body">
+        <div class="archive-meta">
+          {% if essay.extra is defined and essay.extra.issue_name %}<span class="archive-issue">{{ essay.extra.issue_name }}</span><span class="meta-dot">&middot;</span>{% endif %}
+          <time>{{ essay.date | date("%d %B %Y") }}</time>
+        </div>
+        <h2 class="archive-title-row"><a href="{{ essay.url }}">{{ essay.title }}</a></h2>
+        {% if essay.description %}
+        <p class="archive-deck-row">{{ essay.description }}</p>
+        {% endif %}
+      </div>
+    </li>
+    {% endfor %}
+  </ol>
+</section>
+
+{% include "footer.html" %}

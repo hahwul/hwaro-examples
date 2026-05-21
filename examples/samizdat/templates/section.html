@@ -1,0 +1,38 @@
+{% include "header.html" %}
+
+<section class="front">
+  <div class="censor-line">
+    <span class="censor-bar">[ catalog: all items ]</span>
+    <span class="censor-date">{{ section.pages | length }} on file</span>
+  </div>
+  <h1 class="front-headline">{{ section.title }}</h1>
+  {% if section.description %}
+  <p class="front-deck">{{ section.description }}</p>
+  {% endif %}
+
+  <div class="front-divider">. . . . . . . . . . . . . . . . . . . .</div>
+
+  <ol class="items">
+    {% for post in section.pages %}
+    <li class="item">
+      <div class="item-num">item {{ "%03d" | format(section.pages | length - loop.index0) }}</div>
+      <div class="item-body">
+        <div class="item-meta">
+          <span class="item-issue">[ issue {% if post.extra is defined and post.extra.issue %}{{ post.extra.issue }}{% else %}--{% endif %} ]</span>
+          <span class="item-date">{{ post.date | date("%Y.%m.%d") }}</span>
+          {% if post.extra is defined and post.extra.location %}<span class="item-loc">loc: {{ post.extra.location }}</span>{% endif %}
+        </div>
+        <h2 class="item-title"><a href="{{ post.url }}">{{ post.title }}</a></h2>
+        {% if post.description %}
+        <p class="item-deck">{{ post.description }}</p>
+        {% endif %}
+        <div class="item-byline">
+          by {% if post.extra is defined and post.extra.authors %}{{ post.extra.authors | join(", ") }}{% else %}the editors{% endif %}
+        </div>
+      </div>
+    </li>
+    {% endfor %}
+  </ol>
+</section>
+
+{% include "footer.html" %}

@@ -1,0 +1,47 @@
+{% include "header.html" %}
+
+{% set all_posts = site.pages | where("section", "posts") | sort_by("date", reverse=true) %}
+
+<section class="front">
+  <div class="censor-line">
+    <span class="censor-bar">[ retyped: <span class="censor-text">redacted</span> ]</span>
+    <span class="censor-date">{{ current_date }}</span>
+  </div>
+  <h1 class="front-headline">issue forty-seven<br>retyped, again, for circulation</h1>
+  <p class="front-deck">contents below. nothing is signed. all locations are approximate. errors are part of the document.</p>
+
+  <div class="front-divider">. . . . . . . . . . . . . . . . . . . .</div>
+
+  <ol class="items">
+    {% for post in all_posts %}
+    <li class="item">
+      <div class="item-num">item {{ "%03d" | format(loop.index) }}</div>
+      <div class="item-body">
+        <div class="item-meta">
+          <span class="item-issue">[ issue {% if post.extra is defined and post.extra.issue %}{{ post.extra.issue }}{% else %}--{% endif %} ]</span>
+          <span class="item-date">{{ post.date | date("%Y.%m.%d") }}</span>
+          {% if post.extra is defined and post.extra.location %}<span class="item-loc">loc: {{ post.extra.location }}</span>{% endif %}
+        </div>
+        <h2 class="item-title"><a href="{{ post.url }}">{{ post.title }}</a></h2>
+        {% if post.description %}
+        <p class="item-deck">{{ post.description }}</p>
+        {% endif %}
+        <div class="item-byline">
+          by {% if post.extra is defined and post.extra.authors %}{{ post.extra.authors | join(", ") }}{% else %}the editors{% endif %}
+          &nbsp;|&nbsp; {{ post.reading_time }} min
+        </div>
+      </div>
+    </li>
+    {% endfor %}
+  </ol>
+
+  <div class="front-divider">. . . . . . . . . . . . . . . . . . . .</div>
+
+  <div class="pull-quote">
+    <pre class="quote-mark">"&nbsp;"</pre>
+    <p>the bulletin lives at the speed of foot traffic, and that is the speed it should continue to live at.</p>
+    <cite>-- from instructions for the retyper</cite>
+  </div>
+</section>
+
+{% include "footer.html" %}

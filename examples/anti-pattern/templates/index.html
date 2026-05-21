@@ -1,0 +1,54 @@
+{% include "header.html" %}
+
+{% set all_posts = site.pages | where("section", "posts") | sort_by("date", reverse=true) %}
+
+<section class="ap-home">
+  <div class="ap-hero">
+    <div class="ap-hero-sticker ap-hero-sticker-1">NEW</div>
+    <div class="ap-hero-sticker ap-hero-sticker-2">!!!</div>
+    <div class="ap-hero-sticker ap-hero-sticker-3">est. yesterday</div>
+
+    <h1 class="ap-hero-headline">
+      <span class="hl-1">A</span>
+      <span class="hl-2">blog</span>
+      <span class="hl-3">that</span>
+      <span class="hl-4">forgot</span>
+      <span class="hl-5">to</span>
+      <span class="hl-6">align.</span>
+    </h1>
+    <p class="ap-hero-deck">
+      <span class="deck-frag deck-a">Six fonts. </span>
+      <span class="deck-frag deck-b">Three colors. </span>
+      <span class="deck-frag deck-c">No grid. </span>
+      <span class="deck-frag deck-d">Considerable conviction.</span>
+    </p>
+  </div>
+
+  <div class="ap-zigzag">
+    {% for post in all_posts %}
+    {% set variant = (loop.index0 % 5) + 1 %}
+    <article class="ap-card ap-card-{{ variant }}">
+      <div class="ap-card-num">№ {{ "%02d" | format(loop.index) }}</div>
+      <div class="ap-card-cat">{% if post.categories %}{{ post.categories | first }}{% else %}post{% endif %}</div>
+      <h2 class="ap-card-title"><a href="{{ post.url }}">{{ post.title }}</a></h2>
+      {% if post.description %}
+      <p class="ap-card-deck">{{ post.description }}</p>
+      {% endif %}
+      <div class="ap-card-meta">
+        <span class="ap-card-date">{{ post.date | date("%d %b") }}</span>
+        <span class="ap-card-by">{% if post.extra is defined and post.extra.authors %}{{ post.extra.authors | first }}{% else %}staff{% endif %}</span>
+        <span class="ap-card-min">{{ post.reading_time }}m</span>
+      </div>
+      <div class="ap-card-scribble">read &#8594;</div>
+    </article>
+    {% endfor %}
+  </div>
+
+  <div class="ap-quote">
+    <div class="ap-quote-bracket">&laquo;</div>
+    <p class="ap-quote-text">A grid is a contract. A broken grid is a broken contract. A broken contract, when handled with care, is a piece of writing of its own.</p>
+    <div class="ap-quote-author">— from "In Praise of the Broken Grid"</div>
+  </div>
+</section>
+
+{% include "footer.html" %}
