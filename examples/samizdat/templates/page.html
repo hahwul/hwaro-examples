@@ -1,0 +1,40 @@
+{% include "header.html" %}
+
+<article class="paper">
+  <header class="paper-head">
+    <div class="paper-strip">
+      <span class="paper-cat">[ {% if page.categories %}{{ page.categories | first }}{% else %}item{% endif %} ]</span>
+      <span class="paper-issue">issue {% if page.extra is defined and page.extra.issue %}{{ page.extra.issue }}{% else %}--{% endif %}</span>
+      <span class="paper-date">{{ page.date | date("%Y.%m.%d") }}</span>
+    </div>
+    <h1 class="paper-title">{{ page.title }}</h1>
+    {% if page.description %}
+    <p class="paper-deck">{{ page.description }}</p>
+    {% endif %}
+    <div class="paper-byline">
+      <span>by {% if page.extra is defined and page.extra.authors %}{{ page.extra.authors | join(", ") }}{% else %}the editors{% endif %}</span>
+      {% if page.extra is defined and page.extra.location %}<span>loc: {{ page.extra.location }}</span>{% endif %}
+      <span>{{ page.reading_time }} min</span>
+    </div>
+  </header>
+
+  <pre class="paper-rule">--------------------------------------------------------</pre>
+
+  <div class="paper-body">
+    {{ content | safe }}
+  </div>
+
+  <pre class="paper-rule">--------------------------------------------------------</pre>
+
+  <footer class="paper-foot">
+    {% if page.tags %}
+    <div class="paper-tags">
+      subjects: {% for tag in page.tags %}<a class="paper-tag" href="{{ base_url }}/tags/{{ tag | slugify }}/">{{ tag }}</a>{% if not loop.last %}, {% endif %}{% endfor %}
+    </div>
+    {% endif %}
+    <div class="paper-endmark">// end of item //</div>
+    <a class="paper-back" href="{{ base_url }}/posts/">[ back to all items ]</a>
+  </footer>
+</article>
+
+{% include "footer.html" %}

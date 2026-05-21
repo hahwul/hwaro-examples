@@ -1,0 +1,68 @@
+{% include "header.html" %}
+
+{% set all_posts = site.pages | where("section", "posts") | sort_by("date", reverse=true) %}
+{% set lead = all_posts | first %}
+
+<section class="front-page">
+  {% if lead %}
+  <article class="front-lead">
+    <div class="front-kicker">Lead Editorial · {{ lead.date | date("%A, %d %B %Y") }}</div>
+    <h1 class="front-lead-title"><a href="{{ lead.url }}">{{ lead.title }}</a></h1>
+    {% if lead.description %}
+    <p class="front-lead-deck">{{ lead.description }}</p>
+    {% endif %}
+    <div class="front-lead-meta">
+      <span class="byline">By {% if lead.extra is defined and lead.extra.authors %}{{ lead.extra.authors | join(", ") }}{% else %}The Editors{% endif %}</span>
+      <span class="reading-time">{{ lead.reading_time }} min read</span>
+    </div>
+    <div class="front-lead-body">
+      {{ lead.summary | safe }}
+    </div>
+    <a class="continue-reading" href="{{ lead.url }}">Continue on the inside pages →</a>
+  </article>
+  {% endif %}
+
+  <div class="front-rule"></div>
+
+  <div class="front-grid">
+    {% for post in all_posts | slice(start=1, end=5) %}
+    <article class="front-card front-card-{{ loop.index }}">
+      <div class="card-kicker">{% if post.tags %}{{ post.tags | first | upper }}{% else %}DISPATCH{% endif %}</div>
+      <h2 class="card-title"><a href="{{ post.url }}">{{ post.title }}</a></h2>
+      {% if post.description %}
+      <p class="card-deck">{{ post.description }}</p>
+      {% endif %}
+      <div class="card-meta">
+        <time>{{ post.date | date("%d %b %Y") }}</time>
+        <span class="dot">·</span>
+        <span>{% if post.extra is defined and post.extra.authors %}{{ post.extra.authors | first }}{% else %}The Editors{% endif %}</span>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+
+  <div class="front-rule"></div>
+
+  <section class="front-pull">
+    <blockquote>
+      &ldquo;A modest headline is a kind of lie. It suggests that what follows is also modest, which is almost never true.&rdquo;
+      <cite>— From the colophon</cite>
+    </blockquote>
+  </section>
+
+  <div class="front-rule"></div>
+
+  <section class="front-bottom">
+    <h3 class="bottom-head">From the archive</h3>
+    <ul class="bottom-list">
+      {% for post in all_posts | slice(start=5) %}
+      <li>
+        <span class="bottom-date">{{ post.date | date("%d %b") }}</span>
+        <a href="{{ post.url }}">{{ post.title }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+</section>
+
+{% include "footer.html" %}
