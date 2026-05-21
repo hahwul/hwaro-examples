@@ -1,0 +1,65 @@
+{% include "header.html" %}
+
+<section class="hero">
+  <span class="coords">x: 00 · y: 00</span>
+  <span class="coords r">latitude · 37.566°N</span>
+  <h1>null<span class="dot">.</span><span class="on">state</span></h1>
+  <p class="lede">Independent design studio operating from Seoul. We build systems, interfaces, and the boring parts in between. No decks, no demos — only finished work.</p>
+  <div class="meta-row">
+    <div><strong>14</strong>shipped projects</div>
+    <div><strong>06</strong>active clients</div>
+    <div><strong>09yrs</strong>operating</div>
+    <div><strong>00</strong>open slots, 2026</div>
+  </div>
+  <span class="coords b">end · scroll · 01</span>
+</section>
+
+<div class="label"><h2>// selected work</h2><span class="ord">{{ site.pages | length }} pages indexed</span></div>
+
+{% set work_pages = [] %}
+{% for p in site.pages %}{% if p.section == "work" %}{% set work_pages = work_pages + [p] %}{% endif %}{% endfor %}
+
+<div class="work-table">
+  {% set rows = 0 %}
+  {% for p in site.pages | sort_by("date", reverse=true) %}
+    {% if p.section == "work" and rows < 8 %}
+    <a class="work-row" href="{{ p.url }}">
+      <span class="ord">{{ "%02d" | format(loop.index) }}</span>
+      <span class="ttl">{{ p.title }}<small>{% if p.description %}{{ p.description | truncate(60) }}{% endif %}</small></span>
+      <span class="tax">{% if p.tags %}[ {{ p.tags | join(" · ") }} ]{% endif %}</span>
+      <span class="dt">{% if p.date %}{{ p.date | date("%Y · %m") }}{% endif %}</span>
+      <span class="arrow">→</span>
+    </a>
+    {% set rows = rows + 1 %}
+    {% endif %}
+  {% endfor %}
+</div>
+
+<div class="label"><h2>// services</h2><span class="ord">offered · 2026</span></div>
+<div class="split">
+  <div>
+    <h3>systems design</h3>
+    <p>Long-form engagement with companies that need an interface system, not a single screen. Token architecture, motion primitives, accessibility audits, and the documentation that makes them survive a year.</p>
+  </div>
+  <div>
+    <h3>product engineering</h3>
+    <p>End-to-end builds for early-stage teams. We pick the stack, ship the prototype, and stay through the first thousand users. Typescript, Crystal, Rust where it helps.</p>
+  </div>
+</div>
+
+<div class="label"><h2>// index</h2><span class="ord">topics covered</span></div>
+<div class="tag-cloud">
+  <a href="{{ base_url }}/tags/systems/">systems</a>
+  <a href="{{ base_url }}/tags/typography/">typography</a>
+  <a href="{{ base_url }}/tags/interface/">interface</a>
+  <a href="{{ base_url }}/tags/tooling/">tooling</a>
+  <a href="{{ base_url }}/tags/research/">research</a>
+  <a href="{{ base_url }}/tags/static/">static</a>
+  <a href="{{ base_url }}/tags/motion/">motion</a>
+</div>
+
+<article style="margin-top:64px;max-width:64ch;font-family:'Inter',sans-serif;color:#c4c4c4;line-height:1.65;">
+  {{ content | safe }}
+</article>
+
+{% include "footer.html" %}
