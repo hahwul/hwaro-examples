@@ -1,0 +1,36 @@
+{% include "header.html" %}
+
+<section class="ap-home">
+  <div class="ap-hero">
+    <h1 class="ap-hero-headline">
+      <span class="hl-1">{{ section.title | split(pat=" ") | first }}</span>
+      {% for word in section.title | split(pat=" ") | slice(start=1) %}
+      <span class="hl-{{ (loop.index0 % 5) + 2 }}">{{ word }}</span>
+      {% endfor %}
+    </h1>
+    {% if section.description %}
+    <p class="ap-hero-deck">{{ section.description }}</p>
+    {% endif %}
+  </div>
+
+  <div class="ap-zigzag">
+    {% for post in section.pages %}
+    {% set variant = (loop.index0 % 5) + 1 %}
+    <article class="ap-card ap-card-{{ variant }}">
+      <div class="ap-card-num">№ {{ "%02d" | format(loop.index) }}</div>
+      <div class="ap-card-cat">{% if post.categories %}{{ post.categories | first }}{% else %}post{% endif %}</div>
+      <h2 class="ap-card-title"><a href="{{ post.url }}">{{ post.title }}</a></h2>
+      {% if post.description %}
+      <p class="ap-card-deck">{{ post.description }}</p>
+      {% endif %}
+      <div class="ap-card-meta">
+        <span class="ap-card-date">{{ post.date | date("%d %b") }}</span>
+        <span class="ap-card-by">{% if post.extra is defined and post.extra.authors %}{{ post.extra.authors | first }}{% else %}staff{% endif %}</span>
+      </div>
+      <div class="ap-card-scribble">read &#8594;</div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
+{% include "footer.html" %}
