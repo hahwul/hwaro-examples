@@ -1,0 +1,80 @@
+{% include "header.html" %}
+<main class="doc-shell">
+  <aside class="doc-side">
+    <div class="grp">
+      <h4>Principles</h4>
+      {% if section.pages %}
+        {% for doc in section.pages %}
+        <a href="{{ base_url }}{{ doc.url }}" {% if doc.url == page.url %}class="active"{% endif %}>
+          <span class="num">{{ "%02d" | format(loop.index) }}</span>
+          <span>{{ doc.title }}</span>
+        </a>
+        {% endfor %}
+      {% endif %}
+    </div>
+    <div class="grp">
+      <h4>Pages</h4>
+      <a href="{{ base_url }}/"><span class="num">→</span><span>Manual</span></a>
+      <a href="{{ base_url }}/about/"><span class="num">→</span><span>Imprint</span></a>
+      <a href="{{ base_url }}/tags/"><span class="num">→</span><span>Tag Index</span></a>
+    </div>
+  </aside>
+
+  <article class="doc">
+    <div class="crumb">
+      <a href="{{ base_url }}/">Manual</a>
+      <span class="sep">/</span>
+      <a href="{{ base_url }}/principles/">Principles</a>
+      <span class="sep">/</span>
+      <span>{{ page.title }}</span>
+    </div>
+
+    <header class="doc-head">
+      <div class="principle-num">
+        <small>Principle</small>
+        {{ "%02d" | format(page.extra.number | default(value=1)) }}
+      </div>
+      <div>
+        <h1>{{ page.title }}</h1>
+        {% if page.description %}<p class="desc">{{ page.description }}</p>{% endif %}
+        <div class="rule"></div>
+      </div>
+    </header>
+
+    <div class="doc-body">
+      {{ content }}
+    </div>
+
+    <nav class="doc-nav">
+      {% if page.lower %}
+      <a href="{{ base_url }}{{ page.lower.url }}">
+        <span class="label">← Previous principle</span>
+        <span class="title">{{ page.lower.title }}</span>
+      </a>
+      {% else %}<span></span>{% endif %}
+      {% if page.higher %}
+      <a href="{{ base_url }}{{ page.higher.url }}" class="next">
+        <span class="label">Next principle →</span>
+        <span class="title">{{ page.higher.title }}</span>
+      </a>
+      {% else %}<span></span>{% endif %}
+    </nav>
+  </article>
+
+  <aside class="toc-side">
+    {% if page.toc %}
+    <h4>On this page</h4>
+    {{ page.toc }}
+    {% endif %}
+    <div class="stats">
+      <h5>Metadata</h5>
+      <dl>
+        <dt>Principle</dt><dd>{{ "%02d" | format(page.extra.number | default(value=1)) }}</dd>
+        <dt>Date</dt><dd>{{ page.date | date(format="%Y-%m-%d") }}</dd>
+        <dt>Reading</dt><dd>{{ page.reading_time | default(value="—") }} min</dd>
+        <dt>Words</dt><dd>{{ page.word_count | default(value="—") }}</dd>
+      </dl>
+    </div>
+  </aside>
+</main>
+{% include "footer.html" %}

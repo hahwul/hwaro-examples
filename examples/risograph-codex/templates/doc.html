@@ -1,0 +1,63 @@
+{% include "header.html" %}
+<main class="doc-shell">
+  <aside class="doc-side">
+    <h4>{{ section.title | default(value="Chapters") }}</h4>
+    {% if section.pages %}
+    <ul>
+      {% for doc in section.pages %}
+      <li>
+        <a href="{{ base_url }}{{ doc.url }}" {% if doc.url == page.url %}class="active"{% endif %}>
+          {{ "%02d" | format(loop.index) }} &middot; {{ doc.title }}
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    <div class="group-label">— Loose Sheets —</div>
+    <ul>
+      <li><a href="{{ base_url }}/">Cover</a></li>
+      <li><a href="{{ base_url }}/about/">Colophon</a></li>
+      <li><a href="{{ base_url }}/tags/">Index of Tags</a></li>
+    </ul>
+  </aside>
+
+  <article class="doc">
+    <div class="crumb">
+      <a href="{{ base_url }}/">INDEX</a>
+      <span class="sep">/</span>
+      <a href="{{ base_url }}/docs/">CHAPTERS</a>
+      <span class="sep">/</span>
+      <span>{{ page.title | upper }}</span>
+    </div>
+
+    <h1 data-text="{{ page.title }}">{{ page.title }}</h1>
+    {% if page.description %}
+      <p class="desc">{{ page.description }}</p>
+    {% endif %}
+
+    {% if page.extra.notice %}
+      <div class="notice">{{ page.extra.notice }}</div>
+    {% endif %}
+
+    <div class="doc-body">
+      {{ content }}
+    </div>
+
+    <nav class="doc-nav">
+      {% if page.lower %}
+      <a href="{{ base_url }}{{ page.lower.url }}">
+        <span class="label">← Previous Chapter</span>
+        <span class="title">{{ page.lower.title }}</span>
+      </a>
+      {% else %}<span></span>{% endif %}
+
+      {% if page.higher %}
+      <a href="{{ base_url }}{{ page.higher.url }}" class="next">
+        <span class="label">Next Chapter →</span>
+        <span class="title">{{ page.higher.title }}</span>
+      </a>
+      {% else %}<span></span>{% endif %}
+    </nav>
+  </article>
+</main>
+{% include "footer.html" %}
