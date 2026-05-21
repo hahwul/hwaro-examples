@@ -1,0 +1,54 @@
+{% include "header.html" %}
+<section class="cover">
+  <p class="cover-eyebrow">The Catalogue of</p>
+  <h1 class="cover-title" data-letter-stagger>Atelier Letterpress</h1>
+  <div class="fleuron-rule" aria-hidden="true">
+    <svg class="fleuron fleuron-lg"><use href="#fleuron-1"/></svg>
+  </div>
+  <p class="cover-italic">A foundry of slow type, ornament &amp; ink</p>
+  <p class="cover-volume">Volume I &middot; MMXXVI</p>
+
+  {% if content %}
+  <div class="cover-intro">{{ content | safe }}</div>
+  {% endif %}
+
+  <div class="fleuron-rule" aria-hidden="true">
+    <svg class="fleuron fleuron-md"><use href="#fleuron-3"/></svg>
+  </div>
+
+  <h2 class="cover-section-title">The Current Specimens</h2>
+
+  <ol class="catalogue-list cover-list">
+    {% set posts = get_section(path="posts/_index.md") %}
+    {% if posts %}
+      {% for post in posts.pages | sort_by("date", reverse=true) %}
+      {% if loop.index <= 5 %}
+      <li class="catalogue-item">
+        <a class="catalogue-row" href="{{ post.url }}">
+          <span class="catalogue-no">N&deg; {{ post.extra.catalogue_no | default("000") }}</span>
+          <span class="catalogue-body">
+            <span class="catalogue-row-title">{{ post.title }}</span>
+            {% if post.description %}
+            <span class="catalogue-row-desc">{{ post.description }}</span>
+            {% endif %}
+            <span class="catalogue-row-meta">
+              {% if post.date %}{{ post.date | date("%B %Y") }}{% endif %}
+            </span>
+          </span>
+          <span class="catalogue-arrow" aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+      {% endif %}
+      {% endfor %}
+    {% endif %}
+  </ol>
+
+  <p class="cover-cta">
+    <a href="{{ base_url }}/posts/" class="cover-cta-link">View the entire catalogue</a>
+  </p>
+
+  <div class="fleuron-rule" aria-hidden="true">
+    <svg class="fleuron fleuron-md"><use href="#fleuron-2"/></svg>
+  </div>
+</section>
+{% include "footer.html" %}
