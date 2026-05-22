@@ -1,0 +1,42 @@
+{% include "header.html" %}
+
+<div class="drawing-h">
+  <div class="left">
+    <div class="eyebrow"><span class="mark"></span> SECTION INDEX · {{ section.pages | length }} ENTRIES</div>
+    <h1>{{ section.title }}</h1>
+    <p>{{ section.description }}</p>
+    <div class="corner-mark">INDEX <b>{{ section.title | upper }}</b><br>SHEETS <b>{{ section.pages | length }}</b></div>
+  </div>
+  <div class="right">
+    <div class="cell">
+      <div class="lbl">SHEETS</div>
+      <div class="val cyan">{{ section.pages | length }}</div>
+    </div>
+    <div class="cell">
+      <div class="lbl">SCALE</div>
+      <div class="val">1 : 50</div>
+    </div>
+    <div class="cell">
+      <div class="lbl">DRAWN</div>
+      <div class="val">K. NAVARRO</div>
+    </div>
+    <div class="cell">
+      <div class="lbl">CHECKED</div>
+      <div class="val">O. KIM</div>
+    </div>
+  </div>
+</div>
+
+<div class="entries">
+{% for p in section.pages %}
+  <a class="e" href="{{ p.url }}">
+    <span class="balloon"><span class="callout">{{ loop.index }}</span></span>
+    <span class="id">{{ p.extra and p.extra.code or "DRG-0000" }}</span>
+    <span class="t"><div>{{ p.title }}</div><div class="desc">{{ p.summary | default(p.description) | strip_html | truncate_words(22) }}</div></span>
+    <span class="meta">{{ p.date | date("%Y-%m-%d") }} · REV {{ p.extra and p.extra.rev or "A" }}</span>
+    <span class="tag"><span class="pill">{{ p.extra and p.extra.tag or "ISSUED" }}</span></span>
+  </a>
+{% endfor %}
+</div>
+
+{% include "footer.html" %}
