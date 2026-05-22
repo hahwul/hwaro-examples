@@ -1,0 +1,89 @@
+{% include "header.html" %}
+
+<section class="masthead">
+  <div class="title-block">
+    <span class="glyph">⌬</span>
+    <h1>glyph<span class="accent">_</span><span class="cy">cipher</span></h1>
+    <p class="deck">{{ site.description }}</p>
+  </div>
+  <div class="identity-card">
+    <div class="row"><span class="k">node</span><span class="v">gc.node<span class="mg">.0x47A1</span></span></div>
+    <div class="row"><span class="k">operators</span><span class="v"><span class="cy">@dial</span> · @relic · @harken · @kestral</span></div>
+    <div class="row"><span class="k">protocol</span><span class="v">noise_xx · curve25519 · chacha20-poly1305</span></div>
+    <div class="row"><span class="k">established</span><span class="v">2019-11-17 · uptime <span class="cy">2369d</span></span></div>
+    <div class="row"><span class="k">transmissions</span><span class="v"><span class="mg">{{ site.pages | length }}</span> hashed &amp; signed</span></div>
+    <div class="row"><span class="k">posture</span><span class="v">defensive · observation only</span></div>
+  </div>
+</section>
+
+<div class="glyph-strip">
+  <div class="cell">⌬<span class="h">0x2BAC</span></div>
+  <div class="cell hot">⊕<span class="h">0x4F0D</span></div>
+  <div class="cell">⌖<span class="h">0xA31C</span></div>
+  <div class="cell cy">◈<span class="h">0x9D03</span></div>
+  <div class="cell">⌧<span class="h">0xFF22</span></div>
+  <div class="cell hot">▼<span class="h">0x1107</span></div>
+  <div class="cell">⌘<span class="h">0xBEEF</span></div>
+  <div class="cell cy">⌭<span class="h">0xC0DE</span></div>
+</div>
+
+{% set posts = [] %}
+{% for p in site.pages | sort_by("date", reverse=true) %}{% if p.section == "transmissions" %}{% set posts = posts + [p] %}{% endif %}{% endfor %}
+
+<div class="cipher-label"><span class="name">latest transmissions</span><span class="meta">{{ posts | length }} entries · last verified {{ current_date }}</span></div>
+
+{% if posts | length > 0 %}
+{% set lead = posts[0] %}
+<div class="feed-grid">
+  <a class="main" href="{{ lead.url }}" style="text-decoration:none;">
+    <span class="pin">▮ PINNED</span>
+    <div class="stamp">★ TRANSMISSION {{ "%04d" | format(posts | length) }} · {% if lead.date %}{{ lead.date | date("%Y · %m · %d") }} ·{% endif %} {% if lead.extra and lead.extra.operator %}@{{ lead.extra.operator }}{% else %}@anon{% endif %}</div>
+    <h2>{{ lead.title }}</h2>
+    {% if lead.description %}<p class="deck">{{ lead.description }}</p>{% endif %}
+    <div class="footer-row">
+      <span class="tags">{% if lead.tags %}# {{ lead.tags | join(" # ") }}{% endif %}</span>
+      <span>{% if lead.reading_time %}{{ lead.reading_time }} MIN · {% endif %}SHA: 0x{% if lead.extra and lead.extra.hash %}{{ lead.extra.hash }}{% else %}A31C4F0D{% endif %}</span>
+    </div>
+  </a>
+  <div class="side">
+  {% for p in posts %}
+    {% if loop.index > 1 and loop.index <= 5 %}
+    <a href="{{ p.url }}">
+      <div class="stamp"><span class="mg">▸</span> {% if p.date %}{{ p.date | date("%Y·%m·%d") }} ·{% endif %} {% if p.extra and p.extra.operator %}@{{ p.extra.operator }}{% else %}@anon{% endif %}</div>
+      <h3>{{ p.title }}</h3>
+      {% if p.description %}<p class="desc">{{ p.description | truncate(110) }}</p>{% endif %}
+    </a>
+    {% endif %}
+  {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+<div class="cipher-label"><span class="name">archive · all transmissions</span><span class="meta">indexed in reverse chronological order</span></div>
+
+{% set glyphs = ["⌬","⊕","⌖","◈","⌧","▼","⌘","⌭","◉","◬","⌗","⌘"] %}
+<div class="dense-list">
+{% for p in posts %}
+  <a class="row" href="{{ p.url }}" style="text-decoration:none;color:inherit;display:grid;">
+    <span class="id">№ {{ "%03d" | format(posts | length - loop.index0) }}</span>
+    <span class="glyph">{{ glyphs[loop.index0 % 12] }}</span>
+    <span class="title">{{ p.title }}<small>{% if p.description %}{{ p.description | truncate(80) }}{% endif %}</small></span>
+    <span class="tax">{% if p.tags %}# {{ p.tags | join(" # ") }}{% endif %}</span>
+    <span class="dt">{% if p.date %}{{ p.date | date("%Y · %m") }}{% endif %}</span>
+  </a>
+{% endfor %}
+</div>
+
+<div class="cipher-label" style="margin-top:48px;"><span class="name">operator roster</span><span class="meta">on-shift now</span></div>
+<div class="operator-panel">
+  <div class="op"><div class="h">// HANDLE 0x47A1</div><div class="name">@dial<span class="h6"> · pgp ⌬ 9D03</span></div><div class="stats">posts <span class="v">42</span> · joined 2019 · sig: <span class="v">verified</span></div></div>
+  <div class="op"><div class="h">// HANDLE 0x2BAC</div><div class="name">@relic<span class="h6"> · pgp ⌬ FF22</span></div><div class="stats">posts <span class="v">28</span> · joined 2020 · sig: <span class="v">verified</span></div></div>
+  <div class="op"><div class="h">// HANDLE 0xA31C</div><div class="name">@harken<span class="h6"> · pgp ⌬ 4F0D</span></div><div class="stats">posts <span class="v">19</span> · joined 2022 · sig: <span class="v">verified</span></div></div>
+  <div class="op"><div class="h">// HANDLE 0xBEEF</div><div class="name">@kestral<span class="h6"> · pgp ⌬ 1107</span></div><div class="stats">posts <span class="v">11</span> · joined 2024 · sig: <span class="v">verified</span></div></div>
+</div>
+
+<article class="body" style="margin-top:64px;max-width:64ch;">
+  {{ content | safe }}
+</article>
+
+{% include "footer.html" %}
