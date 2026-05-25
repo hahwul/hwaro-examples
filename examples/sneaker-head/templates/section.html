@@ -1,0 +1,55 @@
+{% include "header.html" %}
+
+<div class="main-container">
+  <h1 class="hype-heading">Active Drops</h1>
+
+  <section class="sneaker-section">
+    <div class="sneaker-grid">
+      {% for post in section.pages %}
+        <article class="sneaker-card">
+          <div class="card-header">
+            <span class="badge {{ post.extra.status | default('released') | lower }}">{{ post.extra.status | default('Released') }}</span>
+            <span class="timer">{{ post.date | date("%m/%d/%Y") }}</span>
+          </div>
+          
+          <div class="card-visual">
+            [ {{ post.title | upper }} ]
+          </div>
+          
+          <h2 class="sneaker-title">{{ post.title }}</h2>
+          <p class="sneaker-desc">
+            {{ post.description | default("Limited edition high-top collaborative sneaker featuring signature accents.") }}
+          </p>
+          
+          <div class="card-footer">
+            <span class="sneaker-price">{{ post.extra.price | default("$190") }}</span>
+            <a href="{{ base_url }}{{ post.url }}" class="inspect-btn">Examine</a>
+          </div>
+        </article>
+      {% else %}
+        <!-- Site fallback -->
+        {% for post in site.pages %}
+          {% if post.section == "posts" %}
+            <article class="sneaker-card">
+              <div class="card-header">
+                <span class="badge {{ post.extra.status | default('released') | lower }}">{{ post.extra.status | default('Released') }}</span>
+                <span class="timer">{{ post.date | date("%m/%d/%Y") }}</span>
+              </div>
+              <div class="card-visual">
+                [ {{ post.title | upper }} ]
+              </div>
+              <h2 class="sneaker-title">{{ post.title }}</h2>
+              <p class="sneaker-desc">{{ post.description }}</p>
+              <div class="card-footer">
+                <span class="sneaker-price">{{ post.extra.price | default("$190") }}</span>
+                <a href="{{ base_url }}{{ post.url }}" class="inspect-btn">Examine</a>
+              </div>
+            </article>
+          {% endif %}
+        {% endfor %}
+      {% endfor %}
+    </div>
+  </section>
+</div>
+
+{% include "footer.html" %}

@@ -1,0 +1,59 @@
+{% include "header.html" %}
+
+<div class="main-container">
+  {% if section.title == "Home" or section.title == "Sustainable Weave" %}
+    <section class="organic-hero">
+      <div class="hero-text">
+        <h1 class="hero-title">Designing for Circularity.</h1>
+        <p class="hero-desc">An editorial dedicated to examining natural dye crafts, organic linen sources, zero-waste patterning, and the philosophy of slow fashion.</p>
+        <a href="#journal" class="hero-btn">Explore Journal</a>
+      </div>
+      <div class="hero-visual" style="border: 1px solid var(--color-border); border-radius: 8px; aspect-ratio: 4/5; background-color: #fafaf9; display: flex; align-items: center; justify-content: center; font-family: var(--font-serif); font-style: italic; color: var(--color-text-muted); font-size: 0.9rem;">
+        [ TACTILE TEXTILE PORTFOLIO ]
+      </div>
+    </section>
+  {% else %}
+    <header class="editorial-header">
+      <span class="card-meta">CULTIVATED CATEGORY</span>
+      <h1 class="editorial-title">{{ section.title }}</h1>
+    </header>
+  {% endif %}
+
+  <section id="journal" class="journal-section">
+    <div class="journal-grid">
+      {% for post in section.pages %}
+        <article class="journal-card">
+          <span class="card-meta">
+            {{ post.date | date("%B %d, %Y") }}
+            {% if post.tags %}
+              &nbsp;·&nbsp; {{ post.tags | first }}
+            {% endif %}
+          </span>
+          <h2 class="card-title">
+            <a href="{{ base_url }}{{ post.url }}">{{ post.title }}</a>
+          </h2>
+          <p class="card-excerpt">
+            {{ post.description | default("Exploring how regional craftsmanship and circular fiber webs are shaping the future of ecological drapes.") }}
+          </p>
+          <a href="{{ base_url }}{{ post.url }}" class="card-read-more">Read Journal</a>
+        </article>
+      {% else %}
+        <!-- Fallback if empty -->
+        {% for post in site.pages %}
+          {% if post.section == "posts" %}
+            <article class="journal-card">
+              <span class="card-meta">{{ post.date | date("%B %d, %Y") }}</span>
+              <h2 class="card-title">
+                <a href="{{ base_url }}{{ post.url }}">{{ post.title }}</a>
+              </h2>
+              <p class="card-excerpt">{{ post.description }}</p>
+              <a href="{{ base_url }}{{ post.url }}" class="card-read-more">Read Journal</a>
+            </article>
+          {% endif %}
+        {% endfor %}
+      {% endfor %}
+    </div>
+  </section>
+</div>
+
+{% include "footer.html" %}
