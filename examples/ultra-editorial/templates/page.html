@@ -1,0 +1,50 @@
+{% include "header.html" %}
+  <main class="site-main py-12">
+    {% if page.section == 'posts' %}
+      <!-- Article view -->
+      <article class="max-w-3xl mx-auto">
+        <div class="mb-8">
+          <time class="text-xs tracking-[2px] text-stone-500">{{ page.date | date("%d %B %Y") }}</time>
+          <h1 class="essay-title mt-3 mb-6 text-balance">{{ page.title }}</h1>
+          {% if page.description %}
+            <p class="text-xl text-stone-600">{{ page.description }}</p>
+          {% endif %}
+          <div class="mt-6 flex flex-wrap gap-2">
+            {% for tag in page.tags %}
+              <a href="{{ base_url }}/tags/{{ tag | slugify }}/" class="tag-pill hover:bg-stone-200">{{ tag }}</a>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="prose-custom max-w-none text-[17px] text-stone-800">
+          {{ content | safe }}
+        </div>
+
+        {% if page.lower or page.higher %}
+        <nav class="mt-16 pt-8 border-t border-stone-200 grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+          {% if page.lower %}
+            <a href="{{ page.lower.permalink }}" class="group">
+              <div class="text-xs tracking-widest text-stone-500 mb-1">PREVIOUS</div>
+              <div class="text-stone-950 group-hover:text-stone-700">{{ page.lower.title }}</div>
+            </a>
+          {% endif %}
+          {% if page.higher %}
+            <a href="{{ page.higher.permalink }}" class="group text-right">
+              <div class="text-xs tracking-widest text-stone-500 mb-1">NEXT</div>
+              <div class="text-stone-950 group-hover:text-stone-700">{{ page.higher.title }}</div>
+            </a>
+          {% endif %}
+        </nav>
+        {% endif %}
+      </article>
+    {% else %}
+      <!-- Generic page -->
+      <div class="max-w-3xl mx-auto">
+        {% if page.title is present %}<h1 class="text-4xl font-serif-custom tracking-tighter mb-8">{{ page.title }}</h1>{% endif %}
+        <div class="prose-custom">
+          {{ content | safe }}
+        </div>
+      </div>
+    {% endif %}
+  </main>
+{% include "footer.html" %}
