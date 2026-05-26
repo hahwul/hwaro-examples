@@ -1,57 +1,7 @@
 +++
-title = "Ultra Editorial"
-description = "Sharp criticism and elegant prose on contemporary design, publishing, and visual culture."
-template = "page"
+title = "Punchcut"
+description = "High-impact criticism. No softening. No retreat."
+template = "home"
 +++
 
-<div class="max-w-4xl mx-auto">
-  <div class="pt-12 pb-16 border-b border-stone-200">
-    <p class="text-xs tracking-[3px] text-stone-500 mb-3">EST. 2018</p>
-    <h1 class="text-6xl leading-[0.95] font-serif tracking-tighter text-stone-950">Ultra<br>Editorial.</h1>
-    <p class="mt-6 max-w-md text-xl text-stone-600">Critical essays on the state of design, typography, and the politics of publishing.</p>
-  </div>
-
-  <div class="py-12">
-    <div class="flex items-center justify-between mb-6">
-      <h2 class="text-sm uppercase tracking-widest text-stone-500">Featured</h2>
-      <a href="{{ base_url }}/posts/" class="text-xs tracking-widest text-stone-500 hover:text-stone-950 transition">ALL ESSAYS →</a>
-    </div>
-    
-    <div class="space-y-8">
-      <a href="{{ base_url }}/posts/the-new-austerity-in-digital-product-design/" class="group block border-b border-stone-100 pb-8 hover:border-stone-300 transition">
-        <div class="flex gap-6">
-          <div class="text-sm text-stone-400 w-24 shrink-0 pt-1">12 Feb 2025</div>
-          <div class="flex-1">
-            <h3 class="text-2xl text-stone-950 group-hover:text-stone-700 transition">The New Austerity in Digital Product Design</h3>
-            <p class="mt-2 text-stone-600">How the most refined interfaces are embracing reduction as a form of respect for the user.</p>
-          </div>
-        </div>
-      </a>
-      
-      <a href="{{ base_url }}/posts/why-every-serif-is-political/" class="group block border-b border-stone-100 pb-8 hover:border-stone-300 transition">
-        <div class="flex gap-6">
-          <div class="text-sm text-stone-400 w-24 shrink-0 pt-1">05 Feb 2025</div>
-          <div class="flex-1">
-            <h3 class="text-2xl text-stone-950 group-hover:text-stone-700 transition">Why Every Serif Is Political</h3>
-            <p class="mt-2 text-stone-600">Letterforms carry ideology. Choosing one is never neutral.</p>
-          </div>
-        </div>
-      </a>
-      
-      <a href="{{ base_url }}/posts/the-return-of-the-editor/" class="group block pb-8 hover:border-stone-300 transition">
-        <div class="flex gap-6">
-          <div class="text-sm text-stone-400 w-24 shrink-0 pt-1">28 Jan 2025</div>
-          <div class="flex-1">
-            <h3 class="text-2xl text-stone-950 group-hover:text-stone-700 transition">The Return of the Editor</h3>
-            <p class="mt-2 text-stone-600">In an age of infinite content, the editor becomes the most radical figure in publishing.</p>
-          </div>
-        </div>
-      </a>
-    </div>
-  </div>
-
-  <div class="py-12 border-t border-stone-200">
-    <p class="text-stone-600 max-w-prose">Ultra Editorial publishes twelve times a year. We believe the sentence is still the most powerful unit of design.</p>
-    <p class="mt-4"><a href="{{ base_url }}/about/" class="text-stone-500 hover:text-stone-950 text-sm tracking-widest">READ THE MANIFESTO →</a></p>
-  </div>
-</div>
+Twelve cuts per year. Direct. Uncompromising.
