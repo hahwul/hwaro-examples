@@ -137,7 +137,7 @@ No contract leaves the studio before it has been read aloud in full by the calli
 
 Consultations are taken in person upon the first and third Thursdays of the month, and by correspondence at all other times. The studio advises that commissions be placed not less than three months before the intended date of ceremony, that there may be time for the couple to approve successive drafts and for the calligrapher to proceed at the careful pace the work requires.
 
-The pages that follow display four principal styles of our work. The reader is invited to browse the [portfolio](/gallery/) at length, to read our [note upon the craft](/craft/) and our [account of the tradition](/history/), and when ready to begin, to turn to the [terms of commission](/commission/).
+The pages that follow display four principal styles of our work. The reader is invited to browse the [portfolio](gallery/) at length, to read our [note upon the craft](craft/) and our [account of the tradition](history/), and when ready to begin, to turn to the [terms of commission](commission/).
 
 </div>
 
@@ -146,7 +146,7 @@ The pages that follow display four principal styles of our work. The reader is i
 <ul class="featured-grid">
   <li class="featured-card">
     <div class="featured-card-inner">
-      <a href="{{ base_url }}/gallery/jerusalem-classic/">
+      <a href="gallery/jerusalem-classic/">
         <svg viewBox="0 0 160 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <rect x="0" y="0" width="160" height="120" fill="#fdf7e8"/>
           <rect x="6" y="6" width="148" height="108" fill="none" stroke="#8a6e2e" stroke-width="1"/>
@@ -173,7 +173,7 @@ The pages that follow display four principal styles of our work. The reader is i
   </li>
   <li class="featured-card">
     <div class="featured-card-inner">
-      <a href="{{ base_url }}/gallery/florentine-baroque/">
+      <a href="gallery/florentine-baroque/">
         <svg viewBox="0 0 160 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <rect x="0" y="0" width="160" height="120" fill="#fdf7e8"/>
           <path d="M 10 40 Q 20 10 40 14 Q 80 20 120 14 Q 140 10 150 40 Q 150 80 140 108 Q 120 100 80 106 Q 40 112 20 106 Q 10 80 10 40 Z" fill="none" stroke="#8a6e2e" stroke-width="1"/>
@@ -195,7 +195,7 @@ The pages that follow display four principal styles of our work. The reader is i
   </li>
   <li class="featured-card">
     <div class="featured-card-inner">
-      <a href="{{ base_url }}/gallery/modern-minimal/">
+      <a href="gallery/modern-minimal/">
         <svg viewBox="0 0 160 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <rect x="0" y="0" width="160" height="120" fill="#fdf7e8"/>
           <rect x="20" y="20" width="120" height="80" fill="none" stroke="#2d1b0a" stroke-width="0.8"/>
@@ -213,7 +213,7 @@ The pages that follow display four principal styles of our work. The reader is i
   </li>
   <li class="featured-card">
     <div class="featured-card-inner">
-      <a href="{{ base_url }}/gallery/sephardic-andalusi/">
+      <a href="gallery/sephardic-andalusi/">
         <svg viewBox="0 0 160 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <rect x="0" y="0" width="160" height="120" fill="#fdf7e8"/>
           <rect x="10" y="10" width="140" height="100" fill="none" stroke="#8a6e2e" stroke-width="0.9"/>
@@ -233,4 +233,4 @@ The pages that follow display four principal styles of our work. The reader is i
   </li>
 </ul>
 
-The full [portfolio](/gallery/) may be consulted for further commissions.
+The full [portfolio](gallery/) may be consulted for further commissions.
