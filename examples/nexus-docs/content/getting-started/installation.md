@@ -28,4 +28,4 @@ You should see the version number if Hwaro is installed correctly.
 
 ## Next Steps
 
-Once installed, proceed to the [Quick Start](/getting-started/quick-start.html) guide.
+Once installed, proceed to the [Quick Start](/getting-started/quick-start/) guide.

@@ -33,4 +33,4 @@ enabled = true
 
 ## Full Reference
 
-See the [Configuration Reference](/reference/config.html) for all available options.
+See the [Configuration Reference](/reference/config/) for all available options.
