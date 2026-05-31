@@ -1,0 +1,908 @@
+/* =============================================================================
+   ORRERY — a brass astronomical-instrument documentation theme.
+   Concept: the docs as a clockwork orrery / antique star atlas.
+   Solid colors only — flat fills, borders and box-shadow. Rings & stars are
+   solid strokes (border-radius circles) and planets are solid dots.
+   ============================================================================= */
+
+:root {
+  /* Palette — deep night navy on near-black, antique brass, parchment ink */
+  --void:    #080c14;   /* near-black backdrop */
+  --night:   #0e1626;   /* deep night navy panels */
+  --night-2: #121d31;   /* raised navy */
+  --night-3: #0b1220;   /* recessed navy */
+  --brass:   #c2a14d;   /* antique brass accent — SOLID */
+  --brass-d: #5f5026;   /* dimmed brass for hairlines */
+  --brass-dim: #6f5d2f; /* deep brass */
+  --parch:   #e8e2d2;   /* parchment off-white text */
+  --parch-2: #c4bda9;   /* muted parchment */
+  --parch-3: #8b8674;   /* faint parchment / captions */
+  --grat:    #26334a;   /* star-grey graticule lines */
+  --grat-2:  #1a2336;   /* fainter graticule */
+  --star:    #5a6b86;   /* dim star dot */
+  --rose:    #b8554a;   /* mars-red used very sparingly */
+
+  --rule: var(--brass-d);
+  --code-bg: #0a1120;
+
+  --serif: "Spectral", Georgia, serif;
+  --display: "Cormorant Garamond", "Spectral", Georgia, serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --maxw: 1320px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--void);
+  color: var(--parch);
+  font-family: var(--serif);
+  font-size: 16.5px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a { color: inherit; text-decoration: none; }
+
+::selection { background: var(--brass); color: var(--void); }
+
+/* =============================================================================
+   Top bar / masthead
+   ============================================================================= */
+.bar {
+  border-bottom: 1px solid var(--rule);
+  background: var(--night-3);
+  position: sticky; top: 0; z-index: 40;
+}
+.bar-inner {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: stretch;
+  max-width: var(--maxw);
+  margin: 0 auto;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 26px;
+  border-right: 1px solid var(--rule);
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 25px;
+  letter-spacing: 0.01em;
+  color: var(--parch);
+}
+/* Brand mark: a tiny solid orrery — concentric brass rings + planet dot */
+.brand .mark {
+  position: relative;
+  width: 30px; height: 30px;
+  border: 1px solid var(--brass);
+  border-radius: 50%;
+  flex: 0 0 auto;
+}
+.brand .mark::after {
+  content: "";
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 16px; height: 16px;
+  margin: -8px 0 0 -8px;
+  border: 1px solid var(--brass);
+  border-radius: 50%;
+}
+.brand .mark::before {
+  content: "";
+  position: absolute;
+  left: 50%; top: -2px;
+  width: 4px; height: 4px;
+  margin-left: -2px;
+  background: var(--brass);
+  border-radius: 50%;
+}
+
+.search {
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  border-right: 1px solid var(--rule);
+}
+.search input {
+  border: 0; background: transparent;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--parch-2);
+  padding: 14px 0;
+  width: 100%;
+  outline: none;
+  letter-spacing: 0.02em;
+}
+.search input::placeholder { color: var(--parch-3); }
+.search .kbd {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  padding: 3px 8px;
+  border: 1px solid var(--brass-d);
+  color: var(--brass);
+  letter-spacing: 0.08em;
+}
+
+.bar nav { display: flex; align-items: stretch; }
+.bar nav a {
+  padding: 16px 22px;
+  display: flex; align-items: center;
+  border-left: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--parch-2);
+  transition: color 140ms ease, background 140ms ease;
+}
+.bar nav a:hover { background: var(--night-2); color: var(--brass); }
+.bar nav a:focus-visible { outline: 1px solid var(--brass); outline-offset: -1px; }
+.bar nav a.cta { color: var(--brass); }
+.bar nav a.cta:hover { background: var(--brass); color: var(--void); }
+
+/* =============================================================================
+   Layout shell
+   ============================================================================= */
+.shell {
+  display: grid;
+  grid-template-columns: 290px 1fr 250px;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  min-height: calc(100vh - 60px);
+}
+
+.sidebar {
+  border-right: 1px solid var(--rule);
+  padding: 40px 26px;
+  position: sticky; top: 60px;
+  height: calc(100vh - 60px);
+  overflow-y: auto;
+  background: var(--night-3);
+}
+
+.sidebar h4 {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--parch-3);
+  margin: 30px 0 12px;
+  position: relative;
+  padding-left: 22px;
+  display: flex;
+  align-items: center;
+}
+/* roundel before each sidebar group — a solid brass ring with a dot */
+.sidebar h4::before {
+  content: "";
+  position: absolute; left: 0; top: 50%;
+  width: 12px; height: 12px;
+  margin-top: -6px;
+  border: 1px solid var(--brass);
+  border-radius: 50%;
+}
+.sidebar h4::after {
+  content: "";
+  position: absolute; left: 4px; top: 50%;
+  width: 4px; height: 4px;
+  margin-top: -2px;
+  background: var(--brass);
+  border-radius: 50%;
+}
+.sidebar h4:first-child { margin-top: 0; }
+
+.sidebar ul { list-style: none; padding: 0; margin: 0; }
+.sidebar li { font-size: 15px; }
+.sidebar a {
+  display: block;
+  padding: 7px 14px 7px 22px;
+  border-left: 1px solid transparent;
+  color: var(--parch-2);
+  transition: color 120ms ease, border-color 120ms ease;
+}
+.sidebar a:hover { color: var(--parch); border-left-color: var(--brass-dim); }
+.sidebar a.active {
+  border-left-color: var(--brass);
+  color: var(--brass);
+  background: var(--night-2);
+}
+
+.main { padding: 60px 68px; min-width: 0; }
+.main-inner { max-width: 760px; }
+
+/* TOC rail */
+.toc {
+  border-left: 1px solid var(--rule);
+  padding: 60px 24px;
+  position: sticky; top: 60px;
+  height: calc(100vh - 60px);
+  overflow-y: auto;
+  font-size: 13.5px;
+}
+.toc h5 {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--parch-3);
+  margin: 0 0 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--grat);
+}
+.toc ul { list-style: none; padding: 0; margin: 0; }
+.toc li { padding: 5px 0; }
+.toc a { color: var(--parch-3); transition: color 120ms ease; }
+.toc a:hover { color: var(--brass); }
+.toc ul ul { padding-left: 14px; border-left: 1px solid var(--grat); margin: 4px 0 4px 2px; }
+
+/* =============================================================================
+   Article header
+   ============================================================================= */
+.crumb {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--parch-3);
+  margin-bottom: 22px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.crumb .accent { color: var(--brass); }
+.crumb a:hover { color: var(--brass); }
+
+/* the "coordinate" kicker above headings */
+.coord {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.coord::before {
+  content: "";
+  width: 28px; height: 1px;
+  background: var(--brass);
+}
+
+.main h1 {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(44px, 6vw, 66px);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  margin: 0 0 18px;
+  color: var(--parch);
+}
+.main .deck {
+  font-size: 21px;
+  color: var(--parch-2);
+  margin: 0 0 14px;
+  max-width: 60ch;
+  line-height: 1.55;
+  font-weight: 300;
+  font-style: italic;
+  font-family: var(--display);
+}
+
+/* hairline brass rule with a central star node */
+.starrule {
+  border: 0;
+  height: 1px;
+  background: var(--brass);
+  margin: 40px 0;
+  position: relative;
+  overflow: visible;
+  opacity: 0.6;
+}
+.starrule::after {
+  content: "\2726";
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--brass);
+  background: var(--void);
+  padding: 0 14px;
+  font-size: 13px;
+  opacity: 1;
+}
+
+/* =============================================================================
+   .content prose
+   ============================================================================= */
+.content { font-size: 16.5px; }
+
+.content h2 {
+  font-family: var(--display);
+  font-size: 33px;
+  font-weight: 600;
+  margin: 52px 0 16px;
+  letter-spacing: 0;
+  color: var(--parch);
+  padding-top: 16px;
+  border-top: 1px solid var(--grat);
+  position: relative;
+}
+/* small brass roundel marking each section heading */
+.content h2::before {
+  content: "";
+  position: absolute;
+  left: 0; top: -7px;
+  width: 13px; height: 13px;
+  border: 1px solid var(--brass);
+  border-radius: 50%;
+  background: var(--void);
+}
+.content h2::after {
+  content: "";
+  position: absolute;
+  left: 4px; top: -3px;
+  width: 5px; height: 5px;
+  background: var(--brass);
+  border-radius: 50%;
+}
+.content h3 {
+  font-family: var(--display);
+  font-size: 25px;
+  font-weight: 600;
+  margin: 36px 0 12px;
+  color: var(--parch);
+}
+.content h4 {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin: 30px 0 10px;
+}
+.content p { margin: 0 0 18px; max-width: 70ch; color: var(--parch); }
+.content strong { color: var(--parch); font-weight: 600; }
+.content em { color: var(--parch-2); }
+
+.content a {
+  color: var(--brass);
+  border-bottom: 1px solid var(--brass-dim);
+  transition: border-color 120ms ease, color 120ms ease;
+}
+.content a:hover { border-bottom-color: var(--brass); color: var(--parch); }
+
+.content code {
+  font-family: var(--mono);
+  background: var(--code-bg);
+  border: 1px solid var(--grat);
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 0.85em;
+  color: var(--brass);
+}
+.content pre {
+  background: var(--code-bg);
+  border: 1px solid var(--brass-d);
+  padding: 22px 24px;
+  overflow-x: auto;
+  font-size: 13.5px;
+  line-height: 1.6;
+  font-family: var(--mono);
+  margin: 26px 0;
+  position: relative;
+  border-radius: 4px;
+}
+.content pre code { background: none; border: 0; padding: 0; color: var(--parch); font-size: inherit; }
+/* coordinate tick label on code blocks */
+.content pre::before {
+  content: "\2726";
+  position: absolute; top: 10px; right: 14px;
+  font-size: 11px; color: var(--brass-dim);
+}
+
+.content blockquote {
+  border-left: 2px solid var(--brass);
+  background: var(--night-3);
+  padding: 16px 24px;
+  margin: 26px 0;
+  font-style: italic;
+  font-family: var(--display);
+  font-size: 20px;
+  color: var(--parch-2);
+}
+.content blockquote p:last-child { margin-bottom: 0; }
+
+.content ul, .content ol { padding-left: 26px; margin: 0 0 18px; }
+.content li { margin-bottom: 8px; }
+.content ul li::marker { color: var(--brass); }
+.content ol li::marker { color: var(--brass); font-family: var(--mono); font-size: 0.9em; }
+
+.content hr {
+  border: 0;
+  height: 1px;
+  background: var(--brass);
+  opacity: 0.6;
+  margin: 40px 0;
+  position: relative;
+}
+.content hr::after {
+  content: "\2726";
+  position: absolute; left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--brass);
+  background: var(--void);
+  padding: 0 14px;
+  font-size: 12px;
+}
+
+.content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 26px 0;
+  font-size: 14.5px;
+}
+.content th {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--brass);
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--brass-d);
+  background: var(--night-3);
+}
+.content td {
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--grat);
+  color: var(--parch-2);
+  vertical-align: top;
+}
+.content tr:hover td { background: var(--night-3); }
+.content td code { white-space: nowrap; }
+
+.content img { max-width: 100%; height: auto; border: 1px solid var(--grat); border-radius: 4px; }
+
+/* =============================================================================
+   Pager
+   ============================================================================= */
+.pager {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-top: 60px;
+  padding-top: 40px;
+  border-top: 1px solid var(--brass-d);
+}
+.pager .b {
+  border: 1px solid var(--grat);
+  padding: 20px 24px;
+  background: var(--night-3);
+  border-radius: 4px;
+  transition: border-color 140ms ease, background 140ms ease;
+}
+.pager .b:hover { border-color: var(--brass); background: var(--night-2); }
+.pager .b .k {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--brass);
+}
+.pager .b .t {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 22px;
+  margin-top: 6px;
+  color: var(--parch);
+}
+.pager .next { text-align: right; }
+
+/* =============================================================================
+   HERO — the orrery centerpiece (concentric solid brass rings + planet dots)
+   ============================================================================= */
+.hero {
+  display: grid;
+  grid-template-columns: 1.25fr 0.9fr;
+  border-bottom: 1px solid var(--rule);
+  max-width: var(--maxw);
+  margin: 0 auto;
+  background: var(--night-3);
+  position: relative;
+  overflow: hidden;
+}
+.hero > * { position: relative; z-index: 1; }
+
+.hero .copy {
+  padding: 72px 56px;
+  border-right: 1px solid var(--rule);
+}
+.hero .eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin-bottom: 22px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.hero .eyebrow::before {
+  content: "";
+  width: 9px; height: 9px;
+  border: 1px solid var(--brass);
+  border-radius: 50%;
+}
+.hero h1 {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(48px, 6.5vw, 88px);
+  line-height: 0.98;
+  letter-spacing: -0.01em;
+  margin: 0 0 26px;
+  color: var(--parch);
+}
+.hero h1 .brass { color: var(--brass); font-style: italic; }
+.hero .deck {
+  font-size: 21px;
+  color: var(--parch-2);
+  max-width: 50ch;
+  margin: 0 0 34px;
+  line-height: 1.6;
+  font-family: var(--serif);
+  font-weight: 300;
+}
+.hero .cta-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+.hero .cta-row a {
+  border: 1px solid var(--brass-d);
+  padding: 14px 24px;
+  font-family: var(--mono);
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--parch);
+  border-radius: 3px;
+  transition: background 140ms ease, color 140ms ease, border-color 140ms ease;
+}
+.hero .cta-row a:hover { border-color: var(--brass); color: var(--brass); }
+.hero .cta-row a:focus-visible { outline: 1px solid var(--brass); outline-offset: 2px; }
+.hero .cta-row a.primary { background: var(--brass); color: var(--void); border-color: var(--brass); }
+.hero .cta-row a.primary:hover { background: transparent; color: var(--brass); }
+.hero .cta-row a.kbd {
+  background: var(--code-bg);
+  color: var(--brass);
+  text-transform: none;
+  letter-spacing: 0.04em;
+}
+
+/* The orrery diagram: concentric rings drawn as solid border circles,
+   each carrying a planet dot on its orbit. A star-field of solid dots is
+   painted behind it with layered solid box-shadows. */
+.orrery {
+  display: grid;
+  place-items: center;
+  padding: 40px;
+  min-height: 360px;
+  position: relative;
+}
+/* star field: a single 1px dot replicated as many solid box-shadows */
+.orrery .starfield {
+  position: absolute;
+  top: 24px; left: 24px;
+  width: 1px; height: 1px;
+  border-radius: 50%;
+  background: var(--star);
+  box-shadow:
+    18px 30px 0 0 var(--star), 64px 12px 0 0 var(--grat),
+    120px 48px 0 0 var(--star), 190px 22px 0 0 var(--grat),
+    240px 70px 0 0 var(--star), 300px 36px 0 0 var(--grat),
+    40px 96px 0 0 var(--grat), 150px 110px 0 0 var(--star),
+    280px 130px 0 0 var(--grat), 90px 160px 0 0 var(--star),
+    210px 180px 0 0 var(--grat), 320px 200px 0 0 var(--star),
+    24px 230px 0 0 var(--grat), 130px 250px 0 0 var(--star),
+    250px 270px 0 0 var(--grat), 60px 300px 0 0 var(--star),
+    180px 320px 0 0 var(--grat), 300px 310px 0 0 var(--star);
+}
+.orrery-fig {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  display: grid;
+  place-items: center;
+}
+.orrery-fig .ring {
+  position: absolute;
+  left: 50%; top: 50%;
+  border: 1px solid var(--brass-dim);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+.orrery-fig .ring.r1 { width: 70px; height: 70px; }
+.orrery-fig .ring.r2 { width: 140px; height: 140px; }
+.orrery-fig .ring.r3 { width: 220px; height: 220px; }
+.orrery-fig .ring.r4 { width: 310px; height: 310px; border-color: var(--brass-d); }
+.orrery-fig .ring.dashed { border-style: dashed; }
+
+/* the sun: solid brass disc at the center */
+.orrery-fig .sun {
+  position: absolute;
+  width: 26px; height: 26px;
+  background: var(--brass);
+  border-radius: 50%;
+  box-shadow: 0 0 0 6px var(--night-2);
+}
+
+/* planets: solid dots positioned on the rings */
+.orrery-fig .planet {
+  position: absolute;
+  left: 50%; top: 50%;
+  border-radius: 50%;
+  background: var(--parch);
+}
+.orrery-fig .p1 { width: 7px; height: 7px; margin: -3.5px 0 0 -3.5px; transform: translate(35px, 0); background: var(--rose); }
+.orrery-fig .p2 { width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px; transform: translate(-48px, 48px); background: var(--parch); }
+.orrery-fig .p3 { width: 11px; height: 11px; margin: -5.5px 0 0 -5.5px; transform: translate(96px, -55px); background: var(--brass); }
+.orrery-fig .p4 { width: 8px; height: 8px; margin: -4px 0 0 -4px; transform: translate(-120px, -78px); background: var(--star); }
+
+/* coordinate label floating on the diagram */
+.orrery-fig .coord-tag {
+  position: absolute;
+  bottom: 4px; right: 4px;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  color: var(--brass);
+  border: 1px solid var(--brass-d);
+  padding: 3px 7px;
+  background: var(--night-3);
+}
+
+/* =============================================================================
+   Category cards (home + section listings)
+   ============================================================================= */
+.cats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  max-width: var(--maxw);
+  margin: 0 auto;
+  border-bottom: 1px solid var(--rule);
+}
+.cat {
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: 38px 34px;
+  background: var(--night-3);
+  transition: background 140ms ease;
+  position: relative;
+}
+.cats .cat:nth-child(3n) { border-right: 0; }
+.cat:hover { background: var(--night-2); }
+.cat:hover .read { color: var(--brass); border-bottom-color: var(--brass); }
+
+/* section emblem: miniature concentric rings with a planet dot */
+.cat .emblem {
+  position: relative;
+  width: 44px; height: 44px;
+  margin-bottom: 22px;
+  border: 1px solid var(--brass);
+  border-radius: 50%;
+}
+.cat .emblem::after {
+  content: "";
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 22px; height: 22px;
+  margin: -11px 0 0 -11px;
+  border: 1px solid var(--brass-d);
+  border-radius: 50%;
+}
+.cat .emblem .dot {
+  position: absolute;
+  left: 50%; top: -3px;
+  width: 6px; height: 6px;
+  margin-left: -3px;
+  background: var(--brass);
+  border-radius: 50%;
+}
+.cat .emblem .idx {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--brass);
+}
+
+.cat .kicker {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--parch-3);
+  margin-bottom: 8px;
+}
+.cat h3 {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 27px;
+  margin: 0 0 10px;
+  letter-spacing: 0;
+  color: var(--parch);
+}
+.cat p { color: var(--parch-2); font-size: 15px; line-height: 1.6; margin: 0 0 16px; }
+.cat .read {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--parch-2);
+  border-bottom: 1px solid var(--brass-dim);
+  padding-bottom: 2px;
+  transition: color 120ms ease, border-color 120ms ease;
+}
+
+/* =============================================================================
+   Ephemeris strip (home metrics)
+   ============================================================================= */
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: 1px solid var(--rule);
+  max-width: var(--maxw);
+  margin: 0 auto;
+  background: var(--night);
+}
+.metrics .m { padding: 28px 30px; border-right: 1px solid var(--rule); }
+.metrics .m:last-child { border-right: 0; }
+.metrics .v {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 38px;
+  letter-spacing: 0;
+  color: var(--brass);
+  line-height: 1;
+}
+.metrics .v span { color: var(--parch-3); font-size: 18px; }
+.metrics .k {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--parch-3);
+  margin-top: 10px;
+}
+
+/* =============================================================================
+   Section / listing intro
+   ============================================================================= */
+.section-head {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 56px 68px 36px;
+  border-bottom: 1px solid var(--rule);
+}
+.section-head h1 {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(44px, 6vw, 64px);
+  margin: 8px 0 14px;
+  color: var(--parch);
+}
+.section-head .deck {
+  font-size: 20px;
+  color: var(--parch-2);
+  max-width: 62ch;
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 300;
+}
+.section-head .count {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--parch-3);
+  margin-top: 18px;
+}
+
+/* =============================================================================
+   Footer
+   ============================================================================= */
+.foot {
+  padding: 40px 30px;
+  border-top: 1px solid var(--rule);
+  max-width: var(--maxw);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 26px;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.04em;
+  color: var(--parch-3);
+}
+.foot strong { font-family: var(--display); font-size: 17px; color: var(--brass); font-weight: 600; letter-spacing: 0; }
+.foot .node { color: var(--brass); }
+.foot a:hover { color: var(--brass); }
+
+/* =============================================================================
+   404
+   ============================================================================= */
+.lost {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  border-bottom: 1px solid var(--rule);
+  min-height: 60vh;
+  background: var(--night-3);
+}
+.lost .copy { padding: 80px 56px; border-right: 1px solid var(--rule); align-self: center; }
+.lost h1 {
+  font-family: var(--display);
+  font-size: clamp(48px, 7vw, 92px);
+  font-weight: 600;
+  margin: 0 0 20px;
+  color: var(--parch);
+}
+.lost h1 .brass { color: var(--brass); font-style: italic; }
+.lost .deck { font-size: 20px; color: var(--parch-2); font-family: var(--serif); }
+.lost .deck a { color: var(--brass); border-bottom: 1px solid var(--brass-dim); }
+.lost .deck a:hover { border-bottom-color: var(--brass); }
+
+/* =============================================================================
+   Responsive — collapse to one column under ~860px
+   ============================================================================= */
+@media (max-width: 1180px) {
+  .shell { grid-template-columns: 250px 1fr; }
+  .toc { display: none; }
+  .cats { grid-template-columns: 1fr 1fr; }
+  .cats .cat:nth-child(3n) { border-right: 1px solid var(--rule); }
+  .cats .cat:nth-child(2n) { border-right: 0; }
+}
+
+@media (max-width: 860px) {
+  .bar-inner { grid-template-columns: 1fr; }
+  .brand { border-right: 0; border-bottom: 1px solid var(--rule); }
+  .search { display: none; }
+  .bar nav { overflow-x: auto; }
+  .bar nav a:first-child { border-left: 0; }
+
+  .shell { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .main { padding: 40px 26px; }
+
+  .hero { grid-template-columns: 1fr; }
+  .hero .copy { border-right: 0; border-bottom: 1px solid var(--rule); padding: 48px 30px; }
+  .orrery { min-height: 300px; }
+
+  .cats { grid-template-columns: 1fr; }
+  .cats .cat,
+  .cats .cat:nth-child(3n),
+  .cats .cat:nth-child(2n) { border-right: 0; }
+
+  .metrics { grid-template-columns: 1fr 1fr; }
+  .metrics .m:nth-child(2n) { border-right: 0; }
+
+  .section-head { padding: 40px 26px 28px; }
+
+  .lost { grid-template-columns: 1fr; }
+  .lost .copy { border-right: 0; border-bottom: 1px solid var(--rule); padding: 48px 30px; }
+
+  .pager { grid-template-columns: 1fr; }
+  .pager .next { text-align: left; }
+
+  .foot { grid-template-columns: 1fr; gap: 12px; }
+}
