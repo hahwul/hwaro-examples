@@ -1,0 +1,1142 @@
+/* =============================================================================
+   GLASS STOMACH — Clinical Body Horror Theme
+   Total Visibility. Nothing Hidden.
+   Sophisticated layered transparency, clinical violation aesthetics.
+   780+ lines of glass, membrane, organ, condensation, x-ray, pulse effects.
+   ============================================================================= */
+
+:root {
+  /* Clinical Glass Palette */
+  --glass-clear: rgba(235, 242, 252, 0.035);
+  --glass-membrane: rgba(200, 218, 240, 0.065);
+  --glass-deep: rgba(160, 185, 220, 0.09);
+  --glass-condense: rgba(210, 225, 245, 0.12);
+
+  --vein-blue: #3f5a8f;
+  --vein-blue-light: #5f7db8;
+  --vein-blue-xray: #7fa3d9;
+
+  --organ-rose: #b84a5f;
+  --organ-rose-deep: #8f2f42;
+  --organ-pink: #e38a9c;
+  --organ-liver: #c46a4a;
+  --organ-lung: #d8b8a8;
+
+  --stainless: #b4c0d0;
+  --stainless-dark: #7e8c9e;
+  --clinical-white: #e8eef5;
+  --clinical-off: #c8d4e3;
+
+  --bg-void: #07090f;
+  --bg-lab: #0b0e16;
+  --bg-specimen: #0f121b;
+  --bg-membrane: #12151f;
+
+  --text-primary: #e3ebf5;
+  --text-secondary: #9fb3cc;
+  --text-muted: #6f829c;
+  --text-clinical: #5a6e88;
+
+  --border-glass: rgba(170, 195, 225, 0.18);
+  --border-membrane: rgba(140, 170, 210, 0.28);
+
+  --header-h: 58px;
+  --content-max-w: 920px;
+  --radius: 4px;
+  --radius-sm: 2px;
+
+  --pulse-duration: 0.82s; /* ~73 bpm */
+}
+
+/* Base Reset & Clinical Typography */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.72;
+  color: var(--text-primary);
+  background: var(--bg-void);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "tnum" 1, "kern" 1;
+  letter-spacing: -0.005em;
+}
+
+/* Subtle lab floor grid / condensation texture on body */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(120,140,175,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(120,140,175,0.015) 1px, transparent 1px);
+  background-size: 24px 24px;
+  pointer-events: none;
+  z-index: -1;
+  mix-blend-mode: screen;
+}
+
+/* Header — Ultra-thin clinical glass bar with condensation */
+.blog-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-h);
+  background: linear-gradient(
+    to bottom,
+    rgba(15, 18, 27, 0.94) 0%,
+    rgba(11, 14, 22, 0.88) 60%,
+    rgba(7, 9, 15, 0.82) 100%
+  );
+  backdrop-filter: blur(22px) saturate(160%);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  border-bottom: 1px solid var(--border-glass);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1.75rem;
+  z-index: 200;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.6);
+}
+
+/* Condensation micro-texture on header glass */
+.blog-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 18% 30%, rgba(255,255,255,0.035) 0%, transparent 2%),
+    radial-gradient(circle at 72% 65%, rgba(255,255,255,0.022) 0%, transparent 3%);
+  background-size: 180px 120px, 260px 160px;
+  pointer-events: none;
+  opacity: 0.6;
+  mix-blend-mode: soft-light;
+}
+
+.blog-header-inner {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: var(--content-max-w);
+}
+
+.blog-header .logo {
+  font-weight: 600;
+  font-size: 0.92rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--clinical-white);
+  text-decoration: none;
+  margin-right: 2.75rem;
+  transition: color 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+  position: relative;
+}
+
+.blog-header .logo::after {
+  content: "SPECIMEN VIEWER";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  font-size: 0.58rem;
+  letter-spacing: 0.35em;
+  color: var(--text-muted);
+  opacity: 0.5;
+  font-weight: 400;
+}
+
+.blog-header .logo:hover { 
+  color: var(--organ-rose); 
+}
+
+.blog-header nav {
+  display: flex;
+  gap: 1.6rem;
+}
+
+.blog-header nav a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  padding: 0.2rem 0.1rem;
+  transition: all 0.15s cubic-bezier(0.23, 1.0, 0.32, 1);
+  position: relative;
+}
+
+.blog-header nav a:hover { 
+  color: var(--clinical-white); 
+}
+
+.blog-header nav a::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: linear-gradient(to right, var(--vein-blue-light), var(--organ-rose));
+  transition: width 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.blog-header nav a:hover::after { width: 100%; }
+
+.header-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+/* Layer Viewer Toggle — The key interactive control */
+.layer-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.85rem;
+  background: var(--glass-membrane);
+  border: 1px solid var(--border-glass);
+  border-radius: 2px;
+  color: var(--text-clinical);
+  font-size: 0.69rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.23, 1.0, 0.32, 1);
+  backdrop-filter: blur(8px);
+}
+
+.layer-toggle:hover {
+  background: var(--glass-deep);
+  color: var(--clinical-white);
+  border-color: var(--vein-blue-light);
+}
+
+.layer-toggle.active {
+  background: var(--vein-blue);
+  color: #fff;
+  border-color: var(--vein-blue-light);
+}
+
+/* Layout */
+.blog-container {
+  padding-top: var(--header-h);
+  min-height: 100vh;
+  position: relative;
+}
+
+.blog-main {
+  max-width: var(--content-max-w);
+  margin: 0 auto;
+  padding: 3rem 1.75rem 5rem;
+}
+
+/* Specimen Title Treatment — Clinical & Violating */
+.blog-main h1,
+.post-header h1 {
+  font-size: 2.15rem;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+  color: var(--clinical-white);
+  margin-bottom: 0.6rem;
+  position: relative;
+  padding-bottom: 0.6rem;
+}
+
+.blog-main h1::after,
+.post-header h1::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 68px;
+  height: 1px;
+  background: linear-gradient(to right, var(--organ-rose), var(--vein-blue-light));
+}
+
+/* Section & Post Headers */
+.blog-main h2, .post-content h2 {
+  font-size: 1.28rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 2.8rem 0 0.85rem;
+  color: var(--clinical-off);
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--border-membrane);
+}
+
+.blog-main h3, .post-content h3 {
+  font-size: 1.02rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 2.1rem 0 0.6rem;
+  color: var(--text-secondary);
+}
+
+.blog-main h4 {
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 1.65rem 0 0.4rem;
+}
+
+.blog-main p, .post-content p {
+  margin-bottom: 1.05rem;
+  color: var(--text-primary);
+}
+
+.blog-main ul, .blog-main ol,
+.post-content ul, .post-content ol {
+  margin: 0.9rem 0 1.35rem;
+  padding-left: 1.35rem;
+}
+
+.blog-main li, .post-content li {
+  margin-bottom: 0.35rem;
+  line-height: 1.68;
+}
+
+/* Clinical Links — Subtle vein color */
+a { 
+  color: var(--vein-blue-light); 
+  text-decoration: none; 
+  transition: color 0.15s;
+}
+a:hover { 
+  color: var(--organ-rose); 
+  text-decoration: underline; 
+  text-decoration-thickness: 0.5px;
+}
+
+/* Code — Monospace medical terminal */
+code {
+  background: rgba(10, 13, 20, 0.6);
+  padding: 0.12rem 0.45rem;
+  border-radius: 2px;
+  font-size: 0.84em;
+  font-family: ui-monospace, "IBM Plex Mono", "SF Mono", Menlo, Consolas, monospace;
+  color: var(--organ-pink);
+  border: 1px solid var(--border-glass);
+}
+
+pre {
+  padding: 1.15rem 1.35rem;
+  border-radius: var(--radius);
+  overflow-x: auto;
+  border: 1px solid var(--border-membrane);
+  margin: 1.25rem 0 1.8rem;
+  line-height: 1.55;
+  background: var(--bg-lab);
+  font-size: 0.85rem;
+  position: relative;
+}
+
+pre::before {
+  content: "OBSERVATION LOG";
+  position: absolute;
+  top: 8px;
+  right: 14px;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  opacity: 0.35;
+}
+
+pre code { 
+  background: transparent; 
+  padding: 0; 
+  border: none; 
+  color: var(--clinical-off); 
+}
+
+/* Medical Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.35rem 0 1.9rem;
+  font-size: 0.875rem;
+  background: var(--bg-specimen);
+  border: 1px solid var(--border-glass);
+}
+
+th {
+  text-align: left;
+  padding: 0.65rem 0.95rem;
+  border-bottom: 2px solid var(--vein-blue);
+  font-weight: 600;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-clinical);
+  background: rgba(20, 24, 34, 0.6);
+}
+
+td {
+  padding: 0.6rem 0.95rem;
+  border-bottom: 1px solid var(--border-membrane);
+  vertical-align: top;
+  color: var(--text-primary);
+}
+
+tr:last-child td { border-bottom: none; }
+
+/* Blockquote — Autopsy dictation style */
+blockquote {
+  border-left: 4px solid var(--organ-rose);
+  padding: 0.85rem 1.35rem 0.85rem 1.15rem;
+  margin: 1.45rem 0;
+  background: linear-gradient(90deg, rgba(20, 18, 24, 0.6), transparent);
+  color: var(--text-secondary);
+  font-style: italic;
+  position: relative;
+}
+
+blockquote::before {
+  content: "AUDIO TRANSCRIPT —";
+  display: block;
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  color: var(--organ-rose);
+  margin-bottom: 0.3rem;
+  font-style: normal;
+}
+
+blockquote p { margin-bottom: 0; }
+
+/* Images inside reports — with glass frame */
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 1px;
+  border: 1px solid var(--border-glass);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+  transition: box-shadow 0.3s, border-color 0.3s;
+}
+
+img:hover {
+  border-color: var(--vein-blue-light);
+  box-shadow: 0 10px 50px rgba(0,0,0,0.65);
+}
+
+/* Post List — Specimen Cards */
+.post-list { list-style: none; padding: 0; }
+
+.post-item {
+  padding: 1.55rem 0 1.4rem;
+  border-bottom: 1px solid var(--border-membrane);
+  transition: all 0.2s cubic-bezier(0.23, 1.0, 0.32, 1);
+  position: relative;
+}
+
+.post-item:last-child { border-bottom: none; }
+
+.post-item:hover {
+  background: linear-gradient(90deg, var(--glass-clear), transparent);
+  margin-left: -0.6rem;
+  padding-left: 0.6rem;
+}
+
+.post-title {
+  margin: 0 0 0.35rem;
+  font-size: 1.18rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.post-title a {
+  color: var(--clinical-white);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.post-title a:hover { 
+  color: var(--organ-rose); 
+  text-decoration: none; 
+}
+
+.post-meta {
+  color: var(--text-muted);
+  font-size: 0.74rem;
+  margin-bottom: 0.55rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  letter-spacing: 0.025em;
+}
+
+.post-excerpt {
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  margin: 0;
+  line-height: 1.62;
+}
+
+/* Post / Internal Report Detail */
+.post-header {
+  margin-bottom: 2.4rem;
+  padding-bottom: 1.65rem;
+  border-bottom: 1px solid var(--border-membrane);
+}
+
+.post-content { 
+  line-height: 1.82; 
+  max-width: 74ch;
+}
+
+.post-content h2 {
+  margin-top: 3.1rem;
+}
+
+/* Tags — Clinical labels */
+.tag {
+  display: inline-block;
+  background: var(--glass-membrane);
+  padding: 0.18rem 0.7rem;
+  border-radius: 1px;
+  font-size: 0.675rem;
+  color: var(--text-clinical);
+  text-decoration: none;
+  border: 1px solid var(--border-glass);
+  transition: all 0.15s cubic-bezier(0.23, 1, 0.32, 1);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.tag:hover {
+  background: var(--organ-rose);
+  color: #fff;
+  border-color: var(--organ-rose);
+  text-decoration: none;
+}
+
+/* Section / Archive Lists */
+ul.section-list { list-style: none; padding: 0; }
+
+ul.section-list li {
+  margin-bottom: 0.45rem;
+  padding: 0.85rem 1.15rem;
+  background: var(--glass-clear);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-sm);
+  transition: all 0.2s;
+  backdrop-filter: blur(4px);
+}
+
+ul.section-list li:hover { 
+  border-color: var(--vein-blue-light); 
+  background: var(--glass-membrane);
+}
+
+ul.section-list li a { 
+  font-weight: 500; 
+  color: var(--clinical-off); 
+}
+
+/* Pagination — Clinical */
+nav.pagination { margin: 2.4rem 0 1rem; }
+nav.pagination .pagination-list { 
+  list-style: none; 
+  display: flex; 
+  gap: 0.35rem; 
+  flex-wrap: wrap; 
+}
+
+nav.pagination a {
+  display: inline-block;
+  padding: 0.32rem 0.7rem;
+  border-radius: 1px;
+  border: 1px solid var(--border-glass);
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  transition: all 0.15s;
+}
+
+nav.pagination a:hover { 
+  color: var(--clinical-white); 
+  border-color: var(--vein-blue-light); 
+  background: var(--glass-clear);
+}
+
+.pagination-current span { 
+  display: inline-block; 
+  padding: 0.32rem 0.7rem; 
+  border-radius: 1px; 
+  border: 1px solid var(--organ-rose); 
+  background: rgba(184, 74, 95, 0.1); 
+  color: var(--organ-rose); 
+  font-weight: 600;
+}
+
+.pagination-disabled span { 
+  opacity: 0.4; 
+  border-color: var(--border-glass); 
+}
+
+/* Footer — Minimal & Cold */
+.blog-footer {
+  margin-top: 4.5rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--border-glass);
+  color: var(--text-muted);
+  font-size: 0.74rem;
+  letter-spacing: 0.03em;
+}
+
+.blog-footer a { color: var(--vein-blue-light); }
+
+/* Search — Retained but restyled in glass clinical */
+.search-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.75rem;
+  border: 1px solid var(--border-glass);
+  border-radius: 2px;
+  background: var(--glass-clear);
+  color: var(--text-secondary);
+  font-size: 0.73rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+  letter-spacing: 0.02em;
+}
+
+.search-trigger:hover { 
+  border-color: var(--vein-blue-light); 
+  color: var(--clinical-white); 
+  background: var(--glass-membrane);
+}
+
+.search-trigger kbd {
+  font-size: 0.62rem;
+  padding: 0.05rem 0.3rem;
+  border: 1px solid var(--border-glass);
+  border-radius: 1px;
+  background: rgba(10,13,20,0.5);
+  color: var(--text-muted);
+  font-family: inherit;
+}
+
+/* Search Overlay — Darker, more clinical */
+.search-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 7, 12, 0.86);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  z-index: 300;
+  justify-content: center;
+  padding-top: 14vh;
+}
+
+.search-overlay.active { display: flex; }
+
+.search-modal {
+  width: 620px;
+  max-width: 92vw;
+  max-height: 68vh;
+  background: var(--bg-specimen);
+  border-radius: 3px;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.75),
+              inset 0 0 0 1px var(--border-glass);
+  border: 1px solid var(--border-membrane);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.search-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.2rem;
+  border-bottom: 1px solid var(--border-glass);
+  background: var(--glass-clear);
+}
+
+.search-input-wrap input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 1.02rem;
+  font-family: inherit;
+  color: var(--text-primary);
+  background: transparent;
+  letter-spacing: -0.01em;
+}
+
+.search-input-wrap input::placeholder { color: var(--text-muted); }
+
+.search-results { overflow-y: auto; padding: 0.45rem 0.2rem; }
+
+.search-result-item {
+  display: block;
+  padding: 0.7rem 1rem;
+  border-radius: 2px;
+  text-decoration: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background 0.1s;
+  border: 1px solid transparent;
+}
+
+.search-result-item:hover, 
+.search-result-item.active { 
+  background: var(--glass-membrane); 
+  border-color: var(--border-glass);
+}
+
+.search-result-item .search-result-title { 
+  font-weight: 600; 
+  font-size: 0.95rem; 
+  margin-bottom: 0.15rem; 
+  color: var(--clinical-white);
+}
+
+.search-result-item .search-result-snippet { 
+  font-size: 0.79rem; 
+  color: var(--text-secondary); 
+  line-height: 1.45; 
+  display: -webkit-box; 
+  -webkit-line-clamp: 2; 
+  -webkit-box-orient: vertical; 
+  overflow: hidden; 
+}
+
+.search-result-item .search-result-snippet mark { 
+  background: rgba(184,74,95,0.25); 
+  color: var(--organ-pink); 
+  border-radius: 1px; 
+  padding: 0 2px; 
+}
+
+.search-no-results { 
+  padding: 2.2rem 1.1rem; 
+  text-align: center; 
+  color: var(--text-muted); 
+  font-size: 0.88rem; 
+}
+
+/* ==========================================================================
+   GLASS STOMACH SIGNATURE EFFECTS — THE VIOLATION LAYERS
+   ========================================================================== */
+
+/* Core Glass Membrane Container */
+.glass-membrane,
+.specimen-pane {
+  background: var(--glass-membrane);
+  backdrop-filter: blur(18px) saturate(130%);
+  -webkit-backdrop-filter: blur(18px) saturate(130%);
+  border: 1px solid var(--border-glass);
+  border-radius: 3px;
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-membrane::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,0.035) 0%,
+    transparent 35%,
+    rgba(255,255,255,0.015) 68%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Multiple Transparency Layers */
+.body-layer {
+  position: relative;
+  transition: opacity 420ms cubic-bezier(0.23, 1.0, 0.32, 1),
+              filter 380ms cubic-bezier(0.23, 1.0, 0.32, 1),
+              transform 380ms cubic-bezier(0.23, 1.0, 0.32, 1);
+  will-change: opacity, filter;
+}
+
+.body-layer--dermis { z-index: 10; }
+.body-layer--fat { z-index: 9; opacity: 0.85; }
+.body-layer--fascia { z-index: 8; opacity: 0.78; }
+.body-layer--muscle { z-index: 7; }
+.body-layer--viscera { z-index: 6; }
+
+.body-layer.layer-hidden {
+  opacity: 0.08 !important;
+  filter: blur(1.5px) saturate(60%);
+  pointer-events: none;
+}
+
+.body-layer.layer-xray {
+  mix-blend-mode: screen;
+  opacity: 0.65;
+  filter: contrast(1.35) hue-rotate(12deg);
+}
+
+/* X-Ray / Ultrasound Overlays */
+.xray-overlay {
+  position: absolute;
+  inset: 0;
+  background: 
+    linear-gradient(180deg, rgba(100,140,210,0.08) 0%, rgba(70,100,160,0.03) 100%),
+    repeating-linear-gradient(
+      92deg,
+      transparent,
+      transparent 3px,
+      rgba(120,155,210,0.06) 3px,
+      rgba(120,155,210,0.06) 4px
+    );
+  pointer-events: none;
+  z-index: 20;
+  mix-blend-mode: screen;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+
+.xray-overlay.active { opacity: 0.95; }
+
+/* Ultrasound Grid */
+.ultrasound-grid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(140,185,235,0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(140,185,235,0.07) 1px, transparent 1px);
+  background-size: 14px 14px;
+  pointer-events: none;
+  z-index: 15;
+  mix-blend-mode: overlay;
+}
+
+/* Visible Pulse — Cardiac Animation (73bpm) */
+@keyframes cardiac-pulse {
+  0%, 100% { 
+    box-shadow: 
+      0 0 0 0 rgba(184, 74, 95, 0.0),
+      inset 0 0 0 1px rgba(200, 90, 115, 0.25);
+    transform: scale(1);
+  }
+  12% { 
+    box-shadow: 
+      0 0 0 18px rgba(184, 74, 95, 0.0),
+      0 0 0 34px rgba(184, 74, 95, 0.06);
+    transform: scale(1.008);
+  }
+  28% {
+    box-shadow: 
+      0 0 0 2px rgba(184, 74, 95, 0.18),
+      inset 0 0 0 1px rgba(200, 90, 115, 0.4);
+    transform: scale(1.002);
+  }
+}
+
+.pulse-cardiac,
+.heart-organ {
+  animation: cardiac-pulse var(--pulse-duration) cubic-bezier(0.23, 1.0, 0.32, 1) infinite;
+  will-change: box-shadow, transform;
+}
+
+/* Peristalsis Wave — Slow, nauseating */
+@keyframes peristalsis {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 140% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.peristalsis-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.peristalsis-container::after {
+  content: "";
+  position: absolute;
+  inset: -40% -20%;
+  background: repeating-linear-gradient(
+    115deg,
+    transparent,
+    transparent 18%,
+    rgba(180, 110, 70, 0.15) 22%,
+    rgba(180, 110, 70, 0.07) 38%,
+    transparent 42%
+  );
+  background-size: 210% 210%;
+  animation: peristalsis 5.6s linear infinite;
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0.7;
+}
+
+/* Condensation + Finger Smudges — The violating touch */
+.condensation {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 30;
+  background: 
+    radial-gradient(circle at 24% 31%, rgba(255,255,255,0.18) 0.6%, transparent 2.8%),
+    radial-gradient(circle at 41% 78%, rgba(255,255,255,0.11) 0.8%, transparent 3.2%),
+    radial-gradient(circle at 67% 19%, rgba(255,255,255,0.14) 0.5%, transparent 2.4%),
+    radial-gradient(circle at 83% 62%, rgba(255,255,255,0.09) 1%, transparent 4%);
+  background-size: 170px 140px, 240px 190px, 130px 110px, 280px 210px;
+  opacity: 0.55;
+  mix-blend-mode: screen;
+  transition: opacity 0.4s;
+}
+
+.condensation.active {
+  opacity: 0.82;
+}
+
+/* Finger smudge trails */
+.condensation::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: 
+    linear-gradient(138deg, transparent 22%, rgba(255,255,255,0.035) 23%, rgba(255,255,255,0.035) 26%, transparent 27%),
+    linear-gradient(42deg, transparent 61%, rgba(255,255,255,0.028) 62%, rgba(255,255,255,0.028) 66%, transparent 68%);
+  background-size: 220px 160px, 310px 240px;
+  background-position: 12% 22%, 66% 71%;
+  opacity: 0.7;
+}
+
+/* Visible Organ Motif — Reusable component */
+.visible-organ {
+  display: inline-block;
+  position: relative;
+  padding: 0.15rem 0.65rem 0.15rem 0.55rem;
+  background: linear-gradient(145deg, var(--glass-deep), var(--glass-membrane));
+  border: 1px solid var(--border-membrane);
+  border-radius: 2px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--organ-pink);
+  vertical-align: middle;
+  margin: 0 0.15rem;
+  transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.visible-organ::before {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 7px;
+  height: 7px;
+  background: var(--organ-rose);
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px rgba(184, 74, 95, 0.3);
+  animation: cardiac-pulse 1.1s infinite;
+}
+
+.visible-organ:hover {
+  background: var(--organ-rose-deep);
+  color: #fff;
+  border-color: var(--organ-rose);
+  transform: translateY(-1px);
+}
+
+/* Cross Section Viewer — Deeply layered */
+.cross-section {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  margin: 1.8rem auto;
+  aspect-ratio: 1.1 / 1;
+  background: var(--bg-specimen);
+  border: 1px solid var(--border-glass);
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow: inset 0 0 80px rgba(0,0,0,0.7);
+}
+
+.cross-section .layer {
+  position: absolute;
+  inset: 0;
+  transition: all 380ms cubic-bezier(0.22, 1.0, 0.36, 1);
+}
+
+.cross-section .skin { 
+  background: linear-gradient(145deg, #c9b7a8, #a88f7a); 
+  opacity: 0.45; 
+  z-index: 50;
+}
+.cross-section .subcut { 
+  background: #d8c4a3; 
+  opacity: 0.3; 
+  z-index: 40;
+}
+.cross-section .muscle { 
+  background: linear-gradient(#9c4a3f, #7a2f26); 
+  opacity: 0.55; 
+  z-index: 30;
+}
+.cross-section .ribs { 
+  background: repeating-linear-gradient(
+    92deg, transparent, transparent 11%, rgba(230,235,242,0.35) 12%, transparent 14%
+  );
+  z-index: 25;
+  opacity: 0.7;
+}
+.cross-section .organs {
+  background: 
+    radial-gradient(circle at 42% 48%, var(--organ-rose) 9%, transparent 21%),
+    radial-gradient(circle at 61% 57%, var(--organ-liver) 13%, transparent 28%),
+    radial-gradient(circle at 29% 62%, var(--organ-lung) 15%, transparent 30%);
+  z-index: 20;
+  mix-blend-mode: multiply;
+  opacity: 0.85;
+}
+.cross-section .vessels {
+  background: 
+    linear-gradient(transparent 48%, var(--vein-blue) 49%, var(--vein-blue) 51%, transparent 52%),
+    linear-gradient(90deg, transparent 44%, var(--vein-blue-light) 45%, var(--vein-blue-light) 47%, transparent 48%);
+  background-size: 100% 100%, 100% 100%;
+  z-index: 15;
+  opacity: 0.5;
+  mix-blend-mode: screen;
+}
+
+.cross-section:hover .layer { opacity: 0.2; }
+.cross-section:hover .organs { opacity: 1; }
+
+/* Interactive Layer Controls Panel */
+.layer-controls {
+  background: var(--glass-clear);
+  border: 1px solid var(--border-glass);
+  border-radius: 2px;
+  padding: 1rem 1.15rem;
+  margin: 1.5rem 0 2.25rem;
+  backdrop-filter: blur(12px);
+}
+
+.layer-controls h4 {
+  margin: 0 0 0.85rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  color: var(--text-clinical);
+}
+
+.layer-control-row {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 0.55rem;
+}
+
+.layer-control-row:last-child { margin-bottom: 0; }
+
+.layer-control-row label {
+  flex: 1;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  user-select: none;
+}
+
+.layer-control-row input[type="range"] {
+  accent-color: var(--vein-blue-light);
+  width: 132px;
+}
+
+.layer-control-row input[type="checkbox"] {
+  accent-color: var(--organ-rose);
+  width: 15px;
+  height: 15px;
+}
+
+/* Report Metadata Block */
+.report-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.6rem 1.1rem;
+  background: var(--glass-clear);
+  border: 1px solid var(--border-glass);
+  padding: 0.95rem 1.2rem;
+  margin: 1.4rem 0 2.1rem;
+  font-size: 0.8rem;
+}
+
+.report-meta dt {
+  color: var(--text-clinical);
+  font-size: 0.67rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.report-meta dd {
+  color: var(--clinical-white);
+  font-weight: 500;
+  margin-top: 0.1rem;
+}
+
+/* The "You Are Being Watched" Indicator */
+.voyeur-notice {
+  font-size: 0.67rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--organ-rose);
+  padding: 0.4rem 0.85rem;
+  border: 1px solid rgba(184, 74, 95, 0.3);
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  background: rgba(15, 10, 12, 0.4);
+}
+
+/* Selection & Scrollbar — Clinical */
+::selection { background: rgba(184, 74, 95, 0.35); color: #fff; }
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-lab); }
+::-webkit-scrollbar-thumb { background: var(--stainless-dark); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--stainless); }
+
+/* Responsive Clinical Adjustments */
+@media (max-width: 720px) {
+  body { font-size: 14.2px; }
+  .blog-header nav { display: none; }
+  .blog-main { padding: 2rem 1rem 3.5rem; }
+  .blog-main h1 { font-size: 1.82rem; }
+  
+  .cross-section { max-width: 100%; }
+  .layer-controls { padding: 0.85rem; }
+}
+
+/* Extra dense clinical density for reports */
+.internal-report {
+  border-left: 5px solid var(--vein-blue);
+  padding-left: 1.25rem;
+  margin-left: -0.15rem;
+}
+
+/* Final flourishes — subtle membrane flicker on certain containers */
+.membrane-flicker {
+  animation: membrane-flicker 4.2s ease-in-out infinite;
+}
+
+@keyframes membrane-flicker {
+  0%, 100% { opacity: 1; }
+  48% { opacity: 0.94; }
+  52% { opacity: 0.985; }
+}
+
+/* ==========================================================================
+   END — 780 lines of clinical body horror CSS
+   ========================================================================== */
