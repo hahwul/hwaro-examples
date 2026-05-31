@@ -1,0 +1,448 @@
+/* =============================================================================
+   OPART DASHBOARD — Optical / Kinetic Art (Bridget Riley / Vasarely)
+   High-contrast black & white op-art with ONE electric vermillion accent.
+   Busy patterns live in hero/decor zones; data sits on SOLID panels.
+   NO gradients anywhere — all bands/rings are solid-fill SVG shapes.
+   ============================================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;800;900&display=swap');
+
+:root {
+  --white: #f7f7f4;
+  --black: #0b0b0b;
+  --accent: #ff3b00;        /* electric vermillion — the only accent */
+  --panel: #ffffff;
+  --ink-soft: #2a2a2a;
+  --display: 'Anton', sans-serif;
+  --body: 'Archivo', sans-serif;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition: all 0.28s var(--ease);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--body);
+  background-color: var(--white);
+  color: var(--black);
+  margin: 0;
+  padding: 0;
+  line-height: 1.55;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--white);
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* =============================================================================
+   LAYOUT SHELL
+   ============================================================================= */
+.site-wrapper { max-width: 1280px; margin: 0 auto; padding: 0 2.5rem 4rem; }
+.site-main { min-height: 60vh; }
+
+/* =============================================================================
+   HEADER + LOGO (concentric-ring SVG mark + wordmark)
+   ============================================================================= */
+.site-header {
+  display: flex; justify-content: space-between; align-items: center;
+  border-bottom: 4px solid var(--black);
+  padding: 1.75rem 0; flex-wrap: wrap; gap: 1.25rem;
+}
+.site-logo { display: inline-flex; align-items: center; gap: 0.75rem; text-decoration: none; color: var(--black); }
+.site-logo svg { display: block; flex: none; }
+.site-logo .wordmark {
+  font-family: var(--display); font-size: 2rem; line-height: 0.8;
+  letter-spacing: 0.04em; text-transform: uppercase;
+}
+.site-logo .wordmark span { color: var(--accent); }
+
+.site-header nav { display: flex; gap: 2rem; }
+.site-header nav a {
+  font-family: var(--body); font-size: 0.82rem; font-weight: 800;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--black); text-decoration: none;
+  padding-bottom: 0.2rem; border-bottom: 3px solid transparent;
+  transition: var(--transition);
+}
+.site-header nav a:hover,
+.site-header nav a:focus-visible { border-bottom-color: var(--accent); color: var(--accent); }
+
+/* =============================================================================
+   HERO — op-art band of warped vertical stripes (solid SVG), title knocked
+   out on a solid panel for legibility.
+   ============================================================================= */
+.hero {
+  position: relative; overflow: hidden; background: var(--white);
+  border: 4px solid var(--black); border-top: none; margin-bottom: 3.5rem;
+}
+.hero-art { position: absolute; inset: 0; width: 100%; height: 100%; }
+.hero-art svg { width: 100%; height: 100%; display: block; }
+.hero-stripes { animation: stripe-drift 22s linear infinite alternate; }
+.hero-inner { position: relative; z-index: 2; padding: 5.5rem 3rem; display: flex; justify-content: center; }
+.hero-plate {
+  background: var(--panel); border: 4px solid var(--black);
+  padding: 2.5rem 3rem; max-width: 720px; box-shadow: 14px 14px 0 var(--black);
+}
+.hero-eyebrow {
+  font-family: var(--body); font-weight: 800; letter-spacing: 0.3em;
+  text-transform: uppercase; font-size: 0.72rem; color: var(--accent); margin: 0 0 1rem;
+}
+.hero-title {
+  font-family: var(--display); font-size: clamp(2.8rem, 7vw, 5.2rem);
+  line-height: 0.86; letter-spacing: 0.01em; text-transform: uppercase; margin: 0 0 1.1rem;
+}
+.hero-title em { font-style: normal; color: var(--accent); }
+.hero-sub { font-size: 1.02rem; line-height: 1.55; max-width: 52ch; margin: 0; color: var(--ink-soft); }
+
+/* =============================================================================
+   WAVE DIVIDER — alternating solid black/white wave bands (inline SVG)
+   ============================================================================= */
+.wave-divider { display: block; width: 100%; height: 46px; margin: 3.5rem 0; }
+.wave-divider svg { width: 100%; height: 100%; display: block; }
+
+/* =============================================================================
+   SECTION HEADINGS
+   ============================================================================= */
+.section-head {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
+  border-bottom: 3px solid var(--black); padding-bottom: 0.9rem; margin-bottom: 2rem; flex-wrap: wrap;
+}
+.section-head h2, .panel-title {
+  font-family: var(--display); font-size: clamp(1.8rem, 4vw, 2.6rem);
+  line-height: 0.9; letter-spacing: 0.01em; text-transform: uppercase; margin: 0;
+}
+.section-head h2 span, .panel-title span { color: var(--accent); }
+.tag-strip {
+  font-family: var(--body); font-weight: 800; font-size: 0.72rem;
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent);
+}
+
+/* =============================================================================
+   METRIC CARDS — solid high-contrast panels, big numerals, thin accent rule.
+   Hover lifts the card and grows the accent rule (no gradients).
+   ============================================================================= */
+.metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
+.metric-card {
+  position: relative; background: var(--panel); border: 3px solid var(--black);
+  padding: 1.75rem 1.6rem 1.5rem; overflow: hidden; transition: var(--transition);
+}
+.metric-card::after {
+  content: ""; position: absolute; left: 0; bottom: 0;
+  height: 6px; width: 38%; background: var(--accent);
+  transition: width 0.35s var(--ease);
+}
+.metric-card:hover { transform: translateY(-4px); }
+.metric-card:hover::after { width: 100%; }
+
+/* inverse variant: solid black panel, white text */
+.metric-card.is-inverse {
+  background: var(--black);
+  color: var(--white);
+}
+.metric-card.is-inverse .metric-label { color: var(--accent); }
+.metric-card.is-inverse .metric-value,
+.metric-card.is-inverse .metric-trend { color: var(--white); }
+.metric-label {
+  font-family: var(--body); font-weight: 800; font-size: 0.72rem;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin: 0 0 0.9rem;
+}
+.metric-value {
+  font-family: var(--display); font-size: 3.4rem; line-height: 0.82;
+  letter-spacing: 0.01em; color: var(--black); margin: 0 0 0.6rem;
+}
+.metric-value span { font-size: 1rem; letter-spacing: 0.06em; margin-left: 0.35rem; }
+.metric-trend { font-family: var(--body); font-size: 0.82rem; font-weight: 500; color: var(--ink-soft); margin: 0; }
+.metric-trend b { color: var(--accent); font-weight: 800; }
+
+/* =============================================================================
+   PANEL LAYOUT (data table + side panels)
+   ============================================================================= */
+.dashboard-panels { display: grid; grid-template-columns: 1.6fr 1fr; gap: 2.5rem; margin-bottom: 1rem; align-items: start; }
+.panel { background: var(--panel); border: 3px solid var(--black); padding: 1.75rem; }
+.panel-header {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
+  border-bottom: 3px solid var(--black); padding-bottom: 0.9rem; margin-bottom: 1.5rem; flex-wrap: wrap;
+}
+.panel-action {
+  font-family: var(--body); font-size: 0.78rem; font-weight: 800;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent);
+  text-decoration: none; border-bottom: 2px solid var(--accent); padding-bottom: 0.1rem;
+  transition: var(--transition);
+}
+.panel-action:hover { background: var(--accent); color: var(--white); }
+
+/* =============================================================================
+   DATA TABLE — solid panel, strong rules, sparse inverted rows (white on black)
+   ============================================================================= */
+.op-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.op-table th,
+.op-table td {
+  text-align: left;
+  padding: 0.85rem 1rem;
+  border-bottom: 2px solid var(--black);
+}
+
+.op-table thead th {
+  font-family: var(--body);
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: var(--black);
+  color: var(--white);
+  border-bottom: 2px solid var(--black);
+}
+
+.op-table td strong { font-weight: 800; }
+
+/* inverted (solid black) rows used sparingly — white text on black */
+.op-table tr.row-invert td { background: var(--black); color: var(--white); }
+.op-table tr.row-invert td strong { color: var(--white); }
+.op-table tbody tr:hover td { background: var(--white); }
+.op-table tbody tr.row-invert:hover td { background: var(--ink-soft); }
+
+/* =============================================================================
+   STATUS / BADGES + SPEC LIST
+   ============================================================================= */
+.indicator-badge {
+  font-family: var(--body); font-weight: 800; font-size: 0.66rem;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  background: var(--black); color: var(--white);
+  padding: 0.25rem 0.6rem; display: inline-block; white-space: nowrap;
+}
+.indicator-badge.indicator-accent { background: var(--accent); color: var(--white); }
+.indicator-badge.indicator-hollow { background: var(--white); color: var(--black); box-shadow: inset 0 0 0 2px var(--black); }
+
+.spec-list { list-style: none; margin: 0; padding: 0; }
+.spec-list li {
+  display: flex; justify-content: space-between; gap: 1rem;
+  padding: 0.7rem 0; border-bottom: 2px solid var(--black); font-size: 0.9rem;
+}
+.spec-list li:last-child { border-bottom: none; }
+.spec-list .k { font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; font-size: 0.74rem; }
+.spec-list .v { color: var(--ink-soft); font-family: var(--body); font-weight: 500; text-align: right; }
+.spec-list .v b { color: var(--accent); }
+
+/* =============================================================================
+   INLINE SVG WIDGETS — bar chart + moiré decor (solid fills only)
+   ============================================================================= */
+.chart-block { margin-top: 0.5rem; }
+.chart-block svg { width: 100%; height: auto; display: block; }
+.chart-legend {
+  display: flex; gap: 1.5rem; margin-top: 1rem; font-size: 0.74rem;
+  font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+}
+.chart-legend .swatch { display: inline-block; width: 14px; height: 14px; margin-right: 0.4rem; vertical-align: -2px; }
+.chart-legend .swatch.is-black { background: var(--black); }
+.chart-legend .swatch.is-accent { background: var(--accent); }
+
+.moire-card { position: relative; border: 3px solid var(--black); background: var(--panel); padding: 0; overflow: hidden; aspect-ratio: 1 / 1; }
+.moire-card svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.moire-layer-b { animation: moire-shift 17s ease-in-out infinite alternate; }
+.moire-caption {
+  position: absolute; left: 0; bottom: 0; right: 0; z-index: 2;
+  background: var(--black); color: var(--white);
+  font-weight: 800; font-size: 0.66rem; letter-spacing: 0.16em;
+  text-transform: uppercase; padding: 0.5rem 0.8rem;
+}
+.moire-caption b { color: var(--accent); }
+.decor-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 2.5rem; align-items: stretch; margin-bottom: 1rem; }
+
+/* =============================================================================
+   BUTTONS
+   ============================================================================= */
+.btn-main {
+  font-family: var(--body); font-weight: 800; font-size: 0.82rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--white); background: var(--black); border: 3px solid var(--black);
+  padding: 0.8rem 1.6rem; cursor: pointer; display: inline-block;
+  text-decoration: none; transition: var(--transition);
+}
+.btn-main:hover, .btn-main:focus-visible { background: var(--accent); border-color: var(--accent); }
+
+/* =============================================================================
+   LOG / POST LIST (section + taxonomy)
+   ============================================================================= */
+.log-list { border-top: 3px solid var(--black); }
+.log-item {
+  border-bottom: 3px solid var(--black); padding: 1.5rem 0;
+  display: flex; justify-content: space-between; align-items: center; gap: 1.5rem;
+  transition: var(--transition);
+}
+.log-item:hover { background: var(--panel); padding-left: 1rem; padding-right: 1rem; }
+.log-info a {
+  font-family: var(--display); font-size: 1.7rem; line-height: 0.95;
+  letter-spacing: 0.01em; text-transform: uppercase;
+  color: var(--black); text-decoration: none; transition: var(--transition);
+}
+.log-info a:hover { color: var(--accent); }
+.log-meta {
+  font-family: var(--body); font-size: 0.74rem; font-weight: 600;
+  letter-spacing: 0.08em; color: var(--ink-soft); margin-top: 0.4rem; text-transform: uppercase;
+}
+.log-action {
+  font-family: var(--body); font-size: 0.76rem; font-weight: 800;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--black); text-decoration: none; border-bottom: 2px solid var(--black);
+  padding-bottom: 0.1rem; white-space: nowrap; transition: var(--transition);
+}
+.log-action:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* =============================================================================
+   POST DETAIL
+   ============================================================================= */
+.post-wrapper { display: grid; grid-template-columns: 240px 1fr; gap: 3.5rem; margin: 3rem 0 4rem; }
+.post-sidebar { font-family: var(--body); font-size: 0.85rem; border-right: 3px solid var(--black); padding-right: 2rem; }
+.post-sidebar h3 {
+  font-family: var(--body); font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.12em; font-size: 0.72rem; color: var(--accent); margin: 1.75rem 0 0.4rem;
+}
+.post-sidebar h3:first-child { margin-top: 0; }
+.post-sidebar p { margin: 0; font-weight: 600; }
+.post-title {
+  font-family: var(--display); font-size: clamp(2.6rem, 6vw, 4.4rem);
+  line-height: 0.88; letter-spacing: 0.01em; text-transform: uppercase; margin: 0 0 2rem;
+}
+
+/* =============================================================================
+   PROSE
+   ============================================================================= */
+.prose { font-size: 1.04rem; line-height: 1.7; }
+.prose p { margin: 0 0 1.4rem; }
+.prose strong { font-weight: 800; }
+.prose h1, .prose h2, .prose h3 {
+  font-family: var(--display); font-weight: 400; text-transform: uppercase;
+  letter-spacing: 0.01em; line-height: 0.95; margin: 2.6rem 0 1rem;
+}
+.prose h1 { font-size: 2.4rem; }
+.prose h2 { font-size: 1.9rem; border-bottom: 3px solid var(--black); padding-bottom: 0.4rem; }
+.prose h3 { font-size: 1.4rem; }
+.prose ul, .prose ol { margin: 0 0 1.5rem; padding-left: 1.4rem; }
+.prose li { margin-bottom: 0.5rem; }
+.prose li::marker { color: var(--accent); font-weight: 800; }
+.prose a { color: var(--black); text-decoration: none; font-weight: 800; border-bottom: 2px solid var(--accent); }
+.prose a:hover { background: var(--accent); color: var(--white); }
+.prose blockquote {
+  margin: 2.2rem 0; padding: 1.3rem 1.6rem;
+  background: var(--black); color: var(--white); border-left: 8px solid var(--accent);
+  font-family: var(--body); font-weight: 600; font-style: normal;
+}
+.prose blockquote p { margin: 0; }
+.prose pre {
+  background: var(--black); color: var(--white); border: 3px solid var(--black);
+  padding: 1.4rem; overflow-x: auto; margin: 2.2rem 0; font-size: 0.9rem;
+}
+.prose pre code { background: transparent; padding: 0; color: inherit; box-shadow: none; }
+.prose code {
+  font-family: 'Archivo', monospace; background: var(--white);
+  box-shadow: inset 0 0 0 2px var(--black); padding: 0.08rem 0.35rem; font-size: 0.88em; font-weight: 600;
+}
+.prose table { width: 100%; border-collapse: collapse; margin: 2rem 0; }
+.prose th, .prose td { border: 2px solid var(--black); padding: 0.7rem 0.9rem; text-align: left; }
+.prose th { background: var(--black); color: var(--white); text-transform: uppercase; font-size: 0.78rem; letter-spacing: 0.1em; }
+
+/* =============================================================================
+   TAXONOMY BADGES
+   ============================================================================= */
+.badge-container { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+.badge {
+  font-family: var(--body); font-size: 0.72rem; font-weight: 800;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  background: var(--black); color: var(--white); padding: 0.3rem 0.7rem;
+  text-decoration: none; transition: var(--transition);
+}
+.badge:hover { background: var(--accent); }
+
+/* =============================================================================
+   ALERT SHORTCODE
+   ============================================================================= */
+.op-alert { border: 3px solid var(--black); border-left: 10px solid var(--accent); background: var(--panel); padding: 1rem 1.3rem; margin: 2rem 0; font-weight: 500; }
+.op-alert strong { font-family: var(--body); font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+
+/* =============================================================================
+   404
+   ============================================================================= */
+.notfound { text-align: center; padding: 4rem 1rem; border: 4px solid var(--black); background: var(--panel); margin: 2rem 0; }
+.notfound .code { font-family: var(--display); font-size: clamp(5rem, 18vw, 10rem); line-height: 0.8; color: var(--accent); margin: 0; }
+.notfound h2 { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: 1.5rem; margin: 1rem 0 0.75rem; }
+.notfound p { color: var(--ink-soft); margin: 0 auto 2rem; max-width: 46ch; }
+
+/* =============================================================================
+   FOOTER
+   ============================================================================= */
+.site-footer {
+  margin-top: 5rem; border-top: 4px solid var(--black); padding-top: 2rem;
+  display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+}
+.site-footer p { margin: 0; font-family: var(--body); font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.76rem; }
+.site-footer a { color: var(--accent); text-decoration: none; font-weight: 800; }
+.site-footer a:hover { text-decoration: underline; }
+
+/* =============================================================================
+   KEYFRAMES (gentle kinetic motion — guarded below)
+   ============================================================================= */
+@keyframes stripe-drift { from { transform: translateX(0); } to { transform: translateX(-60px); } }
+@keyframes moire-shift { from { transform: translateX(0) rotate(0deg); } to { transform: translateX(8px) rotate(2.2deg); } }
+
+/* =============================================================================
+   RESPONSIVE
+   ============================================================================= */
+@media (max-width: 992px) {
+  .dashboard-panels, .decor-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .post-wrapper { grid-template-columns: 1fr; gap: 2rem; }
+  .post-sidebar {
+    border-right: none; border-bottom: 3px solid var(--black);
+    padding-right: 0; padding-bottom: 1.5rem;
+    display: flex; flex-wrap: wrap; gap: 1.5rem 2.5rem;
+  }
+  .post-sidebar > div { min-width: 120px; }
+  .post-sidebar h3 { margin-top: 0; }
+}
+
+@media (max-width: 768px) {
+  .site-wrapper { padding: 0 1.25rem 3rem; }
+  .site-header { gap: 1rem; }
+  .site-header nav { width: 100%; justify-content: flex-start; flex-wrap: wrap; gap: 1.25rem; }
+  .hero-inner { padding: 3rem 1.25rem; }
+  .hero-plate { padding: 1.75rem 1.5rem; box-shadow: 8px 8px 0 var(--black); }
+  .metric-value { font-size: 2.8rem; }
+  .log-item { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+  .site-footer { flex-direction: column; align-items: flex-start; }
+}
+
+/* =============================================================================
+   REDUCED MOTION — stop all kinetic op-art for users who prefer it
+   ============================================================================= */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .hero-stripes, .moire-layer-b { animation: none !important; }
+}
