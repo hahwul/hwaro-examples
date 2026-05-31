@@ -1,0 +1,120 @@
+{% include "header.html" %}
+<main>
+  <article>
+    <!-- Dramatic Procedure / Look Header -->
+    <header class="procedure-header">
+      {% if page.extra.look_number %}
+      <div class="look-number">{{ page.extra.look_number }}</div>
+      {% else %}
+      <div class="look-number">LOOK {{ page.date | date("%m") }} / INCISION SERIES</div>
+      {% endif %}
+      
+      <h1>{{ page.title | e }}</h1>
+      
+      {% if page.extra.subtitle %}
+      <p class="subtitle">{{ page.extra.subtitle }}</p>
+      {% endif %}
+      
+      <div class="procedure-meta">
+        <div class="meta-item">
+          <strong>OPERATED</strong>
+          {{ page.date | date("%d %B %Y") }}
+        </div>
+        {% if page.extra.incision_depth %}
+        <div class="meta-item">
+          <strong>INCISION DEPTH</strong>
+          {{ page.extra.incision_depth }}
+        </div>
+        {% endif %}
+        {% if page.extra.anesthesia %}
+        <div class="meta-item">
+          <strong>ANESTHESIA</strong>
+          {{ page.extra.anesthesia }}
+        </div>
+        {% endif %}
+        {% if page.extra.blood_type %}
+        <div class="meta-item">
+          <strong>BLOOD TYPE</strong>
+          {{ page.extra.blood_type }}
+        </div>
+        {% endif %}
+      </div>
+    </header>
+
+    <div class="surgical-content">
+      <!-- The Body: Poetic Surgical Prose -->
+      <div class="surgical-body">
+        {{ content | safe }}
+
+        {% if page.extra.complication %}
+        <div class="fracture-grid" style="margin-top:3.5rem;">
+          <div class="panel">
+            <div class="clinical-label">PRE-OP STATE</div>
+            <p style="margin-top:0.6rem;font-size:0.95rem;opacity:0.85;">The silhouette was conventional. The flesh was still polite.</p>
+          </div>
+          <div class="panel panel--complication">
+            <div class="clinical-label">POST-OP REALITY</div>
+            <p style="margin-top:0.6rem;font-size:0.95rem;">{{ page.extra.complication }}</p>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- Patient Chart Sidebar -->
+      <aside class="patient-chart">
+        <h4>PATIENT CHART — THEATER 03</h4>
+        <dl>
+          <dt>SURGEON OF RECORD</dt>
+          <dd>DR. V. LACERATE, FASHION PATHOLOGIST</dd>
+          
+          {% if page.extra.incision_depth %}
+          <dt>MAX DEPTH ACHIEVED</dt>
+          <dd>{{ page.extra.incision_depth }}</dd>
+          {% endif %}
+          
+          <dt>SUTURE MATERIAL</dt>
+          <dd>18K GOLD THREAD / 00 SILK</dd>
+          
+          <dt>EST. RECOVERY</dt>
+          <dd>FOREVER</dd>
+          
+          {% if page.tags %}
+          <dt>SUTURES USED</dt>
+          <dd>
+            {% for tag in page.tags %}
+              <a href="{{ base_url }}/tags/{{ tag | slugify }}/" style="font-size:11px;letter-spacing:0.05em;display:inline-block;margin:3px 4px 0 0;">{{ tag | upper }}</a>{% if not loop.last %},{% endif %}
+            {% endfor %}
+          </dd>
+          {% endif %}
+        </dl>
+
+        <div style="margin-top:1.65rem; padding-top:1.25rem; border-top:1px dashed rgba(184,184,184,0.2);">
+          <button onclick="zoomIntoScar()" class="btn btn--ghost" style="width:100%; text-align:center; padding:10px 14px; font-size:10px;">
+            ZOOM INTO THE SCAR
+          </button>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Related Procedures -->
+    {% if related_posts and related_posts | length > 0 %}
+    <div style="margin-top:5rem; padding-top:2.5rem; border-top:1px solid rgba(184,184,184,0.08);">
+      <div class="clinical-label" style="margin-bottom:1rem;">NEXT SEASON'S COMPLICATIONS</div>
+      <div class="procedure-grid" style="grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:1.25rem;">
+        {% for rel in related_posts | slice(0,3) %}
+        <a href="{{ rel.permalink }}" class="look-card" style="text-decoration:none;">
+          <div class="look-visual" style="height:138px;">
+            <div class="scar" style="width:56px;height:56px;"></div>
+          </div>
+          <div class="look-meta" style="padding:1rem 1.1rem 1.1rem;">
+            <div class="collection" style="font-size:8px;">RELATED PROCEDURE</div>
+            <h3 style="font-size:1.05rem; margin:0.1rem 0 0.25rem;">{{ rel.title }}</h3>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </article>
+</main>
+{% include "footer.html" %}
