@@ -1,0 +1,56 @@
+{% include "header.html" %}
+
+<div class="shell">
+  {% include "_sidebar.html" %}
+  <main class="main">
+    <nav class="route" aria-label="Breadcrumb">
+      <a href="{{ base_url }}/"><span class="line-bullet l-red"></span>Home</a>
+      <span class="route-arrow">→</span>
+      {% if page.section %}
+        <a href="{{ base_url }}/{{ page.section }}/"><span class="line-bullet l-blue"></span>{{ page.section }}</a>
+        <span class="route-arrow">→</span>
+      {% endif %}
+      <span class="route-now"><span class="line-bullet l-amber"></span>{{ page.title }}</span>
+    </nav>
+
+    <header class="plate plate-blue">
+      <span class="roundel r-blue">{% if page.section %}{{ page.section | first | upper }}{% else %}T{% endif %}</span>
+      <div class="plate-body">
+        <span class="plate-kicker">{% if page.section %}{{ page.section | upper }} LINE · STATION{% else %}STATION{% endif %}</span>
+        <h1>{{ page.title }}</h1>
+      </div>
+    </header>
+    {% if page.description %}<p class="deck">{{ page.description }}</p>{% endif %}
+
+    <div class="content">{{ content | safe }}</div>
+
+    {% if page.lower or page.higher %}
+    <div class="pager">
+      {% if page.lower %}
+      <a href="{{ base_url }}{{ page.lower.url }}" class="b prev">
+        <div class="k"><span class="route-arrow">←</span> Previous station</div>
+        <div class="t">{{ page.lower.title }}</div>
+      </a>
+      {% else %}<div></div>{% endif %}
+      {% if page.higher %}
+      <a href="{{ base_url }}{{ page.higher.url }}" class="b next">
+        <div class="k">Next station <span class="route-arrow">→</span></div>
+        <div class="t">{{ page.higher.title }}</div>
+      </a>
+      {% endif %}
+    </div>
+    {% endif %}
+  </main>
+  <aside class="toc">
+    <h5><span class="tag-code">PLATFORM</span> On this page</h5>
+    {% if page.toc %}
+      {{ page.toc | safe }}
+    {% else %}
+      <ul>
+        <li><a href="#">Top of platform</a></li>
+      </ul>
+    {% endif %}
+  </aside>
+</div>
+
+{% include "footer.html" %}
