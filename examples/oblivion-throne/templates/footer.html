@@ -1,0 +1,91 @@
+  <script>
+    // Oblivion Throne - subtle interactive drama
+    function initThrone() {
+      // Animated metric counters
+      document.querySelectorAll('[data-count]').forEach(el => {
+        const target = parseFloat(el.dataset.count);
+        const isPercent = el.dataset.count.includes('%');
+        let current = 0;
+        const duration = 1400;
+        const start = Date.now();
+        
+        const timer = setInterval(() => {
+          const progress = Math.min((Date.now() - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          current = target * eased;
+          
+          if (isPercent) {
+            el.textContent = current.toFixed(1) + '%';
+          } else if (target > 1000) {
+            el.textContent = Math.floor(current).toLocaleString();
+          } else {
+            el.textContent = current.toFixed(target % 1 === 0 ? 0 : 1);
+          }
+          
+          if (progress >= 1) {
+            clearInterval(timer);
+            if (isPercent) el.textContent = target + '%';
+            else if (target > 1000) el.textContent = target.toLocaleString();
+            else el.textContent = target;
+          }
+        }, 16);
+      });
+
+      // Random edict log append (live feel)
+      const log = document.getElementById('edict-log');
+      if (log) {
+        setInterval(() => {
+          const entries = [
+            { t: 'GOLD', m: 'Vassal <span class="text-emerald-400">LORD_VESPER</span> pledged fealty' },
+            { t: 'CRIMSON', m: 'Node cluster <span class="text-red-400">NEXUS-09</span> seized' },
+            { t: 'GOLD', m: 'Edict 447 ratified across 214 realms' },
+            { t: 'CRIMSON', m: 'Threat vector <span class="text-red-400">NULL-7</span> neutralized' }
+          ];
+          const pick = entries[Math.floor(Math.random() * entries.length)];
+          const time = new Date().toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+          
+          const div = document.createElement('div');
+          div.className = `edict-entry ${pick.t === 'GOLD' ? 'gold' : 'crimson'} flex gap-3`;
+          div.innerHTML = `<span class="opacity-50 tabular-nums shrink-0">${time}</span><span>${pick.m}</span>`;
+          
+          log.appendChild(div);
+          if (log.children.length > 7) log.removeChild(log.children[0]);
+          log.scrollTop = log.scrollHeight;
+        }, 4800);
+      }
+
+      // Power surge on regal buttons
+      document.querySelectorAll('.regal-button').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const orig = btn.textContent;
+          btn.style.transition = 'all 0.05s';
+          btn.textContent = 'EXECUTING...';
+          btn.style.filter = 'brightness(1.6) saturate(1.2)';
+          
+          setTimeout(() => {
+            btn.style.filter = '';
+            btn.textContent = 'EXECUTED';
+            setTimeout(() => {
+              btn.textContent = orig;
+            }, 1200);
+          }, 650);
+        });
+      });
+
+      // Fake table row actions
+      document.querySelectorAll('.vassal-row').forEach(row => {
+        row.addEventListener('click', () => {
+          row.style.transition = 'all .1s';
+          row.style.background = 'rgba(197,162,111,0.1)';
+          setTimeout(() => row.style.background = '', 280);
+        });
+      });
+
+      console.log('%c[OBLIVION] Sovereign session initialized. All realms under absolute control.', 'color:#4a3f2f');
+    }
+    
+    window.addEventListener('DOMContentLoaded', initThrone);
+  </script>
+  {{ highlight_js }}
+</body>
+</html>
