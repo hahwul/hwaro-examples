@@ -8,7 +8,6 @@ description = "She looks just like you. She is hungrier. She has been practicing
     <div class="mirror-surface" style="padding: 3.25rem 2.8rem 3.4rem;">
       <div class="site-title">MIRROR<br>HUNGER</div>
       <div class="site-description">She looks just like you. She is hungrier. She has been practicing.</div>
-      
       <div class="mirror-frame" style="margin:1.1rem 0 0;">
         <div class="mirror-surface" style="padding:1.65rem 1.9rem; font-size:0.96rem; line-height:1.55;">
           <div class="mirror-recursion">

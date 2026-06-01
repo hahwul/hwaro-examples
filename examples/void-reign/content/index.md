@@ -27,14 +27,12 @@ tags = ["admin", "dashboard", "dark", "bold"]
       </div>
       <button onclick="conquerNothing(this)" class="px-8 py-4 bg-white text-[#05050a] font-bold text-sm tracking-[2px] rounded-2xl hover:bg-[#a78bfa] hover:text-white transition">CONQUER MORE NOTHING</button>
     </div>
-
     <div class="grid grid-cols-4 gap-4 mt-8">
       <div class="void-panel ethereal p-6 rounded-3xl float"><div class="text-[#a78bfa] text-xs">VOID NODES</div><div class="metric mt-2" data-count="0">0</div><div class="text-xs text-white/50">100% COVERAGE OF NOTHING</div></div>
       <div class="void-panel ethereal p-6 rounded-3xl"><div class="text-[#a78bfa] text-xs">ENTROPY LEVEL</div><div class="metric mt-2" data-count="100">100</div><div class="text-xs text-white/50">MAXIMUM DECAY ACHIEVED</div></div>
       <div class="void-panel ethereal p-6 rounded-3xl"><div class="text-[#a78bfa] text-xs">GHOST VASSALS</div><div class="metric mt-2" data-count="1847291">1847291</div><div class="text-xs text-emerald-400/70">+∞ THIS CYCLE</div></div>
       <div class="void-panel ethereal p-6 rounded-3xl"><div class="text-[#a78bfa] text-xs">REALITY INTEGRITY</div><div class="metric mt-2 text-red-400/80" data-count="0.0">0.0</div><div class="text-xs">IT NEVER EXISTED</div></div>
     </div>
-
     <div class="grid grid-cols-12 gap-4 mt-4">
       <div class="col-span-7 void-panel rounded-3xl p-7">
         <div class="flex justify-between mb-5"><div><span class="section-label">THE NOTHING LEGIONS</span><div class="text-2xl tracking-tight">Spectral Commanders</div></div></div>
@@ -45,7 +43,6 @@ tags = ["admin", "dashboard", "dark", "bold"]
           <div class="flex justify-between bg-white/5 px-5 py-3 rounded-b-2xl"><div>COUNTESS OF THE GREAT EMPTINESS</div><span class="text-[#a78bfa]">ETERNAL</span></div>
         </div>
       </div>
-
       <div class="col-span-5 void-panel rounded-3xl p-7 relative overflow-hidden">
         <div class="section-label mb-2">THE FLOATING THRONE</div>
         <div class="text-2xl">Reality Anchor Status</div>
@@ -56,7 +53,6 @@ tags = ["admin", "dashboard", "dark", "bold"]
           </div>
         </div>
       </div>
-
       <div class="col-span-12 void-panel rounded-3xl p-7 text-xs text-white/60 flex items-center justify-between font-mono">
         <div>THERE IS NO LIGHT HERE. ONLY THE CROWN OF EMPTINESS. ALL HAIL THE VOID.</div>
         <button onclick="this.textContent='ACKNOWLEDGED. NOTHING CHANGED.';setTimeout(()=>this.textContent='BOW TO THE NOTHING',1200)" class="border border-white/20 px-6 py-2 rounded-2xl hover:bg-white/5">BOW TO THE NOTHING</button>

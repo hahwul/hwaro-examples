@@ -31,11 +31,9 @@ template = "page"
 <div class="content glass-container" style="margin-top: 4rem;">
     <h2>Example Content</h2>
     <p>This is how standard markdown content renders within the Cosmic Weaver Glass theme.</p>
-
     {% alert(type="info") %}
     This is a custom alert shortcode utilizing the theme's glowing neon borders and glassmorphism styling!
     {% end %}
-
     <h3>Code Block Example</h3>
     <pre><code class="language-css">/* Glassmorphism Effect */
 .glass-container {

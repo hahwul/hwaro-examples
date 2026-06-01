@@ -14,14 +14,12 @@ tags = ["admin", "dashboard", "dark", "bold"]
 
   <div class="max-w-7xl mx-auto px-8 pt-8">
     <div class="flex justify-between"><div><div class="text-[#f87171] text-xs tracking-[3px]">MOLTEN INDUSTRIAL TYRANNY</div><div class="text-7xl display tracking-[-4px] leading-none mt-1 text-white">THE FIRES<br>NEVER SLEEP.</div></div><button onclick="feedTheForge(this)" class="px-8 py-4 bg-[#f87171] text-black font-extrabold tracking-widest rounded text-sm">FEED MORE SOULS</button></div>
-
     <div class="grid grid-cols-4 gap-4 mt-8">
       <div class="hell-panel p-6 rounded-2xl"><div class="text-[#f87171] text-xs">ACTIVE FORGES</div><div class="metric mt-1" data-count="18">18</div></div>
       <div class="hell-panel p-6 rounded-2xl"><div class="text-[#f87171] text-xs">SOULS INCINERATED</div><div class="metric mt-1" data-count="184729">184729</div></div>
       <div class="hell-panel p-6 rounded-2xl"><div class="text-[#f87171] text-xs">LAVA FLOW</div><div class="metric mt-1 text-orange-400" data-count="4200">4200</div><div class="text-xs">t/s</div></div>
       <div class="hell-panel p-6 rounded-2xl"><div class="text-[#f87171] text-xs">DAMNATION LEVEL</div><div class="metric mt-1" data-count="100">100</div><div class="text-xs">%</div></div>
     </div>
-
     <div class="mt-4 grid grid-cols-12 gap-4">
       <div class="col-span-12 hell-panel rounded-3xl p-7">
         <div class="text-[#f87171] text-xs mb-3">THE ETERNAL CHAIN GANG — CURRENT SHIFTS</div>

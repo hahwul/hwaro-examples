@@ -25,14 +25,12 @@ tags = ["admin", "dashboard", "dark", "bold"]
       <div><div class="uppercase text-[#00e5ff] text-xs tracking-[4px]">DEEP OPERATIONS</div><div class="text-7xl display tracking-[-4.4px] leading-none mt-1">WE COMMAND<br>THE CRUSH.</div></div>
       <button onclick="pingSonar(this)" class="border border-[#00e5ff] hover:bg-[#00e5ff] hover:text-[#01060f] transition px-8 py-3 text-sm rounded-3xl tracking-[1.5px]">SONAR PING • ALL SECTORS</button>
     </div>
-
     <div class="grid grid-cols-4 gap-4 mt-7">
       <div class="bg-[#00141f] border border-[#002a3d] rounded-3xl p-6"><div class="text-[#00e5ff] text-xs">ACTIVE DRONES</div><div class="text-[46px] leading-none font-semibold mt-2" data-count="19">19</div><div class="text-xs text-[#4a8aa0]">3 RETURNING • 1 LOST TO TRENCH</div></div>
       <div class="bg-[#00141f] border border-[#002a3d] rounded-3xl p-6"><div class="text-[#00e5ff] text-xs">BIOLUMINESCENT SIGNALS</div><div class="text-[46px] leading-none font-semibold mt-2" data-count="184">184</div><div class="text-xs text-emerald-400">+31 IN LAST 6H</div></div>
       <div class="bg-[#00141f] border border-[#002a3d] rounded-3xl p-6"><div class="text-[#00e5ff] text-xs">ANOMALY CONTACTS</div><div class="text-[46px] leading-none font-semibold text-amber-400 mt-2" data-count="4">4</div><div class="text-xs">2 CLASSIFIED • 2 MOVING</div></div>
       <div class="bg-[#00141f] border border-[#002a3d] rounded-3xl p-6"><div class="text-[#00e5ff] text-xs">HULL PRESSURE</div><div class="flex items-baseline mt-1"><span class="text-[46px] leading-none font-semibold" data-count="1099">1099</span><span class="text-lg ml-1 text-[#4a8aa0]">bar</span></div></div>
     </div>
-
     <div class="grid grid-cols-12 gap-4 mt-4">
       <!-- SONAR VISUAL -->
       <div class="col-span-5 bg-[#00141f] border border-[#002a3d] rounded-3xl p-7 relative overflow-hidden" style="min-height:280px">
@@ -52,7 +50,6 @@ tags = ["admin", "dashboard", "dark", "bold"]
         </div>
         <div class="absolute bottom-6 left-7 text-xs font-mono text-[#4a8aa0]">PING INTERVAL 1.8s • 14,200m RANGE</div>
       </div>
-
       <!-- CREATURE / CONTACT LOG -->
       <div class="col-span-7 bg-[#00141f] border border-[#002a3d] rounded-3xl p-7">
         <div class="flex justify-between text-xs mb-4"><span class="text-[#00e5ff]">DEEP CONTACTS • LAST 14 HOURS</span><span class="text-[#4a8aa0]">AUTO-CLASSIFIED</span></div>
@@ -62,7 +59,6 @@ tags = ["admin", "dashboard", "dark", "bold"]
           <div class="flex justify-between bg-black/40 px-5 py-3 rounded-2xl"><div><span class="font-medium">UNKNOWN • 7.4m LONG</span> <span class="text-red-400 text-xs">— AGGRESSIVE</span></div><div class="text-xs text-[#4a8aa0]">11,028m • 2h ago</div></div>
         </div>
       </div>
-
       <div class="col-span-12 mt-1 bg-[#00141f] border border-[#002a3d] rounded-3xl p-6 text-xs flex items-center justify-between font-mono">
         <div>ALL SYSTEMS NOMINAL. WE ARE THE ONLY LIGHT IN THE DARK.</div>
         <button onclick="this.innerHTML='TRANSMITTING...';setTimeout(()=>this.innerHTML='BROADCAST TO SURFACE COMPLETE',900)" class="px-6 py-2 bg-[#002a3d] hover:bg-[#004060] rounded-2xl">BROADCAST STATUS TO SURFACE</button>

@@ -14,14 +14,12 @@ tags = ["admin", "dashboard", "dark", "bold"]
 
   <div class="max-w-7xl mx-auto px-8 pt-8">
     <div class="flex justify-between"><div><div class="text-[#fbbf24] text-xs tracking-[3px]">TOTAL DARKNESS OPS</div><div class="text-7xl display tracking-[-4px] text-white">THE SUN IS DEAD.<br>LONG LIVE THE DARK.</div></div><button onclick="initiateEclipse(this)" class="px-8 py-4 bg-[#fbbf24] text-black font-bold tracking-[2px] rounded-2xl text-sm">INITIATE TOTAL ECLIPSE</button></div>
-
     <div class="grid grid-cols-4 gap-4 mt-8">
       <div class="eclipse-panel p-6 rounded-3xl"><div class="text-[#fbbf24] text-xs">DARKNESS COVERAGE</div><div class="metric mt-1" data-count="100">100</div><div class="text-xs text-white/60">THE SKY BELONGS TO US</div></div>
       <div class="eclipse-panel p-6 rounded-3xl"><div class="text-[#fbbf24] text-xs">SUNLIGHT REMAINING</div><div class="metric mt-1 text-red-400" data-count="0">0</div></div>
       <div class="eclipse-panel p-6 rounded-3xl"><div class="text-[#fbbf24] text-xs">LUNAR ASSETS</div><div class="metric mt-1" data-count="14">14</div></div>
       <div class="eclipse-panel p-6 rounded-3xl"><div class="text-[#fbbf24] text-xs">CIVILIZATIONS IN SHADOW</div><div class="metric mt-1" data-count="219">219</div></div>
     </div>
-
     <div class="mt-4 grid grid-cols-12 gap-4">
       <div class="col-span-12 eclipse-panel rounded-3xl p-7">
         <div class="text-[#fbbf24] text-xs mb-3">CELESTIAL STRIKE TEAMS</div>

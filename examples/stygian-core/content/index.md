@@ -15,7 +15,6 @@ tags = ["admin", "dashboard", "dark", "bold"]
         </div>
         <div class="ml-4 px-3 py-1 text-xs rounded bg-[#1f0a05] text-[#ff6a00] border border-[#3a160b] flex items-center gap-2"><span class="live inline-block w-1.5 h-1.5 bg-[#ff4d00] rounded-full"></span> REACTOR CRITICAL</div>
       </div>
-      
       <div class="flex items-center gap-5 text-xs">
         <div class="font-mono text-[#ff6a00]">SECTOR 09 • DEPTH 4.1km</div>
         <div class="px-4 py-1.5 bg-[#1a0c07] rounded-full border border-[#3a160b] flex items-center gap-2 text-[#ff9500]">
@@ -34,7 +33,6 @@ tags = ["admin", "dashboard", "dark", "bold"]
       </div>
       <button onclick="ventPressure()" class="px-8 py-4 bg-gradient-to-r from-[#ff4d00] to-[#c2410f] hover:brightness-110 active:scale-[0.985] transition text-black font-extrabold text-sm tracking-[2px] rounded-2xl flex items-center gap-2 shadow-[0_0_30px_-6px_#ff4d00]">VENT EXCESS PRESSURE</button>
     </div>
-
     <!-- METRICS - MOLTEN -->
     <div class="grid grid-cols-4 gap-4">
       <div class="molten-panel p-6 rounded-3xl crack">
@@ -63,12 +61,10 @@ tags = ["admin", "dashboard", "dark", "bold"]
         <div class="text-xs">PEAK: 3.1GW @ 04:14</div>
       </div>
     </div>
-
     <div class="grid grid-cols-12 gap-4 mt-4">
       <!-- FORGE CREW / OPERATORS -->
       <div class="col-span-5 molten-panel rounded-3xl p-7">
         <div class="flex justify-between mb-5"><div><span class="section-label">FORGE CREW</span><div class="text-2xl tracking-tight">Active Operatives</div></div><div class="text-xs px-3 py-1 bg-[#1f0a05] self-start rounded">31 ONLINE</div></div>
-        
         <div class="space-y-2 text-sm">
           <div class="flex justify-between items-center bg-[#1a0c07] px-4 h-11 rounded-2xl"><div class="flex items-center gap-3"><span>CHIEF IGNIS VOR</span></div><span class="text-emerald-400 text-xs">STABLE</span></div>
           <div class="flex justify-between items-center bg-[#1a0c07] px-4 h-11 rounded-2xl"><div class="flex items-center gap-3"><span>PYRA KESSA</span></div><span class="text-emerald-400 text-xs">STABLE</span></div>
@@ -76,7 +72,6 @@ tags = ["admin", "dashboard", "dark", "bold"]
           <div class="flex justify-between items-center bg-[#1a0c07] px-4 h-11 rounded-2xl"><div class="flex items-center gap-3"><span>SLAG LORD REX</span></div><span class="text-emerald-400 text-xs">STABLE</span></div>
         </div>
       </div>
-
       <!-- LIVE CONDUITS -->
       <div class="col-span-7 molten-panel rounded-3xl p-7">
         <div class="section-label mb-2">LIVE CONDUITS • 18</div>
@@ -86,7 +81,6 @@ tags = ["admin", "dashboard", "dark", "bold"]
           <div class="bg-[#1a0c07] p-3 rounded-2xl flex flex-col"><div class="text-[#ff9500]">CONDUIT-C9</div><div class="text-xl font-semibold tabular-nums">1994°C</div><div class="h-px bg-[#3a160b] my-2"></div><div class="text-red-400 text-[10px] warning-glow">CRITICAL • 41% FLOW</div></div>
         </div>
       </div>
-
       <!-- THE PIT LOG -->
       <div class="col-span-12 molten-panel rounded-3xl p-7 mt-1">
         <div class="uppercase text-xs tracking-[2px] text-[#ff6a00] mb-3 flex justify-between"><span>THE PIT • INCIDENT LOG</span> <span class="text-[#663322]">AUTO-SCROLL</span></div>
@@ -97,7 +91,6 @@ tags = ["admin", "dashboard", "dark", "bold"]
         </div>
       </div>
     </div>
-
     <div class="text-center mt-8">
       <button onclick="triggerEruption(this)" class="text-sm px-6 py-2.5 border border-[#ff4d00]/60 hover:bg-[#2a120a] transition rounded-2xl text-[#ff6a00] tracking-[1.5px]">SIMULATE FULL ERUPTION SEQUENCE</button>
     </div>

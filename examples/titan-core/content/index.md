@@ -14,14 +14,12 @@ tags = ["admin", "dashboard", "dark", "bold"]
 
   <div class="max-w-7xl mx-auto px-8 pt-8">
     <div class="flex justify-between items-end"><div><div class="text-[#d97706] text-xs tracking-[3px]">COLOSSAL MACHINE GOD</div><div class="text-7xl display tracking-[-4px] text-white">BOW BEFORE<br>THE IRON WILL.</div></div><button onclick="awakenTitan(this)" class="px-9 py-4 bg-[#d97706] text-black font-extrabold tracking-widest text-sm rounded-2xl">AWAKEN THE TITAN</button></div>
-
     <div class="grid grid-cols-4 gap-4 mt-8">
       <div class="titan-panel p-6 rounded-3xl"><div class="text-[#d97706] text-xs">TONS OF BRONZE</div><div class="metric mt-1" data-count="48200">48200</div></div>
       <div class="titan-panel p-6 rounded-3xl"><div class="text-[#d97706] text-xs">HAMMER STRIKES / MIN</div><div class="metric mt-1" data-count="144">144</div></div>
       <div class="titan-panel p-6 rounded-3xl"><div class="text-[#d97706] text-xs">MORTAL SERVANTS</div><div class="metric mt-1" data-count="9184">9184</div></div>
       <div class="titan-panel p-6 rounded-3xl"><div class="text-[#d97706] text-xs">THUNDER RESERVES</div><div class="metric mt-1 text-amber-400" data-count="99">99</div><div class="text-xs">%</div></div>
     </div>
-
     <div class="mt-4 grid grid-cols-12 gap-4">
       <div class="col-span-12 titan-panel rounded-3xl p-7">
         <div class="text-[#d97706] text-xs mb-3">THE GREAT FORGE — STATUS</div>

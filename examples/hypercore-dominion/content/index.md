@@ -18,7 +18,6 @@ tags = ["admin", "dashboard", "dark", "bold", "cyberpunk"]
       <div class="max-w-xl"><div class="text-[#00f0ff] text-xs tracking-[3px]">ABSOLUTE ENERGY AUTHORITY</div><div class="text-[68px] leading-none display tracking-[-4.6px] mt-2">WE ARE THE<br>LIGHT THAT BINDS.</div></div>
       <div><button onclick="spikePower(this)" class="mt-3 px-9 py-4 border-2 border-[#ff00aa] text-[#ff00aa] hover:bg-[#ff00aa] hover:text-black transition font-bold tracking-widest text-sm rounded-2xl">INITIATE POWER SPIKE</button></div>
     </div>
-
     <!-- 4 brutal metrics -->
     <div class="grid grid-cols-4 gap-4 mt-8">
       <div class="hyper-panel p-6 rounded-3xl"><div class="text-xs text-white/50">PLASMA DENSITY</div><div class="text-6xl font-semibold tabular-nums mt-2" data-count="94">94</div><div class="text-[#00f0ff] text-xs">kg/m³ • +19</div></div>
@@ -26,7 +25,6 @@ tags = ["admin", "dashboard", "dark", "bold", "cyberpunk"]
       <div class="hyper-panel p-6 rounded-3xl"><div class="text-xs text-white/50">MAGNETIC CONFINEMENT</div><div class="text-6xl font-semibold tabular-nums mt-2" data-count="99.98">99.98</div><div class="text-xs">99.98% • 14ms</div></div>
       <div class="hyper-panel p-6 rounded-3xl"><div class="text-xs text-white/50">CONNECTED NODES</div><div class="text-6xl font-semibold tabular-nums mt-2" data-count="4128">4128</div><div class="text-[#ff00aa] text-xs">+47 THIS MINUTE</div></div>
     </div>
-
     <div class="mt-4 grid grid-cols-12 gap-4">
       <!-- THE CORE VISUAL -->
       <div class="col-span-5 hyper-panel rounded-3xl p-8 flex items-center justify-center relative" style="min-height:300px">
@@ -39,7 +37,6 @@ tags = ["admin", "dashboard", "dark", "bold", "cyberpunk"]
         </div>
         <div class="absolute bottom-8 text-center text-xs tracking-widest text-white/50">HYPERCORE-01 • 1.4B °C</div>
       </div>
-
       <!-- ENERGY ROUTES -->
       <div class="col-span-7 hyper-panel rounded-3xl p-7">
         <div class="text-xs text-white/50 mb-4">ENERGY ROUTES • LIVE</div>
@@ -50,7 +47,6 @@ tags = ["admin", "dashboard", "dark", "bold", "cyberpunk"]
           <div class="bg-black/60 p-4 rounded-2xl flex justify-between"><div>VOID RELAY 4</div><div class="font-mono text-[#00f0ff]">5.0 GW</div></div>
         </div>
       </div>
-
       <div class="col-span-12 hyper-panel p-6 rounded-3xl text-xs font-mono flex items-center gap-4 text-white/70">
         <div class="flex-1">ALL 4128 NODES SYNCHRONIZED. FUSION CASCADE STABLE. NO WEAK LINKS PERMITTED.</div>
         <button onclick="cascade(this)" class="border border-white/30 px-5 py-2 hover:bg-white/5 rounded-2xl">TRIGGER CASCADE REALIGNMENT</button>
