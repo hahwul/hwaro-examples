@@ -14,14 +14,12 @@ tags = ["admin", "dashboard", "dark", "bold"]
 
   <div class="max-w-7xl mx-auto px-8 pt-8">
     <div class="flex justify-between"><div><div class="text-[#64748b] text-xs tracking-[3px]">IRON ADMIRALTY</div><div class="text-7xl display tracking-[-4px] leading-none mt-1 text-white">THE SEA<br>IS OURS.</div></div><button onclick="broadside(this)" class="px-8 py-4 border border-[#64748b] text-[#64748b] hover:bg-white/5 rounded text-sm tracking-widest">FIRE BROADSIDE</button></div>
-
     <div class="grid grid-cols-4 gap-4 mt-8">
       <div class="dread-panel p-6 rounded-2xl"><div class="text-[#64748b] text-xs">MAIN BATTERY</div><div class="metric mt-1 text-white" data-count="9">9</div><div class="text-xs">× 400mm</div></div>
       <div class="dread-panel p-6 rounded-2xl"><div class="text-[#64748b] text-xs">ENEMY HULLS SUNK</div><div class="metric mt-1" data-count="184">184</div></div>
       <div class="dread-panel p-6 rounded-2xl"><div class="text-[#64748b] text-xs">CREW DISCIPLINE</div><div class="metric mt-1" data-count="100">100</div><div class="text-xs">%</div></div>
       <div class="dread-panel p-6 rounded-2xl"><div class="text-[#64748b] text-xs">STEAM PRESSURE</div><div class="metric mt-1 text-red-400" data-count="1420">1420</div><div class="text-xs">psi</div></div>
     </div>
-
     <div class="mt-4 grid grid-cols-12 gap-4">
       <div class="col-span-12 dread-panel rounded-3xl p-7">
         <div class="text-[#64748b] text-xs mb-3">CURRENT ENGAGEMENT — GUNS 1-9 STATUS</div>

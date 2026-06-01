@@ -14,14 +14,12 @@ tags = ["admin", "dashboard", "dark", "bold"]
 
   <div class="max-w-7xl mx-auto px-8 pt-8">
     <div class="flex justify-between"><div><div class="text-[#d4af37] text-xs tracking-[3px]">CYBER-BRUTALIST GOD-KING</div><div class="text-7xl display tracking-[-4px] leading-none mt-1 text-white">ALL BOW BEFORE<br>THE GOLDEN SARCOPHAGUS.</div></div><button onclick="awakenPharaoh(this)" class="px-8 py-4 bg-[#d4af37] text-black font-extrabold tracking-widest rounded text-sm">AWAKEN THE PHARAOH</button></div>
-
     <div class="grid grid-cols-4 gap-4 mt-8">
       <div class="pharaoh-panel p-6 rounded-2xl"><div class="text-[#d4af37] text-xs">ETERNAL SERVANTS</div><div class="metric mt-1" data-count="18472">18472</div></div>
       <div class="pharaoh-panel p-6 rounded-2xl"><div class="text-[#d4af37] text-xs">PYRAMID SERVERS</div><div class="metric mt-1" data-count="14">14</div></div>
       <div class="pharaoh-panel p-6 rounded-2xl"><div class="text-[#d4af37] text-xs">HERETICS MUMMIFIED</div><div class="metric mt-1 text-red-400" data-count="847">847</div></div>
       <div class="pharaoh-panel p-6 rounded-2xl"><div class="text-[#d4af37] text-xs">DIVINITY INDEX</div><div class="metric mt-1" data-count="100">100</div></div>
     </div>
-
     <div class="mt-4 grid grid-cols-12 gap-4">
       <div class="col-span-12 pharaoh-panel rounded-3xl p-7">
         <div class="text-[#d4af37] text-xs mb-3">THE GOLDEN COURT — CURRENT DECREES</div>

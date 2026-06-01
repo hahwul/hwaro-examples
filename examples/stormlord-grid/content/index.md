@@ -14,14 +14,12 @@ tags = ["admin", "dashboard", "dark", "bold", "cyberpunk"]
 
   <div class="max-w-7xl mx-auto px-8 pt-8">
     <div class="flex justify-between"><div><div class="text-[#60a5fa] text-xs tracking-[3px]">CELESTIAL TYRANNY</div><div class="text-7xl display tracking-[-4px] leading-none mt-1 text-white">THE SKY<br>BOWS TO NO ONE.</div></div><button onclick="callLightning(this)" class="px-8 py-4 bg-[#38bdf8] text-black font-extrabold tracking-widest rounded text-sm">CALL LIGHTNING STRIKE</button></div>
-
     <div class="grid grid-cols-4 gap-4 mt-8">
       <div class="storm-panel p-6 rounded-2xl"><div class="text-[#60a5fa] text-xs">ACTIVE STORMS</div><div class="metric mt-1 text-white" data-count="41">41</div></div>
       <div class="storm-panel p-6 rounded-2xl"><div class="text-[#60a5fa] text-xs">LIGHTNING YIELD</div><div class="metric mt-1" data-count="2.8">2.8</div><div class="text-xs">TW</div></div>
       <div class="storm-panel p-6 rounded-2xl"><div class="text-[#60a5fa] text-xs">CITIES UNDER CLOUD</div><div class="metric mt-1 text-amber-400" data-count="219">219</div></div>
       <div class="storm-panel p-6 rounded-2xl"><div class="text-[#60a5fa] text-xs">PRESSURE ANOMALY</div><div class="metric mt-1 text-red-400" data-count="-980">−980</div><div class="text-xs">hPa</div></div>
     </div>
-
     <div class="mt-4 grid grid-cols-12 gap-4">
       <div class="col-span-12 storm-panel rounded-3xl p-7">
         <div class="text-[#60a5fa] text-xs mb-3">CURRENT CELL STATUS — EYE OF THE STORM</div>

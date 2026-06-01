@@ -14,14 +14,12 @@ tags = ["admin", "dashboard", "dark", "bold"]
 
   <div class="max-w-7xl mx-auto px-8 pt-8">
     <div class="flex justify-between"><div><div class="text-[#4ade80] text-xs tracking-[3px]">BIO-WEAPON PERFECTION</div><div class="text-7xl display tracking-[-4px] leading-none mt-1 text-white">EVERYTHING<br>DECAYS BEAUTIFULLY.</div></div><button onclick="releaseStrain(this)" class="px-8 py-4 bg-[#4ade80] text-black font-extrabold tracking-widest rounded text-sm">RELEASE NEW STRAIN</button></div>
-
     <div class="grid grid-cols-4 gap-4 mt-8">
       <div class="plague-panel p-6 rounded-2xl"><div class="text-[#4ade80] text-xs">ACTIVE STRAINS</div><div class="metric mt-1" data-count="47">47</div></div>
       <div class="plague-panel p-6 rounded-2xl"><div class="text-[#4ade80] text-xs">INFECTED SOULS</div><div class="metric mt-1" data-count="18472910">18472910</div></div>
       <div class="plague-panel p-6 rounded-2xl"><div class="text-[#4ade80] text-xs">MORTALITY RATE</div><div class="metric mt-1 text-red-400" data-count="99.7">99.7</div><div class="text-xs">%</div></div>
       <div class="plague-panel p-6 rounded-2xl"><div class="text-[#4ade80] text-xs">BEAUTY INDEX</div><div class="metric mt-1" data-count="100">100</div></div>
     </div>
-
     <div class="mt-4 grid grid-cols-12 gap-4">
       <div class="col-span-12 plague-panel rounded-3xl p-7">
         <div class="text-[#4ade80] text-xs mb-3">CURRENT OUTBREAKS — PRIORITY DECAY ZONES</div>

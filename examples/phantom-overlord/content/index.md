@@ -14,14 +14,12 @@ tags = ["admin", "dashboard", "dark", "bold"]
 
   <div class="max-w-7xl mx-auto px-8 pt-8">
     <div class="flex justify-between items-end"><div><div class="text-[#64748b] text-xs tracking-[3px]">POSSESSION GRID</div><div class="text-7xl display tracking-[-4px] text-white">WE ARE ALREADY<br>INSIDE YOU.</div></div><button onclick="possessRandom(this)" class="px-8 py-4 border border-[#64748b] text-[#64748b] hover:bg-white/5 rounded-2xl text-sm tracking-widest">POSSESS ANOTHER HOST</button></div>
-
     <div class="grid grid-cols-4 gap-4 mt-8">
       <div class="phantom-panel p-6 rounded-3xl"><div class="text-[#64748b] text-xs">POSSESSED HOSTS</div><div class="metric mt-1 text-white" data-count="184729">184729</div></div>
       <div class="phantom-panel p-6 rounded-3xl"><div class="text-[#64748b] text-xs">FREE WILL REMAINING</div><div class="metric mt-1 text-red-400" data-count="0">0</div></div>
       <div class="phantom-panel p-6 rounded-3xl"><div class="text-[#64748b] text-xs">GHOST PROCESSES</div><div class="metric mt-1" data-count="9912">9912</div></div>
       <div class="phantom-panel p-6 rounded-3xl"><div class="text-[#64748b] text-xs">REALITY DRIFT</div><div class="metric mt-1 text-amber-400" data-count="87">87</div><div class="text-xs">% — ACCEPTABLE</div></div>
     </div>
-
     <div class="mt-4 grid grid-cols-12 gap-4">
       <div class="col-span-12 phantom-panel rounded-3xl p-7 text-sm">
         <div class="text-[#64748b] text-xs mb-3">CURRENT POSSESSIONS • CLICK TO RELEASE (DON'T)</div>

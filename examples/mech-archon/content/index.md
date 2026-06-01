@@ -14,14 +14,12 @@ tags = ["admin", "dashboard", "dark", "bold"]
 
   <div class="max-w-7xl mx-auto px-8 pt-8">
     <div class="flex justify-between"><div><div class="text-[#d97706] text-xs tracking-[3px]">COLOSSAL JUDGMENT ENGINE</div><div class="text-7xl display tracking-[-4px] leading-none mt-1 text-white">ALL FLESH<br>IS OBSOLETE.</div></div><button onclick="decreeJudgment(this)" class="px-8 py-4 bg-[#d97706] text-black font-extrabold tracking-widest rounded text-sm">DECREE JUDGMENT</button></div>
-
     <div class="grid grid-cols-4 gap-4 mt-8">
       <div class="mech-panel p-6 rounded-2xl"><div class="text-[#d97706] text-xs">SERVO PRESSURE</div><div class="metric mt-1" data-count="1840">1840</div><div class="text-xs">psi</div></div>
       <div class="mech-panel p-6 rounded-2xl"><div class="text-[#d97706] text-xs">SOULS PROCESSED</div><div class="metric mt-1 text-white" data-count="99214">99214</div></div>
       <div class="mech-panel p-6 rounded-2xl"><div class="text-[#d97706] text-xs">BRASS INTEGRITY</div><div class="metric mt-1" data-count="99.8">99.8</div></div>
       <div class="mech-panel p-6 rounded-2xl"><div class="text-[#d97706] text-xs">HERETICS CRUSHED</div><div class="metric mt-1 text-red-400" data-count="1847">1847</div></div>
     </div>
-
     <div class="mt-4 grid grid-cols-12 gap-4">
       <div class="col-span-12 mech-panel rounded-3xl p-7 text-sm">
         <div class="text-[#d97706] text-xs mb-3">THE GREAT FORGE — SACRAMENTS</div>
