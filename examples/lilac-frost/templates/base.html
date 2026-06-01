@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="{{ page_language | default(value='en') }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description | default(value=site.description) | e }}">
+  <title>{% if page.title is present %}{{ page.title | e }} &middot; {% endif %}{{ site.title | e }}</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+
+  {{ og_all_tags }}
+  {{ hreflang_tags }}
+  <style>
+    :root {
+      --bg: #ece9f6;
+      --ink: #251f37;
+      --muted: #6a6386;
+      --accent: #7c5cff;
+      --accent-deep: #5a35d6;
+      --line: rgba(37, 31, 55, 0.10);
+
+      --glass-bg: rgba(255, 255, 255, 0.52);
+      --glass-border: rgba(255, 255, 255, 0.72);
+      --glass-shadow: 0 16px 44px rgba(74, 52, 140, 0.15);
+      --glass-spec: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+
+      --radius: 24px;
+      --radius-sm: 15px;
+      --font-body: 'Inter', system-ui, sans-serif;
+      --font-head: 'Plus Jakarta Sans', system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0; font-family: var(--font-body); color: var(--ink);
+      background: var(--bg); line-height: 1.68; min-height: 100vh;
+      -webkit-font-smoothing: antialiased; position: relative; overflow-x: hidden;
+    }
+
+    /* Pastel color fields beneath the glass — solid fills, no gradients */
+    .field { position: fixed; z-index: 0; border-radius: 50%; filter: blur(95px); pointer-events: none; }
+    .field-a { width: 460px; height: 460px; background: #d3c6f6; opacity: 0.7; top: -120px; left: -90px; }
+    .field-b { width: 520px; height: 520px; background: #f4cdee; opacity: 0.6; bottom: -160px; right: -120px; }
+    .field-c { width: 350px; height: 350px; background: #c7d0f8; opacity: 0.6; top: 40%; right: 16%; }
+
+    .glass {
+      background: var(--glass-bg); border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow), var(--glass-spec);
+      backdrop-filter: blur(20px) saturate(165%); -webkit-backdrop-filter: blur(20px) saturate(165%);
+      border-radius: var(--radius);
+    }
+
+    .wrap { max-width: 880px; margin: 0 auto; padding: 0 1.4rem; position: relative; z-index: 1; }
+
+    /* Header */
+    .site-header {
+      position: sticky; top: 1rem; z-index: 50;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.85rem 1.5rem; margin: 1rem 0 2.5rem;
+    }
+    .site-logo { font-family: var(--font-head); font-weight: 700; font-size: 1.16rem; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
+    .site-logo .dot { color: var(--accent); }
+    .site-nav { display: flex; gap: 0.3rem; }
+    .site-nav a { color: var(--muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; padding: 0.4rem 0.85rem; border-radius: 999px; transition: color 0.2s, background 0.2s; }
+    .site-nav a:hover { color: var(--accent-deep); background: rgba(124, 92, 255, 0.1); }
+
+    .site-main { min-height: 60vh; padding-bottom: 1rem; }
+
+    /* Hero */
+    .hero { padding: 3.2rem 2.6rem; margin-bottom: 2.6rem; }
+    .hero-eyebrow { font-family: var(--font-head); text-transform: uppercase; letter-spacing: 0.22em; font-size: 0.72rem; color: var(--accent); margin: 0 0 0.9rem; font-weight: 700; }
+    .hero-title { overflow-wrap: break-word; font-family: var(--font-head); font-size: clamp(2.2rem, 6vw, 3.4rem); line-height: 1.07; letter-spacing: -0.03em; margin: 0 0 1rem; font-weight: 700; }
+    .hero-lede { font-size: 1.12rem; color: var(--muted); max-width: 54ch; }
+    .hero-lede p:first-child { margin-top: 0; }
+    .hero-actions { display: flex; gap: 0.7rem; margin-top: 1.9rem; flex-wrap: wrap; }
+
+    .button {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-family: var(--font-head); font-weight: 600; font-size: 0.9rem;
+      padding: 0.72rem 1.5rem; border-radius: 999px; text-decoration: none;
+      background: var(--accent); color: #fff; border: 1px solid transparent;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+      box-shadow: 0 8px 24px rgba(124, 92, 255, 0.32);
+    }
+    .button:hover { transform: translateY(-2px); background: var(--accent-deep); box-shadow: 0 12px 30px rgba(124, 92, 255, 0.4); }
+    .button-ghost { background: rgba(255,255,255,0.52); color: var(--ink); border-color: var(--glass-border); box-shadow: none; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+    .button-ghost:hover { background: rgba(255,255,255,0.84); color: var(--accent-deep); box-shadow: none; }
+
+    /* Feed — soft pastel grid */
+    .post-feed { margin-bottom: 3rem; }
+    .feed-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 1.5rem; }
+    .feed-title { font-family: var(--font-head); font-size: 1.45rem; margin: 0; letter-spacing: -0.02em; }
+    .feed-all { color: var(--accent); text-decoration: none; font-weight: 600; font-size: 0.88rem; }
+    .feed-all:hover { color: var(--accent-deep); }
+
+    .post-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.1rem; }
+    .post-card { transition: transform 0.25s, box-shadow 0.25s; }
+    .post-card:hover { transform: translateY(-4px) scale(1.01); box-shadow: 0 24px 54px rgba(74, 52, 140, 0.22), var(--glass-spec); }
+    .post-card-link { display: block; padding: 1.7rem 1.8rem; text-decoration: none; color: inherit; height: 100%; }
+    .post-card-date { font-size: 0.76rem; color: var(--muted); font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+    .post-card-title { overflow-wrap: break-word; font-family: var(--font-head); font-size: 1.3rem; line-height: 1.2; letter-spacing: -0.02em; margin: 0.55rem 0 0.5rem; }
+    .post-card-desc { color: var(--muted); margin: 0 0 0.9rem; font-size: 0.98rem; }
+    .read-more { font-family: var(--font-head); font-weight: 600; font-size: 0.86rem; color: var(--accent); }
+
+    /* Tags */
+    .tag-row { display: flex; flex-wrap: wrap; gap: 0.45rem; margin: 0.9rem 0 0; }
+    .tag { font-size: 0.73rem; font-weight: 600; letter-spacing: 0.02em; padding: 0.27rem 0.72rem; border-radius: 999px; text-decoration: none; background: rgba(124, 92, 255, 0.1); color: var(--accent-deep); border: 1px solid rgba(124, 92, 255, 0.18); }
+    a.tag:hover { background: rgba(124, 92, 255, 0.18); }
+
+    /* Single post */
+    .post { max-width: 700px; margin: 0 auto; }
+    .post-header { padding: 2.6rem 2.4rem 2rem; margin-bottom: 2.2rem; }
+    .post-title { overflow-wrap: break-word; font-family: var(--font-head); font-size: clamp(2rem, 5vw, 2.7rem); line-height: 1.1; letter-spacing: -0.03em; margin: 0 0 0.9rem; }
+    .post-meta { color: var(--muted); font-size: 0.88rem; display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+    .meta-sep { opacity: 0.5; }
+    .post-content { font-size: 1.06rem; }
+
+    .section-head { margin: 1rem 0 2rem; }
+    .section-eyebrow { font-family: var(--font-head); text-transform: uppercase; letter-spacing: 0.2em; font-size: 0.72rem; color: var(--accent); font-weight: 700; margin: 0 0 0.5rem; }
+    .section-title { overflow-wrap: break-word; font-family: var(--font-head); font-size: clamp(2rem, 5vw, 2.8rem); letter-spacing: -0.03em; margin: 0 0 0.5rem; }
+    .section-desc { color: var(--muted); font-size: 1.07rem; margin: 0; }
+    .section-intro { margin-bottom: 2rem; }
+
+    /* Post navigation */
+    .post-nav { display: flex; justify-content: space-between; gap: 1rem; margin-top: 2.5rem; padding: 1.3rem 1.6rem; }
+    .post-nav-link { display: flex; flex-direction: column; gap: 0.25rem; text-decoration: none; color: var(--ink); max-width: 46%; }
+    .post-nav-link.next { text-align: right; margin-left: auto; }
+    .post-nav-label { font-size: 0.76rem; color: var(--accent); font-weight: 600; }
+    .post-nav-title { font-family: var(--font-head); font-weight: 600; font-size: 0.98rem; }
+    .post-nav-link:hover .post-nav-title { color: var(--accent-deep); }
+
+    /* Terms */
+    .term-list { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0.8rem; }
+    .term-item { padding: 0; }
+    .term-item a { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.7rem 1.2rem; text-decoration: none; color: var(--ink); font-family: var(--font-head); font-weight: 600; }
+    .term-item:hover a { color: var(--accent-deep); }
+    .term-count { background: rgba(124, 92, 255, 0.12); color: var(--accent-deep); border-radius: 999px; padding: 0.05rem 0.55rem; font-size: 0.76rem; }
+
+    /* Taxonomy auto-generated lists */
+    .tax-body .taxonomy-terms, .tax-body .taxonomy-pages { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.8rem; }
+    .tax-body li { margin: 0; }
+    .tax-body li a {
+      display: block; padding: 1rem 1.3rem; text-decoration: none; color: var(--ink);
+      font-family: var(--font-head); font-weight: 600;
+      background: var(--glass-bg); border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow), var(--glass-spec);
+      backdrop-filter: blur(16px) saturate(150%); -webkit-backdrop-filter: blur(16px) saturate(150%);
+      border-radius: var(--radius-sm); transition: transform 0.2s, color 0.2s;
+    }
+    .tax-body li a:hover { transform: translateY(-3px); color: var(--accent-deep); }
+
+    /* Pagination */
+    .pagination { display: flex; align-items: center; justify-content: center; gap: 1rem; margin: 2.5rem 0 1rem; }
+    .page-link { text-decoration: none; color: var(--accent); font-weight: 600; font-family: var(--font-head); padding: 0.5rem 1rem; border-radius: 999px; }
+    .page-link:hover { background: rgba(124, 92, 255, 0.1); }
+    .page-link.disabled { color: var(--muted); opacity: 0.45; }
+    .page-current { font-family: var(--font-head); color: var(--muted); font-size: 0.9rem; }
+
+    /* Callout */
+    .callout { display: flex; gap: 0.9rem; align-items: flex-start; padding: 1.1rem 1.3rem; border-radius: var(--radius-sm); margin: 1.6rem 0; background: rgba(124, 92, 255, 0.07); border: 1px solid rgba(124, 92, 255, 0.18); }
+    .callout-label { font-family: var(--font-head); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; color: #fff; background: var(--accent); padding: 0.18rem 0.55rem; border-radius: 6px; flex-shrink: 0; margin-top: 0.2rem; }
+    .callout-body { color: var(--ink); }
+    .callout-body p { margin: 0; }
+    .callout-warning { background: rgba(214, 110, 60, 0.09); border-color: rgba(214, 110, 60, 0.26); }
+    .callout-warning .callout-label { background: #d66e3c; }
+
+    /* 404 */
+    .notfound { text-align: center; padding: 4rem 2rem; }
+    .notfound-code { font-family: var(--font-head); font-size: 5rem; font-weight: 700; color: var(--accent); margin: 0; letter-spacing: -0.04em; }
+    .notfound-title { font-family: var(--font-head); font-size: 1.6rem; margin: 0.5rem 0 1rem; }
+    .notfound-text { color: var(--muted); max-width: 40ch; margin: 0 auto 1.8rem; }
+
+    /* Footer */
+    .site-footer { text-align: center; padding: 1.8rem; margin: 3rem 0 2rem; color: var(--muted); font-size: 0.9rem; }
+    .site-footer a { color: var(--accent); text-decoration: none; }
+    .site-footer a:hover { color: var(--accent-deep); }
+
+    /* Content typography */
+    .post-content h2, .post-content h3, .post-content h4 { font-family: var(--font-head); letter-spacing: -0.02em; line-height: 1.25; margin: 2rem 0 0.8rem; }
+    .post-content h2 { font-size: 1.5rem; }
+    .post-content h3 { font-size: 1.24rem; }
+    .post-content p { margin: 1.1rem 0; }
+    .post-content a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+    .post-content a:hover { color: var(--accent-deep); }
+    .post-content ul, .post-content ol { padding-left: 1.3rem; }
+    .post-content li { margin: 0.4rem 0; }
+    .post-content img { max-width: 100%; height: auto; border-radius: var(--radius-sm); }
+    .post-content blockquote { margin: 1.6rem 0; padding: 0.6rem 1.3rem; border-left: 3px solid var(--accent); background: rgba(124, 92, 255, 0.05); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; color: var(--ink); font-style: italic; }
+    .post-content code { font-family: ui-monospace, Menlo, monospace; font-size: 0.88em; background: rgba(37, 31, 55, 0.07); padding: 0.15rem 0.4rem; border-radius: 6px; }
+    .post-content pre { background: #1d1830; color: #ece9f6; padding: 1.3rem 1.5rem; border-radius: var(--radius-sm); overflow-x: auto; font-size: 0.9rem; }
+    .post-content pre code { background: none; padding: 0; color: inherit; }
+    .post-content hr { border: 0; height: 1px; background: var(--line); margin: 2.5rem 0; }
+    .post-content table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.95rem; }
+    .post-content th, .post-content td { text-align: left; padding: 0.6rem 0.8rem; border-bottom: 1px solid var(--line); }
+    .post-content th { font-family: var(--font-head); }
+
+    @media (max-width: 680px) {
+      .site-header { flex-direction: column; gap: 0.7rem; padding: 1rem; top: 0.5rem; }
+      .hero { padding: 2.3rem 1.6rem; }
+      .hero-title { font-size: 1.85rem; }
+      .post-list { grid-template-columns: 1fr; }
+      .post-header { padding: 1.9rem 1.6rem 1.5rem; }
+      .post-nav { flex-direction: column; }
+      .post-nav-link, .post-nav-link.next { max-width: 100%; text-align: left; margin-left: 0; }
+    }
+  </style>
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+</head>
+<body data-section="{{ page.section }}">
+  <div class="field field-a"></div>
+  <div class="field field-b"></div>
+  <div class="field field-c"></div>
+
+  <div class="wrap">
+    <header class="site-header glass">
+      <a href="{{ base_url }}/" class="site-logo">lilac<span class="dot">.</span>frost</a>
+      <nav class="site-nav">
+        <a href="{{ base_url }}/">Home</a>
+        <a href="{{ base_url }}/posts/">Blog</a>
+        <a href="{{ base_url }}/about/">About</a>
+        <a href="{{ base_url }}/tags/">Tags</a>
+      </nav>
+    </header>
+
+    <main class="site-main">
+      {% block content %}{% endblock content %}
+    </main>
+
+    <footer class="site-footer">
+      <p>Lilac Frost &mdash; built with <a href="https://github.com/hahwul/hwaro">Hwaro</a>.</p>
+    </footer>
+  </div>
+
+  {{ highlight_js }}
+  {{ auto_includes_js }}
+</body>
+</html>
