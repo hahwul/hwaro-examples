@@ -47,7 +47,7 @@ tags = ["admin", "dashboard", "dark", "bold", "cyberpunk"]
             <div class="font-semibold text-[#c5a26f]">SOVEREIGN</div>
             <div class="text-[10px] text-[#666]">ETERNAL</div>
           </div>
-          <div class="w-8 h-8 bg-gradient-to-br from-[#c5a26f] to-[#5c4630] rounded-full ring-1 ring-offset-2 ring-offset-[#0a0a0a] ring-[#3a3a3a] flex items-center justify-center text-[13px]">👑</div>
+          <div class="w-8 h-8 bg-gradient-to-br from-[#c5a26f] to-[#5c4630] rounded-full ring-1 ring-offset-2 ring-offset-[#0a0a0a] ring-[#3a3a3a] flex items-center justify-center"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="#0a0a0a" aria-hidden="true"><path d="M3 7l3.5 3L12 4l5.5 6L21 7l-1.8 11H4.8L3 7z"/></svg></div>
         </div>
       </div>
     </div>
@@ -258,7 +258,7 @@ tags = ["admin", "dashboard", "dark", "bold", "cyberpunk"]
       
       <div class="flex gap-3">
         <button onclick="triggerApocalypse(this)" class="px-5 py-2.5 rounded-2xl border border-red-900/70 hover:bg-red-950 hover:border-red-800 text-red-400 text-xs tracking-[1px] flex items-center gap-2 transition-all">
-          <span>🔥</span> <span>INITIATE FINAL PROTOCOL</span>
+          <span class="flex"><svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="currentColor" aria-hidden="true"><path d="M13.5 1.5c.5 3-1.6 4.3-2.7 5.7-1.6 2-2.8 4-2.8 6.3a6 6 0 0012 0c0-2.2-.9-3.8-1.8-5-.3.9-1 1.6-2 1.6 1-2.4.3-5.7-2.7-8.6z"/></svg></span> <span>INITIATE FINAL PROTOCOL</span>
         </button>
         <button onclick="refreshAllMetrics()" class="void-button px-6 py-2.5 rounded-2xl text-xs tracking-[1px]">REFRESH CROWN VIEW</button>
       </div>

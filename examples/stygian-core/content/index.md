@@ -21,7 +21,7 @@ tags = ["admin", "dashboard", "dark", "bold"]
         <div class="px-4 py-1.5 bg-[#1a0c07] rounded-full border border-[#3a160b] flex items-center gap-2 text-[#ff9500]">
           <span>CORE TEMP</span> <span id="core-temp" class="font-semibold tabular-nums text-white">1847.3</span><span class="text-[#ff6a00]">°C</span>
         </div>
-        <div class="w-8 h-8 bg-zinc-900 rounded-full flex items-center justify-center ring-1 ring-[#3a160b]">🔥</div>
+        <div class="w-8 h-8 bg-zinc-900 rounded-full flex items-center justify-center ring-1 ring-[#3a160b]"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="#ff6a00" aria-hidden="true"><path d="M13.5 1.5c.5 3-1.6 4.3-2.7 5.7-1.6 2-2.8 4-2.8 6.3a6 6 0 0012 0c0-2.2-.9-3.8-1.8-5-.3.9-1 1.6-2 1.6 1-2.4.3-5.7-2.7-8.6z"/></svg></div>
       </div>
     </div>
   </div>
@@ -110,7 +110,7 @@ tags = ["admin", "dashboard", "dark", "bold"]
     const orig = event.currentTarget;
     const el = document.createElement('div');
     el.className = 'fixed inset-0 flex items-center justify-center bg-black/80 z-50';
-    el.innerHTML = `<div class="text-center"><div class="text-[#ff4d00] text-6xl mb-2">🌋</div><div class="text-2xl font-bold text-white">PRESSURE VENTED</div><div class="text-sm text-[#bb8f6b] mt-1">Core temperature stabilized −184°C</div></div>`;
+    el.innerHTML = `<div class="text-center"><div class="mb-2 flex justify-center"><svg viewBox="0 0 24 24" class="w-16 h-16" fill="#ff4d00" aria-hidden="true"><path d="M13.5 1.5c.5 3-1.6 4.3-2.7 5.7-1.6 2-2.8 4-2.8 6.3a6 6 0 0012 0c0-2.2-.9-3.8-1.8-5-.3.9-1 1.6-2 1.6 1-2.4.3-5.7-2.7-8.6z"/></svg></div><div class="text-2xl font-bold text-white">PRESSURE VENTED</div><div class="text-sm text-[#bb8f6b] mt-1">Core temperature stabilized −184°C</div></div>`;
     document.body.appendChild(el);
     setTimeout(()=>{ el.remove(); }, 1350);
   }
