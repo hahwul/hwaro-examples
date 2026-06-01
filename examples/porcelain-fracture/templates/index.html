@@ -1,0 +1,69 @@
+{% include "header.html" %}
+{% include "partials/nav.html" %}
+{% include "partials/search.html" %}
+
+<div class="blog-container">
+  <main class="blog-main">
+
+    <!-- THE CABINET: Haunting hero with hand-crafted porcelain doll face -->
+    <section class="cabinet-hero">
+      <div class="doll-face" aria-hidden="true">
+        <div class="eyes">
+          <div class="doll-eye larger">
+            <div class="pupil"></div>
+            <div class="lid"></div>
+          </div>
+          <div class="doll-eye">
+            <div class="pupil"></div>
+            <div class="lid"></div>
+          </div>
+        </div>
+        <!-- Subtle lipstick mouth -->
+        <div class="doll-lips" style="position:absolute; bottom:22%; left:50%; transform:translateX(-50%);"></div>
+      </div>
+
+      <div class="subtitle">The collected fragments</div>
+      <h1 style="color:var(--porcelain); text-shadow: 0.6px 0.5px 0 var(--crack-pink-deep), -1px -0.7px 0 var(--porcelain-warm);">PORCELAIN<br>FRACTURE</h1>
+      <p class="tagline">She smiled until the glaze split.<br>These are the pieces she left behind.</p>
+
+      <div style="margin-top:1.6rem; opacity:0.6; font-size:0.78rem; letter-spacing:0.14em; font-family:var(--font-smallcaps);">
+        KINTSUGI THAT WENT WRONG • VICTORIAN NURSERY HORROR
+      </div>
+    </section>
+
+    <!-- Latest recovered shards -->
+    <div style="max-width:var(--content-max-w); margin:0 auto 1rem; padding:0 1.5rem;">
+      <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:1.1rem; border-bottom:1px solid var(--crack-pink); padding-bottom:0.5rem;">
+        <span class="small-caps" style="color:var(--crack-pink-deep); font-size:0.85rem; letter-spacing:0.3em;">RECOVERED FROM THE FLOOR</span>
+        <a href="{{ base_url }}/posts/" style="font-size:0.78rem; border:none; color:var(--text-muted);">all fragments →</a>
+      </div>
+    </div>
+
+    <div class="shards-grid">
+      {% set latest = site.pages | selectattr("date") | rejectattr("is_index") | rejectattr("draft") | sort(attribute="date", reverse=true) | slice(end=6) %}
+      {% for page in latest %}
+        <a href="{{ base_url }}{{ page.url }}" class="shard porcelain" style="--i: {{ loop.index0 }};">
+          <span class="shard-date">{{ page.date | date("%d %B %Y") | upper }}</span>
+          <h3>{{ page.title | e }}</h3>
+          <div class="shard-excerpt">
+            {% if page.summary %}{{ page.summary | strip_html | truncate_words(22) }}{% else %}{{ page.description | default("A recovered shard from the nursery.") | e }}{% endif %}
+          </div>
+          {% if page.tags %}
+          <div class="tags">
+            {% for tag in page.tags | slice(end=3) %}
+              <span class="tag">{{ tag }}</span>
+            {% endfor %}
+          </div>
+          {% endif %}
+          <!-- Hidden micro cracks rendered via CSS -->
+        </a>
+      {% endfor %}
+    </div>
+
+    <!-- A short invocation from the doll -->
+    <div style="max-width:620px; margin:2.5rem auto 4rem; padding:0 1.5rem; text-align:center; font-style:italic; color:var(--text-muted); font-size:0.96rem; line-height:1.7;">
+      I was perfect once.<br>
+      Now the cracks tell better stories.
+    </div>
+
+{% include "footer.html" %}

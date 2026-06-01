@@ -1,0 +1,21 @@
+{% include "header.html" %}
+{% include "partials/nav.html" %}
+{% include "partials/search.html" %}
+<div class="blog-container">
+  <main class="blog-main">
+    {% if page.title is present %}
+      <h1 class="glitch-text" data-text="{{ page.title | e }}">{{ page.title | e }}</h1>
+    {% endif %}
+    {{ content }}
+
+    <div style="margin:0.8rem 0 1.1rem; font-family:monospace; font-size:0.7rem; color:#ff0033;">ALL FRAMES — SORTED BY WHEN THE CORRUPTION ARRIVED</div>
+
+    <ul class="archive-list" style="list-style:none; padding:0; font-family:monospace; font-size:0.9rem;">
+    {% for p in site.pages | selectattr("date") | rejectattr("is_index") | rejectattr("draft") | sort(attribute="date", reverse=true) %}
+      <li class="archive-entry" style="padding:0.35rem 0; border-bottom:1px dotted #222;">
+        <time datetime="{{ p.date }}" style="color:#555566; margin-right:1rem;">{{ p.date }}</time>
+        <a href="{{ base_url }}{{ p.url }}" style="color:#aaccff;">{{ p.title | e }}</a>
+      </li>
+    {% endfor %}
+    </ul>
+{% include "footer.html" %}

@@ -1,0 +1,41 @@
+{% include "header.html" %}
+{% include "partials/nav.html" %}
+{% include "partials/search.html" %}
+<div class="blog-container">
+  <main class="blog-main">
+    {% if page.url == "/" or page.url == "/index.html" %}
+      <!-- BRUTAL HOME HERO: SUBJECT STATUS + GLITCHING TITLE -->
+      <div class="home-hero">
+        <div class="hero-title">
+          <span class="glitch" data-text="THE FIRST CUT">THE FIRST CUT</span><br>
+          NEVER HEALS
+        </div>
+        <div class="hero-subtitle">
+          FIRMWARE LEAKS. THE BODY WAS NEVER CLOSED.<br>
+          SURGICAL LOGS FROM THE POST-HUMAN FRONTIER.
+        </div>
+        <div style="margin-top:1.4rem">
+          <a href="{{ base_url }}/posts/" class="inject-btn" style="display:inline-block;text-decoration:none">ENTER THE THEATRE →</a>
+        </div>
+      </div>
+
+      <h2 style="margin-bottom:0.4rem">RECENT INCISIONS</h2>
+      <div class="incision-grid">
+        {% for post in site.pages | selectattr("section", "equalto", "posts") | selectattr("draft", "equalto", false) | sort(attribute="date", reverse=true) | slice(end=4) %}
+          <article class="trauma-card">
+            <span class="incision-date">INCISION {{ post.date | date("%Y.%m.%d") }}</span>
+            <h3><a href="{{ base_url }}{{ post.url }}">{{ post.title | e }}</a></h3>
+            {% if post.description %}<p style="font-size:0.9rem;color:var(--text-dim);margin:0.3rem 0 0.6rem">{{ post.description | truncate_words(18) }}</p>{% endif %}
+            <div class="severity">SEVERITY: CRITICAL</div>
+            {% if post.tags %}<div style="margin-top:0.9rem">{% for t in post.tags %}<a href="{{ base_url }}/tags/{{ t | slugify }}/" class="tag">{{ t }}</a>{% endfor %}</div>{% endif %}
+          </article>
+        {% endfor %}
+      </div>
+      <p style="margin-top:1.8rem;text-align:right"><a href="{{ base_url }}/posts/" style="font-family:var(--font-display);font-size:0.78rem;letter-spacing:0.08em">VIEW ALL PATCH NOTES →</a></p>
+
+    {% else %}
+      <!-- STANDARD PAGE CONTENT (ABOUT, ETC) -->
+      {% if page.title is present %}<h1>{{ page.title | e }}</h1>{% endif %}
+      {{ content }}
+    {% endif %}
+{% include "footer.html" %}
