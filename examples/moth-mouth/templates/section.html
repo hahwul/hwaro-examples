@@ -1,0 +1,26 @@
+{% include "header.html" %}
+{% include "partials/nav.html" %}
+{% include "partials/search.html" %}
+<div class="blog-container">
+  <div class="site-frame cabinet" style="margin-top:1.1rem; padding:2.1rem 2.35rem 2.6rem;">
+    <main class="blog-main">
+      {% if section.title is present %}<h1 class="infested">{{ section.title | e }}</h1>{% endif %}
+      {{ content | safe }}
+
+      <ul class="post-list">
+        {% for p in section.pages %}
+        <li class="post-item">
+          <div class="post-meta">
+            <time>{{ p.date | date("%d %b %Y") }}</time>
+            {% if p.tags %}<span style="opacity:0.5;">·</span> {{ p.tags | join(", ") }}{% endif %}
+          </div>
+          <h2><a href="{{ p.url }}">{{ p.title }}</a></h2>
+          {% if p.summary %}<p class="excerpt">{{ p.summary | strip_html | truncate_words(28) }}</p>{% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+
+      {{ pagination }}
+    </main>
+  </div>
+{% include "footer.html" %}
