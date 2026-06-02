@@ -333,7 +333,11 @@ Adding a new subdirectory under `examples/` with a valid `config.toml` + `tags.j
 5. **Preserve TOML front matter.** Always keep `+++` delimiters and valid TOML syntax when editing content files.
 6. **Templates use Jinja2 (Crinja).** Use `{% include %}`, `{% extends %}`, `{% block %}`, `{{ var | filter }}` syntax. **Crinja's `in` operator does not accept array literals** — `{% if x in [1, 2, 3] %}` will fail to parse. Use `{% if x == 1 or x == 2 or x == 3 %}` instead.
 7. **`public/` is build output.** It is gitignored. Never commit or edit files in `public/`.
-8. **Keep sites minimal and focused.** Each example should demonstrate a specific use case or design pattern clearly.
+8. **Keep sites minimal and focused.** Each example should demonstrate a specific use case or design pattern clearly. **Avoid these anti-patterns:**
+   - **No placeholder copy:** Never use "My Hwaro Site", "My Blog", "Hello World" as titles, or "Welcome to my new Hwaro site." / "Welcome to my personal blog powered by Hwaro." as descriptions. The lint will reject these.
+   - **No decorative emoji:** Don't use pictographic emoji (🌸 🌺 ❄️ 🔒 🏆 etc.) as UI ornaments. Use inline SVG icons or typographic ornaments (✦ ❧ ★ ✓) instead.
+   - **No generic recolors:** Don't create a copy of an existing theme with just a color-name change. If a glassmorphism/cosmic/gradient theme already exists, improve it or create something genuinely different.
+   - **Soft caps on heavy effects:** Excessive gradients (>12 declarations) or glassmorphism (>8 backdrop-filter rules) will trigger lint warnings. These patterns are overrepresented—only add them if you're demonstrating the technique itself.
 9. **Use `hwaro serve` for local preview.** Default port is 3000. Use `-p` to change.
 10. **Title and description matter.** They appear on the index page at `examples.hwaro.hahwul.com`.
 11. **Always update `tags.json`** when adding a new example. Tags power the filter buttons on the index page.
