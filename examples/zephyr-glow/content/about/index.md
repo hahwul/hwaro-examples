@@ -27,4 +27,4 @@ We use modern sans-serif typefaces to maintain readability while conveying a sle
 The syntax highlighter is also customized with a translucent dark background and a subtle neon border to perfectly integrate with the rest of the site.
 
 <br>
-<a href="/" class="btn">Back to Home</a>
+<a href="../" class="btn">Back to Home</a>
