@@ -7,7 +7,7 @@ template = "page"
 <div class="hero">
     <h1>Illuminating the Web</h1>
     <p>A highly original, elegant dark-mode template with glowing neon-like accents for your creative portfolio.</p>
-    <a href="/about/" class="btn">Discover the Glow</a>
+    <a href="about/" class="btn">Discover the Glow</a>
 </div>
 
 <div style="display: flex; gap: 2rem; flex-wrap: wrap; justify-content: space-between; margin-top: 2rem;">
