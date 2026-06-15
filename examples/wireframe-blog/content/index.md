@@ -20,5 +20,5 @@ We believe that the best design starts with a solid foundation.
 Check out our nodes of posts or see the schema behind the scenes.
 
 <div style="margin-top: 4rem; text-align: center;">
-  <a href="/posts/" class="btn">VIEW THE NODES</a>
+  <a href="posts/" class="btn">VIEW THE NODES</a>
 </div>
