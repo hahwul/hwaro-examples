@@ -93,11 +93,14 @@
       return;
     }
 
+    var base = document.querySelector('link[rel="stylesheet"]').href;
+    var baseUrl = base.substring(0, base.indexOf('/css/'));
+
     var html = '';
     for (var j = 0; j < results.length; j++) {
       var r = results[j].item;
       var snippet = getSnippet(r.content, query.trim());
-      html += '<a class="search-result-item" href="' + r.url + '" data-index="' + j + '">'
+      html += '<a class="search-result-item" href="' + baseUrl + r.url + '" data-index="' + j + '">'
         + '<div class="search-result-title">' + highlightMatch(r.title, query.trim()) + '</div>'
         + '<div class="search-result-snippet">' + highlightMatch(snippet, query.trim()) + '</div>'
         + '</a>';
