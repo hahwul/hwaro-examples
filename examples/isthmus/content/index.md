@@ -10,7 +10,7 @@ path_type = "bridge"
 Welcome to the central crossing. Navigate between the great continents using the path below.
 
 <div class="bridge-navigation">
-  <a href="{{ base_url }}/continent-west/" class="bridge-link west">West Continent</a>
+  <a href="continent-west/" class="bridge-link west">West Continent</a>
   <span class="bridge-path"></span>
-  <a href="{{ base_url }}/continent-east/" class="bridge-link east">East Continent</a>
+  <a href="continent-east/" class="bridge-link east">East Continent</a>
 </div>
