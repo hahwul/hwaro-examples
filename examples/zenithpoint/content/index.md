@@ -17,4 +17,4 @@ We believe in the power of simplicity. We use heavy weight fonts, solid colors, 
 - **Pure Typography**: Letting the words speak for themselves.
 - **Absolute Contrast**: Black and white, with a single, aggressive accent color.
 
-[Explore our vision](/about/)
+[Explore our vision](about/)
