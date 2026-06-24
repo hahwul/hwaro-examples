@@ -94,10 +94,15 @@
     }
 
     var html = '';
+    var baseLink = document.querySelector('link[rel="stylesheet"]').href;
+    var baseUrlMatch = baseLink.match(/^(.*)\/css\/style\.css$/);
+    var baseUrlPrefix = baseUrlMatch ? baseUrlMatch[1] : '';
+
     for (var j = 0; j < results.length; j++) {
       var r = results[j].item;
       var snippet = getSnippet(r.content, query.trim());
-      html += '<a class="search-result-item" href="' + r.url + '" data-index="' + j + '">'
+      var r_url = r.url.startsWith('/') ? r.url : '/' + r.url;
+      html += '<a class="search-result-item" href="' + baseUrlPrefix + r_url + '" data-index="' + j + '">'
         + '<div class="search-result-title">' + highlightMatch(r.title, query.trim()) + '</div>'
         + '<div class="search-result-snippet">' + highlightMatch(snippet, query.trim()) + '</div>'
         + '</a>';
