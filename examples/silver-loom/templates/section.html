@@ -8,7 +8,7 @@
   {% for p in section.pages %}
   <article class="thread">
     <div class="ix"><em>№ {% if loop.index < 10 %}0{% endif %}{{ loop.index }}</em><small>Loom {{ loop.index }}</small></div>
-    <a class="plate" href="{{ p.url }}">
+    <a class="plate" href="{{ base_url }}{{ p.url }}">
       {% set i = loop.index %}
       {% if i == 1 %}<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><rect width="400" height="300" fill="#e3e0d6"/><g stroke="#1d2c4a" stroke-width="0.7">{% for n in range(end=42) %}<line x1="{{ n * 10 }}" y1="0" x2="{{ n * 10 }}" y2="300"/>{% endfor %}</g><g stroke="#c95a3a" stroke-width="2">{% for n in range(end=8) %}<line x1="0" y1="{{ 40 + n * 32 }}" x2="400" y2="{{ 40 + n * 32 }}"/>{% endfor %}</g></svg>
       {% elif i == 2 %}<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><rect width="400" height="300" fill="#e3e0d6"/><g stroke="#1d2c4a" stroke-width="1.2" fill="none">{% for n in range(end=12) %}<path d="M 0 {{ 20 + n * 22 }} Q 100 {{ n * 22 }} 200 {{ 20 + n * 22 }} T 400 {{ 20 + n * 22 }}"/>{% endfor %}</g><circle cx="200" cy="150" r="36" fill="#c95a3a"/></svg>
@@ -17,12 +17,12 @@
       {% else %}<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><rect width="400" height="300" fill="#e3e0d6"/><rect x="80" y="60" width="240" height="180" fill="none" stroke="#1d2c4a" stroke-width="1.4"/><circle cx="200" cy="150" r="40" fill="#c95a3a"/></svg>{% endif %}
     </a>
     <div class="body">
-      <h2><a href="{{ p.url }}">{{ p.title | e }}</a></h2>
-      <div class="who"><b>{{ p.extra.artist | default(value="Loom artist") }}</b>{% if p.extra.year %} · {{ p.extra.year }}{% endif %}</div>
+      <h2><a href="{{ base_url }}{{ p.url }}">{{ p.title | e }}</a></h2>
+      <div class="who">{% if p.extra is defined %}{% if p.extra %}<b>{{ p.extra.artist | default(value="Loom artist") }}</b>{% if p.extra.year %} · {{ p.extra.year }}{% endif %}{% endif %}{% else %}<b>Loom artist</b>{% endif %}</div>
       {% if p.description %}<p class="desc">{{ p.description | e }}</p>{% endif %}
       <div class="caption">
-        {% if p.extra.medium %}<span><b>Medium</b>{{ p.extra.medium }}</span>{% endif %}
-        {% if p.extra.dimensions %}<span><b>Dimensions</b>{{ p.extra.dimensions }}</span>{% endif %}
+        {% if p.extra is defined %}{% if p.extra %}{% if p.extra.medium %}<span><b>Medium</b>{{ p.extra.medium }}</span>{% endif %}{% endif %}{% endif %}
+        {% if p.extra is defined %}{% if p.extra %}{% if p.extra.dimensions %}<span><b>Dimensions</b>{{ p.extra.dimensions }}</span>{% endif %}{% endif %}{% endif %}
       </div>
     </div>
   </article>
