@@ -17,7 +17,7 @@
     {% for p in works.pages %}
     <article class="thread">
       <div class="ix"><em>№ {% if loop.index < 10 %}0{% endif %}{{ loop.index }}</em><small>Loom {{ loop.index }}</small></div>
-      <a class="plate" href="{{ p.url }}">
+      <a class="plate" href="{{ base_url }}{{ p.url }}">
         {% set i = loop.index %}
         {% if i == 1 %}
         <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
@@ -49,12 +49,12 @@
         {% endif %}
       </a>
       <div class="body">
-        <h2><a href="{{ p.url }}">{{ p.title | e }}</a></h2>
-        <div class="who"><b>{{ p.extra.artist | default(value="Loom artist") }}</b>{% if p.extra.year %} · {{ p.extra.year }}{% endif %}</div>
+        <h2><a href="{{ base_url }}{{ p.url }}">{{ p.title | e }}</a></h2>
+        <div class="who">{% if p.extra is defined %}{% if p.extra %}<b>{{ p.extra.artist | default(value="Loom artist") }}</b>{% if p.extra.year %} · {{ p.extra.year }}{% endif %}{% endif %}{% else %}<b>Loom artist</b>{% endif %}</div>
         {% if p.description %}<p class="desc">{{ p.description | e }}</p>{% endif %}
         <div class="caption">
-          {% if p.extra.medium %}<span><b>Medium</b>{{ p.extra.medium }}</span>{% endif %}
-          {% if p.extra.dimensions %}<span><b>Dimensions</b>{{ p.extra.dimensions }}</span>{% endif %}
+          {% if p.extra is defined %}{% if p.extra %}{% if p.extra.medium %}<span><b>Medium</b>{{ p.extra.medium }}</span>{% endif %}{% endif %}{% endif %}
+          {% if p.extra is defined %}{% if p.extra %}{% if p.extra.dimensions %}<span><b>Dimensions</b>{{ p.extra.dimensions }}</span>{% endif %}{% endif %}{% endif %}
           {% if p.extra.warp %}<span><b>Warp</b>{{ p.extra.warp }}</span>{% endif %}
           {% if p.extra.weft %}<span><b>Weft</b>{{ p.extra.weft }}</span>{% endif %}
         </div>
