@@ -6,13 +6,13 @@ description = "One cherry tomato seedling lagged three weeks behind its siblings
 issue = 2
 +++
 
-Three cherry tomato seedlings went into pots on the same day, from the same tray, given the same light and the same water. Two of them took off within a week — sturdy stems, quick new leaves, the kind of growth that makes you feel competent. The third sat there, more or less unchanged, for close to three weeks. Every instinct I had said to intervene: more fertilizer, a different spot, maybe start over with a fresh seedling. I did none of those things, mostly out of stubbornness, and it turned out to be the right call for the wrong reason.
+Three cherry tomato seedlings went into pots the same day, same tray, same light, same water. Two took off within a week. The third sat there, more or less unchanged, for close to three weeks. Every instinct said to intervene. I did nothing, mostly out of stubbornness, and it turned out to be the right call for the wrong reason.
 
 <!-- more -->
 
 ## What was actually happening
 
-When the slow seedling finally did start moving, the growth came fast and dense, and the root ball I eventually saw at repotting was, if anything, better established than its faster siblings' — more fine root hair, less of the coiling that comes from a plant racing to put on top growth before its roots can support it. My best guess, and it is a guess, is that this particular plant spent its slow weeks building root structure instead of leaf structure, and that the visible pause was not the absence of growth but a different kind of it, one that does not show from above.
+More fertilizer, a different spot, maybe a fresh seedling to start over with — none of it, in the end, was needed. When the slow seedling finally did start moving, the growth came fast and dense, and the root ball I eventually saw at repotting was, if anything, better established than its faster siblings' — more fine root hair, less of the coiling that comes from a plant racing to put on top growth before its roots can support it. My best guess, and it is a guess, is that this particular plant spent its slow weeks building root structure instead of leaf structure, and that the visible pause was not the absence of growth but a different kind of it, one that does not show from above.
 
 ## The hardening-off lesson underneath this
 

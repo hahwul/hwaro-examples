@@ -6,11 +6,13 @@ description = "Mint, perilla, and chives will survive almost anything you do wro
 issue = 5
 +++
 
-After four letters about getting things precisely right — light audits, hardening off, watering discipline, careful repotting — I want to spend this one on the plants that make most of that precision optional. Mint, perilla (known here as *kkaennip*, and increasingly easy to find as starts rather than seed), and chives have survived every mistake I have made on this balcony, including several weeks of outright neglect during a stretch last summer when I barely stepped outside at all.
+After four letters about getting things precisely right, I want to spend this one on the plants that make most of that precision optional. Mint, perilla (*kkaennip*), and chives have survived every mistake I have made on this balcony, including several weeks of outright neglect last summer.
 
 <!-- more -->
 
 ## Mint needs a container within a container
+
+Light audits, hardening off, watering discipline, careful repotting — none of it, with these three, turns out to matter nearly as much as I once thought.
 
 Mint's famous vigor is not a myth, and on a balcony where it cannot escape into open ground, that vigor just means it will fill and eventually crowd out anything sharing its pot. The fix is simple: keep mint in its own pot, always, even if the pot looks comically large for one small plant at first. If you want mint alongside other herbs, sink the mint's own pot into the soil of a larger shared container rather than planting it directly — the plastic or terracotta wall it stays inside contains the roots without anyone seeing the trick. I learned this after mint colonized an entire half-barrel meant for three different herbs in a single growing season.
 

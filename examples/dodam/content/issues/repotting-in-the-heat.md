@@ -6,7 +6,7 @@ description = "Late spring root-bound plants and early-summer heat arrive at the
 issue = 4
 +++
 
-Late May is when the root-bound plants finally announce themselves — water running straight through the pot without the soil seeming to absorb any of it, growth that has visibly stalled despite decent light and feeding, roots showing through the drainage hole or circling the surface. It is also, reliably, the point where daytime temperatures on my balcony start climbing past what I would call comfortable repotting weather. Those two facts collide every year, and every year I have to relearn the same handful of adjustments to do it safely.
+Late May is when the root-bound plants finally announce themselves — water running straight through without the soil absorbing it, growth stalled despite decent light, roots circling the surface. It is also, reliably, when daytime temperatures start climbing past comfortable repotting weather. Those two facts collide every year, and every year I have to relearn the same handful of adjustments to do it safely.
 
 <!-- more -->
 

@@ -6,13 +6,13 @@ description = "A rooted fig cutting that did almost nothing its first year final
 issue = 6
 +++
 
-Two Junes ago I rooted a fig cutting in a jar of water on this balcony, more out of curiosity than any real expectation, and moved it into soil once the roots looked substantial. Its first full year in a pot was, by most visible measures, a disappointment: a handful of leaves, no real gain in height, nothing that looked like the vigorous growth fig trees are supposed to be known for. This spring, its second, it broke dormancy with more new growth in three weeks than it had produced in the entire previous year combined, and I think the gap between those two years is the truest thing I can tell you about growing something long-lived in a container.
+Two Junes ago I rooted a fig cutting in a jar of water, more out of curiosity than expectation, and moved it into soil once the roots looked real. Its first year was a disappointment by every visible measure — a handful of leaves, no real height. This spring, its second, it broke dormancy with more new growth in three weeks than the whole previous year combined.
 
 <!-- more -->
 
 ## What the quiet year was actually for
 
-Cuttings and young woody plants spend their early seasons building a root system proportional to the container they are in, largely out of sight, before they commit real energy to top growth. A fig that looks stalled above the soil line in year one is very often not stalled at all below it — and pulling it out to check, the temptation I mostly resisted, disturbs exactly the structure it needs to finish. I gave it a slightly larger pot at the end of that first year, more out of hope than evidence, top-dressed with fresh compost, and otherwise left it through winter with reduced watering and no fertilizer, which is the standard dormancy care for a fig that has dropped its leaves and is doing nothing you can see.
+The gap between those two years is the truest thing I can tell you about growing something long-lived in a container. Cuttings and young woody plants spend their early seasons building a root system proportional to the container they are in, largely out of sight, before they commit real energy to top growth. A fig that looks stalled above the soil line in year one is very often not stalled at all below it — and pulling it out to check, the temptation I mostly resisted, disturbs exactly the structure it needs to finish. I gave it a slightly larger pot at the end of that first year, more out of hope than evidence, top-dressed with fresh compost, and otherwise left it through winter with reduced watering and no fertilizer, which is the standard dormancy care for a fig that has dropped its leaves and is doing nothing you can see.
 
 ## Reading dormancy correctly
 

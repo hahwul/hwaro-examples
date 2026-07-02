@@ -1,0 +1,40 @@
+{% include "header.html" %}
+  <main id="main">
+    <article class="wrap page">
+      <header class="page__head">
+        {% if page.date %}
+        <p class="page__meta">
+          <time datetime="{{ page.date | date('%Y-%m-%d') }}">{{ page.date | date("%d %B %Y") }}</time>
+          {% if page.reading_time %}<span aria-hidden="true">&middot;</span> <span>{{ page.reading_time }} min read</span>{% endif %}
+        </p>
+        {% endif %}
+        <h1>{{ page.title | e }}</h1>
+        {% if page.description %}<p class="page__deck">{{ page.description | e }}</p>{% endif %}
+      </header>
+
+      {% if page.extra.height_cm %}
+      <dl class="specs">
+        <div><dt>Height</dt><dd>{{ page.extra.height_cm }} cm</dd></div>
+        <div><dt>Diameter</dt><dd>{{ page.extra.diameter_cm }} cm</dd></div>
+        <div><dt>Gathers</dt><dd>{{ page.extra.gather_count }}</dd></div>
+        <div><dt>Anneal</dt><dd>{{ page.extra.anneal_hours }} hours</dd></div>
+        {% if page.extra.color_notes %}<div class="specs__wide"><dt>Notes</dt><dd>{{ page.extra.color_notes | e }}</dd></div>{% endif %}
+      </dl>
+      {% endif %}
+
+      <div class="prose">
+        {{ content | safe }}
+      </div>
+
+      {% if page.section == "vessels" %}
+        {% if page.lower or page.higher %}
+        <nav class="entry-nav" aria-label="More vessels">
+          {% if page.higher %}<a class="entry-nav__link entry-nav__link--prev" href="{{ base_url }}{{ page.higher.url }}"><span class="entry-nav__label">Previous entry</span><span class="entry-nav__title">{{ page.higher.title | e }}</span></a>{% endif %}
+          {% if page.lower %}<a class="entry-nav__link entry-nav__link--next" href="{{ base_url }}{{ page.lower.url }}"><span class="entry-nav__label">Next entry</span><span class="entry-nav__title">{{ page.lower.title | e }}</span></a>{% endif %}
+        </nav>
+        {% endif %}
+        <p class="back-link"><a href="{{ base_url }}/vessels/">&larr; Back to the vessel log</a></p>
+      {% endif %}
+    </article>
+  </main>
+{% include "footer.html" %}

@@ -6,7 +6,7 @@ description = "Overwatering is rarely about the plant needing water. It is usual
 issue = 3
 +++
 
-More balcony plants die from overwatering than from underwatering, by a wide margin, and I do not think this is really a knowledge problem. Most people who overwater their plants can recite the finger test — push a finger an inch into the soil, water only if it comes out dry — and do it anyway, on the wrong day, because watering is doing something, and doing something feels better than sitting with the discomfort of not knowing whether a plant is okay.
+More balcony plants die from overwatering than from underwatering, by a wide margin, and I do not think this is really a knowledge problem. Most people who overwater can recite the finger test — water only if the soil comes out dry — and do it anyway, because watering is doing something, and doing something feels better than sitting with the discomfort of not knowing.
 
 <!-- more -->
 
