@@ -5,7 +5,7 @@ description = "The coldest session in the ledger: M82 shows its dark cut at 198x
 tags = ["galaxies", "double-stars"]
 [extra]
 seeing = 4
-seeing_note = "good — hard cold and still"
+seeing_note = "hard cold and still"
 temp = "−12 °C"
 transparency = "Excellent, the driest air of the winter"
 moon = "New moon tonight"

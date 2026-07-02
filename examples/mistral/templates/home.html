@@ -1,0 +1,42 @@
+{% include "header.html" %}
+    <main id="main">
+      {% set rides = get_section(path="rides") %}
+      {% set ordered = rides.pages | sort_by("date", reverse=true) %}
+      {% set latest = ordered | first %}
+
+      <section class="hero" aria-label="Latest ride report">
+        <div class="hero-lead">
+          <p class="kicker"><span class="kicker-word">Latest ride</span><span class="kicker-sep" aria-hidden="true"> · </span>{% if latest.date %}<time datetime="{{ latest.date | date("%Y-%m-%d") }}">{{ latest.date | date("%B %d, %Y") }}</time>{% endif %}</p>
+          <h1 class="hero-title"><a href="{{ base_url }}{{ latest.url }}">{{ latest.title | e }}</a></h1>
+          {% if latest.description %}<p class="hero-standfirst">{{ latest.description | e }}</p>{% endif %}
+          {% if latest.extra.route %}<p class="hero-route">{{ latest.extra.route | e }}</p>{% endif %}
+          {% if latest.extra.wind %}<p class="hero-wind">{{ latest.extra.wind | e }}</p>{% endif %}
+          <p class="hero-cta"><a class="read-link" href="{{ base_url }}{{ latest.url }}">Read the report<span aria-hidden="true"> &rarr;</span></a></p>
+        </div>
+        <div class="hero-figures" role="group" aria-label="Distance and elevation gain of the latest ride">
+          <p class="stat">
+            <span class="stat-value">{{ latest.extra.distance_km }}</span>
+            <span class="stat-label">kilometres ridden</span>
+          </p>
+          <p class="stat">
+            <span class="stat-value">+{{ latest.extra.elevation_m }}</span>
+            <span class="stat-label">metres climbed</span>
+          </p>
+        </div>
+      </section>
+
+      <section class="archive" aria-label="Ride archive">
+        <header class="archive-head">
+          <h2 class="archive-title">The ride archive</h2>
+          <a class="archive-all" href="{{ base_url }}/rides/">All reports<span aria-hidden="true"> &rarr;</span></a>
+        </header>
+        <ol class="ride-list">
+          {% for r in ordered %}
+            {% if not loop.first %}
+              {% include "partials/ride_row.html" %}
+            {% endif %}
+          {% endfor %}
+        </ol>
+      </section>
+    </main>
+{% include "footer.html" %}

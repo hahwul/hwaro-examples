@@ -9,7 +9,7 @@ Graupel is the observing log of Marta Ilves, kept from a back garden on the edge
 
 The telescope is a 254 mm f/4.7 dobsonian, bought secondhand with a cracked base and rebuilt over one autumn on the kitchen table. It has no motors, no encoders, and no opinions. Finding things is done the old way: a red-dot finder, a 9×50 straight-through, and a stack of photocopied charts held down with a mug. The eyepiece case holds four: 24 mm (50×), 10 mm (119×), 6 mm (198×), and a 4.5 mm ortho (264×) that only comes out when the air deserves it. A narrowband nebula filter does more work per gram than anything else in the kit.
 
-## Why "graupel"
+## Why “graupel”
 
 Graupel is soft hail — rimed snow pellets that fall in short, violent showers from convective winter sky. Where there is graupel there is unstable air, and unstable air clears hard and sudden: twenty minutes after a shower rattles the shed roof, the sky can be the most transparent it will be all month. The first entry in this log was written on exactly that kind of night, so the name stuck.
 

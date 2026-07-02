@@ -5,7 +5,7 @@ description = "Seeing 1, transparency superb — the wrong night for planets is 
 tags = ["galaxies"]
 [extra]
 seeing = 1
-seeing_note = "boiling — jet stream parked directly overhead"
+seeing_note = "boiling, jet stream parked directly overhead"
 temp = "+1 °C"
 transparency = "Excellent, washed clean behind a cold front"
 moon = "New"
