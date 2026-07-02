@@ -1,0 +1,26 @@
+{% include "header.html" %}
+<main id="main" class="section">
+  <header class="section-head tilt-l">
+    <p class="kicker">// COMPOS.DIR</p>
+    <h1 class="page-title glitch" data-text="{{ section.title }}">{{ section.title }}</h1>
+    {% if section.description %}<p class="lede">{{ section.description | e }}</p>{% endif %}
+  </header>
+
+  {% if content %}<div class="prose section-intro">{{ content | safe }}</div>{% endif %}
+
+  <ul class="deck">
+    {% for p in section.pages | sort_by("weight") %}
+    <li class="deck-item {% if loop.index % 2 == 1 %}tilt-l{% else %}tilt-r{% endif %}">
+      <a class="crt-block chroma" href="{{ base_url }}{{ p.url }}">
+        <div class="scanlines" aria-hidden="true"></div>
+        <p class="compo-tag">COMPO 0{{ loop.index }} · {{ p.extra.slot | default("TBA") }}</p>
+        <h2 class="compo-name glitch" data-text="{{ p.title }}">{{ p.title }}</h2>
+        <p class="compo-limit">{{ p.extra.limit | default("no limit") | safe }}</p>
+        <p class="compo-desc">{{ p.description | e }}</p>
+        <p class="compo-dead">DEADLINE {{ p.extra.deadline | default("at the party") }} <span class="arrow" aria-hidden="true">&rsaquo;</span></p>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</main>
+{% include "footer.html" %}

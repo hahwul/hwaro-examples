@@ -1,0 +1,30 @@
+{% include "header.html" %}
+  <main id="main">
+    <section class="masthead">
+      <p class="masthead__kicker">dan &middot; saek &middot; hwa</p>
+      <h1 class="masthead__title">Dansaekhwa</h1>
+      <p class="masthead__manifesto">{{ page.extra.manifesto | default("Monochrome studies of layered ink and clay, held apart by broad bands of unpainted ground.", true) }}</p>
+      <p class="masthead__scroll" aria-hidden="true">&#8595;</p>
+    </section>
+
+    {% if content %}<div class="prose masthead__note">{{ content }}</div>{% endif %}
+
+    {% set studies = get_section(path="studies/_index.md") %}
+    <div class="gallery">
+      {% for s in studies.pages %}
+      <article class="study {% if loop.index is odd %}study--left{% else %}study--right{% endif %}">
+        <header class="study__caption">
+          <span class="study__no">{{ s.extra.number | default("", true) }}</span>
+          <h2 class="study__title"><a href="{{ base_url }}{{ s.url }}">{{ s.title | e }}</a></h2>
+          <p class="study__desc">{{ s.description | e }}</p>
+          <p class="study__meta">{% if s.extra.material %}{{ s.extra.material | e }}{% endif %}{% if s.date %} &middot; {{ s.date | date("%Y") }}{% endif %}</p>
+        </header>
+        <a class="plate" href="{{ base_url }}{{ s.url }}" aria-label="Open {{ s.title | e }}">
+          {% set pk = s.extra.plate %}
+          {% include "plate.html" %}
+        </a>
+      </article>
+      {% endfor %}
+    </div>
+  </main>
+{% include "footer.html" %}

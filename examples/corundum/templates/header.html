@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="{{ page.description | default(site.description, true) | e }}">
+  <title>{% if page.title is present and page.url != "/" %}{{ page.title | e }} · {{ site.title | e }}{% else %}{{ site.title | e }} — {{ site.description | e }}{% endif %}</title>
+  <link rel="icon" type="image/svg+xml" href="{{ base_url }}/favicon.svg">
+  {{ og_all_tags }}
+  {{ canonical_tag }}
+  {{ jsonld }}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ base_url }}/css/style.css">
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+</head>
+<body data-base="{{ base_url }}">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="sidebar" aria-label="Open the contents">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M3 5.5h14M3 10h14M3 14.5h9"/></svg>
+        <span>Contents</span>
+      </button>
+      <a class="brand" href="{{ base_url }}/" aria-label="Corundum — home">
+        <svg class="brand-crest" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M16 3 28 11 16 29 4 11z" fill="var(--accent)" fill-opacity="0.09"/>
+          <path d="M4 11h24"/>
+          <path d="M16 3 10 11l6 18 6-18z"/>
+          <path d="M10 11 16 3l6 8"/>
+        </svg>
+        <span class="brand-word">Corundum</span>
+        <span class="brand-sub" aria-hidden="true">Identity Server</span>
+      </a>
+      <div class="topbar-tools">
+        <button class="cmdk" id="search-open" type="button" aria-haspopup="dialog" aria-expanded="false" aria-label="Open search">
+          <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="7" cy="7" r="4.4"/><path d="M10.4 10.4 14 14"/></svg>
+          <span class="cmdk-label">Search the specification</span>
+          <span class="cmdk-keys" aria-hidden="true"><kbd>Ctrl</kbd><kbd>K</kbd></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="shell">
+    <aside class="sidebar" id="sidebar">
+      <nav class="sidenav" aria-label="Documentation">
+        <p class="sidenav-label">The Guides</p>
+        <ol class="sidenav-list">
+          {% for p in get_section(path="guides").pages | sort_by("weight") %}
+          <li>
+            <a class="sidenav-link{% if page.url == p.url %} is-current{% endif %}" href="{{ base_url }}{{ p.url }}"{% if page.url == p.url %} aria-current="page"{% endif %}>
+              <span class="sidenav-num" aria-hidden="true">{{ p.extra.roman | default("·") }}</span>
+              <span class="sidenav-name">{{ p.title }}</span>
+            </a>
+          </li>
+          {% endfor %}
+        </ol>
+        <p class="sidenav-label sidenav-label-loose">Reference</p>
+        <ul class="sidenav-list sidenav-list-plain">
+          <li>
+            <a class="sidenav-link{% if page.url == "/security/" %} is-current{% endif %}" href="{{ base_url }}/security/"{% if page.url == "/security/" %} aria-current="page"{% endif %}>
+              <span class="sidenav-num" aria-hidden="true">§</span>
+              <span class="sidenav-name">Security Model</span>
+            </a>
+          </li>
+        </ul>
+        <p class="sidenav-foot">Corundum {{ current_year }} · draft&#8209;11 · normative unless marked <em>informative</em>.</p>
+      </nav>
+    </aside>

@@ -1,0 +1,17 @@
+{% include "header.html" %}
+    <main id="main" class="broadsheet">
+      <header class="page-head">
+        <p class="page-kicker">{% if taxonomy_name == "categories" %}Filed at the desk{% else %}Under the motif{% endif %}</p>
+        <h1 class="page-title">{{ taxonomy_term }}</h1>
+        <div class="page-intro"><p>{% if taxonomy_name == "categories" %}Everything written from this desk{% else %}Every piece that keeps returning to <em>{{ taxonomy_term }}</em>{% endif %} &mdash; <a href="{{ base_url }}/{{ taxonomy_name }}/">back to the index</a>.</p></div>
+      </header>
+      {% set tax = get_taxonomy(kind=taxonomy_name) %}
+      <ol class="entry-list entry-list-full">
+        {% for term in tax.items %}
+          {% if term.name == taxonomy_term %}
+            {% for p in term.pages | sort_by("date", reverse=true) %}{% include "partials/row.html" %}{% endfor %}
+          {% endif %}
+        {% endfor %}
+      </ol>
+    </main>
+{% include "footer.html" %}

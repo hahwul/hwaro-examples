@@ -33,19 +33,27 @@
       </footer>
       {% endif %}
 
+      {% set rel_index = get_section(path="releases/_index.md") %}
+      {% set releases = rel_index.pages | sort_by("date", reverse=true) %}
       <nav class="relnav" aria-label="Adjacent releases">
-        {% if page.higher %}
-        <a class="relnav-link relnav-next" href="{{ base_url }}{{ page.higher.url }}">
-          <span class="relnav-dir">Newer</span>
-          <span class="relnav-title">{{ page.higher.title | e }}</span>
+        {% for r in releases %}{% if r.url == page.url %}
+        {% if not loop.first %}
+        <a class="relnav-link relnav-next" href="{{ base_url }}{{ releases[loop.index0 - 1].url }}">
+          <span class="relnav-dir">Newer build</span>
+          <span class="relnav-title">v{{ releases[loop.index0 - 1].extra.version }} &middot; {{ releases[loop.index0 - 1].title | e }}</span>
         </a>
-        {% else %}<span class="relnav-link is-off"><span class="relnav-dir">Newer</span><span class="relnav-title">This is the latest build</span></span>{% endif %}
-        {% if page.lower %}
-        <a class="relnav-link relnav-prev" href="{{ base_url }}{{ page.lower.url }}">
-          <span class="relnav-dir">Older</span>
-          <span class="relnav-title">{{ page.lower.title | e }}</span>
+        {% else %}
+        <span class="relnav-link is-off"><span class="relnav-dir">Newer build</span><span class="relnav-title">This is the latest build</span></span>
+        {% endif %}
+        {% if not loop.last %}
+        <a class="relnav-link relnav-prev" href="{{ base_url }}{{ releases[loop.index0 + 1].url }}">
+          <span class="relnav-dir">Older build</span>
+          <span class="relnav-title">v{{ releases[loop.index0 + 1].extra.version }} &middot; {{ releases[loop.index0 + 1].title | e }}</span>
         </a>
-        {% else %}<span class="relnav-link is-off"><span class="relnav-dir">Older</span><span class="relnav-title">Start of the tracked history</span></span>{% endif %}
+        {% else %}
+        <span class="relnav-link is-off"><span class="relnav-dir">Older build</span><span class="relnav-title">Start of the tracked history</span></span>
+        {% endif %}
+        {% endif %}{% endfor %}
       </nav>
     </article>
   </main>

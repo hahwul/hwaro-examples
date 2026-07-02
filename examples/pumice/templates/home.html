@@ -1,0 +1,62 @@
+{% include "header.html" %}
+      <section class="hero">
+        <p class="eyebrow">eBPF telemetry agent · adaptive sampling</p>
+        <h1 class="hero-title">{{ page.title | e }}</h1>
+        <div class="hero-lede prose">{{ content | safe }}</div>
+        <div class="hero-cta">
+          <a class="btn btn-accent" href="{{ base_url }}/guides/deploy-in-five-minutes/">Deploy in five minutes</a>
+          <a class="btn" href="{{ base_url }}/releases/">Release notes</a>
+        </div>
+      </section>
+
+      <div class="panels">
+        <section class="panel panel-quickstart">
+          <div class="panel-head">
+            <h2 class="panel-title">Quickstart</h2>
+            <span class="panel-tag">linux · x86_64 / arm64</span>
+          </div>
+          <p class="panel-note">One static binary. No kernel module to compile, no sidecar to babysit.</p>
+          <pre class="console" aria-label="Install and run the agent"><span class="ln"><span class="pr">$</span> curl -fsSL get.pumice.dev/install.sh | sh</span>
+<span class="ln"><span class="pr">$</span> pumice up --endpoint otlp://collector:4317</span>
+<span class="ok">  ✓ probe loaded</span>    kprobe/sys_enter · adaptive
+<span class="ok">  ✓ shipping</span>       1:64 sampling · 3.1 KiB/s egress</pre>
+          <p class="panel-foot"><a href="{{ base_url }}/guides/deploy-in-five-minutes/">Full quickstart</a></p>
+        </section>
+
+        <section class="panel panel-collectors">
+          <div class="panel-head">
+            <h2 class="panel-title">Collectors</h2>
+            <span class="panel-tag">6 built-in</span>
+          </div>
+          <table class="metric-table">
+            <thead>
+              <tr><th scope="col">Collector</th><th scope="col">Signal</th><th scope="col" class="num">Unit</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>syscall</code></td><td>syscall.latency</td><td class="num">µs</td></tr>
+              <tr><td><code>tcp</code></td><td>tcp.retransmits</td><td class="num">count/s</td></tr>
+              <tr><td><code>sched</code></td><td>sched.runqueue</td><td class="num">tasks</td></tr>
+              <tr><td><code>blockio</code></td><td>disk.io.wait</td><td class="num">ms</td></tr>
+              <tr><td><code>net</code></td><td>net.throughput</td><td class="num">KiB/s</td></tr>
+              <tr><td><code>dns</code></td><td>dns.lookup.time</td><td class="num">ms</td></tr>
+            </tbody>
+          </table>
+          <p class="panel-foot"><a href="{{ base_url }}/guides/collectors-and-metrics/">Configure collectors</a></p>
+        </section>
+
+        <section class="panel panel-release">
+          <div class="panel-head">
+            <h2 class="panel-title">Latest release</h2>
+            <span class="panel-tag">stable</span>
+          </div>
+          {% set rel = get_section(path="releases") %}
+          {% if rel and rel.pages %}
+            {% set r = rel.pages | first %}
+            <p class="release-ver">{{ r.title | e }}</p>
+            {% if r.date %}<time class="release-date" datetime="{{ r.date | date("%Y-%m-%d") }}">{{ r.date | date("%d %b %Y") }}</time>{% endif %}
+            {% if r.description %}<p class="release-lede">{{ r.description | e }}</p>{% endif %}
+            <p class="panel-foot"><a href="{{ base_url }}{{ r.url }}">Read the notes</a></p>
+          {% endif %}
+        </section>
+      </div>
+{% include "footer.html" %}

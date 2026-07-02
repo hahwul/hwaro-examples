@@ -6,7 +6,7 @@ description = "How Tally protects a vault, how hardware-key unlock works, and ho
 Tally's job is to keep a vault unreadable to everyone except the person holding
 the key. This page explains the cryptography, the unlock flow, and how to report
 a problem. When a release closes a security issue, it earns a solid padlock on
-the [releases timeline](releases/) and a numbered advisory in its notes.
+the [releases timeline](@/releases/_index.md) and a numbered advisory in its notes.
 
 ## How a vault is protected
 

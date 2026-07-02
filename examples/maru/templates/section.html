@@ -1,0 +1,32 @@
+{% include "header.html" %}
+    <main id="main" class="doc">
+      <div class="page-grid">
+        <article class="article">
+          <header class="article-head">
+            <p class="article-kicker"><span class="kicker-plain">Section</span></p>
+            <h1>{{ section.title | e }}</h1>
+            {% if section.description %}<p class="lede">{{ section.description }}</p>{% endif %}
+          </header>
+          <div class="prose">
+            {{ content | safe }}
+          </div>
+          <ol class="index-list">
+            {% for p in section.pages | sort_by("weight") %}
+            <li class="index-row">
+              <a class="index-link" href="{{ base_url }}{{ p.url }}">
+                <span class="index-num" aria-hidden="true">{% if loop.index < 10 %}0{% endif %}{{ loop.index }}</span>
+                <span class="index-body">
+                  <span class="index-line">
+                    <span class="index-name">{{ p.title }}</span>
+                    {% if p.reading_time %}<span class="index-meta">{{ p.reading_time }} min</span>{% endif %}
+                  </span>
+                  {% if p.description %}<span class="index-desc">{{ p.description }}</span>{% endif %}
+                </span>
+              </a>
+            </li>
+            {% endfor %}
+          </ol>
+        </article>
+      </div>
+    </main>
+{% include "footer.html" %}

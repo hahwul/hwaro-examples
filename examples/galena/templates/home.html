@@ -1,0 +1,73 @@
+{% include "header.html" %}
+  <main id="main" class="board">
+    <section class="board-lede" aria-labelledby="board-title">
+      <p class="eyebrow">Distributed cron · jitter · backfills · dead-letter queues</p>
+      <h1 id="board-title">Schedules that fire, catch up, and never drop.</h1>
+      <p class="board-sub">Galena is a distributed job scheduler. It spreads fire times with jitter, replays missed windows as bounded backfills, and parks failed jobs in a dead-letter queue instead of losing them.</p>
+    </section>
+
+    <div class="panels">
+      <section class="panel panel-quickstart" aria-labelledby="p-quickstart">
+        <div class="panel-head">
+          <h2 id="p-quickstart">Quickstart</h2>
+          <span class="panel-badge">5 minutes</span>
+        </div>
+        <p class="panel-copy">Install the daemon, define one job, and watch a leader elect itself. No message broker required to start.</p>
+        <pre class="panel-cmd"><code>brew install galena
+galena serve --state ./galena.db</code></pre>
+        <a class="btn" href="{{ base_url }}/quickstart/">Open the quickstart</a>
+      </section>
+
+      <section class="panel panel-handbook" aria-labelledby="p-handbook">
+        <div class="panel-head">
+          <h2 id="p-handbook">Handbook</h2>
+          <a class="panel-all" href="{{ base_url }}/handbook/">All chapters</a>
+        </div>
+        <div class="docsearch" role="search">
+          <label class="docsearch-field">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="5.5"/><path d="M13.2 13.2L17 17"/></svg>
+            <input id="docsearch-input" type="search" placeholder="Filter the handbook…" aria-label="Search the handbook" autocomplete="off" autocapitalize="off" spellcheck="false">
+          </label>
+          <p class="docsearch-status" id="docsearch-status" role="status"></p>
+        </div>
+        <div id="docsearch-results" class="docsearch-results" hidden></div>
+        <ol class="chapter-list chapter-list-compact" id="docsearch-list">
+          {% for p in get_section(path="handbook").pages | sort_by("weight") %}
+          <li class="chapter">
+            <a class="chapter-link" href="{{ base_url }}{{ p.url }}">
+              <span class="chapter-num" aria-hidden="true">{% if loop.index < 10 %}0{% endif %}{{ loop.index }}</span>
+              <span class="chapter-body">
+                <span class="chapter-title">{{ p.title | e }}</span>
+                {% if p.description %}<span class="chapter-desc">{{ p.description | e }}</span>{% endif %}
+              </span>
+            </a>
+          </li>
+          {% endfor %}
+        </ol>
+      </section>
+
+      <section class="panel panel-status" aria-labelledby="p-status">
+        <div class="panel-head">
+          <h2 id="p-status">Schedules in the wild</h2>
+          <span class="panel-note">hover a field for its name</span>
+        </div>
+        <p class="panel-copy">Every Galena schedule is five fields — minute, hour, day of month, month, day of week. The examples below are the shapes teams reach for most.</p>
+        <div class="chip-strip">
+          {% set cf = ["*/5", "*", "*", "*", "*"] %}{% set cn = "liveness probe, jittered ±20s" %}{% include "cronchip.html" %}
+          {% set cf = ["0", "*/2", "*", "*", "*"] %}{% set cn = "backfill sweep every 2 hours" %}{% include "cronchip.html" %}
+          {% set cf = ["15", "3", "*", "*", "1"] %}{% set cn = "weekly compaction, Mondays 03:15" %}{% include "cronchip.html" %}
+          {% set cf = ["0", "0", "1", "*", "*"] %}{% set cn = "monthly dead-letter drain" %}{% include "cronchip.html" %}
+        </div>
+      </section>
+
+      <section class="panel panel-about" aria-labelledby="p-about">
+        <div class="panel-head">
+          <h2 id="p-about">What Galena is</h2>
+        </div>
+        <div class="prose">
+          {{ content | safe }}
+        </div>
+      </section>
+    </div>
+  </main>
+{% include "footer.html" %}

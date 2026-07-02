@@ -1,0 +1,28 @@
+{% include "header.html" %}
+{% set lineup = section.pages | sort_by("date") %}
+  <main id="main" class="page">
+    <header class="sec-head">
+      {% if page.title is present %}<h1 class="sec-title">{{ page.title | e }}</h1>{% endif %}
+      {% if section.description %}<p class="sec-lede">{{ section.description | e }}</p>{% endif %}
+    </header>
+    <div class="prose sec-intro">
+      {{ content | safe }}
+    </div>
+    <ol class="index index--section">
+      {% for w in lineup %}
+      <li class="index-row{% if loop.index is odd %} is-solid{% else %} is-hollow{% endif %}">
+        <a class="index-link" href="{{ base_url }}{{ w.url }}">
+          <span class="index-num">{% if loop.index < 10 %}0{% endif %}{{ loop.index }}</span>
+          <span class="index-name">{{ w.title }}</span>
+          <span class="index-meta">
+            <span class="index-when"><time datetime="{{ w.date | date("%Y-%m-%d") }}">{{ w.date | date("%a %d %b") }}</time></span>
+            {% if w.extra.instructor %}<span class="index-who">{{ w.extra.instructor }}</span>{% endif %}
+            {% if w.extra.format %}<span class="index-kind">{{ w.extra.format }}</span>{% endif %}
+          </span>
+        </a>
+        {% if w.summary %}<p class="index-sum">{{ w.summary | strip_html | truncate_words(28) }}</p>{% endif %}
+      </li>
+      {% endfor %}
+    </ol>
+  </main>
+{% include "footer.html" %}

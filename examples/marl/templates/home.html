@@ -1,0 +1,65 @@
+{% include "header.html" %}
+  <div class="shell">
+    {% include "sidebar.html" %}
+    <main id="main" class="doc">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="strata-graphic" aria-hidden="true">
+          <div class="strata-band" data-band="1"></div>
+          <div class="strata-band" data-band="2"></div>
+          <div class="strata-band" data-band="3"></div>
+          <div class="strata-band" data-band="4"></div>
+          <div class="strata-band" data-band="5"></div>
+          <svg class="strata-core" viewBox="0 0 60 320" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <path d="M0 60 H60 M0 130 H60 M0 200 H60 M0 262 H60" stroke="var(--accent)" stroke-opacity="0.28" stroke-width="1.2"/>
+            <polyline points="6,40 18,44 30,38 42,46 54,41" fill="none" stroke="var(--accent)" stroke-width="1.6"/>
+          </svg>
+        </div>
+        <div class="hero-copy">
+          <p class="hero-kicker">Time-series database · manual</p>
+          <h1 id="hero-title" class="hero-title">Marl</h1>
+          <p class="hero-lede">Marl stores metrics the way ground stores time: newest at the surface, older data pressed into deeper, coarser layers. Tiered retention, automatic downsampling, and gap-aware queries are built into the storage engine, not bolted on top.</p>
+          <p class="hero-actions">
+            <a class="btn btn-accent" href="{{ base_url }}/quickstart/">Quickstart</a>
+            <a class="btn" href="{{ base_url }}/manual/">Read the manual</a>
+          </p>
+        </div>
+      </section>
+
+      <div class="prose home-intro">
+        {{ content | safe }}
+      </div>
+
+      <section class="pillars" aria-label="What Marl does">
+        <article class="pillar">
+          <h2 class="pillar-title">Tiered retention</h2>
+          <p>Each series flows through named tiers — <code>hot</code>, <code>warm</code>, <code>cold</code> — with its own resolution and lifetime. A point that starts at one-second precision settles into hourly rollups without a cron job.</p>
+        </article>
+        <article class="pillar">
+          <h2 class="pillar-title">Automatic downsampling</h2>
+          <p>Continuous rollups aggregate as data ages: <code>mean</code>, <code>max</code>, <code>p99</code>, and counts are computed once at the tier boundary and reused by every query that reaches for them.</p>
+        </article>
+        <article class="pillar">
+          <h2 class="pillar-title">Gap-aware queries</h2>
+          <p>Missing intervals are first-class. Queries distinguish a real zero from an absent sample, and <code>fill</code> policies let you carry, interpolate, or leave holes exactly where sensors went quiet.</p>
+        </article>
+      </section>
+
+      <section class="chapters" aria-labelledby="chapters-title">
+        <h2 id="chapters-title" class="chapters-title">The manual, top to bottom</h2>
+        <ol class="chapter-list">
+          {% for p in get_section(path="manual").pages | sort_by("weight") %}
+          <li class="chapter">
+            <a class="chapter-link" href="{{ base_url }}{{ p.url }}">
+              <span class="chapter-num" aria-hidden="true">{% if loop.index < 10 %}0{% endif %}{{ loop.index }}</span>
+              <span class="chapter-body">
+                <span class="chapter-name">{{ p.title | e }}</span>
+                {% if p.description %}<span class="chapter-desc">{{ p.description | e }}</span>{% endif %}
+              </span>
+            </a>
+          </li>
+          {% endfor %}
+        </ol>
+      </section>
+    </main>
+  </div>
+{% include "footer.html" %}

@@ -1,0 +1,58 @@
+{% include "header.html" %}
+  <main id="main" class="wrap">
+    <section class="hero" aria-labelledby="hero-line">
+      <p class="hero-name">Dolomite</p>
+      <h1 class="hero-line" id="hero-line">{{ page.extra.tagline | default("The typed configuration language that compiles to plain JSON.") }}</h1>
+
+      <div class="twopane hero-pane" role="group" aria-label="A Dolomite source file and the JSON it compiles to">
+        <figure class="pane pane-source">
+          <figcaption class="pane-cap"><span class="pane-ext">.dolo</span> server.dolo</figcaption>
+<pre><code><span class="tok-c"># a document is a typed record</span>
+<span class="tok-k">schema</span> <span class="tok-t">Server</span> {
+  <span class="tok-key">host</span>: <span class="tok-t">Str</span>
+  <span class="tok-key">port</span>: <span class="tok-t">Int</span>  = <span class="tok-n">8080</span>
+  <span class="tok-key">tls</span>:  <span class="tok-t">Bool</span> = <span class="tok-n">false</span>
+}
+
+<span class="tok-key">server</span>: <span class="tok-t">Server</span> = {
+  <span class="tok-key">host</span> = <span class="tok-s">"0.0.0.0"</span>
+  <span class="tok-key">tls</span>  = <span class="tok-n">true</span>
+}</code></pre>
+        </figure>
+        <div class="pane-join" aria-hidden="true"><span>compiles to</span></div>
+        <figure class="pane pane-json">
+          <figcaption class="pane-cap"><span class="pane-ext">.json</span> server.json</figcaption>
+<pre><code>{
+  <span class="tok-jkey">"server"</span>: {
+    <span class="tok-jkey">"host"</span>: <span class="tok-s">"0.0.0.0"</span>,
+    <span class="tok-jkey">"port"</span>: <span class="tok-n">8080</span>,
+    <span class="tok-jkey">"tls"</span>: <span class="tok-n">true</span>
+  }
+}</code></pre>
+        </figure>
+      </div>
+    </section>
+
+    <section class="prose home-prose">
+      {{ content | safe }}
+    </section>
+
+    <section class="read-next" aria-labelledby="read-next-title">
+      <h2 id="read-next-title" class="section-label">Read the specification</h2>
+      <ol class="spec-toc">
+        {% set spec = get_section(path="spec") %}
+        {% for p in spec.pages %}
+        <li class="spec-toc-item">
+          <a href="{{ base_url }}{{ p.url }}">
+            <span class="spec-toc-num" aria-hidden="true"></span>
+            <span class="spec-toc-text">
+              <span class="spec-toc-name">{{ p.title | e }}</span>
+              {% if p.description %}<span class="spec-toc-desc">{{ p.description | e }}</span>{% endif %}
+            </span>
+          </a>
+        </li>
+        {% endfor %}
+      </ol>
+    </section>
+  </main>
+{% include "footer.html" %}

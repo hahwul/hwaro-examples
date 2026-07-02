@@ -1,0 +1,51 @@
+{% include "header.html" %}
+    <main id="main" class="broadsheet">
+      <article class="essay{% if page.extra.film %} essay-review{% endif %}">
+        <header class="essay-head">
+          {% if page.extra.kicker or page.extra.stars %}
+          <p class="essay-kicker">
+            <span class="kicker-label">{{ page.extra.kicker | default("Essay") }}</span>
+            {% if page.extra.stars %}<span class="rating rating-lg"><span class="stars" aria-hidden="true">{{ page.extra.stars }}</span><span class="sr-only">rated {{ page.extra.rating }} of 5</span></span>{% endif %}
+          </p>
+          {% endif %}
+          <h1 class="essay-title">{{ page.title | e }}</h1>
+          {% if page.description %}<p class="essay-standfirst">{{ page.description | e }}</p>{% endif %}
+          <p class="essay-byline">
+            {% if page.extra.byline %}<span class="byline">{{ page.extra.byline }}</span>{% endif %}
+            {% if page.date %}<span class="dot" aria-hidden="true">&#8226;</span><time datetime="{{ page.date | date('%Y-%m-%d') }}">{{ page.date | date("%B %d, %Y") }}</time>{% endif %}
+            {% if page.reading_time %}<span class="dot" aria-hidden="true">&#8226;</span>{{ page.reading_time }} min read{% endif %}
+          </p>
+        </header>
+
+        {% if page.extra.film %}
+        <dl class="credits" aria-label="Screening notes">
+          <div class="cred"><dt>Film</dt><dd><cite>{{ page.extra.film }}</cite></dd></div>
+          {% if page.extra.director %}<div class="cred"><dt>Director</dt><dd>{{ page.extra.director }}</dd></div>{% endif %}
+          {% if page.extra.year %}<div class="cred"><dt>Year</dt><dd>{{ page.extra.year }}</dd></div>{% endif %}
+          {% if page.extra.runtime %}<div class="cred"><dt>Runtime</dt><dd>{{ page.extra.runtime }}</dd></div>{% endif %}
+        </dl>
+        {% endif %}
+
+        {% if toc %}
+        <nav class="toc" aria-label="Contents">
+          <p class="toc-title">In this piece</p>
+          {{ toc | safe }}
+        </nav>
+        {% endif %}
+
+        <div class="prose">{{ content | safe }}</div>
+
+        <footer class="essay-foot">
+          {% if page.tags %}
+          <p class="foot-row"><span class="foot-label">Motifs</span>{% for t in page.tags %}<a class="foot-term" href="{{ base_url }}/tags/{{ t | slugify }}/">{{ t }}</a>{% endfor %}</p>
+          {% endif %}
+          {% if page.taxonomies.categories %}
+          <p class="foot-row"><span class="foot-label">Filed at</span>{% for c in page.taxonomies.categories %}<a class="foot-term" href="{{ base_url }}/categories/{{ c | slugify }}/">{{ c }}</a>{% endfor %}</p>
+          {% endif %}
+          {% if page.section == "essays" %}
+          <p class="foot-back"><a class="all-link" href="{{ base_url }}/essays/"><span aria-hidden="true">&#8592; </span>Back to the essays desk</a></p>
+          {% endif %}
+        </footer>
+      </article>
+    </main>
+{% include "footer.html" %}

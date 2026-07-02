@@ -1,0 +1,74 @@
+{% include "header.html" %}
+    <main id="main" class="doc doc-home">
+      <section class="masthead">
+        <p class="masthead-kicker">Self-hosted full-text search · release 2.4</p>
+        <h1 class="masthead-title">Magnetite</h1>
+        <p class="masthead-sub">A search server you run yourself: typo tolerance, faceting, and synonym maps over a single binary and one index file.</p>
+
+        <div class="masthead-tape">
+          <figure class="tape tape-hero">
+            <div class="tape-strip" role="img" aria-label="Example query punched on tape: title:manual AND body:altitude~2 &facet=year:2025">
+              <span class="tape-lead" aria-hidden="true"></span>
+              <code class="tape-query">title:manual AND body:altitude~2 &amp;facet=year:2025</code>
+              <span class="tape-lead" aria-hidden="true"></span>
+            </div>
+            <figcaption class="tape-cap"><span class="tape-cap-tick" aria-hidden="true">&#9656;</span> A parsed query on the operator console: a phrase, a fuzzy term (edit distance 2), and a facet, punched to tape before it reaches the index.</figcaption>
+          </figure>
+        </div>
+
+        <div class="masthead-lede">
+          {{ content | safe }}
+        </div>
+
+        <p class="masthead-actions">
+          <a class="btn btn-primary" href="{{ base_url }}/reference/query-syntax/">Read the query grammar</a>
+          <a class="btn btn-ghost" href="{{ base_url }}/install/">Install &amp; run</a>
+        </p>
+      </section>
+
+      <section class="pillars" aria-labelledby="pillars-title">
+        <h2 class="pillars-title" id="pillars-title">What the engine gets right</h2>
+        <div class="pillar-grid">
+          <article class="pillar">
+            <svg class="pillar-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true" focusable="false"><path d="M4 8h24M4 16h16M4 24h20"/><path d="M22 20l4 4 4-6"/></svg>
+            <h3>Typo tolerance</h3>
+            <p>A Levenshtein automaton matches misspellings within a configurable edit distance, so <code>altittude</code> still finds altitude without a spell-check round trip.</p>
+          </article>
+          <article class="pillar">
+            <svg class="pillar-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true" focusable="false"><path d="M5 6h22M9 12h14M13 18h6M15 24h2"/></svg>
+            <h3>Faceting</h3>
+            <p>Declare a field as a facet and every response ships exact counts per value, computed from the same posting lists that answer the query.</p>
+          </article>
+          <article class="pillar">
+            <svg class="pillar-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="3"/><circle cx="23" cy="23" r="3"/><path d="M9 12v6a5 5 0 0 0 5 5h6M23 20v-6a5 5 0 0 0-5-5h-6"/></svg>
+            <h3>Synonym maps</h3>
+            <p>Two-way and one-way synonym sets expand at query time from a plain-text map, hot-reloaded without a reindex when the file changes on disk.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="contents" aria-labelledby="contents-title">
+        <div class="contents-head">
+          <h2 class="contents-title" id="contents-title">The reference, page by page</h2>
+          <p class="contents-sub">Six chapters, ordered the way you would read them from a cold start: the grammar first, then the machinery underneath it.</p>
+        </div>
+        <ol class="ledger">
+          {% for p in get_section(path="reference").pages | sort_by("weight") %}
+          <li class="ledger-row">
+            <a class="ledger-link" href="{{ base_url }}{{ p.url }}">
+              <span class="ledger-num" aria-hidden="true">{% if loop.index < 10 %}0{% endif %}{{ loop.index }}</span>
+              <span class="ledger-main">
+                <span class="ledger-head">
+                  <span class="ledger-name">{{ p.title }}</span>
+                  <span class="ledger-dots" aria-hidden="true"></span>
+                  {% if p.extra.section_id %}<span class="ledger-id">{{ p.extra.section_id }}</span>{% endif %}
+                </span>
+                {% if p.description %}<span class="ledger-desc">{{ p.description }}</span>{% endif %}
+              </span>
+            </a>
+          </li>
+          {% endfor %}
+        </ol>
+      </section>
+    </main>
+{% include "footer.html" %}

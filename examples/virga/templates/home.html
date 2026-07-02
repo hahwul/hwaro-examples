@@ -1,0 +1,60 @@
+{% include "header.html" %}
+    <main id="main" class="frontpage">
+      {% set entries = get_section(path="essays").pages | sort_by("date", reverse=true) %}
+      {% set lead = entries | first %}
+
+      <article class="lead" aria-labelledby="lead-title">
+        <p class="lead-kicker">
+          <span class="kicker-label">{{ lead.extra.kicker | default("Lead essay") }}</span>
+          {% if lead.extra.stars %}<span class="rating rating-lg"><span class="stars" aria-hidden="true">{{ lead.extra.stars }}</span><span class="sr-only">rated {{ lead.extra.rating }} of 5</span></span>{% endif %}
+        </p>
+        <h1 class="lead-title" id="lead-title"><a href="{{ base_url }}{{ lead.url }}">{{ lead.title }}</a></h1>
+        <p class="lead-standfirst">{{ lead.description | e }}</p>
+        <p class="lead-byline">
+          {% if lead.extra.byline %}<span class="byline">{{ lead.extra.byline }}</span>{% endif %}
+          {% if lead.date %}<span class="dot" aria-hidden="true">&#8226;</span><time datetime="{{ lead.date | date('%Y-%m-%d') }}">{{ lead.date | date('%B %d, %Y') }}</time>{% endif %}
+          {% if lead.extra.film %}<span class="dot" aria-hidden="true">&#8226;</span><cite class="film">{{ lead.extra.film }}</cite>{% endif %}
+        </p>
+        <div class="lead-body">{{ lead.summary | safe }}</div>
+        <a class="read-on read-on-lead" href="{{ base_url }}{{ lead.url }}">Continue the essay <span aria-hidden="true">&#8594;</span></a>
+      </article>
+
+      <section class="secondaries" aria-label="Also on the front page">
+        {% for p in entries %}
+          {% if loop.index == 2 or loop.index == 3 %}
+          <article class="secondary">
+            <p class="entry-kicker">
+              <span class="kicker-label">{{ p.extra.kicker | default("Essay") }}</span>
+              {% if p.extra.stars %}<span class="rating"><span class="stars" aria-hidden="true">{{ p.extra.stars }}</span><span class="sr-only">rated {{ p.extra.rating }} of 5</span></span>{% endif %}
+            </p>
+            <h2 class="secondary-title"><a href="{{ base_url }}{{ p.url }}">{{ p.title }}</a></h2>
+            <p class="entry-meta">
+              {% if p.extra.byline %}<span class="byline">{{ p.extra.byline }}</span>{% endif %}
+              {% if p.extra.film %}<span class="dot" aria-hidden="true">&#8226;</span><cite class="film">{{ p.extra.film }}</cite>{% endif %}
+            </p>
+            {% if p.summary %}<p class="entry-summary">{{ p.summary | strip_html | truncate_words(38) }}</p>{% endif %}
+            <a class="read-on" href="{{ base_url }}{{ p.url }}">Read on <span aria-hidden="true">&#8594;</span></a>
+          </article>
+          {% endif %}
+        {% endfor %}
+      </section>
+
+      <aside class="editors-note" aria-label="From the editor">
+        <p class="rail-kicker">From the editor</p>
+        <div class="note-body">{{ content | safe }}</div>
+      </aside>
+
+      {% set rest = entries | length %}
+      {% if rest > 3 %}
+      <section class="also" aria-label="More in this edition">
+        <h2 class="well-heading"><span>Also in this edition</span></h2>
+        <ol class="entry-list">
+          {% for p in entries %}
+            {% if loop.index > 3 %}{% include "partials/row.html" %}{% endif %}
+          {% endfor %}
+        </ol>
+        <p class="all-link"><a class="read-on" href="{{ base_url }}/essays/">The full run of essays <span aria-hidden="true">&#8594;</span></a></p>
+      </section>
+      {% endif %}
+    </main>
+{% include "footer.html" %}

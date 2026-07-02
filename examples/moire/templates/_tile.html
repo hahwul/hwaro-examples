@@ -1,0 +1,57 @@
+{# Renders one pattern tile: two overlapping SVG line fields + caption.
+   Expects: t_kind, t_pitch, t_rot1, t_rot2, t_uid, t_title, t_url, t_date #}
+<a class="tile tile--{{ t_kind }}" href="{{ base_url }}{{ t_url }}">
+  <span class="tile__art" aria-hidden="true">
+  {% if t_kind == "grid" %}
+    <svg viewBox="0 0 120 96" preserveAspectRatio="none" width="100%" height="100%">
+      <defs>
+        <pattern id="p{{ t_uid }}a" width="{{ t_pitch }}" height="{{ t_pitch }}" patternUnits="userSpaceOnUse" patternTransform="rotate({{ t_rot1 }})">
+          <path d="M0 0 H{{ t_pitch }} M0 0 V{{ t_pitch }}" stroke="#e4e8e2" stroke-width="0.9" fill="none"/>
+        </pattern>
+        <pattern id="p{{ t_uid }}b" width="{{ t_pitch }}" height="{{ t_pitch }}" patternUnits="userSpaceOnUse" patternTransform="rotate({{ t_rot2 }})">
+          <path d="M0 0 H{{ t_pitch }} M0 0 V{{ t_pitch }}" stroke="#e4e8e2" stroke-width="0.9" fill="none" opacity="0.62"/>
+        </pattern>
+      </defs>
+      <rect width="120" height="96" fill="url(#p{{ t_uid }}a)"/>
+      <rect width="120" height="96" fill="url(#p{{ t_uid }}b)"/>
+    </svg>
+  {% elif t_kind == "hatch" %}
+    <svg viewBox="0 0 120 150" preserveAspectRatio="none" width="100%" height="100%">
+      <defs>
+        <pattern id="p{{ t_uid }}a" width="{{ t_pitch }}" height="{{ t_pitch }}" patternUnits="userSpaceOnUse" patternTransform="rotate({{ t_rot1 }})">
+          <path d="M0 0 V{{ t_pitch }}" stroke="#e4e8e2" stroke-width="1" fill="none"/>
+        </pattern>
+        <pattern id="p{{ t_uid }}b" width="{{ t_pitch }}" height="{{ t_pitch }}" patternUnits="userSpaceOnUse" patternTransform="rotate({{ t_rot2 }})">
+          <path d="M0 0 V{{ t_pitch }}" stroke="#b7e04b" stroke-width="1" fill="none" opacity="0.7"/>
+        </pattern>
+      </defs>
+      <rect width="120" height="150" fill="url(#p{{ t_uid }}a)"/>
+      <rect width="120" height="150" fill="url(#p{{ t_uid }}b)"/>
+    </svg>
+  {% else %}
+    <svg viewBox="0 0 120 120" preserveAspectRatio="none" width="100%" height="100%">
+      <g fill="none" stroke="#e4e8e2" stroke-width="0.9">
+        <circle cx="60" cy="60" r="8"/><circle cx="60" cy="60" r="16"/><circle cx="60" cy="60" r="24"/>
+        <circle cx="60" cy="60" r="32"/><circle cx="60" cy="60" r="40"/><circle cx="60" cy="60" r="48"/>
+        <circle cx="60" cy="60" r="56"/><circle cx="60" cy="60" r="64"/><circle cx="60" cy="60" r="72"/>
+      </g>
+      <g fill="none" stroke="#e4e8e2" stroke-width="0.9" opacity="0.6">
+        <circle cx="{{ t_rot1 }}" cy="{{ t_rot2 }}" r="8"/><circle cx="{{ t_rot1 }}" cy="{{ t_rot2 }}" r="16"/><circle cx="{{ t_rot1 }}" cy="{{ t_rot2 }}" r="24"/>
+        <circle cx="{{ t_rot1 }}" cy="{{ t_rot2 }}" r="32"/><circle cx="{{ t_rot1 }}" cy="{{ t_rot2 }}" r="40"/><circle cx="{{ t_rot1 }}" cy="{{ t_rot2 }}" r="48"/>
+        <circle cx="{{ t_rot1 }}" cy="{{ t_rot2 }}" r="56"/><circle cx="{{ t_rot1 }}" cy="{{ t_rot2 }}" r="64"/><circle cx="{{ t_rot1 }}" cy="{{ t_rot2 }}" r="72"/>
+      </g>
+    </svg>
+  {% endif %}
+  </span>
+  <span class="tile__meta">
+    <span class="tile__title">{{ t_title | e }}</span>
+    <span class="tile__spec">
+      <span class="tile__spec-item">pitch {{ t_pitch }}px</span>
+      {% if t_kind == "rings" %}
+      <span class="tile__spec-item">offset {{ t_rot1 }},{{ t_rot2 }}</span>
+      {% else %}
+      <span class="tile__spec-item">{{ t_rot1 }}° / {{ t_rot2 }}°</span>
+      {% endif %}
+    </span>
+  </span>
+</a>

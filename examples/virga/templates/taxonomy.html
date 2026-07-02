@@ -1,0 +1,21 @@
+{% include "header.html" %}
+    <main id="main" class="broadsheet">
+      <header class="page-head">
+        <p class="page-kicker">{% if taxonomy_name == "categories" %}The desks{% else %}The motif index{% endif %}</p>
+        <h1 class="page-title">{{ page.title | e }}</h1>
+        <div class="page-intro">
+          <p>{% if taxonomy_name == "categories" %}Every piece is filed to a desk &mdash; the beat it was written from, whether a formal review, a director dossier, or a note from the projection booth.{% else %}The recurring preoccupations of this paper: the weather, the surfaces, the durations that noir and slow cinema keep returning to. Pull a thread to read sideways.{% endif %}</p>
+        </div>
+      </header>
+      {% set tax = get_taxonomy(kind=taxonomy_name) %}
+      <ul class="term-list">
+        {% for term in tax.items | sort_by("name") %}
+        {% set n = term.pages | length %}
+        <li class="term">
+          <a class="term-link" href="{{ get_taxonomy_url(kind=taxonomy_name, term=term.name) }}">{{ term.name }}</a>
+          <span class="term-count">{{ n }} {% if n == 1 %}piece{% else %}pieces{% endif %}</span>
+        </li>
+        {% endfor %}
+      </ul>
+    </main>
+{% include "footer.html" %}

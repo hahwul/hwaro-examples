@@ -1,0 +1,41 @@
+{% include "header.html" %}
+{% set builds = section.pages | sort_by("date", reverse=true) %}
+<main id="main" class="site-main">
+  <section class="page-head">
+    <p class="hero-kicker">section · {{ builds | length }} builds</p>
+    <h1 class="page-title">{{ section.title | e }}</h1>
+    {% if section.description %}<p class="page-desc">{{ section.description }}</p>{% endif %}
+  </section>
+
+  <section class="log" aria-labelledby="log-h">
+    <div class="finder" role="search" data-finder-list="#release-list" data-finder-results="#find-results">
+      <label class="sr-only" for="finder-sec">Filter releases</label>
+      <span class="finder-prompt" aria-hidden="true">find&gt;</span>
+      <input id="finder-sec" class="finder-input" type="search" data-finder-input
+             placeholder="filter the log — try &quot;fm&quot;, &quot;loop&quot;, or &quot;export&quot;"
+             autocomplete="off" spellcheck="false"
+             data-index="{{ base_url }}/search.json" data-base="{{ base_url }}">
+      <span class="finder-status" data-finder-status role="status" aria-live="polite"></span>
+    </div>
+
+    <h2 id="log-h" class="sr-only">Releases, newest first</h2>
+    <ol id="release-list" class="release-list">
+      {% for p in builds %}
+      <li class="rel-row">
+        <a class="rel-link" href="{{ base_url }}{{ p.url }}">
+          <span class="rel-ver">{{ p.title }}</span>
+          <span class="rel-code">{{ p.extra.codename }}</span>
+          <span class="rel-desc">{{ p.description }}</span>
+          <span class="rel-meta">
+            <time datetime="{{ p.date | date('%Y-%m-%d') }}">{{ p.date | date('%Y.%m.%d') }}</time>
+            <span class="rel-tag">{{ p.extra.channel }}</span>
+            <span class="rel-count">{{ p.extra.changes }} chg</span>
+          </span>
+        </a>
+      </li>
+      {% endfor %}
+    </ol>
+    <ul id="find-results" class="find-results" hidden aria-label="Search results"></ul>
+  </section>
+</main>
+{% include "footer.html" %}

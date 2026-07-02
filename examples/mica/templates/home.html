@@ -1,0 +1,42 @@
+{% include "header.html" %}
+    <main id="main" class="doc doc-home">
+      <section class="hero">
+        <p class="hero-kicker"><span class="hero-pill" aria-hidden="true"><span class="hero-knob"></span></span> Feature flags, flipped with intent</p>
+        <h1 class="hero-title">Ship behind a switch, roll out by the percent.</h1>
+        <div class="hero-lede">
+          {{ content | safe }}
+        </div>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="{{ base_url }}/quickstart/">Start the quickstart</a>
+          <a class="btn btn-ghost" href="{{ base_url }}/rollouts/">Browse rollout guides</a>
+        </div>
+      </section>
+
+      <section class="guides" aria-labelledby="guides-title">
+        <div class="guides-head">
+          <h2 class="guides-title" id="guides-title">Rollout guides</h2>
+          <p class="guides-sub">Six patterns for moving a flag from zero to everyone. The pill shows whether the pattern is safe to ship as-is, or needs a guardrail first.</p>
+        </div>
+        <div class="card-grid">
+          {% for p in get_section(path="rollouts").pages | sort_by("weight") %}
+          <article class="card">
+            <div class="card-top">
+              <span class="card-num" aria-hidden="true">{% if loop.index < 10 %}0{% endif %}{{ loop.index }}</span>
+              {% set safe = p.extra.status | default("on") %}
+              <span class="switch switch-{{ safe }}" role="img" aria-label="{% if safe == 'on' %}Safe to ship{% else %}Needs a guardrail{% endif %}">
+                <span class="switch-track"><span class="switch-knob"></span></span>
+                <span class="switch-label">{{ safe }}</span>
+              </span>
+            </div>
+            <h3 class="card-title"><a href="{{ base_url }}{{ p.url }}">{{ p.title }}</a></h3>
+            {% if p.description %}<p class="card-desc">{{ p.description }}</p>{% endif %}
+            <p class="card-meta">
+              {% if p.reading_time %}<span>{{ p.reading_time }} min read</span>{% endif %}
+              {% if p.extra.tag %}<span class="chip">{{ p.extra.tag }}</span>{% endif %}
+            </p>
+          </article>
+          {% endfor %}
+        </div>
+      </section>
+    </main>
+{% include "footer.html" %}

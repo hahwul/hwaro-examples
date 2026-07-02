@@ -1,0 +1,39 @@
+{% include "header.html" %}
+{% set workshops = get_section(path="workshops") %}
+{% set lineup = workshops.pages | sort_by("date") %}
+  <main id="main" class="home">
+
+    <section class="hero-name" aria-labelledby="fest-name">
+      <p class="hero-kicker">Type-design festival</p>
+      <h1 class="hero-display" id="fest-name">Lyrid</h1>
+      <p class="hero-dates"><span class="hero-days">25–26</span> <span class="hero-month">April 2026</span></p>
+      <p class="hero-place">Antwerp</p>
+      <p class="hero-blurb">{{ content | safe }}</p>
+      <a class="hero-cta" href="{{ base_url }}/register/">Reserve a bench <span aria-hidden="true">→</span></a>
+    </section>
+
+    <section class="lineup" aria-labelledby="lineup-heading">
+      <div class="lineup-head">
+        <h2 class="lineup-title" id="lineup-heading">The Lineup</h2>
+        <p class="lineup-count">{{ lineup | length }} workshops · two days</p>
+      </div>
+      <ol class="index">
+        {% for w in lineup %}
+        <li class="index-row{% if loop.index is odd %} is-solid{% else %} is-hollow{% endif %}">
+          <a class="index-link" href="{{ base_url }}{{ w.url }}">
+            <span class="index-num">{% if loop.index < 10 %}0{% endif %}{{ loop.index }}</span>
+            <span class="index-name">{{ w.title }}</span>
+            <span class="index-meta">
+              <span class="index-when"><time datetime="{{ w.date | date("%Y-%m-%d") }}">{{ w.date | date("%a %d %b") }}</time></span>
+              {% if w.extra.instructor %}<span class="index-who">{{ w.extra.instructor }}</span>{% endif %}
+              {% if w.extra.format %}<span class="index-kind">{{ w.extra.format }}</span>{% endif %}
+            </span>
+          </a>
+        </li>
+        {% endfor %}
+      </ol>
+      <a class="lineup-all" href="{{ base_url }}/workshops/">Full workshop catalogue <span aria-hidden="true">→</span></a>
+    </section>
+
+  </main>
+{% include "footer.html" %}

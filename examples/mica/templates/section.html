@@ -1,0 +1,31 @@
+{% include "header.html" %}
+    <main id="main" class="doc">
+      <header class="section-head">
+        <p class="article-kicker"><a class="kicker-link" href="{{ base_url }}/">Mica docs</a><span class="kicker-count">{{ section.pages_count }} guides</span></p>
+        <h1>{{ page.title | e }}</h1>
+        <div class="lede prose">
+          {{ content | safe }}
+        </div>
+      </header>
+      <div class="card-grid card-grid-section">
+        {% for p in section.pages | sort_by("weight") %}
+        <article class="card">
+          <div class="card-top">
+            <span class="card-num" aria-hidden="true">{% if loop.index < 10 %}0{% endif %}{{ loop.index }}</span>
+            {% set safe = p.extra.status | default("on") %}
+            <span class="switch switch-{{ safe }}" role="img" aria-label="{% if safe == 'on' %}Safe to ship{% else %}Needs a guardrail{% endif %}">
+              <span class="switch-track"><span class="switch-knob"></span></span>
+              <span class="switch-label">{{ safe }}</span>
+            </span>
+          </div>
+          <h2 class="card-title"><a href="{{ base_url }}{{ p.url }}">{{ p.title }}</a></h2>
+          {% if p.description %}<p class="card-desc">{{ p.description }}</p>{% endif %}
+          <p class="card-meta">
+            {% if p.reading_time %}<span>{{ p.reading_time }} min read</span>{% endif %}
+            {% if p.extra.tag %}<span class="chip">{{ p.extra.tag }}</span>{% endif %}
+          </p>
+        </article>
+        {% endfor %}
+      </div>
+    </main>
+{% include "footer.html" %}

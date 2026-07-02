@@ -1,0 +1,32 @@
+{% include "header.html" %}
+    <main id="main" class="doc">
+      <header class="section-head">
+        <p class="article-kicker"><span class="kicker-grams">{{ section.pages_count }} chapters · 330 g of reading</span></p>
+        <h1>{{ page.title | e }}</h1>
+        <div class="lede prose">
+          {{ content | safe }}
+        </div>
+      </header>
+      <ol class="ledger ledger-section">
+        {% for p in section.pages | sort_by("weight") %}
+        <li class="ledger-row">
+          <a class="ledger-link" href="{{ base_url }}{{ p.url }}">
+            <span class="ledger-num" aria-hidden="true">{% if loop.index < 10 %}0{% endif %}{{ loop.index }}</span>
+            <span class="ledger-main">
+              <span class="ledger-head">
+                <span class="ledger-name">{{ p.title }}</span>
+                <span class="ledger-dots" aria-hidden="true"></span>
+                <span class="ledger-grams">{{ p.extra.grams | default("—") }} g</span>
+              </span>
+              {% if p.description %}<span class="ledger-desc">{{ p.description }}</span>{% endif %}
+              <span class="ledger-tags">
+                {% if p.extra.station %}<span class="chip">{{ p.extra.station }}</span>{% endif %}
+                {% if p.reading_time %}<span class="ledger-mins">{{ p.reading_time }} min by headlamp</span>{% endif %}
+              </span>
+            </span>
+          </a>
+        </li>
+        {% endfor %}
+      </ol>
+    </main>
+{% include "footer.html" %}

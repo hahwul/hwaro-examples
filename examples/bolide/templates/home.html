@@ -1,0 +1,89 @@
+{% include "header.html" %}
+{% set compos = get_section(path="compos") %}
+{% set sorted = compos.pages | sort_by("weight") %}
+<main id="main" class="zine">
+
+  <section class="hero" aria-labelledby="hero-h">
+    <div class="hero-title">
+      <p class="kicker">// PHOSPHOR BURN ISSUE 07 · PHOTOCOPIED &amp; STILL WARM</p>
+      <h1 id="hero-h" class="wordmark glitch" data-text="BOLIDE">BOLIDE</h1>
+      <p class="hero-sub">A demoscene party of size-limited intros, live shader battles, and tracker music.</p>
+    </div>
+
+    <div class="hero-date crt-block tilt-l">
+      <div class="scanlines" aria-hidden="true"></div>
+      <p class="tiny">MARK YOUR CRT</p>
+      <p class="bigdate">3&ndash;5</p>
+      <p class="bigmonth">APR 2026</p>
+      <p class="tiny">FRI 18:00 &rarr; SUN 14:00</p>
+    </div>
+
+    <div class="hero-where tilt-r">
+      <p class="tiny accent-line">LOCATION.DAT</p>
+      <p class="where-hall">Kuusela sports hall</p>
+      <p class="where-city">Vantaa &mdash; a bus ride outside Helsinki, Finland</p>
+      <p class="where-note">Bring a sleeping bag, an extension cord, and something that fits in 256 bytes.</p>
+      <a class="btn" href="{{ base_url }}/venue/">Getting there &rsaquo;</a>
+    </div>
+
+    <div class="hero-ticker" role="marquee" aria-label="Party bulletin">
+      <span>ENTRIES OPEN</span><span aria-hidden="true">◆</span>
+      <span>BYOC 42 SEATS</span><span aria-hidden="true">◆</span>
+      <span>BIG SCREEN 4K</span><span aria-hidden="true">◆</span>
+      <span>LIVE SHADER BATTLE SAT 21:00</span><span aria-hidden="true">◆</span>
+      <span>PRIZEMONEY IN FLOPPIES</span><span aria-hidden="true">◆</span>
+    </div>
+  </section>
+
+  <section class="compo-deck" aria-labelledby="deck-h">
+    <div class="deck-head">
+      <h2 id="deck-h">THE COMPOS</h2>
+      <p class="deck-sub">Five stages to lose your weekend to. Each block below is a live wire &mdash; hit it for rules, size limits, and the compo slot.</p>
+    </div>
+    <ul class="deck">
+      {% for p in sorted %}
+      <li class="deck-item {% if loop.index % 2 == 1 %}tilt-l{% else %}tilt-r{% endif %}">
+        <a class="crt-block chroma" href="{{ base_url }}{{ p.url }}">
+          <div class="scanlines" aria-hidden="true"></div>
+          <p class="compo-tag">COMPO 0{{ loop.index }} · {{ p.extra.slot | default("TBA") }}</p>
+          <h3 class="compo-name glitch" data-text="{{ p.title }}">{{ p.title }}</h3>
+          <p class="compo-limit">{{ p.extra.limit | default("no limit") }}</p>
+          <p class="compo-desc">{{ p.description | e }}</p>
+          <p class="compo-dead">DEADLINE {{ p.extra.deadline | default("at the party") }} <span class="arrow" aria-hidden="true">&rsaquo;</span></p>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section class="deadlines" aria-labelledby="dl-h">
+    <div class="dl-card tilt-r">
+      <h2 id="dl-h">DEADLINE WALL</h2>
+      <ol class="dl-list">
+        {% for p in sorted %}
+        <li>
+          <span class="dl-when">{{ p.extra.deadline | default("at the party") }}</span>
+          <span class="dl-what"><a href="{{ base_url }}{{ p.url }}">{{ p.title }}</a></span>
+          <span class="dl-lim">{{ p.extra.limit | default("&mdash;") | safe }}</span>
+        </li>
+        {% endfor %}
+      </ol>
+      <p class="dl-note">All times Europe/Helsinki (EEST, UTC+3). Remote entries via the upload box close two hours earlier &mdash; the party server is grumpy.</p>
+    </div>
+
+    <div class="join-card crt-block tilt-l">
+      <div class="scanlines" aria-hidden="true"></div>
+      <p class="tiny">READY.PRG</p>
+      <h2 class="join-h glitch" data-text="GET IN">GET IN</h2>
+      <p>Forty-two BYOC seats, unlimited floor space, and a big screen that has seen things. Registration is a formality &mdash; showing up is the hard part.</p>
+      <a class="btn btn-solid" href="{{ base_url }}/register/">Register your seat &rsaquo;</a>
+    </div>
+  </section>
+
+  <section class="readme" aria-labelledby="readme-h">
+    <h2 id="readme-h" class="sr-only">About Bolide</h2>
+    <div class="prose">{{ content | safe }}</div>
+  </section>
+
+</main>
+{% include "footer.html" %}

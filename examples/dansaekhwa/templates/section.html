@@ -1,0 +1,26 @@
+{% include "header.html" %}
+  <main id="main">
+    <header class="section-head">
+      <p class="section-head__kicker">The series</p>
+      <h1>{{ page.title | e }}</h1>
+      {% if page.description %}<p class="section-head__lede">{{ page.description | e }}</p>{% endif %}
+    </header>
+
+    <div class="gallery">
+      {% for s in section.pages %}
+      <article class="study {% if loop.index is odd %}study--left{% else %}study--right{% endif %}">
+        <header class="study__caption">
+          <span class="study__no">{{ s.extra.number | default("", true) }}</span>
+          <h2 class="study__title"><a href="{{ base_url }}{{ s.url }}">{{ s.title | e }}</a></h2>
+          <p class="study__desc">{{ s.description | e }}</p>
+          <p class="study__meta">{% if s.extra.material %}{{ s.extra.material | e }}{% endif %}{% if s.date %} &middot; {{ s.date | date("%Y") }}{% endif %}</p>
+        </header>
+        <a class="plate" href="{{ base_url }}{{ s.url }}" aria-label="Open {{ s.title | e }}">
+          {% set pk = s.extra.plate %}
+          {% include "plate.html" %}
+        </a>
+      </article>
+      {% endfor %}
+    </div>
+  </main>
+{% include "footer.html" %}
