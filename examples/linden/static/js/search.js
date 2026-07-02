@@ -11,6 +11,8 @@
 
   var base = box.getAttribute("data-base") || "";
   var original = list.innerHTML;
+  var count = document.querySelector(".method-count");
+  var countOriginal = count ? count.textContent : "";
   var fuse = null;
 
   fetch(box.getAttribute("data-index"))
@@ -71,11 +73,13 @@
     if (!query) {
       list.innerHTML = original;
       if (status) status.textContent = "";
+      if (count) count.textContent = countOriginal;
       return;
     }
     if (!fuse) return;
     var results = fuse.search(query).slice(0, 8);
     list.innerHTML = "";
+    if (count) count.textContent = "Filtered by search";
     if (results.length === 0) {
       var empty = document.createElement("li");
       empty.className = "method-empty";

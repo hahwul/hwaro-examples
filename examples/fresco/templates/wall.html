@@ -1,0 +1,59 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <article class="wall-page">
+      <div class="wrap">
+        <p class="wall-page__back"><a href="{{ base_url }}/walls/">&larr; All walls</a></p>
+
+        <div class="wall-page__hero">
+          <svg class="wall-page__art" viewBox="0 0 100 120" role="img" aria-label="Flat-color paint block representing {{ page.title | e }}">
+            <g style="clip-path:url(#wall-{{ page.extra.shape | default('panel') }})">
+              <rect width="100" height="120" fill="{{ page.extra.color_1 | default('#d9552c') }}"></rect>
+              <rect y="42" width="100" height="78" fill="{{ page.extra.color_2 | default('#f2b705') }}"></rect>
+              <rect y="80" width="100" height="40" fill="{{ page.extra.color_3 | default('#1f7a5c') }}"></rect>
+              {% if page.extra.motif == "sun" %}
+              <circle cx="50" cy="32" r="16" fill="{{ page.extra.color_4 | default('#fdfaf4') }}"></circle>
+              {% elif page.extra.motif == "wave" %}
+              <path d="M-10,58 Q10,40 30,58 T70,58 T110,58" stroke="{{ page.extra.color_4 | default('#fdfaf4') }}" stroke-width="7" fill="none"></path>
+              {% elif page.extra.motif == "ladder" %}
+              <g stroke="{{ page.extra.color_4 | default('#fdfaf4') }}" stroke-width="5">
+                <line x1="34" y1="8" x2="34" y2="112"></line>
+                <line x1="66" y1="8" x2="66" y2="112"></line>
+                <line x1="34" y1="28" x2="66" y2="28"></line>
+                <line x1="34" y1="52" x2="66" y2="52"></line>
+                <line x1="34" y1="76" x2="66" y2="76"></line>
+                <line x1="34" y1="100" x2="66" y2="100"></line>
+              </g>
+              {% elif page.extra.motif == "bird" %}
+              <path d="M18,48 Q28,32 38,48 Q48,32 58,48" stroke="{{ page.extra.color_4 | default('#fdfaf4') }}" stroke-width="6" fill="none"></path>
+              <path d="M44,72 Q54,56 64,72 Q74,56 84,72" stroke="{{ page.extra.color_4 | default('#fdfaf4') }}" stroke-width="6" fill="none"></path>
+              {% elif page.extra.motif == "diamond" %}
+              <polygon points="50,18 78,50 50,82 22,50" fill="{{ page.extra.color_4 | default('#fdfaf4') }}"></polygon>
+              {% endif %}
+            </g>
+          </svg>
+
+          <div class="wall-plate">
+            {% if page.extra.status %}<span class="wall-plate__status wall-plate__status--{{ page.extra.status | slugify }}">{{ page.extra.status | e }}</span>{% endif %}
+            <h1 class="wall-plate__title">{{ page.title | e }}</h1>
+            <dl class="wall-plate__specs">
+              <div><dt>Type</dt><dd>{{ page.extra.site_type | default('Civic wall') | e }}</dd></div>
+              {% if page.extra.neighborhood %}<div><dt>Neighborhood</dt><dd>{{ page.extra.neighborhood | e }}</dd></div>{% endif %}
+              {% if page.extra.sqft %}<div><dt>Wall area</dt><dd>{{ page.extra.sqft }} sq ft</dd></div>{% endif %}
+              {% if page.extra.scaffold_days %}<div><dt>Scaffold days</dt><dd>{{ page.extra.scaffold_days }}</dd></div>{% endif %}
+              {% if page.date %}<div><dt>Logged</dt><dd>{{ page.date | date("%B %Y") }}</dd></div>{% endif %}
+            </dl>
+          </div>
+        </div>
+
+        <div class="prose wall-page__body">
+          {{ content | safe }}
+        </div>
+
+        <nav class="wall-pager" aria-label="More walls">
+          {% if page.higher %}<a class="wall-pager__link wall-pager__link--prev" href="{{ base_url }}{{ page.higher.url }}"><span>&larr; Previous</span>{{ page.higher.title | e }}</a>{% endif %}
+          {% if page.lower %}<a class="wall-pager__link wall-pager__link--next" href="{{ base_url }}{{ page.lower.url }}"><span>Next &rarr;</span>{{ page.lower.title | e }}</a>{% endif %}
+        </nav>
+      </div>
+    </article>
+  </main>
+{% include "footer.html" %}

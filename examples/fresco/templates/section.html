@@ -1,0 +1,54 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <section class="section-hero">
+      <div class="wrap">
+        <p class="section-hero__kicker">Site plan</p>
+        <h1 class="section-hero__title">{{ section.title | e }}</h1>
+        <div class="prose section-hero__note">{{ content | safe }}</div>
+      </div>
+    </section>
+
+    <section class="collage collage--listing" aria-label="{{ section.title | e }}">
+      <div class="wrap">
+        <div class="wall-grid">
+          {% for w in section.pages %}
+          <a class="wall-card" href="{{ base_url }}{{ w.url }}" style="--rot:{{ w.extra.rotate | default('0') }}deg">
+            <span class="wall-card__pin" aria-hidden="true"></span>
+            <svg class="wall-card__art" viewBox="0 0 100 120" aria-hidden="true">
+              <g style="clip-path:url(#wall-{{ w.extra.shape | default('panel') }})">
+                <rect width="100" height="120" fill="{{ w.extra.color_1 | default('#d9552c') }}"></rect>
+                <rect y="42" width="100" height="78" fill="{{ w.extra.color_2 | default('#f2b705') }}"></rect>
+                <rect y="80" width="100" height="40" fill="{{ w.extra.color_3 | default('#1f7a5c') }}"></rect>
+                {% if w.extra.motif == "sun" %}
+                <circle cx="50" cy="32" r="16" fill="{{ w.extra.color_4 | default('#fdfaf4') }}"></circle>
+                {% elif w.extra.motif == "wave" %}
+                <path d="M-10,58 Q10,40 30,58 T70,58 T110,58" stroke="{{ w.extra.color_4 | default('#fdfaf4') }}" stroke-width="7" fill="none"></path>
+                {% elif w.extra.motif == "ladder" %}
+                <g stroke="{{ w.extra.color_4 | default('#fdfaf4') }}" stroke-width="5">
+                  <line x1="34" y1="8" x2="34" y2="112"></line>
+                  <line x1="66" y1="8" x2="66" y2="112"></line>
+                  <line x1="34" y1="28" x2="66" y2="28"></line>
+                  <line x1="34" y1="52" x2="66" y2="52"></line>
+                  <line x1="34" y1="76" x2="66" y2="76"></line>
+                  <line x1="34" y1="100" x2="66" y2="100"></line>
+                </g>
+                {% elif w.extra.motif == "bird" %}
+                <path d="M18,48 Q28,32 38,48 Q48,32 58,48" stroke="{{ w.extra.color_4 | default('#fdfaf4') }}" stroke-width="6" fill="none"></path>
+                <path d="M44,72 Q54,56 64,72 Q74,56 84,72" stroke="{{ w.extra.color_4 | default('#fdfaf4') }}" stroke-width="6" fill="none"></path>
+                {% elif w.extra.motif == "diamond" %}
+                <polygon points="50,18 78,50 50,82 22,50" fill="{{ w.extra.color_4 | default('#fdfaf4') }}"></polygon>
+                {% endif %}
+              </g>
+            </svg>
+            <span class="wall-card__tag">
+              <span class="wall-card__status wall-card__status--{{ w.extra.status | default('') | slugify }}">{{ w.extra.status | default('') | e }}</span>
+              <span class="wall-card__title">{{ w.title | e }}</span>
+              <span class="wall-card__meta">{{ w.extra.neighborhood | default('') | e }}{% if w.date %} &middot; {{ w.date | date("%b %Y") }}{% endif %}</span>
+            </span>
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+  </main>
+{% include "footer.html" %}
