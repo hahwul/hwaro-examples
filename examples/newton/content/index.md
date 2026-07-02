@@ -4,4 +4,4 @@ description = "Cold-hardy fruit trees and berry stock, grafted and grown on site
 template = "home"
 +++
 
-We grow on a five-acre bench above the frost line, in ground that drops past minus thirty most winters. Every apple, currant, and haskap below has already lived through at least three seasons here before we offer it for sale &mdash; the number stamped on its card is not copied from a supplier tag, it is the coldest winter our own plants have already survived.
+We grow on a five-acre bench above the frost line, where winters drop past minus thirty. Every apple, currant, and haskap below has already lived through three seasons here &mdash; the number stamped on its card is not a supplier's guess, it is the coldest winter our own plants have survived.

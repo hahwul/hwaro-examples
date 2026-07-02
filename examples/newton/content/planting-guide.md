@@ -27,8 +27,8 @@ Young trees are the most vulnerable to vole and rabbit damage in their first two
 
 | USDA zone | Average annual minimum |
 |---|---|
-| Zone 2 | -50&deg;F to -40&deg;F |
-| Zone 3 | -40&deg;F to -30&deg;F |
-| Zone 4 | -30&deg;F to -20&deg;F |
+| Zone 2 | -50°F to -40°F |
+| Zone 3 | -40°F to -30°F |
+| Zone 4 | -30°F to -20°F |
 
 Match the zone stamped on the plant's catalog card to your own, and round down if your site sits in a known frost pocket &mdash; a low spot, a north slope, or open ground with no windbreak. Browse the full [catalog](/catalog/) once you know your zone, or read [about](/about/) how we arrive at these ratings in the first place.

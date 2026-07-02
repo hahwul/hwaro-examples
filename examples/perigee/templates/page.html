@@ -1,0 +1,40 @@
+{% include "header.html" %}
+<main id="main">
+  <section class="page-masthead">
+    <div class="shell masthead-inner">
+      {% if page.section == "journal" %}<span class="kicker">Journal</span>{% endif %}
+      <h1>{{ page.title | e }}</h1>
+      {% if page.description %}<p class="page-lede">{{ page.description | e }}</p>{% endif %}
+      {% if page.date %}
+      <p class="page-meta">
+        <span>{{ page.date | date("%B %d, %Y") }}</span>
+        {% if page.reading_time %}<span>{{ page.reading_time }} min read</span>{% endif %}
+      </p>
+      {% endif %}
+    </div>
+  </section>
+  <section class="page-body">
+    <div class="shell prose-shell">
+      <div class="prose">
+        {{ content | safe }}
+      </div>
+      {% if page.section == "journal" and (page.lower or page.higher) %}
+      <nav class="page-pager" aria-label="More journal entries">
+        {% if page.lower %}
+        <a class="pager-link" href="{{ base_url }}{{ page.lower.url }}">
+          <span class="pager-label">Previous</span>
+          <span class="pager-title">{{ page.lower.title | e }}</span>
+        </a>
+        {% endif %}
+        {% if page.higher %}
+        <a class="pager-link pager-link--next" href="{{ base_url }}{{ page.higher.url }}">
+          <span class="pager-label">Next</span>
+          <span class="pager-title">{{ page.higher.title | e }}</span>
+        </a>
+        {% endif %}
+      </nav>
+      {% endif %}
+    </div>
+  </section>
+</main>
+{% include "footer.html" %}

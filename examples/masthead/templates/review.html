@@ -1,0 +1,35 @@
+{% include "header.html" %}
+  <main id="main">
+    <article class="review-page">
+      <div class="wrap review-head">
+        {% if page.taxonomies.categories %}<p class="kicker-chip">{{ page.taxonomies.categories | join(" / ") }}</p>{% endif %}
+        <h1 class="review-title hl hl--lg">{{ page.title | e }}</h1>
+        {% if page.description %}<p class="review-dek">{{ page.description | e }}</p>{% endif %}
+        <p class="review-byline">
+          {% if page.authors %}<span class="byline-name">{{ page.authors | join(", ") }}</span>{% endif %}
+          {% if page.date %}<span class="byline-sep" aria-hidden="true">·</span><time datetime="{{ page.date | date("%Y-%m-%d") }}">{{ page.date | date("%B %d, %Y") }}</time>{% endif %}
+          {% if page.extra.status %}<span class="byline-sep" aria-hidden="true">·</span><span class="byline-label">{{ page.extra.status }}</span>{% endif %}
+        </p>
+        {% if page.extra.place or page.extra.architect or page.extra.year_built %}
+        <dl class="review-facts">
+          {% if page.extra.place %}<div class="fact"><dt>Place</dt><dd>{{ page.extra.place }}</dd></div>{% endif %}
+          {% if page.extra.architect %}<div class="fact"><dt>Architect</dt><dd>{{ page.extra.architect }}</dd></div>{% endif %}
+          {% if page.extra.year_built %}<div class="fact"><dt>Built</dt><dd>{{ page.extra.year_built }}</dd></div>{% endif %}
+        </dl>
+        {% endif %}
+      </div>
+      <div class="review-rule wrap" aria-hidden="true"></div>
+      <div class="wrap prose review-prose">{{ content | safe }}</div>
+      {% if page.tags %}
+      <ul class="tag-list wrap">
+        {% for t in page.tags %}<li><a href="{{ base_url }}/tags/{{ t | slugify }}/">{{ t }}</a></li>{% endfor %}
+      </ul>
+      {% endif %}
+    </article>
+
+    <nav class="review-pager wrap" aria-label="More reviews">
+      {% if page.lower %}<a class="pager-link pager-prev" href="{{ base_url }}{{ page.lower.url }}"><span class="pager-label" aria-hidden="true">← Earlier review</span><span class="pager-title">{{ page.lower.title | e }}</span></a>{% endif %}
+      {% if page.higher %}<a class="pager-link pager-next" href="{{ base_url }}{{ page.higher.url }}"><span class="pager-label" aria-hidden="true">Later review →</span><span class="pager-title">{{ page.higher.title | e }}</span></a>{% endif %}
+    </nav>
+  </main>
+{% include "footer.html" %}

@@ -1,0 +1,151 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+
+    <div class="wrap page-head">
+      {% if page.extra.eyebrow %}<p class="kicker">{{ page.extra.eyebrow | e }}</p>{% endif %}
+      {% if page.title is present %}<h1>{{ page.title | e }}</h1>{% endif %}
+      {% if page.description %}<p class="page-lede">{{ page.description | e }}</p>{% endif %}
+    </div>
+
+    <div class="wrap prose">
+      {{ content | safe }}
+    </div>
+
+    {% if page.extra.layout == "features" %}
+    <section class="wrap section-tilegrid" aria-label="Feature list">
+      <div class="card-grid">
+        {% for tile in page.extra.tiles %}
+        <article class="card">
+          <h2>{{ tile.title | e }}</h2>
+          <p>{{ tile.body | e }}</p>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+    {% if page.extra.not_building %}
+    <section class="wrap section-notbuilding">
+      <h2>What we deliberately don't build</h2>
+      <ul class="plain-list">
+        {% for item in page.extra.not_building %}
+        <li>{{ item | e }}</li>
+        {% endfor %}
+      </ul>
+    </section>
+    {% endif %}
+
+    {% elif page.extra.layout == "pricing" %}
+    <section class="wrap section-plans" aria-label="Pricing plans">
+      <div class="plan-table plan-table--full">
+        <div class="plan-col plan-col--struck">
+          <p class="plan-name">Starter</p>
+          <span class="sr-only">Not a real plan &mdash; shown struck through for comparison.</span>
+          <p class="plan-price"><span class="struck-text">$19</span><span class="plan-price-period">/mo</span></p>
+          <p class="plan-fine">reserved for the version of us that gates features behind a paywall</p>
+        </div>
+        <div class="plan-col plan-col--struck">
+          <p class="plan-name">Team</p>
+          <span class="sr-only">Not a real plan &mdash; shown struck through for comparison.</span>
+          <p class="plan-price"><span class="struck-text">$79</span><span class="plan-price-period">/mo</span></p>
+          <p class="plan-fine">the plan that exists so this one looks like a bargain</p>
+        </div>
+        <div class="plan-col plan-col--struck">
+          <p class="plan-name">Enterprise</p>
+          <span class="sr-only">Not a real plan &mdash; shown struck through for comparison.</span>
+          <p class="plan-price"><span class="struck-text">Contact sales</span></p>
+          <p class="plan-fine">a phone call you'd have to schedule twice</p>
+        </div>
+        <div class="plan-col plan-col--active">
+          <p class="plan-badge">the only plan</p>
+          <p class="plan-name">Traction</p>
+          <p class="plan-price">$49<span class="plan-price-period">/mo</span></p>
+          <p class="plan-fine">everyone, everything, forever, at this price</p>
+          <ul class="plan-features">
+            <li>Unlimited teammates</li>
+            <li>Unlimited contacts and companies</li>
+            <li>Unlimited pipelines</li>
+            <li>Email and calendar sync</li>
+            <li>Invoicing with automatic reminders</li>
+            <li>CSV export, any time, no questions</li>
+            <li>Support from Dana or Marcus, by email</li>
+          </ul>
+          <a class="btn btn-primary btn-block" href="{{ base_url }}/contact/">Start the fourteen-day trial</a>
+        </div>
+      </div>
+    </section>
+
+    {% if page.extra.faqs %}
+    <section class="wrap section-faq">
+      <h2>Questions people actually ask</h2>
+      <div class="faq-list">
+        {% for item in page.extra.faqs %}
+        <details class="faq-item">
+          <summary>{{ item.q | e }}</summary>
+          <p>{{ item.a | e }}</p>
+        </details>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+
+    {% elif page.extra.layout == "story" %}
+    {% if page.extra.milestones %}
+    <section class="wrap section-timeline" aria-label="Company timeline">
+      <ol class="timeline">
+        {% for m in page.extra.milestones %}
+        <li class="timeline-item">
+          <p class="timeline-date">{{ m.date | e }}</p>
+          <h2>{{ m.title | e }}</h2>
+          <p>{{ m.body | e }}</p>
+        </li>
+        {% endfor %}
+      </ol>
+    </section>
+    {% endif %}
+
+    {% elif page.extra.layout == "comparisons" %}
+    {% if page.extra.rows %}
+    <section class="wrap section-compare">
+      <div class="compare-table-wrap">
+        <table class="compare-table">
+          <caption class="sr-only">Comparison between Traction, a legacy enterprise CRM, and a spreadsheet</caption>
+          <thead>
+            <tr>
+              <th scope="col">Category</th>
+              <th scope="col">Traction</th>
+              <th scope="col">Legacy enterprise CRM</th>
+              <th scope="col">Spreadsheet + sticky notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in page.extra.rows %}
+            <tr>
+              <th scope="row">{{ row.label | e }}</th>
+              <td class="compare-cell-traction">{{ row.traction | e }}</td>
+              <td>{{ row.enterprise | e }}</td>
+              <td>{{ row.spreadsheet | e }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+    {% endif %}
+
+    {% elif page.extra.layout == "contact" %}
+    {% if page.extra.channels %}
+    <section class="wrap section-channels">
+      <div class="card-grid">
+        {% for ch in page.extra.channels %}
+        <article class="card">
+          <p class="tile-eyebrow">{{ ch.label | e }}</p>
+          <p class="channel-value">{{ ch.value | e }}</p>
+          <p class="muted">{{ ch.note | e }}</p>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+    {% endif %}
+
+  </main>
+{% include "footer.html" %}
