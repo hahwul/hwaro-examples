@@ -13,6 +13,7 @@ in_point = "00:00:00:00"
 out_point = "00:00:42:00"
 curve_name = "Undertow Pull"
 curve_bezier = "cubic-bezier(0.65, -0.55, 0.28, 1.55)"
+curve_short = ".65 -.55 .28 1.55"
 curve_d = "M24.0,134.5 C122.8,172.5 66.6,27.5 176.0,65.5"
 +++
 

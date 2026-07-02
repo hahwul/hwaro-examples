@@ -13,6 +13,7 @@ in_point = "00:00:00:00"
 out_point = "00:00:05:00"
 curve_name = "Nightframe Snap"
 curve_bezier = "cubic-bezier(0.83, 0.00, 0.17, 1.00)"
+curve_short = ".83 0 .17 1"
 curve_d = "M24.0,134.5 C150.2,134.5 49.8,65.5 176.0,65.5"
 +++
 

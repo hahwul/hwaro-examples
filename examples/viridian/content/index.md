@@ -1,5 +1,5 @@
 +++
-title = "Viridian — Drought-Tolerant Gravel Gardens"
+title = "Drought-Tolerant Gravel Gardens"
 description = "Viridian designs gravel gardens for slopes, forecourts and verges that need no irrigation after their first summer."
 template = "home"
 +++

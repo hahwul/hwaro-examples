@@ -13,6 +13,7 @@ in_point = "00:00:00:00"
 out_point = "00:00:08:00"
 curve_name = "Halide Snap"
 curve_bezier = "cubic-bezier(0.16, 1.00, 0.30, 1.00)"
+curve_short = ".16 1 .30 1"
 curve_d = "M24.0,134.5 C48.3,65.5 69.6,65.5 176.0,65.5"
 +++
 

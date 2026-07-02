@@ -13,6 +13,7 @@ in_point = "00:00:00:00"
 out_point = "00:00:35:00"
 curve_name = "Coldwater Drift"
 curve_bezier = "cubic-bezier(0.11, 0.83, 0.32, 1.00)"
+curve_short = ".11 .83 .32 1"
 curve_d = "M24.0,134.5 C40.7,77.2 72.6,65.5 176.0,65.5"
 +++
 

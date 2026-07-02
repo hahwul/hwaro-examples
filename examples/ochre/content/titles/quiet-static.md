@@ -13,6 +13,7 @@ in_point = "00:00:00:00"
 out_point = "00:01:58:00"
 curve_name = "Static Hold"
 curve_bezier = "cubic-bezier(0.36, 0.00, 0.66, -0.42)"
+curve_short = ".36 0 .66 -.42"
 curve_d = "M24.0,134.5 C78.7,134.5 124.3,163.6 176.0,65.5"
 +++
 

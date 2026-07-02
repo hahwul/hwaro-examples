@@ -5,7 +5,7 @@ description = "Five days aboard one of the last three boats still working the ou
 template = "sheet"
 
 [extra]
-location = "The outer grounds, ninety fathom line"
+location = "Outer Grounds"
 film = "Graywacke 100"
 one_line = "Three boats still work the ninety fathom line; this is what a five-day trip looks like from the factory deck."
 circled_frame = "1A"
