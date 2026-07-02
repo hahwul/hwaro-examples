@@ -2,7 +2,7 @@
 title = "Episode archive"
 description = "Every Foley episode, in the order they aired, score counters ticking up from 001"
 sort_by = "date"
-reverse = false
+reverse = true
 paginate = 5
 template = "section"
 generate_feeds = true

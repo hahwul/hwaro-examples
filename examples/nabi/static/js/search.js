@@ -23,7 +23,12 @@
     fetch(base + "/search.json")
       .then(function (r) { return r.json(); })
       .then(function (data) {
-        fuse = new Fuse(data, { keys: ["title", "content"], threshold: 0.3, includeMatches: false });
+        fuse = new Fuse(data, {
+          keys: [{ name: "title", weight: 0.7 }, { name: "content", weight: 0.3 }],
+          threshold: 0.3,
+          ignoreLocation: true,
+          minMatchCharLength: 2
+        });
       })
       .catch(function () {
         hint.textContent = "Search index could not be loaded.";

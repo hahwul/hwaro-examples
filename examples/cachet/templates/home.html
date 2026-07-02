@@ -1,0 +1,79 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="hero-left">
+          <p class="kicker">{{ page.extra.kicker | default("") }}</p>
+          <h1>{{ page.extra.name | default(site.title, true) | e }}</h1>
+          <div class="pitch">{{ content | safe }}</div>
+
+          <dl class="hero-meta">
+            {% if page.extra.email %}
+            <div>
+              <dt>Email</dt>
+              <dd><a href="mailto:{{ page.extra.email }}">{{ page.extra.email }}</a></dd>
+            </div>
+            {% endif %}
+            {% if page.extra.location %}
+            <div>
+              <dt>Based</dt>
+              <dd>{{ page.extra.location }}</dd>
+            </div>
+            {% endif %}
+          </dl>
+
+          {% if page.extra.stack %}
+          <ul class="stack-list" aria-label="Core stack">
+            {% for tech in page.extra.stack %}<li>{{ tech }}</li>{% endfor %}
+          </ul>
+          {% endif %}
+
+          <div class="hero-actions">
+            <a class="btn-primary" href="{{ base_url }}/cv/">View full CV</a>
+            <a class="btn-ghost" href="{{ base_url }}/engagements/">Read engagements</a>
+          </div>
+        </div>
+
+        <aside class="hero-right" aria-labelledby="engagements-heading">
+          <h2 id="engagements-heading" class="panel-kicker">Selected engagements</h2>
+          <ul class="engagement-list">
+            {% set engagements = get_section(path="engagements").pages | sort_by("date", reverse=true) %}
+            {% for e in engagements %}
+            <li class="engagement-row">
+              <a href="{{ base_url }}{{ e.url }}">
+                <span class="status-dot status-{{ e.extra.status | default('resolved') }}" aria-hidden="true"></span>
+                <span class="engagement-info">
+                  <span class="engagement-client">{{ e.extra.client | default(e.title, true) }}</span>
+                  <span class="engagement-outcome">{{ e.extra.outcome | default(e.description, true) }}</span>
+                </span>
+                <span class="engagement-year">{% if e.date %}{{ e.date | date("%Y") }}{% endif %}</span>
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+          <a class="all-link" href="{{ base_url }}/engagements/">All engagements<span aria-hidden="true"> &rarr;</span></a>
+        </aside>
+      </div>
+    </section>
+
+    <section class="uptime" aria-labelledby="uptime-heading">
+      <div class="uptime-head">
+        <h2 id="uptime-heading" class="panel-kicker">Career uptime</h2>
+        <p class="uptime-sub">One tick per consulting year &middot; hover or focus a tick for the story</p>
+      </div>
+      <ul class="year-strip">
+        {% for y in page.extra.years %}
+        <li>
+          <button type="button" class="tick tick-{{ y.status }}" aria-label="{{ y.year }}: {{ y.label }}">
+            <span class="tick-tip" aria-hidden="true"><strong>{{ y.year }}</strong> {{ y.label }}</span>
+          </button>
+        </li>
+        {% endfor %}
+      </ul>
+      <div class="year-strip-labels" aria-hidden="true">
+        <span>{{ page.extra.start_year }}</span>
+        <span>{{ page.extra.end_year }}</span>
+      </div>
+    </section>
+  </main>
+{% include "footer.html" %}

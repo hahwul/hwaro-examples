@@ -1,0 +1,35 @@
+{% include "header.html" %}
+  <main id="main">
+    <section class="masthead" aria-labelledby="masthead-title">
+      <h1 class="masthead-title" id="masthead-title">{{ page.title | e }}</h1>
+      <p class="masthead-tagline">{{ site.description }}</p>
+      {% if page.extra.season_note %}
+      <div class="season-note">
+        <svg class="season-note-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" focusable="false">
+          <path d="M10 17V9"/>
+          <path d="M10 10.5c0-2.5 1.9-4 4.5-4-.2 2.6-1.9 4-4.5 4Z"/>
+          <path d="M10 12.5c0-2.1-1.6-3.5-4-3.5.2 2.3 1.6 3.5 4 3.5Z"/>
+        </svg>
+        <p><span class="season-note-label">Now recording</span>{{ page.extra.season_note }}</p>
+      </div>
+      {% endif %}
+    </section>
+
+    <div class="home-credo">
+      {{ content | safe }}
+    </div>
+
+    <section class="episodes-section" aria-labelledby="episodes-title">
+      {% set episodes = get_section(path="episodes") %}
+      <div class="episodes-head">
+        <h2 class="episodes-title" id="episodes-title">Latest episodes</h2>
+        <p class="episodes-count">{{ episodes.pages | length }} episodes so far</p>
+      </div>
+      <div class="card-grid">
+        {% for p in episodes.pages | sort_by("date", reverse=true) %}
+        {% include "partials/episode-card.html" %}
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+{% include "footer.html" %}

@@ -245,13 +245,21 @@ main { display: block; }
 
 /* ---------- the episode card (the signature) ---------- */
 
-.ep-card {
+/* .ep-card is the shadow-casting frame (transparent); .ep-card-face
+   carries the actual surface, border and content, in a normal-flow
+   child so it paints above the ::after shadow instead of being
+   masked by it — a negative-z pseudo still sits above its own
+   ancestor's background layer, only below sibling content. */
+.ep-card-face {
   display: flex; flex-direction: column; gap: 0.85rem;
+  height: 100%;
   background: var(--surface);
   border: 1px solid var(--border-soft);
   padding: 1.75rem 1.6rem;
+  clip-path: var(--pixel-clip);
+  transition: border-color 0.15s ease-out;
 }
-.ep-card:hover { border-color: var(--accent-dim); }
+.ep-card:hover .ep-card-face, .ep-card:focus-within .ep-card-face { border-color: var(--accent-dim); }
 
 .ep-card-head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); flex-wrap: wrap; }
 
@@ -294,11 +302,12 @@ main { display: block; }
 
 .entry { padding-top: var(--space-5); padding-bottom: var(--space-6); }
 
-.entry-panel {
-  max-width: 54rem; margin: 0 auto var(--space-6);
+.entry-panel { max-width: 54rem; margin: 0 auto var(--space-6); }
+.entry-panel-face {
   padding: var(--space-4) var(--space-5) var(--space-5);
   background: var(--surface);
   border: 1px solid var(--border-soft);
+  clip-path: var(--pixel-clip);
 }
 
 .entry-panel-head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); flex-wrap: wrap; margin-bottom: var(--space-3); }
@@ -530,9 +539,9 @@ body.search-locked { overflow: hidden; }
   .site-header-inner { padding: var(--space-2) var(--space-3); }
   .search-btn-label { display: none; }
   .masthead { padding-top: var(--space-5); }
-  .entry-panel { padding: var(--space-3) var(--space-3) var(--space-4); }
+  .entry-panel-face { padding: var(--space-3) var(--space-3) var(--space-4); }
   .entry-panel-head { flex-wrap: wrap; }
-  .ep-card { padding: 1.5rem 1.25rem; }
+  .ep-card-face { padding: 1.5rem 1.25rem; }
 }
 
 /* ---------- reduced motion ---------- */

@@ -1,0 +1,27 @@
+{# Expects `p` set to an episode page before include. #}
+<a class="episode-card" href="{{ base_url }}{{ p.url }}">
+  <p class="card-kicker">
+    {% if p.extra.episode_number %}<span class="num">Ep. {{ p.extra.episode_number }}</span><span class="dot">·</span>{% endif %}
+    {% if p.date %}<time datetime="{{ p.date | date("%Y-%m-%d") }}">{{ p.date | date("%b %-d, %Y") }}</time>{% endif %}
+    {% if p.extra.duration %}<span class="dot">·</span><span>{{ p.extra.duration }}</span>{% endif %}
+  </p>
+  <h3 class="card-title">{{ p.title | e }}</h3>
+  {% if p.extra.waveform %}
+  {% set wf = p.extra.waveform %}{% set wf_title = p.title %}{% set wf_w = 240 %}{% set wf_h = 60 %}{% set wf_base = 48 %}{% set wf_min = 8 %}{% set wf_max = 22 %}{% include "partials/mounds.html" %}
+  {% endif %}
+  {% if p.summary %}
+  <p class="card-summary">{{ p.summary | strip_html | truncate_words(24) }}</p>
+  {% elif p.description %}
+  <p class="card-summary">{{ p.description | truncate_words(24) }}</p>
+  {% endif %}
+  <div class="card-foot">
+    {% if p.tags %}
+    <ul class="tag-list">
+      {% for tag in p.tags %}{% if loop.index <= 2 %}<li class="tag-chip">{{ tag }}</li>{% endif %}{% endfor %}
+    </ul>
+    {% else %}<span></span>{% endif %}
+    <span class="card-arrow" aria-hidden="true">
+      <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h12M11 5l5 5-5 5"/></svg>
+    </span>
+  </div>
+</a>

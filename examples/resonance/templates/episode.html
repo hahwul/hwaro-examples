@@ -1,0 +1,41 @@
+{% include "header.html" %}
+  <main id="main">
+    <article class="wrap doc-article">
+      <header class="episode-head">
+        <p class="episode-meta">
+          {% if page.extra.episode_number %}<span class="num">Episode {{ page.extra.episode_number }}</span><span class="dot">·</span>{% endif %}
+          {% if page.date %}<time datetime="{{ page.date | date("%Y-%m-%d") }}">{{ page.date | date("%B %-d, %Y") }}</time>{% endif %}
+          {% if page.extra.duration %}<span class="dot">·</span><span>{{ page.extra.duration }}</span>{% endif %}
+        </p>
+        <h1 class="episode-title">{{ page.title | e }}</h1>
+        {% if page.extra.guest %}<p class="episode-guest">With guest <strong>{{ page.extra.guest }}</strong></p>{% endif %}
+
+        {% if page.extra.waveform %}
+        <div class="episode-hero-mounds">
+          {% set wf = page.extra.waveform %}{% set wf_title = page.title %}{% set wf_w = 480 %}{% set wf_h = 110 %}{% set wf_base = 88 %}{% set wf_min = 14 %}{% set wf_max = 40 %}
+          {% include "partials/mounds.html" %}
+          <p class="episode-hero-mounds-caption"><span>Quiet</span><span>Loudness curve, this recording</span><span>Loud</span></p>
+        </div>
+        {% endif %}
+      </header>
+
+      <div class="prose">
+        {{ content | safe }}
+      </div>
+
+      {% if page.tags %}
+      <footer class="entry-tags">
+        <ul class="tag-list" aria-label="Tags">
+          {% for tag in page.tags %}
+          <li><a class="tag-chip" href="{{ base_url }}/tags/{{ tag | slugify }}/">{{ tag }}</a></li>
+          {% endfor %}
+        </ul>
+      </footer>
+      {% endif %}
+
+      <nav class="entry-nav" aria-label="More episodes">
+        <a class="read-link" href="{{ base_url }}/episodes/">Back to all episodes</a>
+      </nav>
+    </article>
+  </main>
+{% include "footer.html" %}

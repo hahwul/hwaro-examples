@@ -1,7 +1,6 @@
 +++
 title = "About"
 description = "What Cadence is, who makes it, and how the show's episodes are transcribed and researched."
-tags = ["about"]
 +++
 
 ## What this is

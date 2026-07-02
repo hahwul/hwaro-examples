@@ -6,7 +6,7 @@ description = "Mint, perilla, and chives will survive almost anything you do wro
 issue = 5
 +++
 
-After four letters about getting things precisely right, I want to spend this one on the plants that make most of that precision optional. Mint, perilla (*kkaennip*), and chives have survived every mistake I have made on this balcony, including several weeks of outright neglect last summer.
+After four letters about getting things precisely right, I want to spend this one on the plants that make most of that precision optional. Mint, perilla (also called kkaennip), and chives have survived every mistake I have made on this balcony, including several weeks of outright neglect last summer.
 
 <!-- more -->
 

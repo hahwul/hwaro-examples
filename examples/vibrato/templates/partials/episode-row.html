@@ -1,0 +1,27 @@
+{#- One session row for listings. Set `p` (the episode page) before including. -#}
+<li class="ep-row">
+  <a class="ep-row-link" href="{{ base_url }}{{ p.url }}">
+    {% set rec_catalog = p.extra.catalog %}
+    {% set rec_duration = p.extra.duration %}
+    {% set rec_year = p.extra.session_year %}
+    {% set rec_size = "chip" %}
+    {% include "partials/record.html" %}
+    <div class="ep-row-body">
+      <p class="ep-row-kicker">
+        <span class="ep-row-catalog">{{ p.extra.catalog }}</span>
+        <span class="ep-row-sep" aria-hidden="true">&middot;</span>
+        <span class="ep-row-duration">{{ p.extra.duration }}</span>
+        {% if p.date %}<span class="ep-row-sep" aria-hidden="true">&middot;</span><time datetime="{{ p.date | date('%Y-%m-%d') }}">{{ p.date | date("%b %d, %Y") }}</time>{% endif %}
+      </p>
+      <h3 class="ep-row-title">{{ p.title | e }}</h3>
+      <p class="ep-row-artist">{{ p.extra.artist | default("", true) }}{% if p.extra.session_date %} &middot; recorded {{ p.extra.session_date }}{% endif %}</p>
+      {% if p.summary %}<p class="ep-row-summary">{{ p.summary | strip_html | truncate_words(26) }}</p>{% endif %}
+      {% if p.tags %}
+      <p class="ep-row-tags">
+        {% for t in p.tags %}<span class="tag-chip">{{ t }}</span>{% endfor %}
+      </p>
+      {% endif %}
+    </div>
+    <span class="ep-row-arrow" aria-hidden="true">&rarr;</span>
+  </a>
+</li>

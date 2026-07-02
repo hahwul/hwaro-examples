@@ -1,0 +1,51 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    {% set episodes = get_section(path="episodes").pages | sort_by("date", reverse=true) %}
+    {% set latest = episodes | first %}
+
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-text">
+        <p class="eyebrow">A Jazz-History Podcast</p>
+        <h1 id="hero-title" class="hero-title">{{ site.title | e }}</h1>
+        <p class="hero-tagline">{{ site.description | e }}</p>
+        <div class="hero-copy">{{ content | safe }}</div>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="{{ base_url }}/episodes/">Browse all sessions</a>
+          <a class="btn btn-ghost" href="{{ base_url }}/about/">About the show</a>
+        </div>
+      </div>
+
+      {% if latest %}
+      <div class="hero-record" aria-labelledby="hero-record-title">
+        <p class="eyebrow eyebrow--accent">Now Pressing</p>
+        {% set rec_catalog = latest.extra.catalog %}
+        {% set rec_duration = latest.extra.duration %}
+        {% set rec_year = latest.extra.session_year %}
+        {% set rec_size = "hero" %}
+        {% include "partials/record.html" %}
+        <div class="hero-record-meta">
+          <p class="hero-record-caption">Pressing <strong>{{ latest.extra.catalog }}</strong> &middot; running time <strong>{{ latest.extra.duration }}</strong></p>
+          <h2 id="hero-record-title" class="hero-record-title"><a href="{{ base_url }}{{ latest.url }}">{{ latest.title | e }}</a></h2>
+          <p class="hero-record-artist">{{ latest.extra.artist | default("", true) }}{% if latest.extra.session_date %} &middot; recorded {{ latest.extra.session_date }}{% endif %}</p>
+          {% if latest.summary %}<p class="hero-record-summary">{{ latest.summary | strip_html | truncate_words(24) }}</p>{% endif %}
+          <a class="hero-record-link" href="{{ base_url }}{{ latest.url }}">Read the session notes <span aria-hidden="true">&rarr;</span></a>
+        </div>
+      </div>
+      {% endif %}
+    </section>
+
+    <section class="recent" aria-labelledby="recent-title">
+      <div class="recent-head">
+        <h2 id="recent-title">Recent Sessions</h2>
+        <a class="recent-all" href="{{ base_url }}/episodes/">Full archive <span aria-hidden="true">&rarr;</span></a>
+      </div>
+      <ul class="ep-list">
+        {% for p in episodes %}
+        {% if loop.index > 1 %}
+        {% include "partials/episode-row.html" %}
+        {% endif %}
+        {% endfor %}
+      </ul>
+    </section>
+  </main>
+{% include "footer.html" %}

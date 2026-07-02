@@ -1,0 +1,73 @@
+{% include "header.html" %}
+{% set issues_section = get_section(path="issues") %}
+{% set latest = issues_section.pages | sort_by("date", reverse=true) | first %}
+  <main id="main" class="site-main">
+
+    <section class="masthead">
+      <p class="masthead-kicker">A serial in letters</p>
+      <h1 class="masthead-title">{{ site.title | e }}</h1>
+      <p class="masthead-tagline">{{ site.description | e }}</p>
+    </section>
+
+    {% if latest %}
+    <section class="current-issue" aria-labelledby="current-issue-title">
+      <p class="current-kicker">
+        <span class="current-kicker-label">Now delivering</span>
+        {% if latest.extra.roman %}<span class="current-kicker-no">No. {{ latest.extra.roman }}</span>{% endif %}
+        {% if latest.date %}<span class="current-kicker-date">{{ latest.date | date("%B %Y") }}</span>{% endif %}
+      </p>
+      <h2 id="current-issue-title" class="current-issue-title">
+        <a href="{{ base_url }}{{ latest.url }}">{{ latest.title | e }}</a>
+      </h2>
+      {% if latest.summary %}<div class="current-issue-body">{{ latest.summary | safe }}</div>{% endif %}
+      <a class="current-issue-continue" href="{{ base_url }}{{ latest.url }}">Continue reading <span aria-hidden="true">&rarr;</span></a>
+    </section>
+    {% endif %}
+
+    <div class="ornament" aria-hidden="true">
+      <span class="ornament-line"></span>
+      <span class="ornament-mark">&#10022;</span>
+      <span class="ornament-line"></span>
+    </div>
+
+    <section class="subscribe" aria-labelledby="subscribe-title">
+      <h2 id="subscribe-title">Receive the next letter</h2>
+      <p class="subscribe-note">One letter a month, plain text, delivered the day it joins the archive.</p>
+      <form class="subscribe-form" action="{{ base_url }}/about/" method="get" onsubmit="return false;">
+        <label for="subscribe-email" class="visually-hidden">Email address</label>
+        <input id="subscribe-email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
+        <button type="submit">Subscribe</button>
+      </form>
+      <p class="subscribe-disclaimer">Static example form &mdash; no message is sent. See <a href="{{ base_url }}/about/">how letters are actually delivered</a>.</p>
+    </section>
+
+    {% if content %}
+    <section class="editorial-note">
+      <div class="prose prose--note">
+        {{ content | safe }}
+      </div>
+    </section>
+    {% endif %}
+
+    <section class="archive-preview" aria-labelledby="archive-title">
+      <div class="archive-preview-head">
+        <h2 id="archive-title">Past letters</h2>
+        <a class="archive-preview-all" href="{{ base_url }}/issues/">Full archive <span aria-hidden="true">&rarr;</span></a>
+      </div>
+      <ol class="folio-list">
+        {% for p in issues_section.pages | sort_by("date", reverse=true) %}
+        <li class="folio-row">
+          <a class="folio-row-link" href="{{ base_url }}{{ p.url }}">
+            <span class="folio-row-no" aria-hidden="true">{{ p.extra.roman | default(loop.index) }}</span>
+            <span class="folio-row-main">
+              <span class="folio-row-title">{{ p.title | e }}</span>
+              {% if p.date %}<span class="folio-row-date">{{ p.date | date("%B %Y") }}</span>{% endif %}
+            </span>
+            {% if p.extra.cumulative_words %}<span class="folio-row-count">{{ p.extra.cumulative_words }} words to date</span>{% endif %}
+          </a>
+        </li>
+        {% endfor %}
+      </ol>
+    </section>
+  </main>
+{% include "footer.html" %}

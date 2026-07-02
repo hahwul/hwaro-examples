@@ -6,7 +6,7 @@ description = "A rooted fig cutting that did almost nothing its first year final
 issue = 6
 +++
 
-Two Junes ago I rooted a fig cutting in a jar of water, more out of curiosity than expectation, and moved it into soil once the roots looked real. Its first year was a disappointment by every visible measure — a handful of leaves, no real height. This spring, its second, it broke dormancy with more new growth in three weeks than the whole previous year combined.
+Two Junes ago I rooted a fig cutting in a jar of water. Its first year was a disappointment by every measure — a handful of leaves, no real height. This spring, its second, it broke dormancy with more growth in three weeks than the whole previous year combined.
 
 <!-- more -->
 

@@ -9,7 +9,7 @@ template = "pour"
 
 [extra]
 kicker = "FLIGHT BOARD"
-abv = "6.1% avg"
+abv = "6.1%"
 venue = "The Tin Whistle — Dockside"
 +++
 
