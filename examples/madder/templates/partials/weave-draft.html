@@ -1,0 +1,47 @@
+{# Renders a four-shaft weave draft — threading, tie-up, treadling — as a
+   compact SVG grid, in the classic weaver's layout:
+     [ threading ][ tie-up  ]
+                  [treadling]
+   Expects `t` in scope with t.title, t.extra.threading (list of shaft
+   numbers 1-4), t.extra.tieup (4 rows x 4 cols of 0/1), t.extra.treadling
+   (list of treadle numbers 1-4). #}
+{% set cell = 8 %}
+{% set gap = 5 %}
+{% set tlen = t.extra.threading | length %}
+{% set plen = t.extra.treadling | length %}
+{% set tx = tlen * cell + gap %}
+{% set ty = 4 * cell + gap %}
+{% set draftw = tx + 4 * cell %}
+{% set drafth = ty + plen * cell %}
+{% set gid = t.title | slugify %}
+<div class="weave-draft">
+  <svg class="draft" viewBox="0 0 {{ draftw }} {{ drafth }}" aria-hidden="true" focusable="false">
+    <defs>
+      <pattern id="wg-{{ gid }}" width="{{ cell }}" height="{{ cell }}" patternUnits="userSpaceOnUse">
+        <rect width="{{ cell }}" height="{{ cell }}" fill="none" stroke="var(--border)" stroke-width="1"></rect>
+      </pattern>
+    </defs>
+    <rect x="0" y="0" width="{{ tlen * cell }}" height="{{ 4 * cell }}" fill="url(#wg-{{ gid }})"></rect>
+    <rect x="{{ tx }}" y="0" width="{{ 4 * cell }}" height="{{ 4 * cell }}" fill="url(#wg-{{ gid }})"></rect>
+    <rect x="{{ tx }}" y="{{ ty }}" width="{{ 4 * cell }}" height="{{ plen * cell }}" fill="url(#wg-{{ gid }})"></rect>
+    {% for end in t.extra.threading %}
+      {% if end == 1 %}<rect class="mk" x="{{ loop.index0 * cell }}" y="0" width="{{ cell }}" height="{{ cell }}"></rect>{% endif %}
+      {% if end == 2 %}<rect class="mk" x="{{ loop.index0 * cell }}" y="{{ cell }}" width="{{ cell }}" height="{{ cell }}"></rect>{% endif %}
+      {% if end == 3 %}<rect class="mk" x="{{ loop.index0 * cell }}" y="{{ cell * 2 }}" width="{{ cell }}" height="{{ cell }}"></rect>{% endif %}
+      {% if end == 4 %}<rect class="mk" x="{{ loop.index0 * cell }}" y="{{ cell * 3 }}" width="{{ cell }}" height="{{ cell }}"></rect>{% endif %}
+    {% endfor %}
+    {% for row in t.extra.tieup %}
+      {% set r = loop.index0 %}
+      {% for v in row %}
+        {% if v == 1 %}<rect class="mk mk-tie" x="{{ tx + loop.index0 * cell }}" y="{{ r * cell }}" width="{{ cell }}" height="{{ cell }}"></rect>{% endif %}
+      {% endfor %}
+    {% endfor %}
+    {% for pick in t.extra.treadling %}
+      {% if pick == 1 %}<rect class="mk" x="{{ tx }}" y="{{ ty + loop.index0 * cell }}" width="{{ cell }}" height="{{ cell }}"></rect>{% endif %}
+      {% if pick == 2 %}<rect class="mk" x="{{ tx + cell }}" y="{{ ty + loop.index0 * cell }}" width="{{ cell }}" height="{{ cell }}"></rect>{% endif %}
+      {% if pick == 3 %}<rect class="mk" x="{{ tx + cell * 2 }}" y="{{ ty + loop.index0 * cell }}" width="{{ cell }}" height="{{ cell }}"></rect>{% endif %}
+      {% if pick == 4 %}<rect class="mk" x="{{ tx + cell * 3 }}" y="{{ ty + loop.index0 * cell }}" width="{{ cell }}" height="{{ cell }}"></rect>{% endif %}
+    {% endfor %}
+  </svg>
+  <p class="draft-caption"><span>threading</span><span aria-hidden="true"> · </span><span>tie-up</span><span aria-hidden="true"> · </span><span>treadling</span></p>
+</div>

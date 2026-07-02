@@ -43,8 +43,8 @@ Halcyon Climate Lab briefs state legislators twice a year, and their staff asked
     <text x="205" y="278" text-anchor="middle">2018</text>
     <text x="465" y="278" text-anchor="middle">2025</text>
   </g>
-  <line class="annotation-lead" x1="530" y1="70" x2="560" y2="46"/>
-  <text class="annotation-text" x="564" y="42">44% renewables</text>
+  <line class="annotation-lead" x1="465" y1="30" x2="465" y2="17"/>
+  <text class="annotation-text" x="465" y="13" text-anchor="middle">44% renewables</text>
 </svg>
 <figcaption class="case-caption">Fig. 1 &mdash; State electricity generation mix by source, 2018 vs. 2025, in percent of total generation.</figcaption>
 </figure>
