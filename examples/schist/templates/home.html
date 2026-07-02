@@ -1,0 +1,51 @@
+{% include "header.html" %}
+  <main id="main" class="home-main">
+    <section class="hero">
+      <h1 class="hero-word">SCHIST<span class="hero-dot" aria-hidden="true">.</span></h1>
+      <p class="hero-tagline">Rule catalog and pipeline guides for a multi-language lint runner.</p>
+
+      <div class="prose home-lede">
+        {{ content | safe }}
+      </div>
+
+      <div class="rule-search" role="search">
+        <label for="rule-search-input" class="rule-search-label">Search the catalog</label>
+        <div class="rule-search-field">
+          <span class="rule-search-caret" aria-hidden="true">&gt;</span>
+          <input id="rule-search-input" type="search" placeholder="grep for a rule, tag, or language&hellip;" autocomplete="off" autocapitalize="off" spellcheck="false" data-index="{{ base_url }}/search.json" data-base="{{ base_url }}" aria-controls="rule-search-results">
+        </div>
+        <p id="rule-search-status" class="rule-search-status" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section class="home-index" aria-labelledby="home-index-h">
+      <h2 id="home-index-h">Rule index</h2>
+      <p class="home-index-lede">Every rule Schist ships, evaluated in this order on every run.</p>
+
+      <div id="rule-index-list">
+        <ol class="citation-list">
+          {% set rules = get_section(path="rules") %}
+          {% for p in rules.pages | sort_by("weight") %}
+          <li class="citation-row">
+            <a class="citation-row-link" href="{{ base_url }}{{ p.url }}">
+              <span class="citation-row-sev" data-severity="{{ p.extra.severity }}">{{ p.extra.severity | upper }}</span>
+              <span class="citation-row-body">
+                <span class="citation-row-top">
+                  <span class="citation-row-id">{{ p.extra.rule_id }}</span>
+                  <span class="citation-row-title">{{ p.title | e }}</span>
+                </span>
+                <span class="citation-row-desc">{{ p.description | e }}</span>
+              </span>
+              <span class="citation-row-lang">{{ p.extra.language }}</span>
+            </a>
+          </li>
+          {% endfor %}
+        </ol>
+      </div>
+
+      <ol id="rule-search-results" class="citation-list" hidden></ol>
+
+      <p class="home-index-more"><a href="{{ base_url }}/rules/">Full rule index &rarr;</a></p>
+    </section>
+  </main>
+{% include "footer.html" %}

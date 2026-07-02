@@ -1,0 +1,30 @@
+{% include "header.html" %}
+  <div class="shell">
+    {% include "sidebar.html" %}
+    <main id="main" class="doc">
+      <header class="section-head">
+        <p class="article-kicker"><span class="kicker-mins">{{ section.pages_count }} {% if page.section == "reference" %}clauses · language spec{% else %}chapters · guide{% endif %}</span></p>
+        <h1>{{ page.title | e }}</h1>
+        <div class="lede prose">
+          {{ content | safe }}
+        </div>
+      </header>
+      <ol class="ledger ledger-section">
+        {% for p in section.pages | sort_by("weight") %}
+        <li class="ledger-row">
+          <a class="ledger-link" href="{{ base_url }}{{ p.url }}">
+            <span class="ledger-num" aria-hidden="true">{% if page.section == "reference" %}§{% endif %}{{ loop.index }}</span>
+            <span class="ledger-main">
+              <span class="ledger-head">
+                <span class="ledger-name">{{ p.title }}</span>
+                {% if p.reading_time %}<span class="ledger-mins">{{ p.reading_time }} min read</span>{% endif %}
+              </span>
+              {% if p.description %}<span class="ledger-desc">{{ p.description }}</span>{% endif %}
+            </span>
+          </a>
+        </li>
+        {% endfor %}
+      </ol>
+    </main>
+  </div>
+{% include "footer.html" %}

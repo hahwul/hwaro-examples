@@ -1,0 +1,79 @@
+{% include "header.html" %}
+      <main id="main" class="main main-home">
+        <section class="hero">
+          <p class="eyebrow">Self-hosted package registry</p>
+          <h1 class="wordmark">Zircon</h1>
+          <p class="hero-pitch">{{ site.description }}</p>
+          <div class="hero-row">
+            <button type="button" class="pkg pkg-install" data-copy="curl -fsSL zircon.sh/install | sh" aria-label="Copy install command: curl -fsSL zircon.sh/install | sh"><span class="pkg-prompt" aria-hidden="true">$</span><span class="pkg-name">curl -fsSL zircon.sh/install | sh</span><svg class="pkg-icon pkg-icon-copy" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="5.5" y="5.5" width="8" height="8" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M3.5 10.5v-6a1 1 0 0 1 1-1h6" fill="none" stroke="currentColor" stroke-width="1.3"/></svg><svg class="pkg-icon pkg-icon-done" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3.5 8.5l3 3 6-7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr-only">, click to copy install command</span></button>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="{{ base_url }}/guides/quickstart/">Read the quickstart</a>
+              <a class="btn btn-ghost" href="{{ base_url }}/api/">API reference</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="overview" aria-labelledby="overview-title">
+          <h2 id="overview-title" class="sr-only">Guides and API reference</h2>
+          <div class="overview-grid">
+            <div class="overview-col">
+              <div class="overview-head">
+                <h3>Guides</h3>
+                <a class="link-arrow" href="{{ base_url }}/guides/">All guides<span aria-hidden="true"> →</span></a>
+              </div>
+              <ol class="doc-list">
+                {% for p in get_section(path="guides").pages | sort_by("weight") %}
+                <li class="doc-item">
+                  <a class="doc-link" href="{{ base_url }}{{ p.url }}">
+                    <span class="doc-num" aria-hidden="true">{{ loop.index }}</span>
+                    <span class="doc-item-body">
+                      <span class="doc-item-title">{{ p.title }}</span>
+                      <span class="doc-item-desc">{{ p.description }}</span>
+                    </span>
+                  </a>
+                </li>
+                {% endfor %}
+              </ol>
+            </div>
+            <div class="overview-col">
+              <div class="overview-head">
+                <h3>API</h3>
+                <a class="link-arrow" href="{{ base_url }}/api/">All endpoints<span aria-hidden="true"> →</span></a>
+              </div>
+              <ol class="doc-list">
+                {% for p in get_section(path="api").pages | sort_by("weight") %}
+                <li class="doc-item">
+                  <a class="doc-link" href="{{ base_url }}{{ p.url }}">
+                    <span class="doc-num doc-num-method">{{ p.extra.method | default("GET") }}</span>
+                    <span class="doc-item-body">
+                      <span class="doc-item-title">{{ p.title }}</span>
+                      <span class="doc-item-desc">{{ p.description }}</span>
+                    </span>
+                  </a>
+                </li>
+                {% endfor %}
+              </ol>
+            </div>
+          </div>
+        </section>
+
+        <section class="quickstart" aria-labelledby="quickstart-title">
+          <div class="quickstart-copy">
+            <h2 id="quickstart-title" class="section-title">Point your package manager at it</h2>
+            <p>Zircon speaks the registry protocols your tools already know. Set a registry URL, drop in a token, and every install resolves through your mirror — provenance checked on the way in.</p>
+            <a class="link-arrow" href="{{ base_url }}/guides/mirroring/">Configure a mirror<span aria-hidden="true"> →</span></a>
+          </div>
+          <pre class="quickstart-code"><code class="language-bash">zircon registry set pkg.internal.example
+zircon login --token $ZIRCON_TOKEN
+zircon add @acme/http-kit
+zircon verify @acme/http-kit --provenance</code></pre>
+        </section>
+
+        <section class="why" aria-labelledby="why-title">
+          <h2 id="why-title" class="section-title">Why run your own registry</h2>
+          <div class="prose prose-narrow">
+            {{ content | safe }}
+          </div>
+        </section>
+      </main>
+{% include "footer.html" %}

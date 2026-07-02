@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="{{ page.description | default(site.description, true) | e }}">
+  <title>{% if page.title is present and page.url != "/" %}{{ page.title | e }} — {{ site.title | e }}{% else %}{{ site.title | e }} — {{ site.description | e }}{% endif %}</title>
+  <link rel="icon" type="image/svg+xml" href="{{ base_url }}/favicon.svg">
+  {{ og_all_tags }}
+  {{ canonical_tag }}
+  {{ jsonld }}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ base_url }}/css/style.css">
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+</head>
+<body data-base="{{ base_url }}" data-section="{{ page.section }}">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="sidebar" aria-label="Open the migrations tree">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true" focusable="false"><path d="M3 5.5h14M3 10h14M3 14.5h9"/></svg>
+        <span>Docs</span>
+      </button>
+
+      <a class="brand" href="{{ base_url }}/" aria-label="Breccia — home">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <rect x="0.5" y="0.5" width="31" height="31" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M0.5 0.5H31.5V31.5H19L23 22L16 24L18 14L9 18L13 6L0.5 9Z" fill="none" stroke="currentColor" stroke-width="1.2"/>
+          <path d="M13 6L9 18L18 14L16 24L23 22L19 31.5" fill="var(--accent)" stroke="none"/>
+        </svg>
+        <span class="brand-word">BRECCIA</span>
+      </a>
+
+      <nav class="topnav" aria-label="Primary">
+        <a href="{{ base_url }}/migrations/"{% if page.section == "migrations" %} aria-current="page"{% endif %}>Migrations</a>
+        <a href="{{ base_url }}/install/"{% if page.url == "/install/" %} aria-current="page"{% endif %}>Install</a>
+        <a href="{{ base_url }}/tags/"{% if page.section == "tags" %} aria-current="page"{% endif %}>Tags</a>
+      </nav>
+
+      <div class="topbar-tools">
+        <button class="cmdk" id="search-open" type="button" aria-haspopup="dialog" aria-expanded="false" aria-label="Open search">
+          <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="square" aria-hidden="true" focusable="false"><circle cx="7" cy="7" r="4.4"/><path d="M10.4 10.4 14 14"/></svg>
+          <span class="cmdk-label">Search docs</span>
+          <span class="cmdk-keys" aria-hidden="true"><kbd>Ctrl</kbd><kbd>K</kbd></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="drawer-scrim" aria-hidden="true"></div>
+
+  <div class="shell">
+    <aside class="sidebar" id="sidebar" aria-label="Migrations navigation">
+      <div class="sidebar-inner">
+        <p class="side-label">Expand &amp; contract, in order</p>
+        <nav class="tree" aria-label="Migrations">
+          <p class="tree-head"><a href="{{ base_url }}/migrations/">Migrations</a><span class="tree-tag" aria-hidden="true">01&ndash;06</span></p>
+          <ol class="tree-list">
+            {% for p in get_section(path="migrations").pages | sort_by("weight") %}
+            <li>
+              <a class="tree-link{% if page.url == p.url %} is-current{% endif %}" href="{{ base_url }}{{ p.url }}"{% if page.url == p.url %} aria-current="page"{% endif %}>
+                <span class="tree-num" aria-hidden="true">{% if p.extra.step %}{% if p.extra.step < 10 %}0{% endif %}{{ p.extra.step }}{% else %}{% if loop.index < 10 %}0{% endif %}{{ loop.index }}{% endif %}</span>
+                <span class="tree-name">{{ p.title }}</span>
+              </a>
+            </li>
+            {% endfor %}
+          </ol>
+          <p class="tree-head tree-head-plain">Getting started</p>
+          <ul class="tree-list tree-list-plain">
+            <li>
+              <a class="tree-link{% if page.url == "/install/" %} is-current{% endif %}" href="{{ base_url }}/install/"{% if page.url == "/install/" %} aria-current="page"{% endif %}>
+                <span class="tree-num" aria-hidden="true">&gt;</span>
+                <span class="tree-name">Install</span>
+              </a>
+            </li>
+            <li>
+              <a class="tree-link{% if page.section == "tags" %} is-current{% endif %}" href="{{ base_url }}/tags/">
+                <span class="tree-num" aria-hidden="true">#</span>
+                <span class="tree-name">Tag index</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <p class="side-note">Every step is load-bearing. Breccia's ledger will not let step six run before step five reports clean.</p>
+      </div>
+    </aside>

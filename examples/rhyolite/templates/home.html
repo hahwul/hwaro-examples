@@ -1,0 +1,106 @@
+{% include "header.html" %}
+    <main id="main" class="doc doc-home">
+      <section class="masthead blueprint-grid">
+        <div class="masthead-diagram" aria-hidden="true">
+          <svg viewBox="0 0 900 420" preserveAspectRatio="xMidYMid meet" class="diagram diagram-hero" fill="none" stroke-linecap="round" focusable="false">
+            <path d="M60,340 C60,120 300,40 450,90" stroke="var(--accent)" stroke-width="3"/>
+            <path d="M450,90 C600,140 760,60 860,300" stroke="var(--accent)" stroke-width="3"/>
+            <g stroke="var(--accent)" stroke-width="1" stroke-opacity="0.55" stroke-dasharray="3 5">
+              <path d="M60,340 L60,120"/>
+              <path d="M450,90 L300,40"/>
+              <path d="M450,90 L600,140"/>
+              <path d="M860,300 L760,60"/>
+            </g>
+            <g fill="var(--accent)">
+              <rect x="53" y="333" width="14" height="14"/>
+              <rect x="443" y="83" width="14" height="14"/>
+              <rect x="853" y="293" width="14" height="14"/>
+            </g>
+            <g fill="var(--bg)" stroke="var(--accent)" stroke-width="1.8">
+              <circle cx="60" cy="120" r="7"/>
+              <circle cx="300" cy="40" r="7"/>
+              <circle cx="600" cy="140" r="7"/>
+              <circle cx="760" cy="60" r="7"/>
+            </g>
+            <g font-family="var(--font-mono)" font-size="12" fill="var(--accent)" fill-opacity="0.75" stroke="none">
+              <text x="30" y="365">P0</text>
+              <text x="465" y="82">P1</text>
+              <text x="875" y="318">P2</text>
+              <text x="70" y="114">C0</text>
+              <text x="310" y="30">C1</text>
+              <text x="608" y="134">C2</text>
+              <text x="768" y="50">C3</text>
+            </g>
+            <g font-family="var(--font-mono)" font-size="11" fill="var(--muted)" stroke="none">
+              <text x="600" y="380">x:450.0 y:90.0 — P1 · shared anchor</text>
+            </g>
+          </svg>
+        </div>
+
+        <div class="masthead-content">
+          <p class="masthead-kicker">GPU vector graphics · retained scene graph</p>
+          <h1 class="masthead-title">Rhyolite</h1>
+          <p class="masthead-sub">A 2D vector graphics library that tessellates paths once, batches them into instanced draw calls, and resolves antialiasing and clipping in compute — from the first control cage to the last frame.</p>
+
+          <div class="masthead-lede">
+            {{ content | safe }}
+          </div>
+
+          <p class="masthead-actions">
+            <a class="btn btn-primary" href="{{ base_url }}/learn/paths/">Start with paths</a>
+            <a class="btn btn-ghost" href="{{ base_url }}/learn/pipeline/">See the GPU pipeline</a>
+          </p>
+        </div>
+      </section>
+
+      <section class="pillars" aria-labelledby="pillars-title">
+        <h2 class="pillars-title" id="pillars-title">What the renderer handles for you</h2>
+        <div class="pillar-grid">
+          <article class="pillar">
+            <svg class="pillar-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true" focusable="false"><path d="M6 24 C6 12 14 8 26 8"/><circle cx="6" cy="24" r="2"/><circle cx="26" cy="8" r="2"/></svg>
+            <h3>Retained scene graph</h3>
+            <p>Build the tree once and mutate it across frames. A dirty flag propagates per subtree, so a node nobody touched since last frame is never re-tessellated or re-uploaded.</p>
+          </article>
+          <article class="pillar">
+            <svg class="pillar-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true" focusable="false"><path d="M4 26 L14 8 L20 20 L24 12 L28 26 Z"/></svg>
+            <h3>GPU tessellation</h3>
+            <p>Cubic beziers flatten to an adaptive tolerance and cache by path identity and scale bucket, so panning and zooming re-tessellate a handful of times, not every frame.</p>
+          </article>
+          <article class="pillar">
+            <svg class="pillar-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true" focusable="false"><rect x="5" y="5" width="9" height="9"/><rect x="18" y="18" width="9" height="9"/><path d="M14 9h13v9M9 14v13h13"/></svg>
+            <h3>Batched instancing</h3>
+            <p>Shapes sharing a pipeline state draw in one instanced call. Ten thousand identical cells cost one draw call and one instance-buffer write, not ten thousand calls.</p>
+          </article>
+          <article class="pillar">
+            <svg class="pillar-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true" focusable="false"><rect x="6" y="6" width="20" height="20"/><path d="M6 14h20M14 6v20"/></svg>
+            <h3>Compute-shader passes</h3>
+            <p>Coverage accumulation and clip masks run as compute passes against small tile buffers, not stencil-buffer tricks — and the frame graph is open to your own passes.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="contents" aria-labelledby="contents-title">
+        <div class="contents-head">
+          <h2 class="contents-title" id="contents-title">The manual, chapter by chapter</h2>
+          <p class="contents-sub">Five chapters, ordered the way a frame actually moves through the renderer: a path is built, joins the scene graph, gets tessellated, gets batched, and gets resolved.</p>
+        </div>
+        <ol class="ledger">
+          {% for p in get_section(path="learn").pages | sort_by("weight") %}
+          <li class="ledger-row">
+            <a class="ledger-link" href="{{ base_url }}{{ p.url }}">
+              <span class="ledger-num" aria-hidden="true">{% if loop.index < 10 %}0{% endif %}{{ loop.index }}</span>
+              <span class="ledger-main">
+                <span class="ledger-head">
+                  <span class="ledger-name">{{ p.title }}</span>
+                  <span class="ledger-dots" aria-hidden="true"></span>
+                  {% if p.extra.section_id %}<span class="ledger-id">{{ p.extra.section_id }}</span>{% endif %}
+                </span>
+                {% if p.description %}<span class="ledger-desc">{{ p.description }}</span>{% endif %}
+              </span>
+            </a>
+          </li>
+          {% endfor %}
+        </ol>
+      </section>
+    </main>
+{% include "footer.html" %}

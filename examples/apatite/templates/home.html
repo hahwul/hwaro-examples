@@ -1,0 +1,104 @@
+{% include "header.html" %}
+    <main id="main" class="doc doc-home">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="hero-eyebrow">Property-based testing · integrated shrinking · replayable seeds</p>
+          <h1 class="hero-title"><span class="hero-line">Write the property.</span><span class="hero-line hero-accent">It finds the smallest lie.</span></h1>
+          <div class="hero-lede prose">
+            {{ content | safe }}
+          </div>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="{{ base_url }}/tutorial/first-property/">Start the tutorial</a>
+            <a class="btn btn-ghost" href="{{ base_url }}/about/">About Apatite <span aria-hidden="true">&rarr;</span></a>
+          </div>
+        </div>
+
+        <div class="hero-demo">
+          <p class="demo-plate-label">Property under test</p>
+          <p class="demo-fail"><span class="demo-fail-mark" aria-hidden="true">✕</span> <code>clamp(x, 0, 10)</code> stays inside <code>[0, 10]</code></p>
+          <p class="demo-run">FAIL after 12 cases · seed <code>0x2af61c9d</code> · counterexample <code>x = -847</code></p>
+          <div class="shrink" role="group" aria-label="Shrink trace from the first failing input to the minimal counterexample">
+            <p class="shrink-label"><span class="shrink-dot" aria-hidden="true"></span>shrink trace — 3 steps to minimal</p>
+            <div class="shrink-row">
+              <span class="shrink-chip"><code>-847</code></span>
+              <span class="shrink-arrow" aria-hidden="true">→</span>
+              <span class="shrink-chip chip-2"><code>-54</code></span>
+              <span class="shrink-arrow" aria-hidden="true">→</span>
+              <span class="shrink-chip chip-3"><code>-13</code></span>
+              <span class="shrink-arrow" aria-hidden="true">→</span>
+              <span class="shrink-chip chip-4 is-minimal"><code>-1</code><span class="minimal-tag">minimal</span></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="steps" aria-labelledby="steps-title">
+        <p class="section-label" id="steps-title">How it works</p>
+        <ol class="step-grid">
+          <li class="step">
+            <span class="step-num" aria-hidden="true">1</span>
+            <h2 class="step-title">Describe a property</h2>
+            <p>Instead of one example, state a rule that should hold for every input a generator can produce — sorting stays sorted, encoding round-trips, a queue never loses an item.</p>
+          </li>
+          <li class="step">
+            <span class="step-num" aria-hidden="true">2</span>
+            <h2 class="step-title">Apatite hunts for a break</h2>
+            <p>It generates hundreds of random cases from your generators — integers, lists, records, command sequences — and stops the instant one falsifies the property.</p>
+          </li>
+          <li class="step">
+            <span class="step-num" aria-hidden="true">3</span>
+            <h2 class="step-title">It shrinks to minimal</h2>
+            <p>The failing case is reduced, step by step, to the smallest input that still reproduces the bug — and a seed is printed so you can replay that exact case forever.</p>
+          </li>
+        </ol>
+      </section>
+
+      <section class="tenets" aria-labelledby="tenets-title">
+        <p class="section-label" id="tenets-title">Why Apatite</p>
+        <div class="tenet-grid">
+          <article class="tenet">
+            <span class="tenet-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/><path d="M20 13v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h11" opacity="0.45"/></svg>
+            </span>
+            <h2 class="tenet-title">Shrinking is not optional</h2>
+            <p>Every generator Apatite ships — integers, lists, strings, records, even command sequences — knows how to shrink itself. You never write a shrinker by hand.</p>
+          </article>
+          <article class="tenet">
+            <span class="tenet-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+            </span>
+            <h2 class="tenet-title">Every failure replays</h2>
+            <p>Each run prints the seed that produced it. Pin that seed in a regression test and the exact counterexample — not a similar one — runs again on every build.</p>
+          </article>
+          <article class="tenet">
+            <span class="tenet-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="3"/><rect x="13" y="3" width="8" height="8" rx="4"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="4"/></svg>
+            </span>
+            <h2 class="tenet-title">Generators compose</h2>
+            <p>Build a generator for a domain type once, out of <code>map</code>, <code>filter</code>, and <code>oneOf</code>, and every property that needs one just asks for it.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="front-contents" aria-labelledby="front-contents-title">
+        <p class="section-label" id="front-contents-title">Start reading</p>
+        <ol class="front-toc">
+          {% for p in get_section(path="tutorial").pages | sort_by("weight") %}
+          <li class="front-row">
+            <a class="front-link" href="{{ base_url }}{{ p.url }}">
+              <span class="front-num" aria-hidden="true">{{ loop.index }}</span>
+              <span class="front-body">
+                <span class="front-line">
+                  <span class="front-name">{{ p.title }}</span>
+                  <span class="front-dots" aria-hidden="true"></span>
+                  <span class="front-meta">{% if p.extra.minutes %}{{ p.extra.minutes }} min{% endif %}</span>
+                </span>
+                {% if p.description %}<span class="front-desc">{{ p.description }}</span>{% endif %}
+              </span>
+            </a>
+          </li>
+          {% endfor %}
+        </ol>
+      </section>
+    </main>
+{% include "footer.html" %}

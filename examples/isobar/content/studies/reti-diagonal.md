@@ -2,7 +2,7 @@
 title = "Réti's Study: The King's Long Diagonal"
 date = "2026-06-18"
 description = "A king too slow to catch one pawn and too far to help its own turns out to be exactly fast enough, walking a diagonal that serves both errands at once."
-tags = ["king-and-pawn", "studies", "reti"]
+tags = ["king-and-pawn", "technique", "reti"]
 
 [extra]
 result = "Draw"

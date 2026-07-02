@@ -1,0 +1,48 @@
+{% include "header.html" %}
+  <div class="docs-shell">
+    {% include "sidebar.html" %}
+    <main id="main" class="docs-main">
+      <div class="doc-columns">
+        <article class="doc-article">
+          {% if page.extra.severity %}
+          <div class="severity-stamp" data-severity="{{ page.extra.severity }}" aria-hidden="true">{{ page.extra.severity | upper }}</div>
+          <p class="rule-meta">
+            <span class="rule-meta-id">{{ page.extra.rule_id }}</span>
+            <span class="rule-meta-sep" aria-hidden="true">&middot;</span>
+            <span class="rule-meta-lang">{{ page.extra.language }}</span>
+            <span class="rule-meta-sep" aria-hidden="true">&middot;</span>
+            <span class="rule-meta-fix">{% if page.extra.autofix %}autofix available{% else %}manual fix required{% endif %}</span>
+          </p>
+          {% endif %}
+
+          <h1>{{ page.title | e }}</h1>
+          {% if page.description %}<p class="doc-dek">{{ page.description }}</p>{% endif %}
+
+          <div class="doc-meta">
+            {% if page.date %}<time datetime="{{ page.date | date('%Y-%m-%d') }}">{{ page.date | date('%B %d, %Y') }}</time>{% endif %}
+            {% if page.reading_time %}<span>{{ page.reading_time }} min read</span>{% endif %}
+            {% if page.tags %}<span class="doc-meta-tags">{% for t in page.tags %}<a href="{{ base_url }}/tags/{{ t | slugify }}/">#{{ t }}</a>{% endfor %}</span>{% endif %}
+          </div>
+
+          <div class="prose">
+            {{ content | safe }}
+          </div>
+
+          {% if page.lower or page.higher %}
+          <nav class="doc-pager" aria-label="Rule navigation">
+            {% if page.lower %}<a class="doc-pager-link doc-pager-prev" href="{{ base_url }}{{ page.lower.url }}"><span>&larr; Previous rule</span>{{ page.lower.title }}</a>{% endif %}
+            {% if page.higher %}<a class="doc-pager-link doc-pager-next" href="{{ base_url }}{{ page.higher.url }}"><span>Next rule &rarr;</span>{{ page.higher.title }}</a>{% endif %}
+          </nav>
+          {% endif %}
+        </article>
+
+        {% if page.toc %}
+        <aside class="doc-toc" aria-label="On this page">
+          <p class="doc-toc-title">On this page</p>
+          {{ toc | safe }}
+        </aside>
+        {% endif %}
+      </div>
+    </main>
+  </div>
+{% include "footer.html" %}

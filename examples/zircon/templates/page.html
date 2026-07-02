@@ -1,0 +1,50 @@
+{% include "header.html" %}
+      <main id="main" class="main">
+        <div class="page-grid{% if page.toc %} has-toc{% endif %}">
+          <article class="article">
+            <header class="article-head">
+              <p class="article-kicker">
+                {% if page.section %}<a class="kicker-link" href="{{ base_url }}/{{ page.section }}/">{{ page.section | capitalize }}</a>{% endif %}
+                {% if page.extra.method %}<span class="chip chip-method chip-method-{{ page.extra.method | lower }}">{{ page.extra.method }}</span>{% endif %}
+                {% if page.extra.level %}<span class="chip">{{ page.extra.level }}</span>{% endif %}
+                {% if page.extra.minutes %}<span class="kicker-mins">{{ page.extra.minutes }} min read</span>{% endif %}
+              </p>
+              <h1>{{ page.title }}</h1>
+              {% if page.description %}<p class="lede">{{ page.description }}</p>{% endif %}
+              {% if page.extra.endpoint %}<p class="article-endpoint"><code>{{ page.extra.method | default("GET") }} {{ page.extra.endpoint }}</code></p>{% endif %}
+              {% if page.date %}<p class="article-meta">Updated {{ page.date | date("%B %-d, %Y") }}</p>{% endif %}
+            </header>
+            <div class="prose">
+              {{ content | safe }}
+            </div>
+            {% if page.tags %}
+            <ul class="tag-list" aria-label="Tags">
+              {% for t in page.tags %}<li><a class="tag-chip" href="{{ get_taxonomy_url(kind='tags', term=t) }}">{{ t }}</a></li>{% endfor %}
+            </ul>
+            {% endif %}
+            {% if page.lower or page.higher %}
+            <nav class="pager" aria-label="More in this section">
+              {% if page.lower %}
+              <a class="pager-link pager-prev" href="{{ base_url }}{{ page.lower.url }}">
+                <span class="pager-label">Previous</span>
+                <span class="pager-title">{{ page.lower.title }}</span>
+              </a>
+              {% endif %}
+              {% if page.higher %}
+              <a class="pager-link pager-next" href="{{ base_url }}{{ page.higher.url }}">
+                <span class="pager-label">Next</span>
+                <span class="pager-title">{{ page.higher.title }}</span>
+              </a>
+              {% endif %}
+            </nav>
+            {% endif %}
+          </article>
+          {% if page.toc %}
+          <aside class="toc" aria-label="On this page">
+            <p class="toc-title">On this page</p>
+            {{ toc | safe }}
+          </aside>
+          {% endif %}
+        </div>
+      </main>
+{% include "footer.html" %}

@@ -1,0 +1,42 @@
+{% include "header.html" %}
+  <main id="main" class="wrap">
+    <article class="doc">
+      <header class="doc-head">
+        {% if page.section %}<p class="doc-kicker"><a href="{{ base_url }}/{{ page.section }}/">{{ page.section | e }}</a></p>{% endif %}
+        <h1>{{ page.title | e }}</h1>
+        {% if page.description %}<p class="doc-lede">{{ page.description | e }}</p>{% endif %}
+        {% if page.reading_time %}<p class="doc-meta">{{ page.reading_time }} min read{% if page.date %} · revised {{ page.date | date("%B %Y") }}{% endif %}</p>{% endif %}
+      </header>
+
+      {% if page.toc %}
+      <nav class="toc" aria-label="On this page">
+        <p class="toc-title">On this page</p>
+        {{ toc | safe }}
+      </nav>
+      {% endif %}
+
+      <div class="prose">
+        {{ content | safe }}
+      </div>
+
+      {% set has_prev = page.lower and page.lower.section == page.section %}
+      {% set has_next = page.higher and page.higher.section == page.section %}
+      {% if page.section and (has_prev or has_next) %}
+      <nav class="pager" aria-label="Syntax reference navigation">
+        {% if has_prev %}
+        <a class="pager-link pager-prev" href="{{ base_url }}{{ page.lower.url }}">
+          <span class="pager-dir">Previous</span>
+          <span class="pager-title">{{ page.lower.title | e }}</span>
+        </a>
+        {% else %}<span class="pager-spacer" aria-hidden="true"></span>{% endif %}
+        {% if has_next %}
+        <a class="pager-link pager-next" href="{{ base_url }}{{ page.higher.url }}">
+          <span class="pager-dir">Next</span>
+          <span class="pager-title">{{ page.higher.title | e }}</span>
+        </a>
+        {% else %}<span class="pager-spacer" aria-hidden="true"></span>{% endif %}
+      </nav>
+      {% endif %}
+    </article>
+  </main>
+{% include "footer.html" %}

@@ -1,0 +1,49 @@
+{% include "header.html" %}
+  <main id="main" class="split">
+
+    <section class="split__left" aria-labelledby="hero-name">
+      <p class="hero__eyebrow">Slow cinema, held far from the sun</p>
+      <h1 id="hero-name" class="hero__name">{{ site.title | e }}</h1>
+      <p class="hero__dates">{{ page.extra.dates | default("29 January – 1 February 2026") | e }}<br>{{ page.extra.place | default("Bergen, Norway") | e }}</p>
+      <div class="hero__copy">
+        {{ content | safe }}
+      </div>
+      <nav class="hero__actions" aria-label="Festival">
+        <a class="btn" href="{{ base_url }}/tickets/">Book a seat</a>
+        <a class="btn btn--ghost" href="{{ base_url }}/venue/">Find the venue</a>
+      </nav>
+    </section>
+
+    <section class="split__right" aria-labelledby="lineup-heading">
+      <div class="lineup">
+        <div class="lineup__head">
+          <h2 id="lineup-heading" class="lineup__heading">The lineup</h2>
+          <p class="lineup__sub">Five films &middot; four days &middot; one screen</p>
+        </div>
+
+        <div class="lineup__search">
+          <label class="visually-hidden" for="lineup-search">Search titles and directors</label>
+          <input type="search" id="lineup-search" class="lineup__input" placeholder="Search titles, directors…" autocomplete="off">
+          <p class="lineup__status" id="lineup-status" role="status" aria-live="polite" hidden></p>
+        </div>
+
+        {% set screenings = get_section(path="screenings/_index.md") %}
+        <ol class="lineup__list" id="lineup-list">
+          {% for p in screenings.pages | sort_by("date") %}
+          <li class="lineup__row">
+            <a href="{{ base_url }}{{ p.url }}">
+              <span class="lineup__title">{{ p.title | e }}</span>
+              <span class="lineup__meta">
+                <span class="lineup__director">{{ p.extra.director | e }}</span>
+                <span class="lineup__when">{{ p.date | date("%a %d %b") }} &middot; {{ p.extra.time | e }}</span>
+              </span>
+            </a>
+          </li>
+          {% endfor %}
+        </ol>
+        <ol class="lineup__list lineup__results" id="lineup-results" hidden></ol>
+      </div>
+    </section>
+
+  </main>
+{% include "footer.html" %}

@@ -1,0 +1,27 @@
+{% include "header.html" %}
+      <main id="main" class="main">
+        <header class="section-head">
+          <p class="eyebrow">{{ section.pages_count }} pages · read in order</p>
+          <h1>{{ page.title }}</h1>
+          {% if page.description %}<p class="lede">{{ page.description }}</p>{% endif %}
+          <div class="section-intro prose prose-narrow">
+            {{ content | safe }}
+          </div>
+        </header>
+        <ol class="doc-grid">
+          {% for p in section.pages | sort_by("weight") %}
+          <li class="doc-card">
+            <a class="doc-link" href="{{ base_url }}{{ p.url }}">
+              <span class="doc-num{% if p.extra.method %} doc-num-method{% endif %}" aria-hidden="true">{% if p.extra.method %}{{ p.extra.method }}{% else %}{{ loop.index }}{% endif %}</span>
+              <h2 class="doc-title">{{ p.title }}</h2>
+              <p class="doc-desc">{{ p.description }}</p>
+              <p class="doc-meta">
+                {% if p.extra.level %}<span class="chip">{{ p.extra.level }}</span>{% endif %}
+                {% if p.extra.minutes %}<span class="doc-mins">about {{ p.extra.minutes }} min</span>{% endif %}
+              </p>
+            </a>
+          </li>
+          {% endfor %}
+        </ol>
+      </main>
+{% include "footer.html" %}

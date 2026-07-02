@@ -1,0 +1,27 @@
+      <button type="button" id="nav-toggle" class="nav-toggle" aria-expanded="false" aria-controls="sidebar">
+        <span class="sr-only">Toggle rule index</span>
+        <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><line x1="3" y1="5" x2="17" y2="5" stroke="currentColor" stroke-width="2"/><line x1="3" y1="10" x2="17" y2="10" stroke="currentColor" stroke-width="2"/><line x1="3" y1="15" x2="17" y2="15" stroke="currentColor" stroke-width="2"/></svg>
+      </button>
+      <nav class="sidebar" id="sidebar" aria-label="Rule index">
+        <div class="sidebar-inner">
+          <a class="sidebar-home" href="{{ base_url }}/">&larr; Overview</a>
+          <p class="sidebar-heading">Rule index</p>
+          <ol class="sidebar-list">
+            {% set rules = get_section(path="rules") %}
+            {% for r in rules.pages | sort_by("weight") %}
+            <li>
+              <a href="{{ base_url }}{{ r.url }}"{% if page.url == r.url %} aria-current="page"{% endif %} class="sidebar-item">
+                <span class="sidebar-item-id">{{ r.extra.rule_id }}</span>
+                <span class="sidebar-item-title">{{ r.title | e }}</span>
+                <span class="sidebar-item-sev" data-severity="{{ r.extra.severity }}">{{ r.extra.severity | upper }}</span>
+              </a>
+            </li>
+            {% endfor %}
+          </ol>
+          <p class="sidebar-heading">Reference</p>
+          <ol class="sidebar-list sidebar-list-plain">
+            <li><a href="{{ base_url }}/about/"{% if page.url == "/about/" %} aria-current="page"{% endif %}>About Schist</a></li>
+            <li><a href="{{ base_url }}/tags/">Browse by tag</a></li>
+          </ol>
+        </div>
+      </nav>
