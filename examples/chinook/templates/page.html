@@ -1,0 +1,48 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <div class="wrap wrap-narrow">
+      <article class="article">
+        <header class="article-head">
+          {% if page.section is present and page.section == "bakes" %}
+          <p class="page-kicker">Bake log{% if page.date %} — {{ page.date | date("%B %-d, %Y") }}{% endif %}</p>
+          {% elif page.date %}
+          <p class="page-kicker">{{ page.date | date("%B %-d, %Y") }}</p>
+          {% endif %}
+          <h1 class="article-title">{{ page.title | e }}</h1>
+          {% if page.description %}<p class="article-lede">{{ page.description }}</p>{% endif %}
+        </header>
+
+        {% if page.extra.hydration or page.extra.proof or page.extra.flour or page.extra.altitude_note or page.extra.bake or page.extra.verdict %}
+        <dl class="bake-sheet" aria-label="Bake sheet">
+          {% if page.extra.hydration %}<div class="sheet-row"><dt>Hydration</dt><dd>{{ page.extra.hydration }}</dd></div>{% endif %}
+          {% if page.extra.proof %}<div class="sheet-row"><dt>Proof</dt><dd>{{ page.extra.proof }}</dd></div>{% endif %}
+          {% if page.extra.flour %}<div class="sheet-row"><dt>Flour</dt><dd>{{ page.extra.flour }}</dd></div>{% endif %}
+          {% if page.extra.bake %}<div class="sheet-row"><dt>Bake</dt><dd>{{ page.extra.bake }}</dd></div>{% endif %}
+          {% if page.extra.altitude_note %}<div class="sheet-row"><dt>Altitude tweak</dt><dd>{{ page.extra.altitude_note }}</dd></div>{% endif %}
+          {% if page.extra.verdict %}<div class="sheet-row"><dt>Verdict</dt><dd>{{ page.extra.verdict }}</dd></div>{% endif %}
+        </dl>
+        {% endif %}
+
+        <div class="prose">
+          {{ content | safe }}
+        </div>
+
+        {% if page.tags %}
+        <footer class="article-foot">
+          <span class="foot-label">Filed under</span>
+          <ul class="bake-tags" aria-label="Tags">
+            {% for t in page.tags %}<li><a href="{{ base_url }}/tags/{{ t | slugify }}/">{{ t }}</a></li>{% endfor %}
+          </ul>
+        </footer>
+        {% endif %}
+      </article>
+
+      {% if page.section is present and page.section == "bakes" %}
+      <nav class="bake-pager" aria-label="More bakes">
+        {% if page.higher %}<a class="pager-prev" href="{{ base_url }}{{ page.higher.url }}"><span class="pager-dir" aria-hidden="true">&larr;</span> <span>{{ page.higher.title | e }}</span></a>{% endif %}
+        {% if page.lower %}<a class="pager-next" href="{{ base_url }}{{ page.lower.url }}"><span>{{ page.lower.title | e }}</span> <span class="pager-dir" aria-hidden="true">&rarr;</span></a>{% endif %}
+      </nav>
+      {% endif %}
+    </div>
+  </main>
+{% include "footer.html" %}

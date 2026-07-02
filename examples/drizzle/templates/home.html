@@ -1,0 +1,43 @@
+{% include "header.html" %}
+    <main id="main" class="home">
+      {% set entries = get_section(path="experiments").pages | sort_by("date", reverse=true) %}
+      {% set latest = entries | first %}
+      <section class="masthead">
+        <p class="masthead-kicker">A kitchen-science sourdough journal</p>
+        <h1 class="masthead-title">Drizzle</h1>
+        <div class="standfirst">{{ content | safe }}</div>
+      </section>
+
+      <section class="latest" aria-labelledby="latest-heading">
+        <p class="latest-kicker" id="latest-heading">Latest experiment</p>
+        <h2 class="latest-title">
+          <a href="{{ base_url }}{{ latest.url }}">{{ latest.title }}</a>
+          {% if latest.extra.hydration %}{% set hyd = latest.extra.hydration %}{% include "partials/hydration.html" %}{% endif %}
+        </h2>
+        <p class="latest-meta">
+          {% if latest.date %}<time datetime="{{ latest.date | date("%Y-%m-%d") }}">{{ latest.date | date("%B %d, %Y") }}</time>{% endif %}
+          {% if latest.extra.flour %}<span class="latest-sep" aria-hidden="true">·</span>{{ latest.extra.flour }}{% endif %}
+        </p>
+        {% if latest.summary %}<p class="latest-summary">{{ latest.summary | strip_html | truncate_words(46) }}</p>{% endif %}
+        <p class="latest-more"><a class="read-link" href="{{ base_url }}{{ latest.url }}">Read the write-up</a></p>
+      </section>
+
+      <section class="earlier" aria-labelledby="earlier-heading">
+        <h2 class="section-heading" id="earlier-heading">Earlier experiments</h2>
+        <ol class="exp-rows">
+          {% for p in entries %}
+          {% if loop.index > 1 %}
+          <li class="exp-row">
+            <a class="exp-row-link" href="{{ base_url }}{{ p.url }}">
+              {% if p.date %}<time class="exp-row-date" datetime="{{ p.date | date("%Y-%m-%d") }}">{{ p.date | date("%b %Y") }}</time>{% endif %}
+              <span class="exp-row-title">{{ p.title }}</span>
+            </a>
+            {% if p.extra.hydration %}{% set hyd = p.extra.hydration %}{% include "partials/hydration.html" %}{% endif %}
+          </li>
+          {% endif %}
+          {% endfor %}
+        </ol>
+        <p class="all-link"><a class="read-link" href="{{ base_url }}/experiments/">Every experiment</a></p>
+      </section>
+    </main>
+{% include "footer.html" %}

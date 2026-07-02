@@ -1,0 +1,50 @@
+{% include "header.html" %}
+  <main id="main">
+    <article class="page-article">
+      <header class="page-header">
+        {% if page.date %}
+        <p class="page-dateline"><time datetime="{{ page.date | date("%Y-%m-%d") }}">{{ page.date | date("%B %d, %Y") }}</time>{% if page.extra.city %} · {{ page.extra.city }}{% endif %}</p>
+        {% endif %}
+        <h1 class="page-title">{{ page.title | e }}</h1>
+        {% if page.description %}<p class="page-standfirst">{{ page.description | e }}</p>{% endif %}
+        {% if page.date %}
+        <dl class="field-notes" aria-label="Session notes">
+          {% if page.extra.medium %}<div class="field"><dt>Medium</dt><dd>{{ page.extra.medium }}</dd></div>{% endif %}
+          {% if page.extra.minutes %}<div class="field"><dt>Sitting</dt><dd>{{ page.extra.minutes }} min</dd></div>{% endif %}
+          {% if page.extra.paper %}<div class="field"><dt>Paper</dt><dd>{{ page.extra.paper }}</dd></div>{% endif %}
+        </dl>
+        {% endif %}
+      </header>
+
+      <div class="prose">
+        {{ content | safe }}
+      </div>
+
+      {% if page.tags %}
+      <footer class="entry-tags">
+        <span class="entry-tags-label">Filed under</span>
+        <ul class="tag-row">
+          {% for t in page.tags %}<li><a class="tag-chip" href="{{ base_url }}/tags/{{ t | slugify }}/">{{ t }}</a></li>{% endfor %}
+        </ul>
+      </footer>
+      {% endif %}
+    </article>
+
+    {% if page.date and (page.lower or page.higher) %}
+    <nav class="adjacent" aria-label="Nearby sittings">
+      {% if page.lower %}
+      <a class="adjacent-link adjacent-prev" href="{{ base_url }}{{ page.lower.url }}">
+        <span class="adjacent-label">Earlier</span>
+        <span class="adjacent-title">{{ page.lower.title | e }}</span>
+      </a>
+      {% endif %}
+      {% if page.higher %}
+      <a class="adjacent-link adjacent-next" href="{{ base_url }}{{ page.higher.url }}">
+        <span class="adjacent-label">Later</span>
+        <span class="adjacent-title">{{ page.higher.title | e }}</span>
+      </a>
+      {% endif %}
+    </nav>
+    {% endif %}
+  </main>
+{% include "footer.html" %}

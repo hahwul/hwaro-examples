@@ -1,0 +1,33 @@
+{% include "header.html" %}
+  <main id="main">
+    <article class="post">
+      <p class="crumb"><a href="{{ base_url }}/">~</a>{% if page.section %}/<a href="{{ base_url }}/{{ page.section }}/">{{ page.section }}</a>{% endif %}/{{ page.title | slugify }}</p>
+
+      {% if page.date %}
+      <p class="post-logline">
+        <span class="ll-serial">{{ page.extra.serial | default("log") }}</span>
+        <span class="ll-utc">{{ page.date | date("%Y-%m-%d") }} {{ page.extra.utc | default("") }}</span>
+        {% if page.extra.freq %}<span class="ll-freq">{{ page.extra.freq }} MHz</span>{% endif %}
+        {% if page.extra.mode %}<span class="mode-tag">{{ page.extra.mode }}</span>{% endif %}
+        {% if page.extra.call %}<span class="ll-call">{{ page.extra.call }}</span>{% endif %}
+      </p>
+      {% endif %}
+
+      {% if page.title is present %}<h1 class="post-title">{{ page.title | e }}</h1>{% endif %}
+      {% if page.description %}<p class="post-desc">{{ page.description | e }}</p>{% endif %}
+
+      <div class="prose">{{ content | safe }}</div>
+
+      {% if page.tags %}
+      <footer class="post-tags">
+        <span class="tags-label"># tags:</span>
+        {% for t in page.tags %}<a href="{{ base_url }}/tags/{{ t | slugify }}/">{{ t }}</a>{% endfor %}
+      </footer>
+      {% endif %}
+
+      {% if page.section == "logbook" %}
+      <p class="post-back"><a href="{{ base_url }}/logbook/"><span aria-hidden="true">&larr;</span> back to the logbook</a></p>
+      {% endif %}
+    </article>
+  </main>
+{% include "footer.html" %}

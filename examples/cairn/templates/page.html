@@ -1,0 +1,43 @@
+{% include "header.html" %}
+<main id="main" class="site-main">
+  <article class="release{% if page.section is present and page.section == 'releases' %} is-release{% endif %}">
+    <header class="release-head">
+      {% if page.section is present and page.section == "releases" %}
+      <p class="release-eyebrow">Release note</p>
+      <h1 class="release-badge" style="--changes: {{ page.extra.changes | default(6, true) }};">{{ page.title | e }}</h1>
+      <div class="release-meta">
+        {% if page.date %}<time datetime="{{ page.date | date('%Y-%m-%d') }}">{{ page.date | date("%B %d, %Y") }}</time>{% endif %}
+        {% if page.extra.codename %}<span class="release-code">{{ page.extra.codename }}</span>{% endif %}
+        {% if page.extra.changes %}<span class="release-count">{{ page.extra.changes }} changes</span>{% endif %}
+      </div>
+      {% if page.description %}<p class="release-lede">{{ page.description }}</p>{% endif %}
+      {% else %}
+      <h1 class="page-title">{{ page.title | e }}</h1>
+      {% if page.description %}<p class="page-lede">{{ page.description }}</p>{% endif %}
+      {% endif %}
+    </header>
+
+    <div class="prose">{{ content | safe }}</div>
+  </article>
+
+  {% if page.section is present and page.section == "releases" %}
+  {% if page.lower.date or page.higher.date %}
+  <nav class="release-nav" aria-label="Adjacent releases">
+    {% if page.lower.date %}
+    <a class="nav-card nav-newer" href="{{ base_url }}{{ page.lower.url }}">
+      <span class="nav-dir">← Newer</span>
+      <span class="nav-ver">{{ page.lower.title }}</span>
+    </a>
+    {% else %}<span></span>{% endif %}
+    {% if page.higher.date %}
+    <a class="nav-card nav-older" href="{{ base_url }}{{ page.higher.url }}">
+      <span class="nav-dir">Older →</span>
+      <span class="nav-ver">{{ page.higher.title }}</span>
+    </a>
+    {% endif %}
+  </nav>
+  {% endif %}
+  <p class="release-back"><a href="{{ base_url }}/releases/">← All releases</a></p>
+  {% endif %}
+</main>
+{% include "footer.html" %}
