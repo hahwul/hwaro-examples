@@ -1,0 +1,32 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <header class="section-head">
+      <h1 class="section-head__title">{{ page.title | e }}</h1>
+      {% if page.description %}<p class="section-head__desc">{{ page.description | e }}</p>{% endif %}
+      <div class="prose">{{ content | safe }}</div>
+    </header>
+
+    <section class="collage" aria-label="{{ page.title | e }}">
+      {% for p in section.pages %}
+      <article class="collage-card collage-card--{{ loop.index0 % 5 + 1 }}">
+        <a class="collage-card__link" href="{{ base_url }}{{ p.url }}">
+          <span class="collage-card__index">0{{ loop.index }} /</span>
+          <h2 class="collage-card__title">{{ p.title | e }}</h2>
+          {% if p.extra.venue %}<p class="collage-card__meta">{{ p.extra.venue | e }}{% if p.date %} — {{ p.date | date("%Y") }}{% endif %}</p>{% endif %}
+          {% if p.extra.blurb %}<p class="collage-card__blurb">{{ p.extra.blurb | e }}</p>{% endif %}
+          <span class="collage-card__open">Open plot &rarr;</span>
+        </a>
+        {% if p.extra.gel_hex %}
+        <svg class="gel-swatch" viewBox="0 0 120 150" role="img" aria-label="Gel swatch {{ p.extra.gel_code | e }}, {{ p.extra.gel_name | e }}" style="--gel-color: {{ p.extra.gel_hex | e }};">
+          <rect class="gel-swatch__film" x="4" y="4" width="112" height="142" rx="2"></rect>
+          <rect class="gel-swatch__tape" x="24" y="-6" width="56" height="20" transform="rotate(-4 52 4)"></rect>
+          <rect class="gel-swatch__label" x="4" y="118" width="112" height="28"></rect>
+          <text class="gel-swatch__code" x="12" y="133">{{ p.extra.gel_code | e }}</text>
+          <text class="gel-swatch__name" x="12" y="143">{{ p.extra.gel_name | e }}</text>
+        </svg>
+        {% endif %}
+      </article>
+      {% endfor %}
+    </section>
+  </main>
+{% include "footer.html" %}

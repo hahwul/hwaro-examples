@@ -1,0 +1,29 @@
+{% include "header.html" %}
+{% set tax = get_taxonomy(kind="tags") %}
+  <main id="main" class="site-main">
+    <div class="list-head">
+      <p class="study-eyebrow">Tag</p>
+      <h1>{{ taxonomy_term }}</h1>
+      <p><a href="{{ base_url }}/tags/">Back to all tags</a></p>
+    </div>
+    <ol class="study-list">
+      {% for t in tax.items %}
+      {% if t.name == taxonomy_term %}
+      {% for p in t.pages | sort_by("date", reverse=true) %}
+      <li>
+        <div class="study-row">
+          <span class="study-row-index">{% if loop.index < 10 %}0{{ loop.index }}{% else %}{{ loop.index }}{% endif %}</span>
+          <div>
+            <h2><a href="{{ base_url }}{{ p.url }}">{{ p.title | e }}</a></h2>
+            <p class="study-row-meta">{% if p.extra.client %}{{ p.extra.client }} &middot; {% endif %}{% if p.date %}{{ p.date | date("%B %Y") }}{% endif %}</p>
+            {% if p.summary %}<p class="dek">{{ p.summary | strip_html | truncate_words(28) }}</p>{% endif %}
+          </div>
+          <div class="study-row-stat">{% if p.extra.stat_value %}{{ p.extra.stat_value }}{% endif %}</div>
+        </div>
+      </li>
+      {% endfor %}
+      {% endif %}
+      {% endfor %}
+    </ol>
+  </main>
+{% include "footer.html" %}
