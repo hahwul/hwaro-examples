@@ -1,0 +1,33 @@
+{% include "header.html" %}
+<section class="section-head">
+  <p class="cmd-line"><span class="prompt">waypoint@stable</span> <span class="caret">›</span> <span class="cmd">waypoint changelog --all --sort=date</span></p>
+  <h1 class="page-title">{{ section.title }}</h1>
+  {% if section.description %}<p class="section-desc"># {{ section.description }}</p>{% endif %}
+</section>
+
+<div class="grep" role="search">
+  <label class="grep-line" for="release-grep">
+    <span class="grep-cmd">grep&nbsp;-ri&nbsp;"</span>
+    <input class="grep-input" id="release-grep" type="search"
+           data-index="{{ base_url }}/search.json" data-base="{{ base_url }}"
+           autocomplete="off" autocapitalize="off" spellcheck="false"
+           placeholder="filter releases" aria-label="Filter releases by keyword">
+    <span class="grep-cmd">"&nbsp;releases/</span>
+  </label>
+  <p class="grep-status" id="grep-status" role="status" aria-live="polite"></p>
+</div>
+
+<ol class="release-list" id="release-list">
+  {% for p in section.pages | sort_by("date", reverse=true) %}
+  <li class="release-entry">
+    <p class="entry-head">
+      <a class="entry-link" href="{{ base_url }}{{ p.url }}"><span class="entry-ver">{{ p.title }}</span></a>
+      {% if p.extra.channel %}<span class="rc-channel">{{ p.extra.channel }}</span>{% endif %}
+      <span class="entry-date">{{ p.date | date("%Y-%m-%d") }}</span>
+    </p>
+    <p class="entry-desc">{{ p.description }}</p>
+  </li>
+  {% endfor %}
+</ol>
+<ul class="grep-results" id="grep-results" hidden></ul>
+{% include "footer.html" %}

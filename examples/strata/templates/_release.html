@@ -1,0 +1,24 @@
+{# One release panel for listings. Expects `p` (a page). #}
+<article class="release">
+  <header class="release-head">
+    <div class="release-id">
+      <span class="ver-badge">v{{ p.extra.version }}</span>
+      {% if p.extra.codename %}<span class="codename">{{ p.extra.codename | e }}</span>{% endif %}
+      {% if p.extra.breaking %}<span class="flag flag-breaking">breaking</span>{% endif %}
+    </div>
+    {% if p.date %}<time class="release-date" datetime="{{ p.date | date('%Y-%m-%d') }}">{{ p.date | date('%Y-%m-%d') }}</time>{% endif %}
+  </header>
+
+  {% set added = p.extra.added %}
+  {% set fixed = p.extra.fixed %}
+  {% set removed = p.extra.removed %}
+  {% include "_meter.html" %}
+
+  <h3 class="release-title"><a href="{{ base_url }}{{ p.url }}">{{ p.title | e }}</a></h3>
+  {% if p.summary %}<p class="release-summary">{{ p.summary | strip_html | truncate_words(38) }}</p>{% endif %}
+
+  <footer class="release-foot">
+    {% if p.tags %}<ul class="chips">{% for t in p.tags %}<li><a class="chip" href="{{ base_url }}/tags/{{ t | slugify }}/">{{ t | e }}</a></li>{% endfor %}</ul>{% endif %}
+    <a class="notes-link" href="{{ base_url }}{{ p.url }}">Full notes<span aria-hidden="true"> &rarr;</span></a>
+  </footer>
+</article>

@@ -1,0 +1,30 @@
+{# The report table. Expects `ledger_pages` (releases, newest first). #}
+<div class="report-scroll">
+  <table class="ledger">
+    <caption class="sr-only">Release ledger: version, codename, date, and rule-count deltas.</caption>
+    <thead>
+      <tr>
+        <th scope="col">Version</th>
+        <th scope="col">Codename</th>
+        <th scope="col">Date</th>
+        <th scope="col" class="num">+Add</th>
+        <th scope="col" class="num">~Fix</th>
+        <th scope="col" class="num">-Rm</th>
+        <th scope="col" class="num">Rules</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in ledger_pages %}
+      <tr>
+        <td class="td-ver"><a href="{{ base_url }}{{ p.url }}">v{{ p.extra.version }}</a></td>
+        <td class="td-code">{{ p.extra.codename | e }}</td>
+        <td class="num td-date">{{ p.date | date('%Y-%m-%d') }}</td>
+        <td class="num num-add">+{{ p.extra.added }}</td>
+        <td class="num">{{ p.extra.fixed }}</td>
+        <td class="num num-rm">{% if p.extra.removed > 0 %}-{{ p.extra.removed }}{% else %}0{% endif %}</td>
+        <td class="num td-total">{{ p.extra.total }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>

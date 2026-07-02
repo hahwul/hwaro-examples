@@ -1,0 +1,23 @@
+{% include "header.html" %}
+{% set rel_index = get_section(path="releases/_index.md") %}
+{% set releases = rel_index.pages | sort_by("date", reverse=true) %}
+  <main id="main" class="detail">
+    <div class="section-col">
+      <section class="report" aria-labelledby="ledger-h">
+        <div class="report-cmd"><span class="prompt" aria-hidden="true">$</span> strata report --all --format table</div>
+        <div class="report-headline">
+          <h1 id="ledger-h" class="report-h1">{{ page.title | e }}</h1>
+          {% if page.description %}<p class="report-meta">{{ page.description | e }}</p>{% endif %}
+        </div>
+        <div class="report-lede">{{ content }}</div>
+        {% set ledger_pages = releases %}
+        {% include "_ledger.html" %}
+      </section>
+
+      <section class="feed" aria-label="Release notes">
+        <h2 class="feed-title">Every release</h2>
+        {% for p in releases %}{% include "_release.html" %}{% endfor %}
+      </section>
+    </div>
+  </main>
+{% include "footer.html" %}

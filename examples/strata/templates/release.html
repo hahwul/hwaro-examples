@@ -1,0 +1,52 @@
+{% include "header.html" %}
+  <main id="main" class="detail">
+    <article class="release-detail">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="{{ base_url }}/releases/">Releases</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">v{{ page.extra.version }}</span>
+      </nav>
+
+      <header class="detail-head">
+        <div class="detail-id">
+          <span class="ver-badge ver-badge-lg">v{{ page.extra.version }}</span>
+          {% if page.extra.codename %}<span class="codename">{{ page.extra.codename | e }}</span>{% endif %}
+          {% if page.extra.breaking %}<span class="flag flag-breaking">breaking</span>{% endif %}
+        </div>
+        <h1 class="detail-title">{{ page.title | e }}</h1>
+        {% if page.date %}<p class="detail-meta"><time datetime="{{ page.date | date('%Y-%m-%d') }}">{{ page.date | date('%B %d, %Y') }}</time>{% if page.extra.total %} <span class="dot" aria-hidden="true">&middot;</span> engine ships {{ page.extra.total }} rules after this build{% endif %}</p>{% endif %}
+      </header>
+
+      <div class="detail-meter">
+        {% set added = page.extra.added %}
+        {% set fixed = page.extra.fixed %}
+        {% set removed = page.extra.removed %}
+        {% include "_meter.html" %}
+      </div>
+
+      <div class="prose">{{ content }}</div>
+
+      {% if page.tags %}
+      <footer class="detail-tags">
+        <span class="detail-tags-label">Touched</span>
+        <ul class="chips">{% for t in page.tags %}<li><a class="chip" href="{{ base_url }}/tags/{{ t | slugify }}/">{{ t | e }}</a></li>{% endfor %}</ul>
+      </footer>
+      {% endif %}
+
+      <nav class="relnav" aria-label="Adjacent releases">
+        {% if page.higher %}
+        <a class="relnav-link relnav-next" href="{{ base_url }}{{ page.higher.url }}">
+          <span class="relnav-dir">Newer</span>
+          <span class="relnav-title">{{ page.higher.title | e }}</span>
+        </a>
+        {% else %}<span class="relnav-link is-off"><span class="relnav-dir">Newer</span><span class="relnav-title">This is the latest build</span></span>{% endif %}
+        {% if page.lower %}
+        <a class="relnav-link relnav-prev" href="{{ base_url }}{{ page.lower.url }}">
+          <span class="relnav-dir">Older</span>
+          <span class="relnav-title">{{ page.lower.title | e }}</span>
+        </a>
+        {% else %}<span class="relnav-link is-off"><span class="relnav-dir">Older</span><span class="relnav-title">Start of the tracked history</span></span>{% endif %}
+      </nav>
+    </article>
+  </main>
+{% include "footer.html" %}

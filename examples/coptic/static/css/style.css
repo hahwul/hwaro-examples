@@ -1,0 +1,494 @@
+/* =========================================================================
+   Coptic — forty-nine programming koans, set like a REPL at midnight.
+   Soot-dark ground, Space Mono display/mono, Work Sans prose, one cyan accent.
+   Layout: a single narrow centered column. Signature: a blinking underscore
+   cursor closes every koan after its final unanswered question.
+   ========================================================================= */
+
+:root {
+  --bg: #101314;
+  --surface: #181d1e;
+  --code-bg: #14191a;
+  --fg: #dfe5e4;
+  --muted: #95a3a1;
+  --accent: #38c6c0;
+  --accent-fg: #04211f;
+  --border: color-mix(in srgb, var(--fg) 13%, transparent);
+  --border-strong: color-mix(in srgb, var(--fg) 22%, transparent);
+  --accent-dim: color-mix(in srgb, var(--accent) 16%, transparent);
+
+  --font-display: "Space Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-mono: "Space Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-text: "Work Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --text-sm: clamp(0.8rem, 0.77rem + 0.12vw, 0.86rem);
+  --text-base: clamp(1rem, 0.96rem + 0.22vw, 1.075rem);
+  --text-lg: clamp(1.15rem, 1.05rem + 0.4vw, 1.35rem);
+  --text-xl: clamp(1.4rem, 1.2rem + 0.85vw, 1.9rem);
+  --text-2xl: clamp(1.85rem, 1.45rem + 1.7vw, 2.85rem);
+  --text-hero: clamp(2.15rem, 1.6rem + 2.6vw, 3.4rem);
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2.5rem;
+  --space-6: 4rem;
+  --space-7: 6rem;
+
+  --radius: 8px;
+  --measure: 39rem;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-text);
+  font-size: var(--text-base);
+  line-height: 1.72;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "kern";
+}
+
+/* faint scanline-free vignette: a single soft radial that lifts the center */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(120% 90% at 50% -10%, color-mix(in srgb, var(--accent) 6%, transparent), transparent 60%);
+  pointer-events: none;
+}
+
+::selection { background: var(--accent-dim); color: var(--fg); }
+
+a { color: var(--accent); text-decoration: none; }
+
+/* ---- centered column shell ------------------------------------------------ */
+.page {
+  max-width: var(--measure);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.column { flex: 1 0 auto; }
+
+/* ---- masthead ------------------------------------------------------------- */
+.masthead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-3) var(--space-4);
+  padding: var(--space-4) 0 var(--space-3);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: var(--space-5);
+}
+
+.brand {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-lg);
+  letter-spacing: -0.01em;
+  color: var(--fg);
+  display: inline-flex;
+  align-items: baseline;
+}
+.brand-hash { color: var(--accent); margin-right: 0.4ch; }
+.brand:hover { color: var(--accent); }
+.brand-cursor {
+  display: inline-block;
+  width: 0.95ch;
+  height: 0.16em;
+  margin-left: 0.12ch;
+  vertical-align: baseline;
+  transform: translateY(0.08em);
+  background: var(--accent);
+  animation: blink 1.15s steps(1) infinite;
+}
+
+.masthead-nav {
+  display: flex;
+  gap: var(--space-4);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+.masthead-nav a { color: var(--muted); padding: 0.2rem 0; border-bottom: 1px solid transparent; }
+.masthead-nav a:hover { color: var(--fg); }
+.masthead-nav a[aria-current="page"] { color: var(--accent); border-bottom-color: var(--accent); }
+
+.search {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.4ch;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  border-bottom: 1px solid var(--border-strong);
+  padding-bottom: 0.15rem;
+  min-width: 12rem;
+}
+.search:focus-within { border-bottom-color: var(--accent); }
+.search-caret { color: var(--accent); font-weight: 700; }
+#koan-search {
+  flex: 1;
+  background: transparent;
+  border: 0;
+  color: var(--fg);
+  font: inherit;
+  padding: 0.2rem 0;
+}
+#koan-search::placeholder { color: var(--muted); opacity: 0.75; }
+#koan-search:focus { outline: none; }
+#koan-search::-webkit-search-cancel-button { -webkit-appearance: none; }
+
+/* ---- home hero ------------------------------------------------------------ */
+.home-hero { margin-bottom: var(--space-5); }
+.home-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-hero);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  margin: 0;
+}
+.home-title .hash { color: var(--accent); }
+.home-sub {
+  font-family: var(--font-mono);
+  color: var(--muted);
+  font-size: var(--text-base);
+  margin: 0.5rem 0 var(--space-4);
+  letter-spacing: -0.01em;
+}
+.instruction { margin-bottom: var(--space-4); }
+
+.prompt-line {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 0.6ch;
+  margin: 0;
+}
+.prompt-sym { color: var(--accent); font-weight: 700; }
+
+/* ---- the shared blinking underscore cursor (the signature) ---------------- */
+.cursor {
+  display: inline-block;
+  width: 1.1ch;
+  height: 0.16em;
+  margin-left: 0.35ch;
+  vertical-align: baseline;
+  transform: translateY(0.08em);
+  background: var(--accent);
+  box-shadow: 0 0 6px color-mix(in srgb, var(--accent) 55%, transparent);
+  animation: blink 1.15s steps(1) infinite;
+}
+@keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+
+/* ---- comment lines / section head ---------------------------------------- */
+.comment-line {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: color-mix(in srgb, var(--muted) 85%, var(--accent));
+  margin: 0 0 var(--space-3);
+  letter-spacing: -0.01em;
+}
+.section-head { margin-bottom: var(--space-5); }
+.section-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-2xl);
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+.section-desc { color: var(--muted); margin: 0.6rem 0 0; max-width: 60ch; }
+
+/* ---- koan list ------------------------------------------------------------ */
+.koan-list { list-style: none; margin: 0; padding: 0; }
+.koan-row { border-top: 1px solid var(--border); }
+.koan-row:last-child { border-bottom: 1px solid var(--border); }
+.koan-link {
+  display: grid;
+  grid-template-columns: 2.6rem 1fr auto;
+  align-items: baseline;
+  gap: 0 var(--space-3);
+  padding: var(--space-3) 0.35rem;
+  color: var(--fg);
+  transition: background-color 0.16s ease-out, padding-left 0.16s ease-out;
+}
+.koan-link:hover, .koan-link:focus-visible {
+  background: var(--surface);
+  padding-left: 0.75rem;
+}
+.koan-num {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--accent);
+  font-weight: 700;
+}
+.koan-name {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-lg);
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+.koan-desc { display: block; color: var(--muted); font-size: var(--text-sm); margin-top: 0.2rem; }
+.koan-lang {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  color: var(--accent);
+  background: var(--accent-dim);
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* ---- results panel -------------------------------------------------------- */
+.results { margin-bottom: var(--space-5); }
+.results-status {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--muted);
+  margin: 0 0 var(--space-2);
+}
+.results-list { list-style: none; margin: 0; padding: 0; }
+.result-row { border-top: 1px solid var(--border); }
+.result-row:last-child { border-bottom: 1px solid var(--border); }
+.result-link { display: block; padding: var(--space-3) 0.35rem; color: var(--fg); }
+.result-link:hover, .result-link:focus-visible { background: var(--surface); }
+.result-title {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-base);
+  color: var(--accent);
+}
+.result-text { display: block; color: var(--muted); font-size: var(--text-sm); margin-top: 0.2rem; }
+
+/* ---- koan article --------------------------------------------------------- */
+.koan-head { margin-bottom: var(--space-5); }
+.koan-index {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--accent);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 0 0 var(--space-2);
+}
+.koan-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-2xl);
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+  margin: 0;
+  text-wrap: balance;
+}
+.koan-meta {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--muted);
+  margin: var(--space-3) 0 0;
+}
+
+/* on-page contents */
+.koan-toc {
+  border-left: 2px solid var(--accent);
+  background: var(--surface);
+  padding: var(--space-3) var(--space-4);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  margin-bottom: var(--space-5);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+.toc-label { color: var(--muted); margin: 0 0 var(--space-2); }
+.koan-toc ul { list-style: none; margin: 0; padding: 0; }
+.koan-toc li { margin: 0.25rem 0; }
+.koan-toc a { color: var(--muted); }
+.koan-toc a:hover { color: var(--accent); }
+
+/* ---- prose ---------------------------------------------------------------- */
+.prose { max-width: 66ch; }
+.prose > * + * { margin-top: var(--space-3); }
+.prose p { margin: 0; text-wrap: pretty; }
+.prose h2, .prose h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-top: var(--space-5);
+  scroll-margin-top: var(--space-4);
+}
+.prose h2 { font-size: var(--text-xl); }
+.prose h3 { font-size: var(--text-lg); }
+.prose a { text-decoration: underline; text-decoration-color: var(--accent-dim); text-underline-offset: 3px; }
+.prose a:hover { text-decoration-color: var(--accent); }
+.prose strong { color: #f0f4f3; font-weight: 600; }
+.prose em { color: var(--fg); }
+
+.prose ul, .prose ol { margin: 0; padding-left: 1.4rem; }
+.prose li { margin: 0.35rem 0; }
+.prose li::marker { color: var(--accent); }
+
+.prose blockquote {
+  margin: var(--space-4) 0;
+  padding: 0.2rem 0 0.2rem 1.2rem;
+  border-left: 2px solid var(--accent);
+  color: var(--muted);
+  font-style: italic;
+}
+
+.prose hr { border: 0; border-top: 1px solid var(--border); margin: var(--space-5) 0; }
+
+/* inline code + the fenced code block: the heart of each koan */
+.prose :not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  background: var(--surface);
+  color: color-mix(in srgb, var(--accent) 70%, var(--fg));
+  padding: 0.12rem 0.4rem;
+  border-radius: 5px;
+}
+
+.prose pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-left: 2px solid var(--accent);
+  border-radius: var(--radius);
+  padding: var(--space-4) var(--space-4) var(--space-4) var(--space-4);
+  overflow-x: auto;
+  line-height: 1.6;
+  font-size: var(--text-sm);
+  position: relative;
+  margin: var(--space-4) 0;
+}
+.prose pre::before {
+  content: "\276F";
+  position: absolute;
+  top: 0.7rem;
+  right: 0.9rem;
+  color: color-mix(in srgb, var(--accent) 55%, transparent);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+.prose pre code {
+  font-family: var(--font-mono);
+  background: transparent;
+  padding: 0;
+  color: var(--fg);
+}
+.prose pre code.hljs { background: transparent; padding: 0; }
+
+.prose table { border-collapse: collapse; width: 100%; margin: var(--space-4) 0; font-size: var(--text-sm); }
+.prose th, .prose td { border-bottom: 1px solid var(--border); padding: 0.5rem 0.7rem; text-align: left; }
+.prose th { font-family: var(--font-mono); color: var(--muted); font-weight: 500; }
+
+/* ---- the koan close (signature block) ------------------------------------ */
+.koan-close {
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
+}
+.close-prompt {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--accent);
+  font-weight: 700;
+  margin: 0 0 var(--space-2);
+}
+.close-question {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-style: italic;
+  line-height: 1.4;
+  color: var(--fg);
+  margin: 0;
+  max-width: 60ch;
+}
+
+/* ---- prev / next ---------------------------------------------------------- */
+.koan-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+.koan-nav a { color: var(--muted); display: inline-flex; align-items: baseline; gap: 0.5ch; max-width: 48%; }
+.koan-nav a:hover { color: var(--accent); }
+.nav-next { text-align: right; }
+.nav-arrow { color: var(--accent); }
+
+/* ---- footer --------------------------------------------------------------- */
+.site-footer {
+  margin-top: var(--space-6);
+  padding: var(--space-4) 0 var(--space-5);
+  border-top: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+.footer-line { margin: 0 0 0.4rem; }
+.footer-hash { color: var(--accent); }
+.footer-meta { margin: 0; color: color-mix(in srgb, var(--muted) 75%, transparent); }
+
+/* ---- accessibility -------------------------------------------------------- */
+.skip-link {
+  position: absolute;
+  left: 0;
+  top: -100px;
+  background: var(--accent);
+  color: var(--accent-fg);
+  padding: 0.6rem 1rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  border-radius: 0 0 var(--radius) 0;
+  z-index: 1000;
+}
+.skip-link:focus { top: 0; }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* ---- responsive ----------------------------------------------------------- */
+@media (max-width: 34rem) {
+  .masthead { gap: var(--space-2) var(--space-3); }
+  .search { margin-left: 0; width: 100%; min-width: 0; }
+  .koan-link { grid-template-columns: 2.2rem 1fr; }
+  .koan-lang { display: none; }
+  .koan-nav { flex-direction: column; }
+  .koan-nav a { max-width: 100%; }
+  .nav-next { text-align: left; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .cursor, .brand-cursor { opacity: 1; }
+}

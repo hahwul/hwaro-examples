@@ -1,0 +1,63 @@
+{% include "header.html" %}
+{% set reviews = get_section(path="reviews") %}
+{% set latest = reviews.pages | sort_by("date", reverse=true) %}
+  <main id="main" class="site-main">
+
+    <section class="masthead" aria-label="Masthead">
+      <div class="wrap wrap--wide">
+        <p class="masthead__kicker">{{ page.extra.kicker | default("Fountain pen & ink journal") }}</p>
+        <h1 class="masthead__title">{{ site.title | e }}</h1>
+        <div class="masthead__rule" aria-hidden="true"></div>
+        <p class="masthead__tagline">{{ page.extra.tagline | default(site.description) }}</p>
+      </div>
+    </section>
+
+    <section class="letter" aria-label="A letter from the desk">
+      <p class="letter__salutation">{{ page.extra.salutation | default("Dear reader,") }}</p>
+      <div class="letter__body prose">
+        {{ content | safe }}
+      </div>
+      <div class="letter__signoff">
+        <span class="valediction">{{ page.extra.valediction | default("Ever yours,") }}</span>
+        <svg class="signature" viewBox="0 0 148 54" role="img" aria-label="Signed by hand">
+          <path d="M12 18 C34 10 74 8 92 14 C70 26 40 38 30 34 C26 32 30 26 40 24 M18 44 C46 36 96 34 134 42" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="letter__name">{{ page.extra.signer | default("The Zephyr desk") }}</span>
+        <span class="letter__title-line">{{ page.extra.signer_role | default("Reviewer-in-residence") }}</span>
+      </div>
+    </section>
+
+    <section class="latest wrap wrap--wide" aria-labelledby="latest-heading">
+      <div class="latest__head">
+        <h2 id="latest-heading">Latest from the desk</h2>
+        <a class="latest__all" href="{{ base_url }}/reviews/">All reviews &rarr;</a>
+      </div>
+      <div class="latest__grid">
+        {% for p in latest %}
+        {% if loop.index <= 2 %}
+        <article class="review-card">
+          <figure class="ink-swab review-card__swab" style="--ink: {{ p.extra.ink | default('#4a3f9e') }}">
+            <svg class="ink-swab__art" viewBox="0 0 340 118" role="img" aria-label="Ink swatch: {{ p.extra.swatch | default(p.title) | e }}">
+              <path class="ink-swab__body" d="M10 26 C44 16 130 16 190 21 C240 25 296 18 324 30 C334 34 336 44 330 54 C322 68 296 64 274 68 C232 78 196 66 154 72 C112 78 66 66 32 72 C16 75 7 66 7 52 C6 42 6 32 10 26 Z"/>
+              <path class="ink-swab__deep" d="M22 40 C60 32 120 34 168 40 C150 56 96 60 54 56 C34 54 20 52 22 40 Z"/>
+              <path class="ink-swab__drip" d="M112 68 C116 82 122 96 116 104 C110 110 102 104 104 94 C106 84 108 74 112 68 Z"/>
+              <circle class="ink-swab__speck" cx="300" cy="84" r="4"/>
+              <circle class="ink-swab__speck" cx="318" cy="72" r="2.4"/>
+            </svg>
+          </figure>
+          <div class="review-card__meta">
+            <span class="review-card__kind">{{ p.extra.kind | default("Review") }}</span>
+            {% if p.extra.maker %}<span>{{ p.extra.maker }}</span>{% endif %}
+            {% if p.date %}<time datetime="{{ p.date | date('%Y-%m-%d') }}">{{ p.date | date("%B %Y") }}</time>{% endif %}
+          </div>
+          <h3 class="review-card__title"><a href="{{ base_url }}{{ p.url }}">{{ p.title | e }}</a></h3>
+          {% if p.summary %}<p class="review-card__summary">{{ p.summary | strip_html | truncate_words(30) }}</p>{% endif %}
+          <a class="review-card__more" href="{{ base_url }}{{ p.url }}">Read the review &rarr;</a>
+        </article>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </section>
+
+  </main>
+{% include "footer.html" %}

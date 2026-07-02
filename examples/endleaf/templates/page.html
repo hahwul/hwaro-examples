@@ -1,0 +1,65 @@
+{% set rh_label = page.title %}
+{% set rh_folio = page.extra.folio %}
+{% include "header.html" %}
+    <main id="main">
+      <article class="chapter">
+        <div class="chapter-grid">
+          <div class="chapter-main">
+            <header class="chapter-open">
+              {% if page.extra.numeral %}<p class="chapter-numeral">Chapter&nbsp;{{ page.extra.numeral }}</p>{% endif %}
+              <h1 class="chapter-title">{{ page.title | e }}</h1>
+              {% if page.description %}<p class="chapter-standfirst">{{ page.description | e }}</p>{% endif %}
+              <div class="fleuron-rule" aria-hidden="true">
+                <svg class="fleuron"><use href="#fleuron"/></svg>
+                <svg class="fleuron fleuron--lg"><use href="#fleuron"/></svg>
+                <svg class="fleuron"><use href="#fleuron"/></svg>
+              </div>
+            </header>
+
+            <div class="prose dropcap">
+              {{ content | safe }}
+            </div>
+
+            {% if page.section == "chapters" %}
+            <nav class="quire-nav" aria-label="Adjacent chapters">
+              {% if page.lower and page.lower.extra.numeral %}
+              <a class="quire-link quire-prev" href="{{ base_url }}{{ page.lower.url }}">
+                <span class="quire-dir"><span aria-hidden="true">&larr;</span> Previous chapter</span>
+                <span class="quire-title">{{ page.lower.title | e }}</span>
+              </a>
+              {% else %}
+              <span class="quire-empty">The book opens here.</span>
+              {% endif %}
+              {% if page.higher and page.higher.extra.numeral %}
+              <a class="quire-link quire-next" href="{{ base_url }}{{ page.higher.url }}">
+                <span class="quire-dir">Next chapter <span aria-hidden="true">&rarr;</span></span>
+                <span class="quire-title">{{ page.higher.title | e }}</span>
+              </a>
+              {% else %}
+              <span class="quire-empty quire-next">You have reached the end-leaf.</span>
+              {% endif %}
+            </nav>
+            {% endif %}
+          </div>
+
+          <aside class="chapter-margin" aria-label="Margin notes">
+            {% if page.extra.folio %}
+            <p class="margin-item"><span class="margin-label">Folio</span><span class="margin-val">p.&thinsp;{{ page.extra.folio }}</span></p>
+            {% endif %}
+            {% if page.date %}
+            <p class="margin-item"><span class="margin-label">Set</span><time datetime="{{ page.date | date("%Y-%m-%d") }}">{{ page.date | date("%B %Y") }}</time></p>
+            {% endif %}
+            {% if page.reading_time %}
+            <p class="margin-item"><span class="margin-label">Reading</span><span class="margin-val">about {{ page.reading_time }} min</span></p>
+            {% endif %}
+            {% if page.toc and toc %}
+            <nav class="margin-toc" aria-label="On this page">
+              <p class="margin-label">In this chapter</p>
+              {{ toc }}
+            </nav>
+            {% endif %}
+          </aside>
+        </div>
+      </article>
+    </main>
+{% include "footer.html" %}
