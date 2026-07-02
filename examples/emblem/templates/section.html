@@ -1,0 +1,27 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <article class="page section-page">
+      {% if page.title is present %}<h1>{{ page.title | e }}</h1>{% endif %}
+      {{ content | safe }}
+
+      <ul class="credit-list credit-list-full">
+        {% for c in section.pages | sort_by("date", reverse=true) %}
+        <li class="credit-row credit-row-full">
+          <a href="{{ base_url }}{{ c.url }}">
+            <span class="credit-led" aria-hidden="true"></span>
+            <span class="credit-info">
+              <span class="credit-title">{{ c.title }}</span>
+              <span class="credit-line">{{ c.extra.studio | default("") }} &middot; {{ c.extra.role | default("") }}</span>
+              <span class="credit-session">{{ c.extra.sample_rate | default("") }} &middot; {{ c.extra.engine | default("") }}</span>
+              {% if c.summary %}<span class="credit-summary">{{ c.summary | safe }}</span>{% endif %}
+            </span>
+            <span class="credit-year">{% if c.date %}{{ c.date | date("%Y") }}{% endif %}</span>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+
+      {{ pagination }}
+    </article>
+  </main>
+{% include "footer.html" %}

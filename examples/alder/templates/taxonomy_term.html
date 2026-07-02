@@ -1,0 +1,28 @@
+{% include "header.html" %}
+      <main id="main" class="docs-main">
+        <article class="doc-article">
+          <p class="topic-path">./tags/{{ taxonomy_term }}</p>
+          <h1>#{{ taxonomy_term }}</h1>
+          <p class="doc-dek">Everything tagged &ldquo;{{ taxonomy_term }}&rdquo;.</p>
+          <ol class="doc-index">
+            {% set tax = get_taxonomy(kind="tags") %}
+            {% for term in tax.items %}
+              {% if term.name == taxonomy_term %}
+                {% for p in term.pages | sort_by("title") %}
+                <li>
+                  <a href="{{ base_url }}{{ p.url }}">
+                    <span class="doc-index-host">{{ p.extra.host | default("", true) }}</span>
+                    <span class="doc-index-body">
+                      <span class="doc-index-title">{{ p.title }}</span>
+                      {% if p.description %}<span class="doc-index-desc">{{ p.description | truncate_words(20) }}</span>{% endif %}
+                    </span>
+                  </a>
+                </li>
+                {% endfor %}
+              {% endif %}
+            {% endfor %}
+          </ol>
+          <p class="term-back"><a href="{{ base_url }}/tags/"><span aria-hidden="true">&larr;</span> all tags</a></p>
+        </article>
+      </main>
+{% include "footer.html" %}

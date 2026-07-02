@@ -1,0 +1,542 @@
+/* ==========================================================================
+   Insignia — CV of a robotics researcher working on compliant manipulation
+   and grasping. Layout: bento-grid. Signature: the hero tile carries an SVG
+   joint-angle diagram of TF-3, the lab's 4-DOF compliant test arm, with a
+   leader-line legend labeling each joint and the compliant gripper.
+   ========================================================================== */
+
+:root {
+  /* Palette */
+  --bg: #0f1218;
+  --surface: #181d26;
+  --fg: #e2e6ec;
+  --muted: #94a0b3;
+  --accent: #6a92f5;
+  --accent-fg: #071829;
+  --border: color-mix(in srgb, var(--fg) 14%, transparent);
+  --border-strong: color-mix(in srgb, var(--fg) 26%, transparent);
+  --accent-border: color-mix(in srgb, var(--accent) 30%, var(--border) 70%);
+
+  /* Type families */
+  --font-display: "Inter Tight", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-text: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "Fragment Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* Fluid type scale */
+  --text-xs: clamp(0.72rem, 0.7rem + 0.1vw, 0.78rem);
+  --text-sm: clamp(0.85rem, 0.82rem + 0.15vw, 0.93rem);
+  --text-base: clamp(1rem, 0.96rem + 0.2vw, 1.08rem);
+  --text-lg: clamp(1.15rem, 1.05rem + 0.4vw, 1.35rem);
+  --text-xl: clamp(1.4rem, 1.2rem + 0.8vw, 1.9rem);
+  --text-2xl: clamp(1.8rem, 1.4rem + 1.6vw, 2.5rem);
+  --text-hero: clamp(2.05rem, 1.6rem + 2.4vw, 3.1rem);
+
+  /* Spacing */
+  --space-1: .25rem;
+  --space-2: .5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2.5rem;
+  --space-6: 4rem;
+  --space-7: 6rem;
+
+  --radius: 14px;
+  --radius-sm: 8px;
+
+  color-scheme: dark;
+}
+
+/* ---- Reset --------------------------------------------------------------- */
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-text);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  color: var(--fg);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection { background: color-mix(in srgb, var(--accent) 32%, transparent); color: var(--fg); }
+
+img, svg { max-width: 100%; display: block; }
+ul, ol { margin: 0; padding: 0; }
+a { color: var(--accent); }
+
+/* ---- Accessibility -------------------------------------------------------- */
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: var(--space-3);
+  background: var(--accent);
+  color: var(--accent-fg);
+  padding: 0.6rem 1rem;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  z-index: 1000;
+  text-decoration: none;
+}
+.skip-link:focus { top: 0; }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---- Shell ----------------------------------------------------------------- */
+
+.shell {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding-inline: var(--space-4);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---- Header ----------------------------------------------------------------- */
+
+.site-header {
+  border-bottom: 1px solid var(--border);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  padding-block: var(--space-3);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  text-decoration: none;
+  color: var(--fg);
+}
+.brand-mark { width: 22px; height: 22px; color: var(--accent); flex: none; }
+.brand-word {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-lg);
+  letter-spacing: -0.01em;
+}
+
+.site-nav { display: flex; gap: var(--space-4); flex-wrap: wrap; }
+.site-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  border-bottom: 2px solid transparent;
+  transition: color 160ms ease, border-color 160ms ease;
+}
+.site-nav a:hover { color: var(--fg); }
+.site-nav a[aria-current="page"] { color: var(--accent); border-color: var(--accent); }
+
+/* ---- Main shells -------------------------------------------------------------- */
+
+.site-main { flex: 1; padding-block: var(--space-5) var(--space-6); }
+
+/* ---- Bento grid ----------------------------------------------------------------- */
+
+.bento {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-areas:
+    "hero hero bio   bio"
+    "hero hero rsrch rsrch"
+    "pub  pub  pub   pub"
+    "tool tool tool  tool";
+  gap: var(--space-3);
+  align-items: stretch;
+}
+
+.tile-hero     { grid-area: hero; }
+.tile-bio      { grid-area: bio; }
+.tile-research { grid-area: rsrch; }
+.tile-pub      { grid-area: pub; }
+.tile-tool     { grid-area: tool; }
+
+.tile {
+  background: var(--surface);
+  border: 1px solid var(--accent-border);
+  border-radius: var(--radius);
+  padding: var(--space-4);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 6%, transparent);
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+  display: flex;
+  flex-direction: column;
+}
+.tile:hover, .tile:focus-within {
+  border-color: color-mix(in srgb, var(--accent) 60%, var(--border) 40%);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 16%, transparent);
+}
+
+.tile-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  margin: 0 0 var(--space-3);
+}
+
+/* ---- Hero tile --------------------------------------------------------------------- */
+
+.tile-hero {
+  background:
+    radial-gradient(ellipse at 24% 12%, color-mix(in srgb, var(--accent) 13%, transparent), transparent 60%),
+    var(--surface);
+}
+
+.hero-name {
+  font-family: var(--font-display);
+  font-size: var(--text-hero);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.04;
+  margin: 0 0 var(--space-1);
+  color: var(--fg);
+}
+.hero-role {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--text-lg);
+  color: var(--fg);
+  margin: 0 0 var(--space-3);
+}
+.hero-tagline {
+  font-size: var(--text-base);
+  color: var(--muted);
+  max-width: 48ch;
+  line-height: 1.6;
+  margin: 0 0 var(--space-4);
+}
+
+.arm-figure { margin: 0 0 var(--space-3); }
+.arm-diagram { width: 100%; height: auto; }
+.arm-caption {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--muted);
+  margin-top: var(--space-2);
+  line-height: 1.5;
+}
+
+/* SVG diagram parts */
+.arm-ground { stroke: var(--border-strong); stroke-width: 1; stroke-dasharray: 2 4; }
+.arm-mount { fill: var(--bg); stroke: var(--border-strong); stroke-width: 1.5; }
+.arm-base-arc { fill: none; stroke: color-mix(in srgb, var(--accent) 45%, transparent); stroke-width: 1.2; stroke-dasharray: 2 3; }
+.arm-rod { stroke: color-mix(in srgb, var(--fg) 26%, var(--surface) 74%); stroke-width: 8; stroke-linecap: round; fill: none; }
+.arm-rod-thin { stroke-width: 6; }
+.arm-coil { stroke: var(--accent); stroke-width: 1.6; fill: none; filter: url(#armGlow); }
+.arm-joint-ring { fill: var(--bg); stroke: var(--accent); stroke-width: 2; filter: url(#armGlow); }
+.arm-joint-dot { fill: var(--accent); filter: url(#armGlow); }
+.arm-object { fill: color-mix(in srgb, var(--accent) 16%, transparent); stroke: var(--accent); stroke-width: 1.4; stroke-dasharray: 3 2; filter: url(#armGlow); }
+.arm-finger { stroke: var(--accent); stroke-width: 2.2; fill: none; stroke-linecap: round; filter: url(#armGlow); }
+.arm-fingertip { fill: var(--accent); filter: url(#armGlow); }
+.arm-leader { stroke: color-mix(in srgb, var(--accent) 45%, transparent); stroke-width: 1; stroke-dasharray: 1 3; }
+.arm-marker { fill: var(--accent); }
+.arm-label-code { font-family: var(--font-mono); font-size: 10.5px; fill: var(--accent); letter-spacing: 0.02em; }
+.arm-label-value { font-family: var(--font-mono); font-size: 10.5px; fill: var(--muted); }
+
+.hero-contact {
+  margin: auto 0 0;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+.hero-contact-link { color: var(--accent); text-decoration: none; }
+.hero-contact-link:hover { text-decoration: underline; }
+.hero-contact-sep { color: var(--muted); margin: 0 var(--space-2); }
+
+/* ---- Bio tile --------------------------------------------------------------------- */
+
+.prose-tile p { margin: 0 0 var(--space-2); color: var(--fg); font-size: var(--text-sm); line-height: 1.65; }
+.prose-tile p:last-child { margin-bottom: 0; }
+
+.tile-foot { margin: auto 0 0; padding-top: var(--space-2); }
+.tile-foot a { color: var(--accent); font-size: var(--text-sm); text-decoration: none; }
+.tile-foot a:hover { text-decoration: underline; }
+
+/* ---- Current research tile ---------------------------------------------------------- */
+
+.tile-heading {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0 0 var(--space-2);
+  color: var(--fg);
+}
+.tile-research p { font-size: var(--text-sm); line-height: 1.6; color: var(--fg); margin: 0 0 var(--space-3); }
+
+.tag-row {
+  list-style: none;
+  margin: auto 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.tag-row li {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--accent);
+  border: 1px solid var(--accent-border);
+  border-radius: 999px;
+  padding: 0.3em 0.8em;
+}
+
+/* ---- Publications tile ------------------------------------------------------------- */
+
+.pub-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.pub-row a {
+  display: flex;
+  gap: var(--space-3);
+  align-items: baseline;
+  text-decoration: none;
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--fg);
+}
+.pub-row:last-child a { border-bottom: none; }
+.pub-date { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--muted); flex: 0 0 4.4em; }
+.pub-title { font-family: var(--font-text); font-size: var(--text-sm); font-weight: 500; }
+.pub-row a:hover .pub-title { color: var(--accent); }
+
+/* ---- Lab tooling tile --------------------------------------------------------------- */
+
+.tool-intro { font-size: var(--text-sm); color: var(--muted); line-height: 1.6; margin: 0 0 var(--space-3); }
+.tool-snippet {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3);
+  overflow-x: auto;
+  margin: 0;
+  font-size: var(--text-xs);
+  line-height: 1.65;
+}
+.tool-snippet code { font-family: var(--font-mono); background: transparent; padding: 0; }
+
+/* ---- Prose panel (about / cv / research note pages) --------------------------------- */
+
+.page-main { display: flex; justify-content: center; }
+
+.prose-panel {
+  max-width: 72ch;
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--accent-border);
+  border-radius: var(--radius);
+  padding: var(--space-5);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 6%, transparent);
+}
+
+.crumb { margin: 0 0 var(--space-3); }
+.crumb a {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-decoration: none;
+}
+.crumb a:hover { color: var(--accent); }
+
+.prose-panel h1 {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 0 0 var(--space-2);
+  color: var(--fg);
+}
+
+.page-meta {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--muted);
+  margin: 0 0 var(--space-4);
+}
+
+.prose { color: var(--fg); font-size: var(--text-base); line-height: 1.75; }
+.prose h2 {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  letter-spacing: -0.01em;
+  margin-top: 2em;
+  margin-bottom: 0.6em;
+  color: var(--fg);
+}
+.prose h3 {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  margin-top: 1.6em;
+  margin-bottom: 0.5em;
+  color: var(--fg);
+}
+.prose p { margin: 1em 0; }
+.prose ul, .prose ol { margin: 1em 0; padding-left: 1.4em; }
+.prose li { margin: 0.4em 0; }
+.prose a { text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent); text-underline-offset: 3px; }
+.prose a:hover { text-decoration-color: currentColor; }
+.prose strong { color: var(--fg); font-weight: 600; }
+.prose hr { border: none; border-top: 1px solid var(--border); margin: 2.5em 0; }
+
+.prose blockquote {
+  border-left: 2px solid var(--accent);
+  margin: 1.4em 0;
+  padding: 0.2em 0 0.2em 1.2em;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.prose table { border-collapse: collapse; width: 100%; margin: 1.5em 0; font-size: var(--text-sm); }
+.prose th, .prose td { border-bottom: 1px solid var(--border); padding: 0.6rem 0.8rem; text-align: left; }
+.prose th {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: var(--text-xs);
+  color: var(--muted);
+  border-bottom: 2px solid var(--border);
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  background: var(--bg);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  font-size: 0.88em;
+  border: 1px solid var(--border);
+}
+.prose pre {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3) var(--space-4);
+  overflow-x: auto;
+  line-height: 1.6;
+  margin: 1.5em 0;
+}
+.prose pre code, .prose pre code.hljs {
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-size: var(--text-sm);
+}
+
+/* ---- Section listing (research archive) ---------------------------------------------- */
+
+.section-head { max-width: 72ch; margin: 0 auto var(--space-5); }
+.section-head h1 {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  letter-spacing: -0.02em;
+  margin: 0 0 var(--space-2);
+  color: var(--fg);
+}
+
+.note-list {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.note-row a {
+  display: flex;
+  gap: var(--space-4);
+  align-items: baseline;
+  text-decoration: none;
+  color: var(--fg);
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  transition: border-color 180ms ease;
+}
+.note-row a:hover { border-color: var(--accent-border); }
+.note-date { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--muted); flex: 0 0 5em; }
+.note-body { display: flex; flex-direction: column; gap: 0.25em; }
+.note-title { font-family: var(--font-display); font-weight: 600; font-size: var(--text-base); color: var(--fg); }
+.note-row a:hover .note-title { color: var(--accent); }
+.note-desc { font-size: var(--text-sm); color: var(--muted); }
+
+/* ---- 404 ------------------------------------------------------------------------------ */
+
+.error-main { max-width: 60ch; margin: 0 auto; }
+.error-main h1 {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  margin: 0 0 var(--space-3);
+  color: var(--fg);
+}
+.error-main p { color: var(--muted); font-size: var(--text-base); }
+
+/* ---- Footer ---------------------------------------------------------------------------- */
+
+.site-footer { border-top: 1px solid var(--border); margin-top: var(--space-6); }
+.footer-inner {
+  padding: var(--space-4) 0 var(--space-5);
+  color: var(--muted);
+  font-size: var(--text-xs);
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+}
+
+/* ---- Responsive ------------------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .bento {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+      "hero hero"
+      "bio  rsrch"
+      "pub  pub"
+      "tool tool";
+  }
+}
+
+@media (max-width: 640px) {
+  .shell { padding-inline: var(--space-3); }
+  .header-inner { flex-direction: column; align-items: flex-start; gap: var(--space-2); padding-block: var(--space-3) var(--space-2); }
+  .bento {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "hero"
+      "bio"
+      "rsrch"
+      "pub"
+      "tool";
+  }
+  .prose-panel { padding: var(--space-4); }
+  .pub-row a, .note-row a { flex-direction: column; gap: 0.2em; }
+}
