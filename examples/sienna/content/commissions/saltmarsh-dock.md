@@ -2,6 +2,7 @@
 title = "Saltmarsh Dock"
 date = "2026-02-14"
 description = "A disused timber wharf reworked into a tidal-range park, its boardwalks designed to flood twice a day along the old dock footprint."
+template = "commission"
 [extra]
 former_use = "Timber import wharf"
 new_use = "Tidal-range public park"

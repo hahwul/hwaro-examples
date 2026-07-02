@@ -7,7 +7,7 @@ I came to music librarianship sideways. I trained as a musicologist, spent two y
 
 What kept me was the specific, unglamorous problem at the center of the work: most manuscripts in a special collection are not lost, exactly — they are simply undescribed. A partbook sits in a box with a shelf mark and no author, no date, no indication that its missing companion volume is two counties away in another institution's uncataloged backlog. Cataloging is the act of making that connection findable by someone who is not me, is not in the room, and may not be born yet.
 
-{{ alert(type="Visiting", body="The Thornfield reading room is open by appointment, Tuesday through Friday. Manuscripts held in cold storage need at least two business days' notice; items already on open shelving can usually be pulled same-day. Contact the desk through the email on the [home page](/) to arrange a visit.") }}
+{{ alert(type="Visiting", body="The Thornfield reading room is open by appointment, Tuesday through Friday. Manuscripts held in cold storage need at least two business days' notice; items already on open shelving can usually be pulled same-day. Contact the desk at f.odell@thornfieldconservatory.org to arrange a visit.") }}
 
 ## What I actually do
 

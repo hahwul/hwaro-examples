@@ -1,0 +1,53 @@
+{% include "header.html" %}
+      <main id="main" class="term-body term-body-home">
+
+        <section class="session session-id" aria-labelledby="whoami-h">
+          <h2 id="whoami-h" class="cmd-label">whoami</h2>
+          <p class="id-name">{{ page.extra.name | default(site.title, true) | e }}</p>
+          <p class="id-role">{{ page.extra.role | e }}</p>
+          <dl class="id-meta">
+            <div><dt>base</dt><dd>{{ page.extra.location | e }}</dd></div>
+            <div><dt>mail</dt><dd><a href="mailto:{{ page.extra.email }}">{{ page.extra.email }}</a></dd></div>
+            <div><dt>focus</dt><dd>{{ page.extra.focus | e }}</dd></div>
+          </dl>
+          <div class="prose id-summary">{{ content | safe }}</div>
+        </section>
+
+        <section class="session session-log" aria-labelledby="log-h">
+          <h2 id="log-h" class="cmd-label">tail -n {{ page.extra.experience_log | length }} experience.log</h2>
+          <ol class="log-rows">
+            {% for job in page.extra.experience_log %}
+            <li class="log-row">
+              <span class="lr-period">{{ job.period }}</span>
+              <span class="lr-role">{{ job.role }} <span class="lr-at">@</span> {{ job.company }}</span>
+              <span class="lr-detail">{{ job.detail }}</span>
+            </li>
+            {% endfor %}
+          </ol>
+          <p class="see-more"><a href="{{ base_url }}/cv/">cat cv.md<span aria-hidden="true"> &#10095;</span> full history</a></p>
+        </section>
+
+        <section class="session session-projects" aria-labelledby="proj-h">
+          <h2 id="proj-h" class="cmd-label">ls projects/ -la</h2>
+          <ul class="proj-rows">
+            {% set projects = get_section(path="projects").pages | sort_by("date", reverse=true) %}
+            {% for p in projects %}
+            <li class="proj-row">
+              <a href="{{ base_url }}{{ p.url }}">
+                <span class="pr-date">{% if p.date %}{{ p.date | date("%Y-%m") }}{% endif %}</span>
+                <span class="pr-title">{{ p.title }}</span>
+                <span class="pr-desc">{{ p.description }}</span>
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+        </section>
+
+        <section class="session session-about" aria-labelledby="about-h">
+          <h2 id="about-h" class="cmd-label">cat about.md | head -n 2</h2>
+          <p class="prose-lite">{{ page.extra.about_teaser | e }}</p>
+          <p class="see-more"><a href="{{ base_url }}/about/">cat about.md<span aria-hidden="true"> &#10095;</span> read more</a></p>
+        </section>
+
+      </main>
+{% include "footer.html" %}

@@ -2,6 +2,7 @@
 title = "Colliery Bank"
 date = "2025-11-24"
 description = "A capped colliery spoil heap regraded into a hillside park with a summit viewpoint, its slopes stabilized by terraced woodland planting."
+template = "commission"
 [extra]
 former_use = "Colliery spoil heap"
 new_use = "Hillside park"

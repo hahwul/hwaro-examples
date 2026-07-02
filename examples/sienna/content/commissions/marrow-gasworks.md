@@ -2,6 +2,7 @@
 title = "Marrow Gasworks"
 date = "2025-09-02"
 description = "Twin gasholders, decommissioned in 1996, reworked into paired wetland basins that trace the original holder rings in boardwalk."
+template = "commission"
 [extra]
 former_use = "Twin gasholders"
 new_use = "Paired wetland basins"
