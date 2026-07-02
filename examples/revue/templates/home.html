@@ -1,0 +1,38 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    {% set essays = get_section(path="essays").pages | sort_by("date", reverse=true) %}
+    {% set lead = essays | first %}
+
+    {% if lead %}
+    <section class="lead-section" aria-labelledby="lead-title">
+      <div class="wrap">
+        {% set reel_item = lead %}
+        {% set reel_heading_id = "lead-title" %}
+        {% set reel_size = "lead" %}
+        {% include "partials/reel.html" %}
+        <p class="lead-more"><a class="more-link" href="{{ base_url }}{{ lead.url }}">Read the essay<span aria-hidden="true"> →</span></a></p>
+      </div>
+    </section>
+    {% endif %}
+
+    <section class="programme-section" aria-labelledby="programme-head">
+      <div class="wrap programme-head">
+        <h2 id="programme-head">This Month&rsquo;s Programme</h2>
+        <a class="all-link" href="{{ base_url }}/essays/">Full archive<span aria-hidden="true"> →</span></a>
+      </div>
+      <ul class="programme-well wrap">
+        {% for entry in essays %}
+          {% if not loop.first %}
+          {% include "partials/programme-row.html" %}
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </section>
+
+    <section class="home-about wrap" aria-labelledby="home-about-head">
+      <h2 id="home-about-head" class="visually-hidden">About Revue</h2>
+      <div class="prose home-about-prose">{{ content | safe }}</div>
+      <p class="home-about-link"><a href="{{ base_url }}/about/">More about Revue<span aria-hidden="true"> →</span></a></p>
+    </section>
+  </main>
+{% include "footer.html" %}

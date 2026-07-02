@@ -1,0 +1,48 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <article class="brief wrap-narrow">
+      <header class="brief-head">
+        <p class="plate-label">
+          <span class="plate-fig">Fig. {{ page.extra.fig | default("&ndash;") }}</span>
+          <span class="plate-sep" aria-hidden="true">&mdash;</span>
+          <span class="plate-kicker">{{ page.extra.discipline | default("FIELD NOTE") | e }}</span>
+        </p>
+        <h1 class="brief-title">{{ page.title | e }}</h1>
+        {% if page.description %}<p class="brief-dek">{{ page.description | e }}</p>{% endif %}
+        <p class="brief-byline">
+          {% if page.authors %}<span class="byline-name">{{ page.authors | join(", ") | e }}</span>{% endif %}
+          {% if page.date %}<span class="byline-sep" aria-hidden="true">&middot;</span><time datetime="{{ page.date | date('%Y-%m-%d') }}">{{ page.date | date("%B %d, %Y") }}</time>{% endif %}
+          {% if page.reading_time %}<span class="byline-sep" aria-hidden="true">&middot;</span><span class="byline-time">{{ page.reading_time }} min read</span>{% endif %}
+        </p>
+      </header>
+
+      <div class="brief-body prose">
+        {{ content | safe }}
+      </div>
+
+      {% if page.taxonomies.categories or page.taxonomies.tags %}
+      <footer class="brief-foot">
+        {% if page.taxonomies.categories %}
+        <p class="brief-taxo">
+          <span class="taxo-label">Discipline</span>
+          {% for c in page.taxonomies.categories %}<a class="taxo-pill" href="{{ get_taxonomy_url(kind='categories', term=c) }}">{{ c }}</a>{% endfor %}
+        </p>
+        {% endif %}
+        {% if page.taxonomies.tags %}
+        <p class="brief-taxo">
+          <span class="taxo-label">Tags</span>
+          {% for t in page.taxonomies.tags %}<a class="taxo-pill" href="{{ get_taxonomy_url(kind='tags', term=t) }}">{{ t }}</a>{% endfor %}
+        </p>
+        {% endif %}
+      </footer>
+      {% endif %}
+
+      {% if (page.lower and page.lower.section == "briefs" and page.lower.date) or (page.higher and page.higher.section == "briefs" and page.higher.date) %}
+      <nav class="brief-nav" aria-label="More plates">
+        {% if page.higher and page.higher.section == "briefs" and page.higher.date %}<a class="brief-nav-link" href="{{ base_url }}{{ page.higher.url }}"><span class="brief-nav-label">&larr; Newer plate</span><span class="brief-nav-title">{{ page.higher.title | e }}</span></a>{% endif %}
+        {% if page.lower and page.lower.section == "briefs" and page.lower.date %}<a class="brief-nav-link brief-nav-next" href="{{ base_url }}{{ page.lower.url }}"><span class="brief-nav-label">Older plate &rarr;</span><span class="brief-nav-title">{{ page.lower.title | e }}</span></a>{% endif %}
+      </nav>
+      {% endif %}
+    </article>
+  </main>
+{% include "footer.html" %}

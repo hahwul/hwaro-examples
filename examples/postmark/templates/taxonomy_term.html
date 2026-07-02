@@ -1,0 +1,27 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <header class="section-head wrap">
+      <p class="label-heading">Tag</p>
+      <h1 class="section-title">{{ taxonomy_term }}</h1>
+    </header>
+    <div class="issue-rule wrap" aria-hidden="true"></div>
+    <ol class="well wrap">
+      {% set tax = get_taxonomy(kind=taxonomy_name) %}
+      {% for term in tax.items %}
+        {% if term.name == taxonomy_term %}
+          {% for issue in term.pages | sort_by("date", reverse=true) %}
+          <li class="well-row">
+            {% if issue.extra.issue_number %}<span class="well-num">No. {{ issue.extra.issue_number }}</span>{% endif %}
+            <div class="well-body">
+              <h2 class="well-title"><a href="{{ base_url }}{{ issue.url }}">{{ issue.title | e }}</a></h2>
+              {% if issue.description %}<p class="well-dek">{{ issue.description | truncate_words(28) }}</p>{% endif %}
+              {% if issue.date %}<p class="well-meta"><time datetime="{{ issue.date | date('%Y-%m-%d') }}">{{ issue.date | date("%B %d, %Y") }}</time></p>{% endif %}
+            </div>
+          </li>
+          {% endfor %}
+        {% endif %}
+      {% endfor %}
+    </ol>
+    <p class="wrap"><a class="all-link" href="{{ base_url }}/tags/"><span aria-hidden="true">&larr; </span>All tags</a></p>
+  </main>
+{% include "footer.html" %}

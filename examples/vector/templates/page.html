@@ -1,0 +1,42 @@
+{% include "header.html" %}
+  <main id="main" class="term-body page">
+    <article class="prose-page">
+      <p class="crumb" aria-hidden="true">{% if page.section %}~/{{ page.section }}{% else %}~{% endif %}/{{ page.title | slugify }}</p>
+
+      <header class="page-head">
+        {% if page.section == "changelog" %}
+        <p class="rel-meta">
+          <span class="rel-ver">{{ page.title | e }}</span>
+          <span class="rel-channel">{{ page.extra.channel | default("stable") }}</span>
+          {% if page.date %}<time datetime="{{ page.date | date('%Y-%m-%d') }}">{{ page.date | date("%Y-%m-%d") }}</time>{% endif %}
+        </p>
+        {% endif %}
+        <h1>{{ page.title | e }}</h1>
+        {% if page.description %}<p class="lede">{{ page.description | e }}</p>{% endif %}
+      </header>
+
+      {% if page.section == "changelog" and page.extra.changes %}
+      <ul class="changes">
+        {% for c in page.extra.changes %}
+        <li class="chg chg-{{ c.kind }}">
+          <span class="chg-mark" aria-hidden="true">{% if c.kind == "add" %}+{% elif c.kind == "fix" %}*{% elif c.kind == "remove" %}-{% else %}~{% endif %}</span>
+          <span class="chg-kind">{{ c.kind }}</span>
+          <span class="chg-text">{{ c.text }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+
+      <div class="prose">{{ content | safe }}</div>
+
+      {% if page.section == "changelog" %}
+      {% if page.lower.date or page.higher.date %}
+      <nav class="pager" aria-label="Changelog navigation">
+        {% if page.lower.date %}<a class="pager-link pager-prev" href="{{ base_url }}{{ page.lower.url }}"><span class="pager-dir">&larr; older</span><span class="pager-title">{{ page.lower.title }}</span></a>{% else %}<span class="pager-spacer" aria-hidden="true"></span>{% endif %}
+        {% if page.higher.date %}<a class="pager-link pager-next" href="{{ base_url }}{{ page.higher.url }}"><span class="pager-dir">newer &rarr;</span><span class="pager-title">{{ page.higher.title }}</span></a>{% else %}<span class="pager-spacer" aria-hidden="true"></span>{% endif %}
+      </nav>
+      {% endif %}
+      {% endif %}
+    </article>
+  </main>
+{% include "footer.html" %}

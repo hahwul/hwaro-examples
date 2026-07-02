@@ -1,0 +1,52 @@
+{% include "header.html" %}
+  <main id="main">
+    {% set bulletins = get_section(path="bulletins").pages | sort_by("date", reverse=true) %}
+    {% set lead = bulletins | first %}
+
+    {% if lead %}
+    <section class="front wrap" aria-labelledby="lead-title">
+      <article class="lead">
+        {% if lead.extra.period %}<p class="slug slug--lg">{{ lead.extra.period }}</p>{% endif %}
+        <h1 class="lead-title" id="lead-title"><a href="{{ base_url }}{{ lead.url }}">{{ lead.title | e }}</a></h1>
+        {% if lead.description %}<p class="lead-dek">{{ lead.description | e }}</p>{% endif %}
+        <p class="lead-byline">
+          {% if lead.extra.researcher %}<span class="byline-name">Filed by {{ lead.extra.researcher }}</span>{% endif %}
+          {% if lead.date %}<span class="byline-sep" aria-hidden="true">&middot;</span><time datetime="{{ lead.date | date('%Y-%m-%d') }}">{{ lead.date | date("%d %b %Y") }}</time>{% endif %}
+        </p>
+        {% if lead.extra.citation %}<p class="lead-citation">{{ lead.extra.citation }}</p>{% endif %}
+        <p class="lead-more"><a class="more-link" href="{{ base_url }}{{ lead.url }}">Read the file<span aria-hidden="true"> &rarr;</span></a></p>
+      </article>
+    </section>
+    {% endif %}
+
+    <div class="rule-full wrap" aria-hidden="true"></div>
+
+    <section class="finds wrap" aria-labelledby="finds-head">
+      <h2 id="finds-head" class="finds-label">Also filed this issue</h2>
+      <div class="finds-columns">
+        <div class="well">
+          <p class="well-label">Column One</p>
+          <ol class="well-list" aria-label="More bulletins, column one">
+            {% for entry in bulletins %}
+              {% if loop.index > 1 and loop.index < 5 %}{% include "partials/well-item.html" %}{% endif %}
+            {% endfor %}
+          </ol>
+        </div>
+        <div class="well well--rule">
+          <p class="well-label">Column Two</p>
+          <ol class="well-list" aria-label="More bulletins, column two">
+            {% for entry in bulletins %}
+              {% if loop.index > 4 %}{% include "partials/well-item.html" %}{% endif %}
+            {% endfor %}
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-about wrap" aria-labelledby="home-about-head">
+      <h2 id="home-about-head" class="section-label">About this bulletin</h2>
+      <div class="prose home-about-prose">{{ content | safe }}</div>
+      <p class="home-about-link"><a class="all-link" href="{{ base_url }}/bulletins/">Full archive<span aria-hidden="true"> &rarr;</span></a></p>
+    </section>
+  </main>
+{% include "footer.html" %}

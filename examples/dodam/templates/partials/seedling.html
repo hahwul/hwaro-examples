@@ -1,0 +1,36 @@
+{#- Signature ornament: a hand-drawn seedling that gains one leaf per issue
+    number. Set `leaves` (1-6, from page.extra.issue) and optionally
+    `seedling_size` ("sm" for inline/list use; omit or "lg" for the closing
+    mark) before including. -#}
+{% if seedling_size == "sm" %}{% set ssize = "sm" %}{% else %}{% set ssize = "lg" %}{% endif %}
+{% if leaves == 1 %}{% set top_y = 140 %}
+{% elif leaves == 2 %}{% set top_y = 122 %}
+{% elif leaves == 3 %}{% set top_y = 104 %}
+{% elif leaves == 4 %}{% set top_y = 82 %}
+{% elif leaves == 5 %}{% set top_y = 58 %}
+{% else %}{% set top_y = 32 %}
+{% endif %}
+{% set mid_y = (154 + top_y) // 2 %}
+<span class="seedling seedling-{{ ssize }}" role="img" aria-label="Seedling ornament for issue {{ leaves }}: {{ leaves }} {% if leaves == 1 %}leaf{% else %}leaves{% endif %} grown so far">
+  <svg viewBox="0 0 120 176" focusable="false" aria-hidden="true">
+    <ellipse class="seedling-soil" cx="60" cy="162" rx="32" ry="9"/>
+    <circle class="seedling-pebble" cx="40" cy="163.5" r="2.6"/>
+    <circle class="seedling-pebble" cx="83" cy="160" r="2"/>
+    <path class="seedling-stem" d="M60,154 Q56,{{ mid_y }} 60,{{ top_y }}" fill="none"/>
+    {% for i in range(1, leaves + 1) %}
+    {% if i == 1 %}{% set lx = 60 %}{% set ly = 140 %}{% set lr = -28 %}{% set lflip = false %}
+    {% elif i == 2 %}{% set lx = 58 %}{% set ly = 122 %}{% set lr = -32 %}{% set lflip = true %}
+    {% elif i == 3 %}{% set lx = 61 %}{% set ly = 104 %}{% set lr = -22 %}{% set lflip = false %}
+    {% elif i == 4 %}{% set lx = 58 %}{% set ly = 82 %}{% set lr = -26 %}{% set lflip = true %}
+    {% elif i == 5 %}{% set lx = 61 %}{% set ly = 58 %}{% set lr = -18 %}{% set lflip = false %}
+    {% else %}{% set lx = 58 %}{% set ly = 32 %}{% set lr = -20 %}{% set lflip = true %}
+    {% endif %}
+    <g class="leaf" transform="translate({{ lx }},{{ ly }}){% if lflip %} scale(-1,1){% endif %} rotate({{ lr }})">
+      <path class="leaf-blade" d="M0,0 C5,-8 16,-10 22,-2 C16,4 6,5 0,0 Z"/>
+      <path class="leaf-vein" d="M2,-1 L17,-3" fill="none"/>
+    </g>
+    {% endfor %}
+    <circle class="seedling-bud" cx="60" cy="{{ top_y - 6 }}" r="3.2"/>
+  </svg>
+  <span class="seedling-count">issue {{ leaves }} · {{ leaves }} {% if leaves == 1 %}leaf{% else %}leaves{% endif %}</span>
+</span>

@@ -1,0 +1,21 @@
+{# Expects: reel_item (page-like object), reel_heading_id, reel_size ("lead"|"essay") #}
+<div class="reel reel--{{ reel_size }}">
+  <div class="reel-bar reel-bar--top" aria-hidden="true"></div>
+  <div class="reel-frame">
+    <span class="cue-mark" aria-hidden="true"></span>
+    {% if reel_item.extra.kicker %}<p class="reel-kicker">{{ reel_item.extra.kicker }}</p>{% endif %}
+    {% if reel_size == "lead" %}
+    <h1 class="reel-title" id="{{ reel_heading_id }}"><a href="{{ base_url }}{{ reel_item.url }}">{{ reel_item.title | e }}</a></h1>
+    {% else %}
+    <h1 class="reel-title" id="{{ reel_heading_id }}">{{ reel_item.title | e }}</h1>
+    {% endif %}
+    {% if reel_item.description %}<p class="reel-dek">{{ reel_item.description | e }}</p>{% endif %}
+  </div>
+  <div class="reel-bar reel-bar--bottom">
+    <p class="reel-byline">
+      {% if reel_item.authors %}<span class="byline-name">{{ reel_item.authors | join(", ") | upper }}</span>{% endif %}
+      {% if reel_item.date %}<span class="byline-sep" aria-hidden="true">·</span><time datetime="{{ reel_item.date | date("%Y-%m-%d") }}">{{ reel_item.date | date("%B %d, %Y") | upper }}</time>{% endif %}
+      {% if reel_size == "essay" and reel_item.reading_time %}<span class="byline-sep" aria-hidden="true">·</span><span>{{ reel_item.reading_time }} min read</span>{% endif %}
+    </p>
+  </div>
+</div>

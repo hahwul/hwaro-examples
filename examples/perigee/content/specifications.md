@@ -7,7 +7,7 @@ The numbers below describe Run Two exactly as it ships — the same sheet that t
 
 ## Case
 
-| | |
+| Property | Value |
 |---|---|
 | Diameter | 38mm |
 | Thickness | 10.4mm |
@@ -20,7 +20,7 @@ The numbers below describe Run Two exactly as it ships — the same sheet that t
 
 ## Movement
 
-| | |
+| Property | Value |
 |---|---|
 | Caliber | P-38, in-house, hand-wound |
 | Power reserve | 46 hours |
@@ -31,7 +31,7 @@ The numbers below describe Run Two exactly as it ships — the same sheet that t
 
 ## Moonphase complication
 
-| | |
+| Property | Value |
 |---|---|
 | Drive | 135-tooth moon wheel, finger-cam advance |
 | Drift | 1 day per ~122 years against the true synodic month |
@@ -40,7 +40,7 @@ The numbers below describe Run Two exactly as it ships — the same sheet that t
 
 ## Dial and hands
 
-| | |
+| Property | Value |
 |---|---|
 | Dial | Oxidized silver, lathe-turned |
 | Indices | Applied silver batons |
@@ -49,7 +49,7 @@ The numbers below describe Run Two exactly as it ships — the same sheet that t
 
 ## Strap and edition
 
-| | |
+| Property | Value |
 |---|---|
 | Strap | Hand-stitched calf leather, quick-release spring bars |
 | Buckle | Oxidized silver, matched to case |

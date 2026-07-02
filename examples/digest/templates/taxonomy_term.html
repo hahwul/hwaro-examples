@@ -1,0 +1,19 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <header class="section-head wrap">
+      <p class="section-eyebrow">{% if taxonomy_name == "categories" %}Discipline{% else %}Tag{% endif %}</p>
+      <h1 class="section-title">{{ taxonomy_term }}</h1>
+    </header>
+    <div class="card-grid wrap">
+      {% set tax = get_taxonomy(kind=taxonomy_name) %}
+      {% for term in tax.items %}
+        {% if term.name == taxonomy_term %}
+          {% for entry in term.pages | sort_by("date", reverse=true) %}
+          {% include "partials/plate-card.html" %}
+          {% endfor %}
+        {% endif %}
+      {% endfor %}
+    </div>
+    <p class="term-back wrap"><a href="{{ base_url }}/{{ taxonomy_name }}/"><span aria-hidden="true">&larr; </span>All {{ taxonomy_name }}</a></p>
+  </main>
+{% include "footer.html" %}

@@ -1,0 +1,40 @@
+{% include "header.html" %}
+{% set catalog = load_data(path="data/titles.toml") %}
+<article class="prose-page">
+  <div class="prose-page-head">
+    <h1>{{ page.title | e }}</h1>
+    {% if page.description %}<p class="prose-page-lede">{{ page.description | e }}</p>{% endif %}
+  </div>
+  <div class="prose">
+    {{ content | safe }}
+  </div>
+</article>
+
+<section class="section section-tight" aria-label="Full catalog">
+  <div class="card-grid">
+    {% for t in catalog.items %}
+    <article class="title-card" id="{{ t.slug }}">
+      <div class="title-card-top">
+        <span class="title-card-genre caps">{{ t.genre }}</span>
+        {% if t.new %}<span class="title-card-badge">New &mdash; This Friday</span>{% endif %}
+      </div>
+      <span class="title-card-mono" aria-hidden="true">{{ t.title | first }}</span>
+      <h2 class="title-card-title">{{ t.title }}</h2>
+      <p class="title-card-author">read by <a href="{{ base_url }}/narrators/#{{ t.narrator_slug }}">{{ t.author }}</a></p>
+      <p class="title-card-blurb">{{ t.blurb }}</p>
+      <div class="title-card-meta">
+        <span class="caps">{{ t.runtime }}</span>
+        <span class="title-card-dot" aria-hidden="true">&middot;</span>
+        <span>{{ t.price }}</span>
+        <span class="title-card-dot" aria-hidden="true">&middot;</span>
+        <span class="caps">{{ t.released_display }}</span>
+      </div>
+      <div class="scrubber" role="img" aria-label="{{ t.chapters }} chapters, {{ t.sample }} free to sample">
+        {% for i in range(t.chapters) %}<span class="scrubber-seg{% if i < t.sample %} is-sample{% endif %}"></span>{% endfor %}
+      </div>
+      <p class="scrubber-label caps">{{ t.chapters }} chapters &middot; {{ t.sample }} free</p>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+{% include "footer.html" %}

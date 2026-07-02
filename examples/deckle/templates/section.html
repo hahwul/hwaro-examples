@@ -1,0 +1,51 @@
+{% include "header.html" %}
+  <main id="main">
+    <div class="spread">
+      <div class="spread-main">
+        <header class="page-head">
+          <p class="page-kicker">The Quarterly Folio</p>
+          {% if page.title is present %}<h1 class="page-title">{{ page.title | e }}</h1>{% endif %}
+          {% if content %}<div class="prose section-intro">{{ content | safe }}</div>{% endif %}
+        </header>
+
+        <ol class="contents contents-full">
+          {% if paginator %}
+            {% for p in paginator.pages %}
+              {% set entry = p %}
+              {% include "partials/contents-row-full.html" %}
+            {% endfor %}
+          {% else %}
+            {% for p in section.pages %}
+              {% set entry = p %}
+              {% include "partials/contents-row-full.html" %}
+            {% endfor %}
+          {% endif %}
+        </ol>
+
+        {% if paginator and paginator.number_pagers > 1 %}
+        <nav class="leafing" aria-label="Pagination">
+          {% if paginator.previous %}
+            <a class="leafing-link" href="{{ base_url }}{{ paginator.previous }}"><span aria-hidden="true">&larr;</span> Newer</a>
+          {% else %}
+            <span class="leafing-empty">Newer</span>
+          {% endif %}
+          <span class="leafing-count">Page {{ paginator.current_index }} of {{ paginator.number_pagers }}</span>
+          {% if paginator.next %}
+            <a class="leafing-link" href="{{ base_url }}{{ paginator.next }}">Older <span aria-hidden="true">&rarr;</span></a>
+          {% else %}
+            <span class="leafing-empty">Older</span>
+          {% endif %}
+        </nav>
+        {% endif %}
+      </div>
+
+      {% include "partials/seam.html" %}
+
+      <aside class="spread-margin" aria-label="About this issue">
+        <h2 class="margin-heading">Issue Notes</h2>
+        <p class="margin-note">Essays and fiction in translation, sequenced as they run in the printed edition.</p>
+        <div class="margin-ornament" aria-hidden="true">&#10086;</div>
+      </aside>
+    </div>
+  </main>
+{% include "footer.html" %}

@@ -1,0 +1,109 @@
+{% include "header.html" %}
+{% set catalog = load_data(path="data/titles.toml") %}
+{% set narrators = load_data(path="data/narrators.toml") %}
+{% set plans = load_data(path="data/pricing.toml") %}
+{% set apps = load_data(path="data/apps.toml") %}
+
+<section class="hero" aria-labelledby="hero-heading">
+  <div class="hero-inner">
+    <p class="kicker">Audiobooks, In The Author's Own Voice</p>
+    <h1 id="hero-heading">The person who wrote it reads it to you.</h1>
+    <p class="hero-lede">No professional narrator stands between you and the sentence. A new title arrives every Friday, read cover to cover by the person who wrote it.</p>
+    <div class="hero-actions">
+      <a class="button button-primary" href="{{ base_url }}/catalog/">Browse the catalog</a>
+      <a class="button button-ghost" href="{{ base_url }}/pricing/">See pricing</a>
+    </div>
+  </div>
+</section>
+
+<section class="section section-tight" aria-labelledby="featured-heading">
+  <div class="section-head section-head-tight">
+    <h2 id="featured-heading">This week's shelf</h2>
+    <p>One dash per chapter &mdash; filled ones are free to sample.</p>
+  </div>
+  <div class="card-grid">
+    {% for t in catalog.items %}
+    {% if t.featured %}
+    <a class="title-card" href="{{ base_url }}/catalog/#{{ t.slug }}">
+      <div class="title-card-top">
+        <span class="title-card-genre caps">{{ t.genre }}</span>
+        {% if t.new %}<span class="title-card-badge">New &mdash; This Friday</span>{% endif %}
+      </div>
+      <span class="title-card-mono" aria-hidden="true">{{ t.title | first }}</span>
+      <h3 class="title-card-title">{{ t.title }}</h3>
+      <p class="title-card-author">read by {{ t.author }}</p>
+      <p class="title-card-blurb">{{ t.blurb | truncate_words(14) }}</p>
+      <div class="title-card-meta">
+        <span class="caps">{{ t.runtime }}</span>
+        <span class="title-card-dot" aria-hidden="true">&middot;</span>
+        <span>{{ t.price }}</span>
+      </div>
+      <div class="scrubber" role="img" aria-label="{{ t.chapters }} chapters, {{ t.sample }} free to sample">
+        {% for i in range(t.chapters) %}<span class="scrubber-seg{% if i < t.sample %} is-sample{% endif %}"></span>{% endfor %}
+      </div>
+      <p class="scrubber-label caps">{{ t.chapters }} chapters</p>
+    </a>
+    {% endif %}
+    {% endfor %}
+  </div>
+</section>
+
+<section class="statement" aria-label="Editorial policy">
+  <blockquote>&ldquo;If you didn't write it, we don't want you reading it to a stranger.&rdquo;</blockquote>
+  <cite>The one rule behind every title in the catalog</cite>
+</section>
+
+<section class="section" aria-labelledby="narrators-heading">
+  <div class="section-head">
+    <h2 id="narrators-heading">Meet the narrators</h2>
+    <p>Every voice in the catalog belongs to the person who wrote the book.</p>
+    <a class="section-link" href="{{ base_url }}/narrators/">All narrators &rarr;</a>
+  </div>
+  <div class="narrator-grid">
+    {% for n in narrators.items %}
+    {% if loop.index <= 3 %}
+    <article class="narrator-card">
+      <span class="narrator-avatar" aria-hidden="true">{{ n.name | first }}</span>
+      <h3 class="narrator-name">{{ n.name }}</h3>
+      <p class="narrator-meta">{{ n.home }}</p>
+      <p class="narrator-note">&ldquo;{{ n.note | truncate_words(22) }}&rdquo;</p>
+      <p class="narrator-title">Reads <a href="{{ base_url }}/catalog/#{{ n.title_slug }}">{{ n.title }}</a></p>
+    </article>
+    {% endif %}
+    {% endfor %}
+  </div>
+</section>
+
+<section class="section section-tight" aria-labelledby="pricing-heading">
+  <div class="section-head">
+    <h2 id="pricing-heading">Simple pricing</h2>
+    <p>Buy one title outright, or unlock the whole shelf.</p>
+    <a class="section-link" href="{{ base_url }}/pricing/">Full pricing &rarr;</a>
+  </div>
+  <div class="pricing-grid">
+    {% for plan in plans.items %}
+    <article class="pricing-card{% if plan.highlighted %} is-highlighted{% endif %}">
+      <p class="pricing-card-name">{{ plan.name }}</p>
+      <p class="pricing-card-price"><strong>{{ plan.price }}</strong><span>{{ plan.price_note }}</span></p>
+      <p class="pricing-card-tagline">{{ plan.tagline }}</p>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="section section-tight" aria-labelledby="apps-heading">
+  <div class="section-head">
+    <h2 id="apps-heading">Take it with you</h2>
+    <p>Chapter-accurate sync across iOS, Android, desktop, and the car.</p>
+    <a class="section-link" href="{{ base_url }}/apps/">All platforms &rarr;</a>
+  </div>
+  <div class="apps-grid">
+    {% for app in apps.items %}
+    <article class="app-card">
+      <p class="app-card-name">{{ app.name }}</p>
+      <p class="app-card-req caps">{{ app.requirement }}</p>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+{% include "footer.html" %}

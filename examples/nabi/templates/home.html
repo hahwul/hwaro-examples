@@ -1,0 +1,68 @@
+{% include "header.html" %}
+    <main id="main" class="site-main">
+      <section class="nameplate">
+        <div class="nameplate-mark" aria-hidden="true">{% include "partials/butterfly.html" %}</div>
+        <h1 class="nameplate-word">{{ site.title | e }}</h1>
+        <p class="nameplate-tag">나비 &middot; a quarterly of Korean market seasons</p>
+        {% if content %}<p class="nameplate-note">{{ content | safe }}</p>{% endif %}
+      </section>
+
+      <div class="rule rule-wide"></div>
+
+      {% set fsec = get_section(path="features") %}
+      {% for p in fsec.pages %}
+        {% if loop.index0 == 0 %}
+        <article class="lead-feature">
+          <a href="{{ base_url }}{{ p.url }}" class="lead-feature-link">
+            {% if p.extra.kicker %}<p class="kicker kicker-lg">{% include "partials/butterfly.html" %}<span>{{ p.extra.kicker | e }}</span></p>{% endif %}
+            <h2 class="lead-feature-title">{{ p.title | e }}</h2>
+            {% if p.description %}<p class="lead-feature-dek">{{ p.description | e }}</p>{% endif %}
+            <p class="story-card-meta">
+              {% if p.authors %}{% for a in p.authors %}{{ a | e }}{% if not loop.last %}, {% endif %}{% endfor %}{% endif %}
+              {% if p.authors and p.date %}<span class="byline-sep">&middot;</span>{% endif %}
+              {% if p.date %}<time datetime="{{ p.date | date('%Y-%m-%d') }}">{{ p.date | date("%B %d, %Y") }}</time>{% endif %}
+            </p>
+            <span class="lead-feature-cta">Read the feature &rarr;</span>
+          </a>
+        </article>
+        {% endif %}
+      {% endfor %}
+
+      <div class="rule"></div>
+
+      <section class="issue-well" aria-labelledby="issue-well-heading">
+        <div class="issue-well-head">
+          <h2 id="issue-well-heading" class="well-heading">In This Issue</h2>
+          <div class="rubrics">
+            <span class="rubric-chip">{% include "partials/butterfly.html" %}Market Day</span>
+            <span class="rubric-chip">{% include "partials/butterfly.html" %}Ferment</span>
+          </div>
+        </div>
+        <div class="story-well">
+          {% for p in fsec.pages %}
+            {% if loop.index0 > 0 %}
+            <article class="story-card">
+              <a href="{{ base_url }}{{ p.url }}" class="story-card-link">
+                {% if p.extra.kicker %}<p class="kicker">{% include "partials/butterfly.html" %}<span>{{ p.extra.kicker | e }}</span></p>{% endif %}
+                <h3 class="story-card-title">{{ p.title | e }}</h3>
+                {% if p.description %}<p class="story-card-dek">{{ p.description | e }}</p>{% endif %}
+                <p class="story-card-meta">
+                  {% if p.authors %}{% for a in p.authors %}{{ a | e }}{% if not loop.last %}, {% endif %}{% endfor %}{% endif %}
+                  {% if p.authors and p.date %}<span class="byline-sep">&middot;</span>{% endif %}
+                  {% if p.date %}<time datetime="{{ p.date | date('%Y-%m-%d') }}">{{ p.date | date("%B %d, %Y") }}</time>{% endif %}
+                </p>
+              </a>
+            </article>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </section>
+
+      <div class="rule"></div>
+
+      <section class="about-teaser">
+        <p class="kicker kicker-lg">{% include "partials/butterfly.html" %}<span>About</span></p>
+        <p class="about-teaser-text">Nabi is written by five people who would rather stand at a market stall than a press table. <a href="{{ base_url }}{{ lang_prefix }}/about/">Meet the masthead &rarr;</a></p>
+      </section>
+    </main>
+{% include "footer.html" %}

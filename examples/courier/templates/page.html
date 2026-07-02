@@ -1,0 +1,44 @@
+{% include "header.html" %}
+    <article class="page-article{% if page.extra.word_count %} issue-article{% endif %}">
+      {% if page.extra.word_count %}
+      {% set sl_title = page.title %}
+      {% set sl_draft = page.extra.draft_number %}
+      {% set sl_words = page.extra.word_count %}
+      <div class="issue-masthead">
+        {% include "partials/slugline.html" %}
+        <p class="issue-meta">
+          {% if page.extra.tool_kind %}<span class="issue-kind">{{ page.extra.tool_kind | e }}</span>{% endif %}
+          {% if page.date %}<time class="issue-date" datetime="{{ page.date | date("%Y-%m-%d") }}">{{ page.date | date("%B %d, %Y") }}</time>{% endif %}
+        </p>
+      </div>
+      {% endif %}
+
+      {% if page.title is present %}<h1>{{ page.title | e }}</h1>{% endif %}
+      {% if page.extra.word_count and page.description %}<p class="standfirst">{{ page.description | e }}</p>{% endif %}
+
+      <div class="prose">
+        {{ content | safe }}
+      </div>
+
+      {% if page.extra.verdict %}
+      <p class="verdict-line"><span class="verdict-label">Verdict</span> {{ page.extra.verdict | e }}</p>
+      {% endif %}
+
+      {% if page.section == "issues" %}
+      <nav class="issue-pager" aria-label="More issues">
+        {% if page.lower %}
+        <a class="issue-pager-link issue-pager-prev" href="{{ base_url }}{{ page.lower.url }}">
+          <span class="issue-pager-dir">Older issue</span>
+          <span class="issue-pager-title">{{ page.lower.title | e }}</span>
+        </a>
+        {% endif %}
+        {% if page.higher %}
+        <a class="issue-pager-link issue-pager-next" href="{{ base_url }}{{ page.higher.url }}">
+          <span class="issue-pager-dir">Newer issue</span>
+          <span class="issue-pager-title">{{ page.higher.title | e }}</span>
+        </a>
+        {% endif %}
+      </nav>
+      {% endif %}
+    </article>
+{% include "footer.html" %}

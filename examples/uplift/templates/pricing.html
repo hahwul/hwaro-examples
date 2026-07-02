@@ -1,0 +1,30 @@
+{% include "header.html" %}
+{% set plans = load_data(path="data/pricing.toml") %}
+<article class="prose-page">
+  <div class="prose-page-head">
+    <h1>{{ page.title | e }}</h1>
+    {% if page.description %}<p class="prose-page-lede">{{ page.description | e }}</p>{% endif %}
+  </div>
+  <div class="prose">
+    {{ content | safe }}
+  </div>
+</article>
+
+<section class="section section-tight" aria-label="Pricing plans">
+  <div class="pricing-grid">
+    {% for plan in plans.items %}
+    <article class="pricing-card{% if plan.highlighted %} is-highlighted{% endif %}">
+      <p class="pricing-card-name">{{ plan.name }}</p>
+      <p class="pricing-card-price"><strong>{{ plan.price }}</strong><span>{{ plan.price_note }}</span></p>
+      <p class="pricing-card-tagline">{{ plan.tagline }}</p>
+      <ul class="pricing-card-features">
+        {% for feature in plan.features %}
+        <li>{{ feature }}</li>
+        {% endfor %}
+      </ul>
+      <a class="button {% if plan.highlighted %}button-primary{% else %}button-ghost{% endif %}" href="{{ base_url }}{{ plan.cta_url }}">{{ plan.cta_label }}</a>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+{% include "footer.html" %}

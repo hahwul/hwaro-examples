@@ -1,0 +1,93 @@
+{% include "header.html" %}
+  <main id="main">
+    {% set issues = get_section(path="issues").pages | sort_by("date", reverse=true) %}
+    {% set lead = issues | first %}
+
+    {% if lead %}
+    <section class="lead" aria-labelledby="lead-title">
+      <div class="wrap lead-grid">
+        <svg class="pm-stamp" viewBox="0 0 300 150" aria-hidden="true" focusable="false">
+          <g transform="rotate(-5 92 75)">
+            <circle class="pm-ring" cx="92" cy="75" r="58"/>
+            <circle class="pm-ring pm-ring-inner" cx="92" cy="75" r="47"/>
+            <path id="pm-arc-top" d="M 41 78 A 51 51 0 0 1 143 78" fill="none"/>
+            <text class="pm-arc-text"><textPath href="#pm-arc-top" startOffset="50%" text-anchor="middle">POSTMARK &#183; WEEKLY DIGEST</textPath></text>
+            <text class="pm-issue-num" x="92" y="72" text-anchor="middle">No. {{ lead.extra.issue_number }}</text>
+            {% if lead.date %}<text class="pm-issue-date" x="92" y="94" text-anchor="middle">{{ lead.date | date("%d %b %Y") | upper }}</text>{% endif %}
+          </g>
+          <g class="pm-bars">
+            <path d="M164 38 q9 10 0 20 t0 20 t0 20 t0 20"/>
+            <path d="M181 38 q9 10 0 20 t0 20 t0 20 t0 20"/>
+            <path d="M198 38 q9 10 0 20 t0 20 t0 20 t0 20"/>
+            <path d="M215 38 q9 10 0 20 t0 20 t0 20 t0 20"/>
+          </g>
+        </svg>
+
+        <div class="lead-main">
+          <p class="lead-kicker">Lead issue</p>
+          <h1 class="lead-title" id="lead-title"><a href="{{ base_url }}{{ lead.url }}">{{ lead.title | e }}</a></h1>
+          <p class="lead-byline">
+            <span class="byline-issue">Issue No. {{ lead.extra.issue_number }}</span>
+            {% if lead.date %}<span class="byline-sep" aria-hidden="true">&middot;</span><time datetime="{{ lead.date | date('%Y-%m-%d') }}">{{ lead.date | date("%B %d, %Y") }}</time>{% endif %}
+            {% if lead.tags %}<span class="byline-sep" aria-hidden="true">&middot;</span><span class="byline-tags">{% for t in lead.tags %}{{ t }}{% if not loop.last %}, {% endif %}{% endfor %}</span>{% endif %}
+          </p>
+          {% if lead.extra.dek %}
+          <div class="lead-standfirst">
+            <p>{{ lead.extra.dek }}</p>
+          </div>
+          {% endif %}
+          <p class="lead-more"><a class="more-link" href="{{ base_url }}{{ lead.url }}">Read issue No. {{ lead.extra.issue_number }}<span aria-hidden="true"> &rarr;</span></a></p>
+        </div>
+      </div>
+    </section>
+    {% endif %}
+
+    <section class="well-section" aria-labelledby="well-head">
+      <div class="wrap well-head">
+        <h2 id="well-head">Back issues</h2>
+        <a class="all-link" href="{{ base_url }}/issues/">Full archive<span aria-hidden="true"> &rarr;</span></a>
+      </div>
+      <ol class="well wrap">
+        {% for issue in issues %}
+          {% if not loop.first %}
+          <li class="well-row">
+            <span class="well-num">No. {{ issue.extra.issue_number }}</span>
+            <div class="well-body">
+              <h3 class="well-title"><a href="{{ base_url }}{{ issue.url }}">{{ issue.title | e }}</a></h3>
+              {% if issue.description %}<p class="well-dek">{{ issue.description | truncate_words(24) }}</p>{% endif %}
+              <p class="well-meta">
+                {% if issue.date %}<time datetime="{{ issue.date | date('%Y-%m-%d') }}">{{ issue.date | date("%B %d, %Y") }}</time>{% endif %}
+                {% if issue.tags %}<span class="well-sep" aria-hidden="true">&middot;</span>{% for t in issue.tags %}<a class="well-tag" href="{{ get_taxonomy_url(kind="tags", term=t) }}">{{ t }}</a>{% if not loop.last %}<span aria-hidden="true"> </span>{% endif %}{% endfor %}{% endif %}
+              </p>
+            </div>
+          </li>
+          {% endif %}
+        {% endfor %}
+      </ol>
+    </section>
+
+    <section class="home-about wrap" aria-labelledby="home-about-head">
+      <h2 id="home-about-head" class="label-heading">About this dispatch</h2>
+      {{ content | safe }}
+      <p><a class="more-link" href="{{ base_url }}/about/">Read the full masthead<span aria-hidden="true"> &rarr;</span></a></p>
+    </section>
+
+    <section class="subscribe-band" aria-labelledby="subscribe-head">
+      <div class="wrap subscribe-grid">
+        <div class="subscribe-copy">
+          <p class="subscribe-kicker">Every Monday, one dispatch</p>
+          <h2 id="subscribe-head">Get the next issue before it's filed</h2>
+          <p>No digests, no summaries of summaries &mdash; the flags and spec minutes as logged the week they moved.</p>
+        </div>
+        <form class="subscribe-form" action="{{ base_url }}/about/" method="get" onsubmit="return false;">
+          <label for="subscribe-email" class="subscribe-label">Email address</label>
+          <div class="subscribe-field">
+            <input id="subscribe-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+            <button type="submit" class="subscribe-submit">Subscribe</button>
+          </div>
+          <p class="subscribe-note">Static example form &mdash; no messages are sent. See <a href="{{ base_url }}/about/">how issues are actually delivered</a>.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+{% include "footer.html" %}

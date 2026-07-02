@@ -1,0 +1,24 @@
+{% include "header.html" %}
+{% set eps = section.pages | sort_by("date", reverse=true) %}
+<main id="main" class="site-main">
+  <header class="page-head">
+    <p class="page-kicker">The full run</p>
+    <h1 class="page-title">{{ section.title | e }}</h1>
+    {% if section.description %}<p class="page-intro">{{ section.description | e }}</p>{% endif %}
+  </header>
+
+  <ol class="spine" aria-label="Episodes, newest first">
+    {% for p in eps %}
+      {% set ep = p %}
+      {% set pinned = false %}
+      {% set nested = false %}
+      {% if loop.first %}
+        {% include "partials/season-marker.html" %}
+      {% elif ep.extra.season != eps[loop.index0 - 1].extra.season %}
+        {% include "partials/season-marker.html" %}
+      {% endif %}
+      {% include "partials/episode-row.html" %}
+    {% endfor %}
+  </ol>
+</main>
+{% include "footer.html" %}

@@ -1,0 +1,32 @@
+{% include "header.html" %}
+  <main id="main">
+    <div class="spread">
+      <div class="spread-main">
+        <header class="page-head">
+          <p class="page-kicker">Deckle Quarterly</p>
+          <h1 class="page-title">{{ page.title | e }}</h1>
+          <p class="page-dek">Every recurring subject across the folio, gathered by tag.</p>
+        </header>
+        <ul class="term-index">
+          {% set tax = get_taxonomy(kind="tags") %}
+          {% for term in tax.items | sort_by("name") %}
+          {% set n = term.pages | length %}
+          <li class="term-row">
+            <a class="term-link" href="{{ get_taxonomy_url(kind="tags", term=term.name) }}">{{ term.name }}</a>
+            <span class="row-leader" aria-hidden="true"></span>
+            <span class="term-count">{{ n }} {% if n == 1 %}piece{% else %}pieces{% endif %}</span>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      {% include "partials/seam.html" %}
+
+      <aside class="spread-margin" aria-label="About tags">
+        <h2 class="margin-heading">A Note on Tags</h2>
+        <p class="margin-note">Tags mark the subjects a piece returns to, not its genre &mdash; genre lives in the kicker at the top of each piece.</p>
+        <div class="margin-ornament" aria-hidden="true">&#10086;</div>
+      </aside>
+    </div>
+  </main>
+{% include "footer.html" %}

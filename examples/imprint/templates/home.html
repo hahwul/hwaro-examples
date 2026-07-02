@@ -1,0 +1,39 @@
+{% include "header.html" %}
+  <main id="main" class="chapter-opener-wrap">
+    <div class="chapter-opener">
+      <section class="opener-left" aria-labelledby="hero-heading">
+        <p class="opener-eyebrow">{{ page.extra.volume | default("Volume VII") }} &middot; {{ page.extra.issue | default("") }}</p>
+        <h1 id="hero-heading" class="opener-wordmark">{{ site.title | e }}</h1>
+        <div class="opener-dek">
+          {{ content | safe }}
+        </div>
+        <a class="opener-cta" href="{{ base_url }}/specimens/">
+          <span>Begin reading</span>
+          <svg viewBox="0 0 20 10" aria-hidden="true" focusable="false"><path d="M0 5h18M12 0l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
+        </a>
+      </section>
+
+      <div class="opener-gutter" aria-hidden="true"></div>
+
+      <section class="opener-right" aria-labelledby="contents-heading">
+        <h2 id="contents-heading" class="opener-contents-label">Contents</h2>
+        <ol class="opener-toc">
+          {% set specimens = get_section(path="specimens") %}
+          {% for p in specimens.pages %}
+          <li class="opener-toc-item">
+            <a href="{{ base_url }}{{ p.url }}">
+              <span class="toc-folio" aria-hidden="true">{% if loop.index < 10 %}0{% endif %}{{ loop.index }}</span>
+              <span class="toc-body">
+                <span class="toc-era">{{ p.extra.era | default("REVIVAL") }}</span>
+                <span class="toc-title">{{ p.title | e }}</span>
+                {% if p.authors %}<span class="toc-byline">{{ p.authors | join(", ") }}</span>{% endif %}
+              </span>
+            </a>
+          </li>
+          {% endfor %}
+        </ol>
+        <p class="opener-standalone"><a href="{{ base_url }}/about/">About this annual</a></p>
+      </section>
+    </div>
+  </main>
+{% include "footer.html" %}

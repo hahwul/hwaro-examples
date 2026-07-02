@@ -1,0 +1,35 @@
+{% include "header.html" %}
+    <main id="main" class="site-main">
+      <article class="feature-article">
+        {% if page.extra.kicker %}
+        <p class="kicker kicker-lg">{% include "partials/butterfly.html" %}<span>{{ page.extra.kicker | e }}</span></p>
+        {% endif %}
+
+        <h1 class="feature-title">{{ page.title | e }}</h1>
+
+        {% if page.description %}
+        <p class="dek">{{ page.description | e }}</p>
+        {% endif %}
+
+        {% if page.authors or page.date %}
+        <p class="byline">
+          {% if page.authors %}Words by {% for a in page.authors %}<span class="byline-name">{{ a | e }}</span>{% if not loop.last %}, {% endif %}{% endfor %}{% endif %}
+          {% if page.authors and page.date %}<span class="byline-sep">&middot;</span>{% endif %}
+          {% if page.date %}<time datetime="{{ page.date | date('%Y-%m-%d') }}">{{ page.date | date("%B %d, %Y") }}</time>{% endif %}
+          {% if page.reading_time %}<span class="byline-sep">&middot;</span>{{ page.reading_time }} min read{% endif %}
+        </p>
+        {% endif %}
+
+        <div class="prose">
+          {{ content | safe }}
+        </div>
+
+        {% if page.tags %}
+        <footer class="feature-tags">
+          <span class="feature-tags-label">Filed under</span>
+          {% for t in page.tags %}<a href="{{ base_url }}{{ lang_prefix }}/tags/{{ t | slugify }}/" class="tag-pill">{{ t | e }}</a>{% endfor %}
+        </footer>
+        {% endif %}
+      </article>
+    </main>
+{% include "footer.html" %}

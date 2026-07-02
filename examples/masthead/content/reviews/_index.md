@@ -2,7 +2,7 @@
 title = "Reviews"
 description = "Every review Masthead has filed on postwar civic buildings and their second lives, newest first."
 sort_by = "date"
-reverse = true
+reverse = false
 paginate = 6
 template = "section"
 generate_feeds = true

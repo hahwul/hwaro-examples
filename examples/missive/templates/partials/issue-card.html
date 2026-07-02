@@ -1,0 +1,23 @@
+<article class="issue-card">
+  <header class="specimen-label">
+    <span class="specimen-chip" style="background-color: {{ entry.extra.chip | default("#8a8f92") }};" aria-hidden="true"></span>
+    <span class="specimen-material">{{ entry.extra.material | default("Unfiled specimen") | e }}</span>
+    <span class="specimen-batch">{{ entry.extra.batch | default("") | e }}</span>
+  </header>
+  <div class="issue-card-body">
+    <h3 class="issue-card-title"><a href="{{ base_url }}{{ entry.url }}">{{ entry.title | e }}</a></h3>
+    <p class="issue-card-meta">
+      {% if entry.date %}<time datetime="{{ entry.date | date("%Y-%m-%d") }}">{{ entry.date | date("%B %d, %Y") }}</time>{% endif %}
+      {% if entry.reading_time %}<span aria-hidden="true"> &middot; </span><span>{{ entry.reading_time }} min read</span>{% endif %}
+    </p>
+    {% if entry.summary %}<p class="issue-card-excerpt">{{ entry.summary | strip_html | truncate_words(26) }}</p>{% endif %}
+    {% if entry.tags %}
+    <ul class="issue-card-tags">
+      {% for t in entry.tags %}<li><a class="tag-chip" href="{{ get_taxonomy_url(kind="tags", term=t) }}">{{ t }}</a></li>{% endfor %}
+    </ul>
+    {% endif %}
+  </div>
+  {% if entry.extra.verdict %}
+  <p class="issue-card-verdict{% if entry.extra.verdict_class == "failed" %} is-failed{% endif %}">Status: {{ entry.extra.verdict | e }}</p>
+  {% endif %}
+</article>

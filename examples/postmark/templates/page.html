@@ -1,0 +1,62 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    {% if page.extra.issue_number %}
+    <article class="issue">
+      <header class="issue-head wrap">
+        <p class="issue-kicker">
+          <svg class="stamp-mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+            <circle cx="15" cy="20" r="12"/>
+            <path d="M29 10q4 3.3 0 6.7t0 6.7t0 6.7"/>
+          </svg>
+          <span>Issue No. {{ page.extra.issue_number }}</span>
+        </p>
+        <h1 class="issue-title">{{ page.title | e }}</h1>
+        <p class="issue-byline">
+          {% if page.date %}<time datetime="{{ page.date | date('%Y-%m-%d') }}">{{ page.date | date("%B %d, %Y") }}</time>{% endif %}
+          {% if page.reading_time %}<span class="byline-sep" aria-hidden="true">&middot;</span><span>{{ page.reading_time }} min read</span>{% endif %}
+        </p>
+        {% if page.extra.dek %}<p class="issue-dek">{{ page.extra.dek }}</p>{% endif %}
+      </header>
+      <div class="issue-rule wrap" aria-hidden="true"></div>
+      <div class="prose wrap">
+        {{ content | safe }}
+      </div>
+      {% if page.tags %}
+      <div class="issue-tags wrap">
+        <span class="label-heading">Filed under</span>
+        <ul class="tag-list">
+          {% for t in page.tags %}<li><a href="{{ get_taxonomy_url(kind="tags", term=t) }}">{{ t }}</a></li>{% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+      {% if page.lower.section == page.section or page.higher.section == page.section %}
+      <nav class="issue-pager wrap" aria-label="Adjacent issues">
+        {% if page.higher.section == page.section %}
+        <a class="pager-link pager-newer" href="{{ base_url }}{{ page.higher.url }}">
+          <span class="pager-label">Newer issue</span>
+          <span class="pager-title">{{ page.higher.title | e }}</span>
+        </a>
+        {% else %}<span class="pager-spacer" aria-hidden="true"></span>{% endif %}
+        {% if page.lower.section == page.section %}
+        <a class="pager-link pager-older" href="{{ base_url }}{{ page.lower.url }}">
+          <span class="pager-label">Older issue</span>
+          <span class="pager-title">{{ page.lower.title | e }}</span>
+        </a>
+        {% endif %}
+      </nav>
+      {% endif %}
+    </article>
+    {% else %}
+    <article class="page">
+      <header class="page-head wrap">
+        {% if page.title is present %}<h1 class="page-title">{{ page.title | e }}</h1>{% endif %}
+        {% if page.description %}<p class="page-dek">{{ page.description }}</p>{% endif %}
+      </header>
+      <div class="issue-rule wrap" aria-hidden="true"></div>
+      <div class="prose wrap">
+        {{ content | safe }}
+      </div>
+    </article>
+    {% endif %}
+  </main>
+{% include "footer.html" %}

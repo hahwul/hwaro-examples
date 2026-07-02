@@ -1,0 +1,35 @@
+{% include "header.html" %}
+  <main id="main">
+    <div class="spread">
+      <div class="spread-main">
+        <header class="page-head">
+          <p class="page-kicker">Deckle Quarterly</p>
+          <h1 class="page-title">{{ page.title | e }}</h1>
+          {% if content %}<div class="prose">{{ content | safe }}</div>{% endif %}
+        </header>
+
+        <form class="search-form" role="search" data-index="{{ base_url }}/search.json" data-base="{{ base_url }}" onsubmit="return false;">
+          <label class="search-label" for="search-input">Search every essay and translation</label>
+          <input class="search-input" id="search-input" type="search" name="q" placeholder="a name, a place, a language&hellip;" autocomplete="off" autofocus>
+        </form>
+        <p class="search-status" id="search-status" role="status" aria-live="polite"></p>
+        <ol class="contents contents-full" id="search-results"></ol>
+      </div>
+
+      {% include "partials/seam.html" %}
+
+      <aside class="spread-margin" aria-label="Browse by tag">
+        <h2 class="margin-heading">Browse by Tag</h2>
+        <ul class="margin-tags margin-tags-list">
+          {% set tax = get_taxonomy(kind="tags") %}
+          {% for term in tax.items | sort_by("name") %}
+          <li><a href="{{ get_taxonomy_url(kind="tags", term=term.name) }}">{{ term.name }}</a></li>
+          {% endfor %}
+        </ul>
+        <div class="margin-ornament" aria-hidden="true">&#10086;</div>
+      </aside>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
+    <script src="{{ base_url }}/js/search.js"></script>
+  </main>
+{% include "footer.html" %}

@@ -1,5 +1,5 @@
 +++
-title = "Perigee"
+title = "A hand-wound moonphase watch, numbered in runs of 300"
 description = "A 38mm hand-wound moonphase watch, made in numbered runs of 300"
 template = "home"
 +++

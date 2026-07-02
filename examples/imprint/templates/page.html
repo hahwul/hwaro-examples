@@ -1,0 +1,39 @@
+{% include "header.html" %}
+  <main id="main" class="page-main">
+    {% if page.extra.initial %}
+    <article class="essay-sheet">
+      <div class="essay-glyph" aria-hidden="true">{{ page.extra.initial }}</div>
+      <div class="essay-meta">
+        {% if page.extra.era %}<p class="essay-kicker">{{ page.extra.era }}</p>{% endif %}
+        <h1 class="essay-title">{{ page.title | e }}</h1>
+        {% if page.description %}<p class="essay-dek">{{ page.description | e }}</p>{% endif %}
+        <p class="essay-byline">
+          {% if page.authors %}<span class="byline-name">{{ page.authors | join(", ") }}</span>{% endif %}
+          {% if page.extra.credential %}<span class="byline-credential">{{ page.extra.credential | e }}</span>{% endif %}
+          {% if page.date %}<span class="byline-date">{{ page.date | date("%B %Y") }}</span>{% endif %}
+          {% if page.reading_time %}<span class="byline-reading">{{ page.reading_time }} min read</span>{% endif %}
+        </p>
+      </div>
+      <div class="essay-body prose">
+        {{ content | safe }}
+      </div>
+      {% if page.tags %}
+      <footer class="essay-tags">
+        <span class="tags-label">Filed under</span>
+        <ul class="tag-list">
+          {% for t in page.tags %}<li><a href="{{ get_taxonomy_url(kind="tags", term=t) }}">{{ t }}</a></li>{% endfor %}
+        </ul>
+      </footer>
+      {% endif %}
+    </article>
+    {% else %}
+    <article class="plain-page">
+      {% if page.extra.kicker %}<p class="page-kicker">{{ page.extra.kicker }}</p>{% endif %}
+      <h1 class="page-title">{{ page.title | e }}</h1>
+      <div class="prose">
+        {{ content | safe }}
+      </div>
+    </article>
+    {% endif %}
+  </main>
+{% include "footer.html" %}
