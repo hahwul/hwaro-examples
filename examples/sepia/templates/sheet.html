@@ -1,0 +1,50 @@
+{% include "header.html" %}
+  <main id="main" class="site-main sheet-page">
+    <div class="sheet-head">
+      <p class="grid-eyebrow">Contact Sheet</p>
+      <h1>{{ page.title | e }}</h1>
+      <dl class="sheet-meta">
+        {% if page.extra.location %}
+        <div><dt>Location</dt><dd>{{ page.extra.location | e }}</dd></div>
+        {% endif %}
+        {% if page.date %}
+        <div><dt>Shot</dt><dd>{{ page.date | date("%B %Y") }}</dd></div>
+        {% endif %}
+        {% if page.extra.film %}
+        <div><dt>Film</dt><dd>{{ page.extra.film | e }}</dd></div>
+        {% endif %}
+        {% if page.extra.frames %}
+        <div><dt>Frames</dt><dd>{{ page.extra.frames | length }}</dd></div>
+        {% endif %}
+      </dl>
+    </div>
+
+    {% if page.extra.frames %}
+    <ol class="contact-grid contact-grid--sheet" aria-label="Contact sheet frames">
+      {% for f in page.extra.frames %}
+      <li class="frame{% if f.n == page.extra.circled_frame %} is-circled{% endif %}">
+        <svg class="frame-rebate" viewBox="0 0 320 14" preserveAspectRatio="none" aria-hidden="true"><use href="#rebate-strip"></use></svg>
+        <span class="frame-window frame-window--sheet">
+          <svg class="frame-marks" viewBox="0 0 100 100" aria-hidden="true"><use href="#crop-marks"></use></svg>
+          {% if f.n == page.extra.circled_frame %}
+          <svg class="frame-circle" viewBox="0 0 100 100" aria-hidden="true"><use href="#grease-circle"></use></svg>
+          <span class="frame-tag">Select</span>
+          {% endif %}
+          <span class="frame-number frame-number--sheet">{{ f.n }}</span>
+          <span class="frame-caption">{{ f.caption | e }}</span>
+        </span>
+        <svg class="frame-rebate" viewBox="0 0 320 14" preserveAspectRatio="none" aria-hidden="true"><use href="#rebate-strip"></use></svg>
+      </li>
+      {% endfor %}
+    </ol>
+    {% endif %}
+
+    <div class="sheet-notes prose">
+      {{ content | safe }}
+    </div>
+
+    <nav class="sheet-pager" aria-label="More sheets">
+      <a href="{{ base_url }}/sheets/">&larr; All sheets</a>
+    </nav>
+  </main>
+{% include "footer.html" %}

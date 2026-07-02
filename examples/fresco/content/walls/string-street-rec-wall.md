@@ -15,7 +15,7 @@ color_4 = "#fdfaf4"
 status = "Scaffold up"
 scaffold_days = 11
 sqft = 980
-rotate = "-2"
+rotate = "-3"
 +++
 
 The String Street Rec Center has been wrapped in plywood hoarding since a roof repair in 2023 stalled out; the hoarding was never taken down, and it has been tagged and buffed by the parks department on a loop ever since. This wall replaces the loop with something the parks department has agreed, in writing, to stop buffing.

@@ -1,0 +1,30 @@
+{% include "header.html" %}
+  <main id="main" class="section-main">
+    <header class="page-band">
+      <p class="page-kicker" aria-hidden="true">index</p>
+      {% if page.title is present %}<h1>{{ page.title | e }}</h1>{% endif %}
+    </header>
+
+    {% if content %}<div class="prose section-intro">{{ content | safe }}</div>{% endif %}
+
+    <ul class="plot-grid">
+      {% for p in section.pages | sort_by("date", reverse=true) %}
+      <li class="plot-card">
+        <a href="{{ base_url }}{{ p.url }}" class="plot-card-link">
+          <span class="plot-sketch" aria-hidden="true">
+            <svg class="sketch-svg" viewBox="0 0 240 160" data-seed="{{ p.title | slugify }}" preserveAspectRatio="xMidYMid meet"></svg>
+          </span>
+          <span class="plot-meta">
+            <span class="plot-index">{{ loop.index }} / {{ section.pages | length }}</span>
+            <span class="plot-title">{{ p.title | e }}</span>
+            {% if p.date %}<span class="plot-date">{{ p.date | date("%Y.%m.%d") }}</span>{% endif %}
+            <span class="plot-summary">{{ p.summary | default(p.description, true) | truncate_words(22) }}</span>
+          </span>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+
+    {{ pagination }}
+  </main>
+{% include "footer.html" %}

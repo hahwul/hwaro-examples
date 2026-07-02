@@ -1,0 +1,52 @@
+{% include "header.html" %}
+  <main id="main" class="site-main home">
+
+    <section class="hero" aria-label="Photographer">
+      <div class="stamp">
+        <p class="stamp-kicker">Field Archive</p>
+        <h1 class="stamp-name">Nerys Calder</h1>
+        <p class="stamp-sub">Documentary&nbsp;— Working Harbours</p>
+      </div>
+      <div class="hero-text prose prose-tight">
+        {{ content | safe }}
+      </div>
+    </section>
+
+    <section class="grid-section" aria-labelledby="grid-heading">
+      <div class="grid-head">
+        <p class="grid-eyebrow">Sheet Index — Current Projects</p>
+        <h2 id="grid-heading" class="visually-hidden">Current projects</h2>
+        <p class="grid-desc">Six harbours along the Cael Estuary, photographed at the pace the tide sets. Newest sheet first — the circled frame is this month's keeper.</p>
+      </div>
+
+      {% set sheets = get_section(path="sheets") %}
+      <ol class="contact-grid" aria-label="Current projects">
+        {% for p in sheets.pages | sort_by("date", reverse=true) %}
+        <li class="frame{% if loop.first %} is-circled{% endif %}">
+          <a class="frame-link" href="{{ base_url }}{{ p.url }}">
+            <svg class="frame-rebate" viewBox="0 0 320 14" preserveAspectRatio="none" aria-hidden="true"><use href="#rebate-strip"></use></svg>
+            <span class="frame-meta">
+              <span class="frame-film">{{ p.extra.film | default("BRACKISH 125", true) | upper }}</span>
+              <span class="frame-number">{% if loop.index < 10 %}0{{ loop.index }}{% else %}{{ loop.index }}{% endif %}</span>
+            </span>
+            <span class="frame-photo">
+              <svg class="frame-marks" viewBox="0 0 100 100" aria-hidden="true"><use href="#crop-marks"></use></svg>
+              {% if loop.first %}
+              <svg class="frame-circle" viewBox="0 0 100 100" aria-hidden="true"><use href="#grease-circle"></use></svg>
+              <span class="frame-tag">Select</span>
+              {% endif %}
+            </span>
+            <span class="frame-info">
+              <span class="frame-title">{{ p.title | e }}</span>
+              <span class="frame-location">{{ p.extra.location | default("", true) | e }}</span>
+              <span class="frame-caption">{{ p.extra.one_line | default(p.description, true) | e }}</span>
+            </span>
+            <svg class="frame-rebate" viewBox="0 0 320 14" preserveAspectRatio="none" aria-hidden="true"><use href="#rebate-strip"></use></svg>
+          </a>
+        </li>
+        {% endfor %}
+      </ol>
+    </section>
+
+  </main>
+{% include "footer.html" %}

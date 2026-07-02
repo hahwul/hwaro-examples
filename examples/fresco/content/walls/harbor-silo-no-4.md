@@ -15,7 +15,7 @@ color_4 = "#f2b705"
 status = "Completed"
 scaffold_days = 26
 sqft = 3400
-rotate = "3"
+rotate = "5"
 +++
 
 Silo No. 4 is the largest wall Fresco has painted and the only one that is not, technically, a wall — it is galvanized steel curved through a full circle, which meant relearning how paint, scaffolding, and even the tracing-paper sketches all behave on a surface with no straight lines.

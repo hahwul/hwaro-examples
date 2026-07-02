@@ -1,0 +1,69 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <section class="hero-copy" aria-labelledby="hero-h">
+      <p class="hero-kicker">Ochre &middot; motion design studio &middot; Leith, est. 2016</p>
+      <h1 class="hero-title" id="hero-h">Ochre</h1>
+      <p class="hero-lede">{{ site.description }}</p>
+    </section>
+
+    <section class="bento" aria-label="Selected titles and idents">
+      {% set titles = get_section(path="titles/_index.md") %}
+      {% for p in titles.pages | sort_by("date", reverse=true) %}
+      {% if loop.index == 1 %}
+      <figure class="tile tile--hero curve-figure">
+      {% elif loop.index == 2 or loop.index == 5 %}
+      <figure class="tile tile--wide curve-figure">
+      {% else %}
+      <figure class="tile tile--square curve-figure">
+      {% endif %}
+        <div class="tile-kicker">
+          <span class="tile-kicker__kind">{{ p.extra.kind }}</span>
+          <span class="tile-kicker__client">{{ p.extra.client }}</span>
+        </div>
+        <svg class="curve-plot" viewBox="0 0 200 200" role="img" aria-label="Easing curve for {{ p.title | e }}: {{ p.extra.curve_bezier }}">
+          <rect class="curve-bounds" x="24" y="65.5" width="152" height="69"></rect>
+          <g class="curve-ticks">
+            <line x1="62" y1="130.5" x2="62" y2="134.5"></line>
+            <line x1="100" y1="130.5" x2="100" y2="134.5"></line>
+            <line x1="138" y1="130.5" x2="138" y2="134.5"></line>
+            <line x1="62" y1="65.5" x2="62" y2="69.5"></line>
+            <line x1="100" y1="65.5" x2="100" y2="69.5"></line>
+            <line x1="138" y1="65.5" x2="138" y2="69.5"></line>
+          </g>
+          <path class="curve-line" d="{{ p.extra.curve_d }}"></path>
+          <circle class="curve-node" cx="24" cy="134.5" r="3"></circle>
+          <circle class="curve-node" cx="176" cy="65.5" r="3"></circle>
+          <circle class="curve-dot" cx="0" cy="0" r="4.5" style="offset-path: path('{{ p.extra.curve_d }}');"></circle>
+          <text class="curve-label curve-label--tag" x="14" y="20">EASE</text>
+          <text class="curve-label curve-label--val" x="186" y="20" text-anchor="end">{{ p.extra.curve_bezier }}</text>
+          <text class="curve-label curve-label--io" x="14" y="192">IN {{ p.extra.in_point }}</text>
+          <text class="curve-label curve-label--io" x="186" y="192" text-anchor="end">OUT {{ p.extra.out_point }}</text>
+        </svg>
+        <figcaption class="tile-cap">
+          <span class="tile-cap__t">{{ p.title }}</span>
+          <span class="tile-cap__curve">{{ p.extra.curve_name }}</span>
+          <span class="tile-cap__meta">{{ p.extra.duration }} &middot; {{ p.extra.frame_count }}F &middot; {{ p.extra.fps }}fps</span>
+        </figcaption>
+        <a class="tile-link" href="{{ base_url }}{{ p.url }}"><span class="visually-hidden">Open project: {{ p.title }}</span></a>
+      </figure>
+      {% endfor %}
+
+      <figure class="tile tile--stat" aria-label="Studio numbers">
+        <ul class="stat-list">
+          <li><span class="stat-n">300+</span><span class="stat-l">curves in the library</span></li>
+          <li><span class="stat-n">10</span><span class="stat-l">years running</span></li>
+          <li><span class="stat-n">48</span><span class="stat-l">idents shipped</span></li>
+          <li><span class="stat-n">6</span><span class="stat-l">people, one studio</span></li>
+        </ul>
+      </figure>
+
+      <figure class="tile tile--intro">
+        <div class="intro-inner">
+          <p class="tile-cap__t">The curve library</p>
+          <p class="intro-text">Every project keeps its curve. Three hundred and counting, each one cut by hand against reference footage before a frame of type ever moved.</p>
+          <a class="text-link" href="{{ base_url }}/about/">Read about the studio &rarr;</a>
+        </div>
+      </figure>
+    </section>
+  </main>
+{% include "footer.html" %}

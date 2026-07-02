@@ -15,7 +15,7 @@ color_4 = "#fdfaf4"
 status = "Completed"
 scaffold_days = 14
 sqft = 640
-rotate = "-3"
+rotate = "-5"
 +++
 
 The Ridgewood Branch Library's east gable had been blank brick since the building went up in 1961, forty feet of wall visible from three blocks away and, according to the branch's head librarian, "the first thing anyone sees when they're already late for story time." It is also the wall that made Fresco a civic muralist rather than just a muralist who occasionally worked for the city.

@@ -15,7 +15,7 @@ color_4 = "#fdfaf4"
 status = "Completed"
 scaffold_days = 19
 sqft = 2150
-rotate = "-4"
+rotate = "-6"
 +++
 
 Six concrete piers hold up the Cannery Line where it crosses Dockside Avenue, and for as long as anyone in the neighborhood could remember they had been the exact gray of unwashed concrete — not tagged, not painted, just present, the way infrastructure usually is until someone actually looks at it.

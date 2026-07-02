@@ -15,7 +15,7 @@ color_4 = "#fdfaf4"
 status = "Sketch phase"
 scaffold_days = 0
 sqft = 410
-rotate = "2"
+rotate = "4"
 +++
 
 The arch above Fire Station Six's apparatus bay is the smallest wall Fresco has taken on in three years, and the one with the loudest sketch sessions to date — every firefighter on the day shift has an opinion about whether the mural should show the trucks, the crew, or neither.

@@ -1,0 +1,42 @@
+{% include "header.html" %}
+  <main id="main" class="plot-main">
+    <header class="plot-head">
+      <p class="page-kicker"><a href="{{ base_url }}/plots/">plots</a> <span aria-hidden="true">/</span> {{ page.title | e }}</p>
+      {% if page.title is present %}<h1>{{ page.title | e }}</h1>{% endif %}
+      {% if page.date %}<p class="plot-head-date">{{ page.date | date("%B %d, %Y") }}</p>{% endif %}
+    </header>
+
+    <div class="plot-hero" aria-hidden="true">
+      <svg class="sketch-svg sketch-svg-lg" viewBox="0 0 240 160" data-seed="{{ page.title | slugify }}" preserveAspectRatio="xMidYMid meet"></svg>
+    </div>
+
+    {% set slug = page.title | slugify %}
+    <dl class="spec">
+      <div class="spec-row"><dt>seed</dt><dd>{{ page.extra.seed | default(slug, true) }}</dd></div>
+      <div class="spec-row"><dt>pattern</dt><dd>{{ page.extra.pattern | default("undocumented", true) }}</dd></div>
+      <div class="spec-row"><dt>paper</dt><dd>{{ page.extra.paper | default("undocumented", true) }}</dd></div>
+      <div class="spec-row"><dt>ink</dt><dd>{{ page.extra.ink | default("undocumented", true) }}</dd></div>
+      <div class="spec-row"><dt>passes</dt><dd>{{ page.extra.passes | default("undocumented", true) }}</dd></div>
+      <div class="spec-row"><dt>plot time</dt><dd>{{ page.extra.runtime | default("undocumented", true) }}</dd></div>
+    </dl>
+
+    <div class="prose">{{ content | safe }}</div>
+
+    {% set plots = get_section(path="plots") %}
+    {% set plots_sorted = plots.pages | sort_by("date", reverse=true) %}
+    {% for p in plots_sorted %}
+      {% if p.url == page.url %}
+      <nav class="plot-pager" aria-label="More plots">
+        {% if loop.index0 > 0 %}
+        {% set prev_plot = plots_sorted[loop.index0 - 1] %}
+        <a class="pager-prev" href="{{ base_url }}{{ prev_plot.url }}"><span aria-hidden="true">&larr;</span> {{ prev_plot.title | e }}</a>
+        {% endif %}
+        {% if not loop.last %}
+        {% set next_plot = plots_sorted[loop.index0 + 1] %}
+        <a class="pager-next" href="{{ base_url }}{{ next_plot.url }}">{{ next_plot.title | e }} <span aria-hidden="true">&rarr;</span></a>
+        {% endif %}
+      </nav>
+      {% endif %}
+    {% endfor %}
+  </main>
+{% include "footer.html" %}
