@@ -17,6 +17,7 @@
   var results = [];
   var selected = -1;
   var lastFocus = null;
+  var failed = false;
 
   function escapeHtml(s) {
     return String(s).replace(/[&<>"']/g, function (c) {
@@ -38,7 +39,10 @@
         });
         if (input.value) render(input.value);
       })
-      .catch(function () { status.textContent = 'The index failed to load.'; });
+      .catch(function () {
+        failed = true;
+        status.textContent = 'The index failed to load.';
+      });
   }
 
   function open() {
@@ -72,7 +76,10 @@
       status.textContent = 'Type to search plots and about.';
       return;
     }
-    if (!fuse) { status.textContent = 'Loading the index…'; return; }
+    if (!fuse) {
+      status.textContent = failed ? 'The index failed to load.' : 'Loading the index…';
+      return;
+    }
     results = fuse.search(q).slice(0, 8);
     if (results.length === 0) {
       list.innerHTML = '';
