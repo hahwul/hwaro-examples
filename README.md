@@ -1,10 +1,40 @@
 # hwaro-examples
 
-This repository is a collection of example sites built with [Hwaro](https://hwaro.hahwul.com), a fast static site generator written in Crystal.
+A **curated collection of 200 example sites** built with
+[Hwaro](https://hwaro.hahwul.com), a fast static site generator written in
+Crystal. Browse them live at
+[examples.hwaro.hahwul.com](https://examples.hwaro.hahwul.com).
+
+Every example is a complete, self-contained Hwaro site — templates, content,
+styles, and built-in search — designed as part of a coherent collection:
+
+- **13 categories** (blog, docs, landing, portfolio, magazine, gallery, event,
+  resume, changelog, book, wiki, podcast, newsletter) across **light / dark /
+  auto** color schemes.
+- **Designed up front.** `manifest.json` assigns each example its typography,
+  palette, layout pattern, and a unique signature element before any code is
+  written; `DESIGN.md` defines the quality bar every site meets.
+- **Scaffold-ready.** Start your own site from any example:
+
+  ```bash
+  hwaro init my-site --scaffold https://github.com/hahwul/hwaro-examples/tree/main/examples/<name>
+  ```
+
+## For contributors and AI agents
+
+- Read [`DESIGN.md`](DESIGN.md) first — design principles, layout catalog,
+  typography/color rules, and the exact process for adding a new example.
+- [`AGENTS.md`](AGENTS.md) is the reference manual: repo conventions, hwaro
+  CLI, template variables, and the tag vocabulary.
+- `manifest.json` is the single source of truth for the collection;
+  `tags.json` is generated from it by `scripts/sync-tags.sh`.
+- `scripts/check-site.sh <name>` is the per-site quality gate (build + lint +
+  asset policy + link check). It must pass before a site is committed.
 
 ## Installation
 
-To work with these examples or for AI agents acting on your behalf, you need to install [Hwaro](https://hwaro.hahwul.com). For complete instructions, please refer to the [official installation guide](https://hwaro.hahwul.com/start/installation/).
+To work with these examples you need [Hwaro](https://hwaro.hahwul.com). See
+the [official installation guide](https://hwaro.hahwul.com/start/installation/).
 
 ### macOS / Linux (Homebrew)
 ```bash
@@ -17,44 +47,29 @@ yay -S hwaro
 ```
 
 ### Nix
-This repository includes a Nix flake that provides a dev shell with Hwaro pre-installed. If you have Nix with flakes enabled:
+This repository includes a Nix flake that provides a dev shell with Hwaro
+pre-installed. With flakes enabled:
 
 ```bash
 nix develop
 ```
 
-This supports `x86_64-linux`, `aarch64-linux`, and `aarch64-darwin`.
+Supports `x86_64-linux`, `aarch64-linux`, and `aarch64-darwin`.
 
-### Manual / Other Platforms
-You can download pre-built binaries (DEB, RPM, APK, or raw binaries) directly from the [GitHub Releases page](https://github.com/hahwul/hwaro/releases).
+### Manual / other platforms
+Download pre-built binaries (DEB, RPM, APK, or raw binaries) from the
+[GitHub Releases page](https://github.com/hahwul/hwaro/releases).
 
-## Contributing with Jules
-
-If you are using [Jules](https://jules.google) to contribute to this repository, you can easily set up your environment by adding the following script to your **Environments > Setup script**. This will install the appropriate Hwaro binary for your architecture.
+## Working locally
 
 ```bash
-#!/bin/bash
+cd examples/<name>
+hwaro serve --open        # dev server at http://localhost:3000
+hwaro build               # static output in public/
+```
 
-echo "Installing Hwaro..."
+To preview the gallery index without Docker:
 
-# Get the latest version from GitHub release
-VERSION=$(curl -sL "https://api.github.com/repos/hahwul/hwaro/releases/latest" | grep '"tag_name":' | sed -E 's/.*"v([^"]+)".*/\1/')
-
-# Check system architecture
-ARCH=$(uname -m)
-if [ "$ARCH" = "aarch64" ] || [ "$ARCH" = "arm64" ]; then
-  DEB_FILE="hwaro_${VERSION}_arm64.deb"
-else
-  DEB_FILE="hwaro_${VERSION}_amd64.deb"
-fi
-
-# Download the latest Hwaro release package
-curl -sL "https://github.com/hahwul/hwaro/releases/latest/download/${DEB_FILE}" -o hwaro.deb
-
-# Install the package
-sudo dpkg -i hwaro.deb
-rm hwaro.deb
-
-echo "Hwaro installation completed!"
-hwaro --version
+```bash
+scripts/preview-index.sh
 ```
