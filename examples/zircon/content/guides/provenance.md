@@ -40,7 +40,7 @@ verification never requires unpacking untrusted archives first.
 zircon policy set require-provenance --scope org --enforce
 ```
 
-With this policy enabled, `zircon add {{ pkg(name="@acme/http-kit") }}`
+With this policy enabled, `zircon add` on {{ pkg(name="@acme/http-kit") }}
 fails closed if the attestation is missing or the signature doesn't
 match a trusted builder identity — there is no "warn but continue" mode
 for a policy this consequential.
@@ -55,7 +55,7 @@ $ zircon add @acme/http-kit
 ## Verifying by hand
 
 ```bash
-zircon verify {{ pkg(name="@acme/http-kit") }} --provenance
+zircon verify @acme/http-kit --provenance
 ```
 
 This prints the decoded attestation, the builder identity that signed

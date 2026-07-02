@@ -1,0 +1,571 @@
+/* =============================================================================
+   Halide — a duotone poster series for darkroom chemistry
+   Layout: zine-collage. Styles: brutalist, retro. Scheme: dark (fixed).
+   Signature: every poster carries a punched sprocket strip down its left edge.
+   ========================================================================== */
+
+/* --- Design tokens --------------------------------------------------------- */
+:root {
+  /* Palette (from manifest) */
+  --bg: #121012;
+  --surface: #1c181a;
+  --fg: #ece6e6;
+  --muted: #a89ea0;
+  --accent: #ff4d43;
+  --accent-fg: #2a0703;
+  --border: color-mix(in srgb, var(--fg) 16%, transparent);
+
+  /* Fonts */
+  --font-display: "Bebas Neue", "Arial Narrow", sans-serif;
+  --font-text: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  /* Fluid type scale */
+  --text-xs: clamp(0.72rem, 0.68rem + 0.2vw, 0.82rem);
+  --text-sm: clamp(0.83rem, 0.8rem + 0.15vw, 0.92rem);
+  --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --text-lg: clamp(1.2rem, 1.1rem + 0.5vw, 1.5rem);
+  --text-xl: clamp(1.5rem, 1.3rem + 1vw, 2.25rem);
+  --text-2xl: clamp(2rem, 1.6rem + 2vw, 3.25rem);
+  --text-hero: clamp(2.75rem, 1.9rem + 4vw, 5.25rem);
+  --text-mega: clamp(3.6rem, 1.6rem + 10vw, 9.5rem);
+
+  /* Spacing (4/8px scale) */
+  --space-1: .25rem;
+  --space-2: .5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2.5rem;
+  --space-6: 4rem;
+  --space-7: 6rem;
+
+  color-scheme: dark;
+}
+
+/* --- Reset ------------------------------------------------------------------ */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+html { overflow-x: hidden; -webkit-text-size-adjust: 100%; }
+img { max-width: 100%; height: auto; display: block; }
+ul, ol { margin: 0; padding: 0; }
+h1, h2, h3, h4 { margin: 0; }
+p { margin: 0; }
+
+/* --- Base --------------------------------------------------------------- */
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-text);
+  font-size: var(--text-base);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection { background: var(--accent); color: var(--accent-fg); }
+
+.site-main { display: block; }
+
+/* --- Links & focus -------------------------------------------------------- */
+a {
+  color: var(--accent);
+  text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  text-underline-offset: 3px;
+  transition: color 150ms ease-out, text-decoration-color 150ms ease-out, transform 150ms ease-out;
+}
+a:hover { text-decoration-color: currentColor; }
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: var(--space-3);
+  background: var(--accent);
+  color: var(--accent-fg);
+  padding: var(--space-2) var(--space-3);
+  z-index: 1000;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 0 0 4px 4px;
+}
+.skip-link:focus { top: 0; }
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --- Headings & labels ------------------------------------------------------ */
+h1, h2, h3 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+  color: var(--fg);
+}
+h2 { font-size: var(--text-2xl); }
+h3 { font-size: var(--text-xl); }
+
+.kicker, .poster__no, .poster-detail__no {
+  font-family: var(--font-text);
+  font-weight: 700;
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* --- Buttons ---------------------------------------------------------------- */
+.button {
+  display: inline-block;
+  background: var(--accent);
+  color: var(--accent-fg);
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.6rem 1.25rem;
+  border: 3px solid var(--fg);
+  box-shadow: 6px 6px 0 var(--surface);
+  transition: transform 150ms ease-out, box-shadow 150ms ease-out;
+}
+.button:hover { transform: translate(-2px, -2px); box-shadow: 9px 9px 0 var(--surface); }
+.button:active { transform: translate(0, 0); box-shadow: 3px 3px 0 var(--surface); }
+
+/* --- Site header -------------------------------------------------------- */
+.site-header {
+  border-bottom: 3px solid var(--fg);
+  background: var(--surface);
+}
+.site-header__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+.site-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  text-decoration: none;
+  color: var(--fg);
+}
+.site-brand__mark {
+  width: 1.6rem;
+  height: 1.6rem;
+  flex: 0 0 auto;
+  background-color: var(--accent);
+  background-image: radial-gradient(circle, var(--surface) 0 3px, transparent 3.2px);
+  background-size: 100% 0.8rem;
+  background-repeat: repeat-y;
+  border: 2px solid var(--fg);
+}
+.site-brand__text { display: flex; flex-direction: column; line-height: 1; }
+.site-brand__name {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+.site-brand__tag {
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 0.15rem;
+}
+.site-nav { display: flex; gap: var(--space-4); }
+.site-nav a {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--fg);
+  text-decoration: none;
+  padding: var(--space-1) 0;
+  border-bottom: 3px solid transparent;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+}
+.site-nav a:hover, .site-nav a[aria-current="page"] {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* --- Sprocket band (horizontal, composition-wide motif) --------------------- */
+.sprocket-band {
+  height: 1.4rem;
+  background-color: var(--accent);
+  background-image: radial-gradient(circle, var(--bg) 0 5px, transparent 5.4px);
+  background-size: 2.4rem 100%;
+  background-position: 1.2rem center;
+  background-repeat: repeat-x;
+  border-top: 2px solid var(--fg);
+  border-bottom: 2px solid var(--fg);
+}
+.sprocket-band--footer { margin-bottom: var(--space-5); }
+
+/* --- Masthead (home hero) ---------------------------------------------------- */
+.masthead {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4) var(--space-4);
+  text-align: center;
+}
+.masthead__kicker {
+  font-size: var(--text-sm);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: var(--space-3);
+}
+.masthead__title {
+  font-size: var(--text-mega);
+  line-height: 0.88;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+.masthead__tagline {
+  font-size: var(--text-lg);
+  color: var(--muted);
+  max-width: 42ch;
+  margin: var(--space-3) auto 0;
+}
+
+/* --- Poster component --------------------------------------------------------
+   Shared by the hero cluster, the section grid, the home teaser, and the
+   single-poster detail page. The sprocket strip is the fixed signature: it
+   renders identically at every size the poster appears. */
+.poster {
+  position: relative;
+  background: var(--surface);
+  border: 3px solid var(--fg);
+  padding-left: 1.5rem;
+  box-shadow: 8px 8px 0 var(--bg);
+}
+.poster__sprockets {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 1.5rem;
+  background-color: var(--accent);
+  background-image: radial-gradient(circle, var(--surface) 0 5px, transparent 5.4px);
+  background-size: 100% 2.2rem;
+  background-position: center 1.1rem;
+  background-repeat: repeat-y;
+  border-right: 3px solid var(--fg);
+  z-index: 2;
+}
+.poster__frame {
+  display: block;
+  overflow: hidden;
+  background: var(--bg);
+}
+.poster__art { width: 100%; height: 100%; object-fit: cover; }
+.torn {
+  clip-path: polygon(
+    0% 2%, 4% 0%, 9% 3%, 14% 0%, 19% 4%, 25% 1%, 31% 4%, 37% 0%, 43% 3%, 50% 0%,
+    57% 3%, 63% 0%, 69% 4%, 75% 1%, 81% 4%, 87% 0%, 92% 3%, 96% 0%, 100% 2%,
+    100% 97%, 96% 100%, 91% 97%, 86% 100%, 80% 97%, 74% 100%, 68% 97%, 62% 100%, 56% 97%, 50% 100%,
+    44% 97%, 38% 100%, 32% 97%, 26% 100%, 20% 97%, 14% 100%, 9% 97%, 4% 100%, 0% 98%
+  );
+}
+.poster__plate {
+  padding: var(--space-3) var(--space-3) var(--space-4);
+}
+.poster__no { display: block; margin-bottom: 0.35rem; }
+.poster__title {
+  font-size: var(--text-lg);
+  margin-bottom: 0.35rem;
+}
+.poster__title a { color: var(--fg); text-decoration: none; }
+.poster__title a:hover { color: var(--accent); }
+.poster__subtitle {
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+.poster__date {
+  font-size: var(--text-xs);
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: var(--space-2);
+}
+
+/* Tilt utilities — cycled across cards by template index, never inline. */
+.tilt-a { transform: rotate(-3.5deg); }
+.tilt-b { transform: rotate(2.5deg); }
+.tilt-c { transform: rotate(-1.75deg); }
+.tilt-d { transform: rotate(2deg); }
+.poster:hover, .poster:focus-within { transform: rotate(0deg) translateY(-3px); }
+
+/* --- Hero cluster (home): three overlapping posters ------------------------- */
+.hero-cluster {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+}
+.poster--hero { width: min(360px, 88vw); }
+.poster--hero .poster__frame { aspect-ratio: 3 / 4; }
+
+/* --- Intro / prose ------------------------------------------------------------ */
+.intro {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4);
+}
+.prose {
+  max-width: 68ch;
+  margin: 0 auto;
+  font-size: var(--text-base);
+}
+.prose p { margin: 1.1em 0; }
+.prose p:first-child { margin-top: 0; }
+.prose h2 { font-size: var(--text-xl); margin-top: 2em; margin-bottom: 0.6em; }
+.prose h3 { font-size: var(--text-lg); margin-top: 1.6em; margin-bottom: 0.5em; }
+.prose a { font-weight: 600; }
+.prose code {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 0.15rem 0.4rem;
+  border-radius: 3px;
+  font-size: 0.88em;
+}
+.prose pre {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: var(--space-3) var(--space-4);
+  overflow-x: auto;
+  border-radius: 4px;
+}
+.prose pre code { background: transparent; border: 0; padding: 0; }
+.prose blockquote {
+  border-left: 3px solid var(--accent);
+  margin: 1.4em 0;
+  padding-left: var(--space-3);
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* --- Teaser (home) ------------------------------------------------------------ */
+.teaser {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4) var(--space-7);
+}
+.teaser__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+  padding-bottom: var(--space-3);
+  border-bottom: 3px solid var(--fg);
+}
+.teaser__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: var(--space-5) var(--space-4);
+}
+.poster--teaser .poster__frame { aspect-ratio: 3 / 4; }
+
+/* --- Section head + full grid (posters listing) -------------------------------- */
+.section-head {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4) var(--space-4);
+}
+.section-head__kicker {
+  font-size: var(--text-sm);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: var(--space-2);
+}
+.section-head__title {
+  font-size: var(--text-hero);
+  margin-bottom: var(--space-4);
+}
+.poster-grid {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4) var(--space-7);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: var(--space-6) var(--space-5);
+}
+.poster--grid .poster__frame { aspect-ratio: 3 / 4; }
+
+/* --- Poster detail page --------------------------------------------------------- */
+.poster-detail {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4) var(--space-7);
+}
+.poster-detail__head { text-align: center; margin-bottom: var(--space-6); }
+.poster-detail__no {
+  display: inline-block;
+  margin-bottom: var(--space-2);
+}
+.poster-detail__title {
+  font-size: var(--text-mega);
+  line-height: 0.9;
+}
+.poster-detail__subtitle {
+  font-size: var(--text-lg);
+  color: var(--muted);
+  margin-top: var(--space-2);
+}
+.poster-detail__meta {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.poster-detail__process { color: var(--accent); font-weight: 600; }
+.poster--full {
+  width: min(560px, 100%);
+  margin: 0 auto var(--space-6);
+}
+.poster--full .poster__frame { aspect-ratio: 3 / 4; }
+.poster-detail__body { margin-top: var(--space-6); }
+
+.poster-nav {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 3px solid var(--fg);
+}
+.poster-nav__link {
+  display: block;
+  text-decoration: none;
+  padding: var(--space-3);
+  border: 2px solid var(--border);
+  background: var(--surface);
+  min-height: 40px;
+}
+.poster-nav__link:hover { border-color: var(--accent); }
+.poster-nav__label {
+  display: block;
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.25rem;
+}
+.poster-nav__title { display: block; color: var(--fg); font-weight: 600; }
+
+/* --- Plain page (about) --------------------------------------------------------- */
+.page {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4) var(--space-7);
+}
+.page__head { max-width: 68ch; margin: 0 auto var(--space-5); }
+.page__title { font-size: var(--text-hero); }
+
+/* --- 404 -------------------------------------------------------------------- */
+.not-found {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4) var(--space-7);
+  text-align: center;
+}
+.not-found__frame {
+  aspect-ratio: 3 / 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.not-found__code {
+  font-family: var(--font-display);
+  font-size: var(--text-mega);
+  color: var(--accent);
+}
+.not-found__title { font-size: var(--text-2xl); margin-top: var(--space-5); }
+.not-found__text {
+  color: var(--muted);
+  max-width: 44ch;
+  margin: var(--space-3) auto var(--space-5);
+}
+
+/* --- Footer ----------------------------------------------------------------- */
+.site-footer { border-top: 3px solid var(--fg); background: var(--surface); }
+.site-footer__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--space-4) var(--space-5);
+  text-align: center;
+}
+.site-footer__colophon {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  margin-top: var(--space-5);
+}
+.site-footer__meta {
+  font-size: var(--text-sm);
+  color: var(--muted);
+  margin-top: var(--space-2);
+}
+.site-footer__meta a { color: var(--muted); }
+.site-footer__meta a:hover { color: var(--accent); }
+
+/* --- Larger viewports: hero posters overlap and crowd the masthead ---------- */
+@media (min-width: 760px) {
+  .hero-cluster { flex-direction: row; justify-content: center; align-items: flex-start; }
+  .poster--hero:nth-of-type(2) { margin-left: -3.5rem; margin-top: 3rem; }
+  .poster--hero:nth-of-type(3) { margin-left: -3.5rem; margin-top: -1rem; }
+  .poster:hover, .poster:focus-within { transform: translateY(-3px); }
+}
+
+@media (min-width: 900px) {
+  .section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-5); }
+  .section-head__title { margin-bottom: 0; }
+  .section-head .prose { max-width: 46ch; margin: 0; }
+}
+
+/* --- Small viewports ---------------------------------------------------------- */
+@media (max-width: 420px) {
+  .site-header__inner { padding: var(--space-3); }
+  .masthead { padding: var(--space-5) var(--space-3) var(--space-3); }
+  .poster { padding-left: 1.2rem; }
+  .poster__sprockets { width: 1.2rem; background-size: 100% 1.9rem; }
+}
+
+/* --- Motion & accessibility --------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

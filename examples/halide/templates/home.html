@@ -1,0 +1,60 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <section class="masthead" aria-labelledby="masthead-h">
+      <p class="masthead__kicker">Est. Darkroom Co-op &middot; Two-Ink Editions</p>
+      <h1 id="masthead-h" class="masthead__title">Halide</h1>
+      <p class="masthead__tagline">A poster series printed in black and safelight red, one plate per stage of the darkroom.</p>
+    </section>
+
+    <div class="sprocket-band" aria-hidden="true"></div>
+
+    <section class="hero-cluster" aria-label="Featured posters currently on the wall">
+      {% set posters = get_section(path="posters").pages | sort_by("date", reverse=true) %}
+      {% for p in posters %}
+        {% if loop.index == 1 or loop.index == 2 or loop.index == 3 %}
+        <article class="poster poster--hero {% if loop.index == 1 %}tilt-a{% elif loop.index == 2 %}tilt-b{% else %}tilt-c{% endif %}">
+          <div class="poster__sprockets" aria-hidden="true"></div>
+          <a class="poster__frame torn" href="{{ base_url }}{{ p.url }}">
+            <img class="poster__art" src="{{ base_url }}/img/{{ p.extra.art }}" alt="{{ p.title | e }} — {{ p.extra.subtitle | e }}" loading="lazy">
+          </a>
+          <div class="poster__plate">
+            <span class="poster__no">No. {{ p.extra.number }}</span>
+            <h2 class="poster__title"><a href="{{ base_url }}{{ p.url }}">{{ p.title | e }}</a></h2>
+            <p class="poster__subtitle">{{ p.extra.subtitle | e }}</p>
+          </div>
+        </article>
+        {% endif %}
+      {% endfor %}
+    </section>
+
+    <section class="intro" aria-labelledby="intro-h">
+      <h2 id="intro-h" class="sr-only">About the series</h2>
+      <div class="prose">{{ content | safe }}</div>
+    </section>
+
+    <div class="sprocket-band" aria-hidden="true"></div>
+
+    <section class="teaser" aria-labelledby="teaser-h">
+      <div class="teaser__head">
+        <h2 id="teaser-h">More From the Series</h2>
+        <a class="button" href="{{ base_url }}/posters/">View All Six Prints</a>
+      </div>
+      <div class="teaser__grid">
+        {% for p in posters %}
+          {% if loop.index == 4 or loop.index == 5 or loop.index == 6 %}
+          <article class="poster poster--teaser {% if loop.index == 4 %}tilt-b{% elif loop.index == 5 %}tilt-c{% else %}tilt-a{% endif %}">
+            <div class="poster__sprockets" aria-hidden="true"></div>
+            <a class="poster__frame torn" href="{{ base_url }}{{ p.url }}">
+              <img class="poster__art" src="{{ base_url }}/img/{{ p.extra.art }}" alt="{{ p.title | e }} — {{ p.extra.subtitle | e }}" loading="lazy">
+            </a>
+            <div class="poster__plate">
+              <span class="poster__no">No. {{ p.extra.number }}</span>
+              <h3 class="poster__title"><a href="{{ base_url }}{{ p.url }}">{{ p.title | e }}</a></h3>
+            </div>
+          </article>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+{% include "footer.html" %}

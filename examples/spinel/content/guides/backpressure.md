@@ -4,9 +4,6 @@ description = "Every connection gets its own bounded send queue so one slow read
 date = "2025-04-02"
 weight = 40
 toc = true
-
-[extra]
-topic = "guides/backpressure"
 +++
 
 Broadcasting to a room means writing to every member's socket, and sockets do not all drain at the same speed — a phone on a weak connection can fall behind a desktop on fiber by a wide margin. Without a queue limit, that one slow connection would back up the server's write buffer for everyone else in the room. Spinel gives each connection its own bounded outbound queue instead, so a slow reader only ever hurts itself.

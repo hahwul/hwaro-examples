@@ -45,8 +45,12 @@ schema version, so upgrades are explicit rather than automatic.
 ```bash
 zircon token create --scope publish --name ci-runner
 zircon login --token $ZIRCON_TOKEN
-zircon add {{ pkg(name="ferrous-cache") }}
+zircon add ferrous-cache
 ```
+
+That last line installs {{ pkg(name="ferrous-cache") }} through your new
+registry — a good first package to try, since a fresh instance has
+nothing mirrored yet and this confirms the whole path end to end.
 
 Every token is scoped at creation — `publish`, `read`, or `admin` — and
 can carry an expiry. There is no unscoped root token; even the account

@@ -4,9 +4,6 @@ description = "Spinel keeps a live roster of who is in a room and pushes diffs, 
 date = "2025-03-10"
 weight = 30
 toc = true
-
-[extra]
-topic = "guides/presence"
 +++
 
 Every room keeps its own roster: connection ids, whatever metadata you attach at join time, and a join or leave timestamp. When membership changes, Spinel sends a small diff — one added or removed entry — to the rest of the room, rather than the full roster. A room with four hundred members generates the same size presence event as a room with four, which matters once you have more than a handful of people in one place at once.

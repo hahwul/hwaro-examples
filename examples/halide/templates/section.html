@@ -1,0 +1,28 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <section class="section-head">
+      <p class="section-head__kicker">The Full Run</p>
+      <h1 class="section-head__title">{{ page.title | e }}</h1>
+      <div class="prose">{{ content | safe }}</div>
+    </section>
+
+    <div class="sprocket-band" aria-hidden="true"></div>
+
+    <div class="poster-grid">
+      {% for p in section.pages | sort_by("date", reverse=true) %}
+      <article class="poster poster--grid {% if loop.index == 1 or loop.index == 4 %}tilt-a{% elif loop.index == 2 or loop.index == 5 %}tilt-b{% else %}tilt-c{% endif %}">
+        <div class="poster__sprockets" aria-hidden="true"></div>
+        <a class="poster__frame torn" href="{{ base_url }}{{ p.url }}">
+          <img class="poster__art" src="{{ base_url }}/img/{{ p.extra.art }}" alt="{{ p.title | e }} — {{ p.extra.subtitle | e }}" loading="lazy">
+        </a>
+        <div class="poster__plate">
+          <span class="poster__no">No. {{ p.extra.number }}</span>
+          <h2 class="poster__title"><a href="{{ base_url }}{{ p.url }}">{{ p.title | e }}</a></h2>
+          <p class="poster__subtitle">{{ p.extra.subtitle | e }}</p>
+          {% if p.date %}<p class="poster__date">{{ p.date | date("%B %Y") }}</p>{% endif %}
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </main>
+{% include "footer.html" %}

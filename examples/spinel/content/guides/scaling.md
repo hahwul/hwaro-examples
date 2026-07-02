@@ -4,9 +4,6 @@ description = "Shard rooms across a cluster and let Spinel's rendezvous hashing 
 date = "2025-06-20"
 weight = 60
 toc = true
-
-[extra]
-topic = "guides/scaling"
 +++
 
 A single Spinel process can hold tens of thousands of open connections, but eventually a room's traffic — or the number of rooms — outgrows one machine. Point every server at the same cluster backend and Spinel shards rooms across nodes by rendezvous hashing: each room name maps deterministically to one owning node, and every server in the cluster knows how to forward a frame to it.

@@ -4,9 +4,6 @@ description = "Resume tokens let a client reconnect after a network blip without
 date = "2025-05-12"
 weight = 50
 toc = true
-
-[extra]
-topic = "guides/reconnection"
 +++
 
 Mobile networks drop connections constantly, and rejoining every room from scratch after each blip is both slow and lossy — anything broadcast during the gap is simply gone unless the client remembers where it left off. Spinel issues a resume token at handshake time specifically to close that gap. The token identifies the connection's prior session and its last acknowledged sequence number.

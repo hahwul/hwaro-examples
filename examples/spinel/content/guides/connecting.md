@@ -4,9 +4,6 @@ description = "How a client upgrades to a Spinel connection, negotiates a protoc
 date = "2025-02-10"
 weight = 10
 toc = true
-
-[extra]
-topic = "guides/connecting"
 +++
 
 A Spinel connection begins as a plain HTTP request. The client sends a `GET` with an `Upgrade: websocket` header at whatever path the server mounted its handler on; the server checks the protocol version in the request, and if it can serve that version, responds `101 Switching Protocols`. From that point the socket speaks Spinel's binary frame format instead of HTTP.

@@ -3,9 +3,6 @@ title = "Quickstart"
 description = "Install the server package, boot a two-line server, and connect a client in under five minutes."
 date = "2025-02-03"
 toc = true
-
-[extra]
-topic = "start/quickstart"
 +++
 
 Spinel ships as a Go server package and a small JavaScript client. Neither pulls in a framework of its own — the server package sits directly on `net/http`, and the client wraps the browser's native `WebSocket` object with room and presence helpers.

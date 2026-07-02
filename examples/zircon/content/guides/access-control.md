@@ -37,8 +37,8 @@ zircon team grant platform --publish "@acme/*"
 
 Ownership is scoped by package prefix, not assigned package-by-package.
 Granting the `platform` team publish rights on `@acme/*` means anyone on
-that team can publish `{{ pkg(name="@acme/http-kit") }}` or
-`{{ pkg(name="@acme/config-loader") }}` without a separate grant for
+that team can publish {{ pkg(name="@acme/http-kit") }} or
+{{ pkg(name="@acme/config-loader") }} without a separate grant for
 each new package the team creates under that scope.
 
 ## Auditing who published what

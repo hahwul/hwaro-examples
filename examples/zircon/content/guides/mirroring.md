@@ -35,8 +35,9 @@ transparently; nothing in application code changes.
 By default a mirror caches forever once a version is fetched — package
 registries treat published versions as immutable, and Zircon trusts
 that contract. Metadata like dist-tags and the "latest" pointer is
-revalidated on a short TTL instead, so `zircon add {{ pkg(name="express") }}`
-still resolves to a current version while the tarball itself is served
+revalidated on a short TTL instead, so `zircon add express` on
+{{ pkg(name="express") }} still resolves to a current version while the
+tarball itself is served
 from cache on every subsequent install.
 
 ```toml

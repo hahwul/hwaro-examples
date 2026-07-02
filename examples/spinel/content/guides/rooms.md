@@ -4,9 +4,6 @@ description = "Create rooms, join and leave them, and broadcast events to every 
 date = "2025-02-24"
 weight = 20
 toc = true
-
-[extra]
-topic = "guides/rooms"
 +++
 
 A room is Spinel's unit of broadcast. Connections join a room by name, and anything sent to that room reaches every current member — the server tracks membership so your handlers never have to iterate a connection list by hand. Rooms can be declared up front, like `lobby` in the quickstart, or created on demand the first time a client asks to join one.
