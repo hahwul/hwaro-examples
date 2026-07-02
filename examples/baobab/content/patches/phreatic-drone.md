@@ -13,7 +13,7 @@ Below the water table, the phreatic zone is permanently saturated — there is n
 <!-- more -->
 
 <figure class="sf-figure">
-  <svg class="sf-diagram" viewBox="0 0 500 258" role="img" aria-label="Signal flow diagram" focusable="false">
+  <svg class="sf-diagram" viewBox="0 0 500 258" width="500" height="258" role="img" aria-label="Signal flow diagram" focusable="false">
     <path class="sf-cable sf-cable-audio" d="M156,52 C173,38 173,66 190,52"/>
     <path class="sf-cable sf-cable-audio" d="M306,52 C323,38 323,66 340,52"/>
     <path class="sf-cable sf-cable-mod" d="M98,188 C98,133 98,133 98,78"/>

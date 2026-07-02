@@ -1,0 +1,47 @@
+{% include "header.html" %}
+      <section class="hero">
+        <div class="wrap">
+          <p class="kicker">Letterpress broadsides &middot; Alder Hollow</p>
+          <h1 class="press-name" data-text="Carmine Press">Carmine Press</h1>
+          <p class="lede">Poetry broadsides pulled by hand on Hazel, a restored 1893 platen press, one small edition at a time.</p>
+        </div>
+      </section>
+
+      <section class="history" aria-labelledby="history-heading">
+        <div class="wrap prose-wrap">
+          <h2 id="history-heading" class="visually-hidden">Shop history</h2>
+          <div class="prose">{{ content | safe }}</div>
+        </div>
+      </section>
+
+      <div class="ornament-rule" aria-hidden="true"><span>&#10086;</span></div>
+
+      <section class="editions" aria-labelledby="editions-heading">
+        <div class="wrap">
+          <div class="editions-head">
+            <h2 id="editions-heading">Recent editions</h2>
+            <a class="all-link" href="{{ base_url }}/broadsides/">Full log<span aria-hidden="true"> &rarr;</span></a>
+          </div>
+          <ol class="broadside-list">
+            {% set broadsides = get_section(path="broadsides").pages | sort_by("date", reverse=true) %}
+            {% for entry in broadsides %}
+            <li class="broadside-row">
+              <div class="row-main">
+                {% if entry.date %}<p class="row-date">{{ entry.date | date("%B %d, %Y") }}</p>{% endif %}
+                <h3 class="row-title"><a href="{{ base_url }}{{ entry.url }}">{{ entry.title | e }}</a></h3>
+                {% if entry.extra.poet %}<p class="row-byline">Words by {{ entry.extra.poet | e }}</p>{% endif %}
+                {% if entry.summary %}<p class="row-excerpt">{{ entry.summary | strip_html | truncate_words(24) }}</p>{% endif %}
+              </div>
+              <div class="row-margin">
+                {% if entry.extra.edition_size %}
+                <span class="margin-label">Edition</span>
+                <span class="margin-value">{{ entry.extra.edition_size }}</span>
+                {% endif %}
+                {% if entry.extra.status %}<span class="margin-status">{{ entry.extra.status | e }}</span>{% endif %}
+              </div>
+            </li>
+            {% endfor %}
+          </ol>
+        </div>
+      </section>
+{% include "footer.html" %}

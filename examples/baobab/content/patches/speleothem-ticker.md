@@ -13,7 +13,7 @@ Stalactites and stalagmites form one drip at a time, each drop leaving behind a 
 <!-- more -->
 
 <figure class="sf-figure">
-  <svg class="sf-diagram" viewBox="0 0 650 258" role="img" aria-label="Signal flow diagram" focusable="false">
+  <svg class="sf-diagram" viewBox="0 0 650 258" width="650" height="258" role="img" aria-label="Signal flow diagram" focusable="false">
     <path class="sf-cable sf-cable-audio" d="M156,52 C173,38 173,66 190,52"/>
     <path class="sf-cable sf-cable-audio" d="M306,52 C323,38 323,66 340,52"/>
     <path class="sf-cable sf-cable-audio" d="M456,52 C473,38 473,66 490,52"/>

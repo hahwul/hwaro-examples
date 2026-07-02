@@ -1,0 +1,21 @@
+{% include "header.html" %}
+    <section class="section-hero wrap" aria-labelledby="section-title">
+      <p class="kicker">Full archive</p>
+      <h1 id="section-title">{{ page.title | e }}</h1>
+      {% if content %}<div class="prose">{{ content | safe }}</div>{% endif %}
+    </section>
+
+    <section class="register wrap" aria-label="All issues">
+      {% set issues = section.pages | sort_by("date", reverse=true) %}
+      {% for issue in issues %}
+      <article class="register-row">
+        <span class="figure-chip" aria-hidden="true">{{ issue.extra.issue_number }}</span>
+        <div class="register-body">
+          <h2><a href="{{ base_url }}{{ issue.url }}">{{ issue.title | e }}</a></h2>
+          {% if issue.description %}<p class="register-dek">{{ issue.description | truncate_words(24) }}</p>{% endif %}
+        </div>
+        {% if issue.date %}<time class="register-date" datetime="{{ issue.date | date('%Y-%m-%d') }}">{{ issue.date | date("%B %d, %Y") }}</time>{% endif %}
+      </article>
+      {% endfor %}
+    </section>
+{% include "footer.html" %}

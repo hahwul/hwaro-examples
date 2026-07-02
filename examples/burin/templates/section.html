@@ -1,0 +1,29 @@
+{% include "header.html" %}
+  <main id="main">
+    <div class="container">
+      <div class="list-head">
+        <p class="eyebrow">Catalogue</p>
+        {% if page.title is present %}<h1>{{ page.title | e }}</h1>{% endif %}
+        {% if section.description %}<p>{{ section.description | e }}</p>{% endif %}
+      </div>
+      <ol class="catalog-list">
+        {% for p in section.pages | sort_by("date", reverse=true) %}
+        <li class="catalog-row">
+          <span class="catalog-row-index tabular">{{ p.extra.catalog_no | default("0" ~ loop.index) }}</span>
+          <div>
+            <h2><a href="{{ base_url }}{{ p.url }}">{{ p.title | e }}</a></h2>
+            <p class="catalog-row-meta">{% if p.extra.source_type %}{{ p.extra.source_type }}{% endif %}{% if p.extra.classification %} &middot; {{ p.extra.classification }}{% endif %}</p>
+            {% if p.summary %}<p class="dek">{{ p.summary | strip_html | truncate_words(30) }}</p>{% endif %}
+            {% if p.tags %}
+            <div class="tag-row">
+              {% for t in p.tags %}<a class="tag-chip" href="{{ base_url }}/tags/{{ t | slugify }}/">{{ t }}</a>{% endfor %}
+            </div>
+            {% endif %}
+          </div>
+          <span class="catalog-row-date tabular">{% if p.date %}{{ p.date | date("%b %Y") }}{% endif %}</span>
+        </li>
+        {% endfor %}
+      </ol>
+    </div>
+  </main>
+{% include "footer.html" %}

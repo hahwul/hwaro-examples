@@ -1,0 +1,76 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    {% set episodes = get_section(path="episodes").pages | sort_by("date", reverse=true) %}
+    {% set latest = episodes | first %}
+
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-left">
+        <svg class="hero-waves" viewBox="0 0 640 760" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+          <path class="wave wave--1" d="M-20,70 C 60,40 140,100 220,70 C 300,40 380,100 460,70 C 540,40 620,100 700,70" />
+          <path class="wave wave--2" d="M-20,150 C 70,190 150,110 230,150 C 310,190 390,110 470,150 C 550,190 630,110 700,150" />
+          <path class="wave wave--3" d="M-20,235 C 90,270 170,200 250,235 C 330,270 410,200 490,235 C 570,270 650,200 700,235" />
+          <path class="wave wave--4" d="M-20,320 C 60,280 160,360 240,320 C 320,280 420,360 500,320 C 580,280 660,360 700,320" />
+          <path class="wave wave--5" d="M-20,410 C 80,450 160,370 240,410 C 320,450 400,370 480,410 C 560,450 640,370 700,410" />
+          <path class="wave wave--6" d="M-20,500 C 70,470 150,540 230,500 C 310,470 390,540 470,500 C 550,470 630,540 700,500" />
+          <path class="wave wave--7" d="M-20,590 C 90,630 170,555 250,590 C 330,630 410,555 490,590 C 570,630 650,555 700,590" />
+          <path class="wave wave--8" d="M-20,680 C 60,645 160,715 240,680 C 320,645 420,715 500,680 C 580,645 660,715 700,680" />
+          <circle class="mote mote--1" cx="120" cy="120" r="2.6"/>
+          <circle class="mote mote--2" cx="480" cy="210" r="1.8"/>
+          <circle class="mote mote--3" cx="300" cy="380" r="2.2"/>
+          <circle class="mote mote--4" cx="560" cy="460" r="1.6"/>
+          <circle class="mote mote--5" cx="150" cy="560" r="2.4"/>
+          <circle class="mote mote--6" cx="420" cy="650" r="1.8"/>
+        </svg>
+        <div class="hero-left-copy">
+          <p class="eyebrow">A Deep-Sea Science Podcast</p>
+          <h1 id="hero-title" class="hero-title">{{ site.title | e }}</h1>
+          <p class="hero-tagline">{{ site.description | e }}</p>
+          <div class="hero-copy">{{ content | safe }}</div>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="{{ base_url }}/episodes/">Browse dispatches</a>
+            <a class="btn btn-ghost" href="{{ base_url }}/about/">About the show</a>
+          </div>
+        </div>
+      </div>
+
+      {% if latest %}
+      <div class="hero-right" aria-labelledby="hero-latest-title">
+        <p class="eyebrow eyebrow--accent">Latest Transmission</p>
+        <div class="hero-latest-card">
+          {% set gauge_pct = latest.extra.depth_pct %}
+          {% set gauge_depth = latest.extra.depth_display %}
+          {% set gauge_size = "hero" %}
+          {% include "partials/depth-gauge.html" %}
+          <div class="hero-latest-body">
+            <p class="hero-latest-kicker">
+              <span>EXP {{ latest.extra.episode }}</span>
+              <span aria-hidden="true">&middot;</span>
+              {% set sonar_duration = latest.extra.duration %}
+              {% set sonar_size = "hero" %}
+              {% include "partials/sonar-chip.html" %}
+            </p>
+            <h2 id="hero-latest-title" class="hero-latest-title"><a href="{{ base_url }}{{ latest.url }}">{{ latest.title | e }}</a></h2>
+            <p class="hero-latest-trench">{{ latest.extra.trench }} <span aria-hidden="true">&mdash;</span> {{ latest.extra.depth_display }} m &middot; {{ latest.extra.zone }}</p>
+            {% if latest.summary %}<p class="hero-latest-summary">{{ latest.summary | strip_html | truncate_words(24) }}</p>{% endif %}
+            <a class="hero-latest-link" href="{{ base_url }}{{ latest.url }}">Read the dispatch <span aria-hidden="true">&rarr;</span></a>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+    </section>
+
+    <section class="recent" aria-labelledby="recent-title">
+      <div class="recent-head">
+        <h2 id="recent-title">Recent Transmissions</h2>
+        <a class="recent-all" href="{{ base_url }}/episodes/">Full archive <span aria-hidden="true">&rarr;</span></a>
+      </div>
+      <ul class="ep-list">
+        {% for p in episodes %}
+        {% if loop.index > 1 and loop.index < 5 %}
+        {% include "partials/episode-row.html" %}
+        {% endif %}
+        {% endfor %}
+      </ul>
+    </section>
+  </main>
+{% include "footer.html" %}

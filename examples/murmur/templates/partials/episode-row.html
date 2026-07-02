@@ -1,0 +1,28 @@
+{#- One dispatch row for listings. Set `p` (the episode page) before including. -#}
+<li class="ep-row">
+  <a class="ep-row-link" href="{{ base_url }}{{ p.url }}">
+    {% set gauge_pct = p.extra.depth_pct %}
+    {% set gauge_depth = p.extra.depth_display %}
+    {% set gauge_size = "row" %}
+    {% include "partials/depth-gauge.html" %}
+    <div class="ep-row-body">
+      <p class="ep-row-kicker">
+        <span class="ep-row-num">EXP {{ p.extra.episode }}</span>
+        <span class="ep-row-sep" aria-hidden="true">&middot;</span>
+        {% set sonar_duration = p.extra.duration %}
+        {% set sonar_size = "row" %}
+        {% include "partials/sonar-chip.html" %}
+        {% if p.date %}<span class="ep-row-sep" aria-hidden="true">&middot;</span><time datetime="{{ p.date | date('%Y-%m-%d') }}">{{ p.date | date("%b %d, %Y") }}</time>{% endif %}
+      </p>
+      <h3 class="ep-row-title">{{ p.title | e }}</h3>
+      <p class="ep-row-trench">{{ p.extra.trench }} <span aria-hidden="true">&mdash;</span> {{ p.extra.depth_display }} m</p>
+      {% if p.summary %}<p class="ep-row-summary">{{ p.summary | strip_html | truncate_words(26) }}</p>{% endif %}
+      {% if p.tags %}
+      <p class="ep-row-tags">
+        {% for t in p.tags %}<span class="tag-chip">{{ t }}</span>{% endfor %}
+      </p>
+      {% endif %}
+    </div>
+    <span class="ep-row-arrow" aria-hidden="true">&rarr;</span>
+  </a>
+</li>

@@ -1,0 +1,38 @@
+{% include "header.html" %}
+  <main id="main">
+    <section class="intro">
+      <p class="intro-eyebrow">A field manual for zone 3&ndash;5 growers</p>
+      <div class="statement">{{ content | safe }}</div>
+
+      <div class="search-inline" data-base="{{ base_url }}" data-index="{{ base_url }}/search.json">
+        <label class="search-label" for="method-search">Search the wiki</label>
+        <div class="search-field">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <circle cx="10.5" cy="10.5" r="6.5"/>
+            <path d="M20 20l-4.7-4.7"/>
+          </svg>
+          <input type="search" id="method-search" placeholder="Search guilds, swales, structures&hellip;" autocomplete="off">
+        </div>
+        <p id="search-status" class="search-status" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section class="method-index" aria-labelledby="method-index-heading">
+      <div class="method-index-head">
+        <h2 id="method-index-heading">Methods</h2>
+        <p class="method-count">{{ get_section(path="methods").pages_count }} entries, sorted A&ndash;Z</p>
+      </div>
+      <ul id="method-list" class="method-list">
+        {% for p in get_section(path="methods").pages | sort_by("title") %}
+        <li class="method-row">
+          <a class="method-link" href="{{ base_url }}{{ p.url }}">
+            <span class="method-kicker">{{ p.extra.method_type | default("method") | upper }}</span>
+            <span class="method-title">{{ p.title | e }}</span>
+            <span class="method-desc">{{ p.description | default("", true) | e }}</span>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+  </main>
+{% include "footer.html" %}

@@ -1,0 +1,46 @@
+{% include "header.html" %}
+  <main id="main">
+    <article class="page">
+      {% if page.section %}
+      <p class="crumb"><a href="{{ base_url }}/methods/">Methods</a><span aria-hidden="true"> / </span><span>{{ page.title | e }}</span></p>
+      {% endif %}
+      <header class="page-head">
+        {% if page.extra.method_type %}<p class="kicker">{{ page.extra.method_type | upper }}</p>{% endif %}
+        <h1>{{ page.title | e }}</h1>
+        {% if page.description %}<p class="lede">{{ page.description | e }}</p>{% endif %}
+        {% if page.date %}
+        <p class="page-meta">
+          <time datetime="{{ page.date | date('%Y-%m-%d') }}">{{ page.date | date("%B %d, %Y") }}</time>
+          {% if page.reading_time %}<span class="dot" aria-hidden="true">&middot;</span><span>{{ page.reading_time }} min read</span>{% endif %}
+        </p>
+        {% endif %}
+      </header>
+
+      {% if page.toc %}
+      <nav class="toc" aria-label="On this page">
+        <p class="toc-title">On this page</p>
+        {{ toc | safe }}
+      </nav>
+      {% endif %}
+
+      <div class="prose">{{ content | safe }}</div>
+
+      {% if page.section == "methods" and (page.lower or page.higher) %}
+      <nav class="pager" aria-label="More methods">
+        {% if page.lower %}
+        <a class="pager-link pager-prev" href="{{ base_url }}{{ page.lower.url }}">
+          <span class="pager-dir">&larr; Previous</span>
+          <span class="pager-title">{{ page.lower.title | e }}</span>
+        </a>
+        {% else %}<span class="pager-spacer" aria-hidden="true"></span>{% endif %}
+        {% if page.higher %}
+        <a class="pager-link pager-next" href="{{ base_url }}{{ page.higher.url }}">
+          <span class="pager-dir">Next &rarr;</span>
+          <span class="pager-title">{{ page.higher.title | e }}</span>
+        </a>
+        {% else %}<span class="pager-spacer" aria-hidden="true"></span>{% endif %}
+      </nav>
+      {% endif %}
+    </article>
+  </main>
+{% include "footer.html" %}
