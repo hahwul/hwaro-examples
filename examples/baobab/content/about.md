@@ -1,6 +1,7 @@
 +++
 title = "About"
 description = "What the Karst-6 is, how this encyclopedia is organized, and the module vocabulary every patch page assumes you already know."
+toc = true
 +++
 
 Baobab catalogues patches for the Karst-6, the semi-modular desktop synthesizer built by Vadose Instruments. It exists because the Karst-6's manual documents what each module does in isolation but says almost nothing about how the modules combine — and the interesting sounds all live in the combinations. Every entry here is a complete, reproducible patch: what feeds what, what modulates what, and the exact settings to get back to the sound described.

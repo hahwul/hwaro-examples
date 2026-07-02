@@ -1,4 +1,6 @@
 {% include "header.html" %}
+{% set episodes_section = get_section(path="episodes") %}
+{% set sorted_eps = episodes_section.pages | sort_by("date", reverse=true) %}
 <main id="main" class="site-main">
 
   <header class="ep-hero">
@@ -27,16 +29,20 @@
   </article>
 
   <nav class="ep-footer-nav" aria-label="Episode navigation">
-    {% if page.higher %}
-      <a href="{{ base_url }}{{ page.higher.url }}">← {{ page.higher.title | e }}</a>
-    {% else %}
-      <span></span>
-    {% endif %}
-    {% if page.lower %}
-      <a href="{{ base_url }}{{ page.lower.url }}">{{ page.lower.title | e }} →</a>
-    {% else %}
-      <a href="{{ base_url }}/episodes/">All tales →</a>
-    {% endif %}
+    {% for ep in sorted_eps %}
+      {% if ep.url == page.url %}
+        {% if not loop.first %}
+          <a href="{{ base_url }}{{ sorted_eps[loop.index0 - 1].url }}">← {{ sorted_eps[loop.index0 - 1].title | e }}</a>
+        {% else %}
+          <span></span>
+        {% endif %}
+        {% if not loop.last %}
+          <a href="{{ base_url }}{{ sorted_eps[loop.index0 + 1].url }}">{{ sorted_eps[loop.index0 + 1].title | e }} →</a>
+        {% else %}
+          <a href="{{ base_url }}/episodes/">All tales →</a>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
   </nav>
 
 </main>
