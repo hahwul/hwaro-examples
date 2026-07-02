@@ -1,0 +1,33 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <article class="spread {% if page.section == 'stories' %}story{% else %}chapter{% endif %}">
+      <header class="article-head">
+        {% if page.section == "stories" %}
+        <p class="kicker">
+          Dispatch{% if page.date %} &middot; <time datetime="{{ page.date | date('%Y-%m-%d') }}">{{ page.date | date("%B %d, %Y") }}</time>{% endif %}{% if page.reading_time %} &middot; {{ page.reading_time }} min read{% endif %}
+        </p>
+        {% else %}
+        <p class="kicker">The Record</p>
+        {% endif %}
+        <h1>{{ page.title | e }}</h1>
+        {% if page.description %}<p class="dek">{{ page.description | e }}</p>{% endif %}
+      </header>
+
+      <div class="prose">
+        {{ content | safe }}
+      </div>
+
+      {% if page.section == "stories" %}
+      <footer class="article-foot">
+        <a class="back-link" href="{{ base_url }}/stories/">&larr; All stories</a>
+        {% if page.lower or page.higher %}
+        <nav class="story-pager" aria-label="More dispatches">
+          {% if page.higher %}<a class="pager-link pager-prev" href="{{ base_url }}{{ page.higher.url }}">&larr; {{ page.higher.title | e }}</a>{% endif %}
+          {% if page.lower %}<a class="pager-link pager-next" href="{{ base_url }}{{ page.lower.url }}">{{ page.lower.title | e }} &rarr;</a>{% endif %}
+        </nav>
+        {% endif %}
+      </footer>
+      {% endif %}
+    </article>
+  </main>
+{% include "footer.html" %}
