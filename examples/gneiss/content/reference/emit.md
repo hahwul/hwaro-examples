@@ -27,13 +27,10 @@ clause_number = "4"
     </g>
     <circle class="rr-start" cx="12" cy="110" r="3.5"/>
     <circle class="rr-end" cx="596" cy="110" r="5"/>
-
     <rect class="rr-term" x="120" y="33" width="90" height="34" rx="6"/>
     <text class="rr-term-text" x="165" y="55" text-anchor="middle">CHANGES</text>
-
     <rect class="rr-term" x="120" y="93" width="78" height="34" rx="6"/>
     <text class="rr-term-text" x="159" y="115" text-anchor="middle">FINAL</text>
-
     <rect class="rr-term" x="120" y="153" width="190" height="34" rx="6"/>
     <text class="rr-term-text" x="215" y="175" text-anchor="middle">AFTER WINDOW CLOSE</text>
   </svg>
@@ -48,7 +45,6 @@ clause_number = "4"
 
 <div class="grammar">
 EMIT emission
-
 emission ::= "CHANGES" | "FINAL" | "AFTER WINDOW CLOSE"
 </div>
 

@@ -1,0 +1,19 @@
+{% include "header.html" %}
+      <div class="section-listing">
+        {% if page.title is present %}
+        <h1 class="sh-head sh-head--h1"><span class="sh-prompt" aria-hidden="true">&#10095;</span><span class="sh-text">{{ page.title | e }}</span><span class="sh-elapsed" aria-hidden="true">[0.19s]</span></h1>
+        {% endif %}
+        <div class="prose">{{ content | safe }}</div>
+        <ol class="devlog-list devlog-list--full">
+          {% for p in section.pages | sort_by("date", reverse=true) %}
+          <li class="devlog-row">
+            <a class="devlog-row-link" href="{{ base_url }}{{ p.url }}">
+              {% if p.date %}<time class="devlog-date" datetime="{{ p.date | date("%Y-%m-%d") }}">{{ p.date | date("%b %d, %Y") }}</time>{% endif %}
+              <span class="devlog-title">{{ p.title }}</span>
+              {% if p.summary %}<span class="devlog-summary">{{ p.summary | strip_html | truncate_words(30) }}</span>{% endif %}
+            </a>
+          </li>
+          {% endfor %}
+        </ol>
+      </div>
+{% include "footer.html" %}

@@ -1,0 +1,39 @@
+{% include "header.html" %}
+  <main id="main">
+    <article class="notice-page">
+      <div class="wrap notice-head">
+        <div class="notice-head-main">
+          {% if page.taxonomies.categories %}<p class="kicker-chip">{{ page.taxonomies.categories | first }}</p>{% endif %}
+          <h1 class="notice-title">{{ page.title | e }}</h1>
+          {% if page.description %}<p class="notice-dek">{{ page.description | e }}</p>{% endif %}
+          <p class="notice-byline">
+            {% if page.authors %}<span class="byline-name">{{ page.authors | join(", ") | upper }}</span>{% endif %}
+            {% if page.date %}<span class="byline-sep" aria-hidden="true">·</span><time datetime="{{ page.date | date("%Y-%m-%d") }}">{{ page.date | date("%B %d, %Y") | upper }}</time>{% endif %}
+            {% if page.extra.label %}<span class="byline-sep" aria-hidden="true">·</span><span class="byline-label">{{ page.extra.label }}</span>{% endif %}
+          </p>
+        </div>
+        {% if page.extra.score_whole %}
+        <div class="notice-score-block">
+          <div class="score score--notice" aria-hidden="true">
+            <span class="score-num">{{ page.extra.score_whole }}</span><span class="score-num">{{ page.extra.score_dec | default(".0") }}</span>
+          </div>
+          <p class="score-suffix" aria-hidden="true">out of 10</p>
+          <p class="visually-hidden">Score {{ page.extra.score_label | default(page.extra.score_whole) }} out of 10</p>
+        </div>
+        {% endif %}
+      </div>
+      <div class="notice-rule wrap" aria-hidden="true"></div>
+      <div class="wrap prose notice-prose">{{ content | safe }}</div>
+      {% if page.tags %}
+      <ul class="tag-list wrap">
+        {% for t in page.tags %}<li><a href="{{ base_url }}/tags/{{ t | slugify }}/">{{ t }}</a></li>{% endfor %}
+      </ul>
+      {% endif %}
+    </article>
+
+    <nav class="notice-pager wrap" aria-label="More notices">
+      {% if page.lower and page.lower.section == page.section and page.lower.date %}<a class="pager-link pager-prev" href="{{ base_url }}{{ page.lower.url }}"><span class="pager-label" aria-hidden="true">← Older notice</span><span class="pager-title">{{ page.lower.title | e }}</span></a>{% endif %}
+      {% if page.higher and page.higher.section == page.section and page.higher.date %}<a class="pager-link pager-next" href="{{ base_url }}{{ page.higher.url }}"><span class="pager-label" aria-hidden="true">Newer notice →</span><span class="pager-title">{{ page.higher.title | e }}</span></a>{% endif %}
+    </nav>
+  </main>
+{% include "footer.html" %}

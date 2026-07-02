@@ -1,0 +1,30 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <div class="page-head">
+      <p class="eyebrow">Reference</p>
+      <h1>{{ page.title | e }}</h1>
+      {% if page.description %}<p class="lead">{{ page.description | e }}</p>{% endif %}
+    </div>
+    <div class="prose">
+      {{ content | safe }}
+    </div>
+
+    {% for g in page.extra.groups %}
+    <section class="section-block" aria-labelledby="{{ g.name | slugify }}">
+      <h2 id="{{ g.name | slugify }}">{{ g.name }}</h2>
+      {% if g.lead %}<p class="section-lead">{{ g.lead }}</p>{% endif %}
+      <div class="tile-grid">
+        {% for s in g.shortcuts %}
+        <article class="tile">
+          <span class="tile-key" aria-label="Keyboard shortcut: {{ s.keys | join(' then ') }}">
+            {% for k in s.keys %}<kbd>{{ k }}</kbd>{% endfor %}
+          </span>
+          <h3>{{ s.title }}</h3>
+          <p>{{ s.desc }}</p>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+    {% endfor %}
+  </main>
+{% include "footer.html" %}

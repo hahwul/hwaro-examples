@@ -17,8 +17,8 @@ We price Flywheel on tracked MRR because that's the number that actually correla
 | Cohort dashboards | Included | Included | Included |
 | Churn signal scoring | Included | Included | Included |
 | Recovery workflows | 1 active | Unlimited | Unlimited |
-| Slack &amp; HubSpot sync | — | Included | Included |
-| SSO &amp; audit log | — | — | Included |
+| Slack & HubSpot sync | — | Included | Included |
+| SSO & audit log | — | — | Included |
 | Dedicated data pipeline | — | — | Included |
 | Support | Community | Email, 1 business day | Dedicated Slack channel |
 

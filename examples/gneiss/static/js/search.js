@@ -14,15 +14,19 @@
   var selected = -1;
   var lastFocused = null;
 
+  var indexFailed = false;
+
   function loadIndex() {
-    if (fuse) return;
+    if (fuse || indexFailed) return;
     fetch(indexUrl)
       .then(function (r) { return r.json(); })
       .then(function (data) {
         fuse = new Fuse(data, { keys: ['title', 'content'], threshold: 0.32, includeScore: true });
+        runSearch();
       })
       .catch(function () {
-        status.textContent = 'Search index failed to load.';
+        indexFailed = true;
+        runSearch();
       });
   }
 
@@ -108,15 +112,22 @@
     }
   });
 
-  input.addEventListener('input', function () {
+  function runSearch() {
     var query = input.value.trim();
-    if (!query || !fuse) {
+    if (!query) {
       results.innerHTML = '';
-      status.textContent = query ? 'Building index…' : 'Type to search — arrows to move, Enter to open.';
+      status.textContent = 'Type to search — arrows to move, Enter to open.';
+      return;
+    }
+    if (!fuse) {
+      results.innerHTML = '';
+      status.textContent = indexFailed ? 'Search index failed to load.' : 'Building index…';
       return;
     }
     render(fuse.search(query).slice(0, 8), query);
-  });
+  }
+
+  input.addEventListener('input', runSearch);
 
   input.addEventListener('keydown', function (event) {
     if (!items.length) return;

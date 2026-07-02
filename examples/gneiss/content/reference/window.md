@@ -34,14 +34,12 @@ clause_number = "3"
     </g>
     <circle class="rr-start" cx="12" cy="110" r="3.5"/>
     <circle class="rr-end" cx="756" cy="110" r="5"/>
-
     <rect class="rr-term" x="120" y="33" width="100" height="34" rx="6"/>
     <text class="rr-term-text" x="170" y="55" text-anchor="middle">TUMBLING</text>
     <text class="rr-punct-text" x="232" y="55" text-anchor="middle">(</text>
     <rect class="rr-nonterm" x="244" y="33" width="104" height="34" rx="6"/>
     <text class="rr-nonterm-text" x="296" y="55" text-anchor="middle">duration</text>
     <text class="rr-punct-text" x="362" y="55" text-anchor="middle">)</text>
-
     <rect class="rr-term" x="120" y="93" width="92" height="34" rx="6"/>
     <text class="rr-term-text" x="166" y="115" text-anchor="middle">HOPPING</text>
     <text class="rr-punct-text" x="221" y="115" text-anchor="middle">(</text>
@@ -51,7 +49,6 @@ clause_number = "3"
     <rect class="rr-nonterm" x="320" y="93" width="96" height="34" rx="6"/>
     <text class="rr-nonterm-text" x="368" y="115" text-anchor="middle">advance</text>
     <text class="rr-punct-text" x="420" y="115" text-anchor="middle">)</text>
-
     <rect class="rr-term" x="120" y="153" width="92" height="34" rx="6"/>
     <text class="rr-term-text" x="166" y="175" text-anchor="middle">SESSION</text>
     <text class="rr-punct-text" x="221" y="175" text-anchor="middle">(</text>
@@ -70,7 +67,6 @@ clause_number = "3"
 
 <div class="grammar">
 WINDOW window_spec
-
 window_spec ::= "TUMBLING" "(" duration ")"
               | "HOPPING" "(" duration "," duration ")"
               | "SESSION" "(" duration ")"

@@ -41,7 +41,6 @@ clause_number = "2"
 
 <div class="grammar">
 WHERE predicate (AND predicate)*
-
 predicate  ::= expr comparator expr
              | predicate "OR" predicate
              | "NOT" predicate

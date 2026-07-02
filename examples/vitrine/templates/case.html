@@ -1,0 +1,55 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <article class="wrap case-sheet">
+      <p class="plate-tag">Plate No. {{ page.extra.plate_no }} &middot; {{ page.extra.grid_module }} grid</p>
+      {% if page.title is present %}<h1>{{ page.title | e }}</h1>{% endif %}
+      {% if page.description %}<p class="lede">{{ page.description | e }}</p>{% endif %}
+
+      <div class="case-display">
+        <span class="case-plate large">
+          <svg class="plate-icon" viewBox="0 0 100 100" role="img" aria-label="{{ page.title | e }} pictogram" preserveAspectRatio="xMidYMid meet">
+            {{ page.extra.svg | safe }}
+          </svg>
+        </span>
+
+        <dl class="spec-sheet">
+          <div class="spec-row"><dt>Object</dt><dd>{{ page.title | e }} pictogram plate</dd></div>
+          <div class="spec-row"><dt>Plate No.</dt><dd>{{ page.extra.plate_no }}</dd></div>
+          <div class="spec-row"><dt>Designer</dt><dd>{{ page.extra.designer | e }}</dd></div>
+          <div class="spec-row"><dt>Construction grid</dt><dd>{{ page.extra.grid_module }}</dd></div>
+          <div class="spec-row"><dt>Years in service</dt><dd>{{ page.extra.years_in_service }}</dd></div>
+          <div class="spec-row"><dt>Medium</dt><dd>{{ page.extra.medium | e }}</dd></div>
+          {% if page.date %}<div class="spec-row"><dt>Catalogued</dt><dd>{{ page.date | date("%d %B %Y") }}</dd></div>{% endif %}
+          <div class="spec-row provenance"><dt>Provenance</dt><dd>{{ page.extra.provenance | e }}</dd></div>
+        </dl>
+      </div>
+
+      <div class="prose">
+        {{ content | safe }}
+      </div>
+
+      {% if page.tags %}
+      <p class="tag-list" aria-label="Tags">
+        {% for tg in page.tags %}<a class="tag-chip" href="{{ base_url }}/tags/{{ tg | slugify }}/">{{ tg }}</a>{% endfor %}
+      </p>
+      {% endif %}
+
+      <nav class="case-pager" aria-label="Adjacent plates">
+        {% if page.lower %}
+        <a class="pager-link pager-prev" href="{{ base_url }}{{ page.lower.url }}">
+          <span class="pager-dir"><span aria-hidden="true">&larr;</span> Previous plate</span>
+          <span class="pager-title">{{ page.lower.title | e }}</span>
+        </a>
+        {% else %}<span class="pager-spacer" aria-hidden="true"></span>{% endif %}
+        {% if page.higher %}
+        <a class="pager-link pager-next" href="{{ base_url }}{{ page.higher.url }}">
+          <span class="pager-dir">Next plate <span aria-hidden="true">&rarr;</span></span>
+          <span class="pager-title">{{ page.higher.title | e }}</span>
+        </a>
+        {% endif %}
+      </nav>
+
+      <p class="back-link"><a href="{{ base_url }}/cases/">&larr; Back to the catalog</a></p>
+    </article>
+  </main>
+{% include "footer.html" %}

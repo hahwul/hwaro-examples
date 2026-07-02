@@ -41,7 +41,6 @@ clause_number = "1"
 
 <div class="grammar">
 MATCH pattern (, pattern)*
-
 pattern    ::= node (edge node)*
 node       ::= "(" [variable] [":" Label] [properties] ")"
 edge       ::= "-[" [":" RelType] "]->" | "-[" [":" RelType] "]-"
