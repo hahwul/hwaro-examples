@@ -2,6 +2,7 @@
 title = "Kiln Quarry"
 date = "2025-06-18"
 description = "A stepped limestone quarry, closed since 1978, terraced into a sunken garden and open-air amphitheatre around its spring-fed floor."
+template = "commission"
 [extra]
 former_use = "Limestone quarry"
 new_use = "Sunken garden and amphitheatre"

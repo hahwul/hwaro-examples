@@ -2,6 +2,7 @@
 title = "Gantry Yards"
 date = "2025-03-10"
 description = "A freight marshalling yard graded into a fourteen-acre district park, its old siding alignments kept legible in the new lawns."
+template = "commission"
 [extra]
 former_use = "Freight marshalling yard"
 new_use = "District park"
