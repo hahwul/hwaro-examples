@@ -1,0 +1,38 @@
+{% include "header.html" %}
+{% set plates = get_section(path="plates") %}
+{% set ordered = plates.pages | sort_by("date", reverse=true) %}
+{% set lead = get_page(path=page.extra.featured) %}
+  <main id="main" class="home">
+    <div class="bento">
+
+      <section class="tile tile--lead" aria-labelledby="masthead-title">
+        <div class="masthead">
+          <p class="masthead__kicker">{{ page.extra.kicker }}</p>
+          <h1 class="masthead__title" id="masthead-title">{{ site.title | e }}</h1>
+          <p class="masthead__tagline">{{ page.extra.tagline | e }}</p>
+          <div class="masthead__prose">{{ content | safe }}</div>
+          <a class="tile__cta" href="{{ base_url }}/plates/">Enter the collection <span aria-hidden="true">&rarr;</span></a>
+        </div>
+        <div class="lead-fan">
+          {% set p = lead %}{% set fan_wide = true %}{% include "plate_fan.html" %}
+          <p class="lead-fan__caption">Featured plate &middot; {{ lead.extra.shop | e }}, {{ lead.extra.city | e }}</p>
+        </div>
+      </section>
+
+      {% for pl in ordered %}
+      <article class="tile tile--plate">
+        <a class="plate-card" href="{{ base_url }}{{ pl.url }}">
+          <span class="plate-card__fan">{% set p = pl %}{% set fan_wide = false %}{% include "plate_fan.html" %}</span>
+          <span class="plate-card__meta">
+            <span class="plate-card__title">{{ pl.title | e }}</span>
+            <span class="plate-card__where">{{ pl.extra.city | e }} &middot; {{ pl.extra.years | e }}</span>
+            <span class="plate-card__spec">{{ pl.extra.specialty | e }}</span>
+            <span class="plate-card__count">{{ pl.extra.inks | length }} inks on the shelf</span>
+          </span>
+        </a>
+      </article>
+      {% endfor %}
+
+    </div>
+  </main>
+{% include "footer.html" %}

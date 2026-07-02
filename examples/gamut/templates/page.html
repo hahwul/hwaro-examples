@@ -1,0 +1,65 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+  {% if page.extra.inks %}
+    <article class="plate">
+      <header class="plate-head">
+        <p class="plate-head__kicker">Plate &middot; a reconstructed pigment set</p>
+        <h1 class="plate-head__title">{{ page.title | e }}</h1>
+        <dl class="plate-facts">
+          <div class="plate-facts__row"><dt>Shop</dt><dd>{{ page.extra.shop | e }}</dd></div>
+          <div class="plate-facts__row"><dt>City</dt><dd>{{ page.extra.city | e }}</dd></div>
+          <div class="plate-facts__row"><dt>Years</dt><dd>{{ page.extra.years | e }}</dd></div>
+          <div class="plate-facts__row"><dt>Work</dt><dd>{{ page.extra.specialty | e }}</dd></div>
+        </dl>
+        <div class="plate-hero-fan">
+          {% set p = page %}{% set fan_wide = true %}{% include "plate_fan.html" %}
+          <p class="plate-hero-fan__hint">Hover to fan the shelf open</p>
+        </div>
+      </header>
+
+      <figure class="plate-figure">
+        <svg class="plate-plate" viewBox="0 0 {{ page.extra.inks | length * 150 }} 196" role="img"
+             aria-label="Swatch plate for {{ page.title | e }}: {{ page.extra.inks | length }} labeled ink swatches"
+             preserveAspectRatio="xMinYMin meet">
+          {% for ink in page.extra.inks %}
+          <g transform="translate({{ loop.index0 * 150 }} 0)">
+            <rect x="10" y="8" width="130" height="108" rx="10" fill="{{ ink.hex }}"/>
+            <rect x="10" y="8" width="130" height="108" rx="10" fill="none" stroke="rgba(36,29,38,0.14)" stroke-width="1"/>
+            <text class="plate-plate__name" x="12" y="146">{{ ink.name | e }}</text>
+            <text class="plate-plate__hex" x="12" y="172">{{ ink.hex | upper }}</text>
+          </g>
+          {% endfor %}
+        </svg>
+        <figcaption class="plate-figure__cap">The working shelf &mdash; {{ page.extra.inks | length }} inks, matched under daylight-balanced light.</figcaption>
+      </figure>
+
+      <section class="swatch-notes" aria-labelledby="inks-heading">
+        <h2 id="inks-heading" class="swatch-notes__heading">The inks &amp; their mixing notes</h2>
+        <ul class="swatch-list">
+          {% for ink in page.extra.inks %}
+          <li class="swatch">
+            <span class="swatch__chip" style="--chip: {{ ink.hex }}" aria-hidden="true"></span>
+            <span class="swatch__body">
+              <span class="swatch__head">
+                <span class="swatch__name">{{ ink.name | e }}</span>
+                <span class="swatch__hex">{{ ink.hex | upper }}</span>
+              </span>
+              <span class="swatch__note">{{ ink.note | e }}</span>
+            </span>
+          </li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      <div class="prose">{{ content | safe }}</div>
+
+      <a class="back-link" href="{{ base_url }}/plates/"><span aria-hidden="true">&larr;</span> All plates</a>
+    </article>
+  {% else %}
+    <article class="page-simple">
+      {% if page.title is present %}<h1 class="page-simple__title">{{ page.title | e }}</h1>{% endif %}
+      <div class="prose">{{ content | safe }}</div>
+    </article>
+  {% endif %}
+  </main>
+{% include "footer.html" %}
