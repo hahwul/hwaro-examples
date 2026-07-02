@@ -1,7 +1,19 @@
 {% include "header.html" %}
-  <main id="main" class="site-main">
-    <h1>{{ page.title | e }}</h1>
-    <p class="taxonomy-desc">Browse all terms in this taxonomy:</p>
-    {{ content }}
-  </main>
+    <main id="main">
+      <header class="section-head">
+        <p class="section-kicker">Ways of reading the trail</p>
+        <h1 class="section-title">{{ page.title | e }}</h1>
+        <p class="section-intro">Every stage entry carries a few tags — the weather it was walked in, the shelters slept in, the things that went wrong along the way. Pick a thread and follow it up the ridge.</p>
+      </header>
+      {% set tax = get_taxonomy(kind="tags") %}
+      <ul class="term-list">
+        {% for term in tax.items | sort_by("name") %}
+          {% set n = term.pages | length %}
+          <li>
+            <a class="term-link" href="{{ get_taxonomy_url(kind="tags", term=term.name) }}">{{ term.name }}</a>
+            <span class="term-count">{{ n }} {% if n == 1 %}stage{% else %}stages{% endif %}</span>
+          </li>
+        {% endfor %}
+      </ul>
+    </main>
 {% include "footer.html" %}

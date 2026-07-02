@@ -1,0 +1,34 @@
+{% include "header.html" %}
+    <main id="main" class="site-main">
+      <section class="hero">
+        <p class="kicker">A mulberry-paper bindery · est. 2019</p>
+        <h1 class="hero-title">Hanji</h1>
+        <p class="hero-sub">Limited editions sewn in Korean mulberry paper, with the thread left where you can see it.</p>
+        <div class="running-stitch" aria-hidden="true"></div>
+        <div class="prose hero-note">
+          {{ content | safe }}
+        </div>
+      </section>
+
+      <section class="recent" aria-labelledby="recent-heading">
+        <h2 class="section-heading" id="recent-heading">Recent bindings</h2>
+        {% set bindings = get_section(path="bindings") %}
+        <ol class="bindings-list">
+          {% for p in bindings.pages | sort_by("date", reverse=true) %}
+          <li class="binding-row">
+            <p class="edition-no">
+              {% if p.extra.edition %}Edition of {{ p.extra.edition }}{% endif %}
+              {% if p.date %}<time datetime="{{ p.date | date('%Y-%m-%d') }}">{{ p.date | date("%B %Y") }}</time>{% endif %}
+            </p>
+            <div class="binding-row-body">
+              <h3 class="binding-row-title"><a href="{{ base_url }}{{ p.url }}">{{ p.title }}</a></h3>
+              {% if p.extra.stitch_name %}<p class="binding-row-stitch">{{ p.extra.stitch_name }}{% if p.extra.paper_short %} · {{ p.extra.paper_short }}{% endif %}</p>{% endif %}
+              {% if p.summary %}<p class="binding-row-summary">{{ p.summary | strip_html | truncate_words(28) }}</p>{% endif %}
+            </div>
+          </li>
+          {% endfor %}
+        </ol>
+        <p class="recent-more"><a href="{{ base_url }}/bindings/">Every binding, with its sewing diagram ❧</a></p>
+      </section>
+    </main>
+{% include "footer.html" %}

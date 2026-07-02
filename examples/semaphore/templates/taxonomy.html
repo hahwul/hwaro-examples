@@ -1,7 +1,19 @@
 {% include "header.html" %}
-  <main id="main" class="site-main">
-    <h1>{{ page.title | e }}</h1>
-    <p class="taxonomy-desc">Browse all terms in this taxonomy:</p>
-    {{ content }}
-  </main>
+{% set tax = get_taxonomy(kind="tags") %}
+<section class="section-head">
+  <p class="line line-cmd"><span class="prompt-path">~/tags</span> <span class="prompt-caret">❯</span> <span class="cmd">ls -l</span></p>
+  <h1 class="page-title">tags</h1>
+  <p class="line-comment section-desc"># every release is tagged by subsystem — pick one to filter the changelog</p>
+</section>
+<ul class="tag-table">
+  {% for t in tax.items | sort_by("name") %}
+  <li>
+    <a class="tag-row" href="{{ base_url }}/tags/{{ t.slug }}/">
+      <span class="tag-count">{{ t.count }}</span>
+      <span class="tag-name">{{ t.name }}/</span>
+      <span class="row-arrow" aria-hidden="true">→</span>
+    </a>
+  </li>
+  {% endfor %}
+</ul>
 {% include "footer.html" %}
