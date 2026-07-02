@@ -1,0 +1,55 @@
+{% include "header.html" %}
+  <main id="main">
+    <section class="masthead">
+      <div class="masthead-text">
+        <p class="kicker">A winter observing ledger · 52° 24′ N</p>
+        <h1 class="masthead-title">Graupel</h1>
+        <div class="masthead-lede">{{ content | safe }}</div>
+      </div>
+      <div class="masthead-side">
+        <svg class="orion" viewBox="0 0 200 240" aria-hidden="true" focusable="false">
+          <g class="orion-lines" fill="none" stroke="currentColor" stroke-width="0.75">
+            <path d="M100 18 L62 44 M100 18 L138 56 M62 44 L86 114 M138 56 L114 126 M86 114 L100 120 L114 126 M86 114 L74 194 M114 126 L150 200"/>
+          </g>
+          <g class="orion-stars" fill="currentColor">
+            <circle cx="100" cy="18" r="1.6"/>
+            <circle cx="62" cy="44" r="3.4"/>
+            <circle cx="138" cy="56" r="2.6"/>
+            <circle cx="86" cy="114" r="2.2"/>
+            <circle cx="100" cy="120" r="2.2"/>
+            <circle cx="114" cy="126" r="2.2"/>
+            <circle cx="74" cy="194" r="2.4"/>
+            <circle cx="150" cy="200" r="3.4"/>
+          </g>
+          <circle class="orion-neb" cx="103" cy="148" r="5" fill="currentColor"/>
+        </svg>
+        {% if page.extra.moon_note %}
+        <aside class="moon-note" aria-label="Moon note">
+          <svg class="moon-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <circle class="moon-disc" cx="12" cy="12" r="9.25"/>
+            <path class="moon-lit" d="M12 2.75 A9.25 9.25 0 0 1 12 21.25 A5.6 9.25 0 0 0 12 2.75 Z"/>
+          </svg>
+          <p class="moon-text"><strong class="moon-phase">{{ page.extra.moon_phase }}.</strong> {{ page.extra.moon_note }}</p>
+        </aside>
+        {% endif %}
+      </div>
+    </section>
+
+    <section class="ledger-block" aria-label="Latest sessions">
+      <div class="ledger-block-head">
+        <h2 class="ledger-block-title">Latest on the spine</h2>
+        {% include "partials/legend.html" %}
+      </div>
+      {% set sessions = get_section(path="sessions") %}
+      <ol class="ledger">
+        {% for p in sessions.pages | sort_by("date", reverse=true) %}
+          {% if loop.index <= 4 %}
+            {% set entry = p %}
+            {% include "partials/entry.html" %}
+          {% endif %}
+        {% endfor %}
+      </ol>
+      <p class="ledger-more"><a class="arrow-link" href="{{ base_url }}/sessions/">Open the full ledger <span aria-hidden="true">→</span></a></p>
+    </section>
+  </main>
+{% include "footer.html" %}

@@ -1,0 +1,61 @@
+{% include "header.html" %}
+    <main id="main">
+      <article class="entry-page">
+        <header class="entry-head">
+          <div class="entry-head-cell" aria-hidden="true">
+            <svg class="hex hex-static" viewBox="0 0 40 44" focusable="false">
+              <polygon class="hex-base" points="20,2 37.5,12 37.5,32 20,42 2.5,32 2.5,12"/>
+              <polygon class="hex-amber hex-amber-full" points="20,7.7 32.3,14.7 32.3,29.3 20,36.3 7.7,29.3 7.7,14.7"/>
+              <polygon class="hex-line" points="20,2 37.5,12 37.5,32 20,42 2.5,32 2.5,12"/>
+            </svg>
+          </div>
+          <p class="entry-kicker">
+            {% if page.date %}<time datetime="{{ page.date | date('%Y-%m-%d') }}">Inspected {{ page.date | date('%B %d, %Y') }}</time>{% endif %}
+            {% if page.extra.hive %}<span class="kicker-dot" aria-hidden="true">·</span><span class="entry-hive">{{ page.extra.hive | e }}</span>{% endif %}
+          </p>
+          <h1 class="entry-page-title">{{ page.title | e }}</h1>
+          {% if page.extra.conditions %}<p class="entry-conditions">Conditions on the roof: {{ page.extra.conditions | e }}{% if page.reading_time %} · {{ page.reading_time }} min read{% endif %}</p>{% endif %}
+        </header>
+
+        <div class="prose">
+          {{ content | safe }}
+        </div>
+
+        {% if page.tags or page.categories %}
+          <footer class="entry-taxa">
+            {% if page.categories %}
+              <p class="taxa-row"><span class="taxa-label">Season</span>
+                {% for c in page.categories %}<a class="season-chip" href="{{ get_taxonomy_url(kind="categories", term=c) }}">{{ c }}</a>{% endfor %}
+              </p>
+            {% endif %}
+            {% if page.tags %}
+              <p class="taxa-row"><span class="taxa-label">Tagged</span>
+                {% for t in page.tags %}<a class="tag-chip" href="{{ get_taxonomy_url(kind="tags", term=t) }}">{{ t }}</a>{% endfor %}
+              </p>
+            {% endif %}
+          </footer>
+        {% endif %}
+
+        {% if page.date %}
+          <nav class="entry-nav" aria-label="Adjacent inspections">
+            {% if page.higher %}
+              <a class="entry-nav-link" href="{{ base_url }}{{ page.higher.url }}">
+                <span class="entry-nav-label"><span aria-hidden="true">←</span> Earlier in the log</span>
+                <span class="entry-nav-title">{{ page.higher.title | e }}</span>
+              </a>
+            {% else %}
+              <span class="entry-nav-empty">The log begins here.</span>
+            {% endif %}
+            {% if page.lower %}
+              <a class="entry-nav-link entry-nav-next" href="{{ base_url }}{{ page.lower.url }}">
+                <span class="entry-nav-label">Later in the log <span aria-hidden="true">→</span></span>
+                <span class="entry-nav-title">{{ page.lower.title | e }}</span>
+              </a>
+            {% else %}
+              <span class="entry-nav-empty entry-nav-next">This is the newest cell.</span>
+            {% endif %}
+          </nav>
+        {% endif %}
+      </article>
+    </main>
+{% include "footer.html" %}

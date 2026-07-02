@@ -1,0 +1,34 @@
+{% include "header.html" %}
+    <main id="main">
+      <header class="section-head">
+        {% if taxonomy_name == "categories" %}
+          <p class="section-kicker">Four ways through the year</p>
+          <h1 class="section-title">Seasons</h1>
+          <p class="section-intro">Every inspection is filed under the season it happened in. Beekeeping is really four different crafts wearing one veil — pick the season you are living in.</p>
+        {% else %}
+          <p class="section-kicker">Threads through the comb</p>
+          <h1 class="section-title">Tags</h1>
+          <p class="section-intro">The recurring subjects of life on the roof — treatments, harvests, weather, and the small hardware of keeping bees alive above a harbour.</p>
+        {% endif %}
+      </header>
+      {% if taxonomy_name == "categories" %}
+        {% set tax = get_taxonomy(kind="categories") %}
+      {% else %}
+        {% set tax = get_taxonomy(kind="tags") %}
+      {% endif %}
+      <ul class="term-list">
+        {% for term in tax.items | sort_by("name") %}
+          {% set n = term.pages | length %}
+          <li class="term-item">
+            <svg class="term-hex" viewBox="0 0 40 44" aria-hidden="true" focusable="false"><polygon points="20,2 37.5,12 37.5,32 20,42 2.5,32 2.5,12" fill="none" stroke="currentColor" stroke-width="3"/></svg>
+            {% if taxonomy_name == "categories" %}
+              <a class="term-link" href="{{ get_taxonomy_url(kind="categories", term=term.name) }}">{{ term.name }}</a>
+            {% else %}
+              <a class="term-link" href="{{ get_taxonomy_url(kind="tags", term=term.name) }}">{{ term.name }}</a>
+            {% endif %}
+            <span class="term-count">{{ n }} {% if n == 1 %}entry{% else %}entries{% endif %}</span>
+          </li>
+        {% endfor %}
+      </ul>
+    </main>
+{% include "footer.html" %}

@@ -1,0 +1,51 @@
+{% include "header.html" %}
+{% set projects = get_section(path="projects") %}
+{% set sorted = projects.pages | sort_by("date", reverse=true) %}
+  <main id="main" class="site-main">
+    <div class="wrap">
+
+      <section class="hero" aria-label="Current build and project log">
+        <div class="hero-essay">
+          <p class="kicker">{{ page.extra.kicker }}</p>
+          <h1 class="hero-title">{{ page.extra.headline }}</h1>
+          <div class="essay prose">
+            {{ content | safe }}
+          </div>
+          <a class="arrow-link" href="{{ base_url }}{{ page.extra.current_project }}">{{ page.extra.current_label }} <span aria-hidden="true">→</span></a>
+        </div>
+
+        <aside class="hero-log" aria-labelledby="log-heading">
+          <h2 class="scribe" id="log-heading">Project log</h2>
+          <ol class="log-list">
+            {% for p in sorted %}
+            <li class="log-entry">
+              <a class="log-link" href="{{ base_url }}{{ p.url }}">
+                <time class="log-date" datetime="{{ p.date | date("%Y-%m-%d") }}">{{ p.date | date("%B %Y") }}</time>
+                <span class="log-title">{{ p.title }}</span>
+              </a>
+              <dl class="spec">
+                {% if p.extra.joinery %}<div class="spec-row"><dt>Joinery</dt><dd>{{ p.extra.joinery }}</dd></div>{% endif %}
+                {% if p.extra.wood %}<div class="spec-row"><dt>Wood</dt><dd>{{ p.extra.wood }}</dd></div>{% endif %}
+              </dl>
+            </li>
+            {% endfor %}
+          </ol>
+          <a class="arrow-link log-all" href="{{ base_url }}/projects/">All projects <span aria-hidden="true">→</span></a>
+        </aside>
+      </section>
+
+      <section class="practice" aria-labelledby="practice-heading">
+        <h2 class="scribe" id="practice-heading">Shop practice</h2>
+        <div class="practice-grid">
+          {% for pr in page.extra.practices %}
+          <article class="practice-item">
+            <h3 class="practice-title">{{ pr.title }}</h3>
+            <p class="practice-text">{{ pr.text }}</p>
+          </article>
+          {% endfor %}
+        </div>
+      </section>
+
+    </div>
+  </main>
+{% include "footer.html" %}

@@ -1,0 +1,43 @@
+{% include "header.html" %}
+    <main id="main">
+      <article class="entry">
+        <header class="entry-head">
+          {% if page.date %}
+          <p class="entry-meta">
+            <time datetime="{{ page.date | date("%Y-%m-%d") }}">{{ page.date | date("%B %d, %Y") }}</time>
+            {% if page.extra.water_temp %}{% set temp = page.extra.water_temp %}{% include "partials/badge.html" %}{% endif %}
+          </p>
+          {% endif %}
+          <h1 class="entry-title{% if page.date %} entry-title-swim{% endif %}">{{ page.title | e }}</h1>
+          {% if page.extra.water_temp %}
+          <dl class="entry-stats">
+            <div class="stat"><dt>Water</dt><dd>{{ page.extra.water_temp }} °C</dd></div>
+            {% if page.extra.air_temp %}<div class="stat"><dt>Air</dt><dd>{{ page.extra.air_temp }} °C</dd></div>{% endif %}
+            {% if page.extra.time_in %}<div class="stat"><dt>Time in</dt><dd>{{ page.extra.time_in }}</dd></div>{% endif %}
+            {% if page.extra.sea_state %}<div class="stat"><dt>Sea</dt><dd>{{ page.extra.sea_state }}</dd></div>{% endif %}
+          </dl>
+          {% endif %}
+        </header>
+
+        <div class="prose">
+          {{ content | safe }}
+        </div>
+
+        {% if page.tags %}
+        <footer class="entry-foot">
+          <ul class="tag-list" aria-label="Tags">
+            {% for tag in page.tags %}
+            <li><a class="tag-link" href="{{ base_url }}/tags/{{ tag | slugify }}/">{{ tag }}</a></li>
+            {% endfor %}
+          </ul>
+        </footer>
+        {% endif %}
+
+        {% if page.date %}
+        <nav class="entry-nav" aria-label="Adjacent swims">
+          <a class="read-link" href="{{ base_url }}/swims/">Back to the log</a>
+        </nav>
+        {% endif %}
+      </article>
+    </main>
+{% include "footer.html" %}

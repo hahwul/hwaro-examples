@@ -1,0 +1,30 @@
+<li class="tl-entry{% if pinned %} tl-entry-pinned{% endif %}">
+  <div class="tl-node" aria-hidden="true">
+    <span class="wind-dial"{% if entry.extra.wind_deg %} style="--wind-deg: {{ entry.extra.wind_deg }}deg"{% endif %}>
+      <svg class="wind-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 4.5v13.5"/>
+        <path d="M7.2 13.8 12 18.6l4.8-4.8"/>
+      </svg>
+    </span>
+    {% if entry.extra.wind_deg %}<span class="tl-node-deg">{{ entry.extra.wind_deg }}°</span>{% endif %}
+  </div>
+  <article class="obs-card">
+    <p class="obs-date">
+      {% if pinned %}<span class="obs-pin">Latest</span>{% endif %}
+      {% if entry.date %}<time datetime="{{ entry.date | date("%Y-%m-%d") }}">{{ entry.date | date("%B %d, %Y") }}</time>{% endif %}
+    </p>
+    <h2 class="obs-title"><a href="{{ base_url }}{{ entry.url }}">{{ entry.title | e }}</a></h2>
+    {% if entry.extra.wind_from %}
+      <p class="obs-readings">
+        <span class="obs-reading obs-reading-wind">{{ entry.extra.wind_from }} {{ entry.extra.wind_deg }}°</span>
+        <span class="obs-reading">mean {{ entry.extra.wind_mean }}</span>
+        <span class="obs-reading">gust {{ entry.extra.wind_gust }}</span>
+        <span class="obs-reading">{{ entry.extra.temp }}</span>
+      </p>
+    {% endif %}
+    {% if entry.summary %}
+      <p class="obs-summary">{{ entry.summary | strip_html | truncate_words(38) }}</p>
+    {% endif %}
+    <p class="obs-more"><a href="{{ base_url }}{{ entry.url }}">Read the observation<span aria-hidden="true"> →</span></a></p>
+  </article>
+</li>

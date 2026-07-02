@@ -1,0 +1,59 @@
+{% include "header.html" %}
+  <main id="main">
+    <article class="entry">
+      {% if page.extra.model %}
+      <header class="entry-panel">
+        <svg class="screw screw-tl" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><circle cx="5" cy="5" r="4"/><line x1="2.4" y1="5" x2="7.6" y2="5"/></svg>
+        <svg class="screw screw-tr" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><circle cx="5" cy="5" r="4"/><line x1="5" y1="2.4" x2="5" y2="7.6"/></svg>
+        <div class="entry-plate">
+          <p class="panel-plate">
+            <span class="panel-maker">{{ page.extra.maker | default("Foehn") }}</span>
+            <span class="panel-model">{{ page.extra.model }}</span>
+            <span class="panel-year">{{ page.extra.year | default("") }}</span>
+          </p>
+          {% set fader_page = page %}
+          {% include "partials/faders.html" %}
+        </div>
+        <h1 class="entry-title">{{ page.title | e }}</h1>
+        <p class="entry-meta">
+          <span class="led" aria-hidden="true"></span>
+          {% if page.date %}<time datetime="{{ page.date | date('%Y-%m-%d') }}">{{ page.date | date("%B %d, %Y") }}</time>{% endif %}
+          <span class="meta-dot" aria-hidden="true">·</span>{{ page.extra.serial | default("") }}
+          <span class="meta-dot" aria-hidden="true">·</span>{{ page.word_count }} words, {{ page.reading_time }} min at the bench
+        </p>
+        {% if page.tags %}
+        <ul class="panel-tags entry-tags">
+          {% for t in page.tags %}
+          <li><a href="{{ get_taxonomy_url(kind="tags", term=t) }}">{{ t }}</a></li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </header>
+      {% else %}
+      <header class="entry-plain">
+        <p class="listing-kicker"><span class="led" aria-hidden="true"></span>{{ site.title | e }}</p>
+        <h1 class="entry-title">{{ page.title | e }}</h1>
+      </header>
+      {% endif %}
+      <div class="prose">
+        {{ content | safe }}
+      </div>
+      {% if page.extra.model %}
+      <nav class="entry-nav" aria-label="Adjacent entries">
+        {% if page.higher and page.higher.date %}
+        <a class="entry-nav-link entry-nav-newer" href="{{ base_url }}{{ page.higher.url }}">
+          <span class="entry-nav-label">Newer on the bench</span>
+          <span class="entry-nav-title">{{ page.higher.title | e }}</span>
+        </a>
+        {% endif %}
+        {% if page.lower and page.lower.date %}
+        <a class="entry-nav-link entry-nav-older" href="{{ base_url }}{{ page.lower.url }}">
+          <span class="entry-nav-label">Older on the bench</span>
+          <span class="entry-nav-title">{{ page.lower.title | e }}</span>
+        </a>
+        {% endif %}
+      </nav>
+      {% endif %}
+    </article>
+  </main>
+{% include "footer.html" %}

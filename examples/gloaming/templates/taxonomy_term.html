@@ -1,0 +1,32 @@
+{% include "header.html" %}
+    <main id="main">
+      <header class="section-head">
+        <p class="section-kicker">{% if taxonomy_name == "categories" %}Inspections from the season of{% else %}Entries tagged{% endif %}</p>
+        <h1 class="section-title">{{ taxonomy_term }}</h1>
+      </header>
+      <section class="comb-section" aria-label="Matching inspection entries">
+        <ol class="comb">
+          {% if taxonomy_name == "categories" %}
+            {% set tax = get_taxonomy(kind="categories") %}
+          {% else %}
+            {% set tax = get_taxonomy(kind="tags") %}
+          {% endif %}
+          {% for term in tax.items %}
+            {% if term.name == taxonomy_term %}
+              {% for p in term.pages | sort_by("date", reverse=true) %}
+                {% set entry = p %}
+                {% include "partials/entry.html" %}
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+        </ol>
+      </section>
+      <p class="term-back">
+        {% if taxonomy_name == "categories" %}
+          <a href="{{ base_url }}/categories/"><span aria-hidden="true">←</span> All seasons</a>
+        {% else %}
+          <a href="{{ base_url }}/tags/"><span aria-hidden="true">←</span> All tags</a>
+        {% endif %}
+      </p>
+    </main>
+{% include "footer.html" %}

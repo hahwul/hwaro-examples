@@ -1,0 +1,41 @@
+{% set rh_label = page.title %}
+{% set rh_folio = "iv" %}
+{% include "header.html" %}
+    <main id="main">
+      <header class="chapter-head">
+        <p class="chapter-kicker">The journal, newest sewing first</p>
+        <h1 class="chapter-title stitched">{{ page.title | e }}</h1>
+        <div class="chapter-intro prose">{{ content | safe }}</div>
+      </header>
+
+      <ol class="contents contents-main">
+        {% if paginator %}
+          {% for p in paginator.pages %}
+            {% set entry = p %}
+            {% include "partials/contents_row.html" %}
+          {% endfor %}
+        {% else %}
+          {% for p in section.pages %}
+            {% set entry = p %}
+            {% include "partials/contents_row.html" %}
+          {% endfor %}
+        {% endif %}
+      </ol>
+
+      {% if paginator and paginator.number_pagers > 1 %}
+      <nav class="leafing" aria-label="Pagination">
+        {% if paginator.previous %}
+          <a class="leafing-link" href="{{ base_url }}{{ paginator.previous }}"><span aria-hidden="true">&larr;</span> Later entries</a>
+        {% else %}
+          <span class="leafing-empty">Later entries</span>
+        {% endif %}
+        <span class="leafing-count">Leaf {{ paginator.current_index }} of {{ paginator.number_pagers }}</span>
+        {% if paginator.next %}
+          <a class="leafing-link" href="{{ base_url }}{{ paginator.next }}">Earlier entries <span aria-hidden="true">&rarr;</span></a>
+        {% else %}
+          <span class="leafing-empty">Earlier entries</span>
+        {% endif %}
+      </nav>
+      {% endif %}
+    </main>
+{% include "footer.html" %}

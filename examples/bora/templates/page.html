@@ -1,0 +1,40 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <div class="wrap wrap-narrow">
+      <article class="article">
+        <header class="article-header">
+          {% if page.section is present and page.section == "projects" %}
+          <p class="kicker">Build log{% if page.date %} — {{ page.date | date("%B %d, %Y") }}{% endif %}</p>
+          {% elif page.date %}
+          <p class="kicker">{{ page.date | date("%B %d, %Y") }}</p>
+          {% endif %}
+          <h1 class="article-title">{{ page.title | e }}</h1>
+          {% if page.description %}<p class="article-lede">{{ page.description }}</p>{% endif %}
+        </header>
+
+        {% if page.extra.joinery or page.extra.wood %}
+        <dl class="spec build-sheet" aria-label="Build specifications">
+          {% if page.extra.joinery %}<div class="spec-row"><dt>Joinery</dt><dd>{{ page.extra.joinery }}</dd></div>{% endif %}
+          {% if page.extra.wood %}<div class="spec-row"><dt>Wood</dt><dd>{{ page.extra.wood }}</dd></div>{% endif %}
+          {% if page.extra.finish %}<div class="spec-row"><dt>Finish</dt><dd>{{ page.extra.finish }}</dd></div>{% endif %}
+          {% if page.extra.status %}<div class="spec-row"><dt>Status</dt><dd>{{ page.extra.status }}</dd></div>{% endif %}
+        </dl>
+        {% endif %}
+
+        <div class="prose">
+          {{ content | safe }}
+        </div>
+
+        {% if page.tags %}
+        <footer class="article-foot">
+          <ul class="tag-list" aria-label="Tags">
+            {% for t in page.tags %}
+            <li><a class="tag" href="{{ base_url }}/tags/{{ t | slugify }}/">{{ t }}</a></li>
+            {% endfor %}
+          </ul>
+        </footer>
+        {% endif %}
+      </article>
+    </div>
+  </main>
+{% include "footer.html" %}
