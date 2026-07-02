@@ -13,8 +13,8 @@ Every typeface in the catalog is sold under one of four license types. Prices on
 | License | Covers | Starts at |
 |---|---|---|
 | Desktop | Installed use in design, print, and office software, one seat | Catalog price |
-| Webfont | `@font-face` embedding, priced by monthly pageviews | 1.6&times; desktop price |
-| App | Embedding in a shipped application or game, one product | 3&times; desktop price |
+| Webfont | `@font-face` embedding, priced by monthly pageviews | 1.6&times;desktop price |
+| App | Embedding in a shipped application or game, one product | 3&times;desktop price |
 | Custom | Broadcast, signage, or unlimited-seat use | By quote |
 
 Additional desktop seats are 60% of the base price each. Webfont tiers step up at 50,000, 500,000, and 5,000,000 monthly pageviews; the license auto-adjusts to the next tier rather than requiring a renegotiation.
