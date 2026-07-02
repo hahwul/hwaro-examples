@@ -4,6 +4,7 @@ date = "2025-11-21"
 description = "A ten-year area chart of wildfire smoke advisory days for a Pacific Northwest metro, built for a regional desk tracking how a new season entered the local vocabulary."
 tags = ["climate", "wildfire", "area-chart"]
 slug = "smoke-season"
+template = "study"
 [extra]
 client = "Cascadia Report"
 chart_type = "Area chart"

@@ -4,6 +4,7 @@ date = "2025-09-05"
 description = "A four-bracket horizontal bar chart of municipal election turnout by age, built for an elections desk's post-mortem on a low-turnout race."
 tags = ["elections", "demographics", "horizontal-bar"]
 slug = "turnout-gap"
+template = "study"
 [extra]
 client = "Civic Signal"
 chart_type = "Horizontal bar chart"

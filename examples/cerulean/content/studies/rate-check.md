@@ -4,6 +4,7 @@ date = "2026-02-09"
 description = "A step chart of nine quarterly policy-rate readings, built for a markets desk that needed hikes and cuts to read as distinct, deliberate moves rather than a smooth curve."
 tags = ["finance", "monetary-policy", "step-chart"]
 slug = "rate-check"
+template = "study"
 [extra]
 client = "Ledger Quarterly"
 chart_type = "Step chart"

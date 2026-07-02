@@ -4,6 +4,7 @@ date = "2025-03-02"
 description = "A decade of days at or above 95°F for a mid-size city desk, built so readers can find the year they remember and check it against the trend."
 tags = ["climate", "heat", "bar-chart"]
 slug = "heat-advisory"
+template = "study"
 [extra]
 client = "The Meridian Times"
 chart_type = "Bar chart"

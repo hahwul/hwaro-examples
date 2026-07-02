@@ -4,6 +4,7 @@ date = "2025-01-14"
 description = "Eleven Septembers of shrinking sea ice across the Baffin–Kara monitoring corridor, built as a live line chart for a climate desk's year-end package."
 tags = ["climate", "sea-ice", "line-chart"]
 slug = "melt-line"
+template = "study"
 [extra]
 client = "Boreal Dispatch"
 chart_type = "Line chart"

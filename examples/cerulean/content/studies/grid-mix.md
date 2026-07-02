@@ -4,6 +4,7 @@ date = "2025-06-18"
 description = "A two-bar comparison of a state's electricity generation mix in 2018 and 2025, built for a research briefing that needed one chart to carry the whole finding."
 tags = ["climate", "energy", "stacked-bar"]
 slug = "grid-mix"
+template = "study"
 [extra]
 client = "Halcyon Climate Lab"
 chart_type = "Stacked bar"
