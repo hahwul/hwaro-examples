@@ -1,4 +1,0 @@
----
-title: "Posts"
-template: "section"
----

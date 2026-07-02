@@ -1,4 +1,0 @@
-+++
-title = "Editorials"
-template = "section"
-+++

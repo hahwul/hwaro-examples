@@ -1,4 +1,0 @@
-+++
-title = "Diorama"
-template = "home"
-+++

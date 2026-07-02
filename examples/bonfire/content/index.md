@@ -1,4 +1,0 @@
-+++
-title = "Bonfire"
-template = "home"
-+++

@@ -1,4 +1,0 @@
-+++
-template = "home"
-transparent = true
-+++

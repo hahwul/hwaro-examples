@@ -1,4 +1,0 @@
-+++
-title = "Lagoon"
-template = "home"
-+++

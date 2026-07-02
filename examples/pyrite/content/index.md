@@ -1,4 +1,0 @@
-+++
-title = "Pyrite"
-template = "home"
-+++

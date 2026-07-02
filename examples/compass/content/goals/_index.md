@@ -1,4 +1,0 @@
-+++
-title = "Goals"
-template = "goals"
-+++

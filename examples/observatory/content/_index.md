@@ -1,4 +1,0 @@
-+++
-title = "Observatory"
-template = "home"
-+++

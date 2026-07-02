@@ -1,4 +1,0 @@
-+++
-title = "MOSAIC"
-template = "index"
-+++

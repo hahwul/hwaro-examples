@@ -1,4 +1,0 @@
-+++
-title = "Cinema"
-template = "home"
-+++

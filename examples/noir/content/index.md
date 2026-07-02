@@ -1,4 +1,0 @@
-+++
-title = "Noir"
-template = "home"
-+++
