@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description | default(site.description, true) | e }}">
+  <meta name="theme-color" content="#121110">
+  <title>{% if page.title is present and page.title != site.title %}{{ page.title | e }} — {% endif %}{{ site.title | e }}</title>
+  <link rel="icon" type="image/svg+xml" href="{{ base_url }}/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ base_url }}/css/style.css">
+  {{ og_all_tags }}
+  {{ canonical_tag }}
+  {{ jsonld }}
+  {{ highlight_css | safe }}
+  {{ auto_includes_css | safe }}
+</head>
+<body data-section="{{ page.section }}">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="term">
+    <div class="term-titlebar" aria-hidden="true">
+      <span class="term-lights"><span></span><span></span><span></span></span>
+      <span class="term-titletext">anthracite &mdash; lint session</span>
+      <span class="term-dims">80&times;24</span>
+    </div>
+
+    <div class="term-shell">
+      <header class="term-header">
+        <a class="term-brand" href="{{ base_url }}/">
+          <span class="term-caret" aria-hidden="true">&gt;</span>anthracite<span class="term-brand-cursor" aria-hidden="true">_</span>
+        </a>
+        <nav class="term-topnav" aria-label="Primary">
+          <a href="{{ base_url }}/rules/"{% if page.section == "rules" %} aria-current="page"{% endif %}>rules</a>
+          <a href="{{ base_url }}/installation/"{% if page.url == "/installation/" %} aria-current="page"{% endif %}>installation</a>
+        </nav>
+      </header>
+
+      <div class="term-layout">
+        <nav class="rulesnav" aria-label="Rule manual">
+          <div class="rulesnav-search" role="search">
+            <span class="rulesnav-prompt" aria-hidden="true">/</span>
+            <label for="rulesnav-input" class="sr-only">Search the manual</label>
+            <input id="rulesnav-input" type="search" placeholder="search rules&hellip;" autocomplete="off" autocapitalize="off" spellcheck="false" data-index="{{ base_url }}/search.json" data-base="{{ base_url }}" aria-label="Search the manual" aria-controls="rulesnav-results">
+          </div>
+          <p id="rulesnav-status" class="rulesnav-status" role="status" aria-live="polite"></p>
+
+          <div id="rulesnav-list">
+            <p class="rulesnav-heading"># rules</p>
+            <ol class="rulesnav-items">
+              {% set rules = get_section(path="rules") %}
+              {% for r in rules.pages | sort_by("weight") %}
+              <li>
+                <a href="{{ base_url }}{{ r.url }}" class="rulesnav-item{% if page.url == r.url %} is-active{% endif %}"{% if page.url == r.url %} aria-current="page"{% endif %}>
+                  <span class="rulesnav-code">{{ r.extra.code }}</span>
+                  <span class="rulesnav-title">{{ r.title | e }}</span>
+                </a>
+              </li>
+              {% endfor %}
+            </ol>
+            <p class="rulesnav-heading"># guide</p>
+            <ul class="rulesnav-items rulesnav-items-flat">
+              <li>
+                <a href="{{ base_url }}/installation/" class="rulesnav-item{% if page.url == "/installation/" %} is-active{% endif %}"{% if page.url == "/installation/" %} aria-current="page"{% endif %}>
+                  <span class="rulesnav-title">Installation</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <ul id="rulesnav-results" class="rulesnav-results" hidden aria-label="Search results"></ul>
+        </nav>

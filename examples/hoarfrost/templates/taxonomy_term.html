@@ -1,0 +1,33 @@
+{% include "header.html" %}
+{% set tax = get_taxonomy(kind="tags") %}
+  <main id="main" class="site-main">
+    <div class="wrap">
+      <header class="section-head">
+        <p class="kicker">The index</p>
+        <h1>Tagged “{{ taxonomy_term }}”</h1>
+        <p class="section-lede">Observations filed under this thread of the log. <a href="{{ base_url }}/tags/">Back to all tags.</a></p>
+      </header>
+
+      <ol class="entry-list">
+        {% for t in tax.items %}
+        {% if t.name == taxonomy_term %}
+        {% for p in t.pages | sort_by("date", reverse=true) %}
+        <li class="entry-row">
+          <a class="entry-row-link" href="{{ base_url }}{{ p.url }}">
+            <p class="entry-row-meta">
+              {% if p.extra.bortle %}<span class="meta-item meta-bortle">Bortle {{ p.extra.bortle }}</span>{% endif %}
+              {% if p.date %}<span class="meta-item"><time datetime="{{ p.date | date('%Y-%m-%d') }}">{{ p.date | date('%B %d, %Y') }}</time></span>{% endif %}
+              {% if p.extra.constellation %}<span class="meta-item">{{ p.extra.constellation }}</span>{% endif %}
+            </p>
+            <h2 class="entry-row-title">{{ p.title }}</h2>
+            {% if p.summary %}<p class="entry-row-summary">{{ p.summary | strip_html | truncate_words(32) }}</p>{% endif %}
+            <span class="entry-row-cta">Read the log <span aria-hidden="true">→</span></span>
+          </a>
+        </li>
+        {% endfor %}
+        {% endif %}
+        {% endfor %}
+      </ol>
+    </div>
+  </main>
+{% include "footer.html" %}

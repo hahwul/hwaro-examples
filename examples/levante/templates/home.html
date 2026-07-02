@@ -1,0 +1,40 @@
+{% include "header.html" %}
+  <main id="main" class="main">
+    <section class="masthead">
+      <svg class="masthead-mark" viewBox="0 0 48 32" role="img" aria-label="A line of waves above a low-water mark">
+        <path d="M2 13.5c3 0 3.9-3.3 6.9-3.3s3.9 3.3 6.9 3.3 3.9-3.3 6.9-3.3 3.9 3.3 6.9 3.3 3.9-3.3 6.9-3.3 3.9 3.3 6.9 3.3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="2" y1="26" x2="46" y2="26" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.45"/>
+      </svg>
+      <p class="masthead-kicker">Field Notes · Low-Water Line</p>
+      <h1 class="masthead-title">{{ site.title | e }}</h1>
+      <div class="masthead-lede">{{ content | safe }}</div>
+    </section>
+
+    {% if page.extra.next_low_date %}
+    <section class="tide-strip" aria-label="Next low water">
+      <span class="tide-strip-label">Next low water</span>
+      <span class="tide-strip-value">
+        <time datetime="{{ page.extra.next_low_date }}">{{ page.extra.next_low_date | date("%d %b %Y") }}</time>
+        <span class="tide-strip-dot" aria-hidden="true">·</span>
+        {{ page.extra.next_low_time }}
+      </span>
+      <span class="tide-strip-height">{{ page.extra.next_low_height }}</span>
+      <span class="tide-strip-trend">{{ page.extra.next_low_trend }}</span>
+    </section>
+    {% endif %}
+
+    <section class="wall" aria-labelledby="wall-heading">
+      <div class="wall-head">
+        <h2 id="wall-heading" class="wall-heading">Recent logs</h2>
+        <a class="wall-link" href="{{ base_url }}/tide-logs/">All tide logs <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="card-grid">
+        {% for p in get_section(path="tide-logs").pages | sort_by("date", reverse=true) %}
+          {% if loop.index <= 6 %}
+            {% include "partials/card.html" %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+{% include "footer.html" %}

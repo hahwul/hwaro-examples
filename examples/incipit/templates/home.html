@@ -1,0 +1,44 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <section class="cover">
+      <div class="wrap cover-wrap">
+        <p class="cover-kicker">A collection of essays</p>
+        <h1 class="cover-title">{{ site.title | e }}</h1>
+        <p class="cover-tagline">{{ site.description | e }}</p>
+        <div class="publisher-note">{{ content | safe }}</div>
+      </div>
+    </section>
+
+    <section class="contents" aria-labelledby="contents-heading">
+      <div class="wrap">
+        <h2 id="contents-heading" class="contents-heading">Contents</h2>
+        <ol class="contents-list">
+          {% set fw = get_page(path="foreword.md") %}
+          {% if fw %}
+          <li class="contents-item">
+            <a class="contents-link" href="{{ base_url }}{{ fw.url }}">
+              <span class="contents-numeral">{{ fw.extra.numeral | default("") }}</span>
+              <span class="contents-body">
+                <span class="contents-title">{{ fw.title | e }}</span>
+                <span class="contents-teaser">{{ fw.summary | default(fw.description) | strip_html | truncate_words(20) }}</span>
+              </span>
+            </a>
+          </li>
+          {% endif %}
+          {% set chapters = get_section(path="chapters") %}
+          {% for p in chapters.pages %}
+          <li class="contents-item">
+            <a class="contents-link" href="{{ base_url }}{{ p.url }}">
+              <span class="contents-numeral">{{ p.extra.numeral | default("") }}</span>
+              <span class="contents-body">
+                <span class="contents-title">{{ p.title | e }}{% if p.extra.city %} <span class="contents-city">— {{ p.extra.city }}</span>{% endif %}</span>
+                <span class="contents-teaser">{{ p.summary | default(p.description) | strip_html | truncate_words(20) }}</span>
+              </span>
+            </a>
+          </li>
+          {% endfor %}
+        </ol>
+      </div>
+    </section>
+  </main>
+{% include "footer.html" %}

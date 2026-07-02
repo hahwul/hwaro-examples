@@ -1,0 +1,21 @@
+{% include "header.html" %}
+    <main id="main">
+      <header class="section-head">
+        <p class="section-kicker">Entries tagged</p>
+        <h1 class="section-title">{{ taxonomy_term }}</h1>
+      </header>
+      <section class="spine-section" aria-label="Matching training weeks">
+        <ol class="timeline">
+          {% set tax = get_taxonomy(kind="tags") %}
+          {% for term in tax.items %}
+            {% if term.name == taxonomy_term %}
+              {% for entry in term.pages | sort_by("date", reverse=true) %}
+                {% include "partials/week.html" %}
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+        </ol>
+      </section>
+      <p class="term-back"><a href="{{ base_url }}/tags/"><span aria-hidden="true">←</span> All tags</a></p>
+    </main>
+{% include "footer.html" %}

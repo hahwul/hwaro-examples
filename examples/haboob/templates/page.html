@@ -1,0 +1,57 @@
+{% include "header.html" %}
+  <main id="main" class="term-body">
+    <article class="article">
+      <p class="cmdline">
+        <span class="cmd-user">kessa@haboob</span><span class="cmd-colon">:</span><span class="cmd-path">~{% if page.section %}/{{ page.section }}{% endif %}</span><span class="cmd-dollar">$</span>
+        {% if page.date %}less {{ page.title | default("file") | slugify }}.md{% else %}cat {{ page.title | default("file") | slugify }}.md{% endif %}
+      </p>
+
+      <header class="article-head">
+        {% if page.title is present %}<h1>{{ page.title | e }}</h1>{% endif %}
+        {% if page.description %}<p class="article-lede">{{ page.description | e }}</p>{% endif %}
+        {% if page.date %}
+        <p class="article-meta">
+          <time datetime="{{ page.date | date('%Y-%m-%d') }}">{{ page.date | date('%B %d, %Y') }}</time>
+          {% if page.reading_time %}<span class="dot" aria-hidden="true">&middot;</span><span>{{ page.reading_time }} min read</span>{% endif %}
+        </p>
+        {% endif %}
+      </header>
+
+      {% if page.toc %}
+      <aside class="toc" aria-label="On this page">
+        <p class="toc-title"># on this page</p>
+        {{ toc | safe }}
+      </aside>
+      {% endif %}
+
+      <div class="prose">{{ content | safe }}</div>
+
+      {% if page.tags %}
+      <footer class="article-tags">
+        <span class="tags-label"># tags:</span>
+        {% for t in page.tags %}<a href="{{ base_url }}/tags/{{ t | slugify }}/">{{ t }}</a>{% endfor %}
+      </footer>
+      {% endif %}
+
+      {% if page.section == "writeups" %}
+      <nav class="pager" aria-label="Writeup navigation">
+        {% if page.extra.older %}
+        {% set older = get_page(path=page.extra.older) %}
+        <a class="pager-link pager-prev" href="{{ base_url }}{{ older.url }}">
+          <span class="pager-dir">&larr; older</span>
+          <span class="pager-title">{{ older.title | e }}</span>
+        </a>
+        {% else %}<span class="pager-spacer" aria-hidden="true"></span>{% endif %}
+        {% if page.extra.newer %}
+        {% set newer = get_page(path=page.extra.newer) %}
+        <a class="pager-link pager-next" href="{{ base_url }}{{ newer.url }}">
+          <span class="pager-dir">newer &rarr;</span>
+          <span class="pager-title">{{ newer.title | e }}</span>
+        </a>
+        {% else %}<span class="pager-spacer" aria-hidden="true"></span>{% endif %}
+      </nav>
+      <p class="post-back"><a href="{{ base_url }}/writeups/"><span aria-hidden="true">&larr;</span> back to writeups</a></p>
+      {% endif %}
+    </article>
+  </main>
+{% include "footer.html" %}

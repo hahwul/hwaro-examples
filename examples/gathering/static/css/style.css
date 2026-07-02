@@ -1,0 +1,632 @@
+/* =============================================================================
+   Gathering — a single-handed sailing memoir, Falmouth to the Azores
+   Pale sea-grey paper, Crimson Pro at book sizes, a restrained teal-blue
+   accent, true spread margins with running heads.
+   Signature: running heads carry the day's noon position in small caps
+   as a folio line across the top of every chapter (.noon-head).
+   ========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  --bg: #f7f8f5;
+  --surface: #eaeee9;
+  --fg: #1c2220;
+  --muted: #5a655f;
+  --accent: #106b7e;
+  --accent-fg: #ffffff;
+
+  --border: color-mix(in srgb, var(--fg) 14%, transparent);
+  --border-strong: color-mix(in srgb, var(--fg) 27%, transparent);
+  --tint: color-mix(in srgb, var(--accent) 9%, transparent);
+
+  --font-book: "Crimson Pro", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --font-set: "Figtree", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --text-sm: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
+  --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.15rem);
+  --text-lg: clamp(1.2rem, 1.1rem + 0.5vw, 1.5rem);
+  --text-xl: clamp(1.5rem, 1.3rem + 1vw, 2.25rem);
+  --text-2xl: clamp(2rem, 1.6rem + 2vw, 3.25rem);
+  --text-hero: clamp(2.75rem, 2rem + 4vw, 5.25rem);
+
+  --space-1: .25rem;
+  --space-2: .5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2.5rem;
+  --space-6: 4rem;
+  --space-7: 6rem;
+
+  --measure: 66ch;
+  --radius: 3px;
+}
+
+/* ----- Reset ---------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-book);
+  font-size: var(--text-base);
+  line-height: 1.72;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection { background: var(--tint); }
+img, svg { max-width: 100%; }
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ----- The spread (page frame with wide margins) ---------------------------- */
+.spread {
+  position: relative;
+  max-width: 74rem;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 6vw, 6rem);
+  padding-block: clamp(1.5rem, 4vw, 3rem) var(--space-7);
+}
+
+/* a dashed rhumb line marks the inner margin, like a course laid off on a
+   chart — the "gutter" of the spread rather than a plain rule. */
+.spread::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: clamp(0.5rem, 3vw, 2.75rem);
+  width: 1px;
+  background-image: repeating-linear-gradient(to bottom, var(--border-strong) 0 6px, transparent 6px 13px);
+  opacity: 0.55;
+  pointer-events: none;
+}
+@media (max-width: 760px) { .spread::before { display: none; } }
+
+/* ----- Masthead --------------------------------------------------------------*/
+.masthead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: var(--space-4);
+  font-family: var(--font-set);
+}
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  text-decoration: none;
+  color: var(--fg);
+  font-family: var(--font-book);
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: -0.01em;
+  transition: color 0.16s ease;
+}
+.wordmark:hover { color: var(--accent); }
+.wordmark-mark { width: 22px; height: 22px; color: var(--accent); flex: none; }
+
+.site-nav { display: flex; flex-wrap: wrap; gap: 0.4rem 1.4rem; }
+.site-nav a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.35rem 0;
+  border-bottom: 2px solid transparent;
+  transition: color 0.16s ease, border-color 0.16s ease;
+}
+.site-nav a:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ----- Half-title (homepage first screen) ------------------------------------*/
+.half-title {
+  text-align: center;
+  max-width: 46rem;
+  margin: 0 auto;
+  padding-block: clamp(0.75rem, 3vw, 1.75rem) var(--space-4);
+}
+.ht-kicker {
+  font-family: var(--font-set);
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  font-size: var(--text-sm);
+  color: var(--muted);
+  margin: 0 0 var(--space-3);
+}
+.ht-title {
+  font-family: var(--font-book);
+  font-weight: 700;
+  font-size: var(--text-hero);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--fg);
+}
+.ht-route {
+  font-family: var(--font-book);
+  font-style: italic;
+  font-size: var(--text-lg);
+  color: var(--muted);
+  margin: var(--space-3) 0 0;
+}
+
+/* rhumb line: two ports joined by a dashed course — used on the homepage
+   route line and echoed, smaller, in the footer. */
+.rhumb {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  justify-content: center;
+  margin: var(--space-4) auto 0;
+  max-width: 26rem;
+  font-family: var(--font-set);
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+}
+.rhumb-port, .rhumb-dest { position: relative; flex: none; padding-left: 1.15em; }
+.rhumb-port::before, .rhumb-dest::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 50%;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  transform: translateY(-50%);
+}
+.rhumb-line {
+  flex: 1 1 auto;
+  min-width: 2rem;
+  height: 1px;
+  background-image: repeating-linear-gradient(to right, var(--accent) 0 6px, transparent 6px 12px);
+  opacity: 0.75;
+}
+.rhumb-foot { margin: 0 auto var(--space-4); max-width: 20rem; font-size: var(--text-sm); }
+
+/* ----- Passage log (homepage + section table) ---------------------------------*/
+.passage-log { margin-top: var(--space-4); }
+.log-title {
+  font-family: var(--font-book);
+  font-weight: 600;
+  font-size: var(--text-2xl);
+  text-align: center;
+  margin: 0 0 var(--space-2);
+  letter-spacing: -0.01em;
+}
+.log-intro {
+  text-align: center;
+  color: var(--muted);
+  max-width: 46ch;
+  margin: 0 auto var(--space-4);
+}
+
+.log-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+.log-table {
+  width: 100%;
+  min-width: 620px;
+  border-collapse: collapse;
+  font-family: var(--font-set);
+  font-size: var(--text-sm);
+}
+.log-table th {
+  text-align: left;
+  padding: 0.85rem 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.72rem;
+  color: var(--muted);
+  border-bottom: 2px solid var(--border-strong);
+}
+.log-table td {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: baseline;
+}
+.log-table tbody tr:last-child td { border-bottom: none; }
+.log-table tbody tr:hover { background: var(--tint); }
+.log-day, .log-date, .log-run, .log-pos { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.log-wind { white-space: nowrap; color: var(--muted); }
+.log-chapter a {
+  font-family: var(--font-book);
+  font-weight: 600;
+  font-size: 1.02rem;
+  color: var(--fg);
+  text-decoration: none;
+}
+.log-chapter a:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+
+/* ----- Foreword / section intro ----------------------------------------------*/
+.foreword {
+  max-width: var(--measure);
+  margin: var(--space-7) auto 0;
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--border);
+}
+.fw-title {
+  font-family: var(--font-book);
+  font-weight: 600;
+  font-size: var(--text-xl);
+  margin: 0 0 var(--space-3);
+}
+
+/* ----- Page header (chapters, about, search, section, 404) -------------------*/
+.page-open {
+  max-width: var(--measure);
+  margin: 0 auto var(--space-4);
+}
+.chapter .page-open { text-align: center; }
+
+.chapter-kicker {
+  font-family: var(--font-set);
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  font-size: var(--text-sm);
+  color: var(--accent);
+  margin: 0 0 var(--space-2);
+}
+.page-title {
+  font-family: var(--font-book);
+  font-weight: 700;
+  font-size: var(--text-2xl);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  margin: 0;
+  text-wrap: balance;
+}
+.page-standfirst {
+  font-family: var(--font-book);
+  font-style: italic;
+  font-size: var(--text-lg);
+  color: var(--muted);
+  margin: var(--space-3) 0 0;
+}
+.chapter .page-standfirst { max-width: 52ch; margin-inline: auto; }
+.section-intro { margin-top: var(--space-2); }
+
+/* ----- The noon head: SIGNATURE running head ----------------------------------
+   Carries the day's noon position across the full width of the spread,
+   set in small caps above every chapter — the folio line of the book. */
+.noon-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 1.15rem;
+  margin: 0 0 var(--space-5);
+  padding: 0.7rem clamp(0.85rem, 2vw, 1.35rem);
+  background: var(--surface);
+  border-top: 1px solid var(--border-strong);
+  border-bottom: 1px solid var(--border-strong);
+  font-family: var(--font-set);
+}
+.noon-item { display: inline-flex; align-items: baseline; gap: 0.45em; }
+.noon-label {
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.68rem;
+  color: var(--muted);
+}
+.noon-value {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--fg);
+}
+.noon-folio {
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ----- On-page table of contents ----------------------------------------------*/
+.page-toc {
+  max-width: var(--measure);
+  margin: 0 auto var(--space-5);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius);
+  background: var(--surface);
+  font-family: var(--font-set);
+  font-size: var(--text-sm);
+}
+.toc-label {
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.7rem;
+  color: var(--muted);
+  margin: 0 0 var(--space-2);
+}
+.page-toc ul, .page-toc ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.page-toc ul ul, .page-toc ol ol { margin-left: 1rem; margin-top: 0.3rem; }
+.page-toc a {
+  color: var(--fg);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.16s ease, border-color 0.16s ease;
+}
+.page-toc a:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ----- Prose -------------------------------------------------------------------*/
+.prose { max-width: var(--measure); margin-inline: auto; }
+.prose > * + * { margin-top: var(--space-3); }
+.prose p { margin: 0; text-wrap: pretty; }
+.prose h2, .prose h3, .prose h4 {
+  font-family: var(--font-book);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin-top: var(--space-5);
+}
+.prose h2 { font-size: var(--text-xl); }
+.prose h3 { font-size: var(--text-lg); }
+.prose h4 {
+  font-size: var(--text-base);
+  font-family: var(--font-set);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+.prose h2 + *, .prose h3 + *, .prose h4 + * { margin-top: var(--space-3); }
+
+.prose a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  transition: text-decoration-color 0.16s ease, color 0.16s ease;
+}
+.prose a:hover { text-decoration-color: currentColor; }
+.prose strong { font-weight: 700; }
+.prose em { font-style: italic; }
+.prose ul, .prose ol { padding-left: 1.4rem; }
+.prose li { margin: 0.35rem 0; }
+.prose li::marker { color: var(--accent); }
+
+.prose blockquote {
+  margin: var(--space-4) 0;
+  padding: 0.2rem 0 0.2rem 1.4rem;
+  border-left: 3px solid var(--accent);
+  font-style: italic;
+  color: var(--muted);
+  font-size: var(--text-lg);
+}
+.prose blockquote p { margin: 0; }
+
+.prose code {
+  font-family: ui-monospace, "SFMono-Regular", "Cascadia Code", Menlo, Consolas, monospace;
+  font-size: 0.86em;
+  background: color-mix(in srgb, var(--fg) 7%, transparent);
+  padding: 0.12em 0.4em;
+  border-radius: var(--radius);
+}
+.prose pre {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius);
+  padding: var(--space-3) var(--space-4);
+  overflow-x: auto;
+  line-height: 1.6;
+  font-size: 0.9rem;
+}
+.prose pre code { background: none; padding: 0; font-size: 0.86em; }
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--space-4) 0;
+  font-family: var(--font-set);
+  font-size: 0.95rem;
+}
+.prose th, .prose td { text-align: left; padding: 0.55rem 0.75rem; border-bottom: 1px solid var(--border); }
+.prose th {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  border-bottom: 2px solid var(--border-strong);
+}
+
+.prose hr {
+  border: 0;
+  height: 1px;
+  margin: var(--space-5) 0;
+  background-image: repeating-linear-gradient(to right, var(--border-strong) 0 6px, transparent 6px 12px);
+}
+
+/* drop cap on the opening paragraph of a chapter */
+.dropcap > p:first-of-type::first-letter {
+  font-family: var(--font-book);
+  font-weight: 700;
+  float: left;
+  font-size: 3.4em;
+  line-height: 0.82;
+  padding: 0.05em 0.08em 0 0;
+  margin-right: 0.05em;
+  color: var(--accent);
+}
+
+/* ----- Passage nav (prev/next day) ---------------------------------------------*/
+.passage-nav {
+  max-width: var(--measure);
+  margin: var(--space-6) auto 0;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.passage-link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: var(--fg);
+  transition: border-color 0.16s ease, background-color 0.16s ease;
+}
+.passage-link:hover { border-color: var(--accent); background: var(--tint); }
+.passage-next { text-align: right; align-items: flex-end; }
+.passage-dir {
+  font-family: var(--font-set);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+.passage-title { font-family: var(--font-book); font-weight: 600; font-size: var(--text-base); }
+.passage-empty {
+  font-family: var(--font-set);
+  font-size: 0.85rem;
+  color: var(--muted);
+  align-self: center;
+  padding: var(--space-3);
+}
+.passage-empty-next { text-align: right; }
+
+/* ----- Search --------------------------------------------------------------- */
+.search-form { max-width: var(--measure); margin: 0 auto var(--space-3); display: flex; flex-direction: column; gap: 0.5rem; }
+.search-label {
+  font-family: var(--font-set);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+.search-input {
+  font-family: var(--font-book);
+  font-size: var(--text-lg);
+  color: var(--fg);
+  background: var(--bg);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+}
+.search-input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-color: var(--accent); }
+.search-status {
+  max-width: var(--measure);
+  margin: 0 auto var(--space-3);
+  font-family: var(--font-set);
+  font-size: var(--text-sm);
+  color: var(--muted);
+  min-height: 1.2em;
+}
+.search-results { max-width: var(--measure); margin: 0 auto; list-style: none; padding: 0; display: flex; flex-direction: column; }
+.result-row { border-bottom: 1px solid var(--border); }
+.result-row:first-child { border-top: 1px solid var(--border); }
+.result-link { display: flex; flex-direction: column; gap: 0.3rem; padding: var(--space-3) 0.25rem; text-decoration: none; color: var(--fg); }
+.result-title { font-family: var(--font-book); font-weight: 600; font-size: var(--text-lg); transition: color 0.16s ease; }
+.result-link:hover .result-title { color: var(--accent); }
+.result-snippet { color: var(--muted); font-size: 0.92rem; line-height: 1.5; }
+
+/* ----- 404 -------------------------------------------------------------------- */
+.notfound .page-open { text-align: left; }
+
+/* ----- Footer ------------------------------------------------------------------*/
+.site-footer {
+  margin-top: var(--space-7);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--border);
+  text-align: center;
+  font-family: var(--font-set);
+}
+.foot-line {
+  font-family: var(--font-book);
+  font-size: var(--text-base);
+  color: var(--muted);
+  max-width: 52ch;
+  margin: 0 auto var(--space-3);
+}
+.foot-nav { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.5rem 1.4rem; margin-bottom: var(--space-3); }
+.foot-nav a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  transition: color 0.16s ease;
+}
+.foot-nav a:hover { color: var(--accent); }
+.foot-imprint { font-size: var(--text-sm); color: var(--muted); letter-spacing: 0.04em; margin: 0; }
+
+/* ----- Accessibility -------------------------------------------------------- */
+.skip-link {
+  position: absolute;
+  left: 0.75rem;
+  top: -3rem;
+  z-index: 20;
+  background: var(--accent);
+  color: var(--accent-fg);
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius);
+  text-decoration: none;
+  font-family: var(--font-set);
+  transition: top 0.16s ease;
+}
+.skip-link:focus { top: 0.75rem; }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ----- Responsive ------------------------------------------------------------*/
+@media (max-width: 760px) {
+  .passage-nav { grid-template-columns: 1fr; }
+  .passage-next { text-align: left; align-items: flex-start; }
+  .passage-empty-next { text-align: left; }
+  .noon-head { padding: 0.6rem 0.85rem; }
+  .noon-folio { margin-left: 0; flex-basis: 100%; }
+}
+@media (max-width: 600px) {
+  .masthead { flex-direction: column; align-items: flex-start; gap: 0.6rem; }
+  .site-nav { gap: 0.3rem 1rem; }
+  .ht-title { font-size: clamp(2.25rem, 2rem + 8vw, 3.5rem); }
+}
+
+/* ----- Motion ----------------------------------------------------------------*/
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,80 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <div class="wrap wrap-narrow">
+      <article class="entry">
+        <header class="page-head">
+          {% if page.extra.route %}<p class="v-badge v-badge-lg">{{ page.extra.route }}</p>{% endif %}
+          <h1 class="page-title">{{ page.title | e }}</h1>
+          {% if page.date %}
+          <p class="page-kicker">
+            <time datetime="{{ page.date | date("%Y-%m-%d") }}">{{ page.date | date("%B %d, %Y") }}</time>
+            {% if page.reading_time %} &middot; {{ page.reading_time }} min read{% endif %}
+          </p>
+          {% endif %}
+
+          {% if page.extra.ribbon_path %}
+          <svg class="v-ribbon v-ribbon-hero" viewBox="0 0 280 56" preserveAspectRatio="none" role="img" aria-label="Route ribbon tracing the {{ page.extra.river | default('river') }}, with {{ page.extra.portages | length }} portage crossings marked.">
+            <path class="v-ribbon-line" d="{{ page.extra.ribbon_path }}" fill="none"/>
+            {% for x in page.extra.portage_ticks %}
+            <line class="v-ribbon-tick" x1="{{ x }}" y1="10" x2="{{ x }}" y2="46"/>
+            {% endfor %}
+          </svg>
+          {% endif %}
+
+          {% if page.extra.river %}
+          <dl class="route-stats">
+            <div><dt>River</dt><dd>{{ page.extra.river }}</dd></div>
+            {% if page.extra.distance_km %}<div><dt>Distance</dt><dd>{{ page.extra.distance_km }} km</dd></div>{% endif %}
+            {% if page.extra.days %}<div><dt>Days</dt><dd>{{ page.extra.days }}</dd></div>{% endif %}
+            {% if page.extra.portages %}<div><dt>Portages</dt><dd>{{ page.extra.portages | length }}</dd></div>{% endif %}
+          </dl>
+          {% endif %}
+        </header>
+
+        <div class="prose">
+          {{ content | safe }}
+        </div>
+
+        {% if page.extra.portages %}
+        <section class="portage-log" aria-labelledby="portage-heading">
+          <h2 id="portage-heading">Portage log</h2>
+          <ol class="portage-list">
+            {% for carry in page.extra.portages %}
+            <li><span class="portage-tick-mark" aria-hidden="true">&times;</span>{{ carry }}</li>
+            {% endfor %}
+          </ol>
+        </section>
+        {% endif %}
+
+        {% if page.tags %}
+        <ul class="tag-list" aria-label="Tags">
+          {% for t in page.tags %}
+          <li><a href="{{ get_taxonomy_url(kind="tags", term=t) }}">{{ t }}</a></li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+
+        {% if page.extra.route %}
+        <nav class="entry-nav" aria-label="Adjacent voyages">
+          {% if page.lower %}
+          <a class="entry-nav-link" href="{{ base_url }}{{ page.lower.url }}">
+            <span class="entry-nav-label"><span aria-hidden="true">&larr;</span> Earlier voyage</span>
+            <span class="entry-nav-title">{{ page.lower.title | e }}</span>
+          </a>
+          {% else %}
+          <span class="entry-nav-empty">The log opens here.</span>
+          {% endif %}
+          {% if page.higher %}
+          <a class="entry-nav-link entry-nav-next" href="{{ base_url }}{{ page.higher.url }}">
+            <span class="entry-nav-label">Later voyage <span aria-hidden="true">&rarr;</span></span>
+            <span class="entry-nav-title">{{ page.higher.title | e }}</span>
+          </a>
+          {% else %}
+          <span class="entry-nav-empty entry-nav-next">Newest voyage in the log.</span>
+          {% endif %}
+        </nav>
+        {% endif %}
+      </article>
+    </div>
+  </main>
+{% include "footer.html" %}

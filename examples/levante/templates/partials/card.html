@@ -1,0 +1,27 @@
+<article class="log-card">
+  <p class="log-meta">
+    {% if p.date %}<time datetime="{{ p.date | date("%Y-%m-%d") }}">{{ p.date | date("%d %b %Y") }}</time>{% endif %}
+    {% if p.extra.location %}<span class="log-meta-dot" aria-hidden="true">·</span><span class="log-location">{{ p.extra.location }}</span>{% endif %}
+  </p>
+
+  <h3 class="log-title"><a href="{{ base_url }}{{ p.url }}">{{ p.title | e }}</a></h3>
+
+  {% if p.extra.tide_pct is defined %}
+  <div class="tide-gauge" role="img" aria-label="Tide height {{ p.extra.tide_m }}, {{ p.extra.tide_trend | default('') }}">
+    <div class="tide-gauge-track"><div class="tide-gauge-fill" style="width: {{ p.extra.tide_pct }}%;"></div></div>
+    <p class="tide-gauge-reading">{{ p.extra.tide_m }} <span class="tide-gauge-trend">· {{ p.extra.tide_trend }}</span></p>
+  </div>
+  {% endif %}
+
+  {% if p.extra.finds %}
+  <ul class="log-finds">
+    {% for f in p.extra.finds %}{% if loop.index <= 3 %}<li>{{ f | safe }}</li>{% endif %}{% endfor %}
+  </ul>
+  {% endif %}
+
+  {% if p.tags %}
+  <ul class="log-tags" aria-label="Tags for this entry">
+    {% for t in p.tags %}<li><a href="{{ get_taxonomy_url(kind="tags", term=t) }}">{{ t }}</a></li>{% endfor %}
+  </ul>
+  {% endif %}
+</article>

@@ -1,0 +1,20 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <header class="section-head">
+      <p class="section-kicker">Index</p>
+      {% if page.title is present %}<h1>{{ page.title | e }}</h1>{% endif %}
+      <div class="section-intro"><p>Studies are filed by the technique they teach — follow a tag to see every study that uses it.</p></div>
+    </header>
+    {% set tax = get_taxonomy(kind="tags") %}
+    <ul class="term-list">
+      {% for term in tax.items | sort_by("name") %}
+        {% set n = term.pages | length %}
+        <li class="term-row">
+          <a class="term-link" href="{{ get_taxonomy_url(kind='tags', term=term.name) }}">{{ term.name }}</a>
+          <span class="term-rule" aria-hidden="true"></span>
+          <span class="term-count">{{ n }} {% if n == 1 %}study{% else %}studies{% endif %}</span>
+        </li>
+      {% endfor %}
+    </ul>
+  </main>
+{% include "footer.html" %}

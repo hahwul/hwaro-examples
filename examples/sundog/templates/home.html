@@ -1,0 +1,46 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <section class="masthead">
+      <p class="masthead-kicker">Notes from the sodium hours</p>
+      <h1 class="masthead-title">Sundog</h1>
+      <div class="standfirst">{{ content | safe }}</div>
+    </section>
+
+    {% set entries = get_section(path="essays").pages | sort_by("date", reverse=true) %}
+    {% set latest = entries | first %}
+    {% if latest %}
+    <section class="latest" aria-labelledby="latest-heading">
+      <p class="latest-kicker">The latest essay</p>
+      <h2 id="latest-heading" class="latest-title">
+        <a href="{{ base_url }}{{ latest.url }}">{{ latest.title }}</a>
+      </h2>
+      {% if latest.extra.exposure %}<p class="exposure">{{ latest.extra.exposure }}</p>{% endif %}
+      {% if latest.summary %}<p class="latest-lede">{{ latest.summary | strip_html }}</p>{% endif %}
+      <p class="latest-more"><a class="read-link" href="{{ base_url }}{{ latest.url }}">Read the essay<span aria-hidden="true"> &rarr;</span></a></p>
+    </section>
+    {% endif %}
+
+    <section class="more-essays" aria-label="More essays">
+      <div class="more-essays-head">
+        <h2>Recent essays</h2>
+        <a class="all-link" href="{{ base_url }}/essays/">All essays<span aria-hidden="true"> &rarr;</span></a>
+      </div>
+      <ol class="essay-list">
+        {% for p in entries %}
+        {% if loop.index > 1 and loop.index <= 6 %}
+        <li class="essay-row">
+          <a class="essay-row-link" href="{{ base_url }}{{ p.url }}">
+            <span class="essay-row-head">
+              <span class="essay-row-title">{{ p.title }}</span>
+              {% if p.date %}<time class="essay-row-date" datetime="{{ p.date | date("%Y-%m-%d") }}">{{ p.date | date("%b %Y") }}</time>{% endif %}
+            </span>
+            {% if p.extra.exposure %}<span class="essay-row-exposure">{{ p.extra.exposure }}</span>{% endif %}
+            {% if p.summary %}<span class="essay-row-snip">{{ p.summary | strip_html | truncate_words(24) }}</span>{% endif %}
+          </a>
+        </li>
+        {% endif %}
+        {% endfor %}
+      </ol>
+    </section>
+  </main>
+{% include "footer.html" %}

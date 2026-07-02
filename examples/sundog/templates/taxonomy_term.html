@@ -1,0 +1,28 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <header class="section-head">
+      <p class="section-kicker">{% if taxonomy_name == "categories" %}Filed as{% else %}Tagged{% endif %}</p>
+      <h1 class="section-title">{{ taxonomy_term }}</h1>
+    </header>
+    <ol class="essay-list essay-list-full">
+      {% set tax = get_taxonomy(kind=taxonomy_name) %}
+      {% for term in tax.items %}
+        {% if term.name == taxonomy_term %}
+          {% for p in term.pages | sort_by("date", reverse=true) %}
+          <li class="essay-row">
+            <a class="essay-row-link" href="{{ base_url }}{{ p.url }}">
+              <span class="essay-row-head">
+                <span class="essay-row-title">{{ p.title }}</span>
+                {% if p.date %}<time class="essay-row-date" datetime="{{ p.date | date("%Y-%m-%d") }}">{{ p.date | date("%b %d, %Y") }}</time>{% endif %}
+              </span>
+              {% if p.extra.exposure %}<span class="essay-row-exposure">{{ p.extra.exposure }}</span>{% endif %}
+              {% if p.summary %}<span class="essay-row-snip">{{ p.summary | strip_html | truncate_words(30) }}</span>{% endif %}
+            </a>
+          </li>
+          {% endfor %}
+        {% endif %}
+      {% endfor %}
+    </ol>
+    <p class="wall-foot"><a class="all-link" href="{{ base_url }}/{{ taxonomy_name }}/"><span aria-hidden="true">&larr; </span>All {{ taxonomy_name }}</a></p>
+  </main>
+{% include "footer.html" %}

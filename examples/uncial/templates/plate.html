@@ -1,0 +1,49 @@
+{% include "header.html" %}
+<article class="spread">
+  <div class="spread-grid">
+    <div class="spread-verso">
+      <figure class="plate-frame gold-frame">
+        <img src="{{ base_url }}/{{ page.extra.plate }}" alt="{{ page.extra.plate_alt | e }}" loading="lazy">
+      </figure>
+      <p class="folio folio-verso">Folio {{ page.extra.folio | e }} <span aria-hidden="true">&middot;</span> verso</p>
+    </div>
+
+    <div class="spread-recto">
+      <p class="plate-kicker">Plate {{ page.extra.folio | e }}</p>
+      <h1>{{ page.title | e }}</h1>
+      <p class="plate-latin"><em>{{ page.extra.latin | e }}</em> <span aria-hidden="true">&mdash;</span> {{ page.extra.habitat | e }}</p>
+      {% if page.date %}<p class="plate-date">Catalogued {{ page.date | date("%d %B %Y") }}</p>{% endif %}
+
+      <div class="prose">
+        {{ content | safe }}
+      </div>
+
+      <p class="folio folio-recto"><span aria-hidden="true">recto &middot;</span> Folio {{ page.extra.folio | e }}</p>
+    </div>
+  </div>
+
+  {% if page.lower or page.higher %}
+  <nav class="plate-pager" aria-label="Plate navigation">
+    {% if page.lower %}
+    <a class="plate-pager-link plate-pager-prev" href="{{ base_url }}{{ page.lower.url }}">
+      <span class="plate-pager-dir"><span aria-hidden="true">&larr;</span> Previous leaf</span>
+      <span class="plate-pager-title">{{ page.lower.title | e }}</span>
+    </a>
+    {% else %}
+    <span class="plate-pager-empty"></span>
+    {% endif %}
+
+    <a class="plate-pager-index" href="{{ base_url }}{{ lang_prefix }}/chapters/">All plates</a>
+
+    {% if page.higher %}
+    <a class="plate-pager-link plate-pager-next" href="{{ base_url }}{{ page.higher.url }}">
+      <span class="plate-pager-dir">Next leaf <span aria-hidden="true">&rarr;</span></span>
+      <span class="plate-pager-title">{{ page.higher.title | e }}</span>
+    </a>
+    {% else %}
+    <span class="plate-pager-empty"></span>
+    {% endif %}
+  </nav>
+  {% endif %}
+</article>
+{% include "footer.html" %}

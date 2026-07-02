@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description | default(site.description, true) | e }}">
+  <meta name="theme-color" content="#12150c">
+  <title>{% if page.title is present and page.url != "/" %}{{ page.title | e }} :: {% endif %}{{ site.title | e }}</title>
+  <link rel="icon" type="image/svg+xml" href="{{ base_url }}/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ base_url }}/css/style.css">
+  {{ og_all_tags }}
+  {{ canonical_tag }}
+  {{ jsonld }}
+  {{ highlight_css | safe }}
+  {{ auto_includes_css | safe }}
+</head>
+<body data-section="{{ page.section }}">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="term">
+    <div class="term-titlebar" aria-hidden="true">
+      <span class="term-dots"><i></i><i></i><i></i></span>
+      <span class="term-titletext">kessa@haboob —
+        {%- if page.url == "/" %} dashboard
+        {%- elif page.url == "/writeups/" %} ls ~/writeups
+        {%- elif page.section == "writeups" %} less {{ page.title | default("file") | slugify }}.md
+        {%- elif page.url == "/about/" %} cat about.md
+        {%- elif page.url == "/tags/" %} grep -r --list-tags
+        {%- elif taxonomy_term %} grep -r &#39;#{{ taxonomy_term }}&#39;
+        {%- else %} command not found
+        {%- endif %}
+      </span>
+      <span class="term-size">86&times;30</span>
+    </div>
+
+    <header class="term-header">
+      <p class="prompt-line">
+        <a class="prompt-id" href="{{ base_url }}/">
+          <span class="prompt-user">kessa</span><span class="prompt-at">@</span><span class="prompt-host">haboob</span>
+        </a><span class="prompt-colon">:</span><span class="prompt-path">~{{ page.url | default("/") }}</span><span class="prompt-dollar">$</span>
+        <span class="prompt-cursor" aria-hidden="true"></span>
+      </p>
+
+      <nav class="term-nav" aria-label="Primary">
+        <a href="{{ base_url }}/writeups/"{% if page.section == "writeups" %} aria-current="page"{% endif %}>writeups</a>
+        <a href="{{ base_url }}/tags/"{% if page.url == "/tags/" %} aria-current="page"{% endif %}>tags</a>
+        <a href="{{ base_url }}/about/"{% if page.url == "/about/" %} aria-current="page"{% endif %}>about</a>
+        <a href="{{ base_url }}/writeups/rss.xml">feed</a>
+        <button type="button" class="search-trig" id="search-open" aria-haspopup="dialog" aria-label="Open search palette">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="5.5"/><path d="M13.2 13.2 17 17"/></svg>
+          <span class="st-label">search</span>
+          <kbd>Ctrl</kbd><kbd>K</kbd>
+        </button>
+      </nav>
+    </header>

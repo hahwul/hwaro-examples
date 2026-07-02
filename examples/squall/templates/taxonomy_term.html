@@ -1,0 +1,21 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <header class="archive-head wrap">
+      <p class="kicker">Filed under</p>
+      <h1>{{ taxonomy_term }}</h1>
+    </header>
+    <section class="archive-body wrap">
+      <ol class="ledger ledger--archive">
+        {% set tax = get_taxonomy(kind="tags") %}
+        {% for term in tax.items %}
+          {% if term.name == taxonomy_term %}
+            {% for p in term.pages | sort_by("date", reverse=true) %}
+            {% include "ledger-entry.html" %}
+            {% endfor %}
+          {% endif %}
+        {% endfor %}
+      </ol>
+      <p class="term-back"><a href="{{ base_url }}/tags/"><span aria-hidden="true">&larr;</span> All tags</a></p>
+    </section>
+  </main>
+{% include "footer.html" %}

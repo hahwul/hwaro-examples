@@ -1,0 +1,68 @@
+{% include "header.html" %}
+{% set entries = get_section(path="observations").pages | sort_by("date", reverse=true) %}
+{% set latest = entries | first %}
+{% set aboutpage = get_page(path="about.md") %}
+  <main id="main" class="site-main">
+
+    <section class="hero" aria-label="Masthead and latest observation">
+      <div class="hero-mast">
+        <p class="kicker">{{ page.extra.kicker | default("An urban astronomy journal") }}</p>
+        <h1 class="hero-title">{{ site.title | e }}</h1>
+        <p class="hero-tagline">{{ page.extra.tagline }}</p>
+        <div class="hero-lede prose">
+          {{ content | safe }}
+        </div>
+        <div class="hero-actions">
+          {% if latest %}<a class="btn btn-primary" href="{{ base_url }}{{ latest.url }}">Read the latest observation <span aria-hidden="true">→</span></a>{% endif %}
+          <a class="btn btn-ghost" href="{{ base_url }}/observations/">Browse all observations</a>
+        </div>
+      </div>
+
+      {% if latest %}
+      <a class="hero-latest" href="{{ base_url }}{{ latest.url }}">
+        {% set chart = latest.extra %}
+        {% include "partials/starchart.html" %}
+        <div class="hero-latest-inner">
+          <p class="hero-latest-kicker">Latest observation{% if latest.extra.bortle %} · Bortle {{ latest.extra.bortle }}{% endif %}</p>
+          <h2 class="hero-latest-title">{{ latest.title }}</h2>
+          {% if latest.date %}<time class="hero-latest-date" datetime="{{ latest.date | date('%Y-%m-%d') }}">{{ latest.date | date('%B %d, %Y') }}</time>{% endif %}
+          {% if latest.summary %}<p class="hero-latest-summary">{{ latest.summary | strip_html | truncate_words(28) }}</p>{% endif %}
+          <span class="hero-latest-cta">Read the log <span aria-hidden="true">→</span></span>
+        </div>
+      </a>
+      {% endif %}
+    </section>
+
+    <section class="recent" aria-labelledby="recent-heading">
+      <div class="wrap">
+        <h2 class="section-scribe" id="recent-heading">Recent observations</h2>
+        <ol class="recent-list">
+          {% for p in entries %}
+          {% if loop.index > 1 and loop.index <= 4 %}
+          <li class="recent-card">
+            <a href="{{ base_url }}{{ p.url }}">
+              <p class="recent-meta">
+                {% if p.extra.bortle %}<span class="meta-item meta-bortle">Bortle {{ p.extra.bortle }}</span>{% endif %}
+                {% if p.date %}<span class="meta-item">{{ p.date | date('%b %d, %Y') }}</span>{% endif %}
+              </p>
+              <h3>{{ p.title }}</h3>
+              {% if p.summary %}<p>{{ p.summary | strip_html | truncate_words(20) }}</p>{% endif %}
+            </a>
+          </li>
+          {% endif %}
+          {% endfor %}
+        </ol>
+        <a class="arrow-link" href="{{ base_url }}/observations/">All observations <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <section class="about-teaser" aria-labelledby="about-heading">
+      <div class="wrap about-teaser-inner">
+        <h2 class="section-scribe" id="about-heading">About the log</h2>
+        {% if aboutpage %}<p>{{ aboutpage.description | e }}</p>{% endif %}
+        <a class="arrow-link" href="{{ base_url }}/about/">About this journal <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+  </main>
+{% include "footer.html" %}

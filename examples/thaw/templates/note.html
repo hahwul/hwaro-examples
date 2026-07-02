@@ -1,0 +1,33 @@
+{% include "header.html" %}
+  <main id="main">
+    <article class="note-single">
+      <div class="note-single-inner">
+        <p class="note-single-back"><a href="{{ base_url }}/field-notes/">← Field Notes</a></p>
+        <header class="note-single-head">
+          <h1 class="note-single-common">{{ page.title | e }}</h1>
+          {% if page.extra.latin_name %}<p class="note-single-latin">{{ page.extra.latin_name | e }}</p>{% endif %}
+          {% if page.extra.season %}
+          <ol class="season-ribbon season-ribbon-lg" aria-label="Season: {{ page.extra.season_label | default('see note', true) | e }}">
+            {% set months_full = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"] %}
+            {% set months_short = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"] %}
+            {% for i in range(0, 12) %}<li class="season-seg{% if page.extra.season[i] %} is-on{% endif %}" title="{{ months_full[i] }}"><span aria-hidden="true">{{ months_short[i] }}</span></li>{% endfor %}
+          </ol>
+          {% if page.extra.season_label %}<p class="note-season-label note-season-label-lg">{{ page.extra.season_label | e }}</p>{% endif %}
+          {% endif %}
+          <p class="note-single-meta">
+            {% if page.date %}<time datetime="{{ page.date | date('%Y-%m-%d') }}">{{ page.date | date('%B %d, %Y') }}</time>{% endif %}
+            {% if page.reading_time %}<span class="note-single-dot" aria-hidden="true">·</span><span>{{ page.reading_time }} min read</span>{% endif %}
+          </p>
+          {% if page.tags %}
+          <ul class="tag-list">
+            {% for t in page.tags %}<li><a href="{{ get_taxonomy_url(kind="tags", term=t) }}">{{ t }}</a></li>{% endfor %}
+          </ul>
+          {% endif %}
+        </header>
+        <div class="note-single-body">
+          {{ content | safe }}
+        </div>
+      </div>
+    </article>
+  </main>
+{% include "footer.html" %}

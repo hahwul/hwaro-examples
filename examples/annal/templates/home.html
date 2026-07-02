@@ -1,0 +1,65 @@
+{% include "header.html" %}
+{% set releases_section = get_section(path="releases") %}
+{% set folios = releases_section.pages | sort_by("date", reverse=true) %}
+{% set latest = folios | first %}
+<main id="main" class="site-main">
+
+  <section class="masthead" aria-labelledby="masthead-h">
+    <p class="masthead-kicker">A running ledger</p>
+    <h1 class="masthead-title" id="masthead-h">{{ site.title | e }}</h1>
+    <p class="masthead-pitch">
+      Commonplace keeps every note as a plain file on your own disk and draws
+      the backlinks between them as you write. This is the record of what
+      shipped, folio by folio.
+    </p>
+    {% if latest %}
+    <p class="masthead-latest">
+      Latest folio
+      <a href="{{ base_url }}{{ latest.url }}" class="masthead-latest-link">{{ latest.title }}{% if latest.extra.codename %} &mdash; {{ latest.extra.codename }}{% endif %}</a>
+      <time datetime="{{ latest.date | date('%Y-%m-%d') }}">{{ latest.date | date("%B %d, %Y") }}</time>
+    </p>
+    {% endif %}
+  </section>
+
+  <section class="ledger-section" aria-labelledby="ledger-h">
+    <div class="ledger-head">
+      <h2 id="ledger-h">The Ledger</h2>
+      <p class="ledger-note">Every folio, newest first. The semver hangs in the margin, in oldstyle figures, above the rule that opens each entry.</p>
+    </div>
+
+    <ol class="ledger" aria-label="Releases, newest first">
+      {% for p in folios %}
+      <li class="folio">
+        <article class="folio-entry">
+          <div class="folio-rule" aria-hidden="true"></div>
+          <div class="folio-grid">
+            <div class="folio-margin">
+              <span class="folio-num">{{ p.title }}</span>
+              <span class="folio-kicker">folio</span>
+            </div>
+            <div class="folio-body">
+              <a class="folio-title-link" href="{{ base_url }}{{ p.url }}">
+                <h3 class="folio-title">{% if p.extra.codename %}{{ p.extra.codename }}{% else %}Release {{ p.title }}{% endif %}</h3>
+              </a>
+              <p class="folio-meta">
+                <time datetime="{{ p.date | date('%Y-%m-%d') }}">{{ p.date | date("%B %d, %Y") }}</time>
+                {% if p.tags %}<span class="folio-tags">{% for t in p.tags %}<a href="{{ base_url }}/tags/{{ t | slugify }}/">{{ t }}</a>{% endfor %}</span>{% endif %}
+              </p>
+              <p class="folio-summary">{{ p.description | e }}</p>
+              <a class="folio-more" href="{{ base_url }}{{ p.url }}">Read the full folio <span aria-hidden="true">&rarr;</span></a>
+            </div>
+          </div>
+        </article>
+      </li>
+      {% endfor %}
+    </ol>
+  </section>
+
+  <section class="colophon" aria-labelledby="colophon-h">
+    <h2 id="colophon-h">What is Commonplace?</h2>
+    <div class="prose">{{ content | safe }}</div>
+    <p class="colophon-more"><a href="{{ base_url }}/about/">Read the full introduction &rarr;</a></p>
+  </section>
+
+</main>
+{% include "footer.html" %}

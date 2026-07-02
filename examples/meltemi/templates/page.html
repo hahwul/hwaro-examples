@@ -1,0 +1,57 @@
+{% include "header.html" %}
+    <main id="main">
+      <article class="entry-page{% if not page.extra.mileage %} entry-page-plain{% endif %}">
+        <header class="entry-head">
+          {% if page.extra.mileage %}
+            <div class="entry-figure" aria-hidden="true">
+              <span class="entry-num">{{ page.extra.mileage }}</span>
+              <span class="entry-unit">{{ page.extra.mileage_unit | default("mi") }}</span>
+            </div>
+          {% endif %}
+          <div class="entry-head-text">
+            {% if page.date or page.extra.week_label %}
+              <p class="entry-kicker">
+                {% if page.extra.week_label %}<span class="entry-week-label">{{ page.extra.week_label | e }}</span>{% endif %}
+                {% if page.date %}<time datetime="{{ page.date | date('%Y-%m-%d') }}">{{ page.date | date("%B %d, %Y") }}</time>{% endif %}
+              </p>
+            {% endif %}
+            <h1 class="entry-title">{{ page.title | e }}</h1>
+            {% if page.extra.long_run %}<p class="entry-longrun">Long run: {{ page.extra.long_run | e }}{% if page.reading_time %} · {{ page.reading_time }} min read{% endif %}</p>{% endif %}
+          </div>
+        </header>
+
+        <div class="prose">
+          {{ content | safe }}
+        </div>
+
+        {% if page.tags %}
+          <footer class="entry-taxa">
+            <p class="taxa-row"><span class="taxa-label">Tagged</span>
+              {% for t in page.tags %}<a class="tag-chip" href="{{ get_taxonomy_url(kind="tags", term=t) }}">{{ t }}</a>{% endfor %}
+            </p>
+          </footer>
+        {% endif %}
+
+        {% if page.date %}
+          <nav class="entry-nav" aria-label="Adjacent weeks">
+            {% if page.higher %}
+              <a class="entry-nav-link" href="{{ base_url }}{{ page.higher.url }}">
+                <span class="entry-nav-label"><span aria-hidden="true">←</span> Earlier week</span>
+                <span class="entry-nav-title">{{ page.higher.title | e }}</span>
+              </a>
+            {% else %}
+              <span class="entry-nav-empty">The log begins here.</span>
+            {% endif %}
+            {% if page.lower %}
+              <a class="entry-nav-link entry-nav-next" href="{{ base_url }}{{ page.lower.url }}">
+                <span class="entry-nav-label">Later week <span aria-hidden="true">→</span></span>
+                <span class="entry-nav-title">{{ page.lower.title | e }}</span>
+              </a>
+            {% else %}
+              <span class="entry-nav-empty entry-nav-next">This is the newest week logged.</span>
+            {% endif %}
+          </nav>
+        {% endif %}
+      </article>
+    </main>
+{% include "footer.html" %}
