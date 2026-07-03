@@ -32,3 +32,5 @@ A sector light shows different colours, usually white, red, and green, across di
 ## What to check before dark
 
 Do the identification work in daylight if the approach allows it: run the same track by day, note where the leading-light structures actually stand against the daylight landmarks, and time how long the approach takes at your boat's speed. A night entry is a poor place to discover that a chart symbol you read confidently at the table looks nothing like what is actually visible from the cockpit once the sun is down and every other light on the shore is competing for attention.
+
+The daylight dry run doubles as practice for [taking a three-point fix](/pilotage/taking-a-three-point-fix/) against the same structures you will be reading as lights after dark.

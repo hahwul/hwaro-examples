@@ -38,3 +38,5 @@ Every plan needs an answer to "what do we do if this goes wrong right now," work
 ## Keep it legible in the cockpit
 
 A pilotage plan that needs two hands and good light to read is a plan you will not use exactly when you need it. Write large, keep it to the one page, and laminate or bag it — spray on the page is not a hypothetical for this kind of approach.
+
+Draw the clearing bearings straight from [clearing lines and transits](/pilotage/clearing-lines-and-transits/), and check the plan's timing against [reading a tidal stream atlas](/pilotage/reading-a-tidal-stream-atlas/) before you commit to a waypoint's course and distance.

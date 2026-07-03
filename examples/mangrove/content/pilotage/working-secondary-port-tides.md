@@ -37,3 +37,5 @@ Almanacs usually print differences for a mean spring range and a mean neap range
 ## Where the method breaks down
 
 Secondary port differences assume the tide at that port behaves like a time-and-height-shifted copy of the standard port's curve. That assumption holds well for most open coastal harbours and fails inside estuaries with their own resonance, river-flow effects, or a double high water — Halyard Sound shows a distinct stand at high water that a straight secondary-port calculation understates by nearly twenty minutes. Where a secondary port carries a note in the almanac about non-standard curve shape, treat the calculated figure as a starting estimate, not a number to plan a drying-out alongside a wall against.
+
+Pair the height calculation here with [reading a tidal stream atlas](/pilotage/reading-a-tidal-stream-atlas/) — the same standard-port timing drives both, and a plan that gets the height right but the stream wrong is still a plan that arrives late.

@@ -42,3 +42,5 @@ rate = neap + (spring − neap) × (days_since_neap / days_in_half_cycle)
 A day roughly a third of the way from neaps to springs, at the +2 diamond above, gives 0.8 + (1.6 − 0.8) × 0.33 ≈ 1.07 knots — closer to the neap figure than the halfway point between the two, which is exactly what a linear interpolation should give that early in the cycle.
 
 Treat atlas rates as a reliable average, not a guarantee for the exact minute — funnelling water round a headland or through a narrows can run noticeably faster than the open-water rate printed at the nearest diamond.
+
+The standard port used for stream timing is often the same one your almanac uses for [secondary port tidal corrections](/pilotage/working-secondary-port-tides/) — work both from the one set of predictions rather than mixing standard ports partway through a passage.

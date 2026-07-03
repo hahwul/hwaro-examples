@@ -19,3 +19,5 @@ Every method in these pages has been worked, by hand, by at least two contributo
 Nothing here assumes a functioning GPS, a charged battery, or a signal. Every fix, every tidal calculation, and every plan can be worked with paper, a pencil, a hand-bearing compass, a watch, and the current chart and tide table for the area. Where an electronic aid genuinely earns its place — a plotter cross-check on a fix, for instance — the text says so explicitly and treats it as a check against the manual method, never as the method itself.
 
 Corrections and reports of a chapter that no longer matches conditions on the water travel through the usual channel: a dated note left at the fairway noticeboard by Bittern Quay, addressed to the Sable Bight Pilot Station.
+
+Return to the [full contents](/pilotage/) to start reading, or back to the [handbook masthead](/).
