@@ -1,0 +1,47 @@
+{% include "header.html" %}
+<main id="main" class="site-main container">
+  <header class="section-header">
+    <h1>{{ section.title | e }}</h1>
+    {{ content | safe }}
+  </header>
+
+  {% if paginator %}
+    {% set entries = paginator.pages %}
+  {% else %}
+    {% set entries = section.pages | sort_by("date", reverse=true) %}
+  {% endif %}
+
+  <ul class="issue-list">
+    {% for p in entries %}
+    <li>
+      <a href="{{ base_url }}{{ p.url }}" class="issue-card">
+        <span class="issue-number">Issue #{{ p.extra.issue_num | default("00") }}</span>
+        <h2 class="issue-title">{{ p.title | e }}</h2>
+        {% if p.date %}<time class="issue-date" datetime="{{ p.date }}">{{ p.date | date("%B %d, %Y") }}</time>{% endif %}
+        {% if p.description %}<p class="issue-desc">{{ p.description | e }}</p>{% endif %}
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+
+  {% if paginator and paginator.number_pagers > 1 %}
+  <nav class="pagination" aria-label="Pagination">
+    <ul class="pagination-list">
+      {% if paginator.previous %}
+      <li><a href="{{ base_url }}{{ paginator.previous }}">&larr; Newer</a></li>
+      {% else %}
+      <li class="pagination-disabled"><span>&larr; Newer</span></li>
+      {% endif %}
+      
+      <li><span class="pagination-info" style="font-size: var(--text-sm); color: var(--muted);">Page {{ paginator.current_index }} of {{ paginator.number_pagers }}</span></li>
+
+      {% if paginator.next %}
+      <li><a href="{{ base_url }}{{ paginator.next }}">Older &rarr;</a></li>
+      {% else %}
+      <li class="pagination-disabled"><span>Older &rarr;</span></li>
+      {% endif %}
+    </ul>
+  </nav>
+  {% endif %}
+</main>
+{% include "footer.html" %}
