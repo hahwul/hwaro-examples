@@ -32,4 +32,4 @@ Adds encrypted sync across every device you own, so the same feed and the same m
 
 Built for small groups who want a shared pile without a shared folder structure. A team space has its own momentum feed, ordered by when *anyone* on the team last touched a note, so the group's collective attention — not an org chart — decides what surfaces. Admin controls cover seat management, space-level export, and an audit log of who touched what and when.
 
-Annual billing on Plus and Teams saves two months versus paying monthly; both plans can be cancelled at any time, and your notes export to plain markdown files regardless of tier. Ready to try it? [Download Momentum](@/download.md) and stay on Personal for as long as you like.
+Annual billing on Plus and Teams saves two months versus paying monthly; both plans can be cancelled at any time, and your notes export to plain markdown files regardless of tier. Ready to try it? [Download Momentum](../download/) and stay on Personal for as long as you like.

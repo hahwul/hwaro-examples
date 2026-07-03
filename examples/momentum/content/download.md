@@ -44,4 +44,4 @@ $ momentum capture "Backyard fence — measurements"
 saved · touched just now · 1 link detected (backyard-fence-2025)
 ```
 
-Every capture through the CLI lands in the same feed as the desktop and mobile apps, ordered the same way, synced the same way. There is exactly one pile, no matter which door you walked in through — see the [full feature list](@/features.md) for what happens to a note after it lands.
+Every capture through the CLI lands in the same feed as the desktop and mobile apps, ordered the same way, synced the same way. There is exactly one pile, no matter which door you walked in through — see the [full feature list](../features/) for what happens to a note after it lands.

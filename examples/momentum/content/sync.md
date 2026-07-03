@@ -33,4 +33,4 @@ Nothing here requires reading logs, but if you ever open the diagnostics panel, 
 
 ## Offline is not a fallback mode
 
-Because the local copy is the real copy, losing a connection never blocks writing, searching, or reading. Momentum simply queues the encrypted change log and sends it the next time a peer or the relay is reachable — on a plane, in a basement, or with sync turned off entirely because you only ever use one device. Sync across devices is a paid feature; the single-device tier stays free — see [pricing](@/pricing.md) for the full breakdown.
+Because the local copy is the real copy, losing a connection never blocks writing, searching, or reading. Momentum simply queues the encrypted change log and sends it the next time a peer or the relay is reachable — on a plane, in a basement, or with sync turned off entirely because you only ever use one device. Sync across devices is a paid feature; the single-device tier stays free — see [pricing](../pricing/) for the full breakdown.

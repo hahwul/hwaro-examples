@@ -42,4 +42,4 @@ never comes up. Compare against the old app's
 "choose a notebook" step during the demo.
 ```
 
-The `touched` field is the only thing the feed actually sorts on — everything else, including the links, is metadata Momentum keeps for you but never requires you to fill in. That same field is what travels between devices; see [how sync merges it](@/sync.md) without ever asking you to resolve a conflict.
+The `touched` field is the only thing the feed actually sorts on — everything else, including the links, is metadata Momentum keeps for you but never requires you to fill in. That same field is what travels between devices; see [how sync merges it](../sync/) without ever asking you to resolve a conflict.
