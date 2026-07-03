@@ -16,9 +16,9 @@ cd "$(dirname "$0")/../.."
 
 name="${1:?usage: loop.sh <name>}"
 max="${MAX_ROUNDS:-3}"
-review_model="${AGY_REVIEW_MODEL:-Claude Sonnet 4.6 (Thinking)}"
-review_fallback="${AGY_REVIEW_FALLBACK_MODEL:-Gemini 3.1 Pro (High)}"
-escalation_model="${AGY_ESCALATION_MODEL:-Claude Sonnet 4.6 (Thinking)}"
+review_model="${AGY_REVIEW_MODEL:-Gemini 3.1 Pro (High)}"
+review_fallback="${AGY_REVIEW_FALLBACK_MODEL:-Gemini 3.5 Flash (High)}"
+escalation_model="${AGY_ESCALATION_MODEL:-Gemini 3.1 Pro (High)}"
 out="_agent/$name"
 mkdir -p "$out"
 

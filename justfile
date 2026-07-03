@@ -9,8 +9,8 @@
 # Requires: agy on PATH with this repo as a trusted workspace, hwaro, python3,
 # Google Chrome (for screenshots), just.
 
-design_model := env_var_or_default("AGY_DESIGN_MODEL", "Claude Sonnet 4.6 (Thinking)")
-review_model := env_var_or_default("AGY_REVIEW_MODEL", "Claude Sonnet 4.6 (Thinking)")
+design_model := env_var_or_default("AGY_DESIGN_MODEL", "Gemini 3.5 Flash (High)")
+review_model := env_var_or_default("AGY_REVIEW_MODEL", "Gemini 3.1 Pro (High)")
 
 default:
     @just --list
