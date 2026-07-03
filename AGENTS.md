@@ -30,13 +30,15 @@ hwaro-examples/
 ├── manifest.json               # design matrix for all examples (single source of truth)
 ├── DESIGN.md                   # the quality bar — read before touching examples/
 ├── tags.json                   # DERIVED from manifest.json (scripts/sync-tags.sh)
+├── justfile                    # agent pipeline: just new/design/build/fix/verify/shots <name>
 ├── scripts/
 │   ├── check-site.sh           # full per-site quality gate (build+lint+greps+links)
 │   ├── lint-examples.sh        # placeholder/emoji/effect-cap lint (used by CI)
 │   ├── sync-tags.sh            # manifest.json -> tags.json (+ --check drift mode)
 │   ├── validate-manifest.py    # manifest schema/uniqueness/vocabulary checks
 │   ├── retired-names.txt       # names of removed legacy examples — never reuse
-│   └── preview-index.sh        # local gallery preview without Docker
+│   ├── preview-index.sh        # local gallery preview without Docker
+│   └── agent/                  # agy orchestration: prompts + verify.sh + shots.sh
 └── examples/                   # all example sites (flat; one dir = one site)
     ├── sirocco/                # light editorial blog
     ├── basalt/                 # docs for a fictional build tool
@@ -84,6 +86,7 @@ Follow `DESIGN.md` §15 exactly — it is the authoritative step order. Summary:
    grep -rn '&lt;div\|&lt;section' public/ --include='*.html'  # escaped-HTML leak: expect none outside code samples
    grep -rn '{{\|{%' public/ --include='*.html'                # unrendered template syntax: expect none outside code samples
    grep -rn 'href=""' public/ --include='*.html'               # permalink trap: expect none
+   grep -c '<h1' public/index.html                              # exactly one h1 on the homepage
    ```
 
    Then open `public/index.html` and confirm listings show real titles,

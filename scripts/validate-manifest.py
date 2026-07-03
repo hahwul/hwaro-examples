@@ -170,6 +170,21 @@ def main() -> int:
             if fs not in section_names:
                 err(f"{ctx} feeds section '{fs}' does not match any content section {section_names}")
 
+    # near-duplicate detection: an entry cloned from another with the name
+    # swapped passes exact-uniqueness checks; token-set similarity catches it
+    def tokens(e: dict) -> set:
+        text = f"{e.get('brief','')} {e.get('signature','')} {e.get('content',{}).get('theme','')}"
+        return {w for w in re.findall(r"[a-z]+", text.lower()) if w != e.get("name", "")}
+
+    toksets = [(e.get("name"), tokens(e)) for e in examples]
+    for i, (n1, t1) in enumerate(toksets):
+        for n2, t2 in toksets[i + 1:]:
+            if not t1 or not t2:
+                continue
+            jac = len(t1 & t2) / len(t1 | t2)
+            if jac > 0.7:
+                err(f"near-duplicate entries: {n1} vs {n2} share {jac:.0%} of brief/signature/theme tokens — no recolored clones")
+
     for pair, count in pairings.items():
         if count > 5:
             err(f"font pairing {pair[0]}/{pair[1]} used {count}x (max 5)")

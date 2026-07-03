@@ -1,0 +1,58 @@
+Build the new example site "__NAME__" in this repository (hwaro-examples).
+
+The manifest entry for "__NAME__" already exists in manifest.json — it is your
+complete art-direction assignment (category, scheme, palette, typography,
+layout, signature, content plan). Do not modify manifest.json.
+
+MANDATORY reading order, before creating any file:
+1. The "__NAME__" entry in manifest.json.
+2. DESIGN.md — all of it. §15 is your step-by-step process; §16 is your final
+   checklist.
+3. AGENTS.md — especially "Template pattern library" and "Idioms that build
+   green but render broken".
+
+Build rules (non-negotiable):
+- Create examples/__NAME__ ONLY via `cd examples && hwaro init __NAME__`. Never
+  copy, move, rename, or modify any other directory under examples/ — other
+  examples are read-only reference material. If examples/__NAME__ already
+  exists before you scaffold, STOP and report instead of reusing anything.
+- Follow DESIGN.md §15 in order: scaffold fresh, design tokens first, then
+  templates, then the signature element, then content.
+- Copy ALL template logic from the AGENTS.md pattern library. Do not invent
+  template idioms. If the site is `auto`-scheme: include the pre-paint theme
+  guard and theme.js exactly as the library shows, define both palettes per
+  DESIGN.md §6, and override the code-block background with palette tokens
+  (highlight themes are single-scheme).
+- The homepage has exactly one <h1>, on the first screen, in the display font.
+- The signature element must be visible on the homepage's first screen
+  (1280x720). Budget your band heights: everything above the signature's
+  bottom edge must sum to under 720px. Show this arithmetic in your report.
+- Prose is centered or paired with real matter — never a 65ch column pinned
+  left inside a wide container with a permanently empty right half.
+- Content per DESIGN.md §12: real fictional prose, 150+ PROSE words per page
+  (front matter, code fences, and shortcode calls do not count), dates spread
+  across 2025-01..2026-06, real tags, <!-- more --> markers on listable pages.
+- No emoji, no lorem ipsum, no binary assets, no external origins beyond
+  Google Fonts and cdn.jsdelivr.net, all CSS in static/css/style.css, every
+  href through {{ base_url }}.
+- If something renders empty or a build fails, check the broken-idioms table
+  in AGENTS.md before trying anything else.
+
+Verification (do not report success without all of these):
+1. DESIGN.md §15 step 9: build + all four rendered-output greps (including
+   `grep -c '<h1' public/index.html` == 1) + manually confirm the home listing
+   shows real titles, dates, and links.
+2. DESIGN.md §16 design QA pass: every checkbox. For first-screen items,
+   show the band-height arithmetic — do not certify from source reasoning.
+3. `scripts/check-site.sh __NAME__` must print "PASS: __NAME__".
+4. Run `scripts/sync-tags.sh`, then inside examples/__NAME__ run
+   `hwaro tool agents-md --remote --write`.
+
+Final report format:
+- check-site.sh output, verbatim
+- the four grep commands and their outputs
+- the first-screen height budget arithmetic
+- the §16 checklist with every item marked [x] and one line of concrete
+  evidence each (a command output or file:line — not just "yes")
+
+Do NOT git commit anything. Leave all changes in the working tree for review.

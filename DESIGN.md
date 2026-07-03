@@ -294,6 +294,14 @@ Every site defines its palette as CSS custom properties — values come from
   with a toggle (`static/js/theme.js`) that sets `data-theme` on `<html>` and
   persists to `localStorage`, defaulting to the system preference. Set
   `color-scheme: light dark` so form controls and scrollbars follow.
+- **Code blocks on `auto` sites:** highlight themes are single-scheme, so a
+  light theme ships a white code background into dark mode. Override with
+  palette tokens: `.prose pre { background: var(--surface); border: 1px solid
+  var(--border); }` and `.hljs { background: transparent; }` — then verify a
+  code block in dark mode. Check the *token* colors too: colors designed for
+  white paper go illegible on dark surfaces; in the dark scheme, remap them
+  to palette tokens (base `var(--fg)`, keywords `var(--accent)`, comments
+  `var(--muted)`, strings via `color-mix`). §6 contrast applies inside code.
 
 ## 7. Layout catalog
 
@@ -432,7 +440,9 @@ so Crinja never sees the braces.
 - **No lorem ipsum, ever.** No "example content", no "this is a sample post".
 - Write specific, plausible fiction: named tools with real-sounding changelogs,
   essays with actual arguments, recipes with real steps. 150+ words per page
-  of genuine prose; docs/book pages include working fenced code blocks.
+  of genuine **prose** — front matter, fenced code blocks, and shortcode
+  bodies do not count toward the total. Docs/book pages include working
+  fenced code blocks on top of that.
 - Placeholder titles/descriptions fail lint: never "My Hwaro Site",
   "My Blog", "Hello World", "Welcome to my new Hwaro site.",
   "Welcome to my personal blog powered by Hwaro.".
@@ -491,6 +501,7 @@ draft contains one, apply the listed fix before continuing.
 | Uniform card grid where every card is identical | Differentiate the anatomy: a lead card, mixed sizes, or rich meta rows (§7 №9) |
 | Multi-column footer link dump on a 7-page site | Footer proportionate to the site — one row of links plus a colophon line is usually right |
 | Free-floating decoration: blobs, glows, dot grids, floating shapes | Delete. Decoration must be the signature element or directly support it |
+| A 65ch prose column pinned left inside a wide container, right half permanently empty | Center the measure (`margin-inline: auto`) or fill the space with real matter (TOC, meta rail, figures) |
 | `transition: all .3s` sprinkled everywhere | §9: ≤200ms, named properties only |
 | Uniform 16px/1.5 text with no measure limit | §5: fluid scale, 65ch measure, real hierarchy |
 
@@ -597,6 +608,9 @@ verification before PR. Each step has a checkpoint; do not skip ahead.
 
    # Empty links from the permalink trap (§14.5) — expect NO matches:
    grep -rn 'href=""' public/ --include='*.html'
+
+   # Exactly one h1 on the homepage (§10) — expect exactly 1:
+   grep -c '<h1' public/index.html
    ```
 
    Then open `public/index.html` and confirm the home listing actually shows
@@ -621,6 +635,14 @@ rationalize a "no".
 
 **First screen** (the gallery shot is 1280×720 of the homepage)
 
+Verify these against an **actual rendering** at 1280×720 — `hwaro serve` and
+look, or a headless screenshot (`chrome --headless=new --screenshot=shot.png
+--window-size=1280,720 <url>`). Reasoning from source alone is not evidence:
+a rule existing in style.css says nothing about where it lands on screen. If
+you cannot render, budget heights explicitly (topbar + each band, in px) and
+show the arithmetic that puts the signature above 720px.
+
+- [ ] The homepage has exactly one `<h1>`, and it is on the first screen.
 - [ ] The manifest's signature element is visible without scrolling.
 - [ ] The display font is visible without scrolling.
 - [ ] The largest text on the first screen is `--text-2xl` or larger.
@@ -647,8 +669,10 @@ rationalize a "no".
       used consistently across cards, insets, and code blocks.
 - [ ] Every link and card has a designed hover state; every interactive
       element has a `:focus-visible` ring; the reduced-motion guard exists.
-- [ ] At 360px: no horizontal scroll (no fixed widths >360px outside media
-      queries), nav usable, touch targets ≥40px.
+- [ ] At 360px: no horizontal scroll — no fixed/min widths >360px outside
+      media queries, multi-column grids stack to one column, long mono
+      strings wrap, and decorative offsets (shadows, skews) don't add layout
+      width. Nav usable, touch targets ≥40px.
 - [ ] Interior pages (section, page, taxonomy, 404, search) carry the same
       design system — not unstyled defaults with the home's header bolted on.
 
