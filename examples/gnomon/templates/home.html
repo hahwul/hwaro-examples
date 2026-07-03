@@ -1,0 +1,64 @@
+{% include "header.html" %}
+<main id="main">
+  <!-- Status Strip (Instrument Panel style) -->
+  <section class="status-strip" aria-label="System Status">
+    <div class="stat-tile">
+      <span class="stat-label">Active Version</span>
+      <span class="stat-value">v2.2.0</span>
+    </div>
+    <div class="stat-tile">
+      <span class="stat-label">Jobs Scheduled</span>
+      <span class="stat-value">1,482,912</span>
+    </div>
+    <div class="stat-tile">
+      <span class="stat-label">Cluster Uptime</span>
+      <span class="stat-value">99.98%</span>
+    </div>
+  </section>
+
+  <!-- Main Grid Layout -->
+  <div class="dashboard-body">
+    <!-- Intro / Real Matter Section -->
+    <section class="intro-panel">
+      <h1>{{ page.title | e }}</h1>
+      <div class="intro-content">
+        {{ content | safe }}
+      </div>
+    </section>
+
+    <!-- Release Panels Grid -->
+    <section class="releases-grid-container" aria-label="Latest Releases">
+      <h2 class="section-title">Latest Releases</h2>
+      {% set entries = get_section(path="releases").pages | sort_by("date", reverse=true) %}
+      <div class="releases-grid">
+        {% for p in entries %}{% if loop.index0 < 6 %}
+        <article class="release-card">
+          <div class="release-header">
+            <!-- Skewed shadow version numeral (Signature) -->
+            <div class="gnomon-numeral-wrapper">
+              <span class="gnomon-numeral" data-version="{{ p.title }}">{{ p.title }}</span>
+            </div>
+            {% if p.date %}
+            <time class="release-date" datetime="{{ p.date }}">{{ p.date | date("%Y-%m-%d") }}</time>
+            {% endif %}
+          </div>
+          <div class="release-body">
+            {% if p.description %}
+            <p class="release-desc">{{ p.description }}</p>
+            {% endif %}
+            <a href="{{ base_url }}{{ p.url }}" class="read-more">View Full Release Notes</a>
+          </div>
+          {% if p.tags %}
+          <div class="card-tags">
+            {% for t in p.tags %}
+            <span class="card-tag">#{{ t }}</span>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </article>
+        {% endif %}{% endfor %}
+      </div>
+    </section>
+  </div>
+</main>
+{% include "footer.html" %}

@@ -1,0 +1,24 @@
+{% include "header.html" %}
+<main id="main" class="taxonomy-term-container">
+  <div class="taxonomy-term-header">
+    <span class="meta-label">Classification Tag</span>
+    <h1>#{{ taxonomy_term }}</h1>
+  </div>
+  {% set tax = get_taxonomy(kind="tags") %}
+  <div class="term-pages-list">
+    {% for term in tax.items %}{% if term.name == taxonomy_term %}
+      {% for p in term.pages | sort_by("date", reverse=true) %}
+      <article class="term-page-card">
+        <a href="{{ base_url }}{{ p.url }}" class="term-page-title">{{ p.title }}</a>
+        {% if p.date %}
+        <time class="term-page-date" datetime="{{ p.date }}">{{ p.date | date("%B %d, %Y") }}</time>
+        {% endif %}
+      </article>
+      {% endfor %}
+    {% endif %}{% endfor %}
+  </div>
+  <div class="taxonomy-term-footer">
+    <a href="{{ base_url }}/tags/" class="back-link">&larr; Return to all tags</a>
+  </div>
+</main>
+{% include "footer.html" %}
