@@ -1,0 +1,22 @@
+{% include "header.html" %}
+<main id="main" class="site-main">
+  <header class="page-head">
+    <p class="page-kicker">Tag</p>
+    <h1 class="page-title">{{ taxonomy_term }}</h1>
+    <p class="page-intro">Episodes filed under <em>{{ taxonomy_term }}</em> &middot; <a href="{{ base_url }}/tags/">all tags</a></p>
+  </header>
+  {% set tax = get_taxonomy(kind="tags") %}
+  <ol class="spine" aria-label="Episodes tagged {{ taxonomy_term }}">
+    {% for t in tax.items %}
+    {% if t.name == taxonomy_term %}
+    {% for p in t.pages | sort_by("date", reverse=true) %}
+      {% set ep = p %}
+      {% set pinned = false %}
+      {% set nested = false %}
+      {% include "partials/episode-row.html" %}
+    {% endfor %}
+    {% endif %}
+    {% endfor %}
+  </ol>
+</main>
+{% include "footer.html" %}

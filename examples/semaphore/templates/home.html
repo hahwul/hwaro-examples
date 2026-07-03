@@ -1,0 +1,47 @@
+{% include "header.html" %}
+{% set releases = get_section(path="releases") %}
+{% set sorted = releases.pages | sort_by("date", reverse=true) %}
+{% set latest = sorted | first %}
+
+<section class="hero" aria-label="Semaphore, a GPU-accelerated terminal emulator">
+  <p class="line line-cmd"><span class="prompt-path">you@ghost ~</span> <span class="prompt-caret">$</span> <span class="cmd">semaphore --version</span></p>
+  <h1 class="wordmark">semaphore <span class="wordmark-ver">{{ latest.title | replace("v", "") }}</span></h1>
+  <p class="hero-sub">gpu-accelerated terminal · vulkan / metal · ligatures shaped once · panes without ceremony</p>
+</section>
+
+<section class="session" aria-label="Latest release {{ latest.title }}">
+  <p class="line line-cmd anim" style="--i: 1"><span class="prompt-semver">{{ latest.title }}</span> <span class="prompt-caret">❯</span> <span class="cmd">changelog --latest</span></p>
+  <p class="line line-comment anim" style="--i: 2"># released {{ latest.date | date("%Y-%m-%d") }}{% if latest.extra.codename %} · codename "{{ latest.extra.codename }}"{% endif %} · {{ latest.extra.highlights | length }} highlights</p>
+  <ul class="out-list">
+    {% for h in latest.extra.highlights %}
+    <li class="anim" style="--i: {{ loop.index + 2 }}">{{ h }}</li>
+    {% endfor %}
+  </ul>
+  <p class="line line-open anim" style="--i: 8"><a href="{{ base_url }}{{ latest.url }}">open full notes → releases/{{ latest.title }}</a></p>
+  <p class="line line-cmd anim" style="--i: 9"><span class="prompt-semver">{{ latest.title }}</span> <span class="prompt-caret">❯</span> <span class="cursor" aria-hidden="true"></span></p>
+</section>
+
+<section class="history" aria-labelledby="history-h">
+  <p class="line line-cmd"><span class="prompt-semver">{{ latest.title }}</span> <span class="prompt-caret">❯</span> <span class="cmd">history releases/</span></p>
+  <h2 class="sr-only" id="history-h">Release history</h2>
+  <ol class="release-rows">
+    {% for p in sorted %}
+    <li>
+      <a class="release-row" href="{{ base_url }}{{ p.url }}">
+        <span class="row-date">{{ p.date | date("%Y-%m-%d") }}</span>
+        <span class="row-ver">{{ p.title }}</span>
+        <span class="row-desc">{{ p.description }}</span>
+        <span class="row-arrow" aria-hidden="true">→</span>
+      </a>
+    </li>
+    {% endfor %}
+  </ol>
+</section>
+
+<section class="readme" aria-labelledby="readme-h">
+  <p class="line line-cmd"><span class="prompt-semver">{{ latest.title }}</span> <span class="prompt-caret">❯</span> <span class="cmd">cat README.md</span></p>
+  <h2 class="sr-only" id="readme-h">About Semaphore</h2>
+  <div class="prose">{{ content | safe }}</div>
+  <p class="line line-open"><a href="{{ base_url }}/about/">man semaphore → about</a></p>
+</section>
+{% include "footer.html" %}

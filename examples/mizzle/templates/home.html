@@ -1,0 +1,38 @@
+{% include "header.html" %}
+    <main id="main">
+      {% set entries = get_section(path="sessions").pages | sort_by("date", reverse=true) %}
+      {% set latest = entries | first %}
+      <section class="hero spread" aria-label="Latest session">
+        <div class="gutter hero-gutter">
+          {% if latest.date %}<time class="hero-date" datetime="{{ latest.date | date("%Y-%m-%d") }}">{{ latest.date | date("%d %b %Y") }}</time>{% endif %}
+        </div>
+        <div class="bodyside hero-body">
+          <p class="kicker">The latest session</p>
+          <h1 class="hero-title"><a href="{{ base_url }}{{ latest.url }}">{{ latest.title }}</a></h1>
+          {% if latest.extra.season %}<p class="season-note">{{ latest.extra.season }}</p>{% endif %}
+          {% if latest.extra.temae %}<p class="hero-temae"><span class="label">Temae</span> {{ latest.extra.temae }}</p>{% endif %}
+          {% if latest.summary %}<p class="hero-summary">{{ latest.summary | strip_html | truncate_words(44) }}</p>{% endif %}
+          <p class="hero-more"><a class="read-link" href="{{ base_url }}{{ latest.url }}">Read the session</a></p>
+        </div>
+      </section>
+
+      {% if content | strip_html | trim %}
+      <section class="home-note spread" aria-label="About this journal">
+        <div class="gutter"><span class="brush-small" aria-hidden="true">&#10087;</span></div>
+        <div class="bodyside prose-note">{{ content | safe }}</div>
+      </section>
+      {% endif %}
+
+      <section class="earlier" aria-label="Earlier sessions">
+        <h2 class="list-heading spread"><span class="gutter"></span><span class="bodyside">Earlier sessions</span></h2>
+        <ol class="sessions">
+          {% for p in entries %}
+          {% if loop.index > 1 %}
+          {% include "partials/row.html" %}
+          {% endif %}
+          {% endfor %}
+        </ol>
+        <p class="all-link spread"><span class="gutter"></span><span class="bodyside"><a class="read-link" href="{{ base_url }}/sessions/">The whole practice, session by session</a></span></p>
+      </section>
+    </main>
+{% include "footer.html" %}

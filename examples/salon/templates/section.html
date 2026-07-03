@@ -1,0 +1,47 @@
+{% include "header.html" %}
+  <main id="main" class="site-main section-main">
+    <header class="section-head">
+      <p class="section-kicker">Salon</p>
+      <h1>{{ page.title | e }}</h1>
+      {% if page.description %}<p class="section-dek">{{ page.description | e }}</p>{% endif %}
+    </header>
+
+    {{ content | safe }}
+
+    <ol class="essay-index essay-index--full">
+      {% if paginator %}
+        {% for p in paginator.pages %}
+        <li class="essay-index-item">
+          <span class="eii-folio" aria-hidden="true">{{ loop.index }}</span>
+          <a href="{{ base_url }}{{ p.url }}">
+            <span class="eii-kicker">{{ p.extra.medium | default("Criticism") | upper }}</span>
+            <span class="eii-title">{{ p.title | e }}</span>
+            {% if p.description %}<span class="eii-dek">{{ p.description | e }}</span>{% endif %}
+            <span class="eii-byline">
+              {% if p.extra.critic %}{{ p.extra.critic | e }}{% endif %}
+              {% if p.date %}<span aria-hidden="true"> · </span>{{ p.date | date("%B %-d, %Y") }}{% endif %}
+            </span>
+          </a>
+        </li>
+        {% endfor %}
+      {% else %}
+        {% for p in section.pages %}
+        <li class="essay-index-item">
+          <span class="eii-folio" aria-hidden="true">{{ loop.index }}</span>
+          <a href="{{ base_url }}{{ p.url }}">
+            <span class="eii-kicker">{{ p.extra.medium | default("Criticism") | upper }}</span>
+            <span class="eii-title">{{ p.title | e }}</span>
+            {% if p.description %}<span class="eii-dek">{{ p.description | e }}</span>{% endif %}
+            <span class="eii-byline">
+              {% if p.extra.critic %}{{ p.extra.critic | e }}{% endif %}
+              {% if p.date %}<span aria-hidden="true"> · </span>{{ p.date | date("%B %-d, %Y") }}{% endif %}
+            </span>
+          </a>
+        </li>
+        {% endfor %}
+      {% endif %}
+    </ol>
+
+    {{ pagination }}
+  </main>
+{% include "footer.html" %}

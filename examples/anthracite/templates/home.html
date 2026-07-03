@@ -1,0 +1,66 @@
+{% include "header.html" %}
+        <main id="main" class="term-main home">
+          <section class="hero" aria-labelledby="hero-h">
+            <h1 id="hero-h" class="hero-word">anthracite<span class="hero-cursor" aria-hidden="true">_</span></h1>
+            <p class="hero-tagline">Static analysis for shell scripts, documented rule by rule.</p>
+
+            <div class="lint-session" role="group" aria-label="Example lint run against deploy.sh">
+              <p class="lint-prompt"><span class="lint-user">you@ci</span><span class="lint-colon">:</span><span class="lint-path">~/app</span><span class="lint-dollar">$</span><span class="lint-cmd">anthracite lint deploy.sh</span></p>
+
+              <ol class="lint-findings">
+                <li class="finding is-error">
+                  <div class="finding-head">
+                    <a class="finding-code" href="{{ base_url }}/rules/an101-unquoted-variable-expansion/">AN101</a>
+                    <span class="finding-sev">error</span>
+                    <span class="finding-loc">deploy.sh:12:14</span>
+                  </div>
+                  <p class="finding-src"><code>rm -rf <mark>$TARGET_DIR</mark>/*</code></p>
+                  <p class="finding-msg">unquoted expansion &mdash; word-splits and globs before <code>rm</code> runs</p>
+                </li>
+                <li class="finding is-warning">
+                  <div class="finding-head">
+                    <a class="finding-code" href="{{ base_url }}/rules/an214-word-splitting-unquoted-expansion/">AN214</a>
+                    <span class="finding-sev">warning</span>
+                    <span class="finding-loc">deploy.sh:27:8</span>
+                  </div>
+                  <p class="finding-src"><code>for host in <mark>$@</mark>; do</code></p>
+                  <p class="finding-msg">word splitting on unquoted positional parameters</p>
+                </li>
+                <li class="finding is-error">
+                  <div class="finding-head">
+                    <a class="finding-code" href="{{ base_url }}/rules/an301-non-posix-test-operator/">AN301</a>
+                    <span class="finding-sev">error</span>
+                    <span class="finding-loc">deploy.sh:41:1</span>
+                  </div>
+                  <p class="finding-src"><code><mark>[[</mark> "$STAGE" == "prod" ]]</code></p>
+                  <p class="finding-msg"><code>[[</code> is not defined by POSIX <code>sh</code></p>
+                </li>
+              </ol>
+
+              <p class="lint-summary">3 findings &mdash; 2 errors, 1 warning &mdash; <code>exit 1</code></p>
+            </div>
+          </section>
+
+          <div class="prose home-prose">{{ content | safe }}</div>
+
+          <section class="home-rules" aria-labelledby="home-rules-h">
+            <h2 id="home-rules-h"># rules</h2>
+            <p class="home-rules-lede">The complete manual, evaluated in this order on every run.</p>
+            <ol class="home-rules-list">
+              {% set rules = get_section(path="rules") %}
+              {% for r in rules.pages | sort_by("weight") %}
+              <li class="home-rules-item">
+                <a href="{{ base_url }}{{ r.url }}">
+                  <span class="hr-code">{{ r.extra.code }}</span>
+                  <span class="hr-body">
+                    <span class="hr-title">{{ r.title | e }}</span>
+                    <span class="hr-desc">{{ r.description | e }}</span>
+                  </span>
+                  <span class="hr-sev hr-sev-{{ r.extra.severity }}">{{ r.extra.severity }}</span>
+                </a>
+              </li>
+              {% endfor %}
+            </ol>
+          </section>
+        </main>
+{% include "footer.html" %}

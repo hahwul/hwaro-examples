@@ -1,0 +1,20 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <header class="section-head wrap">
+      <p class="section-kicker">{% if taxonomy_name == "categories" %}Filed as{% else %}Tagged{% endif %}</p>
+      <h1 class="section-title">{{ taxonomy_term }}</h1>
+    </header>
+    <ul class="programme-well wrap">
+      {% set tax = get_taxonomy(kind=taxonomy_name) %}
+      {% for term in tax.items %}
+        {% if term.name == taxonomy_term %}
+          {% for p in term.pages | sort_by("date", reverse=true) %}
+            {% set entry = p %}
+            {% include "partials/programme-row.html" %}
+          {% endfor %}
+        {% endif %}
+      {% endfor %}
+    </ul>
+    <p class="wall-foot wrap"><a href="{{ base_url }}/{{ taxonomy_name }}/"><span aria-hidden="true">&larr; </span>All {{ taxonomy_name }}</a></p>
+  </main>
+{% include "footer.html" %}

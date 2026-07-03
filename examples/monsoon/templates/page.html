@@ -1,0 +1,52 @@
+{% include "header.html" %}
+  <main id="main">
+    <article class="entry{% if page.date %} entry--ferment{% endif %}">
+
+      {% if page.date %}
+      {% set dn = ((now(format="%s") | int) - (page.date | date("%s") | int)) // 86400 %}
+      <header class="entry__head">
+        <p class="eyebrow">
+          {% if page.categories %}<a class="eyebrow__cat" href="{{ base_url }}/categories/{{ page.categories | first | slugify }}/">{{ page.categories | first }}</a>{% else %}From the log{% endif %}
+        </p>
+        <h1 class="entry__title">{{ page.title | e }}</h1>
+        <div class="counter" aria-label="Day {{ dn }} of this ferment">
+          <span class="counter__label">Day</span>
+          <span class="counter__n">{{ dn }}</span>
+        </div>
+        <p class="entry__meta">
+          <span>Jarred {{ page.date | date("%B %-d, %Y") }}</span>
+          {% if page.reading_time %}<span class="dot" aria-hidden="true">·</span><span>{{ page.reading_time }} min read</span>{% endif %}
+        </p>
+        {% if page.tags %}
+        <ul class="taglist">
+          {% for t in page.tags %}<li><a class="tag" href="{{ base_url }}/tags/{{ t | slugify }}/">{{ t }}</a></li>{% endfor %}
+        </ul>
+        {% endif %}
+      </header>
+      {% else %}
+      <header class="entry__head entry__head--plain">
+        <h1 class="entry__title">{{ page.title | e }}</h1>
+        {% if page.description %}<p class="entry__standfirst">{{ page.description | e }}</p>{% endif %}
+      </header>
+      {% endif %}
+
+      <div class="prose">
+        {{ content | safe }}
+      </div>
+
+      {% if page.date %}
+      {% set siblings = get_section(path="ferments").pages | sort_by("date", reverse=true) %}
+      <nav class="entry__nav" aria-label="More ferments">
+        {% for p in siblings %}
+          {% if p.url == page.url %}
+            {% if not loop.last %}{% set older = siblings[loop.index0 + 1] %}<a class="entry__prev" href="{{ base_url }}{{ older.url }}"><span class="entry__navlab">Older ferment</span>{{ older.title | e }}</a>{% endif %}
+            {% if not loop.first %}{% set newer = siblings[loop.index0 - 1] %}<a class="entry__next" href="{{ base_url }}{{ newer.url }}"><span class="entry__navlab">Newer ferment</span>{{ newer.title | e }}</a>{% endif %}
+          {% endif %}
+        {% endfor %}
+      </nav>
+      <p class="entry__back"><a href="{{ base_url }}/ferments/">Back to every ferment</a></p>
+      {% endif %}
+
+    </article>
+  </main>
+{% include "footer.html" %}

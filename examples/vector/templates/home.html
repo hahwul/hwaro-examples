@@ -1,0 +1,72 @@
+{% include "header.html" %}
+  <main id="main" class="term-body home">
+
+    <section class="session hero" aria-label="Terminal session: vector init">
+      <p class="line line-cmd"><span class="prompt-sym">$</span> {{ page.extra.prompt_cmd }}</p>
+      <p class="line line-out">&#10003; project initialized in {{ page.extra.workspace }}</p>
+      <p class="line line-gap" aria-hidden="true">&nbsp;</p>
+      <p class="line line-version">vector {{ page.extra.version }}</p>
+      <ul class="claims">
+        {% for c in page.extra.claims %}
+        <li class="line line-claim"><span class="claim-mark" aria-hidden="true">&mdash;</span> {{ c }}</li>
+        {% endfor %}
+      </ul>
+      <p class="line line-gap" aria-hidden="true">&nbsp;</p>
+      <p class="line line-hint">next: <code>{{ page.extra.next_cmd }}</code> to define your first table</p>
+    </section>
+
+    <section class="session install" aria-label="Terminal session: install vector">
+      <p class="line line-cmd"><span class="prompt-sym">$</span> {{ page.extra.install_cmd }}</p>
+      {% for l in page.extra.install_log %}
+      <p class="line line-out">{{ l }}</p>
+      {% endfor %}
+      <p class="line line-gap" aria-hidden="true">&nbsp;</p>
+      <p class="line line-cmd"><span class="prompt-sym">$</span> {{ page.extra.verify_cmd }}</p>
+      <p class="line line-out">{{ page.extra.verify_out }}</p>
+    </section>
+
+    <section class="capabilities" aria-labelledby="cap-h">
+      <h2 id="cap-h" class="section-label">vector --help</h2>
+      <div class="cap-grid">
+        {% for cap in page.extra.capabilities %}
+        <article class="cap-card">
+          <p class="cap-name">{{ cap.name }}</p>
+          <h3>{{ cap.title }}</h3>
+          <p>{{ cap.body }}</p>
+        </article>
+        {% endfor %}
+      </div>
+      <p class="see-more"><a href="{{ base_url }}/features/">cat features.md &rarr;</a></p>
+    </section>
+
+    <section class="readme" aria-labelledby="readme-h">
+      <h2 id="readme-h" class="section-label">cat README.md</h2>
+      <div class="prose">{{ content | safe }}</div>
+    </section>
+
+    <section class="changelog-teaser" aria-labelledby="log-h">
+      <h2 id="log-h" class="section-label">tail -n 3 changelog</h2>
+      {% set log = get_section(path="changelog") %}
+      <ol class="log-rows">
+        {% for p in log.pages | sort_by("date", reverse=true) %}{% if loop.index <= 3 %}
+        <li>
+          <a class="log-row" href="{{ base_url }}{{ p.url }}">
+            <span class="lr-date">{{ p.date | date("%Y-%m-%d") }}</span>
+            <span class="lr-ver">{{ p.title }}</span>
+            <span class="lr-desc">{{ p.description }}</span>
+          </a>
+        </li>
+        {% endif %}{% endfor %}
+      </ol>
+      <p class="see-more"><a href="{{ base_url }}/changelog/">vector changelog --all &rarr;</a></p>
+    </section>
+
+    <section class="pricing-teaser" aria-labelledby="price-h">
+      <h2 id="price-h" class="section-label">vector pricing --summary</h2>
+      <p class="prose-lite">The engine and CLI are free forever. Pricing applies only to the
+        hosted sync relay, and only once a fleet outgrows the free tier's three devices.</p>
+      <p class="see-more"><a href="{{ base_url }}/pricing/">less pricing.md &rarr;</a></p>
+    </section>
+
+  </main>
+{% include "footer.html" %}

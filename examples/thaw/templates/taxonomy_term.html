@@ -1,0 +1,23 @@
+{% include "header.html" %}
+  <main id="main">
+    <header class="page-head">
+      <p class="page-kicker">Notes tagged</p>
+      <h1 class="page-title">{{ taxonomy_term }}</h1>
+    </header>
+    <section class="note-wall note-wall-standalone" aria-label="Tagged field notes">
+      <div class="note-wall-inner">
+        <div class="note-grid">
+          {% set tax = get_taxonomy(kind="tags") %}
+          {% for term in tax.items %}
+            {% if term.name == taxonomy_term %}
+              {% for entry in term.pages | sort_by("date", reverse=true) %}
+                {% include "note-card.html" %}
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+    <p class="term-back"><a href="{{ base_url }}/tags/"><span aria-hidden="true">←</span> All tags</a></p>
+  </main>
+{% include "footer.html" %}

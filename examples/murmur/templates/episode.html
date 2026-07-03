@@ -1,0 +1,59 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <article class="dispatch">
+      <header class="dispatch-head">
+        <p class="eyebrow">Expedition {{ page.extra.episode }}{% if page.date %} <span aria-hidden="true">&middot;</span> <time datetime="{{ page.date | date('%Y-%m-%d') }}">{{ page.date | date("%B %d, %Y") }}</time>{% endif %}</p>
+        <h1>{{ page.title | e }}</h1>
+        {% if page.description %}<p class="dispatch-dek">{{ page.description | e }}</p>{% endif %}
+      </header>
+
+      <div class="instrument-panel">
+        {% set gauge_pct = page.extra.depth_pct %}
+        {% set gauge_depth = page.extra.depth_display %}
+        {% set gauge_size = "page" %}
+        {% include "partials/depth-gauge.html" %}
+        <dl class="instrument-facts">
+          <div><dt>Trench</dt><dd>{{ page.extra.trench }}</dd></div>
+          <div><dt>Depth</dt><dd>{{ page.extra.depth_display }} m <span aria-hidden="true">&middot;</span> {{ page.extra.zone }}</dd></div>
+          <div><dt>Coordinates</dt><dd>{{ page.extra.coordinates }}</dd></div>
+          <div><dt>Vessel</dt><dd>{{ page.extra.vessel }}</dd></div>
+          <div><dt>Lead</dt><dd>{{ page.extra.lead }}</dd></div>
+          <div><dt>Runtime</dt><dd>
+            {% set sonar_duration = page.extra.duration %}
+            {% set sonar_size = "inline" %}
+            {% include "partials/sonar-chip.html" %}
+          </dd></div>
+        </dl>
+      </div>
+
+      <div class="dispatch-body prose">
+        {{ content | safe }}
+      </div>
+
+      {% if page.tags %}
+      <ul class="tag-row" aria-label="Tags">
+        {% for t in page.tags %}<li><a class="tag-chip tag-chip--link" href="{{ base_url }}/tags/{{ t | slugify }}/">{{ t }}</a></li>{% endfor %}
+      </ul>
+      {% endif %}
+
+      {% set has_prev = page.lower and page.lower.section == page.section and page.lower.extra.episode %}
+      {% set has_next = page.higher and page.higher.section == page.section and page.higher.extra.episode %}
+      {% if has_prev or has_next %}
+      <nav class="dispatch-pager" aria-label="Dispatch navigation">
+        {% if has_prev %}
+        <a class="pager-link pager-prev" href="{{ base_url }}{{ page.lower.url }}">
+          <span class="pager-eyebrow">&larr; Previous</span>
+          <span class="pager-title">{{ page.lower.title | e }}</span>
+        </a>
+        {% endif %}
+        {% if has_next %}
+        <a class="pager-link pager-next" href="{{ base_url }}{{ page.higher.url }}">
+          <span class="pager-eyebrow">Next &rarr;</span>
+          <span class="pager-title">{{ page.higher.title | e }}</span>
+        </a>
+        {% endif %}
+      </nav>
+      {% endif %}
+    </article>
+  </main>
+{% include "footer.html" %}

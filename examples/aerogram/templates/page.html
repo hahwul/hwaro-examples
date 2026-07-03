@@ -1,0 +1,52 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <div class="wrap">
+      <article class="entry">
+        <header class="page-head">
+          {% if page.extra.dispatch or page.extra.coord %}
+          <p class="page-coord">
+            {% if page.extra.dispatch %}<span class="issue-card-no">{{ page.extra.dispatch | e }}</span>{% endif %}
+            {% if page.extra.coord %}<span class="issue-card-latlon">{{ page.extra.coord | e }}</span>{% endif %}
+          </p>
+          {% endif %}
+          {% if page.title is present %}<h1 class="page-title">{{ page.title | e }}</h1>{% endif %}
+          {% if page.date or page.reading_time %}
+          <p class="page-meta">
+            {% if page.date %}<time datetime="{{ page.date | date("%Y-%m-%d") }}">{{ page.date | date("%B %d, %Y") }}</time>{% endif %}
+            {% if page.reading_time %}<span aria-hidden="true"> &middot; </span><span>{{ page.reading_time }} min read</span>{% endif %}
+          </p>
+          {% endif %}
+        </header>
+
+        <div class="prose">{{ content | safe }}</div>
+
+        {% if page.tags %}
+        <ul class="tag-row" aria-label="Tags">
+          {% for t in page.tags %}<li><a class="tag-chip" href="{{ get_taxonomy_url(kind="tags", term=t) }}">{{ t }}</a></li>{% endfor %}
+        </ul>
+        {% endif %}
+
+        {% if page.section == "issues" and (page.lower or page.higher) %}
+        <nav class="entry-nav" aria-label="Adjacent dispatches">
+          {% if page.lower %}
+          <a class="entry-nav-link" href="{{ base_url }}{{ page.lower.url }}">
+            <span class="entry-nav-label"><span aria-hidden="true">&larr;</span> Earlier dispatch</span>
+            <span class="entry-nav-title">{{ page.lower.title | e }}</span>
+          </a>
+          {% else %}
+          <span class="entry-nav-empty">The archive opens here.</span>
+          {% endif %}
+          {% if page.higher %}
+          <a class="entry-nav-link entry-nav-next" href="{{ base_url }}{{ page.higher.url }}">
+            <span class="entry-nav-label">Later dispatch <span aria-hidden="true">&rarr;</span></span>
+            <span class="entry-nav-title">{{ page.higher.title | e }}</span>
+          </a>
+          {% else %}
+          <span class="entry-nav-empty entry-nav-next">Newest dispatch on file.</span>
+          {% endif %}
+        </nav>
+        {% endif %}
+      </article>
+    </div>
+  </main>
+{% include "footer.html" %}

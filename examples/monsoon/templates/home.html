@@ -1,0 +1,90 @@
+{% include "header.html" %}
+  <main id="main">
+
+    {% set feat = get_page(path=page.extra.feature) %}
+    {% set feat_day = ((now(format="%s") | int) - (feat.date | date("%s") | int)) // 86400 %}
+    {% set shelf = get_section(path="ferments").pages | sort_by("date") %}
+
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="shell hero__grid">
+
+        <div class="hero__batch">
+          <p class="eyebrow">On the bench now</p>
+          <h1 class="hero__title" id="hero-title">{{ feat.title | e }}</h1>
+          <p class="dayline">
+            <span class="dayline__count">Day <span class="dayline__n">{{ feat_day }}</span></span>
+            <span class="dayline__since">jarred {{ feat.date | date("%B %-d, %Y") }}</span>
+          </p>
+          <p class="hero__lede">{{ feat.description | e }}</p>
+          <p class="hero__note">{{ feat.summary | strip_html | truncate_words(38) }}</p>
+          <a class="btn" href="{{ base_url }}{{ feat.url }}">Read the full entry<span aria-hidden="true"> &rarr;</span></a>
+        </div>
+
+        <aside class="shelf" aria-labelledby="shelf-title">
+          <div class="shelf__head">
+            <span class="pulse" aria-hidden="true"></span>
+            <h2 class="shelf__title" id="shelf-title">On the shelf right now</h2>
+          </div>
+          <ul class="shelf__list">
+            {% for p in shelf %}
+            {% set d = ((now(format="%s") | int) - (p.date | date("%s") | int)) // 86400 %}
+            <li class="crock">
+              <a class="crock__link" href="{{ base_url }}{{ p.url }}">
+                <svg class="crock__jar" viewBox="0 0 32 34" width="34" height="36" aria-hidden="true" focusable="false">
+                  <path d="M8 12c0-1 .9-1.8 2-1.8h12c1.1 0 2 .8 2 1.8l-1 16c-.1 1.5-1.4 2.6-2.9 2.6h-8.2c-1.5 0-2.8-1.1-2.9-2.6z" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                  <path d="M11 8c0-.9.8-1.6 1.7-1.6h6.6c.9 0 1.7.7 1.7 1.6v1.4H11z" fill="currentColor"/>
+                  <path d="M11.5 18c2 1.3 7 1.3 9 0" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity="0.55"/>
+                </svg>
+                <span class="crock__body">
+                  <span class="crock__name">{{ p.title | e }}</span>
+                  {% if p.categories %}<span class="crock__cat">{{ p.categories | first }}</span>{% endif %}
+                </span>
+                <span class="crock__day"><span class="crock__num">{{ d }}</span><span class="crock__unit">days</span></span>
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+          <p class="shelf__foot">Counts tick over at midnight. Nothing is bottled until it tells me it is ready.</p>
+        </aside>
+
+      </div>
+    </section>
+
+    <section class="log" aria-labelledby="log-title">
+      <div class="shell">
+        <div class="log__head">
+          <h2 class="section-title" id="log-title">Lately from the log</h2>
+          <a class="log__all" href="{{ base_url }}/ferments/">Every entry<span aria-hidden="true"> &rarr;</span></a>
+        </div>
+        <ul class="cards">
+          {% for p in get_section(path="ferments").pages | sort_by("date", reverse=true) %}
+          {% if loop.index <= 3 %}
+          {% set d = ((now(format="%s") | int) - (p.date | date("%s") | int)) // 86400 %}
+          <li class="card">
+            <a class="card__link" href="{{ base_url }}{{ p.url }}">
+              <p class="card__meta">
+                {% if p.categories %}<span class="tag">{{ p.categories | first }}</span>{% endif %}
+                <span class="card__day">Day {{ d }}</span>
+              </p>
+              <h3 class="card__title">{{ p.title | e }}</h3>
+              <p class="card__excerpt">{{ p.summary | strip_html | truncate_words(28) }}</p>
+              <p class="card__date">{{ p.date | date("%B %-d, %Y") }}</p>
+            </a>
+          </li>
+          {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+    </section>
+
+    <section class="pantry" aria-labelledby="pantry-title">
+      <div class="shell pantry__inner">
+        <h2 class="section-title" id="pantry-title">The pantry</h2>
+        <div class="prose">
+          {{ content | safe }}
+        </div>
+      </div>
+    </section>
+
+  </main>
+{% include "footer.html" %}

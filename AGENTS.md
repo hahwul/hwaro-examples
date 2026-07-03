@@ -1,156 +1,144 @@
 # AGENTS.md - AI Agent Instructions for hwaro-examples
 
-This repository is a collection of example sites built with [Hwaro](https://hwaro.hahwul.com), a fast static site generator written in Crystal. Each subdirectory under `examples/` is an independent Hwaro site that gets deployed together to [examples.hwaro.hahwul.com](https://examples.hwaro.hahwul.com).
+This repository is a **curated collection of 200 example sites** built with
+[Hwaro](https://hwaro.hahwul.com), a fast static site generator written in
+Crystal. Each subdirectory under `examples/` is an independent Hwaro site;
+all of them deploy together to
+[examples.hwaro.hahwul.com](https://examples.hwaro.hahwul.com).
 
-## Repository Structure
+Unlike a grab-bag theme dump, this collection is **designed as a whole**:
+every example is pre-assigned a category, color scheme, style, typography,
+palette, layout pattern, and a unique signature element in `manifest.json`,
+and every example meets the quality bar in `DESIGN.md`.
+
+## The four key files
+
+| File | Role | Edit by hand? |
+|---|---|---|
+| `manifest.json` | The design matrix: one entry per example with its full art-direction assignment | Yes — this is where new examples start |
+| `DESIGN.md` | The quality bar: typography, color, layout, a11y, content, anti-patterns | Yes (carefully) |
+| `tags.json` | Gallery filter tags, `{name: [category, scheme, ...styles]}` | **No — generated** by `scripts/sync-tags.sh` |
+| `AGENTS.md` | This file: hwaro reference + repo conventions | Yes |
+
+## Repository structure
 
 ```
 hwaro-examples/
-├── .github/workflows/deploy.yml   # Builds all sites and deploys to GitHub Pages
-├── tags.json                       # Tag definitions for index page filtering
-├── AGENTS.md                       # This file
-└── examples/                       # All example sites live here (flat)
-    ├── acme-docs/                  # Documentation site (light, docs)
-    ├── anubis/                     # Minimal Egyptian theme (light, blog, minimal)
-    ├── beautiful-hwaro/            # Beautiful Jekyll-inspired blog (light, blog)
-    ├── book/                       # Book/documentation theme (light, docs)
-    ├── cactus/                     # Dark minimal blog (dark, blog, minimal)
-    ├── console/                    # Terminal-style theme (dark, blog, minimal)
-    ├── devconf/                    # Conference event site (dark, event, landing)
-    ├── hwaro.386/                  # Retro DOS theme (dark, blog, retro)
-    ├── neon/                       # Cyberpunk neon theme (dark, blog, cyberpunk)
-    ├── paper/                      # Clean paper-style blog (light, blog, minimal)
-    └── ... (1000+ more)
+├── .github/workflows/
+│   ├── ci.yml                  # PR: trial-build new examples + lint + tags.json check
+│   └── deploy.yml              # main: build all, screenshot, generate gallery, deploy
+├── manifest.json               # design matrix for all examples (single source of truth)
+├── DESIGN.md                   # the quality bar — read before touching examples/
+├── tags.json                   # DERIVED from manifest.json (scripts/sync-tags.sh)
+├── scripts/
+│   ├── check-site.sh           # full per-site quality gate (build+lint+greps+links)
+│   ├── lint-examples.sh        # placeholder/emoji/effect-cap lint (used by CI)
+│   ├── sync-tags.sh            # manifest.json -> tags.json (+ --check drift mode)
+│   ├── validate-manifest.py    # manifest schema/uniqueness/vocabulary checks
+│   ├── retired-names.txt       # names of removed legacy examples — never reuse
+│   └── preview-index.sh        # local gallery preview without Docker
+└── examples/                   # all example sites (flat; one dir = one site)
+    ├── sirocco/                # light editorial blog
+    ├── basalt/                 # docs for a fictional build tool
+    └── ...
 ```
 
-Each subdirectory under `examples/` with a `config.toml` is automatically detected, built, and deployed by the CI workflow. The deployed URL remains flat — a site at `examples/<name>/` is served at `https://examples.hwaro.hahwul.com/<name>/` (no `examples/` prefix in the URL).
+A site at `examples/<name>/` is served at
+`https://examples.hwaro.hahwul.com/<name>/` (no `examples/` prefix in the URL).
 
-## Creating a New Example Site
+## Tag vocabulary (closed — do not invent tags)
 
-### Step 0: Scaffold with `hwaro init`
+Every example gets **exactly 1 category + 1 scheme + 1–2 styles** (3–4 tags),
+assigned in `manifest.json` and materialized into `tags.json` by
+`scripts/sync-tags.sh`:
 
-```bash
-# Run from the examples/ directory — creates a minimal skeleton (config.toml + empty dirs)
-cd examples
-hwaro init <site-name>
+- **Categories (13):** `blog` `docs` `landing` `portfolio` `magazine`
+  `gallery` `event` `resume` `changelog` `book` `wiki` `podcast` `newsletter`
+- **Schemes (3):** `light` `dark` `auto` (auto = defaults light, honors
+  `prefers-color-scheme`, ships a toggle)
+- **Styles (12):** `minimal` `editorial` `brutalist` `retro` `terminal`
+  `elegant` `playful` `geometric` `futuristic` `organic` `classic` `maximalist`
 
-# Equivalent to the above (explicit minimal skeleton)
-hwaro init <site-name> --scaffold simple
+Subject-matter variety (a recipe blog, a SaaS landing, a travel journal) is
+expressed in the manifest's `content.theme`, **not** as tags.
 
-# Bare scaffold — absolute minimum for advanced users
-hwaro init <site-name> --scaffold bare
+## Creating a new example site
 
-# With pre-built scaffold for common layouts
-hwaro init <site-name> --scaffold blog
-hwaro init <site-name> --scaffold docs
+Follow `DESIGN.md` §15 exactly. Summary:
 
-# Remote scaffold from an existing example
-hwaro init <site-name> --scaffold https://github.com/hahwul/hwaro-examples/tree/main/examples/some-example
+1. **Manifest entry first.** Pick a fresh single-word lowercase name (not in
+   `manifest.json`, not in `scripts/retired-names.txt`, not a hwaro CLI term),
+   then write the complete entry: category, scheme, styles, brief, typography,
+   palette, layout, signature, content plan, features. Run
+   `scripts/validate-manifest.py`.
+2. **Scaffold:** `cd examples && hwaro init <name>` — always. Delete the
+   bundled `static/fonts/` (Google Fonts CDN replaces them).
+3. **Build the site** to the DESIGN.md bar.
+4. **Gate:** `scripts/check-site.sh <name>` must print `PASS`. This wraps
+   `hwaro build`, output checks, lint (errors *and* warnings fatal),
+   anti-pattern greps, asset policy, and internal link checks.
+5. **Sync tags:** `scripts/sync-tags.sh` regenerates `tags.json`.
+6. PR. CI trial-builds new examples, lints them, and requires tags.json
+   entries.
 
-# Minimal config with dark theme support
-hwaro init <site-name> --minimal-config
+### The standard skeleton
+
 ```
-
-**Always start with `hwaro init`**, even for custom layouts. Running without `--scaffold` (or with `--scaffold simple`) gives you a bare skeleton with `config.toml` and empty directories — just fill in your own templates and content from there.
-
-Then work inside the generated `examples/<site-name>/` directory. The default structure looks like this:
-
-```
-<site-name>/
+<name>/
 ├── config.toml
+├── AGENTS.md                  # generated by hwaro init / hwaro tool agents-md
 ├── content/
-│   ├── index.md              # Homepage (front matter + markdown)
-│   └── posts/                # Section (optional)
-│       ├── _index.md         # Section listing page
-│       └── my-post.md        # Individual page
+│   ├── index.md               # homepage (front matter: template = "home")
+│   ├── about.md               # or category-appropriate standalone pages
+│   ├── search.md              # only when the search UI variant is "page"
+│   └── <section>/             # named for the theme (not a reflexive "posts")
+│       ├── _index.md
+│       └── *.md               # 4-8 pages of real fictional content
 ├── templates/
-│   ├── header.html           # Site header partial
-│   ├── footer.html           # Site footer partial
-│   ├── page.html             # Default page template
-│   ├── section.html          # Section listing template
-│   ├── taxonomy.html         # Taxonomy listing (e.g., /tags/)
-│   ├── taxonomy_term.html    # Taxonomy term page (e.g., /tags/crystal/)
-│   ├── 404.html              # Not found page
-│   └── shortcodes/           # Shortcode templates (optional)
-│       └── alert.html
-└── static/                   # Static assets copied as-is (optional)
-    ├── css/
-    ├── js/
-    └── images/
+│   ├── header.html, footer.html
+│   ├── home.html, page.html, section.html, 404.html
+│   ├── taxonomy.html, taxonomy_term.html   # required iff [[taxonomies]] configured
+│   ├── search.html            # only for the "page" search variant
+│   └── shortcodes/            # optional
+└── static/
+    ├── css/style.css          # always external
+    └── js/                    # search.js / theme.js as needed
 ```
 
-### Step 1: Write `config.toml`
+### config.toml requirements
 
-```toml
-title = "Site Title"
-description = "Short description for index page and SEO"
-base_url = "http://localhost:3000"
+- `title` / `description`: verbatim from the manifest (the gallery reads them
+  from config.toml). Placeholders fail lint.
+- `base_url = "http://localhost:3000"` — CI overrides at build time with
+  `--base-url`. Never hardcode production URLs.
+- `[search] enabled = true` in every site (the JSON index always builds, even
+  when there is no search UI).
+- `[feeds] sections` must name real `content/` directories.
+- Every `[[taxonomies]]` entry requires `taxonomy.html` + `taxonomy_term.html`.
 
-[plugins]
-processors = ["markdown"]
+## Hwaro reference
 
-[content.files]
-allow_extensions = ["jpg", "jpeg", "png", "gif", "svg", "webp"]
-
-[highlight]
-enabled = true
-theme = "github"          # github | monokai | atom-one-dark | vs2015
-use_cdn = true
-
-[pagination]
-enabled = true
-per_page = 5
-
-[[taxonomies]]
-name = "tags"
-feed = true
-
-[[taxonomies]]
-name = "categories"
-
-[sitemap]
-enabled = true
-
-[robots]
-enabled = true
-
-[feeds]
-enabled = true
-type = "rss"              # rss | atom
-limit = 10
-sections = ["posts"]
-
-[markdown]
-safe = false
-lazy_loading = true
-```
-
-`base_url` is overridden at build time by CI (`--base-url`), so `http://localhost:3000` is fine for local development.
-
-### Step 2: Write content files
-
-**Front Matter (TOML between `+++`):**
+### Front matter (TOML between `+++`)
 
 ```toml
 +++
 title = "Page Title"                      # Required
-date = "2025-01-15"                       # YYYY-MM-DD
-draft = false                             # Excluded from production if true
+date = "2025-06-15"                       # YYYY-MM-DD
+draft = false
 description = "SEO description"
 tags = ["tag1", "tag2"]
 categories = ["guides"]
 template = "custom_template"              # Omit to use default (page)
 weight = 1                                # Sort order (lower = first)
 slug = "custom-url-slug"
-image = "/images/featured.jpg"            # Social sharing image
-aliases = ["/old-url/"]                   # Redirects
-toc = true                                # Show table of contents
+aliases = ["/old-url/"]
+toc = true
 authors = ["Author Name"]
 [extra]
 custom_field = "accessible via page.extra.custom_field"
 +++
 
-Markdown content here. Use `<!-- more -->` for summary break.
+Markdown content here. Use `<!-- more -->` for the summary break.
 ```
 
 **Section `_index.md`:**
@@ -163,65 +151,49 @@ reverse = false
 paginate = 10
 template = "section"
 generate_feeds = true
-transparent = false       # If true, pages merge into parent section
+transparent = false
 +++
 ```
 
-### Step 3: Write templates (Jinja2/Crinja)
+### Template variables (Jinja2 / Crinja)
 
-#### Template Variables
-
-| Object | Key Properties |
+| Object | Key properties |
 |--------|---------------|
 | `site` | `title`, `description`, `base_url`, `pages`, `sections`, `taxonomies`, `data` |
-| `page` | `title`, `date`, `url`, `permalink`, `section`, `summary`, `word_count`, `reading_time`, `extra`, `toc`, `lower`, `higher`, `ancestors`, `assets`, `description`, `image` |
-| `section` | `title`, `description`, `pages`, `pages_count`, `subsections`, `assets` |
-| Global | `current_year`, `current_date`, `base_url`, `toc` |
-| SEO | `og_all_tags`, `canonical_tag`, `jsonld`, `highlight_tags`, `auto_includes` |
+| `page` | `title`, `date`, `url`, `permalink`, `section`, `summary`, `word_count`, `reading_time`, `extra`, `toc`, `lower`, `higher`, `ancestors`, `description`, `image` |
+| `section` | `title`, `description`, `pages`, `pages_count`, `subsections` |
+| Global | `current_year`, `current_date`, `base_url`, `toc`, `content` (rendered HTML) |
+| SEO | `og_all_tags`, `canonical_tag`, `jsonld`, `highlight_css`, `highlight_js`, `auto_includes_css`, `auto_includes_js` |
 | Taxonomy | `taxonomy_name`, `taxonomy_term`, `taxonomy_terms`, `taxonomy_pages` |
+| Paginator | `paginator.pages`, `paginator.current_index`, `paginator.number_pagers`, `paginator.previous`, `paginator.next` |
 
-Rendered content is `{{ content | safe }}` (not `{{ page.content }}`). Custom metadata is `page.extra.field` (not `page.params.field`).
+Flat aliases: `site_title`, `site_description`, `page_title`, `page_url`,
+`page_section`, `page_date`.
 
-Flat aliases: `site_title`, `site_description`, `page_title`, `page_url`, `page_section`, `page_date`, `page_image`, `content` (rendered HTML).
-
-#### Syntax Quick Reference
+### Syntax quick reference
 
 ```jinja
-{# Output #}
 {{ page.title }}
 {{ page.date | date("%Y-%m-%d") }}
-
-{# Conditionals #}
 {% if page.summary %}...{% endif %}
-
-{# Loops #}
-{% for post in section.pages %}
-  <a href="{{ post.url }}">{{ post.title }}</a>
-{% endfor %}
-
-{# Includes #}
+{% for post in section.pages %}<a href="{{ base_url }}{{ post.url }}">{{ post.title }}</a>{% endfor %}
 {% include "header.html" %}
-
-{# Inheritance #}
-{% extends "base.html" %}
-{% block content %}...{% endblock %}
-
-{# Whitespace control #}
+{% extends "base.html" %}{% block content %}...{% endblock %}
 {%- if condition -%}trimmed{%- endif -%}
+{% raw %}{{ not-jinja }}{% endraw %}
 ```
 
-#### Available Filters
+### Filters
 
 | Filter | Example |
 |--------|---------|
 | `date(fmt)` | `{{ page.date \| date("%B %d, %Y") }}` |
 | `truncate_words(n)` | `{{ page.summary \| strip_html \| truncate_words(30) }}` |
 | `slugify` | `{{ title \| slugify }}` |
-| `absolute_url` | `{{ page.url \| absolute_url }}` |
-| `relative_url` | `{{ "/css/style.css" \| relative_url }}` |
+| `absolute_url` / `relative_url` | `{{ page.url \| absolute_url }}` |
 | `strip_html` | `{{ content \| strip_html }}` |
 | `markdownify` | `{{ text \| markdownify }}` |
-| `safe` | `{{ og_tags \| safe }}` |
+| `safe` | `{{ og_all_tags \| safe }}` |
 | `upper` / `lower` | `{{ title \| upper }}` |
 | `replace(old, new)` | `{{ text \| replace("a", "b") }}` |
 | `default(val)` | `{{ description \| default("No description") }}` |
@@ -229,121 +201,76 @@ Flat aliases: `site_title`, `site_description`, `page_title`, `page_url`, `page_
 | `where(attr, val)` | `{{ pages \| where("draft", false) }}` |
 | `sort_by(attr)` | `{{ pages \| sort_by("date", reverse=true) }}` |
 | `group_by(attr)` | `{{ pages \| group_by("section") }}` |
-| `join(sep)` | `{{ tags \| join(", ") }}` |
-| `first` / `last` | `{{ items \| first }}` |
-| `length` | `{{ items \| length }}` |
+| `join(sep)` / `first` / `last` / `length` | `{{ tags \| join(", ") }}` |
 
-#### Shortcodes
+### Template functions
 
-Shortcodes live in `templates/shortcodes/`. Use in markdown:
+`get_page(path=...)`, `get_section(path=...)`, `get_taxonomy(kind=...)`,
+`get_taxonomy_url(kind=..., term=...)`, `load_data(path=...)`,
+`url_for(path=...)`, `asset(name=...)`, `now(format=...)`, `env(...)`.
+
+### Shortcodes
+
+Shortcode templates live in `templates/shortcodes/`; call them from markdown:
 
 ```markdown
-{{ alert(type="warning", message="Be careful!") }}
-{{ youtube(id="dQw4w9WgXcQ") }}
-{{ figure(src="/images/photo.jpg", alt="Photo", caption="A caption") }}
+{{ alert(type="warning", message="Be careful") }}
 ```
 
-Shortcode templates have access to all passed arguments plus `site` and `page` objects.
-
-## Hwaro CLI Reference
+### CLI
 
 | Command | Description |
 |---------|-------------|
 | `hwaro init <dir>` | Create new site (`--scaffold simple\|bare\|blog\|docs`, `--minimal-config`) |
-| `hwaro new <path>` | Create content file with front matter (`-t "Title"`, `-a archetype`, `--date`, `--draft`, `--tags`, `--section`) |
-| `hwaro build` | Build to `public/` (`--minify`, `--drafts`, `--base-url URL`, `--cache`, `--skip-og-image`, `--skip-image-processing`) |
-| `hwaro serve` | Dev server with live reload (`-p PORT`, `--open`, `--drafts`, `--cache`, `--stream`, `--memory-limit`) |
-| `hwaro deploy` | Deploy to configured targets (`--dry-run`, `--confirm`) |
-| `hwaro doctor` | Check site health and fix common issues (`--fix`) |
-| `hwaro tool list all\|drafts\|published` | List content files |
-| `hwaro tool check-links` | Check for dead links (`--timeout`, `--concurrency`, `--external-only`, `--internal-only`) |
-| `hwaro tool platform` | Generate CI configs (`github-pages`, `gitlab-ci`) |
+| `hwaro new <path>` | Create content file with front matter |
+| `hwaro build` | Build to `public/` (`--minify`, `--drafts`, `--base-url URL`) |
+| `hwaro serve` | Dev server with live reload (`-p PORT`, `--open`) |
+| `hwaro doctor` | Check site health, `--fix` to auto-fix config |
+| `hwaro tool check-links` | Dead link check (`--internal-only`) |
+| `hwaro tool agents-md` | Generate per-site AGENTS.md (`--remote`, `--local`, `--write`) |
 | `hwaro tool convert toTOML\|toYAML` | Convert front matter format |
-| `hwaro tool agents-md` | Generate AGENTS.md (`--remote`, `--local`, `--write`, `--force`) |
 
-### Installation
+## Crinja pitfalls (build-breakers)
 
-```bash
-# Homebrew
-brew tap hahwul/hwaro
-brew install hwaro
+1. `{% if x in [1, 2, 3] %}` **fails to parse** — Crinja's `in` does not
+   accept array literals. Use `==` or-chains.
+2. Rendered content is `{{ content | safe }}`, not `{{ page.content }}`.
+3. Custom front matter is `page.extra.field`, not `page.params.field`.
+4. Guard optional fields (`{% if page.date %}`) — standalone pages lack dates.
+5. Brace-heavy inline JS/CSS belongs in `static/` or inside `{% raw %}`.
+6. Every asset/link uses `{{ base_url }}` — sites deploy under a subpath.
 
-# Docker (used in CI)
-docker run --rm -v "$(pwd):/src" -v "$(pwd)/public:/output" \
-  ghcr.io/hahwul/hwaro build -i /src -o /output
+## CI/CD pipeline
 
-# From source
-git clone https://github.com/hahwul/hwaro.git && cd hwaro
-shards install && shards build --release --no-debug --production
-```
+- **ci.yml** (PRs): detects newly added `examples/*/config.toml`, trial-builds
+  each with Docker (`ghcr.io/hahwul/hwaro`), runs `scripts/lint-examples.sh`
+  on them, and fails if any new example lacks a `tags.json` entry.
+- **deploy.yml** (push to main): lints changed sites, builds every example
+  with Docker, captures Playwright screenshots (content-hash cached),
+  generates the gallery `index.html` (search, tag filters, cards with
+  screenshot/title/description/tags/scaffold command), and deploys to GitHub
+  Pages. Title/description come from each `config.toml`; tags from `tags.json`.
 
-### Step 4: Add tags to `tags.json`
+## Rules for AI agents
 
-Add your new example's tags to `tags.json` at the repo root. Tags are used for filtering on the index page.
-
-```json
-{
-  "my-new-site": ["dark", "blog", "minimal"]
-}
-```
-
-Available tags: `dark`, `light`, `blog`, `docs`, `landing`, `portfolio`, `event`, `resume`, `gallery`, `minimal`, `retro`, `editorial`, `cyberpunk`, `traditional`, `sidebar`
-
-You may add new tags if needed.
-
-### Step 5: Validate and update config
-
-```bash
-cd examples/<site-name>
-hwaro tool doctor --fix
-```
-
-Automatically adds any missing config sections. Always run this when creating a new example.
-
-### Step 6: Local preview
-
-```bash
-cd examples/<site-name>
-hwaro serve --open
-```
-
-Opens the site in your browser at `http://localhost:3000`.
-
-## CI/CD Pipeline
-
-The deploy workflow (`.github/workflows/deploy.yml`):
-1. Iterates all directories under `examples/` containing `config.toml`
-2. Reads tags from `tags.json` (via `jq`) — keyed by site basename (no `examples/` prefix)
-3. Builds each with Docker: `ghcr.io/hahwul/hwaro build --base-url "https://.../<name>"`
-4. Captures screenshots of each site with Playwright
-5. Generates an index page at `_site/index.html` with:
-   - Search bar and grid size slider
-   - Tag filter buttons (from `tags.json`)
-   - Card per example: screenshot, title, description, tag badges, source code link, scaffold command (copy-to-clipboard)
-6. Deploys to GitHub Pages at `examples.hwaro.hahwul.com`
-
-Adding a new subdirectory under `examples/` with a valid `config.toml` + `tags.json` entry is all that's needed to include it in the deployment.
-
-## Rules for AI Agents
-
-1. **One directory = one site, under `examples/`.** Each sample site is fully self-contained at `examples/<name>/`. Never share files across subdirectories and never create sites outside `examples/`.
-2. **`config.toml` is required.** This is the only file the CI uses to detect a buildable site.
-3. **`base_url` stays `http://localhost:3000`.** CI overrides it at build time. Do not hardcode production URLs.
-4. **Use `{{ base_url }}` in templates** for all asset/link references (e.g., `{{ base_url }}/css/style.css`). Never use absolute paths without the prefix.
-5. **Preserve TOML front matter.** Always keep `+++` delimiters and valid TOML syntax when editing content files.
-6. **Templates use Jinja2 (Crinja).** Use `{% include %}`, `{% extends %}`, `{% block %}`, `{{ var | filter }}` syntax. **Crinja's `in` operator does not accept array literals** — `{% if x in [1, 2, 3] %}` will fail to parse. Use `{% if x == 1 or x == 2 or x == 3 %}` instead.
-7. **`public/` is build output.** It is gitignored. Never commit or edit files in `public/`.
-8. **Keep sites minimal and focused.** Each example should demonstrate a specific use case or design pattern clearly. **Avoid these anti-patterns:**
-   - **No placeholder copy:** Never use "My Hwaro Site", "My Blog", "Hello World" as titles, or "Welcome to my new Hwaro site." / "Welcome to my personal blog powered by Hwaro." as descriptions. The lint will reject these.
-   - **No decorative emoji:** Don't use pictographic emoji (🌸 🌺 ❄️ 🔒 🏆 etc.) as UI ornaments. Use inline SVG icons or typographic ornaments (✦ ❧ ★ ✓) instead.
-   - **No generic recolors:** Don't create a copy of an existing theme with just a color-name change. If a glassmorphism/cosmic/gradient theme already exists, improve it or create something genuinely different.
-   - **Soft caps on heavy effects:** Excessive gradients (>12 declarations) or glassmorphism (>8 backdrop-filter rules) will trigger lint warnings. These patterns are overrepresented—only add them if you're demonstrating the technique itself.
-9. **Use `hwaro serve` for local preview.** Default port is 3000. Use `-p` to change.
-10. **Title and description matter.** They appear on the index page at `examples.hwaro.hahwul.com`.
-11. **Always update `tags.json`** when adding a new example. Tags power the filter buttons on the index page.
-12. **Always run `hwaro doctor --fix`** after creating or modifying a site to keep config up to date.
-13. **Always start with `hwaro init`.** Use `hwaro init <name>` (no scaffold flag, `--scaffold simple`, or `--scaffold bare`) for custom layouts, or `--scaffold blog`/`docs` for pre-built ones. Never create the directory manually.
-14. **Rendered content** is `{{ content | safe }}`, not `{{ page.content }}`. Custom metadata is `page.extra.field`, not `page.params.field`.
-15. **Generate AGENTS.md** with `hwaro tool agents-md --local --write` for new sites. Use `--remote` for a lightweight version linking to online docs.
-16. **CSS placement convention:** If a theme's CSS is under ~200 lines, inline `<style>` in `header.html` is fine. If 200 lines or more, extract to `static/css/style.css` and link with `<link rel="stylesheet" href="{{ base_url }}/css/style.css">`.
-17. **Directory name = example name.** Use descriptive English names (e.g., `blog1` ✗ → `modern-blog` ✓).
+1. **Read `DESIGN.md` before touching `examples/`.** It is the quality bar;
+   this file is only the reference manual.
+2. **One directory = one site, under `examples/`.** Fully self-contained;
+   never share files across sites.
+3. **`manifest.json` leads.** No example exists without a manifest entry, and
+   `tags.json` is only ever written by `scripts/sync-tags.sh`.
+4. **Always start with `hwaro init`.** Never create the directory manually.
+5. **`scripts/check-site.sh <name>` must PASS** before any example is
+   committed — it enforces build success, lint (warnings fatal), anti-pattern
+   greps, the SVG-only asset policy, and internal links.
+6. **No binary assets.** SVG and CSS art only; fonts via Google Fonts CDN;
+   the only allowed external origins are `fonts.googleapis.com`,
+   `fonts.gstatic.com`, and `cdn.jsdelivr.net` (Fuse.js).
+7. **No pictographic emoji, no placeholder copy, no lorem ipsum** — lint
+   hard-fails all three. Typographic ornaments (✦ ❧ ★ ✓) are allowed.
+8. **Effect caps are hard:** ≤12 gradient declarations and ≤8
+   `backdrop-filter` rules per site (targets: ≤8 / ≤4; zero lint warnings).
+9. **Never reuse retired names** (`scripts/retired-names.txt`) — stale
+   screenshot caches and git history make recycled names confusing.
+10. **`public/` is build output** — gitignored; never commit or edit it.
+11. **Keep `base_url = "http://localhost:3000"`** — CI overrides it.

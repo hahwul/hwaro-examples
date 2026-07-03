@@ -1,0 +1,47 @@
+{% include "header.html" %}
+  <main id="main">
+    <article class="entry">
+      <header class="page-head">
+        {% if page.extra.genus %}<p class="page-kicker">{{ page.extra.genus | e }}</p>{% endif %}
+        <h1>{{ page.title | e }}</h1>
+        {% if page.date or page.extra.location %}
+        <p class="entry-byline">
+          {% if page.date %}<time datetime="{{ page.date | date('%Y-%m-%d') }}">{{ page.date | date('%d %B %Y') }}</time>{% endif %}
+          {% if page.date and page.extra.location %}<span class="dot" aria-hidden="true">·</span>{% endif %}
+          {% if page.extra.location %}<span>{{ page.extra.location | e }}</span>{% endif %}
+        </p>
+        {% endif %}
+      </header>
+
+      {% if page.section == "sightings" %}
+      <dl class="record">
+        {% if page.extra.cover %}<div><dt>Cover</dt><dd>{{ page.extra.cover | e }}</dd></div>{% endif %}
+        {% if page.extra.wind %}<div><dt>Wind</dt><dd>{{ page.extra.wind | e }}</dd></div>{% endif %}
+        {% if page.extra.temp %}<div><dt>Air</dt><dd>{{ page.extra.temp | e }}</dd></div>{% endif %}
+        {% if page.extra.visibility %}<div><dt>Visibility</dt><dd>{{ page.extra.visibility | e }}</dd></div>{% endif %}
+        {% if page.extra.base %}<div><dt>Cloud base</dt><dd>{{ page.extra.base | e }}</dd></div>{% endif %}
+      </dl>
+      {% endif %}
+
+      <div class="prose">
+        {{ content }}
+      </div>
+
+      {% if page.tags %}
+      <footer class="entry-tags">
+        <span class="entry-tags-label">Filed under</span>
+        <ul>
+          {% for tag in page.tags %}<li><a href="{{ base_url }}/tags/{{ tag | slugify }}/">{{ tag | e }}</a></li>{% endfor %}
+        </ul>
+      </footer>
+      {% endif %}
+
+      {% if page.lower or page.higher %}
+      <nav class="entry-nav" aria-label="Sighting navigation">
+        {% if page.higher %}<a class="entry-nav-prev" href="{{ base_url }}{{ page.higher.url }}"><span>Earlier</span>{{ page.higher.title | e }}</a>{% endif %}
+        {% if page.lower %}<a class="entry-nav-next" href="{{ base_url }}{{ page.lower.url }}"><span>Later</span>{{ page.lower.title | e }}</a>{% endif %}
+      </nav>
+      {% endif %}
+    </article>
+  </main>
+{% include "footer.html" %}

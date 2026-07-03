@@ -1,0 +1,51 @@
+{% set rh_label = "Title page" %}
+{% set rh_folio = "i" %}
+{% include "header.html" %}
+    <main id="main">
+      <section class="title-page">
+        <p class="tp-kicker">A bookbinder&rsquo;s bench journal</p>
+        <h1 class="tp-title stitched">Fogbow</h1>
+        <p class="tp-epigraph">Stitches, papers, and quiet repairs,<br>recorded as they happen at the folding table</p>
+        <svg class="tp-stitchrow" viewBox="0 0 76 14" width="76" height="14" aria-hidden="true" focusable="false">
+          <path d="M4 3l8 8M12 3l-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M34 3l8 8M42 3l-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M64 3l8 8M72 3l-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <p class="tp-imprint">Sewn, never merely glued &middot; Greyhaven &middot; MMXXV&ndash;MMXXVI</p>
+      </section>
+
+      <section class="colophon-note" aria-label="Colophon note">
+        {{ content | safe }}
+      </section>
+
+      <div class="ornament" aria-hidden="true"><span>&#10087;</span></div>
+
+      {% set entries = get_section(path="bindings").pages | sort_by("date", reverse=true) %}
+      {% set latest = entries | first %}
+      <article class="opener">
+        <header class="opener-head">
+          <p class="opener-kicker">The latest entry{% if latest.date %} &middot; sewn {{ latest.date | date("%B %d, %Y") }}{% endif %}{% if latest.extra.folio %} &middot; fol.&thinsp;{{ latest.extra.folio }}{% endif %}</p>
+          <h2 class="opener-title stitched"><a href="{{ base_url }}{{ latest.url }}">{{ latest.title | e }}</a></h2>
+        </header>
+        {% if latest.summary %}
+        <div class="prose dropcap opener-body">
+          {{ latest.summary | safe }}
+        </div>
+        {% endif %}
+        <p class="opener-more"><a href="{{ base_url }}{{ latest.url }}">Read the entry in full <span aria-hidden="true">&rarr;</span></a></p>
+      </article>
+
+      <section class="recent" aria-label="Earlier entries">
+        <h2 class="recent-heading stitched">Earlier at the bench</h2>
+        <ol class="contents">
+          {% for p in entries %}
+            {% if loop.index0 > 0 and loop.index0 < 4 %}
+              {% set entry = p %}
+              {% include "partials/contents_row.html" %}
+            {% endif %}
+          {% endfor %}
+        </ol>
+        <p class="contents-more"><a href="{{ base_url }}/bindings/">The full table of entries <span aria-hidden="true">&rarr;</span></a></p>
+      </section>
+    </main>
+{% include "footer.html" %}

@@ -1,0 +1,24 @@
+{% include "header.html" %}
+{% set tax = get_taxonomy(kind="tags") %}
+<section class="section-head">
+  <p class="line line-cmd"><span class="prompt-path">~/releases</span> <span class="prompt-caret">❯</span> <span class="cmd">grep -l "{{ taxonomy_term }}" ./</span></p>
+  <h1 class="page-title">tag: {{ taxonomy_term }}</h1>
+  <p class="line-comment section-desc"># releases that touched the {{ taxonomy_term }} subsystem · <a href="{{ base_url }}/tags/">all tags</a></p>
+</section>
+<ol class="release-rows">
+  {% for t in tax.items %}
+  {% if t.name == taxonomy_term %}
+  {% for p in t.pages | sort_by("date", reverse=true) %}
+  <li>
+    <a class="release-row" href="{{ base_url }}{{ p.url }}">
+      <span class="row-date">{% if p.date %}{{ p.date | date("%Y-%m-%d") }}{% endif %}</span>
+      <span class="row-ver">{{ p.title }}</span>
+      <span class="row-desc">{{ p.description }}</span>
+      <span class="row-arrow" aria-hidden="true">→</span>
+    </a>
+  </li>
+  {% endfor %}
+  {% endif %}
+  {% endfor %}
+</ol>
+{% include "footer.html" %}

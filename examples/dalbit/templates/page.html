@@ -1,0 +1,68 @@
+{% include "header.html" %}
+  <main id="main">
+    {% if page.section == "nocturnes" %}
+    <figure class="plate plate--full">
+      {% set pk = page.extra.plate %}
+      {% include "plate.html" %}
+    </figure>
+    <article class="study">
+      <div class="study__inner">
+        <header class="study__head">
+          <span class="study__marker">
+            {% set phase = page.extra.phase %}{% set uid = "study" %}
+            {% include "moon.html" %}
+          </span>
+          <p class="study__kicker">Nocturne {{ page.extra.phase | default("", true) }} of 5{% if page.extra.subject %} &middot; {{ page.extra.subject | e }}{% endif %}</p>
+          <h1 class="study__title">{{ page.title | e }}</h1>
+          {% if page.date %}<p class="study__date">{{ page.date | date("%B %-d, %Y") }}{% if page.extra.medium %} &middot; {{ page.extra.medium | e }}{% endif %}</p>{% endif %}
+        </header>
+        <div class="prose study__body">
+          {{ content | safe }}
+        </div>
+        {#
+          page.lower / page.higher walk the whole site's page order, not just
+          this section (they can spill into "About" or the section index) —
+          so adjacency here is computed from the nocturnes list itself,
+          matched by the explicit `extra.phase` sequence.
+        #}
+        {% set studies = get_section(path="nocturnes/_index.md") %}
+        <nav class="study__pager" aria-label="Adjacent nocturnes">
+          {% for p in studies.pages %}
+            {% if p.extra.phase == page.extra.phase - 1 %}
+          <a class="study__pager-link study__pager-link--prev" href="{{ base_url }}{{ p.url }}">
+            <span class="study__pager-marker" aria-hidden="true">{% set phase = p.extra.phase %}{% set uid = "pager-prev" %}{% include "moon.html" %}</span>
+            <span class="study__pager-text"><span class="study__pager-label">Previous</span>{{ p.title | e }}</span>
+          </a>
+            {% endif %}
+          {% endfor %}
+          {% if page.extra.phase == 1 %}
+          <a class="study__pager-link study__pager-link--prev" href="{{ base_url }}{{ lang_prefix }}/nocturnes/">
+            <span class="study__pager-text"><span class="study__pager-label">Previous</span>All nocturnes</span>
+          </a>
+          {% endif %}
+          {% for p in studies.pages %}
+            {% if p.extra.phase == page.extra.phase + 1 %}
+          <a class="study__pager-link study__pager-link--next" href="{{ base_url }}{{ p.url }}">
+            <span class="study__pager-text"><span class="study__pager-label">Next</span>{{ p.title | e }}</span>
+            <span class="study__pager-marker" aria-hidden="true">{% set phase = p.extra.phase %}{% set uid = "pager-next" %}{% include "moon.html" %}</span>
+          </a>
+            {% endif %}
+          {% endfor %}
+          {% if page.extra.phase == studies.pages | length %}
+          <a class="study__pager-link study__pager-link--next" href="{{ base_url }}{{ lang_prefix }}/about/">
+            <span class="study__pager-text"><span class="study__pager-label">Next</span>About the room</span>
+          </a>
+          {% endif %}
+        </nav>
+      </div>
+    </article>
+    {% else %}
+    <article class="page">
+      <div class="prose page__body">
+        {% if page.title is present %}<h1>{{ page.title | e }}</h1>{% endif %}
+        {{ content | safe }}
+      </div>
+    </article>
+    {% endif %}
+  </main>
+{% include "footer.html" %}

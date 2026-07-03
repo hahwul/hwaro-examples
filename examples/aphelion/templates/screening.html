@@ -1,0 +1,59 @@
+{% include "header.html" %}
+  <main id="main" class="page">
+    <article class="screening">
+
+      {% if page.extra.duotone_svg %}
+      <figure class="frame">
+        <div class="frame__letterbox">{{ page.extra.duotone_svg | safe }}</div>
+        {% if page.extra.slot %}<figcaption class="frame__cap">{{ page.extra.slot | e }}</figcaption>{% endif %}
+      </figure>
+      {% endif %}
+
+      <header class="screening__head">
+        {% if page.title is present %}<h1 class="screening__title">{{ page.title | e }}</h1>{% endif %}
+        <dl class="screening__meta">
+          {% if page.extra.director %}
+          <div class="screening__meta-item"><dt>Director</dt><dd>{{ page.extra.director | e }}</dd></div>
+          {% endif %}
+          {% if page.date %}
+          <div class="screening__meta-item"><dt>Date</dt><dd>{{ page.date | date("%A %d %B") }}</dd></div>
+          {% endif %}
+          {% if page.extra.time %}
+          <div class="screening__meta-item"><dt>Time</dt><dd>{{ page.extra.time | e }}</dd></div>
+          {% endif %}
+          {% if page.extra.duration %}
+          <div class="screening__meta-item"><dt>Running time</dt><dd>{{ page.extra.duration | e }}</dd></div>
+          {% endif %}
+          {% if page.extra.format %}
+          <div class="screening__meta-item"><dt>Format</dt><dd>{{ page.extra.format | e }}</dd></div>
+          {% endif %}
+          {% if page.extra.language %}
+          <div class="screening__meta-item"><dt>Language</dt><dd>{{ page.extra.language | e }}</dd></div>
+          {% endif %}
+        </dl>
+      </header>
+
+      <div class="prose">
+        {{ content | safe }}
+      </div>
+
+      <nav class="screening__adjacent" aria-label="Other screenings">
+        {% if page.extra.prev_page %}
+        {% set earlier = get_page(path=page.extra.prev_page) %}
+        <a class="screening__adjacent-link" href="{{ base_url }}{{ earlier.url }}">
+          <span class="screening__adjacent-label">&larr; Earlier in the lineup</span>
+          <span class="screening__adjacent-title">{{ earlier.title | e }}</span>
+        </a>
+        {% endif %}
+        {% if page.extra.next_page %}
+        {% set later = get_page(path=page.extra.next_page) %}
+        <a class="screening__adjacent-link screening__adjacent-link--next" href="{{ base_url }}{{ later.url }}">
+          <span class="screening__adjacent-label">Later in the lineup &rarr;</span>
+          <span class="screening__adjacent-title">{{ later.title | e }}</span>
+        </a>
+        {% endif %}
+      </nav>
+
+    </article>
+  </main>
+{% include "footer.html" %}

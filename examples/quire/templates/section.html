@@ -1,0 +1,28 @@
+{% include "header.html" %}
+    <main id="main" class="doc">
+      <header class="section-head">
+        <h1>{{ section.title | e }}</h1>
+        {% if section.description %}<p class="lede">{{ section.description }}</p>{% endif %}
+      </header>
+      <div class="prose">
+        {{ content | safe }}
+      </div>
+      <ol class="toc-list">
+        {% for p in section.pages | sort_by("weight") %}
+        <li class="toc-row">
+          <a class="toc-row-link" href="{{ base_url }}{{ p.url }}">
+            <span class="toc-row-num" aria-hidden="true">{% if loop.index < 10 %}0{% endif %}{{ loop.index }}</span>
+            <span class="toc-row-main">
+              <span class="toc-row-head">
+                <span class="toc-row-title">{{ p.title }}</span>
+                <span class="toc-row-rule" aria-hidden="true"></span>
+                {% if p.reading_time %}<span class="toc-row-time">{{ p.reading_time }} min</span>{% endif %}
+              </span>
+              {% if p.description %}<span class="toc-row-desc">{{ p.description }}</span>{% endif %}
+            </span>
+          </a>
+        </li>
+        {% endfor %}
+      </ol>
+    </main>
+{% include "footer.html" %}

@@ -1,0 +1,44 @@
+{% include "header.html" %}
+      <main id="main" class="codex-main">
+        <article class="entry entry--section">
+          <p class="topic-path">The Codex</p>
+          <h1 class="entry-title">{{ page.title | e }}</h1>
+          <div class="rule-double" aria-hidden="true"></div>
+          {% if page.description %}<p class="entry-dek">{{ page.description }}</p>{% endif %}
+
+          <div class="prose">
+            {{ content | safe }}
+          </div>
+
+          {% set codex_pages = section.pages | sort_by("title") %}
+
+          <p class="rubric">Regions</p>
+          <ol class="doc-index">
+            {% for p in codex_pages %}
+              {% if p.extra.kind == "region" %}
+              <li>
+                <a href="{{ base_url }}{{ p.url }}">
+                  <span class="doc-index-title">{{ p.title }}</span>
+                  {% if p.description %}<span class="doc-index-desc">{{ p.description | truncate_words(22) }}</span>{% endif %}
+                </a>
+              </li>
+              {% endif %}
+            {% endfor %}
+          </ol>
+
+          <p class="rubric">Houses</p>
+          <ol class="doc-index">
+            {% for p in codex_pages %}
+              {% if p.extra.kind == "house" %}
+              <li>
+                <a href="{{ base_url }}{{ p.url }}">
+                  <span class="doc-index-title">{{ p.title }}</span>
+                  {% if p.description %}<span class="doc-index-desc">{{ p.description | truncate_words(22) }}</span>{% endif %}
+                </a>
+              </li>
+              {% endif %}
+            {% endfor %}
+          </ol>
+        </article>
+      </main>
+{% include "footer.html" %}

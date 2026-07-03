@@ -1,0 +1,53 @@
+{% include "header.html" %}
+      <main id="main" class="codex-main codex-main--home">
+        <section class="masthead" aria-label="Codex masthead">
+          <svg class="masthead-seal" viewBox="0 0 32 32" aria-hidden="true">
+            <circle cx="16" cy="16" r="13" fill="none" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M16 6 L18.2 13.8 L26 16 L18.2 18.2 L16 26 L13.8 18.2 L6 16 L13.8 13.8 Z" fill="currentColor"/>
+          </svg>
+          <p class="masthead-eyebrow">A Codex of the Archipelago</p>
+          <h1 class="masthead-title">{{ site.title }}</h1>
+          {% if page.extra.tagline %}<p class="masthead-tagline">{{ page.extra.tagline }}</p>{% endif %}
+          <div class="rule-double" aria-hidden="true"></div>
+          {% if page.extra.epigraph %}<p class="masthead-epigraph">{{ page.extra.epigraph }}</p>{% endif %}
+        </section>
+
+        <div class="gazetteer-intro prose">
+          {{ content | safe }}
+        </div>
+
+        {% set codex_pages = get_section(path="codex").pages | sort_by("title") %}
+        <section class="home-preview" aria-label="Entries in this edition">
+          <div class="home-preview-group">
+            <p class="rubric">Regions</p>
+            <ul class="preview-list">
+              {% for p in codex_pages %}
+                {% if p.extra.kind == "region" %}
+                <li>
+                  <a class="preview-card" href="{{ base_url }}{{ p.url }}">
+                    <span class="preview-card-title">{{ p.title }}</span>
+                    {% if p.description %}<span class="preview-card-desc">{{ p.description | truncate_words(18) }}</span>{% endif %}
+                  </a>
+                </li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          </div>
+          <div class="home-preview-group">
+            <p class="rubric">Houses</p>
+            <ul class="preview-list">
+              {% for p in codex_pages %}
+                {% if p.extra.kind == "house" %}
+                <li>
+                  <a class="preview-card" href="{{ base_url }}{{ p.url }}">
+                    <span class="preview-card-title">{{ p.title }}</span>
+                    {% if p.description %}<span class="preview-card-desc">{{ p.description | truncate_words(18) }}</span>{% endif %}
+                  </a>
+                </li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          </div>
+        </section>
+      </main>
+{% include "footer.html" %}

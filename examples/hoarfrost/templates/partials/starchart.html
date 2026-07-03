@@ -1,0 +1,29 @@
+{# Signature element: a faint star-chart behind an entry's header.
+   Expects a `chart` variable set by the caller to a front-matter `extra`
+   table carrying `stars` (array of {x, y, r, name}, coordinates on a
+   0-100 x 0-56 field, r pre-sized by the star's visual magnitude) and
+   `lines` (array of [from_index, to_index] pairs joining the figure).
+   Purely decorative — aria-hidden, the constellation name is spoken in
+   the entry's meta line as plain text, not here. #}
+{% if chart and chart.stars %}
+<svg class="starchart" viewBox="0 0 100 56" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+  <g class="starchart-field">
+    <circle cx="6" cy="8" r="0.5"/><circle cx="93" cy="6" r="0.6"/><circle cx="80" cy="48" r="0.5"/>
+    <circle cx="10" cy="45" r="0.4"/><circle cx="48" cy="4" r="0.5"/><circle cx="62" cy="52" r="0.4"/>
+    <circle cx="24" cy="52" r="0.5"/><circle cx="90" cy="30" r="0.4"/><circle cx="4" cy="26" r="0.5"/>
+    <circle cx="70" cy="6" r="0.4"/><circle cx="35" cy="50" r="0.4"/><circle cx="97" cy="44" r="0.5"/>
+  </g>
+  <g class="starchart-lines">
+    {% for pair in chart.lines %}
+    {% set a = chart.stars[pair[0]] %}
+    {% set b = chart.stars[pair[1]] %}
+    <line x1="{{ a.x }}" y1="{{ a.y }}" x2="{{ b.x }}" y2="{{ b.y }}"/>
+    {% endfor %}
+  </g>
+  <g class="starchart-stars">
+    {% for s in chart.stars %}
+    <circle cx="{{ s.x }}" cy="{{ s.y }}" r="{{ s.r }}"/>
+    {% endfor %}
+  </g>
+</svg>
+{% endif %}

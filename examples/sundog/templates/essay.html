@@ -1,0 +1,34 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <article class="essay">
+      <header class="essay-head">
+        <p class="essay-kicker">
+          {% if page.date %}<time datetime="{{ page.date | date("%Y-%m-%d") }}">{{ page.date | date("%B %d, %Y") }}</time>{% endif %}
+          {% if page.reading_time %}<span aria-hidden="true"> &middot; </span>{{ page.reading_time }} min read{% endif %}
+        </p>
+        <h1 class="essay-title">{{ page.title | e }}</h1>
+        {% if page.extra.exposure %}<p class="exposure">{{ page.extra.exposure }}</p>{% endif %}
+        {% if page.description %}<p class="essay-desc">{{ page.description | e }}</p>{% endif %}
+      </header>
+
+      <div class="prose">{{ content | safe }}</div>
+
+      <footer class="essay-foot">
+        {% if page.tags %}
+        <p class="foot-row"><span class="foot-label">Tags</span>{% for t in page.tags %}<a class="foot-term" href="{{ get_taxonomy_url(kind="tags", term=t) }}">{{ t }}</a>{% endfor %}</p>
+        {% endif %}
+        {% if page.taxonomies.categories %}
+        <p class="foot-row"><span class="foot-label">Filed as</span>{% for c in page.taxonomies.categories %}<a class="foot-term" href="{{ get_taxonomy_url(kind="categories", term=c) }}">{{ c }}</a>{% endfor %}</p>
+        {% endif %}
+        <p class="foot-back"><a class="all-link" href="{{ base_url }}/essays/"><span aria-hidden="true">&larr; </span>All essays</a></p>
+      </footer>
+
+      {% if (page.lower and page.lower.section == "essays" and page.lower.date) or (page.higher and page.higher.section == "essays" and page.higher.date) %}
+      <nav class="essay-pager" aria-label="More essays">
+        {% if page.lower and page.lower.section == "essays" and page.lower.date %}<a class="pager-link pager-newer" href="{{ base_url }}{{ page.lower.url }}"><span class="pager-label">Newer</span><span class="pager-title">{{ page.lower.title }}</span></a>{% else %}<span class="pager-link pager-empty" aria-hidden="true"></span>{% endif %}
+        {% if page.higher and page.higher.section == "essays" and page.higher.date %}<a class="pager-link pager-older" href="{{ base_url }}{{ page.higher.url }}"><span class="pager-label">Older</span><span class="pager-title">{{ page.higher.title }}</span></a>{% endif %}
+      </nav>
+      {% endif %}
+    </article>
+  </main>
+{% include "footer.html" %}

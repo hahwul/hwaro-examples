@@ -1,0 +1,25 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <div class="page-head">
+      <p class="page-kicker">Archive</p>
+      <h1>{{ page.title | e }}</h1>
+      {% if content %}<div class="prose prose--lead">{{ content | safe }}</div>{% endif %}
+    </div>
+
+    <ol class="folio-list folio-list--archive">
+      {% for p in section.pages | sort_by("date", reverse=true) %}
+      <li class="folio-row">
+        <a class="folio-row-link" href="{{ base_url }}{{ p.url }}">
+          <span class="folio-row-no" aria-hidden="true">{{ p.extra.roman | default(loop.index) }}</span>
+          <span class="folio-row-main">
+            <span class="folio-row-title">{{ p.title | e }}</span>
+            {% if p.date %}<span class="folio-row-date">{{ p.date | date("%B %Y") }}</span>{% endif %}
+            {% if p.summary %}<span class="folio-row-teaser">{{ p.summary | strip_html | truncate_words(26) }}</span>{% endif %}
+          </span>
+          {% if p.extra.cumulative_words %}<span class="folio-row-count">{{ p.extra.cumulative_words }} words to date</span>{% endif %}
+        </a>
+      </li>
+      {% endfor %}
+    </ol>
+  </main>
+{% include "footer.html" %}

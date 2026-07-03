@@ -1,0 +1,617 @@
+/* =============================================================================
+   Syzygy — three-day systems programming conference
+   Terminal-minimal, near-black, phosphor-green. The schedule is the design:
+   most of this file exists to draw the timeline "spine" and the oversized
+   dimmed time numerals that hang off it. See §"Timeline spine" below.
+   ========================================================================== */
+
+:root {
+  /* Palette */
+  --bg: #0e1210;
+  --surface: #161d19;
+  --fg: #dfe6e1;
+  --muted: #94a29a;
+  --accent: #3ecf7a;
+  --accent-fg: #08170e;
+  --border: color-mix(in srgb, var(--fg) 14%, transparent);
+
+  /* Type families */
+  --font-display: "Fragment Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-text: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  /* Fluid type scale */
+  --text-sm: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
+  --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --text-lg: clamp(1.2rem, 1.1rem + 0.5vw, 1.5rem);
+  --text-xl: clamp(1.5rem, 1.3rem + 1vw, 2.25rem);
+  --text-2xl: clamp(2rem, 1.6rem + 2vw, 3.5rem);
+  --text-hero: clamp(2.5rem, 1.8rem + 3.5vw, 5rem);
+
+  /* Spacing scale (4/8px) */
+  --space-1: .25rem;
+  --space-2: .5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2.5rem;
+  --space-6: 4rem;
+  --space-7: 6rem;
+
+  /* Timeline spine geometry */
+  --spine-x: clamp(3.25rem, 9vw, 5rem);
+}
+
+/* -------------------------------------------------------------------------
+   Reset & base
+   ------------------------------------------------------------------------- */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  color-scheme: dark;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-text);
+  font-size: var(--text-base);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 35%, transparent);
+  color: var(--fg);
+}
+
+img, svg { max-width: 100%; height: auto; }
+
+a {
+  color: var(--accent);
+  text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  text-underline-offset: 3px;
+  transition: color .15s ease-out, text-decoration-color .15s ease-out;
+}
+a:hover { text-decoration-color: currentColor; }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.005em;
+  color: var(--fg);
+  text-wrap: balance;
+  margin: 0;
+}
+
+p { margin: 0 0 var(--space-3); }
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--space-3);
+  top: -3rem;
+  z-index: 100;
+  background: var(--accent);
+  color: var(--accent-fg);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  padding: 0.6rem 1rem;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: top .15s ease-out;
+}
+.skip-link:focus { top: var(--space-3); }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* -------------------------------------------------------------------------
+   Header
+   ------------------------------------------------------------------------- */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+
+.site-header-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--fg);
+  text-decoration: none;
+}
+.brand-mark { width: 2rem; height: auto; color: var(--accent); flex-shrink: 0; }
+.brand-word {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  letter-spacing: 0.16em;
+}
+.brand:hover { color: var(--accent); }
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+.site-nav a {
+  color: var(--muted);
+  text-decoration: none;
+  padding: 0.35rem 0.05rem;
+  border-bottom: 1px solid transparent;
+  transition: color .15s ease-out, border-color .15s ease-out;
+}
+.site-nav a:hover { color: var(--fg); }
+.site-nav a[aria-current="page"] { color: var(--accent); border-color: var(--accent); }
+.site-nav a.site-nav-cta { color: var(--accent); }
+
+@media (max-width: 560px) {
+  .site-header-inner { flex-wrap: wrap; row-gap: var(--space-2); }
+  .site-nav { gap: var(--space-3); }
+}
+
+/* -------------------------------------------------------------------------
+   Footer
+   ------------------------------------------------------------------------- */
+
+.site-footer { border-top: 1px solid var(--border); margin-top: var(--space-7); }
+.site-footer-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: var(--space-5) var(--space-4);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3) var(--space-5);
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+.footer-line { margin: 0; }
+.footer-links { display: flex; gap: var(--space-4); }
+.footer-links a { color: var(--muted); text-decoration: none; }
+.footer-links a:hover { color: var(--accent); }
+
+/* -------------------------------------------------------------------------
+   Buttons
+   ------------------------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  padding: 0.65rem 1.1rem;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  text-decoration: none;
+  transition: color .15s ease-out, background-color .15s ease-out, border-color .15s ease-out;
+}
+.btn-solid { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
+.btn-solid:hover {
+  background: color-mix(in srgb, var(--accent) 88%, black);
+  border-color: color-mix(in srgb, var(--accent) 88%, black);
+}
+.btn-ghost { background: transparent; color: var(--fg); border-color: var(--border); }
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+/* -------------------------------------------------------------------------
+   Homepage masthead
+   ------------------------------------------------------------------------- */
+
+.home-main, .schedule-main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 var(--space-4) var(--space-7);
+}
+
+.masthead { padding: var(--space-6) 0 var(--space-5); border-bottom: 1px solid var(--border); }
+.masthead-kicker {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 var(--space-3);
+}
+.masthead-title {
+  font-size: var(--text-hero);
+  line-height: 0.92;
+  letter-spacing: 0.01em;
+  margin: 0 0 var(--space-3);
+}
+.masthead-meta {
+  font-family: var(--font-mono);
+  font-size: var(--text-lg);
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-4);
+}
+.masthead-meta .dot { color: var(--muted); }
+.masthead-lede p {
+  font-family: var(--font-text);
+  font-size: var(--text-base);
+  color: var(--muted);
+  max-width: 62ch;
+  line-height: 1.7;
+  margin: 0 0 var(--space-4);
+}
+.masthead-links { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+
+/* -------------------------------------------------------------------------
+   Day schedule head (homepage) / schedule head (talks section)
+   ------------------------------------------------------------------------- */
+
+.day-schedule-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-5) 0 var(--space-4);
+}
+.day-schedule-head h2 { font-size: var(--text-xl); }
+.day-schedule-date, .schedule-day-date { color: var(--muted); font-weight: 400; }
+.day-schedule-note {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--muted);
+  margin: 0;
+}
+.day-schedule-note a { color: var(--muted); }
+.day-schedule-note a:hover { color: var(--accent); }
+.day-schedule-more {
+  margin: var(--space-4) 0 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+
+.kicker {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 var(--space-2);
+}
+
+.schedule-head { padding: var(--space-6) 0 var(--space-4); border-bottom: 1px solid var(--border); }
+.schedule-head h1 { font-size: var(--text-2xl); margin: 0 0 var(--space-3); }
+.schedule-intro p {
+  color: var(--muted);
+  max-width: 62ch;
+  line-height: 1.7;
+  margin: 0 0 var(--space-4);
+}
+
+.schedule-search { margin-top: var(--space-3); }
+.schedule-search input[type="search"] {
+  width: 100%;
+  max-width: 42rem;
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  color: var(--fg);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  appearance: none;
+}
+.schedule-search input[type="search"]::placeholder { color: var(--muted); }
+.schedule-search-status {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--muted);
+  min-height: 1.4em;
+  margin: var(--space-2) 0 0;
+}
+
+.schedule-body { padding-top: var(--space-2); }
+.schedule-day { margin-bottom: var(--space-5); }
+.schedule-day h2 {
+  font-size: var(--text-xl);
+  margin: 0 0 var(--space-1);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--border);
+}
+.schedule-day:first-child h2 { border-top: none; padding-top: 0; }
+
+.schedule-results { list-style: none; margin: var(--space-3) 0 0; padding: 0; }
+.schedule-results li { border-bottom: 1px solid var(--border); padding: var(--space-3) 0; }
+.search-hit-link { display: block; text-decoration: none; }
+.search-hit-title {
+  display: block;
+  font-family: var(--font-text);
+  font-weight: 600;
+  color: var(--fg);
+  margin-bottom: 0.25rem;
+}
+.search-hit-link:hover .search-hit-title { color: var(--accent); }
+.search-hit-text {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* -------------------------------------------------------------------------
+   Timeline spine — the signature element.
+   Every entry is prefixed by its 24-hour start time set in the display
+   (monospace) font, oversized and dimmed, right-anchored just past the
+   spine line and nudged further right so it visibly crosses over — an
+   overhang — before the entry's own content begins.
+   ------------------------------------------------------------------------- */
+
+.spine {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--border);
+}
+
+.slot {
+  position: relative;
+  padding: var(--space-4) 0 var(--space-4) calc(var(--spine-x) + 1.25rem);
+  border-bottom: 1px solid var(--border);
+}
+
+.slot::after {
+  content: "";
+  position: absolute;
+  left: var(--spine-x);
+  top: 0;
+  bottom: -1px;
+  width: 1px;
+  background: var(--border);
+}
+
+.slot-time {
+  position: absolute;
+  left: calc(var(--spine-x) + 0.45rem - 5ch);
+  top: 0.05rem;
+  width: max-content;
+  white-space: nowrap;
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 3vw, 2.1rem);
+  line-height: 0.85;
+  letter-spacing: 0;
+  color: var(--muted);
+  opacity: 0.55;
+  font-variant-numeric: tabular-nums;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.slot-body { position: relative; z-index: 2; }
+
+.slot-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-fg);
+  background: var(--accent);
+  padding: 0.1rem 0.5rem;
+  border-radius: 2px;
+  margin: 0 0 0.5rem;
+}
+
+.slot-title {
+  font-family: var(--font-text);
+  font-weight: 600;
+  font-size: var(--text-lg);
+  line-height: 1.3;
+  margin: 0 0 0.35rem;
+}
+.slot-title a { color: var(--fg); text-decoration: none; }
+.slot-title a:hover { color: var(--accent); }
+
+.slot-speaker {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--muted);
+  margin: 0 0 0.5rem;
+}
+.slot-room { color: var(--muted); }
+
+.slot-note {
+  font-family: var(--font-text);
+  font-size: var(--text-sm);
+  color: var(--muted);
+  max-width: 58ch;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Kind variants */
+.slot-session .slot-title { font-weight: 500; font-size: var(--text-base); }
+.slot-break {
+  padding-top: var(--space-3);
+  padding-bottom: var(--space-3);
+}
+.slot-break .slot-title {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: var(--text-sm);
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.slot-break .slot-title a { color: var(--muted); }
+
+.spine-compact .slot-time { font-size: clamp(1.2rem, 2.8vw, 2rem); }
+
+/* -------------------------------------------------------------------------
+   Page / prose (talk detail, venue, register, 404)
+   ------------------------------------------------------------------------- */
+
+.page-main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4) var(--space-7);
+}
+
+.prose h1 { font-size: var(--text-2xl); margin: 0 0 var(--space-4); }
+.prose h2 { font-size: var(--text-xl); margin: var(--space-6) 0 var(--space-3); }
+.prose h3 { font-size: var(--text-lg); margin: var(--space-5) 0 var(--space-2); }
+
+.prose ul, .prose ol { padding-left: 1.4rem; margin: 0 0 var(--space-3); }
+.prose li { margin-bottom: 0.4rem; }
+
+.prose blockquote {
+  margin: var(--space-4) 0;
+  padding: 0.2rem 0 0.2rem 1.2rem;
+  border-left: 2px solid var(--accent);
+  color: var(--muted);
+  font-style: italic;
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  background: var(--surface);
+  padding: 0.15rem 0.4rem;
+  border-radius: 3px;
+  font-size: 0.88em;
+  color: var(--fg);
+}
+
+.prose pre {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: var(--space-3) var(--space-4);
+  overflow-x: auto;
+  line-height: 1.6;
+  margin: var(--space-4) 0;
+}
+.prose pre code { background: transparent; padding: 0; font-size: 0.85em; }
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--space-4) 0;
+  font-size: var(--text-sm);
+  display: block;
+  overflow-x: auto;
+}
+.prose th, .prose td { border-bottom: 1px solid var(--border); padding: 0.6rem 0.8rem; text-align: left; }
+.prose th {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.78em;
+  color: var(--muted);
+  border-bottom: 2px solid var(--border);
+}
+
+.prose hr { border: none; border-top: 1px solid var(--border); margin: var(--space-5) 0; }
+.prose img { border-radius: 4px; }
+
+/* Talk detail hero */
+.talk-hero {
+  position: relative;
+  padding: 0 0 var(--space-4) calc(var(--spine-x) + 1.25rem);
+  margin-bottom: var(--space-4);
+  border-bottom: 1px solid var(--border);
+}
+.talk-time-big {
+  position: absolute;
+  left: calc(var(--spine-x) + 0.45rem - 5ch);
+  top: 0.05rem;
+  width: max-content;
+  white-space: nowrap;
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  line-height: 0.85;
+  letter-spacing: 0;
+  color: var(--muted);
+  opacity: 0.55;
+  font-variant-numeric: tabular-nums;
+}
+.talk-eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--muted);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0 0 var(--space-2);
+}
+.talk-eyebrow .dot { color: var(--border); }
+.talk-hero h1 { font-size: var(--text-2xl); margin: 0 0 var(--space-2); }
+.talk-speaker { font-family: var(--font-mono); font-size: var(--text-base); color: var(--fg); margin: 0; }
+.talk-speaker-role { color: var(--muted); }
+.talk-back { margin-top: var(--space-5); font-family: var(--font-mono); font-size: var(--text-sm); }
+.talk-back a { text-decoration: none; }
+
+.slot-time-404 {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
+  color: var(--muted);
+  opacity: 0.55;
+  letter-spacing: -0.02em;
+}
+
+/* -------------------------------------------------------------------------
+   Responsive
+   ------------------------------------------------------------------------- */
+
+@media (max-width: 640px) {
+  .slot, .talk-hero { padding-left: calc(var(--spine-x) + 0.85rem); }
+}
+
+/* -------------------------------------------------------------------------
+   Accessibility: reduced motion
+   ------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

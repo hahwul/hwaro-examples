@@ -1,0 +1,50 @@
+{% include "header.html" %}
+<main id="main" class="site-main">
+  {% if page.section == "releases" %}
+  <article class="folio folio-full">
+    <div class="folio-rule" aria-hidden="true"></div>
+    <div class="folio-grid">
+      <div class="folio-margin">
+        <span class="folio-num">{{ page.title }}</span>
+        <span class="folio-kicker">folio</span>
+      </div>
+      <div class="folio-body">
+        <p class="folio-eyebrow"><a href="{{ base_url }}/releases/">Releases</a></p>
+        {% if page.extra.codename %}
+        <h1 class="folio-title folio-title-full">{{ page.extra.codename }}</h1>
+        <p class="folio-version">Version {{ page.title }}</p>
+        {% else %}
+        <h1 class="folio-title folio-title-full">Release {{ page.title }}</h1>
+        {% endif %}
+        <p class="folio-meta">
+          {% if page.date %}<time datetime="{{ page.date | date('%Y-%m-%d') }}">{{ page.date | date("%B %d, %Y") }}</time>{% endif %}
+          {% if page.tags %}<span class="folio-tags">{% for t in page.tags %}<a href="{{ base_url }}/tags/{{ t | slugify }}/">{{ t }}</a>{% endfor %}</span>{% endif %}
+        </p>
+        <div class="prose">{{ content | safe }}</div>
+      </div>
+    </div>
+  </article>
+  {% if page.lower.date or page.higher.date %}
+  <nav class="folio-pager" aria-label="Adjacent releases">
+    {% if page.higher.date %}
+    <a class="folio-pager-link" href="{{ base_url }}{{ page.higher.url }}">
+      <span class="folio-pager-label">Newer folio</span>
+      <span class="folio-pager-title">{{ page.higher.title }}</span>
+    </a>
+    {% else %}<span></span>{% endif %}
+    {% if page.lower.date %}
+    <a class="folio-pager-link folio-pager-next" href="{{ base_url }}{{ page.lower.url }}">
+      <span class="folio-pager-label">Older folio</span>
+      <span class="folio-pager-title">{{ page.lower.title }}</span>
+    </a>
+    {% endif %}
+  </nav>
+  {% endif %}
+  {% else %}
+  <header class="page-head">
+    {% if page.title is present %}<h1 class="page-title">{{ page.title | e }}</h1>{% endif %}
+  </header>
+  <div class="prose">{{ content | safe }}</div>
+  {% endif %}
+</main>
+{% include "footer.html" %}

@@ -1,0 +1,49 @@
+{% include "header.html" %}
+  <main id="main" class="term-body">
+    <section class="hero" aria-label="Introduction">
+      <p class="cmdline"><span class="cmd-user">kessa@haboob</span><span class="cmd-colon">:</span><span class="cmd-path">~</span><span class="cmd-dollar">$</span> cat motd</p>
+      <h1 class="hero-title">{{ site.title | e }}</h1>
+      <p class="hero-tag">{{ site.description | e }}</p>
+    </section>
+
+    {% set writeups = get_section(path="writeups") %}
+    {% set rows = writeups.pages | sort_by("date", reverse=true) %}
+    <section class="listing" aria-labelledby="listing-h">
+      <p class="cmdline"><span class="cmd-user">kessa@haboob</span><span class="cmd-colon">:</span><span class="cmd-path">~/writeups</span><span class="cmd-dollar">$</span> ls -la --sort=-date</p>
+      <h2 class="sr-only" id="listing-h">Latest write-ups</h2>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="Latest write-ups">
+        <table class="ls-table">
+          <thead>
+            <tr>
+              <th scope="col" class="c-mode">mode</th>
+              <th scope="col" class="c-date">date</th>
+              <th scope="col" class="c-tags">tags</th>
+              <th scope="col" class="c-name">name</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for p in rows %}
+            {% if loop.index <= 5 %}
+            <tr>
+              <td class="c-mode">-rw-r--r--</td>
+              <td class="c-date"><time datetime="{{ p.date | date('%Y-%m-%d') }}">{{ p.date | date('%Y-%m-%d') }}</time></td>
+              <td class="c-tags">
+                <span class="tag-row">{% for t in p.tags %}<a class="tag-chip" href="{{ base_url }}/tags/{{ t | slugify }}/">{{ t }}</a>{% endfor %}</span>
+              </td>
+              <td class="c-name"><a href="{{ base_url }}{{ p.url }}">{{ p.title | slugify }}.md</a></td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <p class="ls-total">total {{ rows | length }} write-ups &middot; <a href="{{ base_url }}/writeups/">cd ~/writeups for the full listing</a></p>
+    </section>
+
+    <section class="home-about" aria-labelledby="about-h">
+      <p class="cmdline"><span class="cmd-user">kessa@haboob</span><span class="cmd-colon">:</span><span class="cmd-path">~</span><span class="cmd-dollar">$</span> whoami</p>
+      <h2 class="sr-only" id="about-h">About this site</h2>
+      <div class="prose hero-prose">{{ content | safe }}</div>
+    </section>
+  </main>
+{% include "footer.html" %}

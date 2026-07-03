@@ -1,0 +1,56 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    {% if page.extra.curve_d %}
+    <article class="title-article">
+      <header class="title-head">
+        <p class="title-kicker">{{ page.extra.kind }} &middot; {{ page.extra.client }} &middot; {{ page.extra.year }}</p>
+        <h1 class="title-heading">{{ page.title }}</h1>
+        {% if page.description %}<p class="title-lede">{{ page.description }}</p>{% endif %}
+        <dl class="title-meta">
+          <div><dt>Duration</dt><dd>{{ page.extra.duration }}</dd></div>
+          <div><dt>Frames</dt><dd>{{ page.extra.frame_count }}</dd></div>
+          <div><dt>Rate</dt><dd>{{ page.extra.fps }} fps</dd></div>
+          <div><dt>In</dt><dd>{{ page.extra.in_point }}</dd></div>
+          <div><dt>Out</dt><dd>{{ page.extra.out_point }}</dd></div>
+        </dl>
+      </header>
+
+      <figure class="curve-figure curve-figure--detail">
+        <svg class="curve-plot" viewBox="0 0 200 200" role="img" aria-label="Easing curve for {{ page.title | e }}: {{ page.extra.curve_bezier }}">
+          <rect class="curve-bounds" x="24" y="65.5" width="152" height="69"></rect>
+          <g class="curve-ticks">
+            <line x1="62" y1="130.5" x2="62" y2="134.5"></line>
+            <line x1="100" y1="130.5" x2="100" y2="134.5"></line>
+            <line x1="138" y1="130.5" x2="138" y2="134.5"></line>
+            <line x1="62" y1="65.5" x2="62" y2="69.5"></line>
+            <line x1="100" y1="65.5" x2="100" y2="69.5"></line>
+            <line x1="138" y1="65.5" x2="138" y2="69.5"></line>
+          </g>
+          <path class="curve-line" d="{{ page.extra.curve_d }}"></path>
+          <circle class="curve-node" cx="24" cy="134.5" r="3.4"></circle>
+          <circle class="curve-node" cx="176" cy="65.5" r="3.4"></circle>
+          <circle class="curve-dot" cx="0" cy="0" r="5.5" style="offset-path: path('{{ page.extra.curve_d }}');"></circle>
+          <text class="curve-label curve-label--tag" x="14" y="20">EASE</text>
+          <text class="curve-label curve-label--val" x="186" y="20" text-anchor="end">{{ page.extra.curve_short }}</text>
+          <text class="curve-label curve-label--io" x="14" y="192">IN {{ page.extra.in_point }}</text>
+          <text class="curve-label curve-label--io" x="186" y="192" text-anchor="end">OUT {{ page.extra.out_point }}</text>
+        </svg>
+        <figcaption class="curve-detail-cap">
+          <span class="curve-detail-cap__name">{{ page.extra.curve_name }}</span>
+          <code class="curve-detail-cap__code">{{ page.extra.curve_bezier }}</code>
+          <span class="curve-detail-cap__hint">Hover or focus the curve to ride the dot along it.</span>
+        </figcaption>
+      </figure>
+
+      <div class="prose">
+        {{ content | safe }}
+      </div>
+    </article>
+    {% else %}
+    {% if page.title is present %}<h1 class="page-heading">{{ page.title | e }}</h1>{% endif %}
+    <div class="prose page-prose">
+      {{ content | safe }}
+    </div>
+    {% endif %}
+  </main>
+{% include "footer.html" %}

@@ -1,0 +1,46 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <section class="hero">
+      <p class="hero__kicker">Lighting design — dance &amp; opera</p>
+      <h1 class="hero__mark">ALIZARIN</h1>
+      <p class="hero__tagline">{{ page.extra.tagline | default(site.description) | e }}</p>
+
+      <dl class="titleblock">
+        <div><dt>Plot</dt><dd>Portfolio {{ current_year }}</dd></div>
+        <div><dt>Designer</dt><dd>Noor Adeyemi</dd></div>
+        <div><dt>Base</dt><dd>Rotterdam, NL</dd></div>
+        <div><dt>Rev</dt><dd>{{ current_date }}</dd></div>
+      </dl>
+
+      <div class="hero__note prose">
+        {{ content | safe }}
+      </div>
+    </section>
+
+    {% set productions = get_section(path="productions").pages | sort_by("date", reverse=true) %}
+    <section class="collage" aria-label="Productions">
+      {% for p in productions %}
+      <article class="collage-card collage-card--{{ loop.index }}">
+        <a class="collage-card__link" href="{{ base_url }}{{ p.url }}">
+          <span class="collage-card__index">0{{ loop.index }} /</span>
+          <h2 class="collage-card__title">{{ p.title | e }}</h2>
+          {% if p.extra.venue %}<p class="collage-card__meta">{{ p.extra.venue | e }}{% if p.date %} — {{ p.date | date("%Y") }}{% endif %}</p>{% endif %}
+          {% if p.extra.blurb %}<p class="collage-card__blurb">{{ p.extra.blurb | e }}</p>{% endif %}
+          <span class="collage-card__open">Open plot &rarr;</span>
+        </a>
+        {% if p.extra.gel_hex %}
+        <svg class="gel-swatch" viewBox="0 0 120 150" role="img" aria-label="Gel swatch {{ p.extra.gel_code | e }}, {{ p.extra.gel_name | e }}" style="--gel-color: {{ p.extra.gel_hex | e }};">
+          <rect class="gel-swatch__film" x="4" y="4" width="112" height="142" rx="2"></rect>
+          <rect class="gel-swatch__tape" x="24" y="-6" width="56" height="20" transform="rotate(-4 52 4)"></rect>
+          <rect class="gel-swatch__label" x="4" y="118" width="112" height="28"></rect>
+          <text class="gel-swatch__code" x="12" y="133">{{ p.extra.gel_code | e }}</text>
+          <text class="gel-swatch__name" x="12" y="143">{{ p.extra.gel_name | e }}</text>
+        </svg>
+        {% endif %}
+      </article>
+      {% endfor %}
+    </section>
+
+    <p class="hero__more"><a href="{{ base_url }}/productions/">View all plots &rarr;</a></p>
+  </main>
+{% include "footer.html" %}

@@ -1,0 +1,41 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <article class="study-article">
+      <header class="study-head">
+        {% if page.title is present %}<h1>{{ page.title | e }}</h1>{% endif %}
+        {% if page.date or page.extra.side_to_move or page.extra.result %}
+        <p class="study-meta">
+          {% if page.date %}<time datetime="{{ page.date | date('%Y-%m-%d') }}">{{ page.date | date('%B %-d, %Y') }}</time>{% endif %}
+          {% if page.extra.side_to_move %}<span class="meta-sep" aria-hidden="true">·</span>{{ page.extra.side_to_move }}{% endif %}
+          {% if page.extra.result %}<span class="meta-sep" aria-hidden="true">·</span><span class="study-result">{{ page.extra.result }}</span>{% endif %}
+        </p>
+        {% endif %}
+      </header>
+
+      {% if page.extra.board_svg %}
+      <figure class="board-figure">
+        {{ page.extra.board_svg | safe }}
+      </figure>
+      {% endif %}
+
+      {% if page.extra.annotation %}
+      <p class="pull-quote">{{ page.extra.annotation }}</p>
+      {% endif %}
+
+      <div class="prose">{{ content | safe }}</div>
+
+      {% if page.tags %}
+      <footer class="study-foot">
+        <p class="study-foot-label">Technique</p>
+        <ul class="tag-list">
+          {% for t in page.tags %}<li><a href="{{ get_taxonomy_url(kind="tags", term=t) }}">{{ t }}</a></li>{% endfor %}
+        </ul>
+      </footer>
+      {% endif %}
+
+      {% if page.section == "studies" %}
+      <p class="back-to-index"><a href="{{ base_url }}/studies/"><span aria-hidden="true">&#8592;</span> All studies</a></p>
+      {% endif %}
+    </article>
+  </main>
+{% include "footer.html" %}

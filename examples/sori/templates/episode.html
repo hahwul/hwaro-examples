@@ -1,0 +1,49 @@
+{% include "header.html" %}
+{% set episodes_section = get_section(path="episodes") %}
+{% set sorted_eps = episodes_section.pages | sort_by("date", reverse=true) %}
+<main id="main" class="site-main">
+
+  <header class="ep-hero">
+    <div class="wrap">
+      <p class="ep-meta">
+        {% if page.extra.episode_no %}<span class="ep-num">Ep. {{ page.extra.episode_no }}</span>{% endif %}
+        {% if page.date %}<time datetime="{{ page.date | date('%Y-%m-%d') }}">{{ page.date | date("%d %B %Y") }}</time>{% endif %}
+        {% if page.extra.duration %}
+        <span class="ep-chip">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M8 4.5v4l2.6 1.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          {{ page.extra.duration }}
+        </span>
+        {% endif %}
+      </p>
+      <h1>{{ page.title | e }}</h1>
+      {% if page.extra.waveform %}{{ page.extra.waveform | safe }}{% endif %}
+      {% if page.extra.jangdan %}
+      <p class="ep-jangdan"><strong>{{ page.extra.jangdan }}</strong> jangdan — {{ page.extra.syllables }}</p>
+      {% endif %}
+      {% if page.description %}<p class="ep-description">{{ page.description | e }}</p>{% endif %}
+    </div>
+  </header>
+
+  <article class="prose">
+    {{ content | safe }}
+  </article>
+
+  <nav class="ep-footer-nav" aria-label="Episode navigation">
+    {% for ep in sorted_eps %}
+      {% if ep.url == page.url %}
+        {% if not loop.first %}
+          <a href="{{ base_url }}{{ sorted_eps[loop.index0 - 1].url }}">← {{ sorted_eps[loop.index0 - 1].title | e }}</a>
+        {% else %}
+          <span></span>
+        {% endif %}
+        {% if not loop.last %}
+          <a href="{{ base_url }}{{ sorted_eps[loop.index0 + 1].url }}">{{ sorted_eps[loop.index0 + 1].title | e }} →</a>
+        {% else %}
+          <a href="{{ base_url }}/episodes/">All tales →</a>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+  </nav>
+
+</main>
+{% include "footer.html" %}

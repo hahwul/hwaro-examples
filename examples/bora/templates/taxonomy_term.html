@@ -1,0 +1,33 @@
+{% include "header.html" %}
+{% set tax = get_taxonomy(kind="tags") %}
+  <main id="main" class="site-main">
+    <div class="wrap">
+      <header class="listing-header">
+        <p class="kicker">The index</p>
+        <h1 class="listing-title">Tagged “{{ taxonomy_term }}”</h1>
+        <p class="listing-lede">Build logs filed under this thread of the journal. <a href="{{ base_url }}/tags/">Back to all tags.</a></p>
+      </header>
+
+      <h2 class="scribe">From the project log</h2>
+      <ol class="project-rows">
+        {% for t in tax.items %}
+        {% if t.name == taxonomy_term %}
+        {% for p in t.pages | sort_by("date", reverse=true) %}
+        <li class="project-row">
+          {% if p.date %}<time class="row-date" datetime="{{ p.date | date("%Y-%m-%d") }}">{{ p.date | date("%b %Y") }}</time>{% endif %}
+          <div class="row-body">
+            <h3 class="row-title"><a href="{{ base_url }}{{ p.url }}">{{ p.title }}</a></h3>
+            {% if p.description %}<p class="row-summary">{{ p.description }}</p>{% endif %}
+            <dl class="spec">
+              {% if p.extra.joinery %}<div class="spec-row"><dt>Joinery</dt><dd>{{ p.extra.joinery }}</dd></div>{% endif %}
+              {% if p.extra.wood %}<div class="spec-row"><dt>Wood</dt><dd>{{ p.extra.wood }}</dd></div>{% endif %}
+            </dl>
+          </div>
+        </li>
+        {% endfor %}
+        {% endif %}
+        {% endfor %}
+      </ol>
+    </div>
+  </main>
+{% include "footer.html" %}

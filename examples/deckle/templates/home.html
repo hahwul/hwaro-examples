@@ -1,0 +1,55 @@
+{% include "header.html" %}
+  <main id="main">
+    <section class="spread spread--opener">
+      <div class="spread-main opener-main">
+        <p class="opener-issue">{{ page.extra.issue | default("") }}{% if page.extra.issue and page.extra.season %} &middot; {% endif %}{{ page.extra.season | default("") }}</p>
+        <h1 class="opener-mark">Deckle</h1>
+        <p class="opener-tagline">A Literary Quarterly of Long Essays and Fiction in Translation</p>
+        <blockquote class="opener-epigraph">
+          <p>&ldquo;{{ page.extra.epigraph }}&rdquo;</p>
+          {% if page.extra.epigraph_source %}<cite>{{ page.extra.epigraph_source }}</cite>{% endif %}
+        </blockquote>
+        <div class="prose opener-note">
+          {{ content | safe }}
+        </div>
+      </div>
+
+      {% include "partials/seam.html" %}
+
+      <aside class="spread-margin opener-margin" aria-label="Contents of this issue">
+        <h2 class="margin-heading">In This Issue</h2>
+        <ol class="contents">
+          {% for p in get_section(path="folio").pages | sort_by("date") %}
+          <li class="contents-row">
+            <a class="row-link" href="{{ base_url }}{{ p.url }}">
+              <span class="row-kicker">{{ p.extra.kicker | default("") }}</span>
+              <span class="row-line">
+                <span class="row-title">{{ p.title | e }}</span>
+                <span class="row-leader" aria-hidden="true"></span>
+                <span class="row-folio">{{ p.extra.folio | default("") }}</span>
+              </span>
+            </a>
+          </li>
+          {% endfor %}
+        </ol>
+        <p class="margin-more"><a href="{{ base_url }}/folio/">The full folio <span aria-hidden="true">&rarr;</span></a></p>
+      </aside>
+    </section>
+
+    <section class="issue-grid" aria-label="From the current issue">
+      <h2 class="section-heading">From the Current Issue</h2>
+      <div class="piece-cards">
+        {% for p in get_section(path="folio").pages | sort_by("date") %}
+        <article class="piece-card">
+          <p class="card-kicker">{{ p.extra.kicker | default("") }}</p>
+          <h3 class="card-title"><a href="{{ base_url }}{{ p.url }}">{{ p.title | e }}</a></h3>
+          {% if p.description %}<p class="card-dek">{{ p.description | e }}</p>{% endif %}
+          <p class="card-byline">
+            {% if p.extra.author %}{{ p.extra.author }}{% endif %}{% if p.extra.translator %} &middot; translated by {{ p.extra.translator }}{% endif %}
+          </p>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+{% include "footer.html" %}

@@ -1,0 +1,47 @@
+{% include "header.html" %}
+  <main id="main">
+    {% set ascents = get_section(path="ascents").pages | sort_by("date", reverse=true) %}
+    {% set latest = ascents | first %}
+    {% if latest %}
+    <section class="hero" aria-labelledby="hero-title">
+      {% if latest.extra.elevation %}
+      <p class="hero-elev" aria-hidden="true"><span class="hero-elev-num">{{ latest.extra.elevation }}</span><span class="hero-elev-unit">m</span></p>
+      {% endif %}
+      <div class="hero-text">
+        <p class="hero-kicker">Latest ascent{% if latest.date %} · <time datetime="{{ latest.date | date("%Y-%m-%d") }}">{{ latest.date | date("%d %b %Y") }}</time>{% endif %}</p>
+        <h1 class="hero-title" id="hero-title"><a href="{{ base_url }}{{ latest.url }}">{{ latest.title | e }}</a></h1>
+        {% if latest.extra.grade %}<p class="hero-grade">{{ latest.extra.grade }}</p>{% endif %}
+        <p class="hero-meta">
+          {% if latest.extra.massif %}<span>{{ latest.extra.massif }}</span>{% endif %}
+          {% if latest.extra.aspect %}<span>{{ latest.extra.aspect }}</span>{% endif %}
+          {% if latest.extra.style %}<span>{{ latest.extra.style }}</span>{% endif %}
+        </p>
+        {% if latest.summary %}<p class="hero-summary">{{ latest.summary | strip_html | truncate_words(34) }}</p>{% endif %}
+        <p class="hero-more"><a class="btn" href="{{ base_url }}{{ latest.url }}">Read the dispatch<span aria-hidden="true"> →</span></a></p>
+      </div>
+    </section>
+    {% endif %}
+
+    <section class="log" aria-labelledby="log-head">
+      <div class="section-head">
+        <h2 class="section-title" id="log-head">The log</h2>
+        <a class="section-all" href="{{ base_url }}/ascents/">All ascents<span aria-hidden="true"> →</span></a>
+      </div>
+      <ol class="ascent-list">
+        {% for p in ascents %}
+          {% if not loop.first %}
+          <li class="ascent-row">
+            <span class="row-elev" aria-hidden="true">{{ p.extra.elevation | default("—") }}<i>m</i></span>
+            <span class="row-main">
+              <a class="row-title" href="{{ base_url }}{{ p.url }}">{{ p.title | e }}</a>
+              <span class="row-meta">{% if p.extra.massif %}{{ p.extra.massif }}{% endif %}{% if p.extra.aspect %} · {{ p.extra.aspect }}{% endif %}</span>
+            </span>
+            {% if p.extra.grade %}<span class="row-grade">{{ p.extra.grade }}</span>{% endif %}
+            {% if p.date %}<time class="row-date" datetime="{{ p.date | date("%Y-%m-%d") }}">{{ p.date | date("%d.%m.%y") }}</time>{% endif %}
+          </li>
+          {% endif %}
+        {% endfor %}
+      </ol>
+    </section>
+  </main>
+{% include "footer.html" %}

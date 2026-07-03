@@ -1,0 +1,518 @@
+/* ==========================================================================
+   Dalbit — 달빛, moonlight.
+   A dark, hushed gallery of nocturne studies. Blue-black ground, soft
+   silver-blue accents, enormous breathing room. The crescent-phase mark
+   (see .moon-mark) is the site's one signature device: it stands in for
+   list bullets everywhere a nocturne is listed, and grows fuller with
+   every successive plate.
+   ========================================================================== */
+
+/* ---- tokens -------------------------------------------------------------- */
+
+:root {
+  --bg: #0c1018;
+  --surface: #151b26;
+  --surface-2: #10141e;
+  --fg: #dfe4ec;
+  --muted: #94a0b3;
+  --accent: #a8c5e6;
+  --accent-fg: #0c1420;
+  --border: color-mix(in srgb, var(--fg) 14%, transparent);
+  --border-soft: color-mix(in srgb, var(--fg) 8%, transparent);
+
+  --font-display: "Instrument Serif", "Iowan Old Style", Georgia, serif;
+  --font-text: "Instrument Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+
+  --space-1: .25rem;
+  --space-2: .5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2.5rem;
+  --space-6: 4rem;
+  --space-7: 6rem;
+  --space-8: 9rem;
+
+  --text-sm: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
+  --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --text-lg: clamp(1.2rem, 1.1rem + 0.5vw, 1.5rem);
+  --text-xl: clamp(1.5rem, 1.3rem + 1vw, 2.25rem);
+  --text-2xl: clamp(2rem, 1.6rem + 2vw, 3.25rem);
+  --text-hero: clamp(3.5rem, 2.4rem + 6.5vw, 8rem);
+
+  --measure: 65ch;
+  --wide: 1180px;
+
+  color-scheme: dark;
+}
+
+/* ---- reset ---------------------------------------------------------------- */
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body, h1, h2, h3, p, figure, ol, ul { margin: 0; }
+ul, ol { padding: 0; }
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; }
+
+body {
+  font-family: var(--font-text);
+  font-size: var(--text-base);
+  line-height: 1.7;
+  color: var(--fg);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection { background: color-mix(in srgb, var(--accent) 30%, transparent); color: var(--fg); }
+
+main { display: block; }
+
+/* ---- skip link -------------------------------------------------------- */
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  background: var(--accent);
+  color: var(--accent-fg);
+  padding: 0.6rem 1.1rem;
+  z-index: 1000;
+  border-radius: 0 0 6px 0;
+  font-weight: 600;
+  text-decoration: none;
+}
+.skip-link:focus { top: 0; }
+
+/* ---- focus / motion ----------------------------------------------------- */
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+html { scroll-behavior: smooth; }
+
+/* ---- header --------------------------------------------------------------- */
+
+.site-header {
+  position: relative;
+  z-index: 10;
+}
+.site-header__inner {
+  max-width: var(--wide);
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+.site-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  text-decoration: none;
+  color: var(--fg);
+}
+.site-logo__mark { display: inline-flex; color: var(--accent); }
+.site-logo__word {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  letter-spacing: 0.01em;
+}
+.site-header nav {
+  display: flex;
+  gap: var(--space-4);
+}
+.site-header nav a {
+  text-decoration: none;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  letter-spacing: 0.03em;
+  padding: 0.5rem 0.1rem;
+  transition: color .15s ease;
+}
+.site-header nav a:hover { color: var(--accent); }
+
+/* ---- hero ------------------------------------------------------------------ */
+
+.hero {
+  position: relative;
+  min-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  padding: var(--space-6) var(--space-4) var(--space-7);
+}
+.hero__glow {
+  position: absolute;
+  left: 50%;
+  bottom: -102vh;
+  width: min(120vh, 90vw, 1100px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  background: radial-gradient(circle at 50% 12%, color-mix(in srgb, var(--accent) 65%, transparent) 0%, color-mix(in srgb, var(--accent) 20%, transparent) 30%, transparent 62%);
+  pointer-events: none;
+}
+.hero__inner { position: relative; max-width: 40rem; }
+.hero__crescent {
+  display: flex;
+  justify-content: center;
+  color: var(--accent);
+  margin-bottom: var(--space-4);
+}
+.hero__crescent .moon-mark { width: 30px; height: 30px; }
+.hero__title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--text-hero);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+}
+.hero__sub {
+  margin-top: var(--space-4);
+  color: var(--muted);
+  font-size: var(--text-lg);
+  letter-spacing: 0.01em;
+}
+.hero__cue {
+  position: relative;
+  margin-top: var(--space-6);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  text-decoration: none;
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+.hero__cue-glyph {
+  font-size: 1.1rem;
+  color: var(--accent);
+  animation: hero-cue-drift 2.6s ease-in-out infinite;
+}
+.hero__cue:hover { color: var(--accent); }
+@keyframes hero-cue-drift {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+/* ---- prose ------------------------------------------------------------------ */
+
+.prose { max-width: var(--measure); }
+.prose p { margin: 1.1em 0; color: var(--fg); }
+.prose p:first-child { margin-top: 0; }
+.prose a { color: var(--accent); text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent); text-underline-offset: 3px; transition: text-decoration-color .15s ease; }
+.prose a:hover { text-decoration-color: currentColor; }
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--surface);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  color: var(--accent);
+}
+.prose pre {
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: 10px;
+  padding: 1.1rem 1.3rem;
+  overflow-x: auto;
+  line-height: 1.6;
+  font-size: 0.86rem;
+}
+.prose pre code { background: none; padding: 0; color: inherit; }
+.prose blockquote {
+  margin: 1.6em 0;
+  padding-left: 1.25rem;
+  border-left: 2px solid var(--accent);
+  color: var(--muted);
+  font-style: italic;
+}
+.prose hr { border: none; border-top: 1px solid var(--border); margin: var(--space-5) 0; }
+
+.intro {
+  max-width: var(--wide);
+  margin: 0 auto;
+  padding: 0 var(--space-4) var(--space-6);
+}
+.intro .prose { margin: 0 auto; }
+
+/* ---- nocturne list (the signature layout) ----------------------------------- */
+
+.nocturnes {
+  list-style: none;
+}
+.nocturne { background: var(--bg); }
+.nocturne--b { background: var(--surface-2); }
+
+.nocturne__inner {
+  max-width: var(--wide);
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4);
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: var(--space-6);
+  align-items: center;
+}
+.nocturne--b .nocturne__inner { grid-template-columns: 1fr 1.15fr; }
+.nocturne--b .nocturne__art { order: 2; }
+.nocturne--b .nocturne__body { order: 1; }
+
+.nocturne__art {
+  display: block;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border-soft);
+  aspect-ratio: 16 / 9.2;
+}
+.plate__art { width: 100%; height: 100%; }
+
+.nocturne__body { min-width: 0; }
+.nocturne__marker { display: inline-flex; color: var(--accent); margin-bottom: var(--space-3); }
+.nocturne__marker .moon-mark { width: 26px; height: 26px; }
+.nocturne__meta {
+  font-size: var(--text-sm);
+  color: var(--muted);
+  letter-spacing: 0.03em;
+  margin-bottom: var(--space-2);
+}
+.nocturne__title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--text-2xl);
+  line-height: 1.1;
+}
+.nocturne__title a { text-decoration: none; color: var(--fg); transition: color .15s ease; }
+.nocturne__title a:hover { color: var(--accent); }
+.nocturne__desc {
+  margin-top: var(--space-3);
+  color: var(--muted);
+  max-width: 42ch;
+}
+.nocturne__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  margin-top: var(--space-4);
+  color: var(--accent);
+  text-decoration: none;
+  font-size: var(--text-sm);
+  letter-spacing: 0.03em;
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  padding-bottom: 0.15rem;
+  transition: border-color .15s ease, gap .15s ease;
+}
+.nocturne__link:hover { border-color: currentColor; gap: 0.6em; }
+
+/* ---- closing ----------------------------------------------------------------- */
+
+.closing {
+  border-top: 1px solid var(--border-soft);
+}
+.closing__inner {
+  max-width: var(--wide);
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4);
+  text-align: center;
+}
+.closing__text { color: var(--muted); font-size: var(--text-lg); }
+.closing__text a { color: var(--accent); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); }
+.closing__text a:hover { border-color: currentColor; }
+
+/* ---- section head (nocturnes index) -------------------------------------------- */
+
+.section-head { border-bottom: 1px solid var(--border-soft); }
+.section-head__inner {
+  max-width: var(--wide);
+  margin: 0 auto;
+  padding: var(--space-7) var(--space-4) var(--space-6);
+}
+.section-head__kicker {
+  color: var(--muted);
+  font-size: var(--text-sm);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-3);
+}
+.section-head__title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--text-hero);
+  line-height: 1;
+  color: var(--fg);
+}
+.section-head__desc { margin-top: var(--space-4); }
+.section-head__desc .prose p { color: var(--muted); font-size: var(--text-lg); }
+
+/* ---- individual nocturne (study) ----------------------------------------------- */
+
+.plate--full {
+  width: 100%;
+  aspect-ratio: 16 / 8;
+  border-bottom: 1px solid var(--border-soft);
+}
+.plate--full .plate__art { width: 100%; height: 100%; }
+
+.study__inner {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4) var(--space-7);
+}
+.study__marker { display: inline-flex; color: var(--accent); margin-bottom: var(--space-3); }
+.study__marker .moon-mark { width: 30px; height: 30px; }
+.study__kicker {
+  color: var(--muted);
+  font-size: var(--text-sm);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-2);
+}
+.study__title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--text-2xl);
+  line-height: 1.1;
+  color: var(--fg);
+}
+.study__date { margin-top: var(--space-2); color: var(--muted); font-size: var(--text-sm); }
+.study__body { margin-top: var(--space-5); }
+
+.study__pager {
+  margin-top: var(--space-7);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--border-soft);
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+.study__pager-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  text-decoration: none;
+  color: var(--fg);
+  max-width: 45%;
+}
+.study__pager-link--next { margin-left: auto; text-align: right; }
+.study__pager-marker { display: inline-flex; color: var(--accent); flex-shrink: 0; }
+.study__pager-marker .moon-mark { width: 20px; height: 20px; }
+.study__pager-text { display: flex; flex-direction: column; }
+.study__pager-label { font-size: var(--text-sm); color: var(--muted); letter-spacing: 0.03em; }
+.study__pager-link:hover .study__pager-text { color: var(--accent); }
+
+/* ---- generic page (about) ----------------------------------------------------- */
+
+.page {
+  max-width: var(--wide);
+  margin: 0 auto;
+  padding: var(--space-7) var(--space-4) var(--space-7);
+}
+.page__body h1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--text-hero);
+  line-height: 1;
+  margin-bottom: var(--space-5);
+  color: var(--fg);
+}
+.page__body h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--text-xl);
+  margin: var(--space-5) 0 var(--space-3);
+  color: var(--fg);
+}
+
+/* ---- 404 --------------------------------------------------------------------- */
+
+.notfound { min-height: 60vh; display: flex; align-items: center; }
+.notfound__inner {
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4);
+  text-align: center;
+}
+.notfound__marker { display: flex; justify-content: center; color: var(--accent); margin-bottom: var(--space-3); }
+.notfound__marker .moon-mark { width: 30px; height: 30px; }
+.notfound__kicker { color: var(--muted); letter-spacing: 0.1em; font-size: var(--text-sm); }
+.notfound__title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--text-2xl);
+  margin-top: var(--space-2);
+}
+.notfound__text { margin-top: var(--space-3); color: var(--muted); }
+.notfound__link {
+  display: inline-block;
+  margin-top: var(--space-4);
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+}
+.notfound__link:hover { border-color: currentColor; }
+
+/* ---- footer ------------------------------------------------------------------ */
+
+.site-footer { border-top: 1px solid var(--border-soft); }
+.site-footer__inner {
+  max-width: var(--wide);
+  margin: 0 auto;
+  padding: var(--space-5) var(--space-4);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+.site-footer__mark { display: inline-flex; color: var(--accent); }
+.site-footer__text { margin-right: auto; }
+.site-footer__text a { color: var(--muted); text-decoration-color: color-mix(in srgb, var(--muted) 45%, transparent); }
+.site-footer__text a:hover { color: var(--accent); }
+.site-footer__nav { display: flex; gap: var(--space-4); }
+.site-footer__nav a { color: var(--muted); text-decoration: none; }
+.site-footer__nav a:hover { color: var(--accent); }
+
+/* ---- moon-mark (the crescent-phase device) ------------------------------------- */
+
+.moon-mark { width: 24px; height: 24px; }
+.moon-mark__ring { fill: none; stroke: color-mix(in srgb, var(--fg) 20%, transparent); stroke-width: 1; }
+.moon-mark__disc { fill: currentColor; }
+.moon-mark__shadow { fill: var(--bg); }
+
+/* ---- responsive --------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .nocturne__inner,
+  .nocturne--b .nocturne__inner {
+    grid-template-columns: 1fr;
+  }
+  .nocturne--b .nocturne__art,
+  .nocturne--b .nocturne__body { order: initial; }
+  .study__pager-link--next { text-align: left; margin-left: 0; }
+  .study__pager { flex-direction: column; }
+  .study__pager-link { max-width: 100%; }
+}
+
+@media (max-width: 600px) {
+  .site-header__inner { padding: var(--space-3); }
+  .site-header nav { gap: var(--space-3); }
+  .hero { min-height: 80vh; padding: var(--space-5) var(--space-3) var(--space-6); }
+  .nocturne__inner { padding: var(--space-5) var(--space-3); gap: var(--space-4); }
+  .intro, .closing__inner, .section-head__inner, .study__inner, .page { padding-left: var(--space-3); padding-right: var(--space-3); }
+}

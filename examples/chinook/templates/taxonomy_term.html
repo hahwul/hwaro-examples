@@ -1,0 +1,25 @@
+{% include "header.html" %}
+{% set tax = get_taxonomy(kind="tags") %}
+  <main id="main" class="site-main">
+    <div class="wrap">
+      <header class="page-head">
+        <p class="page-kicker">Tagged</p>
+        <h1 class="page-title">{{ taxonomy_term }}</h1>
+        <p class="page-lede">Bakes filed under this thread. <a href="{{ base_url }}/tags/">Back to all tags.</a></p>
+      </header>
+
+      <section class="timeline-block" aria-label="Bakes with this tag">
+        <ol class="timeline">
+          {% for t in tax.items %}
+            {% if t.name == taxonomy_term %}
+              {% for p in t.pages | sort_by("date", reverse=true) %}
+                {% set entry = p %}
+                {% include "partials/bake_entry.html" %}
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+        </ol>
+      </section>
+    </div>
+  </main>
+{% include "footer.html" %}

@@ -1,0 +1,38 @@
+{% include "header.html" %}
+    <main id="main">
+      {% set entries = get_section(path="swims").pages | sort_by("date", reverse=true) %}
+      {% set latest = entries | first %}
+      <section class="hero">
+        <p class="hero-kicker">Latest swim</p>
+        <p class="hero-meta">
+          {% if latest.date %}<time datetime="{{ latest.date | date("%Y-%m-%d") }}">{{ latest.date | date("%B %d, %Y") }}</time>{% endif %}
+          {% if latest.extra.water_temp %}{% set temp = latest.extra.water_temp %}{% include "partials/badge.html" %}{% endif %}
+        </p>
+        <h1 class="hero-title"><a href="{{ base_url }}{{ latest.url }}">{{ latest.title }}</a></h1>
+        {% if latest.summary %}
+        <p class="hero-summary">{{ latest.summary | strip_html | truncate_words(42) }}</p>
+        {% endif %}
+        <p class="hero-more"><a class="read-link" href="{{ base_url }}{{ latest.url }}">Read the entry</a></p>
+      </section>
+
+      <div class="home-note">{{ content | safe }}</div>
+
+      <section class="earlier" aria-label="Earlier swims">
+        <h2 class="list-heading">Earlier swims</h2>
+        <ol class="swim-list">
+          {% for p in entries %}
+          {% if loop.index > 1 %}
+          <li class="swim-row">
+            <a class="swim-row-link" href="{{ base_url }}{{ p.url }}">
+              {% if p.date %}<time class="swim-date" datetime="{{ p.date | date("%Y-%m-%d") }}">{{ p.date | date("%b %d, %Y") }}</time>{% endif %}
+              <span class="swim-title">{{ p.title }}</span>
+              {% if p.extra.water_temp %}{% set temp = p.extra.water_temp %}{% include "partials/badge.html" %}{% endif %}
+            </a>
+          </li>
+          {% endif %}
+          {% endfor %}
+        </ol>
+        <p class="all-link"><a class="read-link" href="{{ base_url }}/swims/">All swims</a></p>
+      </section>
+    </main>
+{% include "footer.html" %}

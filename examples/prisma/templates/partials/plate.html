@@ -1,0 +1,71 @@
+{%- set pid = plate_page.url | slugify %}
+<svg class="plate-svg" viewBox="0 0 100 {{ plate_page.extra.vh }}" role="img" aria-label="Spectral study: {{ plate_page.title | e }}" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    {%- if plate_page.extra.glass %}
+    <linearGradient id="{{ pid }}-glass" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#6d28c9" stop-opacity="0.07"/>
+    </linearGradient>
+    {%- endif %}
+    {%- for r in plate_page.extra.rays %}
+    <linearGradient id="{{ pid }}-ray-{{ loop.index }}" gradientUnits="userSpaceOnUse" x1="{{ r[0] }}" y1="{{ r[1] }}" x2="{{ r[2] }}" y2="{{ r[3] }}">
+      <stop offset="0%" stop-color="{{ r[4] }}" stop-opacity="0.92"/>
+      <stop offset="100%" stop-color="{{ r[4] }}" stop-opacity="0"/>
+    </linearGradient>
+    {%- endfor %}
+    {%- for c in plate_page.extra.curves %}
+    <linearGradient id="{{ pid }}-curve-{{ loop.index }}" gradientUnits="userSpaceOnUse" x1="{{ c[0] }}" y1="{{ c[1] }}" x2="{{ c[4] }}" y2="{{ c[5] }}">
+      <stop offset="0%" stop-color="{{ c[6] }}" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="{{ c[6] }}" stop-opacity="0"/>
+    </linearGradient>
+    {%- endfor %}
+    {%- if plate_page.extra.bounce_grad %}
+    <linearGradient id="{{ pid }}-bounce" gradientUnits="userSpaceOnUse" x1="{{ plate_page.extra.bounce_grad[0] }}" y1="{{ plate_page.extra.bounce_grad[1] }}" x2="{{ plate_page.extra.bounce_grad[2] }}" y2="{{ plate_page.extra.bounce_grad[3] }}">
+      <stop offset="0%" stop-color="#6d28c9"/>
+      <stop offset="30%" stop-color="#2f6fd6"/>
+      <stop offset="58%" stop-color="#2f8f5b"/>
+      <stop offset="80%" stop-color="#d4af22"/>
+      <stop offset="100%" stop-color="#e0475c"/>
+    </linearGradient>
+    {%- endif %}
+  </defs>
+
+  {%- if plate_page.extra.glass %}
+  {%- for poly in plate_page.extra.glass %}
+  <polygon class="glass-body" points="{% for pt in poly %}{{ pt[0] }},{{ pt[1] }} {% endfor %}" fill="url(#{{ pid }}-glass)" stroke="currentColor" stroke-width="0.5"/>
+  {%- endfor %}
+  {%- endif %}
+
+  {%- if plate_page.extra.normal %}
+  <line class="normal-line" x1="{{ plate_page.extra.normal[0] }}" y1="{{ plate_page.extra.normal[1] }}" x2="{{ plate_page.extra.normal[2] }}" y2="{{ plate_page.extra.normal[3] }}"/>
+  {%- endif %}
+
+  {%- for b in plate_page.extra.beams %}
+  <line class="beam-line" x1="{{ b[0] }}" y1="{{ b[1] }}" x2="{{ b[2] }}" y2="{{ b[3] }}"/>
+  {%- endfor %}
+
+  {%- for r in plate_page.extra.rays %}
+  <line class="ray-line" x1="{{ r[0] }}" y1="{{ r[1] }}" x2="{{ r[2] }}" y2="{{ r[3] }}" stroke="url(#{{ pid }}-ray-{{ loop.index }})"/>
+  {%- endfor %}
+
+  {%- for c in plate_page.extra.curves %}
+  <path class="curve-line" d="M{{ c[0] }},{{ c[1] }} Q{{ c[2] }},{{ c[3] }} {{ c[4] }},{{ c[5] }}" stroke="url(#{{ pid }}-curve-{{ loop.index }})" fill="none"/>
+  {%- endfor %}
+
+  {%- if plate_page.extra.bounce %}
+  <polyline class="bounce-line" points="{% for pt in plate_page.extra.bounce %}{{ pt[0] }},{{ pt[1] }} {% endfor %}" fill="none" stroke="url(#{{ pid }}-bounce)"/>
+  {%- for pt in plate_page.extra.bounce_nodes %}
+  <circle class="bounce-node" cx="{{ pt[0] }}" cy="{{ pt[1] }}" r="0.9"/>
+  {%- endfor %}
+  {%- endif %}
+
+  {%- for n in plate_page.extra.nodes %}
+  <circle class="focus-node" cx="{{ n[0] }}" cy="{{ n[1] }}" r="{{ n[2] }}"/>
+  {%- endfor %}
+
+  {%- if plate_detail %}
+  {%- for t in plate_page.extra.ticks %}
+  <text class="plate-tick" x="{{ t[0] }}" y="{{ t[1] }}" text-anchor="{{ t[2] }}">{{ t[3] }}</text>
+  {%- endfor %}
+  {%- endif %}
+</svg>

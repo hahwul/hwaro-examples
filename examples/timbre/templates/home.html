@@ -1,0 +1,62 @@
+{% include "header.html" %}
+{% set episodes_section = get_section(path="episodes") %}
+{% set eps = episodes_section.pages | sort_by("date", reverse=true) %}
+{% set latest = eps | first %}
+<main id="main" class="site-main">
+
+  <section class="hero" aria-labelledby="hero-h">
+    <div class="hero-mark">
+      <p class="hero-kicker">A design history podcast</p>
+      <h1 class="hero-title" id="hero-h">{{ site.title | e }}</h1>
+      <p class="hero-tagline">Tracing graphic design history, one artifact at a time.</p>
+      <p class="hero-byline">Hosted by Adaline Marchetti &amp; Desmond Okafor</p>
+    </div>
+
+    {% if latest %}
+    <div class="hero-latest">
+      <p class="wall-label">Latest accession</p>
+      <article class="latest-card">
+        <a class="latest-card-link" href="{{ base_url }}{{ latest.url }}">
+          <div class="swatch-chip swatch-chip--lg" style="--chip-color: {{ latest.extra.swatch_hex }};">
+            <span class="swatch-chip-color" aria-hidden="true"></span>
+            <span class="swatch-chip-label">
+              <span class="swatch-chip-name">{{ latest.extra.swatch_name | e }}</span>
+              <span class="swatch-chip-code">{{ latest.extra.swatch_code | e }}</span>
+            </span>
+          </div>
+          <p class="latest-number">No. {{ latest.extra.episode_number }} &middot; {{ latest.extra.era | e }}</p>
+          <h2 class="latest-title">{{ latest.title | e }}</h2>
+          <p class="latest-meta">
+            <span class="chip chip-duration">{{ latest.extra.duration | e }}</span>
+            {% if latest.date %}<time datetime="{{ latest.date | date('%Y-%m-%d') }}">{{ latest.date | date('%B %d, %Y') }}</time>{% endif %}
+          </p>
+          {% if latest.description %}<p class="latest-desc">{{ latest.description | e }}</p>{% endif %}
+        </a>
+      </article>
+    </div>
+    {% endif %}
+  </section>
+
+  <section class="catalog wrap" aria-labelledby="catalog-h">
+    <div class="catalog-head">
+      <h2 id="catalog-h">The Catalog</h2>
+      <p class="catalog-note">Every episode, accessioned newest first.</p>
+    </div>
+    <ul class="catalog-grid">
+      {% for ep in eps %}
+      <li>{% include "partials/episode-card.html" %}</li>
+      {% endfor %}
+    </ul>
+    <p class="catalog-more"><a href="{{ base_url }}/episodes/">View the full episode index &rarr;</a></p>
+  </section>
+
+  <section class="about-strip" aria-labelledby="about-h">
+    <div class="wrap">
+      <h2 id="about-h">About the show</h2>
+      <div class="prose">{{ content | safe }}</div>
+      <a href="{{ base_url }}/about/">Read more about Timbre &rarr;</a>
+    </div>
+  </section>
+
+</main>
+{% include "footer.html" %}

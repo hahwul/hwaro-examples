@@ -1,0 +1,65 @@
+{% include "header.html" %}
+    <main id="main" class="doc doc-home">
+      <section class="masthead">
+        <p class="masthead-eyebrow">Payments SDK · Subscriptions · Invoicing · Idempotent Charges</p>
+        <h1 class="masthead-word">Quartzite</h1>
+        <p class="masthead-promise">One predictable API for moving money — every mutating call is safe to retry, by default.</p>
+        <div class="masthead-cta">
+          <a class="btn btn-primary" href="{{ base_url }}/quickstart/">Start the quickstart</a>
+          <a class="btn btn-ghost" href="{{ base_url }}/api/">Browse the API reference</a>
+        </div>
+      </section>
+
+      <section class="front-index" aria-labelledby="front-index-title">
+        <p class="section-label" id="front-index-title">API Guides</p>
+        <div class="rule-double" aria-hidden="true"></div>
+        <ol class="index-list">
+          {% for p in get_section(path="api").pages | sort_by("weight") %}
+          <li class="index-row">
+            <a class="index-link" href="{{ base_url }}{{ p.url }}">
+              <span class="index-main">
+                <span class="index-title">{{ p.title }}</span>
+                {% if p.description %}<span class="index-desc">{{ p.description }}</span>{% endif %}
+              </span>
+              <span class="index-meta">
+                <span class="index-route">{{ p.extra.route }}</span>
+                <span class="ledger-method ledger-method-{{ p.extra.method | default('get') | lower }}">{{ p.extra.method }}</span>
+              </span>
+            </a>
+          </li>
+          {% endfor %}
+        </ol>
+        <div class="rule-double" aria-hidden="true"></div>
+      </section>
+
+      <section class="mission" aria-labelledby="mission-title">
+        <p class="section-label" id="mission-title">Why Quartzite</p>
+        <div class="rule-double" aria-hidden="true"></div>
+        <div class="prose prose-mission">
+          {{ content | safe }}
+        </div>
+      </section>
+
+      <section class="tenets" aria-labelledby="tenets-title">
+        <p class="section-label" id="tenets-title">Three Guarantees</p>
+        <div class="rule-double" aria-hidden="true"></div>
+        <div class="tenet-grid">
+          <article class="tenet">
+            <span class="tenet-num">01</span>
+            <h2 class="tenet-title">Idempotent by construction</h2>
+            <p>Every write accepts an <code>Idempotency-Key</code>. Replays of a known key return the original result — never a second charge, never a duplicate invoice.</p>
+          </article>
+          <article class="tenet">
+            <span class="tenet-num">02</span>
+            <h2 class="tenet-title">Versioned, never silent</h2>
+            <p>Response shapes only change behind a dated version header. Nothing you integrate against today is rewritten under you tomorrow.</p>
+          </article>
+          <article class="tenet">
+            <span class="tenet-num">03</span>
+            <h2 class="tenet-title">Signed, verifiable events</h2>
+            <p>Webhook payloads carry an HMAC signature you verify before you trust them. No event reaches your handler unauthenticated.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+{% include "footer.html" %}

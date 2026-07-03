@@ -1,0 +1,23 @@
+{% include "header.html" %}
+  <main id="main">
+    <header class="page-head">
+      <p class="kicker">Sessions tagged</p>
+      <h1 class="page-title">{{ taxonomy_term }}</h1>
+    </header>
+    <section class="ledger-block" aria-label="Tagged sessions">
+      <h2 class="visually-hidden">Entries</h2>
+      <ol class="ledger">
+        {% set tax = get_taxonomy(kind="tags") %}
+        {% for term in tax.items %}
+          {% if term.name == taxonomy_term %}
+            {% for p in term.pages | sort_by("date", reverse=true) %}
+              {% set entry = p %}
+              {% include "partials/entry.html" %}
+            {% endfor %}
+          {% endif %}
+        {% endfor %}
+      </ol>
+    </section>
+    <p class="ledger-more"><a class="arrow-link" href="{{ base_url }}/tags/"><span aria-hidden="true">←</span> All tags</a></p>
+  </main>
+{% include "footer.html" %}

@@ -1,0 +1,63 @@
+{% include "header.html" %}
+    <main id="main">
+      <article class="entry">
+        <header class="entry-head">
+          {% if page.extra.stage %}
+            <p class="entry-kicker">
+              <span class="stage-no">Stage {{ page.extra.stage_word }}</span>
+              <span class="kicker-dot" aria-hidden="true">·</span>
+              {% if page.date %}<time datetime="{{ page.date | date("%Y-%m-%d") }}">{{ page.date | date("%B %d, %Y") }}</time>{% endif %}
+            </p>
+          {% endif %}
+          <h1 class="entry-title">{{ page.title | e }}</h1>
+          {% if page.extra.stage %}
+            <div class="route-strip" role="img" aria-label="Stage route from {{ page.extra.start }} at kilometre {{ page.extra.km_start }} to {{ page.extra.finish }} at kilometre {{ page.extra.km_end }}">
+              <div class="route-post">
+                <span class="route-km">km {{ page.extra.km_start }}</span>
+                <span class="route-name">{{ page.extra.start | e }}</span>
+              </div>
+              <div class="route-path" aria-hidden="true"></div>
+              <div class="route-post route-post-end">
+                <span class="route-km">km {{ page.extra.km_end }}</span>
+                <span class="route-name">{{ page.extra.finish | e }}</span>
+              </div>
+            </div>
+            <p class="entry-meta">{{ page.extra.km_stage }} km over {{ page.extra.days }} walking days · {{ page.extra.km_end }} of 600 km now behind me{% if page.reading_time %} · {{ page.reading_time }} min read{% endif %}</p>
+          {% endif %}
+        </header>
+
+        <div class="prose">
+          {{ content | safe }}
+        </div>
+
+        {% if page.tags %}
+          <ul class="tag-list" aria-label="Tags">
+            {% for t in page.tags %}
+              <li><a href="{{ get_taxonomy_url(kind="tags", term=t) }}">{{ t }}</a></li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+
+        {% if page.extra.stage %}
+          <nav class="stage-nav" aria-label="Adjacent stages">
+            {% if page.lower %}
+              <a class="stage-nav-link stage-nav-prev" href="{{ base_url }}{{ page.lower.url }}">
+                <span class="stage-nav-label"><span aria-hidden="true">←</span> South, the stage before</span>
+                <span class="stage-nav-title">{{ page.lower.title | e }}</span>
+              </a>
+            {% else %}
+              <span class="stage-nav-empty">The trail starts here.</span>
+            {% endif %}
+            {% if page.higher %}
+              <a class="stage-nav-link stage-nav-next" href="{{ base_url }}{{ page.higher.url }}">
+                <span class="stage-nav-label">North, the stage after <span aria-hidden="true">→</span></span>
+                <span class="stage-nav-title">{{ page.higher.title | e }}</span>
+              </a>
+            {% else %}
+              <span class="stage-nav-empty">The trail ends here.</span>
+            {% endif %}
+          </nav>
+        {% endif %}
+      </article>
+    </main>
+{% include "footer.html" %}

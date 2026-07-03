@@ -1,0 +1,26 @@
+{% include "header.html" %}
+<article class="page-session">
+  <header class="page-head">
+    <p class="cmd-line">
+      {%- if page.section is present and page.section == "releases" -%}
+      <span class="prompt">waypoint@{{ page.title }}</span>
+      {%- else -%}
+      <span class="prompt">waypoint@stable</span>
+      {%- endif %} <span class="caret">›</span> <span class="cmd">{% if page.section is present and page.section == "releases" %}waypoint changelog --show {{ page.title }}{% else %}man waypoint-{{ page.title | slugify }}{% endif %}</span></p>
+    <h1 class="page-title">{{ page.title }}</h1>
+    {% if page.date %}
+    <p class="page-meta"># released {{ page.date | date("%Y-%m-%d") }}{% if page.extra.digest_short %} · image {{ page.extra.digest_short }}…{% endif %}{% if page.reading_time %} · {{ page.reading_time }} min read{% endif %}</p>
+    {% endif %}
+  </header>
+  <div class="prose">{{ content | safe }}</div>
+  {% if page.section is present and page.section == "releases" %}
+  {% if page.lower.date or page.higher.date %}
+  <nav class="page-nav" aria-label="Adjacent releases">
+    {% if page.lower.date %}<a class="page-nav-link" href="{{ base_url }}{{ page.lower.url }}"><span aria-hidden="true">←</span> newer · {{ page.lower.title }}</a>{% endif %}
+    <span class="page-nav-spacer"></span>
+    {% if page.higher.date %}<a class="page-nav-link" href="{{ base_url }}{{ page.higher.url }}">older · {{ page.higher.title }} <span aria-hidden="true">→</span></a>{% endif %}
+  </nav>
+  {% endif %}
+  {% endif %}
+</article>
+{% include "footer.html" %}

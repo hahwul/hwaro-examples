@@ -1,0 +1,94 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="dot dot-ok" aria-hidden="true"></span> Live status, no theatre</p>
+        <h1 id="hero-title">Tell your users the truth in under a minute.</h1>
+        <p class="lede">Hertz is a hosted status page for small SaaS teams. Wire up a healthcheck, name your services, and ship an honest incident timeline your customers can actually trust.</p>
+        <div class="hero-actions">
+          <a class="btn btn-accent" href="{{ base_url }}/pricing/">Start a status page</a>
+          <a class="btn btn-ghost" href="{{ base_url }}/features/">See how it works</a>
+        </div>
+      </div>
+
+      <aside class="board" aria-label="Example status board">
+        <div class="board-head">
+          <span class="board-title">status.northwind.app</span>
+          <span class="board-badge"><span class="dot dot-ok" aria-hidden="true"></span> Operational</span>
+        </div>
+        <ul class="svc-list">
+          <li class="svc">
+            <span class="svc-name"><span class="dot dot-ok" aria-hidden="true"></span> API Gateway</span>
+            <span class="svc-figure">99.99%</span>
+          </li>
+          <li class="svc">
+            <span class="svc-name"><span class="dot dot-ok" aria-hidden="true"></span> Dashboard</span>
+            <span class="svc-figure">99.97%</span>
+          </li>
+          <li class="svc">
+            <span class="svc-name"><span class="dot dot-warn" aria-hidden="true"></span> Webhooks</span>
+            <span class="svc-figure">99.82%</span>
+          </li>
+        </ul>
+        <div class="board-foot">
+          <span>90-day uptime</span>
+          <span class="mono">refreshed 41s ago</span>
+        </div>
+      </aside>
+    </section>
+
+    <section class="uptime-strip" aria-label="Ninety day uptime history">
+      <div class="strip-meta">
+        <span class="strip-label">Uptime · last 90 days</span>
+        <span class="strip-figure mono">99.94%</span>
+      </div>
+      <div class="ticks" role="img" aria-label="Ninety daily uptime ticks: eighty-seven full, three partial outages">
+        {% for i in range(90) %}{% if i == 33 or i == 58 %}<span class="tick tick-warn"></span>{% elif i == 71 %}<span class="tick tick-down"></span>{% else %}<span class="tick"></span>{% endif %}{% endfor %}
+      </div>
+      <div class="strip-axis mono">
+        <span>90 days ago</span>
+        <span>today</span>
+      </div>
+    </section>
+
+    <section class="panels" aria-label="Product highlights">
+      <article class="panel">
+        <span class="panel-kicker mono">01 / signal</span>
+        <h2>Checks that read like a heartbeat</h2>
+        <p>Ping any HTTP endpoint every 30 seconds from three regions. A single flap won't page anyone; a real outage flips the board the instant two regions agree.</p>
+      </article>
+      <article class="panel">
+        <span class="panel-kicker mono">02 / honesty</span>
+        <h2>Incidents in plain language</h2>
+        <p>Post an update, pick an impact level, and Hertz timestamps it, emails subscribers, and folds it into the uptime record. No spin, no vanity green.</p>
+      </article>
+      <article class="panel">
+        <span class="panel-kicker mono">03 / calm</span>
+        <h2>A page that stays quiet</h2>
+        <p>No autoplay, no chat bubble, no cookie wall. Just the numbers, monospaced and legible, on a page that loads in one round trip.</p>
+      </article>
+    </section>
+
+    <section class="latest" aria-labelledby="latest-title">
+      <div class="latest-head">
+        <h2 id="latest-title">From the changelog</h2>
+        <a class="latest-all" href="{{ base_url }}/changelog/">All entries →</a>
+      </div>
+      <ul class="entry-list">
+        {% set changelog = get_section(path="changelog/_index.md") %}
+        {% for post in changelog.pages | sort_by(attribute="date", reverse=true) %}{% if loop.index <= 3 %}
+        <li class="entry">
+          <a href="{{ base_url }}{{ post.url }}">
+            <time class="entry-date mono" datetime="{{ post.date | date('%Y-%m-%d') }}">{{ post.date | date('%Y.%m.%d') }}</time>
+            <span class="entry-title">{{ post.title | e }}</span>
+          </a>
+        </li>
+        {% endif %}{% endfor %}
+      </ul>
+    </section>
+
+    <div class="home-prose">{{ content }}</div>
+
+  </main>
+{% include "footer.html" %}

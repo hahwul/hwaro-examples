@@ -1,0 +1,30 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <header class="page-head module">
+      <span class="mod-id">RACK / {{ section.title | upper }}</span>
+      <span class="jack jack--tr" aria-hidden="true"></span>
+      <span class="jack jack--br" aria-hidden="true"></span>
+      {% if section.title %}<h1 class="page-title">{{ section.title | e }}</h1>{% endif %}
+      {% if section.description %}<p class="page-desc">{{ section.description | e }}</p>{% endif %}
+    </header>
+
+    {% if content %}<div class="prose section-intro">{{ content }}</div>{% endif %}
+
+    <ul class="patch-list">
+      {% for p in section.pages | sort_by("date") %}
+      <li class="patch-row module">
+        <span class="jack jack--tr" aria-hidden="true"></span>
+        <div class="patch-slot">
+          {% if p.extra.slot_time %}<span class="patch-time">{{ p.extra.slot_time }}</span>{% endif %}
+          {% if p.date %}<span class="patch-date">{{ p.date | date("%d %b") }}</span>{% endif %}
+        </div>
+        <div class="patch-main">
+          <h2 class="patch-name"><a href="{{ base_url }}{{ p.url }}">{{ p.title }}</a></h2>
+          {% if p.summary %}<p class="patch-summary">{{ p.summary | strip_html | truncate_words(34) }}</p>{% endif %}
+          {% if p.extra.setup %}<p class="patch-setup">{{ p.extra.setup }}</p>{% endif %}
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </main>
+{% include "footer.html" %}

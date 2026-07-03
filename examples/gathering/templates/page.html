@@ -1,0 +1,53 @@
+{% include "header.html" %}
+    <main id="main">
+      <article class="page {% if page.section == "chapters" %}chapter{% else %}standalone{% endif %}">
+        {% if page.section == "chapters" %}
+        <div class="noon-head" role="group" aria-label="Noon position for this entry">
+          <span class="noon-item"><span class="noon-label">Day</span><span class="noon-value">{{ page.extra.day | default("") }}</span></span>
+          <span class="noon-item"><span class="noon-label">Noon position</span><span class="noon-value">{{ page.extra.position | default("") }}</span></span>
+          <span class="noon-item"><span class="noon-label">Wind</span><span class="noon-value">{{ page.extra.wind | default("") }}</span></span>
+          <span class="noon-item"><span class="noon-label">Run</span><span class="noon-value">{{ page.extra.run | default("") }}</span></span>
+          {% if page.extra.folio %}<span class="noon-folio">Folio {{ page.extra.folio }}</span>{% endif %}
+        </div>
+        {% endif %}
+
+        <header class="page-open">
+          {% if page.section == "chapters" %}<p class="chapter-kicker">Chapter {{ page.extra.numeral | default("") }}</p>{% endif %}
+          <h1 class="page-title">{{ page.title | e }}</h1>
+          {% if page.description %}<p class="page-standfirst">{{ page.description | e }}</p>{% endif %}
+        </header>
+
+        {% if page.toc and toc and page.section == "chapters" %}
+        <aside class="page-toc" aria-label="On this page">
+          <p class="toc-label">In this entry</p>
+          {{ toc }}
+        </aside>
+        {% endif %}
+
+        <div class="prose {% if page.section == "chapters" %}dropcap{% endif %}">
+          {{ content | safe }}
+        </div>
+
+        {% if page.section == "chapters" %}
+        <nav class="passage-nav" aria-label="Adjacent days">
+          {% if page.lower and page.lower.extra.numeral %}
+          <a class="passage-link passage-prev" href="{{ base_url }}{{ page.lower.url }}">
+            <span class="passage-dir"><span aria-hidden="true">&larr;</span> Previous day</span>
+            <span class="passage-title">{{ page.lower.title | e }}</span>
+          </a>
+          {% else %}
+          <span class="passage-empty">The log opens here — Falmouth astern.</span>
+          {% endif %}
+          {% if page.higher and page.higher.extra.numeral %}
+          <a class="passage-link passage-next" href="{{ base_url }}{{ page.higher.url }}">
+            <span class="passage-dir">Next day <span aria-hidden="true">&rarr;</span></span>
+            <span class="passage-title">{{ page.higher.title | e }}</span>
+          </a>
+          {% else %}
+          <span class="passage-empty passage-empty-next">Horta made fast — the log ends here.</span>
+          {% endif %}
+        </nav>
+        {% endif %}
+      </article>
+    </main>
+{% include "footer.html" %}

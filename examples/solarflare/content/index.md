@@ -1,4 +1,0 @@
-+++
-title = "Solarflare"
-template = "home"
-+++

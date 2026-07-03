@@ -1,0 +1,37 @@
+{% include "header.html" %}
+    <main id="main" class="article-main">
+      <article class="article">
+        <header class="article-head">
+          {% if page.section == "experiments" %}
+          <p class="article-kicker"><a href="{{ base_url }}/experiments/">Experiment</a>{% if page.extra.hydration %} <span class="kicker-sep" aria-hidden="true">·</span> {% set hyd = page.extra.hydration %}{% include "partials/hydration.html" %}{% endif %}</p>
+          {% endif %}
+          <h1>{{ page.title | e }}</h1>
+          {% if page.description %}<p class="lede">{{ page.description }}</p>{% endif %}
+          {% if page.date %}<p class="article-meta"><time datetime="{{ page.date | date("%Y-%m-%d") }}">{{ page.date | date("%B %d, %Y") }}</time>{% if page.reading_time %} <span class="meta-sep" aria-hidden="true">·</span> {{ page.reading_time }} min read{% endif %}</p>{% endif %}
+          {% if page.extra.flour or page.extra.starter or page.extra.temp or page.extra.result %}
+          <dl class="spec">
+            {% if page.extra.flour %}<div class="spec-row"><dt>Flour</dt><dd>{{ page.extra.flour | e }}</dd></div>{% endif %}
+            {% if page.extra.starter %}<div class="spec-row"><dt>Starter</dt><dd>{{ page.extra.starter | e }}</dd></div>{% endif %}
+            {% if page.extra.temp %}<div class="spec-row"><dt>Dough temp</dt><dd>{{ page.extra.temp | e }}</dd></div>{% endif %}
+            {% if page.extra.result %}<div class="spec-row"><dt>Outcome</dt><dd>{{ page.extra.result | e }}</dd></div>{% endif %}
+          </dl>
+          {% endif %}
+        </header>
+        {% if page.toc %}
+        <nav class="toc" aria-label="Table of contents">
+          <p class="toc-title">In this experiment</p>
+          {{ toc | safe }}
+        </nav>
+        {% endif %}
+        <div class="prose">
+          {{ content | safe }}
+        </div>
+        {% if page.tags %}
+        <footer class="article-tags">
+          <span class="tags-label">Filed under</span>
+          {% for t in page.tags %}<a class="tag" href="{{ base_url }}/tags/{{ t | slugify }}/">{{ t }}</a>{% endfor %}
+        </footer>
+        {% endif %}
+      </article>
+    </main>
+{% include "footer.html" %}

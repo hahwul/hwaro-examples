@@ -1,0 +1,32 @@
+{% include "header.html" %}
+  <main id="main">
+    <header class="section-head">
+      <div class="shell">
+        <p class="eyebrow">The full log · newest first</p>
+        <h1 class="section-title section-title--lg">{{ page.title | e }}</h1>
+        <div class="section-intro prose">{{ content | safe }}</div>
+      </div>
+    </header>
+
+    <section class="shell">
+      <ul class="cards cards--section">
+        {% if paginator %}{% set entries = paginator.pages %}{% else %}{% set entries = section.pages %}{% endif %}
+        {% for p in entries %}
+        {% set d = ((now(format="%s") | int) - (p.date | date("%s") | int)) // 86400 %}
+        <li class="card">
+          <a class="card__link" href="{{ base_url }}{{ p.url }}">
+            <p class="card__meta">
+              {% if p.categories %}<span class="tag">{{ p.categories | first }}</span>{% endif %}
+              <span class="card__day">Day {{ d }}</span>
+            </p>
+            <h2 class="card__title">{{ p.title | e }}</h2>
+            <p class="card__excerpt">{{ p.summary | strip_html | truncate_words(34) }}</p>
+            <p class="card__date">Jarred {{ p.date | date("%B %-d, %Y") }}</p>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+      {{ pagination }}
+    </section>
+  </main>
+{% include "footer.html" %}

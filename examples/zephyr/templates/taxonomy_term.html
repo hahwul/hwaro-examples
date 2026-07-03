@@ -1,0 +1,41 @@
+{% include "header.html" %}
+{% set tax = get_taxonomy(kind="tags") %}
+  <main id="main" class="site-main">
+    <div class="wrap wrap--wide">
+      <header class="listing-head">
+        <p class="kicker">Tagged</p>
+        <h1>{{ taxonomy_term }}</h1>
+        <p class="lede">Reviews filed under this thread. <a href="{{ base_url }}/tags/">Back to all tags.</a></p>
+      </header>
+
+      <ol class="entry-list">
+        {% for t in tax.items %}
+        {% if t.name == taxonomy_term %}
+        {% for p in t.pages | sort_by("date", reverse=true) %}
+        <li class="entry">
+          <figure class="ink-swab entry__swab" style="--ink: {{ p.extra.ink | default('#4a3f9e') }}">
+            <svg class="ink-swab__art" viewBox="0 0 340 118" role="img" aria-label="Ink swatch: {{ p.extra.swatch | default(p.title) | e }}">
+              <path class="ink-swab__body" d="M10 26 C44 16 130 16 190 21 C240 25 296 18 324 30 C334 34 336 44 330 54 C322 68 296 64 274 68 C232 78 196 66 154 72 C112 78 66 66 32 72 C16 75 7 66 7 52 C6 42 6 32 10 26 Z"/>
+              <path class="ink-swab__deep" d="M22 40 C60 32 120 34 168 40 C150 56 96 60 54 56 C34 54 20 52 22 40 Z"/>
+              <path class="ink-swab__drip" d="M112 68 C116 82 122 96 116 104 C110 110 102 104 104 94 C106 84 108 74 112 68 Z"/>
+              <circle class="ink-swab__speck" cx="300" cy="84" r="4"/>
+              <circle class="ink-swab__speck" cx="318" cy="72" r="2.4"/>
+            </svg>
+          </figure>
+          <div class="entry__body">
+            <div class="entry__meta">
+              <span class="entry__kind">{{ p.extra.kind | default("Review") }}</span>
+              {% if p.extra.maker %}<span>{{ p.extra.maker }}</span>{% endif %}
+              {% if p.date %}<time datetime="{{ p.date | date('%Y-%m-%d') }}">{{ p.date | date("%B %-d, %Y") }}</time>{% endif %}
+            </div>
+            <h2 class="entry__title"><a href="{{ base_url }}{{ p.url }}">{{ p.title | e }}</a></h2>
+            {% if p.summary %}<p class="entry__summary">{{ p.summary | strip_html | truncate_words(36) }}</p>{% endif %}
+          </div>
+        </li>
+        {% endfor %}
+        {% endif %}
+        {% endfor %}
+      </ol>
+    </div>
+  </main>
+{% include "footer.html" %}

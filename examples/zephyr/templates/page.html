@@ -1,0 +1,58 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+  {% if page.extra.ink is present %}
+    <article>
+      <div class="wrap wrap--wide review-head">
+        <figure class="ink-swab review-head__swab" style="--ink: {{ page.extra.ink }}">
+          <svg class="ink-swab__art" viewBox="0 0 340 118" role="img" aria-label="Ink swatch: {{ page.extra.swatch | default(page.title) | e }}">
+            <path class="ink-swab__body" d="M10 26 C44 16 130 16 190 21 C240 25 296 18 324 30 C334 34 336 44 330 54 C322 68 296 64 274 68 C232 78 196 66 154 72 C112 78 66 66 32 72 C16 75 7 66 7 52 C6 42 6 32 10 26 Z"/>
+            <path class="ink-swab__deep" d="M22 40 C60 32 120 34 168 40 C150 56 96 60 54 56 C34 54 20 52 22 40 Z"/>
+            <path class="ink-swab__drip" d="M112 68 C116 82 122 96 116 104 C110 110 102 104 104 94 C106 84 108 74 112 68 Z"/>
+            <circle class="ink-swab__speck" cx="300" cy="84" r="4"/>
+            <circle class="ink-swab__speck" cx="318" cy="72" r="2.4"/>
+          </svg>
+        </figure>
+        <p class="kicker review-head__kicker">{{ page.extra.kind | default("Review") }}</p>
+        <h1>{{ page.title | e }}</h1>
+        {% if page.extra.verdict %}<p class="review-head__verdict">{{ page.extra.verdict }}</p>{% endif %}
+        <div class="byline">
+          {% if page.date %}<time datetime="{{ page.date | date('%Y-%m-%d') }}">{{ page.date | date("%B %-d, %Y") }}</time>{% endif %}
+          {% if page.reading_time %}<span>{{ page.reading_time }} min read</span>{% endif %}
+        </div>
+
+        <dl class="spec">
+          {% if page.extra.maker %}<div><dt>Maker</dt><dd>{{ page.extra.maker }}</dd></div>{% endif %}
+          {% if page.extra.item %}<div><dt>{{ page.extra.item_label | default("Item") }}</dt><dd>{{ page.extra.item }}</dd></div>{% endif %}
+          {% if page.extra.nib %}<div><dt>Nib</dt><dd>{{ page.extra.nib }}</dd></div>{% endif %}
+          {% if page.extra.filling %}<div><dt>Filling</dt><dd>{{ page.extra.filling }}</dd></div>{% endif %}
+          {% if page.extra.swatch %}<div><dt>Colour</dt><dd>{{ page.extra.swatch }}</dd></div>{% endif %}
+          {% if page.extra.paper %}<div><dt>Tested on</dt><dd>{{ page.extra.paper }}</dd></div>{% endif %}
+          {% if page.extra.price %}<div><dt>Price</dt><dd>{{ page.extra.price }}</dd></div>{% endif %}
+        </dl>
+      </div>
+
+      <div class="wrap review-body prose">
+        {{ content | safe }}
+
+        {% if page.tags %}
+        <div class="tag-row">
+          <span class="eyebrow">Filed under</span>
+          {% for t in page.tags %}
+          <a class="tag" href="{{ base_url }}/tags/{{ t | slugify }}/">{{ t }}</a>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+    </article>
+  {% else %}
+    <div class="wrap page-head">
+      <p class="kicker">{{ page.extra.kicker | default("Zephyr") }}</p>
+      <h1>{{ page.title | e }}</h1>
+      {% if page.description %}<p class="lede">{{ page.description }}</p>{% endif %}
+    </div>
+    <div class="wrap prose">
+      {{ content | safe }}
+    </div>
+  {% endif %}
+  </main>
+{% include "footer.html" %}

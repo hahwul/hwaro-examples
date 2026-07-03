@@ -1,0 +1,28 @@
+{% include "header.html" %}
+  <main id="main" class="wrap page">
+    <article class="page-article{% if page.extra.period %} bulletin-article{% endif %}">
+      {% if page.extra.period %}<p class="slug">{{ page.extra.period }}</p>{% endif %}
+      <h1 class="page-title{% if page.extra.period %} bulletin-title{% endif %}">{{ page.title | e }}</h1>
+      {% if page.description %}<p class="page-dek">{{ page.description | e }}</p>{% endif %}
+      {% if page.extra.researcher or page.date %}
+      <p class="byline">
+        {% if page.extra.researcher %}<span class="byline-name">Filed by {{ page.extra.researcher }}</span>{% endif %}
+        {% if page.date %}<span class="byline-sep" aria-hidden="true">&middot;</span><time datetime="{{ page.date | date('%Y-%m-%d') }}">{{ page.date | date("%d %b %Y") }}</time>{% endif %}
+      </p>
+      {% endif %}
+      {% if page.extra.citation %}<p class="citation">{{ page.extra.citation }}</p>{% endif %}
+      <div class="prose">{{ content | safe }}</div>
+      {% if page.tags %}
+      <p class="tag-list" aria-label="Tags">
+        {% for t in page.tags %}<a class="tag-chip" href="{{ base_url }}/tags/{{ t | slugify }}/">{{ t }}</a>{% endfor %}
+      </p>
+      {% endif %}
+    </article>
+    {% if page.section == "bulletins" and (page.lower or page.higher) %}
+    <nav class="entry-nav" aria-label="More bulletins">
+      {% if page.lower %}<a class="entry-nav-link entry-nav-prev" href="{{ base_url }}{{ page.lower.url }}"><span aria-hidden="true">&larr;</span> {{ page.lower.title | e }}</a>{% endif %}
+      {% if page.higher %}<a class="entry-nav-link entry-nav-next" href="{{ base_url }}{{ page.higher.url }}">{{ page.higher.title | e }} <span aria-hidden="true">&rarr;</span></a>{% endif %}
+    </nav>
+    {% endif %}
+  </main>
+{% include "footer.html" %}

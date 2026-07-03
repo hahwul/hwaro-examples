@@ -1,0 +1,36 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <div class="wrap">
+      <header class="specimen-header">
+        {% if page.extra.material %}
+        <div class="specimen-label">
+          <span class="specimen-chip" style="background-color: {{ page.extra.chip | default("#8a8f92") }};" aria-hidden="true"></span>
+          <span class="specimen-material">{{ page.extra.material | e }}</span>
+          {% if page.extra.batch %}<span class="specimen-batch">{{ page.extra.batch | e }}</span>{% endif %}
+        </div>
+        {% endif %}
+        <div class="specimen-header-body">
+          {% if page.title is present %}<h1 class="page-title">{{ page.title | e }}</h1>{% endif %}
+          {% if page.date or page.reading_time or page.extra.test %}
+          <p class="page-meta">
+            {% if page.date %}<time datetime="{{ page.date | date("%Y-%m-%d") }}">{{ page.date | date("%B %d, %Y") }}</time>{% endif %}
+            {% if page.reading_time %}<span>{{ page.reading_time }} min read</span>{% endif %}
+            {% if page.extra.test %}<span>Test: {{ page.extra.test | e }}</span>{% endif %}
+          </p>
+          {% endif %}
+          {% if page.extra.verdict %}
+          <p class="page-verdict{% if page.extra.verdict_class == "failed" %} is-failed{% endif %}">Status: {{ page.extra.verdict | e }}</p>
+          {% endif %}
+        </div>
+      </header>
+
+      <div class="prose">{{ content | safe }}</div>
+
+      {% if page.tags %}
+      <ul class="tag-row">
+        {% for t in page.tags %}<li><a class="tag-chip" href="{{ get_taxonomy_url(kind="tags", term=t) }}">{{ t }}</a></li>{% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+  </main>
+{% include "footer.html" %}

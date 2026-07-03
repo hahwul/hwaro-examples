@@ -1,0 +1,75 @@
+{% include "header.html" %}
+{% set tools_section = get_section(path="tools") %}
+{% set tools = tools_section.pages | sort_by("date", reverse=true) %}
+<main id="main" class="site-main">
+
+  <section class="hero" aria-labelledby="hero-h">
+    <div class="hero-top">
+      <p class="hero-kicker">Independent industrial design studio</p>
+      <h1 class="hero-title" id="hero-h">Cadmium</h1>
+    </div>
+    <div class="hero-body">
+      <p class="hero-tagline">Hand tools, redrawn from the grip outward — pruning shears, block planes, bicycle wrenches, taken apart and rebuilt around where the hand actually sits.</p>
+      <div class="hero-philosophy">
+        {{ content | safe }}
+      </div>
+    </div>
+  </section>
+
+  <section class="grid-section" aria-labelledby="grid-h">
+    <h2 class="visually-hidden" id="grid-h">Current tools</h2>
+    <div class="bento">
+      {% for t in tools %}
+      {% set tool = t %}
+      {% if loop.index0 == 0 %}
+      <a class="tile tile-lg" href="{{ base_url }}{{ t.url }}">
+        <span class="tile-diagram">{% include "diagram.html" %}</span>
+        <span class="tile-body">
+          <span class="tile-meta">
+            {% if tool.extra.model %}<span class="tile-model">{{ tool.extra.model }}</span>{% endif %}
+            {% if tool.extra.status %}<span class="tile-status">{{ tool.extra.status }}</span>{% endif %}
+          </span>
+          <span class="tile-title">{{ tool.title }}</span>
+          {% if tool.description %}<span class="tile-desc">{{ tool.description }}</span>{% endif %}
+        </span>
+      </a>
+
+      <article class="cell cell-currently">
+        <p class="cell-eyebrow">In the shop</p>
+        <p class="cell-text">A sole-flattening jig is running a batch of O1 tool-steel irons for the No. 4½, ahead of the next production run.</p>
+      </article>
+      {% elif loop.index0 == 1 %}
+      <a class="tile tile-sm" href="{{ base_url }}{{ t.url }}">
+        <span class="tile-diagram">{% include "diagram.html" %}</span>
+        <span class="tile-body">
+          <span class="tile-meta">
+            {% if tool.extra.model %}<span class="tile-model">{{ tool.extra.model }}</span>{% endif %}
+          </span>
+          <span class="tile-title">{{ tool.title }}</span>
+        </span>
+      </a>
+      {% else %}
+      <a class="tile tile-eq" href="{{ base_url }}{{ t.url }}">
+        <span class="tile-diagram">{% include "diagram.html" %}</span>
+        <span class="tile-body">
+          <span class="tile-meta">
+            {% if tool.extra.model %}<span class="tile-model">{{ tool.extra.model }}</span>{% endif %}
+          </span>
+          <span class="tile-title">{{ tool.title }}</span>
+        </span>
+      </a>
+      {% endif %}
+      {% endfor %}
+
+      <a class="cell cell-about" href="{{ base_url }}/about/">
+        <span class="cell-about-text">
+          <span class="cell-eyebrow">Studio</span>
+          <span class="cell-about-title">Materials, process, and how commissions work</span>
+        </span>
+        <svg class="cell-about-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="square" aria-hidden="true" focusable="false"><path d="M4 10h12M11 5l5 5-5 5"/></svg>
+      </a>
+    </div>
+  </section>
+
+</main>
+{% include "footer.html" %}

@@ -1,0 +1,30 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <h1 class="visually-hidden">Candela &mdash; recovered ASCII and Unicode BBS art archive, 1993&ndash;1998</h1>
+
+    <section class="masthead-wrap">
+      <pre class="masthead" aria-hidden="true">╔═════════════════════════════════════════════════╗
+║                  C A N D E L A                  ║
+║   phosphor archive of ascii &amp; unicode bbs art   ║
+║  recovered transmissions . node dump 1993-1998  ║
+╚═════════════════════════════════════════════════╝</pre>
+      <div class="transmission-note">
+        {{ content | safe }}
+      </div>
+    </section>
+
+    {% set exhibits = get_section(path="exhibits").pages | sort_by("date", reverse=true) %}
+    <section class="wall" aria-label="Exhibits">
+      {% for p in exhibits %}
+      <article class="exhibit-card exhibit-card--{{ loop.index }}">
+        <a class="exhibit-card__link" href="{{ base_url }}{{ p.url }}" aria-label="{{ p.title | e }} &mdash; uploaded {{ p.extra.bbs_date }} by {{ p.extra.handle }}. {{ p.description | e }}">
+          <div class="exhibit-card__art" aria-hidden="true">{{ p.summary | safe }}</div>
+          <span class="exhibit-card__open">open exhibit &rarr;</span>
+        </a>
+      </article>
+      {% endfor %}
+    </section>
+
+    <p class="wall-footnote"><a href="{{ base_url }}{{ lang_prefix }}/exhibits/">view the full exhibits index &rarr;</a></p>
+  </main>
+{% include "footer.html" %}

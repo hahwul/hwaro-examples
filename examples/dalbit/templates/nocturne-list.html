@@ -1,0 +1,29 @@
+{#
+  nocturne-list.html — the full-bleed-alternating gallery list. Expects
+  `studies` (a section, already sorted) in context. Each <li> is one
+  full-width band with its own background; the crescent-phase mark stands
+  in place of the list bullet and grows fuller with every item.
+#}
+<ol class="nocturnes" id="nocturnes">
+  {% for p in studies.pages %}
+  <li class="nocturne {% if loop.index is odd %}nocturne--a{% else %}nocturne--b{% endif %}">
+    <div class="nocturne__inner">
+      <a class="nocturne__art" href="{{ base_url }}{{ p.url }}" aria-label="Open {{ p.title | e }}">
+        {% set pk = p.extra.plate %}
+        {% include "plate.html" %}
+      </a>
+      <div class="nocturne__body">
+        <span class="nocturne__marker">
+          {% set phase = p.extra.phase %}
+          {% set uid = "list-" ~ loop.index %}
+          {% include "moon.html" %}
+        </span>
+        <p class="nocturne__meta">Nocturne {{ loop.index }} of {{ studies.pages | length }} &middot; {% if p.date %}{{ p.date | date("%B %Y") }}{% endif %}</p>
+        <h2 class="nocturne__title"><a href="{{ base_url }}{{ p.url }}">{{ p.title | e }}</a></h2>
+        <p class="nocturne__desc">{{ p.description | e }}</p>
+        <a class="nocturne__link" href="{{ base_url }}{{ p.url }}">Read the study <span aria-hidden="true">&#8594;</span></a>
+      </div>
+    </div>
+  </li>
+  {% endfor %}
+</ol>

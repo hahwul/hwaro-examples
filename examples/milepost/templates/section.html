@@ -1,0 +1,33 @@
+{% include "header.html" %}
+  <main id="main" class="section-page">
+    <header class="page-head">
+      {% if page.title is present %}<h1 class="page-head__title">{{ page.title | e }}</h1>{% endif %}
+      {% if section.description %}<p class="page-head__lead">{{ section.description | e }}</p>{% endif %}
+    </header>
+
+    {% if content | trim %}<div class="prose section-intro">{{ content | safe }}</div>{% endif %}
+
+    {% set entries = section.pages | sort_by("date", reverse=true) %}
+    <ol class="timeline timeline--full">
+      {% for r in entries %}
+      <li class="milestone {% if loop.index % 2 == 1 %}milestone--left{% else %}milestone--right{% endif %}">
+        <div class="milestone__marker">
+          <div class="plate {% if r.extra.kind == 'major' %}plate--major{% elif r.extra.kind == 'patch' %}plate--patch{% endif %}">
+            <span class="plate__ver">{{ r.extra.version | default("0.0.0") | e }}</span>
+          </div>
+        </div>
+        <article class="milestone__card card">
+          <div class="card__meta">
+            {% if r.date %}<time datetime="{{ r.date | date('%Y-%m-%d') }}">{{ r.date | date('%b %d, %Y') }}</time>{% endif %}
+            <span class="chip chip--{{ r.extra.kind | default('minor') }}">{{ r.extra.kind | default('minor') }}</span>
+          </div>
+          <h2 class="card__title"><a href="{{ base_url }}{{ r.url }}">{{ r.title | e }}</a></h2>
+          {% if r.extra.codename %}<p class="card__codename">Codename &ldquo;{{ r.extra.codename | e }}&rdquo;</p>{% endif %}
+          <div class="card__summary">{{ r.summary | safe }}</div>
+          <a class="card__more" href="{{ base_url }}{{ r.url }}">Read the notes<span aria-hidden="true"> &rarr;</span></a>
+        </article>
+      </li>
+      {% endfor %}
+    </ol>
+  </main>
+{% include "footer.html" %}

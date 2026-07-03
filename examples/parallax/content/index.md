@@ -1,4 +1,0 @@
-+++
-title = "Parallax"
-template = "home"
-+++

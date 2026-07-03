@@ -1,0 +1,46 @@
+{% include "header.html" %}
+    <main id="main" class="main">
+      <div class="page-grid{% if page.toc %} has-toc{% endif %}">
+        <article class="article">
+          <header class="article-head">
+            {% if page.extra.difficulty %}
+            <p class="article-kicker">
+              <a class="kicker-link" href="{{ base_url }}/tutorials/">Tutorial</a>
+              {% set d = page.extra.difficulty %}{% include "difficulty.html" %}
+              {% if page.extra.difficulty_label %}<span class="badge">{{ page.extra.difficulty_label }}</span>{% endif %}
+              {% if page.extra.minutes %}<span class="kicker-mins">about {{ page.extra.minutes }} min</span>{% endif %}
+            </p>
+            {% endif %}
+            <h1>{{ page.title }}</h1>
+            {% if page.description %}<p class="lede">{{ page.description }}</p>{% endif %}
+            {% if page.date %}<p class="article-meta">Checked against tuff 0.9 · updated {{ page.date | date("%B %Y") }}</p>{% endif %}
+          </header>
+          <div class="prose">
+            {{ content | safe }}
+          </div>
+          {% if page.extra.difficulty %}
+          <nav class="pager" aria-label="Tutorial trail steps">
+            {% if page.lower and page.lower.extra.difficulty %}
+            <a class="pager-link pager-prev" href="{{ base_url }}{{ page.lower.url }}">
+              <span class="pager-label">Previous</span>
+              <span class="pager-title">{{ page.lower.title }}</span>
+            </a>
+            {% endif %}
+            {% if page.higher and page.higher.extra.difficulty %}
+            <a class="pager-link pager-next" href="{{ base_url }}{{ page.higher.url }}">
+              <span class="pager-label">Next up</span>
+              <span class="pager-title">{{ page.higher.title }}</span>
+            </a>
+            {% endif %}
+          </nav>
+          {% endif %}
+        </article>
+        {% if page.toc %}
+        <aside class="toc" aria-label="On this page">
+          <p class="toc-title">On this page</p>
+          {{ toc | safe }}
+        </aside>
+        {% endif %}
+      </div>
+    </main>
+{% include "footer.html" %}

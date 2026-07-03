@@ -1,0 +1,414 @@
+/* Viridian — drought-tolerant gravel gardens
+   Barlow Condensed (display) / Barlow (text), botanical Latin in italics.
+   Soft green-tinted paper by day, moss-dark by night. */
+
+:root {
+  /* palette — light (default) */
+  --bg: #f7faf5;
+  --surface: #e9f0e6;
+  --fg: #1c231c;
+  --muted: #566052;
+  --accent: #1e7a4a;
+  --accent-fg: #ffffff;
+  --border: color-mix(in srgb, var(--fg) 14%, transparent);
+  color-scheme: light;
+
+  /* type */
+  --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font-text: "Barlow", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --text-sm: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
+  --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --text-lg: clamp(1.2rem, 1.1rem + 0.5vw, 1.5rem);
+  --text-xl: clamp(1.5rem, 1.3rem + 1vw, 2.25rem);
+  --text-2xl: clamp(2rem, 1.6rem + 2vw, 3.5rem);
+  --text-hero: clamp(2.6rem, 1.9rem + 4.5vw, 6rem);
+
+  /* space */
+  --space-1: .25rem;
+  --space-2: .5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2.5rem;
+  --space-6: 4rem;
+  --space-7: 6rem;
+}
+
+:root[data-theme="dark"] {
+  --bg: #0f1410;
+  --surface: #18201a;
+  --fg: #e2e9e2;
+  --muted: #9aa89c;
+  --accent: #52c98a;
+  --accent-fg: #06281a;
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1410;
+    --surface: #18201a;
+    --fg: #e2e9e2;
+    --muted: #9aa89c;
+    --accent: #52c98a;
+    --accent-fg: #06281a;
+    color-scheme: dark;
+  }
+}
+
+/* ---------- reset ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  font-family: var(--font-text);
+  font-size: var(--text-base);
+  line-height: 1.65;
+  color: var(--fg);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+::selection { background: color-mix(in srgb, var(--accent) 30%, transparent); }
+img, svg { max-width: 100%; }
+ul, ol { padding-left: 1.2em; }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+  margin: 0 0 0.5em;
+}
+h1 { font-size: var(--text-hero); font-weight: 700; letter-spacing: -0.02em; }
+h2 { font-size: var(--text-2xl); }
+h3 { font-size: var(--text-xl); }
+p { margin: 0 0 1em; text-wrap: pretty; }
+
+a { color: var(--accent); text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent); text-underline-offset: 3px; transition: color 0.15s ease, text-decoration-color 0.15s ease; }
+a:hover { text-decoration-color: currentColor; }
+
+/* botanical Latin, wherever it appears, sets in italic Barlow */
+em, i { font-style: italic; }
+.prose em, .garden-card-summary em, .garden-card-signature em {
+  font-style: italic;
+  color: var(--fg);
+}
+
+/* ---------- accessibility ---------- */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  background: var(--accent);
+  color: var(--accent-fg);
+  padding: 0.6rem 1.1rem;
+  z-index: 1000;
+  border-radius: 0 0 8px 0;
+  font-family: var(--font-display);
+  letter-spacing: 0.02em;
+}
+.skip-link:focus { top: 0; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0; padding: 0; margin: -1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- header ---------- */
+.site-header {
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+.header-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--fg);
+  text-decoration: none;
+}
+.brand-mark { color: var(--accent); flex-shrink: 0; }
+.brand-word {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.4rem;
+  letter-spacing: 0.01em;
+}
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+.site-nav a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: var(--text-sm);
+  letter-spacing: 0.02em;
+  padding: 0.4rem 0.1rem;
+}
+.site-nav a:hover { color: var(--accent); }
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--fg);
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.theme-toggle:hover { color: var(--accent); border-color: var(--accent); }
+.theme-toggle .icon-moon { display: none; }
+:root[data-theme="dark"] .theme-toggle .icon-sun { display: none; }
+:root[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-toggle .icon-sun { display: none; }
+  :root:not([data-theme="light"]) .theme-toggle .icon-moon { display: block; }
+}
+
+/* ---------- hero (practice name over the top of the wall) ---------- */
+.hero {
+  position: relative;
+  background: var(--surface);
+  padding: var(--space-5) var(--space-4) 0;
+  text-align: center;
+}
+.hero-inner {
+  max-width: 760px;
+  margin: 0 auto;
+}
+.hero-kicker {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: var(--text-sm);
+  color: var(--accent);
+  margin: 0 0 var(--space-1);
+}
+.hero-title {
+  margin: 0;
+  color: var(--fg);
+  font-size: clamp(2.4rem, 1.8rem + 4vw, 5rem);
+}
+.hero-lede {
+  max-width: 42ch;
+  margin: var(--space-2) auto 0;
+  font-size: var(--text-base);
+  color: var(--muted);
+  font-style: italic;
+}
+.hero-divider {
+  display: block;
+  width: 100%;
+  height: 28px;
+  margin-top: var(--space-3);
+}
+.hero-divider path { fill: var(--bg); }
+
+/* ---------- wall (masonry) ---------- */
+.wall-section {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-4) var(--space-7);
+}
+.wall-head {
+  max-width: 62ch;
+  margin: 0 auto var(--space-5);
+  text-align: center;
+}
+.wall-heading { font-size: var(--text-2xl); margin-bottom: var(--space-2); }
+.wall-head-compact { margin-bottom: var(--space-3); }
+.wall-heading-sm {
+  font-size: var(--text-lg);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 0;
+}
+
+.wall {
+  column-count: 1;
+  column-gap: var(--space-4);
+}
+@media (min-width: 620px) {
+  .wall { column-count: 2; }
+}
+@media (min-width: 980px) {
+  .wall { column-count: 3; }
+}
+
+.garden-card {
+  break-inside: avoid;
+  display: block;
+  margin: 0 0 var(--space-4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 22px 8px 22px 8px;
+  overflow: hidden;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+.garden-card:hover { border-color: var(--accent); }
+
+.cal-strip-wrap { display: block; }
+.cal-strip {
+  display: block;
+  width: 100%;
+  height: 16px;
+}
+.cal-strip rect { transition: opacity 0.15s ease; }
+.cal-0 { fill: var(--bg); }
+.cal-1 { fill: color-mix(in srgb, var(--accent) 30%, var(--bg)); }
+.cal-2 { fill: color-mix(in srgb, var(--accent) 62%, var(--bg)); }
+.cal-3 { fill: var(--accent); }
+.cal-caption {
+  margin: 0.35rem var(--space-3) 0;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.garden-card-body { padding: var(--space-3) var(--space-4) var(--space-4); }
+.garden-card-meta {
+  font-size: var(--text-sm);
+  color: var(--muted);
+  margin: 0 0 0.3em;
+  letter-spacing: 0.01em;
+}
+.garden-card-title { font-size: var(--text-xl); margin-bottom: 0.4em; }
+.garden-card-title a { color: var(--fg); text-decoration: none; }
+.garden-card-title a:hover { color: var(--accent); }
+.garden-card-summary { color: var(--fg); }
+.garden-card-signature {
+  font-size: var(--text-sm);
+  color: var(--muted);
+  margin-bottom: var(--space-3);
+}
+.garden-card-link {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  color: var(--accent);
+}
+.garden-card-link:hover { text-decoration: underline; }
+
+/* ---------- section head (gardens listing) ---------- */
+.section-head {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: var(--space-5) var(--space-4) var(--space-4);
+  text-align: center;
+}
+.section-head h1 { font-size: var(--text-2xl); }
+.section-intro { max-width: 62ch; margin: 0 auto; color: var(--muted); font-size: var(--text-lg); }
+.wall-section + .wall,
+.site-main > .wall {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 var(--space-4) var(--space-7);
+}
+
+/* ---------- article / garden detail / about / 404 ---------- */
+.page-article {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: var(--space-5) var(--space-4) var(--space-7);
+}
+.page-article h1 { font-size: var(--text-2xl); margin-bottom: var(--space-3); }
+.not-found { max-width: 65ch; margin: 0 auto; padding: var(--space-6) var(--space-4); }
+.not-found h1 { font-size: var(--text-2xl); }
+
+.detail-cal-wrap { margin-bottom: var(--space-4); }
+.cal-strip-lg { height: 26px; border-radius: 6px; overflow: hidden; }
+.detail-cal-wrap .cal-caption { margin-left: 0; font-size: var(--text-sm); }
+
+.garden-spec {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-3) var(--space-4);
+  margin: var(--space-4) 0 var(--space-5);
+  padding: var(--space-4);
+  background: var(--surface);
+  border-radius: 8px 22px 8px 22px;
+  border: 1px solid var(--border);
+}
+.spec-row dt {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.72rem;
+  color: var(--muted);
+  margin-bottom: 0.2em;
+}
+.spec-row dd { margin: 0; font-size: var(--text-base); }
+
+.prose { max-width: 68ch; font-size: var(--text-base); }
+.prose h2 { font-size: var(--text-xl); margin-top: 1.6em; }
+.prose h3 { font-size: var(--text-lg); margin-top: 1.4em; }
+.prose ul, .prose ol { margin: 0 0 1em; }
+.prose li { margin-bottom: 0.35em; }
+
+.back-link { margin-top: var(--space-5); }
+.back-link a { text-decoration: none; font-family: var(--font-display); font-weight: 600; }
+.back-link a:hover { text-decoration: underline; }
+
+/* ---------- footer ---------- */
+.site-footer {
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+.footer-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: var(--space-5) var(--space-4);
+  text-align: center;
+}
+.footer-practice { max-width: 52ch; margin: 0 auto var(--space-3); color: var(--muted); }
+.footer-nav { display: flex; gap: var(--space-4); justify-content: center; margin-bottom: var(--space-3); flex-wrap: wrap; }
+.footer-nav a { color: var(--fg); text-decoration: none; font-size: var(--text-sm); }
+.footer-nav a:hover { color: var(--accent); }
+.footer-meta { font-size: var(--text-sm); color: var(--muted); margin: 0; }
+
+/* ---------- code (shared, low emphasis on a portfolio site) ---------- */
+code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 0.85em; background: var(--surface); padding: 0.15rem 0.4rem; border-radius: 4px; }
+pre { background: var(--surface); padding: 1rem 1.25rem; border-radius: 8px; overflow-x: auto; border: 1px solid var(--border); }
+pre code { background: transparent; padding: 0; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 640px) {
+  .header-inner { padding: var(--space-2) var(--space-3); flex-wrap: wrap; row-gap: var(--space-2); }
+  .site-nav { gap: var(--space-3); flex-wrap: nowrap; width: 100%; justify-content: space-between; }
+  .hero { padding: var(--space-5) var(--space-3) var(--space-4); }
+  .wall-section, .section-head, .page-article { padding-left: var(--space-3); padding-right: var(--space-3); }
+}

@@ -1,0 +1,33 @@
+{% include "header.html" %}
+<main id="main" class="site-main">
+  {% if page.section is present and page.section == "releases" %}
+  <article class="release">
+    <div class="rel-headgrid">
+      <div class="tracker-bar rh-bar">
+        <span class="tbar-item tbar-key">build {{ page.extra.build }}</span>
+        <span class="tbar-item">{{ page.extra.channel }}</span>
+        <span class="tbar-item">{{ page.extra.changes }} changes</span>
+        <span class="tbar-item tbar-play">{{ page.date | date("%Y.%m.%d") }}</span>
+      </div>
+      <div class="rh-title">
+        <span class="rh-num" aria-hidden="true">00</span>
+        <h1 class="rh-ver">{{ page.title | e }}</h1>
+        <span class="rh-code">{{ page.extra.codename }}</span>
+      </div>
+      {% if page.description %}<p class="rh-desc">{{ page.description }}</p>{% endif %}
+    </div>
+    <div class="prose">{{ content | safe }}</div>
+    <nav class="rel-nav" aria-label="Adjacent releases">
+      {% if page.lower and page.lower.section == "releases" and page.lower.date %}<a class="rn-prev" href="{{ base_url }}{{ page.lower.url }}"><span class="rn-dir">newer</span><span class="rn-ver">{{ page.lower.title }}</span></a>{% else %}<span></span>{% endif %}
+      {% if page.higher and page.higher.section == "releases" and page.higher.date %}<a class="rn-next" href="{{ base_url }}{{ page.higher.url }}"><span class="rn-dir">older</span><span class="rn-ver">{{ page.higher.title }}</span></a>{% endif %}
+    </nav>
+    <p class="more-link"><a href="{{ base_url }}/releases/">← all releases</a></p>
+  </article>
+  {% else %}
+  <article class="standalone">
+    {% if page.title is present %}<h1 class="page-title">{{ page.title | e }}</h1>{% endif %}
+    <div class="prose">{{ content | safe }}</div>
+  </article>
+  {% endif %}
+</main>
+{% include "footer.html" %}

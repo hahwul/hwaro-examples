@@ -1,0 +1,44 @@
+{% include "header.html" %}
+{% set bakes = get_section(path="bakes") %}
+{% set sorted = bakes.pages | sort_by("date", reverse=true) %}
+  <main id="main" class="site-main">
+    <div class="wrap">
+
+      <section class="masthead" aria-label="About this log">
+        <p class="masthead-kicker">Field notes from a mountain kitchen</p>
+        <h1 class="masthead-title">{{ site.title | e }}</h1>
+        <p class="masthead-mission" aria-label="Elevation">
+          <svg viewBox="0 0 24 16" width="26" height="18" aria-hidden="true" focusable="false" class="peak">
+            <path class="ic-peak" stroke-width="1.6" stroke-linejoin="round" d="M1 15 L8 5 L12 9 L17 2 L23 15 Z"/>
+          </svg>
+          1,048&nbsp;m above sea level
+        </p>
+        <div class="masthead-lede prose">
+          {{ content | safe }}
+        </div>
+        <dl class="masthead-stats">
+          <div><dt>Elevation</dt><dd>1,048&nbsp;m</dd></div>
+          <div><dt>Bakes logged</dt><dd>{{ bakes.pages | length }}</dd></div>
+          <div><dt>Chasing</dt><dd>the perfect roll</dd></div>
+        </dl>
+      </section>
+
+      <section class="timeline-block" aria-labelledby="latest-heading">
+        <div class="timeline-head">
+          <h2 class="section-label" id="latest-heading">The bake timeline</h2>
+          <p class="section-note">Newest bake first. Every entry logs hydration and proof.</p>
+        </div>
+        <ol class="timeline">
+          {% for p in sorted %}
+            {% if loop.index <= 5 %}
+            {% set entry = p %}
+            {% include "partials/bake_entry.html" %}
+            {% endif %}
+          {% endfor %}
+        </ol>
+        <a class="pill-link" href="{{ base_url }}/bakes/">Read the whole log <span aria-hidden="true">&rarr;</span></a>
+      </section>
+
+    </div>
+  </main>
+{% include "footer.html" %}

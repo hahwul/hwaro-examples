@@ -1,0 +1,29 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <div class="wrap">
+      <header class="listing-header">
+        <p class="kicker">The journal</p>
+        <h1 class="listing-title">{{ page.title | e }}</h1>
+        {% if page.description %}<p class="listing-lede">{{ page.description }}</p>{% endif %}
+      </header>
+
+      <h2 class="scribe">{{ section.pages | length }} builds, newest first</h2>
+      <ol class="project-rows">
+        {% for p in section.pages | sort_by("date", reverse=true) %}
+        <li class="project-row">
+          <time class="row-date" datetime="{{ p.date | date("%Y-%m-%d") }}">{{ p.date | date("%b %Y") }}</time>
+          <div class="row-body">
+            <h3 class="row-title"><a href="{{ base_url }}{{ p.url }}">{{ p.title }}</a></h3>
+            {% if p.summary %}<p class="row-summary">{{ p.summary | strip_html | truncate_words(38) }}</p>{% endif %}
+            <dl class="spec">
+              {% if p.extra.joinery %}<div class="spec-row"><dt>Joinery</dt><dd>{{ p.extra.joinery }}</dd></div>{% endif %}
+              {% if p.extra.wood %}<div class="spec-row"><dt>Wood</dt><dd>{{ p.extra.wood }}</dd></div>{% endif %}
+            </dl>
+          </div>
+        </li>
+        {% endfor %}
+      </ol>
+      <p class="listing-feed">Follow new builds by <a href="{{ base_url }}/projects/rss.xml">RSS</a>, or browse by <a href="{{ base_url }}/tags/">tag</a>.</p>
+    </div>
+  </main>
+{% include "footer.html" %}

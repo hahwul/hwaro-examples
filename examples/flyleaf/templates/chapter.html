@@ -1,0 +1,51 @@
+{% include "header.html" %}
+  <main id="main">
+    <article class="leaf">
+      <p class="running-head">
+        <span class="rh-numeral">Chapter {{ page.extra.numeral | default("") }}</span>
+        {% if page.extra.folio %}<span class="rh-folio">p.&nbsp;{{ page.extra.folio }}</span>{% endif %}
+      </p>
+
+      <header class="chapter-open">
+        <h1 class="chapter-title">{{ page.title | e }}</h1>
+        {% if page.description %}<p class="chapter-standfirst">{{ page.description | e }}</p>{% endif %}
+        <p class="chapter-meta">
+          {% if page.date %}<span><time datetime="{{ page.date | date('%Y-%m-%d') }}">{{ page.date | date('%B %Y') }}</time></span>{% endif %}
+          {% if page.reading_time %}<span>About {{ page.reading_time }} min read</span>{% endif %}
+        </p>
+      </header>
+
+      {% if page.toc and toc %}
+      <nav class="chapter-toc" aria-label="Scenes in this chapter">
+        <span class="chapter-toc-label">In this chapter</span>
+        {{ toc | safe }}
+      </nav>
+      {% endif %}
+
+      <hr class="chapter-rule" aria-hidden="true">
+
+      <div class="chapter-body prose">
+        {{ content | safe }}
+      </div>
+
+      <nav class="leaf-nav" aria-label="Adjacent chapters">
+        {% if page.lower and page.lower.extra.numeral %}
+        <a class="leaf-link leaf-prev" href="{{ base_url }}{{ page.lower.url }}">
+          <span class="leaf-dir">&larr; Previous chapter</span>
+          <span class="leaf-title">{{ page.lower.title | e }}</span>
+        </a>
+        {% else %}
+        <span class="leaf-empty">The novella opens here.</span>
+        {% endif %}
+        {% if page.higher and page.higher.extra.numeral %}
+        <a class="leaf-link leaf-next" href="{{ base_url }}{{ page.higher.url }}">
+          <span class="leaf-dir">Next chapter &rarr;</span>
+          <span class="leaf-title">{{ page.higher.title | e }}</span>
+        </a>
+        {% else %}
+        <span class="leaf-empty leaf-next">The last page. The flyleaf follows.</span>
+        {% endif %}
+      </nav>
+    </article>
+  </main>
+{% include "footer.html" %}

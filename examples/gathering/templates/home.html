@@ -1,0 +1,53 @@
+{% include "header.html" %}
+    <main id="main">
+      <section class="half-title" aria-labelledby="ht-title">
+        <p class="ht-kicker">A memoir, logged day by day</p>
+        <h1 class="ht-title" id="ht-title">{{ site.title | e }}</h1>
+        <p class="ht-route">Falmouth to Horta, single-handed</p>
+        <div class="rhumb" role="presentation" aria-hidden="true">
+          <span class="rhumb-port">Falmouth</span>
+          <span class="rhumb-line"></span>
+          <span class="rhumb-dest">Horta</span>
+        </div>
+      </section>
+
+      <section class="passage-log" aria-labelledby="log-title">
+        <h2 id="log-title" class="log-title">Passage Log</h2>
+        <p class="log-intro">Six noon entries from a single-handed Atlantic crossing, set down in voyage order.</p>
+        <div class="log-table-wrap">
+          <table class="log-table">
+            <caption class="sr-only">Passage log, Falmouth to Horta, six noon entries in voyage order</caption>
+            <thead>
+              <tr>
+                <th scope="col">Day</th>
+                <th scope="col">Date</th>
+                <th scope="col">Noon position</th>
+                <th scope="col">Wind</th>
+                <th scope="col">Run</th>
+                <th scope="col">Chapter</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for p in get_section(path="chapters").pages | sort_by("weight") %}
+              <tr>
+                <td class="log-day">{{ p.extra.day | default("") }}</td>
+                <td class="log-date">{% if p.date %}<time datetime="{{ p.date | date("%Y-%m-%d") }}">{{ p.date | date("%b %d") }}</time>{% endif %}</td>
+                <td class="log-pos">{{ p.extra.position | default("") }}</td>
+                <td class="log-wind">{{ p.extra.wind | default("") }}</td>
+                <td class="log-run">{{ p.extra.run | default("") }}</td>
+                <td class="log-chapter"><a href="{{ base_url }}{{ p.url }}">{{ p.title | e }}</a></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      {% if content %}
+      <section class="foreword prose" aria-labelledby="fw-title">
+        <h2 id="fw-title" class="fw-title">Foreword</h2>
+        {{ content | safe }}
+      </section>
+      {% endif %}
+    </main>
+{% include "footer.html" %}

@@ -1,0 +1,79 @@
+{% include "header.html" %}
+  <main id="main" class="doc doc-home">
+    <section class="hero">
+      <h1 class="hero-kicker">The graph query language for streaming data</h1>
+      <pre class="hero-query" aria-label="A five-line Gneiss query: match sensor readings above a threshold in a one-minute tumbling window and emit every change"><code><span class="tok-kw">MATCH</span> (<span class="tok-id">s</span>:<span class="tok-id">Sensor</span>)-[:<span class="tok-id">REPORTS</span>]-&gt;(<span class="tok-id">r</span>:<span class="tok-id">Reading</span>)
+<span class="tok-kw">WHERE</span> <span class="tok-id">r.value</span> <span class="tok-punct">&gt;</span> <span class="tok-id">s.threshold</span>
+<span class="tok-kw">WINDOW</span> <span class="tok-kw">TUMBLING</span> <span class="tok-punct">(</span><span class="tok-kw">INTERVAL</span> <span class="tok-str">'1'</span> <span class="tok-kw">MINUTE</span><span class="tok-punct">)</span>
+<span class="tok-kw">GROUP BY</span> <span class="tok-id">s.id</span>
+<span class="tok-kw">EMIT</span> <span class="tok-kw">CHANGES</span></code></pre>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="{{ base_url }}/tutorial/">Start the tutorial</a>
+        <a class="btn btn-ghost" href="{{ base_url }}/reference/">Browse the reference</a>
+      </div>
+      <p class="hero-hint">Press <kbd>Ctrl</kbd><kbd>K</kbd> to jump straight to a clause.</p>
+    </section>
+
+    <section class="section-band">
+      <div class="band-head prose">
+        {{ content | safe }}
+      </div>
+      <div class="pillar-grid">
+        <article class="pillar">
+          <svg class="pillar-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 8 L8 22 M16 8 L24 22 M8 22 L24 22"/><circle cx="16" cy="8" r="2.4" fill="currentColor" stroke="none"/><circle cx="8" cy="22" r="2.4" fill="currentColor" stroke="none"/><circle cx="24" cy="22" r="2.4" fill="currentColor" stroke="none"/></svg>
+          <h3>Graphs, not tables</h3>
+          <p>Nodes and edges arrive as events. <code>MATCH</code> walks a pattern against whatever shape the graph holds at the current watermark, not a snapshot from disk.</p>
+        </article>
+        <article class="pillar">
+          <svg class="pillar-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M4 24h24"/><path d="M4 10v14M12 10v14M20 10v14M28 10v14"/></svg>
+          <h3>Windows keep results live</h3>
+          <p>A <code>WINDOW</code> clause slices unbounded time into tumbling, hopping, or session buckets, so aggregates stay meaningful over a stream that never ends.</p>
+        </article>
+        <article class="pillar">
+          <svg class="pillar-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="9" cy="23" r="2.2" fill="currentColor" stroke="none"/><path d="M14 18a7 7 0 0 1 0 10M18 14a13 13 0 0 1 0 18"/></svg>
+          <h3>Emission is explicit</h3>
+          <p>Nothing streams out until you say so. <code>EMIT</code> chooses between every incremental change, one final row per window, or a grace-period flush.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-band">
+      <div class="home-grid">
+        <div class="home-panel">
+          <h2>Tutorial</h2>
+          <p class="panel-sub">Three chapters, read start to finish.</p>
+          <ol class="ledger">
+            {% for p in get_section(path="tutorial").pages | sort_by("weight") %}
+            <li class="ledger-row">
+              <a class="ledger-link" href="{{ base_url }}{{ p.url }}">
+                <span class="ledger-num" aria-hidden="true">{{ loop.index }}</span>
+                <span class="ledger-main">
+                  <span class="ledger-head"><span class="ledger-name">{{ p.title }}</span></span>
+                  {% if p.description %}<span class="ledger-desc">{{ p.description }}</span>{% endif %}
+                </span>
+              </a>
+            </li>
+            {% endfor %}
+          </ol>
+        </div>
+        <div class="home-panel">
+          <h2>Language reference</h2>
+          <p class="panel-sub">Four clauses, each opening with a railroad diagram.</p>
+          <ol class="ledger">
+            {% for p in get_section(path="reference").pages | sort_by("weight") %}
+            <li class="ledger-row">
+              <a class="ledger-link" href="{{ base_url }}{{ p.url }}">
+                <span class="ledger-num" aria-hidden="true">§{{ loop.index }}</span>
+                <span class="ledger-main">
+                  <span class="ledger-head"><span class="ledger-name">{{ p.title }}</span></span>
+                  {% if p.description %}<span class="ledger-desc">{{ p.description }}</span>{% endif %}
+                </span>
+              </a>
+            </li>
+            {% endfor %}
+          </ol>
+        </div>
+      </div>
+    </section>
+  </main>
+{% include "footer.html" %}

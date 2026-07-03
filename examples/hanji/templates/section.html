@@ -1,0 +1,31 @@
+{% include "header.html" %}
+    <main id="main" class="site-main">
+      <section class="page-opener">
+        <p class="kicker">The ledger</p>
+        <h1 class="page-title">{{ section.title }}</h1>
+        {% if section.description %}<p class="page-lede">{{ section.description }}</p>{% endif %}
+        <div class="running-stitch" aria-hidden="true"></div>
+        {% if content %}
+        <div class="prose section-note">
+          {{ content | safe }}
+        </div>
+        {% endif %}
+      </section>
+
+      <ol class="bindings-list bindings-list--archive">
+        {% for p in section.pages | sort_by("date", reverse=true) %}
+        <li class="binding-row">
+          <p class="edition-no">
+            {% if p.extra.edition %}Edition of {{ p.extra.edition }}{% endif %}
+            {% if p.date %}<time datetime="{{ p.date | date('%Y-%m-%d') }}">{{ p.date | date("%B %Y") }}</time>{% endif %}
+          </p>
+          <div class="binding-row-body">
+            <h2 class="binding-row-title"><a href="{{ base_url }}{{ p.url }}">{{ p.title }}</a></h2>
+            {% if p.extra.stitch_name %}<p class="binding-row-stitch">{{ p.extra.stitch_name }}{% if p.extra.paper_short %} · {{ p.extra.paper_short }}{% endif %}</p>{% endif %}
+            {% if p.summary %}<p class="binding-row-summary">{{ p.summary | strip_html | truncate_words(34) }}</p>{% endif %}
+          </div>
+        </li>
+        {% endfor %}
+      </ol>
+    </main>
+{% include "footer.html" %}

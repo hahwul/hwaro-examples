@@ -1,0 +1,59 @@
+{% include "header.html" %}
+        <div class="doc-grid{% if page.toc %} has-toc{% endif %}">
+          <article class="article">
+            <p class="crumb" aria-label="Breadcrumb">
+              <a href="{{ base_url }}/">~</a><span aria-hidden="true">/</span>{% if page.section %}<a href="{{ base_url }}/{{ page.section }}/">{{ page.section }}</a><span aria-hidden="true">/</span>{% endif %}<span class="crumb-here">{{ page.title | slugify }}</span>
+            </p>
+
+            <header class="article-head">
+              {% if page.extra.synopsis %}
+              <p class="cmd-synopsis" aria-hidden="true"><span class="cmd-synopsis-label">usage</span><code>{{ page.extra.synopsis | e }}</code></p>
+              {% endif %}
+              <h1>{{ page.title | e }}</h1>
+              {% if page.description %}<p class="lede">{{ page.description | e }}</p>{% endif %}
+              {% if page.date %}
+              <p class="article-date">
+                {% if page.reading_time %}<span>{{ page.reading_time }} min read</span><span class="dot" aria-hidden="true">&middot;</span>{% endif %}
+                documented <time datetime="{{ page.date | date('%Y-%m-%d') }}">{{ page.date | date("%B %d, %Y") }}</time>
+              </p>
+              {% endif %}
+            </header>
+
+            <div class="prose">{{ content | safe }}</div>
+
+            {% if page.section == "commands" %}
+            <nav class="pager" aria-label="Command navigation">
+              {% if page.lower %}
+              <a class="pager-link pager-prev" href="{{ base_url }}{{ page.lower.url }}">
+                <span class="pager-dir">&larr; prev</span>
+                <span class="pager-title">{{ page.lower.title | e }}</span>
+              </a>
+              {% else %}
+              <a class="pager-link pager-prev" href="{{ base_url }}/commands/">
+                <span class="pager-dir">&larr; back</span>
+                <span class="pager-title">All commands</span>
+              </a>
+              {% endif %}
+              {% if page.higher %}
+              <a class="pager-link pager-next" href="{{ base_url }}{{ page.higher.url }}">
+                <span class="pager-dir">next &rarr;</span>
+                <span class="pager-title">{{ page.higher.title | e }}</span>
+              </a>
+              {% else %}
+              <a class="pager-link pager-next" href="{{ base_url }}/about/">
+                <span class="pager-dir">next &rarr;</span>
+                <span class="pager-title">About beryl</span>
+              </a>
+              {% endif %}
+            </nav>
+            {% endif %}
+          </article>
+
+          {% if page.toc %}
+          <aside class="toc" aria-label="On this page">
+            <p class="toc-title"># on this page</p>
+            {{ toc | safe }}
+          </aside>
+          {% endif %}
+        </div>
+{% include "footer.html" %}

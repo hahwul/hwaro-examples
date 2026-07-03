@@ -1,0 +1,37 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <div class="wrap">
+      <header class="listing-head">
+        <p class="listing-kicker">The archive</p>
+        <h1 class="listing-title">{{ page.title | e }}</h1>
+        {% if page.description %}<p class="listing-lede">{{ page.description }}</p>{% endif %}
+        <p class="listing-count">{{ section.pages | length }} plots · newest first</p>
+      </header>
+      <ol class="plot-index">
+        {% for p in section.pages | sort_by("date", reverse=true) %}
+        <li class="plot-row">
+          <a class="plot-row__link" href="{{ base_url }}{{ p.url }}">
+            <svg class="plot-row__rule" viewBox="0 0 120 24" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+              <line x1="0" y1="12" x2="120" y2="12" stroke="currentColor" stroke-width="0.5" opacity="0.4"/>
+              <g stroke="currentColor" stroke-width="0.5" opacity="0.55">
+                <line x1="4" y1="6" x2="4" y2="18"/><line x1="24" y1="8" x2="24" y2="16"/>
+                <line x1="44" y1="8" x2="44" y2="16"/><line x1="64" y1="6" x2="64" y2="18"/>
+                <line x1="84" y1="8" x2="84" y2="16"/><line x1="104" y1="8" x2="104" y2="16"/>
+              </g>
+            </svg>
+            <div class="plot-row__body">
+              {% if p.date %}<time class="plot-row__date" datetime="{{ p.date | date("%Y-%m-%d") }}">{{ p.date | date("%b %Y") }}</time>{% endif %}
+              <h2 class="plot-row__title">{{ p.title }}</h2>
+              {% if p.summary %}<p class="plot-row__sum">{{ p.summary | strip_html | truncate_words(34) }}</p>{% endif %}
+              {% if p.extra.instrument %}<p class="plot-row__meta">{{ p.extra.instrument }}</p>{% endif %}
+            </div>
+            <span class="plot-row__go" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </a>
+        </li>
+        {% endfor %}
+      </ol>
+    </div>
+  </main>
+{% include "footer.html" %}

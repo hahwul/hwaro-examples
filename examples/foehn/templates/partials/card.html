@@ -1,0 +1,35 @@
+{#- One restoration card. Set `p` (the page) and optionally
+    `card_level = 2` (defaults to h3) before including. -#}
+<article class="panel-card">
+  <header class="panel-head">
+    <p class="panel-plate">
+      <span class="panel-maker">{{ p.extra.maker | default("Foehn") }}</span>
+      <span class="panel-model">{{ p.extra.model | default("Workshop") }}</span>
+      <span class="panel-year">{{ p.extra.year | default("") }}</span>
+    </p>
+    {% set fader_page = p %}
+    {% include "partials/faders.html" %}
+  </header>
+  <div class="panel-body">
+    <p class="panel-meta">
+      <span class="led" aria-hidden="true"></span>
+      {% if p.date %}<time datetime="{{ p.date | date('%Y-%m-%d') }}">{{ p.date | date("%b %d, %Y") }}</time>{% endif %}
+      <span class="panel-serial">{{ p.extra.serial | default("") }}</span>
+    </p>
+    {% if card_level == 2 %}
+    <h2 class="panel-title"><a href="{{ base_url }}{{ p.url }}">{{ p.title | e }}</a></h2>
+    {% else %}
+    <h3 class="panel-title"><a href="{{ base_url }}{{ p.url }}">{{ p.title | e }}</a></h3>
+    {% endif %}
+    {% if p.summary %}
+    <p class="panel-summary">{{ p.summary | strip_html | truncate_words(30) }}</p>
+    {% endif %}
+    {% if p.tags %}
+    <ul class="panel-tags">
+      {% for t in p.tags %}
+      <li><a href="{{ get_taxonomy_url(kind="tags", term=t) }}">{{ t }}</a></li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </div>
+</article>

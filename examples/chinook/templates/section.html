@@ -1,0 +1,31 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <div class="wrap">
+      <header class="page-head">
+        <p class="page-kicker">The bake log</p>
+        <h1 class="page-title">{{ page.title | e }}</h1>
+        {% if page.description %}<p class="page-lede">{{ page.description }}</p>{% endif %}
+        <div class="page-intro prose">{{ content | safe }}</div>
+      </header>
+
+      <section class="timeline-block" aria-label="All bakes">
+        <ol class="timeline">
+          {% if paginator %}
+            {% for p in paginator.pages %}
+              {% set entry = p %}
+              {% include "partials/bake_entry.html" %}
+            {% endfor %}
+          {% else %}
+            {% for p in section.pages | sort_by("date", reverse=true) %}
+              {% set entry = p %}
+              {% include "partials/bake_entry.html" %}
+            {% endfor %}
+          {% endif %}
+        </ol>
+        {{ pagination }}
+      </section>
+
+      <p class="listing-feed">Subscribe by <a href="{{ base_url }}/bakes/rss.xml">RSS</a>, or browse by <a href="{{ base_url }}/tags/">tag</a>.</p>
+    </div>
+  </main>
+{% include "footer.html" %}

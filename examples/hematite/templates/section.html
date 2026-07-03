@@ -1,0 +1,49 @@
+{% include "header.html" %}
+  <div class="shell">
+    <button class="sidebar-toggle" id="nav-button" type="button" aria-expanded="false" aria-controls="sidebar">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M3 5.5h14M3 10h14M3 14.5h9"/></svg>
+      <span>Documentation menu</span>
+    </button>
+    <aside class="sidebar" id="sidebar">
+      <nav class="sidebar-nav" aria-label="Documentation">
+        <p class="sidebar-heading">Transforms</p>
+        <ol class="tree">
+          {% for p in section.pages | sort_by("weight") %}
+          <li>
+            <a class="tree-link" href="{{ base_url }}{{ p.url }}">
+              <span class="tree-name">{{ p.title }}</span>
+            </a>
+          </li>
+          {% endfor %}
+        </ol>
+        <p class="sidebar-heading sidebar-heading-alt"><a class="sidebar-heading-link" href="{{ base_url }}/about/">About Hematite</a></p>
+      </nav>
+    </aside>
+    <main id="main" class="main">
+      <div class="page-grid">
+        <article class="article article-wide">
+          <header class="article-head">
+            <p class="article-kicker"><span class="chip">{{ section.pages_count }} transforms</span></p>
+            <h1>{{ section.title }}</h1>
+            {% if section.description %}<p class="lede">{{ section.description }}</p>{% endif %}
+          </header>
+          <div class="prose">
+            {{ content | safe }}
+          </div>
+          <ol class="doc-grid">
+            {% for p in section.pages | sort_by("weight") %}
+            <li class="doc-card">
+              <a class="doc-link" href="{{ base_url }}{{ p.url }}">
+                <span class="doc-num" aria-hidden="true">{{ loop.index }}</span>
+                <h2 class="doc-title">{{ p.title }}</h2>
+                <p class="doc-desc">{{ p.description }}</p>
+                {% if p.extra.class %}<p class="doc-meta">{{ p.extra.class }}</p>{% endif %}
+              </a>
+            </li>
+            {% endfor %}
+          </ol>
+        </article>
+      </div>
+    </main>
+  </div>
+{% include "footer.html" %}

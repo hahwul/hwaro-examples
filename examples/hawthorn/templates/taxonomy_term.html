@@ -1,0 +1,34 @@
+{% include "header.html" %}
+<main id="main" class="site-main">
+  <section class="wrap section-intro">
+    <p class="kicker">Tag</p>
+    <h1 class="page-title">{{ taxonomy_term }}</h1>
+    <p class="lede">Entries filed under <em>{{ taxonomy_term }}</em> &middot; <a href="{{ base_url }}/tags/">all tags</a></p>
+  </section>
+  <section class="wrap catalog-section">
+    {% set tax = get_taxonomy(kind="tags") %}
+    <ul class="species-grid" role="list">
+      {% for t in tax.items %}
+      {% if t.name == taxonomy_term %}
+      {% for p in t.pages | sort_by("title") %}
+      <li class="species-card">
+        <a class="species-card-link" href="{{ base_url }}{{ p.url }}">
+          {% if p.extra.spore_color %}
+          <span class="card-badge">
+            <span class="badge-spore" style="--spore-color: {{ p.extra.spore_color }};"></span>
+            <span class="badge-edible {% if p.extra.edible %}is-edible{% else %}is-inedible{% endif %}"></span>
+            <span class="sr-only">Spore print: {{ p.extra.spore_print }}. {{ p.extra.edibility_label }}.</span>
+          </span>
+          {% endif %}
+          <span class="card-name">{{ p.title | e }}</span>
+          {% if p.extra.binomial %}<span class="card-binomial">{{ p.extra.binomial }}</span>{% endif %}
+          <span class="card-desc">{{ p.description | default("", true) | truncate_words(20) }}</span>
+        </a>
+      </li>
+      {% endfor %}
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </section>
+</main>
+{% include "footer.html" %}

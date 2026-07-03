@@ -1,4 +1,0 @@
-+++
-title = "Bearings"
-template = "search"
-+++

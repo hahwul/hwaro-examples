@@ -1,0 +1,45 @@
+{% include "header.html" %}
+      <main id="main" class="docs-main">
+        <div class="doc-columns">
+          <article class="doc-article">
+            {% if page.extra.family %}<p class="topic-path">{{ page.extra.family | lower }} / patch</p>{% endif %}
+            <h1>{{ page.title }}</h1>
+            {% if page.description %}<p class="doc-dek">{{ page.description }}</p>{% endif %}
+            {% if page.date or page.tags %}
+            <div class="doc-meta">
+              {% if page.date %}<time datetime="{{ page.date | date('%Y-%m-%d') }}">{{ page.date | date('%B %d, %Y') }}</time>{% endif %}
+              {% if page.reading_time %}<span>{{ page.reading_time }} min read</span>{% endif %}
+              {% if page.tags %}
+              <span class="doc-tags">
+                {% for t in page.tags %}<a class="tag-chip" href="{{ get_taxonomy_url(kind="tags", term=t) }}">#{{ t }}</a>{% endfor %}
+              </span>
+              {% endif %}
+            </div>
+            {% endif %}
+
+            <div class="prose">
+              {{ content | safe }}
+            </div>
+
+            {% if page.extra.family %}
+            {% set patches = get_section(path="patches").pages | sort_by("title") %}
+            <nav class="doc-pager" aria-label="Page navigation">
+              {% for p in patches %}
+                {% if p.url == page.url %}
+                  {% if not loop.first %}{% set prev = patches[loop.index0 - 1] %}<a class="doc-pager-link doc-pager-prev" href="{{ base_url }}{{ prev.url }}"><span>&larr; Previous</span>{{ prev.title }}</a>{% endif %}
+                  {% if not loop.last %}{% set next = patches[loop.index0 + 1] %}<a class="doc-pager-link doc-pager-next" href="{{ base_url }}{{ next.url }}"><span>Next &rarr;</span>{{ next.title }}</a>{% endif %}
+                {% endif %}
+              {% endfor %}
+            </nav>
+            {% endif %}
+          </article>
+
+          {% if page.toc %}
+          <aside class="doc-toc" aria-label="On this page">
+            <p class="doc-toc-title">On this page</p>
+            {{ toc | safe }}
+          </aside>
+          {% endif %}
+        </div>
+      </main>
+{% include "footer.html" %}

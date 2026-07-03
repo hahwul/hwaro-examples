@@ -1,0 +1,48 @@
+{% include "header.html" %}
+{% set identities = get_section(path="identities") %}
+{% set cases = identities.pages | sort_by("date", reverse=true) %}
+<main id="main" class="site-main">
+  {% if page.section == "identities" %}
+  <article class="case-study">
+    <header class="case-hero">
+      <div class="case-hero-text">
+        <p class="hero-kicker">{{ page.extra.craft | default("Identity system") }}{% if page.extra.location %} · {{ page.extra.location }}{% endif %}</p>
+        <h1>{{ page.title | e }}</h1>
+        {% if page.description %}<p class="case-summary">{{ page.description }}</p>{% endif %}
+        <dl class="case-meta">
+          {% if page.extra.founded %}<div class="case-meta-item"><dt>Founded</dt><dd>{{ page.extra.founded }}</dd></div>{% endif %}
+          {% if page.date %}<div class="case-meta-item"><dt>Project</dt><dd>{{ page.date | date("%Y") }}</dd></div>{% endif %}
+          {% if page.extra.deliverables %}<div class="case-meta-item case-meta-wide"><dt>Deliverables</dt><dd>{{ page.extra.deliverables | join(", ") }}</dd></div>{% endif %}
+        </dl>
+      </div>
+      <div class="case-hero-glyph">
+        {% set glyph = page.extra.monogram %}{% include "monogram.html" %}
+      </div>
+    </header>
+
+    <div class="prose case-body">
+      {{ content | safe }}
+    </div>
+
+    <nav class="case-pager" aria-label="More identities">
+      {% for c in cases %}
+        {% if c.url == page.url %}
+          {% set idx = loop.index0 %}
+          {% set total = cases | length %}
+          {% if idx > 0 %}<a class="case-pager-link case-pager-prev" href="{{ base_url }}{{ cases[idx - 1].url }}"><span>Previous</span>{{ cases[idx - 1].title }}</a>{% endif %}
+          <a class="case-pager-link case-pager-all" href="{{ base_url }}/identities/"><span>All identities</span>View the full grid</a>
+          {% if idx < total - 1 %}<a class="case-pager-link case-pager-next" href="{{ base_url }}{{ cases[idx + 1].url }}"><span>Next</span>{{ cases[idx + 1].title }}</a>{% endif %}
+        {% endif %}
+      {% endfor %}
+    </nav>
+  </article>
+  {% else %}
+  <div class="page">
+    {% if page.title is present %}<h1>{{ page.title | e }}</h1>{% endif %}
+    <div class="prose">
+      {{ content | safe }}
+    </div>
+  </div>
+  {% endif %}
+</main>
+{% include "footer.html" %}

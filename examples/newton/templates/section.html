@@ -1,0 +1,27 @@
+{#
+  section.html — generic section listing. Newton has no dated sections
+  today (the catalog is a single standalone page), but this template keeps
+  the site ready for one without breaking the skeleton contract.
+#}
+{% include "header.html" %}
+{% set entries = section.pages | sort_by("date", reverse=true) %}
+<article class="page-head">
+  <div class="page-head-inner">
+    <p class="page-kicker">Newton Nursery</p>
+    <h1>{{ page.title | e }}</h1>
+    {% if page.description %}<p class="page-lede">{{ page.description | e }}</p>{% endif %}
+  </div>
+</article>
+
+<ul class="entry-grid">
+  {% for p in entries %}
+  <li class="entry-card">
+    <a href="{{ base_url }}{{ p.url }}">
+      {% if p.date %}<time datetime="{{ p.date | date('%Y-%m-%d') }}">{{ p.date | date("%B %d, %Y") }}</time>{% endif %}
+      <h2>{{ p.title }}</h2>
+      {% if p.summary %}<p>{{ p.summary | strip_html | truncate_words(28) }}</p>{% elif p.description %}<p>{{ p.description }}</p>{% endif %}
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+{% include "footer.html" %}

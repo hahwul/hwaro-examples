@@ -1,0 +1,20 @@
+{% include "header.html" %}
+    <main id="main">
+      <header class="section-head">
+        <p class="kicker">{% if taxonomy_name == "categories" %}Watches filed as{% else %}Notes tagged{% endif %}</p>
+        <h1 class="section-title">{{ taxonomy_term }}</h1>
+      </header>
+      <section class="wall" aria-label="Matching field notes">
+        {% set tax = get_taxonomy(kind=taxonomy_name) %}
+        {% for term in tax.items %}
+          {% if term.name == taxonomy_term %}
+            {% for p in term.pages | sort_by("date", reverse=true) %}
+              {% set entry = p %}
+              {% include "partials/card.html" %}
+            {% endfor %}
+          {% endif %}
+        {% endfor %}
+      </section>
+      <p class="wall-foot"><a class="all-link" href="{{ base_url }}/{{ taxonomy_name }}/"><span aria-hidden="true">← </span>All {{ taxonomy_name }}</a></p>
+    </main>
+{% include "footer.html" %}

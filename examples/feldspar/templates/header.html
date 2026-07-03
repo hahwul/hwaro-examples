@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="{{ page.description | default(site.description, true) | e }}">
+  <title>{% if page.title is present and page.url != "/" %}{{ page.title | e }} · {{ site.title | e }}{% else %}{{ site.title | e }} — {{ site.description | e }}{% endif %}</title>
+  <link rel="icon" type="image/svg+xml" href="{{ base_url }}/favicon.svg">
+  {{ og_all_tags }}
+  {{ canonical_tag }}
+  {{ jsonld }}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Fira+Code:wght@400;500&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ base_url }}/css/style.css">
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+</head>
+<body data-base="{{ base_url }}">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="sidebar" aria-label="Open the handbook menu">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M3 5.5h14M3 10h14M3 14.5h9"/></svg>
+        <span>Menu</span>
+      </button>
+      <a class="brand" href="{{ base_url }}/" aria-label="Feldspar — home">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <rect x="1" y="1" width="14" height="14" rx="5" fill="var(--accent)"/>
+          <rect x="17" y="1" width="14" height="14" rx="7" fill="none" stroke="var(--accent)" stroke-width="2"/>
+          <rect x="1" y="17" width="14" height="14" rx="2" fill="none" stroke="var(--accent)" stroke-width="2"/>
+          <rect x="17" y="17" width="14" height="14" rx="7" fill="var(--accent)"/>
+        </svg>
+        <span class="brand-word">Feldspar</span>
+        <span class="brand-tag" aria-hidden="true">v3.2</span>
+      </a>
+      <nav class="topbar-nav" aria-label="Primary">
+        <a href="{{ base_url }}/handbook/">Handbook</a>
+        <a href="{{ base_url }}/handbook/recipes/">Recipes</a>
+        <a href="{{ base_url }}/about/">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="shell">
+    <aside class="sidebar" id="sidebar">
+      <form class="find" role="search" onsubmit="return false;">
+        <label class="find-label" for="find-input">Search the handbook</label>
+        <div class="find-field">
+          <svg class="find-glyph" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="7" cy="7" r="4.4"/><path d="M10.4 10.4 14 14"/></svg>
+          <input id="find-input" class="find-input" type="search" placeholder="Filter utilities, tokens…" autocomplete="off" autocapitalize="off" spellcheck="false" aria-controls="find-results" aria-describedby="find-status">
+        </div>
+      </form>
+      <p class="find-status" id="find-status" role="status" aria-live="polite" hidden></p>
+      <ul class="find-results" id="find-results" aria-label="Search results" hidden></ul>
+      <nav class="sidenav" id="sidenav" aria-label="Handbook">
+        <p class="sidenav-label">The Handbook</p>
+        <ol class="sidenav-list">
+          {% for p in get_section(path="handbook").pages | sort_by("weight") %}
+          <li>
+            <a class="sidenav-link{% if page.url == p.url %} is-current{% endif %}" href="{{ base_url }}{{ p.url }}"{% if page.url == p.url %} aria-current="page"{% endif %}>
+              <span class="sidenav-step" aria-hidden="true">{{ loop.index }}</span>
+              <span class="sidenav-name">{{ p.title }}</span>
+            </a>
+          </li>
+          {% endfor %}
+        </ol>
+        <p class="sidenav-label sidenav-label-loose">Project</p>
+        <ul class="sidenav-list sidenav-list-plain">
+          <li>
+            <a class="sidenav-link{% if page.url == "/about/" %} is-current{% endif %}" href="{{ base_url }}/about/"{% if page.url == "/about/" %} aria-current="page"{% endif %}>
+              <span class="sidenav-step" aria-hidden="true">·</span>
+              <span class="sidenav-name">About Feldspar</span>
+            </a>
+          </li>
+        </ul>
+        <p class="sidenav-foot">Feldspar compiler {{ current_year }} · MIT licensed · no runtime, no telemetry.</p>
+      </nav>
+    </aside>

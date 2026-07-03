@@ -1,0 +1,75 @@
+{% include "header.html" %}
+  <main id="main">
+    {% include "partials/search_panel.html" %}
+    <div id="page-content">
+      <article class="entry">
+        <header class="entry-head">
+          <p class="entry-kicker">
+            {% if page.date %}<time datetime="{{ page.date | date("%Y-%m-%d") }}">{{ page.date | date("%B %d, %Y") }}</time> · {% endif %}{{ page.extra.form }}-former{% if page.reading_time %} · {{ page.reading_time }} min read{% endif %}
+          </p>
+          <h1 class="entry-title">{{ page.title | e }}</h1>
+          <p class="entry-latin">{{ page.extra.latin }}</p>
+        </header>
+
+        <dl class="field-card">
+          <div class="field">
+            <dt>Shade</dt>
+            <dd>
+              <svg class="shade-dots shade-{{ page.extra.shade }}" viewBox="0 0 52 10" width="52" height="10" role="img"
+                   aria-label="Shade preference {{ page.extra.shade }} of 5">
+                <circle cx="5" cy="5" r="3.4"/>
+                <circle cx="15.5" cy="5" r="3.4"/>
+                <circle cx="26" cy="5" r="3.4"/>
+                <circle cx="36.5" cy="5" r="3.4"/>
+                <circle cx="47" cy="5" r="3.4"/>
+              </svg>
+            </dd>
+          </div>
+          <div class="field">
+            <dt>Moisture</dt>
+            <dd>{{ page.extra.moisture }}</dd>
+          </div>
+          <div class="field">
+            <dt>Substrate</dt>
+            <dd>{{ page.extra.substrate }}</dd>
+          </div>
+          <div class="field">
+            <dt>Patch</dt>
+            <dd>{{ page.extra.patch }}</dd>
+          </div>
+        </dl>
+
+        <div class="prose">
+          {{ content | safe }}
+        </div>
+
+        {% if page.tags %}
+          <ul class="tag-list" aria-label="Tags">
+            {% for t in page.tags %}
+              <li><a href="{{ get_taxonomy_url(kind="tags", term=t) }}">{{ t }}</a></li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+
+        <nav class="patch-nav" aria-label="Neighbouring entries">
+          {% if page.higher %}
+            <a class="patch-nav-link patch-nav-prev" href="{{ base_url }}{{ page.higher.url }}">
+              <span class="patch-nav-label"><span aria-hidden="true">&larr;</span> One patch over</span>
+              <span class="patch-nav-title">{{ page.higher.title | e }}</span>
+            </a>
+          {% else %}
+            <span class="patch-nav-empty">The wall begins here.</span>
+          {% endif %}
+          {% if page.lower %}
+            <a class="patch-nav-link patch-nav-next" href="{{ base_url }}{{ page.lower.url }}">
+              <span class="patch-nav-label">One patch back <span aria-hidden="true">&rarr;</span></span>
+              <span class="patch-nav-title">{{ page.lower.title | e }}</span>
+            </a>
+          {% else %}
+            <span class="patch-nav-empty">The wall ends here, for now.</span>
+          {% endif %}
+        </nav>
+      </article>
+    </div>
+  </main>
+{% include "footer.html" %}

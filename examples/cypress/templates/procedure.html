@@ -1,0 +1,52 @@
+{% include "header.html" %}
+      <main id="main" class="content">
+        <div class="procedure-columns">
+          <article class="procedure-article">
+            <p class="topic-path">Repairs / {% if page.extra.category == "drivetrain" %}Drivetrain{% elif page.extra.category == "brake" %}Brakes{% elif page.extra.category == "wheel" %}Wheels{% endif %}</p>
+            <h1>{{ page.title | e }}</h1>
+            {% if page.description %}<p class="page-dek">{{ page.description }}</p>{% endif %}
+
+            <div class="procedure-meta">
+              {% if page.extra.difficulty %}<span class="meta-chip">{{ page.extra.difficulty }}</span>{% endif %}
+              {% if page.extra.time %}<span class="meta-chip">{{ page.extra.time }}</span>{% endif %}
+              {% if page.date %}<time class="meta-chip meta-chip--time" datetime="{{ page.date | date('%Y-%m-%d') }}">verified {{ page.date | date('%B %d, %Y') }}</time>{% endif %}
+            </div>
+
+            {% if page.extra.tools %}
+            <p class="procedure-tools"><strong>Tools:</strong> {{ page.extra.tools | join(", ") }}</p>
+            {% endif %}
+
+            <div class="procedure-body">
+              {{ content | safe }}
+            </div>
+
+            {% set siblings = get_section(path="repairs").pages | sort_by("title") %}
+            <nav class="procedure-pager" aria-label="Repair procedure navigation">
+              {% for p in siblings %}
+                {% if p.url == page.url %}
+                  {% if not loop.first %}{% set prev = siblings[loop.index0 - 1] %}<a class="procedure-pager-link procedure-pager-prev" href="{{ base_url }}{{ prev.url }}"><span class="procedure-pager-label">&larr; Previous</span>{{ prev.title }}</a>{% endif %}
+                  {% if not loop.last %}{% set next = siblings[loop.index0 + 1] %}<a class="procedure-pager-link procedure-pager-next" href="{{ base_url }}{{ next.url }}"><span class="procedure-pager-label">Next &rarr;</span>{{ next.title }}</a>{% endif %}
+                {% endif %}
+              {% endfor %}
+            </nav>
+          </article>
+
+          <aside class="spec-rail" aria-label="Torque and fit specifications">
+            <p class="spec-rail-title">Spec rail</p>
+            {% for s in page.extra.specs %}
+            <div class="spec-pill">
+              <span class="spec-pill-label">{{ s.label }}</span>
+              <span class="spec-pill-value">{{ s.value }}</span>
+            </div>
+            {% endfor %}
+
+            {% if page.toc %}
+            <div class="spec-rail-toc">
+              <p class="spec-rail-title">On this page</p>
+              {{ toc | safe }}
+            </div>
+            {% endif %}
+          </aside>
+        </div>
+      </main>
+{% include "footer.html" %}

@@ -1,0 +1,33 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <div class="listing-head">
+      <p class="listing-kicker">Selected work</p>
+      <h1 class="listing-title">{{ section.title }}</h1>
+      {% if section.description %}<p class="listing-lede">{{ section.description }}</p>{% endif %}
+      <p class="listing-count">{{ section.pages_count }} projects on the wall</p>
+    </div>
+
+    <ul class="title-index">
+      {% for p in section.pages | sort_by("date", reverse=true) %}
+      <li class="title-row">
+        <a class="title-row__link" href="{{ base_url }}{{ p.url }}">
+          <svg class="curve-plot curve-plot--mini" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+            <rect class="curve-bounds" x="24" y="65.5" width="152" height="69"></rect>
+            <path class="curve-line" d="{{ p.extra.curve_d }}"></path>
+            <circle class="curve-node" cx="24" cy="134.5" r="3"></circle>
+            <circle class="curve-node" cx="176" cy="65.5" r="3"></circle>
+            <circle class="curve-dot" cx="0" cy="0" r="4.5" style="offset-path: path('{{ p.extra.curve_d }}');"></circle>
+          </svg>
+          <span class="title-row__body">
+            <span class="title-row__date">{{ p.date | date("%b %Y") }}</span>
+            <span class="title-row__title">{{ p.title }}</span>
+            <span class="title-row__sum">{{ p.summary | default(p.description, true) | strip_html | truncate_words(26) }}</span>
+            <span class="title-row__meta">{{ p.extra.kind }} &middot; {{ p.extra.client }} &middot; {{ p.extra.duration }}</span>
+          </span>
+          <svg class="title-row__go" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </main>
+{% include "footer.html" %}

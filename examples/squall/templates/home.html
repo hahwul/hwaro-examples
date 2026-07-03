@@ -1,0 +1,45 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <section class="hero-intro wrap">
+      <p class="kicker">Passage log &middot; single-handed &middot; coastal</p>
+      <h1 class="hero-heading">Squall</h1>
+      <p class="hero-heading-sub">Passage logs kept under storm light</p>
+      <div class="hero-lede">{{ content | safe }}</div>
+    </section>
+
+    {% set recent_passages = get_section(path="passages").pages | sort_by("date", reverse=true) %}
+    {% set latest = recent_passages | first %}
+    <section class="hero-split wrap" aria-label="Latest passage and recent log">
+      {% if latest %}
+      <article class="hero-latest">
+        <p class="entry-meta">
+          <time class="entry-date" datetime="{{ latest.date | date("%Y-%m-%d") }}">{{ latest.date | date("%d %B %Y") }}</time>
+          {% set p = latest %}{% include "baro-full.html" %}
+        </p>
+        <h2 class="hero-latest-title"><a href="{{ base_url }}{{ latest.url }}">{{ latest.title | e }}</a></h2>
+        {% if latest.extra.wind %}<p class="hero-latest-wind">Wind: {{ latest.extra.wind | e }}{% if latest.extra.location %} &middot; {{ latest.extra.location | e }}{% endif %}</p>{% endif %}
+        <div class="hero-latest-excerpt">{{ latest.summary | safe }}</div>
+        <a class="hero-latest-link" href="{{ base_url }}{{ latest.url }}">Read the full passage <span aria-hidden="true">&rarr;</span></a>
+      </article>
+      {% endif %}
+
+      <aside class="hero-ledger" aria-label="Recent passages" data-inline-search data-search-scope="/passages/">
+        <div class="search-inline">
+          <label class="search-label" for="ledger-search">Search the log</label>
+          <div class="search-box">
+            <svg class="search-icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="5.4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M13.2 13.2 17 17" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <input class="search-input" type="search" id="ledger-search" data-search-input placeholder="Search passages, wind, gear&hellip;" autocomplete="off">
+          </div>
+          <p class="search-status" data-search-status aria-live="polite"></p>
+        </div>
+        <ol class="ledger ledger--home" data-search-list>
+          {% for p in recent_passages %}
+          {% include "ledger-entry.html" %}
+          {% endfor %}
+        </ol>
+        <ul class="search-results" data-search-results hidden></ul>
+        <a class="ledger-more" href="{{ base_url }}/passages/">Full log <span aria-hidden="true">&rarr;</span></a>
+      </aside>
+    </section>
+  </main>
+{% include "footer.html" %}

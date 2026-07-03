@@ -1,0 +1,25 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <div class="section-head">
+      {% if page.title is present %}<h1 class="section-head__title">{{ page.title | e }}</h1>{% endif %}
+      <div class="prose section-head__intro">{{ content | safe }}</div>
+    </div>
+
+    {% set ordered = section.pages | sort_by("date", reverse=true) %}
+    <div class="plate-grid">
+      {% for pl in ordered %}
+      <article class="tile tile--plate">
+        <a class="plate-card" href="{{ base_url }}{{ pl.url }}">
+          <span class="plate-card__fan">{% set p = pl %}{% set fan_wide = false %}{% include "plate_fan.html" %}</span>
+          <span class="plate-card__meta">
+            <span class="plate-card__title">{{ pl.title | e }}</span>
+            <span class="plate-card__where">{{ pl.extra.city | e }} &middot; {{ pl.extra.years | e }}</span>
+            <span class="plate-card__spec">{{ pl.extra.specialty | e }}</span>
+            <span class="plate-card__count">{{ pl.extra.inks | length }} inks on the shelf</span>
+          </span>
+        </a>
+      </article>
+      {% endfor %}
+    </div>
+  </main>
+{% include "footer.html" %}

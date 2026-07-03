@@ -1,0 +1,26 @@
+{% include "header.html" %}
+      <main id="main" class="codex-main">
+        <article class="entry">
+          <p class="topic-path">The Codex / Tags / {{ taxonomy_term }}</p>
+          <h1 class="entry-title">{{ taxonomy_term }}</h1>
+          <div class="rule-double" aria-hidden="true"></div>
+          <p class="entry-dek">Every entry catalogued under &ldquo;{{ taxonomy_term }}&rdquo;.</p>
+          <ol class="doc-index">
+            {% set tax = get_taxonomy(kind="tags") %}
+            {% for term in tax.items %}
+              {% if term.name == taxonomy_term %}
+                {% for p in term.pages | sort_by("title") %}
+                <li>
+                  <a href="{{ base_url }}{{ p.url }}">
+                    <span class="doc-index-title">{{ p.title }}</span>
+                    {% if p.description %}<span class="doc-index-desc">{{ p.description | truncate_words(22) }}</span>{% endif %}
+                  </a>
+                </li>
+                {% endfor %}
+              {% endif %}
+            {% endfor %}
+          </ol>
+          <p class="term-back"><a href="{{ base_url }}/tags/"><span aria-hidden="true">&larr;</span> all tags</a></p>
+        </article>
+      </main>
+{% include "footer.html" %}

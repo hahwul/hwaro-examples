@@ -1,0 +1,72 @@
+{% include "header.html" %}
+  <main id="main" class="home">
+    <section class="hero" aria-labelledby="hero-title">
+      <p class="hero__eyebrow">Release log &amp; server status</p>
+      <div class="signplate" role="img" aria-label="Milepost">
+        <span class="signplate__stud" aria-hidden="true"></span>
+        <span class="signplate__stud signplate__stud--r" aria-hidden="true"></span>
+        <span class="signplate__kicker">ROUTE</span>
+        <h1 class="signplate__word" id="hero-title">MILEPOST</h1>
+        <span class="signplate__sub">voxel sandbox server</span>
+      </div>
+      <p class="hero__promise">{{ page.extra.tagline | default("A voxel sandbox game server with a real plugin API. This is the road behind it — every release is a marker, dated and honest about what shifted.") | e }}</p>
+
+      <ul class="statusboard" aria-label="Current server status">
+        <li class="status status--ok">
+          <span class="status__dot" aria-hidden="true"></span>
+          <span class="status__label">Overworld shards</span>
+          <span class="status__value">nominal</span>
+        </li>
+        <li class="status status--ok">
+          <span class="status__dot" aria-hidden="true"></span>
+          <span class="status__label">Plugin registry</span>
+          <span class="status__value">API v2</span>
+        </li>
+        <li class="status status--warn">
+          <span class="status__dot" aria-hidden="true"></span>
+          <span class="status__label">Nether relay</span>
+          <span class="status__value">degraded</span>
+        </li>
+        <li class="status status--ok">
+          <span class="status__dot" aria-hidden="true"></span>
+          <span class="status__label">Uptime</span>
+          <span class="status__value">37d 04h</span>
+        </li>
+      </ul>
+      <span class="hero__road" aria-hidden="true"></span>
+    </section>
+
+    {% set releases = get_section(path="releases/_index.md") %}
+    {% set latest = releases.pages | sort_by("date", reverse=true) %}
+    <section class="strip" aria-labelledby="latest-title">
+      <div class="strip__head">
+        <h2 class="strip__title" id="latest-title">Latest mileposts</h2>
+        <a class="strip__all" href="{{ base_url }}/releases/">The whole strip<span aria-hidden="true"> &rarr;</span></a>
+      </div>
+
+      <ol class="timeline">
+        {% for r in latest %}
+        {% if loop.index <= 2 %}
+        <li class="milestone {% if loop.index % 2 == 1 %}milestone--left{% else %}milestone--right{% endif %}">
+          <div class="milestone__marker">
+            <div class="plate {% if r.extra.kind == 'major' %}plate--major{% elif r.extra.kind == 'patch' %}plate--patch{% endif %}">
+              <span class="plate__ver">{{ r.extra.version | default("0.0.0") | e }}</span>
+            </div>
+          </div>
+          <article class="milestone__card card">
+            <div class="card__meta">
+              {% if r.date %}<time datetime="{{ r.date | date('%Y-%m-%d') }}">{{ r.date | date('%b %d, %Y') }}</time>{% endif %}
+              <span class="chip chip--{{ r.extra.kind | default('minor') }}">{{ r.extra.kind | default('minor') }}</span>
+            </div>
+            <h3 class="card__title"><a href="{{ base_url }}{{ r.url }}">{{ r.title | e }}</a></h3>
+            {% if r.extra.codename %}<p class="card__codename">Codename &ldquo;{{ r.extra.codename | e }}&rdquo;</p>{% endif %}
+            <div class="card__summary">{{ r.summary | safe }}</div>
+            <a class="card__more" href="{{ base_url }}{{ r.url }}">Read the notes<span aria-hidden="true"> &rarr;</span></a>
+          </article>
+        </li>
+        {% endif %}
+        {% endfor %}
+      </ol>
+    </section>
+  </main>
+{% include "footer.html" %}

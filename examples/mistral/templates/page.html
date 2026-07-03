@@ -1,0 +1,65 @@
+{% include "header.html" %}
+    <main id="main">
+      {% if page.extra.distance_km %}
+      <article class="report">
+        <header class="report-head">
+          <div class="report-lead">
+            <p class="kicker"><span class="kicker-word">Ride report</span>{% if page.date %}<span class="kicker-sep" aria-hidden="true"> · </span><time datetime="{{ page.date | date("%Y-%m-%d") }}">{{ page.date | date("%B %d, %Y") }}</time>{% endif %}</p>
+            <h1 class="report-title">{{ page.title | e }}</h1>
+            {% if page.description %}<p class="report-standfirst">{{ page.description | e }}</p>{% endif %}
+          </div>
+          <div class="report-figures" role="group" aria-label="Distance and elevation gain">
+            <p class="stat stat-report">
+              <span class="stat-value">{{ page.extra.distance_km }}</span>
+              <span class="stat-label">kilometres ridden</span>
+            </p>
+            <p class="stat stat-report">
+              <span class="stat-value">+{{ page.extra.elevation_m }}</span>
+              <span class="stat-label">metres climbed</span>
+            </p>
+          </div>
+        </header>
+        <dl class="report-conditions">
+          {% if page.extra.route %}
+          <div class="condition">
+            <dt>Route</dt>
+            <dd>{{ page.extra.route | e }}</dd>
+          </div>
+          {% endif %}
+          {% if page.extra.wind %}
+          <div class="condition">
+            <dt>Wind</dt>
+            <dd>{{ page.extra.wind | e }}</dd>
+          </div>
+          {% endif %}
+          {% if page.reading_time %}
+          <div class="condition">
+            <dt>Report</dt>
+            <dd>{{ page.reading_time }} min read</dd>
+          </div>
+          {% endif %}
+        </dl>
+        <div class="prose">
+          {{ content | safe }}
+        </div>
+        <footer class="report-foot">
+          {% if page.tags %}
+          <p class="tag-row"><span class="tag-label">Tagged</span>{% for t in page.tags %}<a class="tag-term" href="{{ get_taxonomy_url(kind="tags", term=t) }}">{{ t }}</a>{% endfor %}</p>
+          {% endif %}
+          <p class="back-link"><a href="{{ base_url }}/rides/"><span aria-hidden="true">&larr; </span>All ride reports</a></p>
+        </footer>
+      </article>
+      {% else %}
+      <article class="plain">
+        <header class="plain-head">
+          {% if page.date %}<p class="kicker"><time datetime="{{ page.date | date("%Y-%m-%d") }}">{{ page.date | date("%B %d, %Y") }}</time></p>{% endif %}
+          <h1 class="plain-title">{{ page.title | e }}</h1>
+          {% if page.description %}<p class="report-standfirst">{{ page.description | e }}</p>{% endif %}
+        </header>
+        <div class="prose">
+          {{ content | safe }}
+        </div>
+      </article>
+      {% endif %}
+    </main>
+{% include "footer.html" %}

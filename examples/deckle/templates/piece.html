@@ -1,0 +1,63 @@
+{% include "header.html" %}
+  <main id="main">
+    <article class="spread piece">
+      <div class="spread-main piece-main">
+        <header class="piece-head">
+          {% if page.extra.kicker %}<p class="piece-kicker">{{ page.extra.kicker | e }}</p>{% endif %}
+          <h1 class="piece-title">{{ page.title | e }}</h1>
+          {% if page.description %}<p class="piece-dek">{{ page.description | e }}</p>{% endif %}
+          {% if page.extra.author or page.extra.translator %}
+          <p class="piece-byline">
+            {% if page.extra.author %}<span class="byline-author">{{ page.extra.author | e }}</span>{% endif %}
+            {% if page.extra.translator %}<span class="byline-translator">translated by {{ page.extra.translator | e }}{% if page.extra.source_language %} from the {{ page.extra.source_language | e }}{% endif %}</span>{% endif %}
+          </p>
+          {% endif %}
+        </header>
+
+        <div class="prose dropcap piece-body">
+          {{ content | safe }}
+        </div>
+
+        {% if page.extra.prev or page.extra.next %}
+        <nav class="piece-nav" aria-label="Adjacent pieces">
+          {% if page.extra.prev %}
+            {% set prev_page = get_page(path=page.extra.prev) %}
+          <a class="nav-link nav-prev" href="{{ base_url }}{{ prev_page.url }}">
+            <span class="nav-label"><span aria-hidden="true">&larr;</span> Earlier in the folio</span>
+            <span class="nav-title">{{ prev_page.title | e }}</span>
+          </a>
+          {% else %}
+          <span class="nav-empty">This piece opens the folio.</span>
+          {% endif %}
+          {% if page.extra.next %}
+            {% set next_page = get_page(path=page.extra.next) %}
+          <a class="nav-link nav-next" href="{{ base_url }}{{ next_page.url }}">
+            <span class="nav-label">Later in the folio <span aria-hidden="true">&rarr;</span></span>
+            <span class="nav-title">{{ next_page.title | e }}</span>
+          </a>
+          {% else %}
+          <span class="nav-empty nav-empty-next">This piece closes the folio.</span>
+          {% endif %}
+        </nav>
+        {% endif %}
+      </div>
+
+      {% include "partials/seam.html" %}
+
+      <aside class="spread-margin piece-margin" aria-label="About this piece">
+        {% if page.extra.folio %}<p class="margin-item"><span class="margin-label">Folio</span><span class="margin-value margin-folio">{{ page.extra.folio }}</span></p>{% endif %}
+        {% if page.date %}<p class="margin-item"><span class="margin-label">Published</span><time datetime="{{ page.date | date("%Y-%m-%d") }}">{{ page.date | date("%B %Y") }}</time></p>{% endif %}
+        {% if page.reading_time %}<p class="margin-item"><span class="margin-label">Reading</span><span class="margin-value">{{ page.reading_time }} min</span></p>{% endif %}
+        {% if page.tags %}
+        <div class="margin-item">
+          <span class="margin-label">Tags</span>
+          <ul class="margin-tags">
+            {% for t in page.tags %}<li><a href="{{ get_taxonomy_url(kind="tags", term=t) }}">{{ t }}</a></li>{% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+        <div class="margin-ornament" aria-hidden="true">&#10086;</div>
+      </aside>
+    </article>
+  </main>
+{% include "footer.html" %}

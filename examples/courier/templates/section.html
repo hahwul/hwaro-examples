@@ -1,0 +1,28 @@
+{% include "header.html" %}
+    <div class="section-head">
+      {% if page.title is present %}<h1>{{ page.title | e }}</h1>{% endif %}
+      {% if page.description %}<p class="section-intro">{{ page.description | e }}</p>{% endif %}
+    </div>
+    <div class="prose section-body">{{ content | safe }}</div>
+
+    <ol class="issue-list">
+      {% for p in section.pages | sort_by("date", reverse=true) %}
+      <li class="issue-list-item">
+        <a class="issue-list-link" href="{{ base_url }}{{ p.url }}">
+          {% set sl_title = p.title %}
+          {% set sl_draft = p.extra.draft_number %}
+          {% set sl_words = p.extra.word_count %}
+          {% include "partials/slugline.html" %}
+          <span class="issue-list-title">{{ p.title | e }}</span>
+          {% if p.summary %}<span class="issue-list-summary">{{ p.summary | strip_html | truncate_words(28) }}</span>{% endif %}
+          <span class="issue-list-meta">
+            {% if p.extra.tool_kind %}<span class="issue-list-kind">{{ p.extra.tool_kind | e }}</span>{% endif %}
+            {% if p.date %}<time datetime="{{ p.date | date("%Y-%m-%d") }}">{{ p.date | date("%B %d, %Y") }}</time>{% endif %}
+          </span>
+        </a>
+      </li>
+      {% endfor %}
+    </ol>
+
+    {{ pagination }}
+{% include "footer.html" %}

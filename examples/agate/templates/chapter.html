@@ -1,0 +1,53 @@
+{% include "header.html" %}
+  <main id="main" class="wrap">
+    <article class="chapter">
+      <p class="chapter-kicker">
+        <a href="{{ base_url }}/language/">Language reference</a>
+        <span aria-hidden="true">/</span> Chapter {{ page.extra.chapter | default("—") }}
+      </p>
+
+      <header class="chapter-head">
+        <span class="chapter-watermark" aria-hidden="true">{% raw %}{% %}{% endraw %}</span>
+        <span class="chapter-num" aria-hidden="true">{{ page.extra.chapter | default("—") }}</span>
+        <h1>{{ page.title | e }}</h1>
+        {% if page.description %}<p class="chapter-lede">{{ page.description | e }}</p>{% endif %}
+        {% if page.date %}
+        <p class="chapter-meta">
+          {% if page.reading_time %}<span>{{ page.reading_time }} min read</span><span class="dot" aria-hidden="true">·</span>{% endif %}
+          <time datetime="{{ page.date | date('%Y-%m-%d') }}">revised {{ page.date | date("%B %Y") }}</time>
+        </p>
+        {% endif %}
+      </header>
+
+      {% if page.toc %}
+      <nav class="on-page-toc" aria-label="On this page">
+        <p class="toc-label">On this page</p>
+        {{ toc | safe }}
+      </nav>
+      {% endif %}
+
+      <div class="prose">
+        {{ content | safe }}
+      </div>
+
+      {% set has_prev = page.lower and page.lower.section == page.section %}
+      {% set has_next = page.higher and page.higher.section == page.section %}
+      {% if has_prev or has_next %}
+      <nav class="chapter-pager" aria-label="Chapter navigation">
+        {% if has_prev %}
+        <a class="pager-link pager-prev" href="{{ base_url }}{{ page.lower.url }}">
+          <span class="pager-dir">Previous</span>
+          <span class="pager-title">{{ page.lower.title | e }}</span>
+        </a>
+        {% else %}<span class="pager-spacer" aria-hidden="true"></span>{% endif %}
+        {% if has_next %}
+        <a class="pager-link pager-next" href="{{ base_url }}{{ page.higher.url }}">
+          <span class="pager-dir">Next</span>
+          <span class="pager-title">{{ page.higher.title | e }}</span>
+        </a>
+        {% else %}<span class="pager-spacer" aria-hidden="true"></span>{% endif %}
+      </nav>
+      {% endif %}
+    </article>
+  </main>
+{% include "footer.html" %}

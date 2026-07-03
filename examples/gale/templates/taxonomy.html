@@ -1,0 +1,19 @@
+{% include "header.html" %}
+    <main id="main">
+      <header class="section-head">
+        <p class="kicker">Ways through the log</p>
+        <h1 class="section-title">{{ page.title | e }}</h1>
+        <p class="section-intro">{% if taxonomy_name == "categories" %}Every watch is filed by its kind — the routine seawatches, the storm vigils, and the fixed census counts on the cliff.{% else %}Threads running through the journal: the weather that delivered the birds, the families they belong to, the hours they favour.{% endif %}</p>
+      </header>
+      {% set tax = get_taxonomy(kind=taxonomy_name) %}
+      <ul class="term-list">
+        {% for term in tax.items | sort_by("name") %}
+        {% set n = term.pages | length %}
+        <li>
+          <a class="term-link" href="{{ get_taxonomy_url(kind=taxonomy_name, term=term.name) }}">{{ term.name }}</a>
+          <span class="term-count">{{ n }} {% if n == 1 %}note{% else %}notes{% endif %}</span>
+        </li>
+        {% endfor %}
+      </ul>
+    </main>
+{% include "footer.html" %}

@@ -1,0 +1,53 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    {% set studies = get_section(path="studies") %}
+    {% set ordered = studies.pages | sort_by("date", reverse=true) %}
+    {% set latest = ordered | first %}
+    <section class="hero" aria-label="Latest study">
+      <div class="wrap hero-grid">
+        <div class="hero-text">
+          <p class="hero-kicker">Latest study</p>
+          <h1><a href="{{ base_url }}{{ latest.url }}">{{ latest.title | e }}</a></h1>
+          {% if latest.extra.side_to_move or latest.extra.result %}
+          <p class="hero-meta">
+            {% if latest.extra.side_to_move %}{{ latest.extra.side_to_move }}{% endif %}
+            {% if latest.extra.side_to_move and latest.extra.result %}<span class="meta-sep" aria-hidden="true">·</span>{% endif %}
+            {% if latest.extra.result %}<span class="study-result">{{ latest.extra.result }}</span>{% endif %}
+          </p>
+          {% endif %}
+          {% if latest.extra.annotation %}
+          <p class="pull-quote hero-quote">{{ latest.extra.annotation }}</p>
+          {% endif %}
+          <a class="hero-cta" href="{{ base_url }}{{ latest.url }}">Read the study<span aria-hidden="true"> &#8594;</span></a>
+        </div>
+        <div class="hero-board">
+          {% if latest.extra.board_svg %}
+          <figure class="board-figure">
+            {{ latest.extra.board_svg | safe }}
+          </figure>
+          {% endif %}
+        </div>
+      </div>
+    </section>
+
+    {% if content %}
+    <section class="editor-note wrap">
+      <div class="prose">{{ content | safe }}</div>
+    </section>
+    {% endif %}
+
+    <section class="recent wrap" aria-label="Recent studies">
+      <div class="recent-head">
+        <h2>Recent studies</h2>
+        <a href="{{ base_url }}/studies/" class="recent-all">All studies<span aria-hidden="true"> &#8594;</span></a>
+      </div>
+      <div class="study-list">
+        {% for entry in ordered %}
+          {% if loop.index > 1 and loop.index <= 5 %}
+            {% include "study-card.html" %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+{% include "footer.html" %}

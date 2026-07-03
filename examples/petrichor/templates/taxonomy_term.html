@@ -1,0 +1,21 @@
+{% include "header.html" %}
+  <main id="main" class="wrap">
+    <header class="section-head">
+      <p class="intro-eyebrow">Entries tagged</p>
+      <h1 class="page-title">{{ taxonomy_term | e }}</h1>
+    </header>
+    <section aria-label="Tagged entries">
+      <ol class="entry-list">
+        {% set tax = get_taxonomy(kind="tags") %}
+        {% for term in tax.items %}
+          {% if term.name == taxonomy_term %}
+            {% for p in term.pages | sort_by("date", reverse=true) %}
+              {% include "partials/entry.html" %}
+            {% endfor %}
+          {% endif %}
+        {% endfor %}
+      </ol>
+    </section>
+    <p class="term-back"><a href="{{ base_url }}/tags/"><span aria-hidden="true">&larr;</span> All tags</a></p>
+  </main>
+{% include "footer.html" %}

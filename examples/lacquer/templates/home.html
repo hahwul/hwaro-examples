@@ -1,0 +1,42 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <section class="hero">
+      <p class="hero__kicker">{{ page.extra.kicker | default("Urushi & Gold Leaf") | e }}</p>
+      <h1 class="hero__mark">{{ site.title | e }}</h1>
+      {% if page.extra.tagline %}<p class="hero__tagline">{{ page.extra.tagline | e }}</p>{% endif %}
+
+      <div class="ornament" aria-hidden="true">
+        <span class="ornament__line"></span>
+        <svg class="ornament__gem" viewBox="0 0 16 16"><use href="#gem-mark"></use></svg>
+        <span class="ornament__line"></span>
+      </div>
+
+      <div class="prose hero__note">
+        {{ content | safe }}
+      </div>
+    </section>
+
+    <section class="collections" aria-label="Current collections">
+      <div class="collections__head">
+        <h2 class="collections__title">Current Collections</h2>
+        <a class="collections__all" href="{{ base_url }}/collections/">View all &rarr;</a>
+      </div>
+
+      {% set pieces = get_section(path="collections").pages | sort_by("date", reverse=true) %}
+      <ol class="piece-list">
+        {% for p in pieces %}
+        <li class="piece-list__item">
+          <a class="piece-list__link" href="{{ base_url }}{{ p.url }}">
+            <span class="piece-list__row">
+              {% if p.date %}<span class="piece-list__date">{{ p.date | date("%B %Y") }}</span>{% endif %}
+              {% if p.extra.coats %}<span class="piece-list__coats">{{ p.extra.coats }} coats &middot; {{ p.extra.weeks }} weeks</span>{% endif %}
+            </span>
+            <span class="piece-list__title">{{ p.title | e }}</span>
+            {% if p.extra.blurb %}<span class="piece-list__blurb">{{ p.extra.blurb | e }}</span>{% endif %}
+          </a>
+        </li>
+        {% endfor %}
+      </ol>
+    </section>
+  </main>
+{% include "footer.html" %}

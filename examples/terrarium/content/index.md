@@ -1,4 +1,0 @@
-+++
-title = "Terrarium"
-template = "home"
-+++

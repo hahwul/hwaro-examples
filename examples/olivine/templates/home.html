@@ -1,0 +1,144 @@
+{% include "header.html" %}
+    <main id="main" class="main main-home">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Olivine · v0.8 · streaming ETL for Python</p>
+          <h1 class="hero-title">Streaming ETL with <em>backpressure</em> that just works.</h1>
+          <p class="hero-lede">A pipeline is a living thing: a source at the root, transforms in the middle, a sink at the tip. Demand flows back up from the sink so nothing ever floods — and every sink can commit exactly once.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="{{ base_url }}/guides/quickstart/">Start the quickstart</a>
+            <a class="btn btn-ghost" href="{{ base_url }}/guides/">Read the guides</a>
+          </div>
+          <p class="hero-install"><code>pip install olivine</code></p>
+        </div>
+
+        <div class="vine-figure">
+          <svg class="vine-svg" viewBox="0 0 320 480" aria-hidden="true" focusable="false">
+            <path class="vine-stem" d="M80 72 C 80 158 240 154 240 240 C 240 326 80 322 80 408" fill="none"/>
+            <path class="vine-flow" d="M80 72 C 80 158 240 154 240 240 C 240 326 80 322 80 408" fill="none"/>
+            <!-- budding leaves along the vine -->
+            <g class="bud" transform="translate(158 150) rotate(24) scale(0.42)">
+              <path class="leaf-body" d="M-30 0 C -17 -19 17 -19 30 0 C 17 19 -17 19 -30 0 Z"/>
+            </g>
+            <g class="bud" transform="translate(160 330) rotate(-150) scale(0.42)">
+              <path class="leaf-body" d="M-30 0 C -17 -19 17 -19 30 0 C 17 19 -17 19 -30 0 Z"/>
+            </g>
+            <!-- source node -->
+            <g transform="translate(80 72) rotate(-34)"><g class="node">
+              <path class="leaf-body" d="M-32 0 C -18 -20 18 -20 32 0 C 18 20 -18 20 -32 0 Z"/>
+              <path class="leaf-vein" fill="none" d="M-30 0 H30 M-8 0 l11 -8 M-8 0 l11 8 M10 0 l9 -6 M10 0 l9 6"/>
+            </g></g>
+            <!-- transform node -->
+            <g transform="translate(240 240) rotate(22)"><g class="node node--2">
+              <path class="leaf-body" d="M-32 0 C -18 -20 18 -20 32 0 C 18 20 -18 20 -32 0 Z"/>
+              <path class="leaf-vein" fill="none" d="M-30 0 H30 M-8 0 l11 -8 M-8 0 l11 8 M10 0 l9 -6 M10 0 l9 6"/>
+            </g></g>
+            <!-- sink node -->
+            <g transform="translate(80 408) rotate(-24)"><g class="node node--3">
+              <path class="leaf-body" d="M-32 0 C -18 -20 18 -20 32 0 C 18 20 -18 20 -32 0 Z"/>
+              <path class="leaf-vein" fill="none" d="M-30 0 H30 M-8 0 l11 -8 M-8 0 l11 8 M10 0 l9 -6 M10 0 l9 6"/>
+            </g></g>
+          </svg>
+          <p class="vine-tag vine-tag--source">
+            <span class="vine-kicker">Source</span>
+            <span class="vine-name">reads a Kafka topic</span>
+          </p>
+          <p class="vine-tag vine-tag--transform">
+            <span class="vine-kicker">Transform</span>
+            <span class="vine-name">map · key · window</span>
+          </p>
+          <p class="vine-tag vine-tag--sink">
+            <span class="vine-kicker">Sink</span>
+            <span class="vine-name">commits exactly once</span>
+          </p>
+        </div>
+      </section>
+
+      <section class="stages" aria-labelledby="stages-title">
+        <h2 id="stages-title" class="section-title">Three stages, one flow</h2>
+        <ul class="stage-grid">
+          <li class="stage-card">
+            <span class="stage-mark" aria-hidden="true"></span>
+            <h3>Source</h3>
+            <p>Read from Kafka, Postgres CDC, or a generator. Every source joins the credit protocol, so it only pulls what the pipeline can absorb.</p>
+          </li>
+          <li class="stage-card">
+            <span class="stage-mark" aria-hidden="true"></span>
+            <h3>Transform</h3>
+            <p>Filter and map one record at a time, or gather them into event-time windows with watermarks for late data. State is checkpointed.</p>
+          </li>
+          <li class="stage-card">
+            <span class="stage-mark" aria-hidden="true"></span>
+            <h3>Sink</h3>
+            <p>Commit transactionally on each checkpoint barrier. Postgres, Kafka, and object stores all deliver exactly once, not just once-ish.</p>
+          </li>
+        </ul>
+      </section>
+
+      <section class="quickstart" aria-labelledby="quickstart-title">
+        <div class="quickstart-copy">
+          <h2 id="quickstart-title" class="section-title">A whole pipeline in one file</h2>
+          <p>No cluster, no coordinator. A pipeline is an ordinary Python process — wire the stages, call <code>run()</code>, and the runtime keeps the flow alive and in order.</p>
+          <a class="link-arrow" href="{{ base_url }}/guides/quickstart/">Full quickstart<span aria-hidden="true"> →</span></a>
+        </div>
+        <pre class="quickstart-code"><code class="language-python">from olivine import Pipeline, sources, sinks
+
+pipe = Pipeline("orders")
+
+(
+    pipe.source(sources.kafka(topic="orders"))
+        .filter(lambda o: o.total_cents >= 5000)
+        .map(lambda o: {"id": o.id, "usd": o.total_cents / 100})
+        .sink(sinks.postgres(table="big_orders",
+                             delivery="exactly_once"))
+)
+
+pipe.run()</code></pre>
+      </section>
+
+      <section class="listing" aria-labelledby="guides-title">
+        <div class="listing-head">
+          <h2 id="guides-title" class="section-title">Guides</h2>
+          <a class="link-arrow" href="{{ base_url }}/guides/">All guides<span aria-hidden="true"> →</span></a>
+        </div>
+        <ol class="doc-grid">
+          {% for p in get_section(path="guides").pages | sort_by("weight") %}
+          <li class="doc-card">
+            <a class="doc-link" href="{{ base_url }}{{ p.url }}">
+              <span class="doc-num" aria-hidden="true">{{ loop.index }}</span>
+              <h3 class="doc-title">{{ p.title }}</h3>
+              <p class="doc-desc">{{ p.description }}</p>
+              {% if p.extra.minutes %}<p class="doc-meta">about {{ p.extra.minutes }} min</p>{% endif %}
+            </a>
+          </li>
+          {% endfor %}
+        </ol>
+      </section>
+
+      <section class="listing" aria-labelledby="connectors-title">
+        <div class="listing-head">
+          <h2 id="connectors-title" class="section-title">Connectors</h2>
+          <a class="link-arrow" href="{{ base_url }}/connectors/">All connectors<span aria-hidden="true"> →</span></a>
+        </div>
+        <ol class="doc-grid">
+          {% for p in get_section(path="connectors").pages | sort_by("weight") %}
+          <li class="doc-card">
+            <a class="doc-link" href="{{ base_url }}{{ p.url }}">
+              <span class="doc-num" aria-hidden="true">{{ loop.index }}</span>
+              <h3 class="doc-title">{{ p.title }}</h3>
+              <p class="doc-desc">{{ p.description }}</p>
+              {% if p.extra.role %}<p class="doc-meta">{{ p.extra.role }}</p>{% endif %}
+            </a>
+          </li>
+          {% endfor %}
+        </ol>
+      </section>
+
+      <section class="why" aria-labelledby="why-title">
+        <h2 id="why-title" class="section-title">Why backpressure first?</h2>
+        <div class="prose prose-narrow">
+          {{ content | safe }}
+        </div>
+      </section>
+    </main>
+{% include "footer.html" %}

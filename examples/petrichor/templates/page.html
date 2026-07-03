@@ -1,0 +1,34 @@
+{% include "header.html" %}
+  <main id="main" class="wrap">
+    <article class="post">
+      <header class="post-head">
+        {% if page.date %}
+        <p class="post-kicker">
+          <time datetime="{{ page.date | date("%Y-%m-%d") }}">{{ page.date | date("%B %-d, %Y") }}</time>
+          {% if page.extra.plot %}<span class="entry-plot">{{ page.extra.plot | e }}</span>{% endif %}
+        </p>
+        {% endif %}
+        <h1 class="post-title">{{ page.title | e }}</h1>
+        {% if page.description %}<p class="post-standfirst">{{ page.description | e }}</p>{% endif %}
+      </header>
+
+      <div class="prose">{{ content | safe }}</div>
+
+      {% if page.tags %}
+      <footer class="post-foot">
+        <p class="post-foot-label">Filed under</p>
+        <ul class="entry-tags" aria-label="Tags">
+          {% for t in page.tags %}<li><a href="{{ get_taxonomy_url(kind="tags", term=t) }}">{{ t | e }}</a></li>{% endfor %}
+        </ul>
+      </footer>
+      {% endif %}
+
+      {% if page.lower or page.higher %}
+      <nav class="post-nav" aria-label="More entries">
+        {% if page.higher %}<a class="post-nav-prev" href="{{ base_url }}{{ page.higher.url }}"><span class="post-nav-dir">Later</span><span class="post-nav-title">{{ page.higher.title | e }}</span></a>{% endif %}
+        {% if page.lower %}<a class="post-nav-next" href="{{ base_url }}{{ page.lower.url }}"><span class="post-nav-dir">Earlier</span><span class="post-nav-title">{{ page.lower.title | e }}</span></a>{% endif %}
+      </nav>
+      {% endif %}
+    </article>
+  </main>
+{% include "footer.html" %}

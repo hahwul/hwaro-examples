@@ -1,0 +1,56 @@
+{% include "header.html" %}
+{% set issues_section = get_section(path="issues") %}
+  <main id="main" class="site-main">
+    <article class="spread">
+      <div class="spread-grid">
+        <aside class="spread-verso">
+          <p class="folio folio-verso">No. {{ page.extra.issue_no | e }} of {{ issues_section.pages_count }}</p>
+          <div class="route-card">
+            <p class="route-kicker">{{ page.extra.route | default("Flyway") | e }}</p>
+            <p class="route-species">{{ page.extra.species | e }}{% if page.extra.binomial %} <span aria-hidden="true">&middot;</span> <em>{{ page.extra.binomial | e }}</em>{% endif %}</p>
+            <svg class="route-diagram" viewBox="0 0 200 120" role="img" aria-label="Abstract route diagram from departure to arrival">
+              <circle cx="24" cy="96" r="5" fill="var(--accent)"/>
+              <path d="M24 96 Q90 100 110 60 T176 24" fill="none" stroke="var(--accent)" stroke-width="1.6" stroke-dasharray="1 8" stroke-linecap="round"/>
+              <circle cx="176" cy="24" r="5" fill="none" stroke="var(--accent)" stroke-width="2.2"/>
+            </svg>
+            <dl class="route-meta">
+              {% if page.extra.distance %}<div><dt>Distance</dt><dd>{{ page.extra.distance | e }}</dd></div>{% endif %}
+              {% if page.extra.window %}<div><dt>Window</dt><dd>{{ page.extra.window | e }}</dd></div>{% endif %}
+              {% if page.extra.from %}<div><dt>Departs</dt><dd>{{ page.extra.from | e }}</dd></div>{% endif %}
+              {% if page.extra.to %}<div><dt>Arrives</dt><dd>{{ page.extra.to | e }}</dd></div>{% endif %}
+            </dl>
+          </div>
+        </aside>
+
+        <div class="spread-recto">
+          {% if page.date %}<p class="plate-kicker">{{ page.date | date("%B %-d, %Y") }}</p>{% endif %}
+          <h1>{{ page.title | e }}</h1>
+          <div class="prose">
+            {{ content | safe }}
+          </div>
+          <p class="folio folio-recto">&mdash; {{ site.title | e }}, Field Roster</p>
+        </div>
+      </div>
+
+      {% if page.extra.prev_url or page.extra.next_url %}
+      <nav class="plate-pager" aria-label="Issue navigation">
+        {% if page.extra.prev_url %}
+        <a class="plate-pager-link plate-pager-prev" href="{{ base_url }}{{ page.extra.prev_url }}">
+          <span class="plate-pager-dir"><span aria-hidden="true">&larr;</span> Previous issue</span>
+          <span class="plate-pager-title">{{ page.extra.prev_title | e }}</span>
+        </a>
+        {% else %}<span class="plate-pager-empty"></span>{% endif %}
+
+        <a class="plate-pager-index" href="{{ base_url }}/issues/">All issues</a>
+
+        {% if page.extra.next_url %}
+        <a class="plate-pager-link plate-pager-next" href="{{ base_url }}{{ page.extra.next_url }}">
+          <span class="plate-pager-dir">Next issue <span aria-hidden="true">&rarr;</span></span>
+          <span class="plate-pager-title">{{ page.extra.next_title | e }}</span>
+        </a>
+        {% else %}<span class="plate-pager-empty"></span>{% endif %}
+      </nav>
+      {% endif %}
+    </article>
+  </main>
+{% include "footer.html" %}

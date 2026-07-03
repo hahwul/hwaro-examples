@@ -1,0 +1,47 @@
+{% include "header.html" %}
+  <main id="main" class="main">
+    {% include "partials/search_panel.html" %}
+    <div id="page-content">
+      <article class="entry{% if page.toc %} entry-has-toc{% endif %}">
+        <div class="entry-body">
+          <header class="entry-head">
+            <p class="entry-kicker">
+              {% if page.section == "briefings" %}<a class="kicker-link" href="{{ base_url }}/briefings/">Briefing</a>{% endif %}
+              {% if page.date %}<span class="kicker-dot" aria-hidden="true">·</span><time datetime="{{ page.date | date("%Y-%m-%d") }}">{{ page.date | date("%d %b %Y") }}</time>{% endif %}
+              {% if page.extra.station %}<span class="kicker-dot" aria-hidden="true">·</span><span class="entry-station">{{ page.extra.station }}</span>{% endif %}
+              {% if page.reading_time %}<span class="kicker-dot" aria-hidden="true">·</span><span>{{ page.reading_time }} min read</span>{% endif %}
+            </p>
+            <h1 class="entry-title">{{ page.title | e }}</h1>
+            {% if page.description %}<p class="entry-lede">{{ page.description | e }}</p>{% endif %}
+          </header>
+          {% if page.extra.metar %}
+          <figure class="metar-block metar-block-lead">
+            <div class="metar-capsule">
+              <span class="capsule-tag">{{ page.extra.kind | default("METAR") }}</span>
+              <code class="capsule-raw">{{ page.extra.metar | e }}</code>
+            </div>
+            {% if page.extra.decoded %}<figcaption class="metar-decoded">{{ page.extra.decoded | e }}</figcaption>{% endif %}
+          </figure>
+          {% endif %}
+          <div class="prose">
+            {{ content | safe }}
+          </div>
+          {% if page.tags %}
+          <footer class="entry-foot">
+            <span class="foot-label">Filed under</span>
+            <ul class="card-tags" aria-label="Tags">
+              {% for t in page.tags %}<li><a class="tag-chip" href="{{ get_taxonomy_url(kind="tags", term=t) }}">{{ t }}</a></li>{% endfor %}
+            </ul>
+          </footer>
+          {% endif %}
+        </div>
+        {% if page.toc %}
+        <aside class="toc" aria-label="On this page">
+          <p class="toc-title">On this page</p>
+          {{ toc | safe }}
+        </aside>
+        {% endif %}
+      </article>
+    </div>
+  </main>
+{% include "footer.html" %}

@@ -1,0 +1,49 @@
+{% include "header.html" %}
+  <main id="main">
+    {% set notices = get_section(path="notices").pages | sort_by("date", reverse=true) %}
+    {% set lead = notices | first %}
+
+    {% if lead %}
+    <section class="lead" aria-labelledby="lead-title">
+      <div class="wrap lead-grid">
+        <div class="lead-main">
+          {% if lead.taxonomies.categories %}<p class="kicker-chip">{{ lead.taxonomies.categories | first }}</p>{% endif %}
+          <h1 class="lead-title" id="lead-title"><a href="{{ base_url }}{{ lead.url }}">{{ lead.title | e }}</a></h1>
+          {% if lead.description %}<p class="lead-dek">{{ lead.description | e }}</p>{% endif %}
+          <p class="lead-byline">
+            {% if lead.authors %}<span class="byline-name">{{ lead.authors | join(", ") | upper }}</span>{% endif %}
+            {% if lead.date %}<span class="byline-sep" aria-hidden="true">·</span><time datetime="{{ lead.date | date("%Y-%m-%d") }}">{{ lead.date | date("%B %d, %Y") | upper }}</time>{% endif %}
+            {% if lead.extra.label %}<span class="byline-sep" aria-hidden="true">·</span><span class="byline-label">{{ lead.extra.label }}</span>{% endif %}
+          </p>
+          <p class="lead-more"><a class="more-link" href="{{ base_url }}{{ lead.url }}">Read the notice<span aria-hidden="true"> →</span></a></p>
+        </div>
+        {% if lead.extra.score_whole %}
+        <div class="score score--lead" aria-hidden="true">
+          <span class="score-num">{{ lead.extra.score_whole }}</span><span class="score-num">{{ lead.extra.score_dec | default(".0") }}</span>
+        </div>
+        <p class="visually-hidden">Score {{ lead.extra.score_label | default(lead.extra.score_whole) }} out of 10</p>
+        {% endif %}
+      </div>
+    </section>
+    {% endif %}
+
+    <section class="well-section" aria-labelledby="well-head">
+      <div class="wrap well-head">
+        <h2 id="well-head">This week&rsquo;s well</h2>
+        <a class="all-link" href="{{ base_url }}/notices/">Full archive<span aria-hidden="true"> →</span></a>
+      </div>
+      <ol class="well wrap">
+        {% for entry in notices %}
+          {% if not loop.first %}
+          {% include "partials/notice-row.html" %}
+          {% endif %}
+        {% endfor %}
+      </ol>
+    </section>
+
+    <section class="home-about wrap" aria-labelledby="home-about-head">
+      <h2 id="home-about-head" class="visually-hidden">About The Courant</h2>
+      {{ content | safe }}
+    </section>
+  </main>
+{% include "footer.html" %}

@@ -1,0 +1,109 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+
+    <section class="stencil-band">
+      <div class="wrap stencil-band__inner">
+        <p class="stencil-band__kicker">Civic muralist &nbsp;&#10022;&nbsp; walls painted on public property since 2016</p>
+        <h1 class="stencil-band__mark">FRESCO</h1>
+        <p class="stencil-band__tagline">{{ site.description | e }}</p>
+      </div>
+    </section>
+
+    <section class="collage" aria-label="Recent commissions">
+      <div class="wrap">
+        <div class="collage__head">
+          <h2>The walls</h2>
+          <p>Pinned like a site plan, newest first — a firehouse arch still in sketch sessions back to the library gable that started all of this.</p>
+        </div>
+
+        {% set walls = get_section(path="walls").pages | sort_by("date", reverse=true) %}
+        <div class="wall-grid">
+          {% for w in walls %}
+          <a class="wall-card" href="{{ base_url }}{{ w.url }}" style="--rot:{{ w.extra.rotate | default('0') }}deg">
+            <span class="wall-card__pin" aria-hidden="true"></span>
+            <svg class="wall-card__art" viewBox="0 0 100 120" aria-hidden="true">
+              <g style="clip-path:url(#wall-{{ w.extra.shape | default('panel') }})">
+                <rect width="100" height="120" fill="{{ w.extra.color_1 | default('#d9552c') }}"></rect>
+                <rect y="42" width="100" height="78" fill="{{ w.extra.color_2 | default('#f2b705') }}"></rect>
+                <rect y="80" width="100" height="40" fill="{{ w.extra.color_3 | default('#1f7a5c') }}"></rect>
+                {% if w.extra.motif == "sun" %}
+                <circle cx="50" cy="32" r="16" fill="{{ w.extra.color_4 | default('#fdfaf4') }}"></circle>
+                {% elif w.extra.motif == "wave" %}
+                <path d="M-10,58 Q10,40 30,58 T70,58 T110,58" stroke="{{ w.extra.color_4 | default('#fdfaf4') }}" stroke-width="7" fill="none"></path>
+                {% elif w.extra.motif == "ladder" %}
+                <g stroke="{{ w.extra.color_4 | default('#fdfaf4') }}" stroke-width="5">
+                  <line x1="34" y1="8" x2="34" y2="112"></line>
+                  <line x1="66" y1="8" x2="66" y2="112"></line>
+                  <line x1="34" y1="28" x2="66" y2="28"></line>
+                  <line x1="34" y1="52" x2="66" y2="52"></line>
+                  <line x1="34" y1="76" x2="66" y2="76"></line>
+                  <line x1="34" y1="100" x2="66" y2="100"></line>
+                </g>
+                {% elif w.extra.motif == "bird" %}
+                <path d="M18,48 Q28,32 38,48 Q48,32 58,48" stroke="{{ w.extra.color_4 | default('#fdfaf4') }}" stroke-width="6" fill="none"></path>
+                <path d="M44,72 Q54,56 64,72 Q74,56 84,72" stroke="{{ w.extra.color_4 | default('#fdfaf4') }}" stroke-width="6" fill="none"></path>
+                {% elif w.extra.motif == "diamond" %}
+                <polygon points="50,18 78,50 50,82 22,50" fill="{{ w.extra.color_4 | default('#fdfaf4') }}"></polygon>
+                {% endif %}
+              </g>
+            </svg>
+            <span class="wall-card__tag">
+              <span class="wall-card__status wall-card__status--{{ w.extra.status | default('') | slugify }}">{{ w.extra.status | default('') | e }}</span>
+              <span class="wall-card__title">{{ w.title | e }}</span>
+              <span class="wall-card__meta">{{ w.extra.neighborhood | default('') | e }}{% if w.date %} &middot; {{ w.date | date("%b %Y") }}{% endif %}</span>
+            </span>
+          </a>
+          {% endfor %}
+        </div>
+
+        <p class="collage__more"><a class="btn" href="{{ base_url }}/walls/">View every commission &rarr;</a></p>
+      </div>
+    </section>
+
+    <section class="intro-note" aria-label="Studio note">
+      <div class="wrap">
+        <div class="note-card">
+          <span class="note-card__pin" aria-hidden="true"></span>
+          {{ content | safe }}
+        </div>
+      </div>
+    </section>
+
+    <section class="stats" aria-label="By the numbers">
+      <div class="wrap stats__grid">
+        <div class="stat">
+          <span class="stat__num">5</span>
+          <span class="stat__label">Commissions documented on this site</span>
+        </div>
+        <div class="stat">
+          <span class="stat__num">7,480</span>
+          <span class="stat__label">Square feet of civic wall painted</span>
+        </div>
+        <div class="stat">
+          <span class="stat__num">70</span>
+          <span class="stat__label">Scaffold days logged, sketch to strike</span>
+        </div>
+        <div class="stat">
+          <span class="stat__num">18</span>
+          <span class="stat__label">Standing colors in the studio palette</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="process-teaser">
+      <div class="wrap">
+        <h2>How a wall happens</h2>
+        <ol class="process-strip">
+          <li><span class="process-strip__num">1</span><span>Community sketch session</span></li>
+          <li><span class="process-strip__num">2</span><span>Wall survey &amp; permit</span></li>
+          <li><span class="process-strip__num">3</span><span>Design proof</span></li>
+          <li><span class="process-strip__num">4</span><span>Scaffold &amp; prime</span></li>
+          <li><span class="process-strip__num">5</span><span>Paint days</span></li>
+          <li><span class="process-strip__num">6</span><span>Scaffold strike</span></li>
+        </ol>
+        <p><a class="btn btn--ghost" href="{{ base_url }}/about/">Read the studio's full process &rarr;</a></p>
+      </div>
+    </section>
+
+  </main>
+{% include "footer.html" %}

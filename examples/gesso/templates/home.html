@@ -1,0 +1,38 @@
+{% include "header.html" %}
+  <main id="main" class="home">
+    <section class="masthead" aria-labelledby="wordmark">
+      <p class="masthead-kicker" aria-hidden="true">generative plotter drawings // deterministic code</p>
+      <h1 class="wordmark" id="wordmark">{{ site.title | e }}</h1>
+      <p class="statement">Pen plotter drawings, each one drawn once by a function under fifty lines and never touched by hand again.</p>
+      <p class="process-line" aria-hidden="true">seed <span>&rarr;</span> function <span>&rarr;</span> plotter <span>&rarr;</span> ink</p>
+    </section>
+
+    <section class="plot-grid-section" aria-labelledby="plots-h">
+      <div class="section-band">
+        <h2 id="plots-h">Plots</h2>
+        <a class="see-all" href="{{ base_url }}/plots/">full index &rarr;</a>
+      </div>
+
+      {% set plots = get_section(path="plots") %}
+      <ul class="plot-grid">
+        {% for p in plots.pages | sort_by("date", reverse=true) %}
+        <li class="plot-card">
+          <a href="{{ base_url }}{{ p.url }}" class="plot-card-link">
+            <span class="plot-sketch" aria-hidden="true">
+              <svg class="sketch-svg" viewBox="0 0 240 160" data-seed="{{ p.title | slugify }}" preserveAspectRatio="xMidYMid meet"></svg>
+            </span>
+            <span class="plot-meta">
+              <span class="plot-index">{{ loop.index }} / {{ plots.pages | length }}</span>
+              <span class="plot-title">{{ p.title | e }}</span>
+              {% if p.date %}<span class="plot-date">{{ p.date | date("%Y.%m.%d") }}</span>{% endif %}
+              <span class="plot-summary">{{ p.summary | default(p.description, true) | strip_html | truncate_words(22) }}</span>
+            </span>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <div class="prose home-intro">{{ content | safe }}</div>
+  </main>
+{% include "footer.html" %}

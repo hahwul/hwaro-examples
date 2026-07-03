@@ -1,0 +1,29 @@
+{% include "header.html" %}
+<article class="page-session">
+  <header class="page-head">
+    <p class="line line-cmd">
+      {%- if page.section is present and page.section == "releases" -%}
+      <span class="prompt-semver">{{ page.title }}</span>
+      {%- else -%}
+      <span class="prompt-path">~</span>
+      {%- endif %} <span class="prompt-caret">❯</span> <span class="cmd">{% if page.extra.cmd %}{{ page.extra.cmd }}{% else %}cat {{ page.title | slugify }}.md{% endif %}</span></p>
+    <h1 class="page-title">{{ page.title }}{% if page.extra.codename %} <span class="codename">"{{ page.extra.codename }}"</span>{% endif %}</h1>
+    {% if page.date %}
+    <p class="line-comment page-meta"># released {{ page.date | date("%Y-%m-%d") }}{% if page.reading_time %} · {{ page.reading_time }} min read{% endif %}</p>
+    {% endif %}
+    {% if page.tags %}
+    <p class="line-comment page-tags"># tags:{% for t in page.tags %} <a href="{{ base_url }}/tags/{{ t | slugify }}/">{{ t }}</a>{% endfor %}</p>
+    {% endif %}
+  </header>
+  <div class="prose">{{ content | safe }}</div>
+  {% if page.section is present and page.section == "releases" %}
+  {% if page.lower.date or page.higher.date %}
+  <nav class="page-nav" aria-label="Adjacent releases">
+    {% if page.lower.date %}<a class="page-nav-link" href="{{ base_url }}{{ page.lower.url }}"><span class="prompt-caret" aria-hidden="true">←</span> newer: {{ page.lower.title }}</a>{% endif %}
+    <span class="status-spacer"></span>
+    {% if page.higher.date %}<a class="page-nav-link" href="{{ base_url }}{{ page.higher.url }}">older: {{ page.higher.title }} <span class="prompt-caret" aria-hidden="true">→</span></a>{% endif %}
+  </nav>
+  {% endif %}
+  {% endif %}
+</article>
+{% include "footer.html" %}

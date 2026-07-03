@@ -1,0 +1,30 @@
+{% include "header.html" %}
+  <main id="main" class="home-main">
+    {% set mornings = get_section(path="mornings/_index.md") %}
+    {% set sorted_mornings = mornings.pages | sort_by("date", reverse=true) %}
+    {% set latest = sorted_mornings | first %}
+    <section class="hero" aria-labelledby="hero-title">
+      <p class="hero-kicker"><span lang="ko">새벽</span> &middot; saebyeok</p>
+      <h1 id="hero-title" class="hero-title"><a href="{{ base_url }}{{ latest.url }}">{{ latest.title }}</a></h1>
+      {% if latest.date %}
+      <p class="hero-meta">
+        {% if latest.extra.time %}<span class="time-badge">{{ latest.extra.time }}</span><span class="meta-sep" aria-hidden="true">&middot;</span>{% endif %}
+        <time datetime="{{ latest.date | date("%Y-%m-%d") }}">{{ latest.date | date("%B %d, %Y") }}</time>
+      </p>
+      {% endif %}
+      <a class="hero-read" href="{{ base_url }}{{ latest.url }}">Read this morning&rsquo;s essay <span aria-hidden="true">&rarr;</span></a>
+    </section>
+
+    <section class="home-recent" aria-labelledby="recent-heading">
+      <h2 id="recent-heading" class="recent-heading">Earlier mornings</h2>
+      <ol class="entry-list">
+        {% for p in sorted_mornings %}
+          {% if loop.index > 1 and loop.index <= 6 %}
+            {% include "partials/entry-row.html" %}
+          {% endif %}
+        {% endfor %}
+      </ol>
+      <a class="all-link" href="{{ base_url }}/mornings/">All mornings <span aria-hidden="true">&rarr;</span></a>
+    </section>
+  </main>
+{% include "footer.html" %}

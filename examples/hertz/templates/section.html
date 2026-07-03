@@ -1,0 +1,25 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <header class="doc-head">
+      {% if page.title is present %}<h1>{{ page.title | e }}</h1>{% endif %}
+      {% if section.description %}<p class="doc-desc">{{ section.description | e }}</p>{% endif %}
+    </header>
+    <div class="prose section-intro">{{ content }}</div>
+
+    <ol class="log">
+      {% for post in section.pages | sort_by(attribute="date", reverse=true) %}
+      <li class="log-item">
+        <div class="log-meta">
+          {% if post.date %}<time class="log-date mono" datetime="{{ post.date | date('%Y-%m-%d') }}">{{ post.date | date('%Y.%m.%d') }}</time>{% endif %}
+          {% if post.extra.tag %}<span class="log-tag mono">{{ post.extra.tag | e }}</span>{% endif %}
+        </div>
+        <div class="log-body">
+          <h2 class="log-title"><a href="{{ base_url }}{{ post.url }}">{{ post.title | e }}</a></h2>
+          {% if post.summary %}<div class="log-summary">{{ post.summary | safe }}</div>{% endif %}
+          <a class="log-more" href="{{ base_url }}{{ post.url }}">Read entry →</a>
+        </div>
+      </li>
+      {% endfor %}
+    </ol>
+  </main>
+{% include "footer.html" %}

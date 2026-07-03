@@ -1,0 +1,31 @@
+{% include "header.html" %}
+<section class="section-head">
+  <p class="line line-cmd"><span class="prompt-path">~/releases</span> <span class="prompt-caret">❯</span> <span class="cmd">ls --sort=date --reverse</span></p>
+  <h1 class="page-title">{{ section.title }}</h1>
+  {% if section.description %}<p class="line-comment section-desc"># {{ section.description }}</p>{% endif %}
+</section>
+
+<div class="grep" role="search">
+  <label class="line line-cmd grep-line" for="release-grep">
+    <span class="prompt-path">~/releases</span> <span class="prompt-caret">❯</span>
+    <span class="grep-cmd">grep&nbsp;-i&nbsp;"</span><input id="release-grep" type="search" data-index="{{ base_url }}/search.json" data-base="{{ base_url }}" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="query" aria-label="Search releases"><span class="grep-cmd">"&nbsp;./</span>
+  </label>
+  <p class="line-comment grep-status" id="grep-status" role="status" aria-live="polite"></p>
+</div>
+
+<ol class="release-list" id="release-list">
+  {% for p in section.pages | sort_by("date", reverse=true) %}
+  <li class="release-entry">
+    <p class="line line-cmd entry-head">
+      <a class="entry-link" href="{{ base_url }}{{ p.url }}"><span class="prompt-semver">{{ p.title }}</span> <span class="prompt-caret">❯</span> <span class="cmd">changelog{% if p.extra.codename %} --codename "{{ p.extra.codename }}"{% endif %}</span></a>
+      <span class="entry-date">{{ p.date | date("%Y-%m-%d") }}</span>
+    </p>
+    <p class="entry-desc">{{ p.description }}</p>
+    {% if p.tags %}
+    <p class="line-comment entry-tags"># tags:{% for t in p.tags %} <a href="{{ base_url }}/tags/{{ t | slugify }}/">{{ t }}</a>{% endfor %}</p>
+    {% endif %}
+  </li>
+  {% endfor %}
+</ol>
+<ul id="grep-results" class="grep-results" hidden></ul>
+{% include "footer.html" %}

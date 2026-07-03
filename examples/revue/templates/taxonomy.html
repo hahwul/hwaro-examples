@@ -1,0 +1,19 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <header class="section-head wrap">
+      <p class="section-kicker">{% if taxonomy_name == "categories" %}Every programme strand{% else %}Every tag in the run{% endif %}</p>
+      <h1 class="section-title">{{ page.title | e }}</h1>
+      <p class="section-intro">{% if taxonomy_name == "categories" %}Essays filed by the strand of programming they belong to — restoration reports, midnight slots, and the print culture that surrounds them.{% else %}Threads running across the essays: the labs, the houses, the formats, and the arguments Revue keeps returning to.{% endif %}</p>
+    </header>
+    {% set tax = get_taxonomy(kind=taxonomy_name) %}
+    <ul class="term-list wrap">
+      {% for term in tax.items | sort_by("name") %}
+      {% set n = term.pages | length %}
+      <li class="term-item">
+        <a class="term-link" href="{{ get_taxonomy_url(kind=taxonomy_name, term=term.name) }}">{{ term.name }}</a>
+        <span class="term-count">{{ n }} {% if n == 1 %}essay{% else %}essays{% endif %}</span>
+      </li>
+      {% endfor %}
+    </ul>
+  </main>
+{% include "footer.html" %}

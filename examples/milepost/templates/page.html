@@ -1,0 +1,37 @@
+{% include "header.html" %}
+  <main id="main" class="page">
+    {% if page.extra.version %}
+    <article class="release">
+      <header class="release__head">
+        <a class="release__back" href="{{ base_url }}/releases/"><span aria-hidden="true">&larr; </span>Back to the strip</a>
+        <div class="release__marker">
+          <div class="plate plate--lg {% if page.extra.kind == 'major' %}plate--major{% elif page.extra.kind == 'patch' %}plate--patch{% endif %}">
+            <span class="plate__ver">{{ page.extra.version | e }}</span>
+          </div>
+        </div>
+        <h1 class="release__title">{{ page.title | e }}</h1>
+        <p class="release__meta">
+          {% if page.date %}<time datetime="{{ page.date | date('%Y-%m-%d') }}">{{ page.date | date('%B %d, %Y') }}</time>{% endif %}
+          <span class="chip chip--{{ page.extra.kind | default('minor') }}">{{ page.extra.kind | default('minor') }}</span>
+          {% if page.extra.codename %}<span class="release__codename">Codename &ldquo;{{ page.extra.codename | e }}&rdquo;</span>{% endif %}
+        </p>
+      </header>
+      <div class="prose">{{ content | safe }}</div>
+      {% set entries = get_section(path="releases/_index.md").pages | sort_by("date", reverse=true) %}
+      <nav class="release__nav" aria-label="More releases">
+        {% for r in entries %}
+          {% if r.url == page.url %}
+            {% if not loop.last %}{% set older = entries[loop.index0 + 1] %}<a class="release__navlink" href="{{ base_url }}{{ older.url }}"><span aria-hidden="true">&larr; </span>Older: {{ older.title | e }}</a>{% endif %}
+            {% if not loop.first %}{% set newer = entries[loop.index0 - 1] %}<a class="release__navlink release__navlink--next" href="{{ base_url }}{{ newer.url }}">Newer: {{ newer.title | e }}<span aria-hidden="true"> &rarr;</span></a>{% endif %}
+          {% endif %}
+        {% endfor %}
+      </nav>
+    </article>
+    {% else %}
+    <article class="standalone">
+      {% if page.title is present %}<h1 class="standalone__title">{{ page.title | e }}</h1>{% endif %}
+      <div class="prose">{{ content | safe }}</div>
+    </article>
+    {% endif %}
+  </main>
+{% include "footer.html" %}

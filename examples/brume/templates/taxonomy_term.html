@@ -1,0 +1,25 @@
+{% include "header.html" %}
+  <main id="main">
+    {% include "partials/search_panel.html" %}
+    <div id="page-content">
+      <header class="section-head">
+        <p class="section-kicker">Patches tagged</p>
+        <h1 class="section-title">{{ taxonomy_term }}</h1>
+      </header>
+      <section class="wall" aria-labelledby="wall-heading">
+        <h2 class="visually-hidden" id="wall-heading">Tagged species cards</h2>
+        <div class="moss-wall moss-wall-narrow">
+          {% set tax = get_taxonomy(kind="tags") %}
+          {% for term in tax.items %}
+            {% if term.name == taxonomy_term %}
+              {% for p in term.pages | sort_by("date", reverse=true) %}
+                {% include "partials/card.html" %}
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+        </div>
+      </section>
+      <p class="term-back"><a href="{{ base_url }}/tags/"><span aria-hidden="true">&larr;</span> All tags</a></p>
+    </div>
+  </main>
+{% include "footer.html" %}

@@ -1,0 +1,62 @@
+{% include "header.html" %}
+{% set issues_section = get_section(path="issues") %}
+  <main id="main" class="site-main">
+    <article class="spread">
+
+      <p class="folio-inline">
+        <span class="folio-inline-no">Letter {{ page.extra.roman | default("") }}</span>
+        <span class="folio-inline-sep" aria-hidden="true">&middot;</span>
+        <span class="folio-inline-count">{{ page.extra.cumulative_words | default(0) }} words to date</span>
+      </p>
+
+      <div class="spread-grid">
+        <div class="spread-main">
+          <header class="chapter-opener">
+            <div class="ornament" aria-hidden="true">
+              <span class="ornament-line"></span>
+              <span class="ornament-mark">&#10022;</span>
+              <span class="ornament-line"></span>
+            </div>
+            <p class="chapter-kicker">Letter {{ page.extra.roman | default("") }}{% if page.date %} &middot; {{ page.date | date("%B %Y") }}{% endif %}</p>
+            <h1 class="chapter-title">{{ page.title | e }}</h1>
+          </header>
+
+          <div class="prose">
+            {{ content | safe }}
+          </div>
+        </div>
+
+        <aside class="folio-rail" aria-label="Installment marker">
+          <div class="folio-block">
+            <p class="folio-eyebrow">Letter</p>
+            <p class="folio-no">{{ page.extra.roman | default("") }}</p>
+            {% if issues_section %}<p class="folio-of">of {{ issues_section.pages_count }}</p>{% endif %}
+            <div class="folio-rule" aria-hidden="true"></div>
+            <p class="folio-count">{{ page.extra.cumulative_words | default(0) }}</p>
+            <p class="folio-count-label">words<br>to date</p>
+          </div>
+        </aside>
+      </div>
+
+      {% if page.extra.prev_url or page.extra.next_url %}
+      <nav class="issue-pager" aria-label="Letter navigation">
+        {% if page.extra.prev_url %}
+        <a class="issue-pager-link issue-pager-prev" href="{{ base_url }}{{ page.extra.prev_url }}">
+          <span class="issue-pager-dir">&larr; Previous letter</span>
+          <span class="issue-pager-title">{{ page.extra.prev_title | e }}</span>
+        </a>
+        {% else %}<span class="issue-pager-empty" aria-hidden="true"></span>{% endif %}
+
+        <a class="issue-pager-index" href="{{ base_url }}/issues/">All letters</a>
+
+        {% if page.extra.next_url %}
+        <a class="issue-pager-link issue-pager-next" href="{{ base_url }}{{ page.extra.next_url }}">
+          <span class="issue-pager-dir">Next letter &rarr;</span>
+          <span class="issue-pager-title">{{ page.extra.next_title | e }}</span>
+        </a>
+        {% else %}<span class="issue-pager-empty" aria-hidden="true"></span>{% endif %}
+      </nav>
+      {% endif %}
+    </article>
+  </main>
+{% include "footer.html" %}

@@ -1,0 +1,149 @@
+{% include "header.html" %}
+{% set releases = get_section(path="releases") %}
+{% set builds = releases.pages | sort_by("date", reverse=true) %}
+{% set latest = builds | first %}
+{% set hexrows = ["00","01","02","03","04","05","06","07","08","09","0A","0B","0C","0D","0E","0F","10","11","12","13"] %}
+{% set notes = [
+  ["01", "A-3 01 40 A08", "F-4 05 32 .00", "C-5 07 2c J04", "A-3 02 38 ..."],
+  ["02", "... .. .. ...", "... .. .. ...", "C-5 07 24 R31", "... .. .. ..."],
+  ["03", "C-4 01 40 ...", "A-4 05 30 G0c", "D-5 07 20 ...", "E-3 02 34 S02"],
+  ["04", "... .. .. F06", "... .. .. ...", "... .. .. ...", "... .. .. ..."],
+  ["05", "E-4 01 3a ...", "C-5 05 2e .00", "F-5 07 1c J04", "A-3 02 30 A04"],
+  ["06", "G-4 01 34 ...", "... .. .. ...", "A-5 07 18 R21", "... .. .. OFF"]
+] %}
+<main id="main" class="site-main">
+
+  <section class="hero" aria-labelledby="hero-h">
+    <p class="hero-kicker">chiptune tracker · six-operator fm · changelog</p>
+    <h1 class="hero-h" id="hero-h">notch</h1>
+    <p class="hero-lede">
+      A tracker that synthesises every voice from stacked FM operators — no
+      samples required. This is the pattern editor's own changelog, numbered in
+      hex the way the grid numbers its rows.
+    </p>
+    <p class="hero-latest">
+      latest <a href="{{ base_url }}{{ latest.url }}">{{ latest.title }}</a>
+      <span class="sep" aria-hidden="true">·</span> {{ latest.extra.codename }}
+      <span class="sep" aria-hidden="true">·</span> {{ latest.date | date("%Y.%m.%d") }}
+    </p>
+  </section>
+
+  <section class="tracker" aria-labelledby="tracker-h">
+    <h2 id="tracker-h" class="sr-only">Current versions by release channel</h2>
+    <div class="tracker-bar">
+      <span class="tbar-item tbar-key">pattern 00</span>
+      <span class="tbar-item">song: notch</span>
+      <span class="tbar-item">bpm 150</span>
+      <span class="tbar-item">spd 06</span>
+      <span class="tbar-item tbar-play"><span class="play-dot" aria-hidden="true"></span>playing</span>
+    </div>
+    <div class="tracker-scroll">
+      <div class="tracker-grid">
+        <div class="tg-row tg-head">
+          <span class="tg-num">row</span>
+          <span class="tg-ch"><b>ch01</b> stable</span>
+          <span class="tg-ch"><b>ch02</b> beta</span>
+          <span class="tg-ch"><b>ch03</b> nightly</span>
+          <span class="tg-ch"><b>ch04</b> lts</span>
+        </div>
+        <div class="tg-row tg-ver">
+          <span class="tg-num">00</span>
+          <span class="tg-cell">
+            <a class="ver-link" href="{{ base_url }}{{ latest.url }}">
+              <b class="ver">{{ latest.title }}</b>
+              <span class="verc">{{ latest.extra.codename | lower }}</span>
+            </a>
+          </span>
+          <span class="tg-cell">
+            <b class="ver ver-dim">4.3.0</b>
+            <span class="verc">b2 · neon drift</span>
+          </span>
+          <span class="tg-cell">
+            <b class="ver ver-dim">4.4.0</b>
+            <span class="verc">n331 · edge</span>
+          </span>
+          <span class="tg-cell">
+            <b class="ver ver-dim">3.8.9</b>
+            <span class="verc">dust loop</span>
+          </span>
+        </div>
+        {% for r in notes %}
+        <div class="tg-row tg-note" aria-hidden="true">
+          <span class="tg-num">{{ r[0] }}</span>
+          <span class="tg-cell">{{ r[1] }}</span>
+          <span class="tg-cell">{{ r[2] }}</span>
+          <span class="tg-cell">{{ r[3] }}</span>
+          <span class="tg-cell">{{ r[4] }}</span>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <p class="tracker-legend">
+      Four release channels, laid out as tracker tracks. The top row is each
+      channel's current build; the faint rows below are pattern data.
+    </p>
+  </section>
+
+  <section class="changes" aria-labelledby="changes-h">
+    <div class="sec-head">
+      <h2 id="changes-h">latest changes</h2>
+      <p class="sec-note">
+        <a href="{{ base_url }}{{ latest.url }}">{{ latest.title }} · {{ latest.extra.codename | lower }}</a>
+        <span class="sep" aria-hidden="true">·</span> {{ latest.date | date("%Y.%m.%d") }}
+        <span class="sep" aria-hidden="true">·</span> build {{ latest.extra.build }}
+      </p>
+    </div>
+    <ol class="changelog">
+      {% for c in latest.extra.log %}
+      <li class="cl-row">
+        <span class="cl-num">{{ hexrows[loop.index0] }}</span>
+        <span class="cl-op" data-op="{{ c.op }}">{{ c.op }}</span>
+        <span class="cl-text">{{ c.text }}</span>
+      </li>
+      {% endfor %}
+    </ol>
+    <p class="more-link"><a href="{{ base_url }}{{ latest.url }}">read the full {{ latest.title }} notes →</a></p>
+  </section>
+
+  <section class="log" aria-labelledby="log-h">
+    <div class="sec-head">
+      <h2 id="log-h">version history</h2>
+      <p class="sec-note">{{ builds | length }} tagged builds, newest first.</p>
+    </div>
+
+    <div class="finder" role="search" data-finder-list="#release-list" data-finder-results="#find-results">
+      <label class="sr-only" for="finder-home">Filter releases</label>
+      <span class="finder-prompt" aria-hidden="true">find&gt;</span>
+      <input id="finder-home" class="finder-input" type="search" data-finder-input
+             placeholder="filter the log — try &quot;fm&quot;, &quot;loop&quot;, or &quot;export&quot;"
+             autocomplete="off" spellcheck="false"
+             data-index="{{ base_url }}/search.json" data-base="{{ base_url }}">
+      <span class="finder-status" data-finder-status role="status" aria-live="polite"></span>
+    </div>
+
+    <ol id="release-list" class="release-list">
+      {% for p in builds %}
+      <li class="rel-row">
+        <a class="rel-link" href="{{ base_url }}{{ p.url }}">
+          <span class="rel-ver">{{ p.title }}</span>
+          <span class="rel-code">{{ p.extra.codename }}</span>
+          <span class="rel-desc">{{ p.description }}</span>
+          <span class="rel-meta">
+            <time datetime="{{ p.date | date('%Y-%m-%d') }}">{{ p.date | date('%Y.%m.%d') }}</time>
+            <span class="rel-tag">{{ p.extra.channel }}</span>
+            <span class="rel-count">{{ p.extra.changes }} chg</span>
+          </span>
+        </a>
+      </li>
+      {% endfor %}
+    </ol>
+    <ul id="find-results" class="find-results" hidden aria-label="Search results"></ul>
+  </section>
+
+  <section class="readme" aria-labelledby="readme-h">
+    <h2 id="readme-h">what is notch</h2>
+    <div class="prose">{{ content | safe }}</div>
+  </section>
+
+</main>
+{% include "footer.html" %}

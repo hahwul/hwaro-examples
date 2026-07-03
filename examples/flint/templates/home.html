@@ -1,0 +1,99 @@
+{% include "header.html" %}
+    <main id="main" class="doc doc-home">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="hero-eyebrow"><span class="brk" aria-hidden="true">[</span> 2D physics · v0.9 <span class="brk" aria-hidden="true">]</span></p>
+          <h1 class="hero-title">Deterministic 2D physics, one fixed timestep at a time.</h1>
+          <div class="hero-lede">{{ content | safe }}</div>
+          <div class="hero-cta">
+            <a class="btn btn-accent" href="{{ base_url }}/manual/overview/">Read the manual</a>
+            <a class="btn" href="{{ base_url }}/manual/determinism/">Determinism model</a>
+          </div>
+          <dl class="hero-stats">
+            <div class="stat"><dt>Timestep</dt><dd>1&#8260;60 s, fixed</dd></div>
+            <div class="stat"><dt>Math</dt><dd>integer-anchored</dd></div>
+            <div class="stat"><dt>Replays</dt><dd>bit-identical</dd></div>
+          </dl>
+        </div>
+
+        <figure class="hero-window px-frame">
+          <div class="px-frame-in">
+            <div class="titlebar">
+              <span class="titlebar-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="titlebar-name"><span class="brk" aria-hidden="true">[</span> flint <span class="brk" aria-hidden="true">]</span></span>
+              <span class="titlebar-tag" aria-hidden="true">contact.sim</span>
+            </div>
+            <div class="hero-stage">
+              <svg class="contact-svg" viewBox="0 0 440 300" role="img" aria-labelledby="contact-title contact-desc" shape-rendering="geometricPrecision">
+                <title id="contact-title">Two rigid bodies at the moment of contact</title>
+                <desc id="contact-desc">A falling square body A rests on a wide ground body B. The overlap region is highlighted, two contact points sit on the shared surface, and a contact normal points up out of B into A. A dashed velocity vector enters A from above.</desc>
+                <!-- grid backdrop -->
+                <g stroke="var(--border)" stroke-width="1" shape-rendering="crispEdges">
+                  <path d="M0 60H440M0 120H440M0 180H440M0 240H440"/>
+                  <path d="M80 0V300M160 0V300M240 0V300M320 0V300M400 0V300"/>
+                </g>
+                <!-- ground body B -->
+                <rect x="20" y="210" width="400" height="72" fill="var(--surface)" stroke="var(--fg)" stroke-width="3" shape-rendering="crispEdges"/>
+                <!-- overlap / penetration region -->
+                <rect x="165" y="210" width="110" height="14" fill="var(--accent)" fill-opacity="0.16"/>
+                <!-- falling body A -->
+                <rect x="165" y="108" width="110" height="116" fill="var(--bg)" stroke="var(--fg)" stroke-width="3" shape-rendering="crispEdges"/>
+                <!-- velocity vector into A -->
+                <g stroke="var(--muted)" stroke-width="3" stroke-dasharray="6 5" fill="none">
+                  <path d="M330 44V96"/>
+                </g>
+                <path d="M330 108 322 92h16z" fill="var(--muted)"/>
+                <!-- contact normal n (out of B into A) -->
+                <path d="M220 210V150" stroke="var(--accent)" stroke-width="4" fill="none"/>
+                <path d="M220 138 210 156h20z" fill="var(--accent)"/>
+                <!-- contact points (pixel-stepped) -->
+                <g fill="var(--accent)" shape-rendering="crispEdges">
+                  <rect x="159" y="204" width="12" height="12"/>
+                  <rect x="269" y="204" width="12" height="12"/>
+                  <rect x="155" y="208" width="4" height="4"/>
+                  <rect x="171" y="208" width="4" height="4"/>
+                  <rect x="265" y="208" width="4" height="4"/>
+                  <rect x="281" y="208" width="4" height="4"/>
+                </g>
+                <!-- penetration depth bracket -->
+                <g stroke="var(--accent)" stroke-width="2" fill="none">
+                  <path d="M126 210h14M126 224h14M133 210v14"/>
+                </g>
+                <!-- labels -->
+                <g font-family="'Fira Code', monospace" font-size="15" fill="var(--fg)">
+                  <text x="220" y="172" text-anchor="middle" font-weight="500">A</text>
+                  <text x="360" y="256" text-anchor="middle" font-weight="500">B</text>
+                </g>
+                <g font-family="'Fira Code', monospace" font-size="13" fill="var(--accent)">
+                  <text x="232" y="146">n</text>
+                  <text x="90" y="222" text-anchor="end">d</text>
+                </g>
+                <g font-family="'Fira Code', monospace" font-size="13" fill="var(--muted)">
+                  <text x="342" y="72">v</text>
+                </g>
+              </svg>
+            </div>
+          </div>
+          <figcaption class="hero-caption">A collision manifold: two contact points, one shared normal <span class="mono">n</span>, penetration depth <span class="mono">d</span>. The solver resolves it before the next tick.</figcaption>
+        </figure>
+      </section>
+
+      <section class="pillars" aria-labelledby="pillars-title">
+        <h2 class="section-label" id="pillars-title"><span class="brk" aria-hidden="true">[</span> why flint <span class="brk" aria-hidden="true">]</span></h2>
+        <div class="pillar-grid">
+          <article class="pillar px-frame"><div class="px-frame-in">
+            <h3>Fixed timesteps</h3>
+            <p>The world advances in whole ticks of a constant <span class="mono">dt</span>. No variable-step drift, no spiral of death: an accumulator drains time in fixed slices and the renderer interpolates the remainder.</p>
+          </div></article>
+          <article class="pillar px-frame"><div class="px-frame-in">
+            <h3>Honest manifolds</h3>
+            <p>Narrowphase returns a compact contact manifold — points, normal, depth — that the sequential-impulse solver warm-starts each frame. Stacks settle; jitter stays bounded.</p>
+          </div></article>
+          <article class="pillar px-frame"><div class="px-frame-in">
+            <h3>Rollback-safe state</h3>
+            <p>Integer-anchored math and a strict iteration order make every step reproducible. Snapshot the world, restore it, re-simulate — the bytes match, so lockstep netcode and replays just work.</p>
+          </div></article>
+        </div>
+      </section>
+    </main>
+{% include "footer.html" %}

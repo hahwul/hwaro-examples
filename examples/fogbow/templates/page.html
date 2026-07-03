@@ -1,0 +1,61 @@
+{% set rh_label = page.title %}
+{% set rh_folio = page.extra.folio %}
+{% include "header.html" %}
+    <main id="main">
+      <article class="entry">
+        <div class="entry-grid">
+          <div class="entry-main">
+            <header class="entry-head">
+              {% if page.date %}<p class="entry-kicker">Bench entry</p>{% endif %}
+              <h1 class="entry-title stitched">{{ page.title | e }}</h1>
+              {% if page.description %}<p class="entry-desc">{{ page.description | e }}</p>{% endif %}
+            </header>
+            <div class="prose dropcap">
+              {{ content | safe }}
+            </div>
+            {% if page.date and (page.lower or page.higher) %}
+            <nav class="leaf-nav" aria-label="Adjacent entries">
+              {% if page.higher %}
+                <a class="leaf-nav-link" href="{{ base_url }}{{ page.higher.url }}">
+                  <span class="leaf-nav-label"><span aria-hidden="true">&larr;</span> The leaf after</span>
+                  <span class="leaf-nav-title">{{ page.higher.title | e }}</span>
+                </a>
+              {% else %}
+                <span class="leaf-nav-empty">This is the newest entry.</span>
+              {% endif %}
+              {% if page.lower %}
+                <a class="leaf-nav-link leaf-nav-next" href="{{ base_url }}{{ page.lower.url }}">
+                  <span class="leaf-nav-label">The leaf before <span aria-hidden="true">&rarr;</span></span>
+                  <span class="leaf-nav-title">{{ page.lower.title | e }}</span>
+                </a>
+              {% else %}
+                <span class="leaf-nav-empty leaf-nav-next">The journal opens here.</span>
+              {% endif %}
+            </nav>
+            {% endif %}
+          </div>
+          <aside class="entry-margin" aria-label="Margin notes">
+            {% if page.date %}
+            <p class="margin-item"><span class="margin-label">Sewn</span><time datetime="{{ page.date | date("%Y-%m-%d") }}">{{ page.date | date("%B %d, %Y") }}</time></p>
+            {% endif %}
+            {% if page.extra.folio %}
+            <p class="margin-item"><span class="margin-label">Folio</span><span class="margin-folio">fol.&thinsp;{{ page.extra.folio }}</span></p>
+            {% endif %}
+            {% if page.reading_time %}
+            <p class="margin-item"><span class="margin-label">Reading</span>about {{ page.reading_time }} min</p>
+            {% endif %}
+            {% if page.tags %}
+            <div class="margin-item">
+              <span class="margin-label">Threads</span>
+              <ul class="thread-list">
+                {% for t in page.tags %}
+                <li><a href="{{ get_taxonomy_url(kind="tags", term=t) }}">{{ t }}</a></li>
+                {% endfor %}
+              </ul>
+            </div>
+            {% endif %}
+          </aside>
+        </div>
+      </article>
+    </main>
+{% include "footer.html" %}

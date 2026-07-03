@@ -1,0 +1,51 @@
+{% include "header.html" %}
+      <main id="main" class="docs-main docs-main--home">
+        <p class="eyebrow">Websocket framework</p>
+        <h1 class="hero-title">{{ page.title }}</h1>
+        {% if page.description %}<p class="hero-lede">{{ page.description }}</p>{% endif %}
+
+        <pre class="handshake" role="img" aria-label="ASCII sequence diagram of the Spinel handshake. The client sends an HTTP upgrade request to switch to the websocket protocol. The server replies 101 Switching Protocols. The client joins a room. The server broadcasts a presence update naming the room and current peer count. The server then streams events back with a backpressure-aware queue depth shown in the frame. The client acknowledges the latest sequence number.">
+<span class="hs-endpoint">CLIENT                                            SERVER</span>
+<span class="hs-rail">|</span>                                                      <span class="hs-rail">|</span>
+<span class="hs-rail">|</span><span class="hs-rule">------</span> <span class="hs-label">connect: GET /spinel  Upgrade: websocket</span> <span class="hs-rule">-----></span><span class="hs-rail">|</span>
+<span class="hs-rail">|</span>                                                      <span class="hs-rail">|</span>
+<span class="hs-rail">|</span><span class="hs-rule">&lt;-------------</span> <span class="hs-label">101 Switching Protocols</span> <span class="hs-rule">---------------</span><span class="hs-rail">|</span>
+<span class="hs-rail">|</span>                                                      <span class="hs-rail">|</span>
+<span class="hs-rail">|</span><span class="hs-rule">------------------</span> <span class="hs-label">JOIN room:lobby</span> <span class="hs-rule">------------------></span><span class="hs-rail">|</span>
+<span class="hs-rail">|</span>                                                      <span class="hs-rail">|</span>
+<span class="hs-rail">|</span><span class="hs-rule">&lt;-----------</span> <span class="hs-label">PRESENCE room:lobby  peers:3</span> <span class="hs-rule">------------</span><span class="hs-rail">|</span>
+<span class="hs-rail">|</span>                                                      <span class="hs-rail">|</span>
+<span class="hs-rail">|</span><span class="hs-rule">&lt;=============</span> <span class="hs-label">EVENT stream  queue 0/64</span> <span class="hs-rule">==============</span><span class="hs-rail">|</span>
+<span class="hs-rail">|</span>                                                      <span class="hs-rail">|</span>
+<span class="hs-rail">|</span><span class="hs-rule">--------------------</span> <span class="hs-label">ACK seq:118</span> <span class="hs-rule">--------------------></span><span class="hs-rail">|</span>
+<span class="hs-rail">|</span>                                                      <span class="hs-rail">|</span>
+        </pre>
+
+        <div class="prose prose--home">
+          {{ content | safe }}
+        </div>
+
+        <div class="section-grid">
+          <section class="section-card">
+            <h2><a href="{{ base_url }}/quickstart/">Quickstart</a></h2>
+            <p class="section-card-desc">Install the server package, boot a two-line server, and connect a client in under five minutes.</p>
+          </section>
+          {% for s in site.sections | sort_by("title") %}
+            {% if s.pages and s.pages | length > 0 %}
+            <section class="section-card">
+              <h2><a href="{{ base_url }}{{ s.url }}">{{ s.title }}</a></h2>
+              {% if s.description %}<p class="section-card-desc">{{ s.description }}</p>{% endif %}
+              <ul class="doc-list">
+                {% for p in s.pages | sort_by("weight") %}
+                <li>
+                  <a href="{{ base_url }}{{ p.url }}">{{ p.title }}</a>
+                  {% if p.description %}<span>{{ p.description }}</span>{% endif %}
+                </li>
+                {% endfor %}
+              </ul>
+            </section>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </main>
+{% include "footer.html" %}

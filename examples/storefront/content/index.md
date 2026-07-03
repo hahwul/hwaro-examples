@@ -1,4 +1,0 @@
-+++
-title = "Storefront"
-template = "index"
-+++

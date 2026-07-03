@@ -1,0 +1,37 @@
+{% include "header.html" %}
+{% set folios = section.pages | sort_by("date", reverse=true) %}
+<main id="main" class="site-main">
+  <header class="page-head">
+    <p class="page-kicker">The full run</p>
+    <h1 class="page-title">{{ section.title | e }}</h1>
+    {% if section.description %}<p class="page-intro">{{ section.description | e }}</p>{% endif %}
+  </header>
+
+  <ol class="ledger" aria-label="Releases, newest first">
+    {% for p in folios %}
+    <li class="folio">
+      <article class="folio-entry">
+        <div class="folio-rule" aria-hidden="true"></div>
+        <div class="folio-grid">
+          <div class="folio-margin">
+            <span class="folio-num">{{ p.title }}</span>
+            <span class="folio-kicker">folio</span>
+          </div>
+          <div class="folio-body">
+            <a class="folio-title-link" href="{{ base_url }}{{ p.url }}">
+              <h2 class="folio-title">{% if p.extra.codename %}{{ p.extra.codename }}{% else %}Release {{ p.title }}{% endif %}</h2>
+            </a>
+            <p class="folio-meta">
+              <time datetime="{{ p.date | date('%Y-%m-%d') }}">{{ p.date | date("%B %d, %Y") }}</time>
+              {% if p.tags %}<span class="folio-tags">{% for t in p.tags %}<a href="{{ base_url }}/tags/{{ t | slugify }}/">{{ t }}</a>{% endfor %}</span>{% endif %}
+            </p>
+            <p class="folio-summary">{{ p.description | e }}</p>
+            <a class="folio-more" href="{{ base_url }}{{ p.url }}">Read the full folio <span aria-hidden="true">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+    </li>
+    {% endfor %}
+  </ol>
+</main>
+{% include "footer.html" %}

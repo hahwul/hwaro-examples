@@ -1,0 +1,30 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <div class="wrap">
+      <header class="section-head">
+        <p class="eyebrow">Commissions</p>
+        {% if page.title is present %}<h1>{{ page.title | e }}</h1>{% endif %}
+        {% if page.description %}<p class="section-desc">{{ page.description | e }}</p>{% endif %}
+        {{ content | safe }}
+      </header>
+
+      <ul class="commission-cards">
+        {% for p in section.pages | sort_by("date", reverse=true) %}
+        <li class="commission-card">
+          <a href="{{ base_url }}{{ p.url }}">
+            {% if p.date %}<time datetime="{{ p.date | date('%Y-%m-%d') }}">{{ p.date | date('%b %Y') }}</time>{% endif %}
+            <div class="card-main">
+              <h3>{{ p.title | e }}</h3>
+              {% if p.extra.former_use %}<p class="card-transition">{{ p.extra.former_use }} <span aria-hidden="true">&rarr;</span> {{ p.extra.new_use }}</p>{% endif %}
+              <p class="card-desc">{{ p.description | e }}</p>
+            </div>
+            <span class="card-arrow" aria-hidden="true">Survey &rarr;</span>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+
+      {{ pagination }}
+    </div>
+  </main>
+{% include "footer.html" %}

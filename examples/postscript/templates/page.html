@@ -1,0 +1,44 @@
+{% include "header.html" %}
+    {% if page.section == "issues" %}
+    <article>
+      <header class="issue-head wrap">
+        <p class="kicker">Issue No. {{ page.extra.issue_number }}</p>
+        <h1>{{ page.title | e }}</h1>
+        <p class="issue-byline">
+          <span>Postscript</span>
+          {% if page.date %}<span aria-hidden="true"> &middot; </span><time datetime="{{ page.date | date('%Y-%m-%d') }}">{{ page.date | date("%B %d, %Y") }}</time>{% endif %}
+          {% if page.reading_time %}<span aria-hidden="true"> &middot; </span><span>{{ page.reading_time }} min read</span>{% endif %}
+        </p>
+        {% if page.extra.dek %}<p class="issue-dek">{{ page.extra.dek }}</p>{% endif %}
+      </header>
+
+      <div class="issue-ledger-wrap">
+        {% set lg_figure = page.extra.figure %}
+        {% set lg_prefix = page.extra.figure_prefix %}
+        {% set lg_suffix = page.extra.figure_suffix %}
+        {% set lg_label = page.extra.figure_label %}
+        {% set lg_size = "lg" %}
+        {% include "partials/ledger.html" %}
+      </div>
+
+      <div class="issue-body wrap prose">
+        {{ content | safe }}
+      </div>
+
+      <nav class="issue-nav wrap" aria-label="Issue navigation">
+        {% if page.lower and page.lower.section == "issues" and page.lower.date %}<a href="{{ base_url }}{{ page.lower.url }}">&larr; No. {{ page.lower.extra.issue_number }}, {{ page.lower.title | e }}</a>{% else %}<span></span>{% endif %}
+        {% if page.higher and page.higher.section == "issues" and page.higher.date %}<a href="{{ base_url }}{{ page.higher.url }}">No. {{ page.higher.extra.issue_number }}, {{ page.higher.title | e }} &rarr;</a>{% endif %}
+      </nav>
+    </article>
+    {% else %}
+    <article>
+      <header class="page-head wrap">
+        <p class="kicker">Postscript</p>
+        <h1>{{ page.title | e }}</h1>
+      </header>
+      <div class="page-body wrap prose">
+        {{ content | safe }}
+      </div>
+    </article>
+    {% endif %}
+{% include "footer.html" %}

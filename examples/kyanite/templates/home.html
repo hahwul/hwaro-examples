@@ -1,0 +1,93 @@
+{% include "header.html" %}
+    <main id="main" class="doc doc-home">
+      <section class="masthead">
+        <div class="masthead-diagram" aria-hidden="true">
+          <svg viewBox="0 0 760 360" preserveAspectRatio="xMidYMid meet" focusable="false">
+            <g class="mesh-lines" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+              <path d="M85 60 V90 H380 V162"/>
+              <path d="M675 60 V90 H380 V162"/>
+              <path d="M380 198 V260 H85 V300"/>
+              <path d="M380 198 V300"/>
+              <path d="M380 198 V260 H675 V300"/>
+            </g>
+            <g class="mesh-nodes" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="40" y="24" width="90" height="36"/>
+              <rect x="630" y="24" width="90" height="36"/>
+              <rect x="40" y="300" width="90" height="36"/>
+              <rect x="630" y="300" width="90" height="36"/>
+              <rect x="335" y="300" width="90" height="36"/>
+              <rect x="335" y="162" width="90" height="36" class="mesh-core"/>
+            </g>
+            <g class="mesh-labels" fill="currentColor" font-family="Fira Code, monospace" font-size="11" letter-spacing="0.5">
+              <text x="85" y="46" text-anchor="middle">gateway</text>
+              <text x="675" y="46" text-anchor="middle">auth</text>
+              <text x="85" y="322" text-anchor="middle">billing</text>
+              <text x="675" y="322" text-anchor="middle">inventory</text>
+              <text x="380" y="322" text-anchor="middle">checkout</text>
+              <text x="380" y="184" text-anchor="middle">mesh</text>
+            </g>
+          </svg>
+        </div>
+
+        <div class="masthead-content">
+          <p class="masthead-kicker">Service mesh · control plane 1.3</p>
+          <h1 class="masthead-title">Kyanite</h1>
+          <p class="masthead-sub">A service mesh for teams who want mutual TLS, weighted rollouts, and sidecar injection without a control-plane onboarding project.</p>
+
+          <div class="masthead-lede">
+            {{ content | safe }}
+          </div>
+
+          <p class="masthead-actions">
+            <a class="btn btn-primary" href="{{ base_url }}/mesh/architecture/">Read the architecture</a>
+            <a class="btn btn-ghost" href="{{ base_url }}/install/">Install &amp; bootstrap</a>
+          </p>
+        </div>
+      </section>
+
+      <section class="pillars" aria-labelledby="pillars-title">
+        <h2 class="pillars-title" id="pillars-title">What the mesh handles for you</h2>
+        <div class="pillar-grid">
+          <article class="pillar">
+            <svg class="pillar-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true" focusable="false"><rect x="9" y="14" width="14" height="12"/><path d="M12 14v-4a4 4 0 0 1 8 0v4"/></svg>
+            <h3>Automatic mTLS</h3>
+            <p>Every sidecar requests a short-lived certificate from the mesh's identity authority on boot. Connections between services are encrypted and mutually authenticated before the first request lands — no operator ever handles a key.</p>
+          </article>
+          <article class="pillar">
+            <svg class="pillar-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true" focusable="false"><path d="M4 10h10M4 22h10"/><path d="M20 6h8v8h-8zM20 18h8v8h-8z"/><path d="M14 10h6M14 22h6"/></svg>
+            <h3>Weighted traffic splits</h3>
+            <p>Route a percentage of live traffic to a new revision, watch the golden metrics, and shift the weight in one line. Splits are enforced at the sidecar, so rollback is a config change, not a redeploy.</p>
+          </article>
+          <article class="pillar">
+            <svg class="pillar-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true" focusable="false"><rect x="5" y="5" width="9" height="9"/><rect x="18" y="18" width="9" height="9"/><path d="M14 9h13v9M9 14v13h13"/></svg>
+            <h3>Zero-config sidecars</h3>
+            <p>Label a namespace and every pod scheduled into it gets a sidecar proxy injected at admission, wired to the mesh with no annotations required. Opting a workload out is one label, not a migration.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="contents" aria-labelledby="contents-title">
+        <div class="contents-head">
+          <h2 class="contents-title" id="contents-title">The mesh reference, chapter by chapter</h2>
+          <p class="contents-sub">Six chapters, ordered the way traffic actually flows through the system: how it's built, how a workload joins it, and how you steer what happens once it's in.</p>
+        </div>
+        <ol class="ledger">
+          {% for p in get_section(path="mesh").pages | sort_by("weight") %}
+          <li class="ledger-row">
+            <a class="ledger-link" href="{{ base_url }}{{ p.url }}">
+              <span class="ledger-num" aria-hidden="true">{% if loop.index < 10 %}0{% endif %}{{ loop.index }}</span>
+              <span class="ledger-main">
+                <span class="ledger-head">
+                  <span class="ledger-name">{{ p.title }}</span>
+                  <span class="ledger-dots" aria-hidden="true"></span>
+                  {% if p.extra.section_id %}<span class="ledger-id">{{ p.extra.section_id }}</span>{% endif %}
+                </span>
+                {% if p.description %}<span class="ledger-desc">{{ p.description }}</span>{% endif %}
+              </span>
+            </a>
+          </li>
+          {% endfor %}
+        </ol>
+      </section>
+    </main>
+{% include "footer.html" %}

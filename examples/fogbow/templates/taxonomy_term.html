@@ -1,0 +1,22 @@
+{% set rh_label = taxonomy_term %}
+{% set rh_folio = "vi" %}
+{% include "header.html" %}
+    <main id="main">
+      <header class="chapter-head">
+        <p class="chapter-kicker">Entries sewn with the thread</p>
+        <h1 class="chapter-title stitched">{{ taxonomy_term }}</h1>
+      </header>
+      <ol class="contents contents-main">
+        {% set tax = get_taxonomy(kind="tags") %}
+        {% for term in tax.items %}
+          {% if term.name == taxonomy_term %}
+            {% for p in term.pages | sort_by("date", reverse=true) %}
+              {% set entry = p %}
+              {% include "partials/contents_row.html" %}
+            {% endfor %}
+          {% endif %}
+        {% endfor %}
+      </ol>
+      <p class="contents-more"><a href="{{ base_url }}/tags/"><span aria-hidden="true">&larr;</span> The full index of threads</a></p>
+    </main>
+{% include "footer.html" %}

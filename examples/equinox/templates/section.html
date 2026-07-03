@@ -1,0 +1,37 @@
+{% include "header.html" %}
+  <main id="main" class="band band--page">
+    <div class="band__inner">
+      <header class="page-head">
+        <p class="page-head__kicker">Two days · five tracks</p>
+        <h1>{{ page.title | e }}</h1>
+        {% if page.description %}<p class="page-head__lede">{{ page.description | e }}</p>{% endif %}
+      </header>
+
+      <div class="finder">
+        <label class="finder__label" for="finder-input">Search sessions and tracks</label>
+        <input id="finder-input" class="finder__input" type="search" autocomplete="off"
+               placeholder="Try “managed retreat”, “flood”, “zoning”…"
+               aria-controls="finder-results" aria-describedby="finder-status">
+        <p id="finder-status" class="finder__status" aria-live="polite" hidden></p>
+      </div>
+
+      <ul id="finder-results" class="results" hidden></ul>
+
+      <ol class="track-index" id="track-index">
+        {% for p in section.pages | sort_by("date") %}
+        <li class="track-index__item">
+          <span class="track-index__num">{{ loop.index }}</span>
+          <div class="track-index__body">
+            {% if p.extra.kicker %}<p class="track-index__kicker">{{ p.extra.kicker | e }}</p>{% endif %}
+            <h2 class="track-index__title"><a href="{{ base_url }}{{ p.url }}">{{ p.title | e }}</a></h2>
+            {% if p.summary %}<p class="track-index__lede">{{ p.summary | strip_html | truncate_words(40) }}</p>{% endif %}
+          </div>
+        </li>
+        {% endfor %}
+      </ol>
+    </div>
+  </main>
+  <script>window.EQX_SEARCH = "{{ base_url }}/search.json";</script>
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
+  <script src="{{ base_url }}/js/search.js" defer></script>
+{% include "footer.html" %}

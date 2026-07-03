@@ -1,0 +1,40 @@
+{% include "header.html" %}
+{% set episodes_section = get_section(path="episodes") %}
+{% set eps = episodes_section.pages | sort_by("date", reverse=true) %}
+<main id="main" class="site-main">
+
+  <section class="masthead" aria-labelledby="masthead-h">
+    <p class="masthead-kicker">A linguistics podcast</p>
+    <h1 class="masthead-title" id="masthead-h">{{ site.title | e }}</h1>
+    <p class="masthead-ipa ipa">/ˈkeɪdəns/</p>
+    <p class="masthead-pitch">On how sounds and grammar drift across generations — one feature, one episode, traced back to where it started.</p>
+  </section>
+
+  <section class="spine-section" aria-labelledby="spine-h">
+    <div class="spine-head">
+      <h2 id="spine-h">Latest Episodes</h2>
+      <p class="spine-note">Every episode, newest first. A small ring marks where one season ends and the next begins.</p>
+    </div>
+    <ol class="spine" aria-label="Episodes, newest first">
+      {% for p in eps %}
+        {% set ep = p %}
+        {% set pinned = loop.first %}
+        {% set nested = true %}
+        {% if loop.first %}
+          {% include "partials/season-marker.html" %}
+        {% elif ep.extra.season != eps[loop.index0 - 1].extra.season %}
+          {% include "partials/season-marker.html" %}
+        {% endif %}
+        {% include "partials/episode-row.html" %}
+      {% endfor %}
+    </ol>
+  </section>
+
+  <section class="colophon" aria-labelledby="colophon-h">
+    <h2 id="colophon-h">About the show</h2>
+    <div class="prose">{{ content | safe }}</div>
+    <p class="colophon-more"><a href="{{ base_url }}/about/">Read more about Cadence and its hosts &rarr;</a></p>
+  </section>
+
+</main>
+{% include "footer.html" %}

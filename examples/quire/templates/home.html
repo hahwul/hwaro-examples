@@ -1,0 +1,37 @@
+{% include "header.html" %}
+    <main id="main" class="doc doc-home">
+      <section class="masthead">
+        <p class="masthead-kicker">A handbook of typographic craft</p>
+        <h1 class="masthead-title">Quire</h1>
+        <p class="masthead-thesis">{{ site.description | e }}</p>
+      </section>
+
+      <section class="contents" aria-labelledby="contents-title">
+        <div class="contents-head">
+          <h2 class="contents-title" id="contents-title">Six chapters, in reading order</h2>
+          <p class="contents-sub">Each one is a single working habit. Read them in sequence the first time; use them as a reference after that.</p>
+        </div>
+        <ol class="toc-list">
+          {% for p in get_section(path="chapters").pages | sort_by("weight") %}
+          <li class="toc-row">
+            <a class="toc-row-link" href="{{ base_url }}{{ p.url }}">
+              <span class="toc-row-num" aria-hidden="true">{% if loop.index < 10 %}0{% endif %}{{ loop.index }}</span>
+              <span class="toc-row-main">
+                <span class="toc-row-head">
+                  <span class="toc-row-title">{{ p.title }}</span>
+                  <span class="toc-row-rule" aria-hidden="true"></span>
+                  {% if p.reading_time %}<span class="toc-row-time">{{ p.reading_time }} min</span>{% endif %}
+                </span>
+                {% if p.description %}<span class="toc-row-desc">{{ p.description }}</span>{% endif %}
+              </span>
+            </a>
+          </li>
+          {% endfor %}
+        </ol>
+      </section>
+
+      <section class="lede-wrap prose">
+        {{ content | safe }}
+      </section>
+    </main>
+{% include "footer.html" %}

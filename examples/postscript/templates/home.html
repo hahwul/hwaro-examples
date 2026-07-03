@@ -1,0 +1,88 @@
+{% include "header.html" %}
+    {% set issues = get_section(path="issues").pages | sort_by("date", reverse=true) %}
+    {% set lead = issues | first %}
+
+    <section class="masthead" aria-labelledby="masthead-title">
+      <h1 class="masthead-name" id="masthead-title">Post<span class="accent-dot">script</span></h1>
+      <p class="masthead-tagline">Money talk for people who invoice instead of clock in</p>
+      <p class="masthead-meta">
+        <span>Vol. III</span>
+        {% if lead %}<span>No. {{ lead.extra.issue_number }}</span>{% endif %}
+        {% if lead.date %}<span>{{ lead.date | date("%B %d, %Y") }}</span>{% endif %}
+        <span>Published every six weeks</span>
+      </p>
+    </section>
+
+    {% if lead %}
+    <section class="lead" aria-labelledby="lead-title">
+      <div class="wrap lead-grid">
+        {% set lg_figure = lead.extra.figure %}
+        {% set lg_prefix = lead.extra.figure_prefix %}
+        {% set lg_suffix = lead.extra.figure_suffix %}
+        {% set lg_label = lead.extra.figure_label %}
+        {% set lg_size = "lg" %}
+        {% include "partials/ledger.html" %}
+
+        <div class="lead-copy">
+          <p class="kicker">Lead issue</p>
+          <h2 class="lead-title" id="lead-title"><a href="{{ base_url }}{{ lead.url }}">{{ lead.title | e }}</a></h2>
+          <p class="lead-byline">
+            <span>Issue No. {{ lead.extra.issue_number }}</span>
+            {% if lead.date %}<span aria-hidden="true"> &middot; </span><time datetime="{{ lead.date | date('%Y-%m-%d') }}">{{ lead.date | date("%B %d, %Y") }}</time>{% endif %}
+          </p>
+          {% if lead.extra.dek %}<p class="lead-dek">{{ lead.extra.dek }}</p>{% endif %}
+          <p><a class="more-link" href="{{ base_url }}{{ lead.url }}">Read Issue No. {{ lead.extra.issue_number }}<span class="arrow" aria-hidden="true"> &rarr;</span></a></p>
+        </div>
+      </div>
+    </section>
+    {% endif %}
+
+    <section class="well" aria-labelledby="well-title">
+      <div class="wrap well-head">
+        <h2 id="well-title">Back issues</h2>
+        <a class="all-link" href="{{ base_url }}/issues/">Full archive<span aria-hidden="true"> &rarr;</span></a>
+      </div>
+      <ol class="wrap well-columns">
+        {% for issue in issues %}
+          {% if not loop.first %}
+          <li class="well-row">
+            <span class="figure-chip" aria-hidden="true">{{ issue.extra.issue_number }}</span>
+            <div class="well-body">
+              <p class="well-title"><a href="{{ base_url }}{{ issue.url }}">{{ issue.title | e }}</a></p>
+              {% if issue.description %}<p class="well-dek">{{ issue.description | truncate_words(20) }}</p>{% endif %}
+              <p class="well-meta">
+                <span>No. {{ issue.extra.issue_number }}</span>
+                {% if issue.date %}<span aria-hidden="true"> &middot; </span><time datetime="{{ issue.date | date('%Y-%m-%d') }}">{{ issue.date | date("%B %d, %Y") }}</time>{% endif %}
+              </p>
+            </div>
+          </li>
+          {% endif %}
+        {% endfor %}
+      </ol>
+    </section>
+
+    <section class="coupon-section wrap" aria-labelledby="coupon-title">
+      <div class="coupon">
+        <p class="coupon-clip" aria-hidden="true">&#9986; clip &amp; keep</p>
+        <div class="coupon-copy-wrap">
+          <p class="kicker coupon-kicker">Classified &mdash; subscriptions</p>
+          <h2 id="coupon-title">Get the next issue before the ledger closes</h2>
+          <p class="coupon-copy">One letter every six weeks. One real figure, one method that's already been run for a full quarter. No sponsored issues, no upsells.</p>
+        </div>
+        <form class="coupon-form" action="{{ base_url }}/about/" method="get" onsubmit="return false;">
+          <label class="coupon-label" for="coupon-email">Email address</label>
+          <div class="coupon-field">
+            <input id="coupon-email" name="email" type="email" autocomplete="email" placeholder="you@studio.example" required>
+            <button type="submit" class="coupon-submit">Subscribe</button>
+          </div>
+          <p class="coupon-note">Static example form &mdash; nothing is sent. See <a href="{{ base_url }}/about/">how issues are actually delivered</a>.</p>
+        </form>
+      </div>
+    </section>
+
+    <section class="home-about wrap" aria-labelledby="home-about-title">
+      <h2 id="home-about-title" class="label-caps">About this letter</h2>
+      <div class="prose">{{ content | safe }}</div>
+      <p><a class="more-link" href="{{ base_url }}/about/">Read the full masthead<span class="arrow" aria-hidden="true"> &rarr;</span></a></p>
+    </section>
+{% include "footer.html" %}

@@ -1,4 +1,0 @@
-+++
-title = "Glacier"
-template = "home"
-+++

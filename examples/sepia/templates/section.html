@@ -1,0 +1,36 @@
+{% include "header.html" %}
+  <main id="main" class="site-main sheets-index">
+    <div class="list-head">
+      <p class="grid-eyebrow">Full Archive</p>
+      {% if page.title is present %}<h1>{{ page.title | e }}</h1>{% endif %}
+      <div class="prose prose-tight">{{ content | safe }}</div>
+    </div>
+
+    <ol class="contact-grid" aria-label="All projects">
+      {% for p in section.pages | sort_by("date", reverse=true) %}
+      <li class="frame">
+        <a class="frame-link" href="{{ base_url }}{{ p.url }}">
+          <svg class="frame-rebate" viewBox="0 0 320 14" preserveAspectRatio="none" aria-hidden="true"><use href="#rebate-strip"></use></svg>
+          <span class="frame-meta">
+            <span class="frame-film">{{ p.extra.film | default("BRACKISH 125", true) | upper }}</span>
+            <span class="frame-number">{% if loop.index < 10 %}0{{ loop.index }}{% else %}{{ loop.index }}{% endif %}</span>
+          </span>
+          <span class="frame-photo">
+            <svg class="frame-marks" viewBox="0 0 100 100" aria-hidden="true"><use href="#crop-marks"></use></svg>
+          </span>
+          <span class="frame-info">
+            <span class="frame-title">{{ p.title | e }}</span>
+            <span class="frame-location">{{ p.extra.location | default("", true) | e }}</span>
+            <span class="frame-caption">{{ p.extra.one_line | default(p.description, true) | e }}</span>
+          </span>
+          <svg class="frame-rebate" viewBox="0 0 320 14" preserveAspectRatio="none" aria-hidden="true"><use href="#rebate-strip"></use></svg>
+        </a>
+        <span class="frame-footline">
+          {% if p.date %}<span>{{ p.date | date("%Y") }}</span>{% endif %}
+          {% if p.extra.frames %}<span aria-hidden="true">·</span><span>{{ p.extra.frames | length }} frames</span>{% endif %}
+        </span>
+      </li>
+      {% endfor %}
+    </ol>
+  </main>
+{% include "footer.html" %}

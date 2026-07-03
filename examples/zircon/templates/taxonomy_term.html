@@ -1,0 +1,25 @@
+{% include "header.html" %}
+      <main id="main" class="main">
+        <header class="section-head">
+          <p class="eyebrow">Tagged</p>
+          <h1>{{ taxonomy_term }}</h1>
+        </header>
+        <ol class="doc-grid">
+          {% set tax = get_taxonomy(kind="tags") %}
+          {% for term in tax.items %}
+            {% if term.name == taxonomy_term %}
+              {% for p in term.pages | sort_by("weight") %}
+              <li class="doc-card">
+                <a class="doc-link" href="{{ base_url }}{{ p.url }}">
+                  <span class="doc-num{% if p.extra.method %} doc-num-method{% endif %}" aria-hidden="true">{% if p.extra.method %}{{ p.extra.method }}{% else %}{{ p.section | capitalize }}{% endif %}</span>
+                  <h2 class="doc-title">{{ p.title }}</h2>
+                  <p class="doc-desc">{{ p.description }}</p>
+                </a>
+              </li>
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+        </ol>
+        <p class="term-back"><a href="{{ base_url }}/tags/"><span aria-hidden="true">←</span> All tags</a></p>
+      </main>
+{% include "footer.html" %}

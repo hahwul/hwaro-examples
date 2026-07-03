@@ -1,0 +1,54 @@
+{% include "header.html" %}
+  <main id="main">
+
+    <section class="band band--open" aria-labelledby="summit-title">
+      <div class="band__inner open">
+        <p class="open__eyebrow">Regional Climate Summit</p>
+        <h1 id="summit-title" class="open__title">{{ site.title | e }}</h1>
+        <p class="open__dates">22&ndash;23 September 2026 &middot; Aarhus, Denmark</p>
+        <p class="open__charge">Two days to move coastal adaptation from anxious talk to funded, humane plans &mdash; for the towns that will meet the water first.</p>
+        <div class="open__actions">
+          <a class="btn" href="{{ base_url }}/register/">Reserve a seat</a>
+          <a class="btn btn--ghost" href="{{ base_url }}/program/">See the program</a>
+        </div>
+        <div class="stripes" role="img" aria-label="A cool-to-warm climate-stripe sequence marking the five program tracks.">
+          <span class="stripes__band s1"></span>
+          <span class="stripes__band s2"></span>
+          <span class="stripes__band s3"></span>
+          <span class="stripes__band s4"></span>
+          <span class="stripes__band s5"></span>
+        </div>
+      </div>
+    </section>
+
+    {% set program = get_section(path="program/_index.md") %}
+    {% for p in program.pages | sort_by("date") %}
+    <section class="band band--track track-{{ loop.index }}" aria-labelledby="track-{{ loop.index }}-title">
+      <div class="band__inner track">
+        <div class="track__head">
+          <p class="track__kicker">{{ p.extra.kicker | default("Program track") }}</p>
+          <h2 id="track-{{ loop.index }}-title" class="track__title">
+            <a href="{{ base_url }}{{ p.url }}">{{ p.title | e }}</a>
+          </h2>
+          {% if p.summary %}<p class="track__lede">{{ p.summary | strip_html | truncate_words(34) }}</p>{% endif %}
+        </div>
+        {% if p.extra.sessions %}
+        <ol class="sessions">
+          {% for s in p.extra.sessions %}
+          <li class="session">
+            <span class="session__time">{{ s.time }}</span>
+            <span class="session__body">
+              <span class="session__title">{{ s.title | e }}</span>
+              <span class="session__speaker">{{ s.speaker | e }}</span>
+            </span>
+          </li>
+          {% endfor %}
+        </ol>
+        {% endif %}
+        <a class="track__more" href="{{ base_url }}{{ p.url }}">Full track detail &rarr;</a>
+      </div>
+    </section>
+    {% endfor %}
+
+  </main>
+{% include "footer.html" %}

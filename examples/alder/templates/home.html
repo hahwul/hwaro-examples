@@ -1,0 +1,44 @@
+{% include "header.html" %}
+      <main id="main" class="docs-main docs-main--home">
+        <section class="terminal-block" aria-label="Rack status">
+          <div class="terminal-block-bar" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="terminal-block-body">
+            <p class="term-line term-line--cmd"><span class="prompt-glyph">{{ page.extra.user | default("op") }}@{{ page.extra.hostname | default("alder") }}</span><span class="prompt-sep">:~$</span> uptime</p>
+            <p class="term-line term-line--out"> {{ page.extra.uptime_days | default(214) }} days up &middot; {{ page.extra.nodes_online | default(4) }} nodes online &middot; load {{ page.extra.load_avg | default("0.18, 0.12, 0.09") }}</p>
+            <p class="term-line term-line--cmd"><span class="prompt-glyph">{{ page.extra.user | default("op") }}@{{ page.extra.hostname | default("alder") }}</span><span class="prompt-sep">:~$</span> rack-status --power</p>
+            <p class="term-line term-line--out">  draw       {{ page.extra.power_draw | default(341) }}W / {{ page.extra.power_budget | default(1800) }}W breaker budget</p>
+            <p class="term-line term-line--out">  nodes      {{ page.extra.nodes_online | default(4) }} online / {{ page.extra.nodes_total | default(4) }}</p>
+            <p class="term-line term-line--out">  switches   {{ page.extra.switches_online | default(2) }} online / {{ page.extra.switches_total | default(2) }}</p>
+            <p class="term-line term-line--out">  rack temp  {{ page.extra.rack_temp | default(27) }}&deg;C</p>
+            <p class="term-line term-line--cmd"><span class="prompt-glyph">{{ page.extra.user | default("op") }}@{{ page.extra.hostname | default("alder") }}</span><span class="prompt-sep">:~$</span> <span class="term-cursor" aria-hidden="true">&#9608;</span></p>
+          </div>
+        </section>
+
+        <h1 class="hero-title">{{ page.title }}</h1>
+        {% if page.description %}<p class="hero-lede">{{ page.description }}</p>{% endif %}
+
+        <div class="prose prose--home">
+          {{ content | safe }}
+        </div>
+
+        {% set hw = get_section(path="hardware").pages | sort_by("title") %}
+        <section class="inventory-grid" aria-label="Rack inventory">
+          <p class="section-kicker">./hardware &mdash; {{ hw | length }} entries</p>
+          <div class="inv-cards">
+            {% for p in hw %}
+            <a class="inv-card" href="{{ base_url }}{{ p.url }}">
+              <span class="inv-card-top">
+                <span class="inv-card-host">{{ p.extra.host }}</span>
+                <span class="inv-card-kind">{{ p.extra.kind }}</span>
+              </span>
+              <span class="inv-card-role">{{ p.extra.role }}</span>
+              {% if p.description %}<span class="inv-card-desc">{{ p.description | truncate_words(16) }}</span>{% endif %}
+              <span class="inv-card-watts">{{ p.extra.watts }} idle</span>
+            </a>
+            {% endfor %}
+          </div>
+        </section>
+      </main>
+{% include "footer.html" %}

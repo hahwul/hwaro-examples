@@ -1,0 +1,43 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-text">
+          <p class="kicker">{{ page.extra.kicker | e }}</p>
+          <h1 class="byline">{{ page.title | e }}</h1>
+          <p class="dek">{{ page.extra.dek | e }}</p>
+          <div class="hero-actions">
+            <a class="btn" href="{{ base_url }}/cv/">Read the CV</a>
+            <a class="btn-ghost" href="{{ base_url }}/stories/">Browse the stories</a>
+          </div>
+        </div>
+        <div class="hero-margin">
+          {{ content | safe }}
+        </div>
+      </div>
+    </section>
+
+    <section class="stories-preview">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Dispatches</h2>
+          <a class="see-all" href="{{ base_url }}/stories/">All stories <span aria-hidden="true">&rarr;</span></a>
+        </div>
+        <ol class="story-list">
+          {% set stories = get_section(path="stories") %}
+          {% for p in stories.pages | sort_by("date", reverse=true) %}
+          <li class="story-item">
+            <a href="{{ base_url }}{{ p.url }}">
+              <span class="story-meta">
+                {% if p.date %}<time datetime="{{ p.date | date('%Y-%m-%d') }}">{{ p.date | date("%B %Y") }}</time>{% endif %}
+              </span>
+              <span class="story-title">{{ p.title | e }}</span>
+              {% if p.summary %}<span class="story-dek">{{ p.summary | strip_html | truncate_words(26) }}</span>{% endif %}
+            </a>
+          </li>
+          {% endfor %}
+        </ol>
+      </div>
+    </section>
+  </main>
+{% include "footer.html" %}

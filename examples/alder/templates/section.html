@@ -1,0 +1,29 @@
+{% include "header.html" %}
+      <main id="main" class="docs-main">
+        <article class="doc-article doc-article--section">
+          <p class="topic-path">./{{ page.section | default("hardware") }}</p>
+          <h1>{{ page.title }}</h1>
+          {% if page.description %}<p class="doc-dek">{{ page.description }}</p>{% endif %}
+
+          <div class="prose">
+            {{ content | safe }}
+          </div>
+
+          {% set hw = section.pages | sort_by("title") %}
+          <ol class="doc-index">
+            {% for p in hw %}
+            <li>
+              <a href="{{ base_url }}{{ p.url }}">
+                <span class="doc-index-host">{{ p.extra.host | default(p.title) }}</span>
+                <span class="doc-index-body">
+                  <span class="doc-index-title">{{ p.title }}</span>
+                  {% if p.description %}<span class="doc-index-desc">{{ p.description | truncate_words(20) }}</span>{% endif %}
+                </span>
+                <span class="doc-index-watts">{{ p.extra.watts | default("") }}</span>
+              </a>
+            </li>
+            {% endfor %}
+          </ol>
+        </article>
+      </main>
+{% include "footer.html" %}

@@ -1,0 +1,33 @@
+{#- One episode card. Set `p` (the page) and optionally
+    `card_level = 2` (defaults to h3) before including. -#}
+<article class="ep-card pixel-lg shadowed">
+  <div class="ep-card-face">
+    <div class="ep-card-head">
+      <p class="score" aria-label="Episode {{ p.extra.episode_no | default('000') }}">
+        <span class="score-label">EP</span><span class="score-value">{{ p.extra.episode_no | default('000') }}</span>
+      </p>
+      {% if p.extra.duration %}<span class="chip chip-duration">{{ p.extra.duration }}</span>{% endif %}
+    </div>
+    {% if p.extra.game %}
+    <p class="ep-game">{{ p.extra.game | upper }}<span class="ep-studio"> — {{ p.extra.studio | default("") }}</span></p>
+    {% endif %}
+    {% if card_level == 2 %}
+    <h2 class="ep-title"><a href="{{ base_url }}{{ p.url }}">{{ p.title | e }}</a></h2>
+    {% else %}
+    <h3 class="ep-title"><a href="{{ base_url }}{{ p.url }}">{{ p.title | e }}</a></h3>
+    {% endif %}
+    {% if p.summary %}
+    <p class="ep-summary">{{ p.summary | strip_html | truncate_words(28) }}</p>
+    {% endif %}
+    <div class="ep-card-foot">
+      {% if p.date %}<time datetime="{{ p.date | date('%Y-%m-%d') }}">{{ p.date | date("%b %d, %Y") }}</time>{% endif %}
+      {% if p.tags %}
+      <ul class="ep-tags">
+        {% for t in p.tags %}
+        <li><a href="{{ get_taxonomy_url(kind="tags", term=t) }}">{{ t }}</a></li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+  </div>
+</article>

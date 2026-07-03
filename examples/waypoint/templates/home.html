@@ -1,0 +1,52 @@
+{% include "header.html" %}
+{% set releases = get_section(path="releases") %}
+{% set sorted = releases.pages | sort_by("date", reverse=true) %}
+{% set latest = sorted | first %}
+
+<section class="hero" aria-label="Latest release {{ latest.title }}">
+  <p class="cmd-line"><span class="prompt">waypoint@stable</span> <span class="caret">›</span> <span class="cmd">waypoint changelog --latest</span></p>
+
+  <article class="release-card">
+    <p class="rc-head">
+      <span class="rc-ver">{{ latest.title }}</span>
+      <span class="rc-date">{{ latest.date | date("%Y-%m-%d") }}</span>
+      <span class="rc-channel">{{ latest.extra.channel | default("stable") }}</span>
+    </p>
+    <h1 class="rc-title">{{ latest.description }}</h1>
+    <ul class="changes">
+      {% for c in latest.extra.changes %}
+      <li class="chg chg-{{ c.kind }}">
+        <span class="chg-mark" aria-hidden="true">{% if c.kind == "add" %}+{% elif c.kind == "change" %}~{% elif c.kind == "remove" %}-{% else %}*{% endif %}</span>
+        <span class="chg-kind">{{ c.kind }}</span>
+        <span class="chg-text">{{ c.text }}</span>
+      </li>
+      {% endfor %}
+    </ul>
+    <p class="rc-open"><a href="{{ base_url }}{{ latest.url }}">open full notes → releases/{{ latest.title }}</a></p>
+  </article>
+</section>
+
+<section class="history" aria-labelledby="history-h">
+  <p class="cmd-line"><span class="prompt">waypoint@stable</span> <span class="caret">›</span> <span class="cmd">waypoint changelog --list</span></p>
+  <h2 class="section-h" id="history-h">Release history</h2>
+  <ol class="rel-rows">
+    {% for p in sorted %}
+    <li>
+      <a class="rel-row" href="{{ base_url }}{{ p.url }}">
+        <span class="rr-date">{{ p.date | date("%Y-%m-%d") }}</span>
+        <span class="rr-ver">{{ p.title }}</span>
+        <span class="rr-desc">{{ p.description }}</span>
+        <span class="rr-arrow" aria-hidden="true">→</span>
+      </a>
+    </li>
+    {% endfor %}
+  </ol>
+</section>
+
+<section class="readme" aria-labelledby="readme-h">
+  <p class="cmd-line"><span class="prompt">waypoint@stable</span> <span class="caret">›</span> <span class="cmd">cat README.md</span><span class="cursor" aria-hidden="true"></span></p>
+  <h2 class="section-h" id="readme-h">What Waypoint is</h2>
+  <div class="prose">{{ content | safe }}</div>
+  <p class="readme-open"><a href="{{ base_url }}/about/">man waypoint → about &amp; design notes</a></p>
+</section>
+{% include "footer.html" %}

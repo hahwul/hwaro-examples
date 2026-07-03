@@ -1,0 +1,41 @@
+{% include "header.html" %}
+<main id="main" class="column">
+  <article class="koan{% if page.section is present and page.section == "chapters" %} is-koan{% endif %}">
+    <header class="koan-head">
+      <p class="comment-line" aria-hidden="true">#
+        {%- if page.section is present and page.section == "chapters" %} cat chapters/{{ page.extra.n }}.md
+        {%- else %} cat {{ page.title | slugify }}.md{% endif %}</p>
+      {% if page.extra.n %}<p class="koan-index" aria-hidden="true">koan {{ page.extra.n }}</p>{% endif %}
+      <h1 class="koan-title">{{ page.title }}</h1>
+      {% if page.date %}
+      <p class="koan-meta">{{ page.date | date("%Y-%m-%d") }}{% if page.reading_time %} &middot; {{ page.reading_time }} min sit{% endif %}{% if page.extra.lang %} &middot; {{ page.extra.lang }}{% endif %}</p>
+      {% endif %}
+    </header>
+
+    {% if page.toc and toc %}
+    <nav class="koan-toc" aria-label="Contents">
+      <p class="toc-label" aria-hidden="true"># contents</p>
+      {{ toc }}
+    </nav>
+    {% endif %}
+
+    <div class="prose">{{ content | safe }}</div>
+
+    {% if page.extra.question %}
+    <div class="koan-close" role="note">
+      <p class="close-prompt" aria-hidden="true">koan&nbsp;&rsaquo;</p>
+      <p class="close-question">{{ page.extra.question }}<span class="cursor" aria-hidden="true"></span></p>
+    </div>
+    {% endif %}
+  </article>
+
+  {% if page.section is present and page.section == "chapters" %}
+  {% if page.lower.extra.n or page.higher.extra.n %}
+  <nav class="koan-nav" aria-label="Adjacent koans">
+    {% if page.lower.extra.n %}<a class="nav-prev" href="{{ base_url }}{{ page.lower.url }}"><span class="nav-arrow" aria-hidden="true">&larr;</span> <span class="nav-text">{{ page.lower.title }}</span></a>{% else %}<span></span>{% endif %}
+    {% if page.higher.extra.n %}<a class="nav-next" href="{{ base_url }}{{ page.higher.url }}"><span class="nav-text">{{ page.higher.title }}</span> <span class="nav-arrow" aria-hidden="true">&rarr;</span></a>{% else %}<span></span>{% endif %}
+  </nav>
+  {% endif %}
+  {% endif %}
+</main>
+{% include "footer.html" %}

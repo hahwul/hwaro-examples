@@ -1,0 +1,27 @@
+{% include "header.html" %}
+  <main id="main" class="term-body section">
+    <article class="prose-page">
+      <p class="crumb" aria-hidden="true">~/{{ section.title | slugify }}</p>
+      <header class="page-head">
+        <h1>{{ section.title | e }}</h1>
+        {% if section.description %}<p class="lede">{{ section.description | e }}</p>{% endif %}
+      </header>
+
+      <div class="prose">{{ content | safe }}</div>
+
+      <p class="section-label">vector changelog --list</p>
+      <ol class="log-rows log-rows-full">
+        {% for p in section.pages | sort_by("date", reverse=true) %}
+        <li>
+          <a class="log-row" href="{{ base_url }}{{ p.url }}">
+            <span class="lr-date">{% if p.date %}{{ p.date | date("%Y-%m-%d") }}{% endif %}</span>
+            <span class="lr-ver">{{ p.title | e }}</span>
+            <span class="lr-desc">{{ p.description | e }}</span>
+          </a>
+        </li>
+        {% endfor %}
+      </ol>
+      <p class="see-more"><a href="{{ base_url }}/changelog/rss.xml">subscribe: changelog.rss &rarr;</a></p>
+    </article>
+  </main>
+{% include "footer.html" %}

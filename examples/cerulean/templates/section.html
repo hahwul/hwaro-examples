@@ -1,0 +1,30 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <div class="list-head">
+      <p class="study-eyebrow">Case studies</p>
+      {% if page.title is present %}<h1>{{ page.title | e }}</h1>{% endif %}
+      {% if section.description %}<p>{{ section.description | e }}</p>{% endif %}
+      {{ content }}
+    </div>
+    <ol class="study-list">
+      {% for p in section.pages | sort_by("date", reverse=true) %}
+      <li>
+        <div class="study-row">
+          <span class="study-row-index">{% if loop.index < 10 %}0{{ loop.index }}{% else %}{{ loop.index }}{% endif %}</span>
+          <div>
+            <h2><a href="{{ base_url }}{{ p.url }}">{{ p.title | e }}</a></h2>
+            <p class="study-row-meta">{% if p.extra.client %}{{ p.extra.client }} &middot; {% endif %}{% if p.date %}{{ p.date | date("%B %Y") }}{% endif %}</p>
+            {% if p.summary %}<p class="dek">{{ p.summary | strip_html | truncate_words(28) }}</p>{% endif %}
+            {% if p.tags %}
+            <div class="tag-row">
+              {% for t in p.tags %}<a class="tag-chip" href="{{ base_url }}/tags/{{ t | slugify }}/">{{ t }}</a>{% endfor %}
+            </div>
+            {% endif %}
+          </div>
+          <div class="study-row-stat">{% if p.extra.stat_value %}{{ p.extra.stat_value }}{% endif %}</div>
+        </div>
+      </li>
+      {% endfor %}
+    </ol>
+  </main>
+{% include "footer.html" %}

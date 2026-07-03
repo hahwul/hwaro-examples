@@ -1,0 +1,23 @@
+{% include "header.html" %}
+  <main id="main">
+    <header class="section-head">
+      <div class="shell">
+        <p class="eyebrow">Ways through the pantry</p>
+        <h1 class="section-title section-title--lg">{{ page.title | e }}</h1>
+        <p class="section-intro">{% if taxonomy_name == "categories" %}Everything on the shelf, filed by what it is — the misos, the krauts, the long patient brews, and the crocks that pickle by the bedful.{% else %}The threads that run between jars: the grains and the salt, the cultures, the vegetables that came in by the crate.{% endif %}</p>
+      </div>
+    </header>
+    <section class="shell">
+      {% set tax = get_taxonomy(kind=taxonomy_name) %}
+      <ul class="term-list">
+        {% for term in tax.items | sort_by("name") %}
+        {% set n = term.pages | length %}
+        <li class="term">
+          <a class="term__link" href="{{ get_taxonomy_url(kind=taxonomy_name, term=term.name) }}">{{ term.name }}</a>
+          <span class="term__count">{{ n }} {% if n == 1 %}jar{% else %}jars{% endif %}</span>
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+  </main>
+{% include "footer.html" %}

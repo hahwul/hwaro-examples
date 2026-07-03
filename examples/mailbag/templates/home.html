@@ -1,0 +1,83 @@
+{% include "header.html" %}
+{% set issues_section = get_section(path="issues") %}
+  <main id="main" class="site-main">
+    <section class="masthead">
+      <div class="masthead-inner">
+        <p class="masthead-kicker">{{ page.extra.season | default("Field Dispatch") | e }}</p>
+        <h1 class="masthead-title">{{ page.title | e }}</h1>
+        <p class="masthead-tagline">{{ site.description | e }}</p>
+        {% if content %}<div class="masthead-lead">{{ content | safe }}</div>{% endif %}
+        <dl class="masthead-stats">
+          <div><dt>Issues</dt><dd>{{ issues_section.pages_count }}</dd></div>
+          <div><dt>Routes tracked</dt><dd>{{ page.extra.route_count | default("6, three continents") | e }}</dd></div>
+          <div><dt>Roster</dt><dd>{{ page.extra.roster_status | default("Open") | e }}</dd></div>
+        </dl>
+      </div>
+      <svg class="masthead-path" aria-hidden="true" viewBox="0 0 320 48" preserveAspectRatio="none">
+        <path d="M0 40 Q60 8 120 26 T260 12 T320 22" fill="none" stroke="var(--accent)" stroke-width="1.4" stroke-dasharray="0.4 8" stroke-linecap="round"/>
+      </svg>
+    </section>
+
+    <section class="dispatches" aria-labelledby="dispatches-title">
+      <div class="dispatches-head">
+        <h2 id="dispatches-title">Latest dispatches</h2>
+        <a class="dispatches-all" href="{{ base_url }}/issues/">Full archive <span aria-hidden="true">&rarr;</span></a>
+      </div>
+      <p class="dispatches-lead">Each issue follows one flyway or herd route from departure to arrival. The path below runs in the order the letters were filed &mdash; scroll to the latest waypoint.</p>
+
+      <div class="flightpath">
+        <div class="flightpath-line" aria-hidden="true">
+          <svg width="100%" height="100%" preserveAspectRatio="none" viewBox="0 0 4 100">
+            <line x1="2" y1="0" x2="2" y2="100" vector-effect="non-scaling-stroke" stroke="var(--accent)" stroke-width="2" stroke-dasharray="1 6" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <ol class="flightpath-list">
+        {% for p in issues_section.pages | sort_by("date") %}
+        <li class="dispatch">
+          <div class="dispatch-rail" aria-hidden="true">
+            <span class="waypoint{% if loop.last %} waypoint-latest{% endif %}"></span>
+          </div>
+          <a class="dispatch-body" href="{{ base_url }}{{ p.url }}">
+            <p class="dispatch-meta">
+              <span class="dispatch-no">No. {{ p.extra.issue_no | default(loop.index) }}</span>
+              {% if p.date %}<span class="dispatch-date">{{ p.date | date("%B %-d, %Y") }}</span>{% endif %}
+              {% if p.extra.route %}<span class="dispatch-route">{{ p.extra.route | e }}</span>{% endif %}
+            </p>
+            <h3 class="dispatch-title">{{ p.title | e }}</h3>
+            {% if p.extra.species %}<p class="dispatch-species">{{ p.extra.species | e }}{% if p.extra.binomial %} <span aria-hidden="true">&middot;</span> {{ p.extra.binomial | e }}{% endif %}</p>{% endif %}
+            {% if p.summary %}<p class="dispatch-summary">{{ p.summary | strip_html | truncate_words(28) }}</p>{% endif %}
+            <p class="dispatch-coords">
+              {% if p.extra.distance %}<span class="dispatch-distance">{{ p.extra.distance | e }}</span>{% endif %}
+              {% if p.extra.from %}<span>{{ p.extra.from | e }}</span>{% endif %}
+              {% if p.extra.to %}<span>&rarr; {{ p.extra.to | e }}</span>{% endif %}
+            </p>
+          </a>
+        </li>
+        {% endfor %}
+        </ol>
+      </div>
+    </section>
+
+    <section class="roster" aria-labelledby="roster-title">
+      <div class="roster-inner">
+        <div class="roster-copy">
+          <p class="roster-kicker">Join the field roster</p>
+          <h2 id="roster-title">Get the next flyway before it lands</h2>
+          <p>Six letters a season, each one filed the week its route closes out. No digests, no rewrites &mdash; the notes as logged in the field.</p>
+        </div>
+        <form class="roster-form" action="{{ base_url }}/about/" method="get" onsubmit="return false;">
+          <div class="roster-field">
+            <label for="roster-name">Name</label>
+            <input id="roster-name" name="name" type="text" autocomplete="name" placeholder="Your name">
+          </div>
+          <div class="roster-field">
+            <label for="roster-email">Email</label>
+            <input id="roster-email" name="email" type="email" autocomplete="email" placeholder="you@fieldmail.com">
+          </div>
+          <button type="submit" class="roster-submit">Join the roster</button>
+        </form>
+        <p class="roster-note">Static example roster &mdash; no messages are sent. Read <a href="{{ base_url }}/about/">how issues are actually delivered</a>.</p>
+      </div>
+    </section>
+  </main>
+{% include "footer.html" %}

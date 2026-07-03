@@ -1,0 +1,53 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <article class="passage wrap">
+      <header class="passage-head">
+        {% if page.date or page.extra.barometer_trend %}
+        <p class="entry-meta">
+          {% if page.date %}<time class="entry-date" datetime="{{ page.date | date("%Y-%m-%d") }}">{{ page.date | date("%d %B %Y") }}</time>{% endif %}
+          {% if page.extra.barometer_trend %}{% set p = page %}{% include "baro-full.html" %}{% endif %}
+          {% if page.reading_time %}<span class="entry-reading">{{ page.reading_time }} min read</span>{% endif %}
+        </p>
+        {% endif %}
+        <h1>{{ page.title | e }}</h1>
+        {% if page.extra.wind %}<p class="passage-wind">Wind: {{ page.extra.wind | e }}{% if page.extra.location %} &middot; {{ page.extra.location | e }}{% endif %}</p>{% endif %}
+      </header>
+
+      <div class="passage-body">
+        {{ content | safe }}
+      </div>
+
+      {% if page.tags %}
+      <footer class="passage-tags">
+        <span class="tags-label">Filed under</span>
+        <ul class="tag-list">
+          {% for t in page.tags %}<li><a href="{{ get_taxonomy_url(kind="tags", term=t) }}">{{ t }}</a></li>{% endfor %}
+        </ul>
+      </footer>
+      {% endif %}
+
+      {% if page.extra.barometer_trend %}
+      {% set ordered = get_section(path="passages").pages | sort_by("date", reverse=true) %}
+      {% set total = ordered | length %}
+      {% for entry in ordered %}
+        {% if entry.url == page.url %}
+        <nav class="adjacent" aria-label="Adjacent passages">
+          {% if loop.index0 < total - 1 %}
+          <a class="adjacent-link" href="{{ base_url }}{{ ordered[loop.index0 + 1].url }}">
+            <span class="adjacent-label">Older passage</span>
+            <span class="adjacent-title">{{ ordered[loop.index0 + 1].title | e }}</span>
+          </a>
+          {% endif %}
+          {% if loop.index0 > 0 %}
+          <a class="adjacent-link adjacent-next" href="{{ base_url }}{{ ordered[loop.index0 - 1].url }}">
+            <span class="adjacent-label">Newer passage</span>
+            <span class="adjacent-title">{{ ordered[loop.index0 - 1].title | e }}</span>
+          </a>
+          {% endif %}
+        </nav>
+        {% endif %}
+      {% endfor %}
+      {% endif %}
+    </article>
+  </main>
+{% include "footer.html" %}

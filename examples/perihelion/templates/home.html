@@ -1,0 +1,90 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+
+    <section class="hero" aria-labelledby="hero-title">
+      <p class="hero__eyebrow">{{ page.extra.eyebrow | default("A January bread festival") | e }}</p>
+      <h1 id="hero-title" class="hero__title">{{ site.title | e }}</h1>
+      <p class="hero__facts">
+        <span class="hero__dates">{{ page.extra.dates | default("24–25 January 2026") | e }}</span>
+        <span class="hero__sep" aria-hidden="true">✺</span>
+        <span class="hero__venue">{{ page.extra.venue | default("De Korenhal, Ghent") | e }}</span>
+      </p>
+      {% if page.extra.tagline %}<p class="hero__tagline">{{ page.extra.tagline | e }}</p>{% endif %}
+      <nav class="hero__actions" aria-label="Festival">
+        <a class="btn" href="{{ base_url }}/register/">Register for Perihelion</a>
+        <a class="btn btn--ghost" href="{{ base_url }}/venue/">Find De Korenhal</a>
+      </nav>
+    </section>
+
+    <section class="schedule" aria-labelledby="schedule-title">
+      <header class="schedule__head">
+        <p class="schedule__kicker" aria-hidden="true">○ ○ ○</p>
+        <h2 id="schedule-title">The schedule</h2>
+        <p class="schedule__sub">Two days on one spine. Times are fixed; oven queues are not.</p>
+      </header>
+
+      <div class="day" aria-labelledby="day1-title">
+        <h3 id="day1-title" class="day__title"><span class="day__label">Day One</span> Saturday, 24 January</h3>
+        <ol class="spine" aria-label="Saturday schedule">
+          {% for e in page.extra.day1 %}
+          <li class="event{% if loop.index is odd %} event--left{% else %} event--right{% endif %}">
+            <span class="event__badge" aria-hidden="true"><span class="event__time">{{ e.time }}</span></span>
+            <div class="event__card">
+              <p class="event__kind">{{ e.kind | e }}</p>
+              <h4 class="event__title">{{ e.title | e }}</h4>
+              <p class="event__loc">{{ e.location | e }}</p>
+              <p class="event__desc">{{ e.desc | e }}</p>
+            </div>
+          </li>
+          {% endfor %}
+        </ol>
+      </div>
+
+      <div class="day" aria-labelledby="day2-title">
+        <h3 id="day2-title" class="day__title"><span class="day__label">Day Two</span> Sunday, 25 January</h3>
+        <ol class="spine" aria-label="Sunday schedule">
+          {% for e in page.extra.day2 %}
+          <li class="event{% if loop.index is odd %} event--left{% else %} event--right{% endif %}">
+            <span class="event__badge" aria-hidden="true"><span class="event__time">{{ e.time }}</span></span>
+            <div class="event__card">
+              <p class="event__kind">{{ e.kind | e }}</p>
+              <h4 class="event__title">{{ e.title | e }}</h4>
+              <p class="event__loc">{{ e.location | e }}</p>
+              <p class="event__desc">{{ e.desc | e }}</p>
+            </div>
+          </li>
+          {% endfor %}
+        </ol>
+      </div>
+    </section>
+
+    <section class="about" aria-labelledby="about-title">
+      <p class="about__kicker" aria-hidden="true">✺</p>
+      <h2 id="about-title">Why &ldquo;Perihelion&rdquo;</h2>
+      <div class="prose about__copy">
+        {{ content | safe }}
+      </div>
+    </section>
+
+    <section class="bakers-preview" aria-labelledby="bakers-title">
+      {% set bakers = get_section(path="bakers/_index.md") %}
+      <header class="bakers-preview__head">
+        <p class="bakers-preview__kicker" aria-hidden="true">◎</p>
+        <h2 id="bakers-title">Who&rsquo;s baking</h2>
+        <p class="bakers-preview__sub">Five bakers and millers, travelling in from five ovens.</p>
+      </header>
+      <ul class="bakers-preview__list">
+        {% for p in bakers.pages | sort_by("title") %}
+        <li>
+          <a href="{{ base_url }}{{ p.url }}">
+            <span class="bakers-preview__name">{{ p.title | e }}</span>
+            {% if p.extra.bakery %}<span class="bakers-preview__bakery">{{ p.extra.bakery | e }}</span>{% endif %}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+      <p class="bakers-preview__more"><a href="{{ base_url }}/bakers/">Meet all the bakers &rarr;</a></p>
+    </section>
+
+  </main>
+{% include "footer.html" %}

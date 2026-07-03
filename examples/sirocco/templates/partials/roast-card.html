@@ -1,0 +1,26 @@
+{#- One roast-log card. Set `p` (the page) and `card_level` (2 or 3,
+    defaults to 3) before including. -#}
+<article class="roast-card">
+  <a class="roast-card-link" href="{{ base_url }}{{ p.url }}">
+    <p class="roast-card-kicker">
+      <span class="roast-card-origin">{{ p.extra.origin | default("Unlisted origin") }}</span>
+    </p>
+    {% if card_level == 2 %}
+    <h2 class="roast-card-title">{{ p.title | e }}</h2>
+    {% else %}
+    <h3 class="roast-card-title">{{ p.title | e }}</h3>
+    {% endif %}
+    <p class="roast-card-meta">
+      <span class="roast-card-process">{{ p.extra.process | default("") }}</span>
+      <span class="roast-card-sep" aria-hidden="true">&middot;</span>
+      {% if p.date %}<time datetime="{{ p.date | date('%Y-%m-%d') }}">{{ p.date | date("%b %d, %Y") }}</time>{% endif %}
+    </p>
+    {% set meter_stage = p.extra.roast_stage %}
+    {% set meter_size = "sm" %}
+    {% include "partials/roast-meter.html" %}
+    {% if p.summary %}
+    <p class="roast-card-summary">{{ p.summary | strip_html | truncate_words(16) }}</p>
+    {% endif %}
+    <span class="roast-card-cta" aria-hidden="true">Read the log &rarr;</span>
+  </a>
+</article>

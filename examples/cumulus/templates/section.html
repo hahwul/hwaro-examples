@@ -1,0 +1,28 @@
+{% include "header.html" %}
+  <main id="main">
+    <header class="page-head">
+      <p class="page-kicker">The log</p>
+      <h1>{{ page.title | e }}</h1>
+      {% if page.description %}<p class="page-lede">{{ page.description | e }}</p>{% endif %}
+    </header>
+
+    {% if content %}<div class="prose section-intro">{{ content }}</div>{% endif %}
+
+    {% if paginator is defined and paginator.pages %}
+    <div class="card-wall">
+      {% for s in paginator.pages %}{% include "sighting_card.html" %}{% endfor %}
+    </div>
+    {% if paginator.number_pagers > 1 %}
+    <nav class="pager" aria-label="Pagination">
+      {% if paginator.previous %}<a class="pager-link" href="{{ paginator.previous }}" rel="prev">&larr; Newer</a>{% else %}<span class="pager-link is-off">&larr; Newer</span>{% endif %}
+      <span class="pager-count">Page {{ paginator.current_index }} of {{ paginator.number_pagers }}</span>
+      {% if paginator.next %}<a class="pager-link" href="{{ paginator.next }}" rel="next">Older &rarr;</a>{% else %}<span class="pager-link is-off">Older &rarr;</span>{% endif %}
+    </nav>
+    {% endif %}
+    {% else %}
+    <div class="card-wall">
+      {% for s in section.pages %}{% include "sighting_card.html" %}{% endfor %}
+    </div>
+    {% endif %}
+  </main>
+{% include "footer.html" %}

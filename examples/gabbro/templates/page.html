@@ -1,0 +1,52 @@
+{% include "header.html" %}
+  <main id="main" class="doc">
+    <div class="doc-grid{% if page.toc %} has-toc{% endif %}">
+      <article class="article">
+        <p class="crumb" aria-label="Breadcrumb">
+          <a href="{{ base_url }}/">~</a><span aria-hidden="true">/</span>{% if page.section %}<a href="{{ base_url }}/{{ page.section }}/">{{ page.section }}</a><span aria-hidden="true">/</span>{% endif %}<span class="crumb-here">{{ page.title | slugify }}</span>
+        </p>
+
+        <header class="article-head">
+          <p class="man-line article-man" aria-hidden="true">
+            <span>{{ page.title | upper }}{% if page.section == "manual" %}(3){% else %}(1){% endif %}</span>
+            <span>{% if page.extra.section_label %}{{ page.extra.section_label }}{% else %}Gabbro Manual{% endif %}</span>
+          </p>
+          <h1>{{ page.title | e }}</h1>
+          {% if page.description %}<p class="lede">{{ page.description | e }}</p>{% endif %}
+          {% if page.date %}
+          <p class="article-meta">
+            {% if page.reading_time %}<span>{{ page.reading_time }} min read</span><span class="dot" aria-hidden="true">&middot;</span>{% endif %}
+            <time datetime="{{ page.date | date('%Y-%m-%d') }}">revised {{ page.date | date("%Y-%m-%d") }}</time>
+          </p>
+          {% endif %}
+        </header>
+
+        <div class="prose">{{ content | safe }}</div>
+
+        {% if page.section == "manual" %}
+        <nav class="pager" aria-label="Manual navigation">
+          {% if page.lower %}
+          <a class="pager-link pager-prev" href="{{ base_url }}{{ page.lower.url }}">
+            <span class="pager-dir">&larr; prev</span>
+            <span class="pager-title">{{ page.lower.title | e }}</span>
+          </a>
+          {% else %}<span class="pager-spacer" aria-hidden="true"></span>{% endif %}
+          {% if page.higher %}
+          <a class="pager-link pager-next" href="{{ base_url }}{{ page.higher.url }}">
+            <span class="pager-dir">next &rarr;</span>
+            <span class="pager-title">{{ page.higher.title | e }}</span>
+          </a>
+          {% else %}<span class="pager-spacer" aria-hidden="true"></span>{% endif %}
+        </nav>
+        {% endif %}
+      </article>
+
+      {% if page.toc %}
+      <aside class="toc" aria-label="On this page">
+        <p class="toc-title"># on this page</p>
+        {{ toc | safe }}
+      </aside>
+      {% endif %}
+    </div>
+  </main>
+{% include "footer.html" %}

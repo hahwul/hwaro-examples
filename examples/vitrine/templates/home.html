@@ -1,0 +1,59 @@
+{% include "header.html" %}
+{% set cases_section = get_section(path="cases/_index.md") %}
+{% set cases = cases_section.pages | sort_by("date", reverse=true) %}
+<main id="main" class="site-main">
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <p class="kicker">A gallery retrospective</p>
+    <h1 class="hero-title" id="hero-title">Vitrine</h1>
+    <p class="hero-body">{{ page.description | e }}</p>
+  </section>
+
+  <section class="wrap catalog-section" aria-labelledby="catalog-heading">
+    <div class="section-head">
+      <div>
+        <h2 id="catalog-heading">The Cases</h2>
+        <p class="section-count">{{ cases | length }} plates catalogued</p>
+      </div>
+      <div class="case-search" role="search">
+        <label for="vitrine-search" class="sr-only">Search the catalog</label>
+        <svg class="search-icon" width="18" height="18" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+          <circle cx="8.5" cy="8.5" r="5.5" fill="none" stroke="currentColor" stroke-width="2"/>
+          <line x1="12.5" y1="12.5" x2="18" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <input id="vitrine-search" type="search" placeholder="Search plates — try &quot;escalator&quot; or &quot;porcelain&quot;"
+               autocomplete="off" spellcheck="false"
+               data-index="{{ base_url }}/search.json" data-base="{{ base_url }}"
+               aria-label="Search the catalog">
+        <p id="search-status" class="search-status" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+
+    <ul id="case-grid" class="case-grid" role="list">
+      {% for p in cases %}
+      <li class="case-card">
+        <a class="case-card-link" href="{{ base_url }}{{ p.url }}">
+          <span class="case-plate">
+            <svg class="plate-icon" viewBox="0 0 100 100" role="img" aria-label="{{ p.title | e }} pictogram" preserveAspectRatio="xMidYMid meet">
+              {{ p.extra.svg | safe }}
+            </svg>
+          </span>
+          <span class="case-strip">
+            <span class="strip-no">No. {{ p.extra.plate_no }}</span>
+            <span class="strip-title">{{ p.title | e }}</span>
+          </span>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+
+    <ul id="search-results" class="search-results" hidden aria-label="Search results"></ul>
+  </section>
+
+  <section class="wrap archive-note" aria-labelledby="archive-heading">
+    <h2 id="archive-heading">From the Archive</h2>
+    <div class="prose">
+      {{ content | safe }}
+    </div>
+  </section>
+</main>
+{% include "footer.html" %}

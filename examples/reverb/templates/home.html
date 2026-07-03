@@ -1,0 +1,56 @@
+{% include "header.html" %}
+{% set episodes = get_section(path="episodes") %}
+
+<section class="masthead" aria-labelledby="masthead-heading">
+  <div class="masthead-inner">
+    <p class="masthead-eyebrow">{{ page.extra.eyebrow | default("A CRYPTOGRAPHY PODCAST") }}</p>
+    <h1 id="masthead-heading" class="masthead-wordmark">Reverb</h1>
+    <p class="masthead-tagline">{{ page.extra.tagline }}</p>
+    <p class="masthead-stat">{{ page.extra.stat_line }}</p>
+  </div>
+  <svg class="masthead-dial" viewBox="0 0 120 120" aria-hidden="true">
+    <circle cx="60" cy="60" r="52" fill="none" stroke="currentColor" stroke-width="1" opacity="0.5"></circle>
+    <circle cx="60" cy="60" r="38" fill="none" stroke="currentColor" stroke-width="1" opacity="0.35"></circle>
+    <circle cx="60" cy="60" r="3" fill="currentColor"></circle>
+    <g stroke="currentColor" stroke-width="1" opacity="0.7">
+      <path d="M60 4V16"></path>
+      <path d="M60 104V116"></path>
+      <path d="M4 60H16"></path>
+      <path d="M104 60H116"></path>
+      <path d="M22.4 22.4L30.8 30.8"></path>
+      <path d="M89.2 89.2L97.6 97.6"></path>
+      <path d="M22.4 97.6L30.8 89.2"></path>
+      <path d="M89.2 30.8L97.6 22.4"></path>
+    </g>
+  </svg>
+</section>
+
+<section class="episode-grid-section" aria-labelledby="grid-heading">
+  <div class="section-head">
+    <h2 id="grid-heading" class="section-eyebrow">// Episodes</h2>
+    <p class="section-hint">Show notes render as ciphertext. Hover or focus a block to decrypt the preview.</p>
+  </div>
+  <ul class="cipher-grid">
+    {% for ep in episodes.pages | sort_by("date", reverse=true) %}
+    <li>
+      <a class="cipher-card" href="{{ base_url }}{{ ep.url }}">
+        <span class="cipher-card-head">
+          <span class="cipher-block">BLOCK {{ ep.extra.block }}</span>
+          <span class="cipher-badge" aria-hidden="true"></span>
+        </span>
+        <span class="cipher-title">{{ ep.title | e }}</span>
+        <span class="cipher-preview">
+          <span class="cipher-scramble" aria-hidden="true" data-encoded="{{ ep.extra.preview_rot13 | e }}" data-decoded="{{ ep.extra.preview | e }}"></span>
+          <span class="sr-only">{{ ep.extra.preview | e }}</span>
+        </span>
+        <span class="cipher-card-foot">
+          <span class="cipher-cipher">{{ ep.extra.cipher }}</span>
+          {% if ep.date %}<span class="cipher-date">{{ ep.date | date("%b %d, %Y") }}</span>{% endif %}
+        </span>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+  <p class="grid-foot"><a href="{{ base_url }}/episodes/">All episodes and show notes <span aria-hidden="true">→</span></a></p>
+</section>
+{% include "footer.html" %}

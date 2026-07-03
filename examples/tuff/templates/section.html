@@ -1,0 +1,30 @@
+{% include "header.html" %}
+    <main id="main" class="main">
+      <header class="section-head">
+        <p class="eyebrow">The trail, end to end</p>
+        <h1>{{ page.title }}</h1>
+        <div class="section-intro prose">
+          {{ content | safe }}
+        </div>
+      </header>
+      <ol class="card-grid">
+        {% for p in section.pages | sort_by("weight") %}
+        <li class="tut-card">
+          <a class="card-link" href="{{ base_url }}{{ p.url }}">
+            <p class="card-top">
+              <span class="card-num" aria-hidden="true">{{ loop.index }}</span>
+              {% if p.extra.difficulty %}{% set d = p.extra.difficulty %}{% include "difficulty.html" %}{% endif %}
+            </p>
+            <h2 class="card-title">{{ p.title }}</h2>
+            <p class="card-desc">{{ p.description }}</p>
+            <p class="card-meta">
+              {% if p.extra.difficulty_label %}<span class="badge">{{ p.extra.difficulty_label }}</span>{% endif %}
+              {% if p.extra.minutes %}<span class="card-mins">about {{ p.extra.minutes }} min</span>{% endif %}
+              {% if p.date %}<span class="card-mins">updated {{ p.date | date("%b %Y") }}</span>{% endif %}
+            </p>
+          </a>
+        </li>
+        {% endfor %}
+      </ol>
+    </main>
+{% include "footer.html" %}

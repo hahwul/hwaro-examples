@@ -1,0 +1,45 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <article class="session">
+      <p class="session-back"><a href="{{ base_url }}/episodes/"><span aria-hidden="true">&larr;</span> All sessions</a></p>
+
+      <header class="session-head">
+        <div class="session-head-text">
+          <p class="eyebrow">Session No. {{ page.extra.episode | default("", true) }}</p>
+          <h1>{{ page.title | e }}</h1>
+          <p class="session-lede">{{ page.description | default("", true) }}</p>
+          <dl class="session-facts">
+            {% if page.extra.artist %}<div><dt>Artist</dt><dd>{{ page.extra.artist }}</dd></div>{% endif %}
+            {% if page.extra.session_date %}<div><dt>Recorded</dt><dd>{{ page.extra.session_date }}</dd></div>{% endif %}
+            {% if page.extra.studio %}<div><dt>Studio</dt><dd>{{ page.extra.studio }}</dd></div>{% endif %}
+            {% if page.extra.label %}<div><dt>Label</dt><dd>{{ page.extra.label }}</dd></div>{% endif %}
+          </dl>
+          {% if page.tags %}
+          <p class="session-tags">
+            {% for t in page.tags %}<a class="tag-chip" href="{{ base_url }}/tags/{{ t | slugify }}/">{{ t }}</a>{% endfor %}
+          </p>
+          {% endif %}
+        </div>
+        <div class="session-head-record">
+          {% set rec_catalog = page.extra.catalog %}
+          {% set rec_duration = page.extra.duration %}
+          {% set rec_year = page.extra.session_year %}
+          {% set rec_size = "hero" %}
+          {% include "partials/record.html" %}
+          <p class="session-record-caption">Pressing <strong>{{ page.extra.catalog }}</strong> &middot; running time <strong>{{ page.extra.duration }}</strong></p>
+        </div>
+      </header>
+
+      <div class="prose session-prose">
+        {{ content | safe }}
+      </div>
+
+      {% if page.lower or page.higher %}
+      <nav class="session-adjacent" aria-label="More sessions">
+        {% if page.higher %}<a class="session-adjacent-link" href="{{ base_url }}{{ page.higher.url }}"><span class="session-adjacent-dir">&larr; Newer session</span><span class="session-adjacent-title">{{ page.higher.title | e }}</span></a>{% endif %}
+        {% if page.lower %}<a class="session-adjacent-link session-adjacent-link--next" href="{{ base_url }}{{ page.lower.url }}"><span class="session-adjacent-dir">Older session &rarr;</span><span class="session-adjacent-title">{{ page.lower.title | e }}</span></a>{% endif %}
+      </nav>
+      {% endif %}
+    </article>
+  </main>
+{% include "footer.html" %}

@@ -1,0 +1,23 @@
+{% include "header.html" %}
+    <main id="main">
+      <header class="page-head">
+        <p class="page-kicker">Observations tagged</p>
+        <h1 class="page-title">{{ taxonomy_term }}</h1>
+      </header>
+      <section class="tl-block" aria-label="Tagged observations">
+        <ol class="tl">
+          {% set tax = get_taxonomy(kind="tags") %}
+          {% for term in tax.items %}
+            {% if term.name == taxonomy_term %}
+              {% for p in term.pages | sort_by("date", reverse=true) %}
+                {% set entry = p %}
+                {% set pinned = false %}
+                {% include "partials/obs_entry.html" %}
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+        </ol>
+      </section>
+      <p class="term-back"><a href="{{ base_url }}/tags/"><span aria-hidden="true">←</span> All tags</a></p>
+    </main>
+{% include "footer.html" %}

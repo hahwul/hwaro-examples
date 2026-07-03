@@ -1,0 +1,66 @@
+{% include "header.html" %}
+{% set guide = get_section(path="species/_index.md") %}
+{% set species = guide.pages | sort_by("title") %}
+<main id="main" class="site-main">
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <p class="kicker">A woodland field guide</p>
+    <h1 class="hero-title" id="hero-title">Hawthorn</h1>
+    <p class="hero-note">Six fungi logged from one square mile of mixed oak, beech, and pine — cap to spore print, with every dangerous look-alike named.</p>
+    <p class="glyph-legend" aria-hidden="true">
+      <span class="legend-item"><span class="legend-swatch"></span> spore-print colour</span>
+      <span class="legend-item"><span class="legend-dot is-edible"></span> filled = edible</span>
+      <span class="legend-item"><span class="legend-dot is-inedible"></span> hollow = not for the table</span>
+    </p>
+  </section>
+
+  <section class="wrap catalog-section" aria-labelledby="species-heading">
+    <div class="section-head">
+      <div>
+        <h2 id="species-heading">The Species</h2>
+        <p class="section-count">{{ species | length }} entries, A&ndash;Z</p>
+      </div>
+      <div class="guide-search" role="search">
+        <label for="hawthorn-search" class="sr-only">Search the guide</label>
+        <svg class="search-icon" width="18" height="18" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+          <circle cx="8.5" cy="8.5" r="5.5" fill="none" stroke="currentColor" stroke-width="2"/>
+          <line x1="12.5" y1="12.5" x2="18" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <input id="hawthorn-search" type="search" placeholder="Search species — try &quot;gills&quot; or &quot;oak&quot;"
+               autocomplete="off" spellcheck="false"
+               data-index="{{ base_url }}/search.json" data-base="{{ base_url }}"
+               aria-label="Search the guide">
+        <p id="search-status" class="search-status" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+
+    <ul id="species-grid" class="species-grid" role="list">
+      {% for p in species %}
+      <li class="species-card">
+        <a class="species-card-link" href="{{ base_url }}{{ p.url }}">
+          <span class="card-badge">
+            <span class="badge-spore" style="--spore-color: {{ p.extra.spore_color }};"></span>
+            <span class="badge-edible {% if p.extra.edible %}is-edible{% else %}is-inedible{% endif %}"></span>
+            <span class="sr-only">Spore print: {{ p.extra.spore_print }}. {{ p.extra.edibility_label }}.</span>
+          </span>
+          <span class="card-name">{{ p.title | e }}</span>
+          <span class="card-binomial">{{ p.extra.binomial }}</span>
+          <span class="card-desc">{{ p.description | default("", true) | truncate_words(20) }}</span>
+          <span class="card-meta">
+            <span>{{ p.extra.season | default("", true) }}</span>
+          </span>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+
+    <ul id="search-results" class="search-results" hidden aria-label="Search results"></ul>
+  </section>
+
+  <section class="wrap archive-note" aria-labelledby="about-heading">
+    <h2 id="about-heading">How to Read This Guide</h2>
+    <div class="prose">
+      {{ content | safe }}
+    </div>
+  </section>
+</main>
+{% include "footer.html" %}

@@ -1,0 +1,36 @@
+{% include "header.html" %}
+<article class="prose-page">
+  <div class="prose-page-head">
+    <p class="episode-kicker"><span class="episode-block">// TAG</span></p>
+    <h1>{{ taxonomy_term }}</h1>
+    <p class="prose-page-lede">Episodes tagged with this term.</p>
+  </div>
+  <ul class="cipher-grid">
+    {% set tax = get_taxonomy(kind="tags") %}
+    {% for term in tax.items %}
+      {% if term.name == taxonomy_term %}
+        {% for ep in term.pages | sort_by("date", reverse=true) %}
+        <li>
+          <a class="cipher-card" href="{{ base_url }}{{ ep.url }}">
+            <span class="cipher-card-head">
+              <span class="cipher-block">BLOCK {{ ep.extra.block }}</span>
+              <span class="cipher-badge" aria-hidden="true"></span>
+            </span>
+            <span class="cipher-title">{{ ep.title | e }}</span>
+            <span class="cipher-preview">
+              <span class="cipher-scramble" aria-hidden="true" data-encoded="{{ ep.extra.preview_rot13 | e }}" data-decoded="{{ ep.extra.preview | e }}"></span>
+              <span class="sr-only">{{ ep.extra.preview | e }}</span>
+            </span>
+            <span class="cipher-card-foot">
+              <span class="cipher-cipher">{{ ep.extra.cipher }}</span>
+              {% if ep.date %}<span class="cipher-date">{{ ep.date | date("%b %d, %Y") }}</span>{% endif %}
+            </span>
+          </a>
+        </li>
+        {% endfor %}
+      {% endif %}
+    {% endfor %}
+  </ul>
+  <p class="term-back"><a href="{{ base_url }}/tags/"><span aria-hidden="true">←</span> All tags</a></p>
+</article>
+{% include "footer.html" %}

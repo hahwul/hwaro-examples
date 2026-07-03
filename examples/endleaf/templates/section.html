@@ -1,0 +1,30 @@
+{% set rh_label = page.title %}
+{% set rh_folio = "vii" %}
+{% include "header.html" %}
+    <main id="main">
+      <header class="section-open">
+        <p class="chapter-numeral">The table of contents</p>
+        <h1 class="chapter-title">{{ page.title | e }}</h1>
+        <div class="section-intro prose">{{ content | safe }}</div>
+        <div class="fleuron-rule" aria-hidden="true">
+          <svg class="fleuron"><use href="#fleuron"/></svg>
+          <svg class="fleuron fleuron--lg"><use href="#fleuron"/></svg>
+          <svg class="fleuron"><use href="#fleuron"/></svg>
+        </div>
+      </header>
+
+      <ol class="contents contents--full">
+        {% for p in section.pages | sort_by("weight") %}
+        <li class="contents-row">
+          <a class="row-link" href="{{ base_url }}{{ p.url }}">
+            <span class="row-numeral" aria-hidden="true">{{ p.extra.numeral | default("") }}</span>
+            <span class="row-title">{{ p.title | e }}</span>
+            <span class="row-leader" aria-hidden="true"></span>
+            <span class="row-folio">{% if p.extra.folio %}p.&thinsp;{{ p.extra.folio }}{% endif %}</span>
+          </a>
+          {% if p.description %}<p class="row-gloss">{{ p.description | e }}</p>{% endif %}
+        </li>
+        {% endfor %}
+      </ol>
+    </main>
+{% include "footer.html" %}

@@ -1,0 +1,70 @@
+{% include "header.html" %}
+{% set releases = get_section(path="releases") %}
+{% set stones = releases.pages | sort_by("date", reverse=true) %}
+{% set latest = stones | first %}
+<main id="main" class="site-main">
+  <section class="hero" aria-labelledby="wordmark">
+    <h1 class="hero-wordmark" id="wordmark">Cairn</h1>
+    <p class="hero-pitch">
+      Open firmware for split keyboards. Program every layer as a script —
+      taps, holds, combos, and macros in a handful of readable lines. Flash it
+      yourself and own the whole stack, from the matrix scan up.
+    </p>
+    <p class="hero-latest">
+      Latest: <a href="{{ base_url }}{{ latest.url }}">{{ latest.title }}</a>
+      <span class="dot" aria-hidden="true">·</span> {{ latest.extra.codename }}
+      <span class="dot" aria-hidden="true">·</span> {{ latest.date | date("%B %d, %Y") }}
+    </p>
+  </section>
+
+  <section class="trail" aria-labelledby="trail-h">
+    <div class="trail-head">
+      <h2 id="trail-h">Release cairn</h2>
+      <p class="trail-note">Newest stone on top. Each slab widens with the number of changes it carries.</p>
+    </div>
+
+    <div class="trail-search" role="search">
+      <label for="cairn-search" class="sr-only">Search releases</label>
+      <svg class="search-icon" width="18" height="18" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+        <circle cx="8.5" cy="8.5" r="5.5" fill="none" stroke="currentColor" stroke-width="2"/>
+        <line x1="12.5" y1="12.5" x2="18" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <input id="cairn-search" type="search" placeholder="Search releases — try &quot;combo&quot; or &quot;matrix&quot;"
+             autocomplete="off" spellcheck="false"
+             data-index="{{ base_url }}/search.json" data-base="{{ base_url }}"
+             aria-label="Search releases">
+      <p id="search-status" class="search-status" role="status" aria-live="polite"></p>
+    </div>
+
+    <ol id="cairn" class="cairn" aria-label="Releases, newest first">
+      <li class="cairn-cap" aria-hidden="true"></li>
+      {% for p in stones %}
+      <li class="stone-row">
+        <article class="stone" style="--changes: {{ p.extra.changes }};">
+          <a class="stone-link" href="{{ base_url }}{{ p.url }}">
+            {% if loop.first %}<span class="stone-flag">Newest</span>{% endif %}
+            <span class="stone-top">
+              <span class="stone-ver">{{ p.title }}</span>
+              <span class="stone-count">{{ p.extra.changes }} changes</span>
+            </span>
+            <span class="stone-desc">{{ p.description }}</span>
+            <span class="stone-foot">
+              <span class="stone-code">{{ p.extra.codename }}</span>
+              <time datetime="{{ p.date | date('%Y-%m-%d') }}">{{ p.date | date("%b %d, %Y") }}</time>
+            </span>
+          </a>
+        </article>
+      </li>
+      {% endfor %}
+    </ol>
+
+    <ul id="search-results" class="search-results" hidden aria-label="Search results"></ul>
+  </section>
+
+  <section class="readme" aria-labelledby="readme-h">
+    <h2 id="readme-h">What is Cairn?</h2>
+    <div class="prose">{{ content | safe }}</div>
+    <p class="readme-more"><a href="{{ base_url }}/about/">Read the full introduction →</a></p>
+  </section>
+</main>
+{% include "footer.html" %}

@@ -1,0 +1,58 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    {% set briefs = get_section(path="briefs").pages | sort_by("date", reverse=true) %}
+    {% set lead = briefs | first %}
+
+    {% if lead %}
+    <section class="lead" aria-labelledby="lead-title">
+      <div class="wrap lead-grid">
+        <div class="lead-main">
+          <p class="plate-label lead-label">
+            <span class="plate-fig">Fig. {{ lead.extra.fig | default(1) }}</span>
+            <span class="plate-sep" aria-hidden="true">&mdash;</span>
+            <span class="plate-kicker">{{ lead.extra.discipline | default("FIELD NOTE") | e }}</span>
+          </p>
+          <h1 class="lead-title" id="lead-title"><a href="{{ base_url }}{{ lead.url }}">{{ lead.title | e }}</a></h1>
+          {% if lead.description %}<p class="lead-dek">{{ lead.description | e }}</p>{% endif %}
+          <p class="lead-byline">
+            {% if lead.authors %}<span class="byline-name">{{ lead.authors | join(", ") | e }}</span>{% endif %}
+            {% if lead.date %}<span class="byline-sep" aria-hidden="true">&middot;</span><time datetime="{{ lead.date | date('%Y-%m-%d') }}">{{ lead.date | date("%B %d, %Y") }}</time>{% endif %}
+            {% if lead.reading_time %}<span class="byline-sep" aria-hidden="true">&middot;</span><span class="byline-time">{{ lead.reading_time }} min read</span>{% endif %}
+          </p>
+          {% if lead.summary %}<div class="lead-summary">{{ lead.summary | safe }}</div>{% endif %}
+          <p class="lead-more"><a class="more-link" href="{{ base_url }}{{ lead.url }}">Read the full brief<span aria-hidden="true"> &rarr;</span></a></p>
+        </div>
+        <aside class="lead-index" aria-labelledby="lead-index-head">
+          <p class="lead-index-head" id="lead-index-head">Filed this issue</p>
+          <ol class="lead-index-list">
+            {% for entry in briefs %}
+            <li><a href="{{ base_url }}{{ entry.url }}"><span class="index-fig">{{ entry.extra.fig | default(loop.index) }}</span><span class="index-title">{{ entry.title | e }}</span></a></li>
+            {% endfor %}
+          </ol>
+        </aside>
+      </div>
+    </section>
+    {% endif %}
+
+    <section class="well-section" aria-labelledby="well-head">
+      <div class="wrap well-head">
+        <h2 id="well-head">The well</h2>
+        <a class="all-link" href="{{ base_url }}/briefs/">Full archive<span aria-hidden="true"> &rarr;</span></a>
+      </div>
+      <div class="well wrap">
+        {% for entry in briefs %}
+          {% if not loop.first %}
+          {% include "partials/plate-card.html" %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="home-note wrap" aria-labelledby="home-note-head">
+      <h2 id="home-note-head">Reading the plates</h2>
+      <div class="home-note-body prose">
+        {{ content | safe }}
+      </div>
+    </section>
+  </main>
+{% include "footer.html" %}

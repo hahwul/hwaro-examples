@@ -1,0 +1,32 @@
+{% include "header.html" %}
+  <main id="main">
+    <div class="spread">
+      <div class="spread-main">
+        <header class="page-head">
+          <p class="page-kicker">Tagged</p>
+          <h1 class="page-title">{{ taxonomy_term | e }}</h1>
+        </header>
+        <ol class="contents contents-full">
+          {% set tax = get_taxonomy(kind="tags") %}
+          {% for term in tax.items %}
+            {% if term.name == taxonomy_term %}
+              {% for p in term.pages | sort_by("date", reverse=true) %}
+                {% set entry = p %}
+                {% include "partials/contents-row-full.html" %}
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+        </ol>
+        <p class="margin-more"><a href="{{ base_url }}/tags/"><span aria-hidden="true">&larr;</span> All tags</a></p>
+      </div>
+
+      {% include "partials/seam.html" %}
+
+      <aside class="spread-margin" aria-label="About this tag">
+        <h2 class="margin-heading">This Tag</h2>
+        <p class="margin-note">Every piece the folio has filed under &ldquo;{{ taxonomy_term | e }}.&rdquo;</p>
+        <div class="margin-ornament" aria-hidden="true">&#10086;</div>
+      </aside>
+    </div>
+  </main>
+{% include "footer.html" %}

@@ -1,0 +1,41 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <article class="page-article{% if page.extra.calendar %} garden-article{% endif %}">
+      {% if page.extra.calendar %}
+      <header class="detail-cal-wrap">
+        <svg class="cal-strip cal-strip-lg" viewBox="0 0 132 16" preserveAspectRatio="none" role="img" aria-labelledby="cal-title-detail">
+          <title id="cal-title-detail">Bloom calendar for {{ page.title | e }}, twelve months January through December, peak color in {{ page.extra.peak | e }}</title>
+          {% for v in page.extra.calendar %}
+          {% if v == 0 %}<rect class="cal-0" x="{{ loop.index0 * 11 }}" y="0" width="10" height="16"></rect>
+          {% elif v == 1 %}<rect class="cal-1" x="{{ loop.index0 * 11 }}" y="0" width="10" height="16"></rect>
+          {% elif v == 2 %}<rect class="cal-2" x="{{ loop.index0 * 11 }}" y="0" width="10" height="16"></rect>
+          {% else %}<rect class="cal-3" x="{{ loop.index0 * 11 }}" y="0" width="10" height="16"></rect>
+          {% endif %}
+          {% endfor %}
+        </svg>
+        <p class="cal-caption">J F M A M J J A S O N D — peak {{ page.extra.peak | e }}</p>
+      </header>
+      {% endif %}
+
+      {% if page.title is present %}<h1>{{ page.title | e }}</h1>{% endif %}
+
+      {% if page.extra.established %}
+      <dl class="garden-spec">
+        <div class="spec-row"><dt>Established</dt><dd>{{ page.extra.established }}</dd></div>
+        <div class="spec-row"><dt>Exposure</dt><dd>{{ page.extra.exposure | e }}</dd></div>
+        {% if page.extra.rainfall %}<div class="spec-row"><dt>Rainfall</dt><dd>{{ page.extra.rainfall | e }}</dd></div>{% endif %}
+        {% if page.extra.signature_plant %}<div class="spec-row"><dt>Signature planting</dt><dd><em>{{ page.extra.signature_plant }}</em></dd></div>{% endif %}
+        {% if page.date %}<div class="spec-row"><dt>Documented</dt><dd><time datetime="{{ page.date | date("%Y-%m-%d") }}">{{ page.date | date("%B %Y") }}</time></dd></div>{% endif %}
+      </dl>
+      {% endif %}
+
+      <div class="prose">
+        {{ content | safe }}
+      </div>
+
+      {% if page.extra.calendar %}
+      <p class="back-link"><a href="{{ base_url }}/gardens/">&larr; All gardens</a></p>
+      {% endif %}
+    </article>
+  </main>
+{% include "footer.html" %}

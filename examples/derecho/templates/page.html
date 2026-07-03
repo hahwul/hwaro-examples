@@ -1,0 +1,45 @@
+{% include "header.html" %}
+  <main id="main">
+    <article class="post">
+      <div class="wrap wrap-prose">
+        <header class="post-head">
+          {% if page.section is present and page.section == "builds" %}
+          <p class="post-kicker"><a href="{{ base_url }}/builds/">Build log</a>{% if page.extra.no %} · {{ page.extra.no }}{% endif %}</p>
+          {% endif %}
+          <h1 class="post-title">{{ page.title | e }}</h1>
+          <div class="post-meta">
+            {% if page.date %}<time datetime="{{ page.date | date("%Y-%m-%d") }}">{{ page.date | date("%B %d, %Y") }}</time>{% endif %}
+            {% if page.reading_time %}<span class="dot" aria-hidden="true">·</span><span>{{ page.reading_time }} min read</span>{% endif %}
+          </div>
+          {% if page.extra.board or page.extra.switches or page.extra.plate %}
+          <dl class="post-spec">
+            {% if page.extra.board %}<div class="spec-row"><dt>Board</dt><dd>{{ page.extra.board }}</dd></div>{% endif %}
+            {% if page.extra.switches %}<div class="spec-row"><dt>Switches</dt><dd>{{ page.extra.switches }}</dd></div>{% endif %}
+            {% if page.extra.plate %}<div class="spec-row"><dt>Plate</dt><dd>{{ page.extra.plate }}</dd></div>{% endif %}
+          </dl>
+          {% endif %}
+        </header>
+
+        <div class="prose">
+          {{ content | safe }}
+        </div>
+
+        {% if page.tags %}
+        <footer class="post-foot">
+          <span class="foot-label">Filed under</span>
+          <ul class="foot-tags">
+            {% for t in page.tags %}<li><a href="{{ base_url }}/tags/{{ t | slugify }}/">{{ t }}</a></li>{% endfor %}
+          </ul>
+        </footer>
+        {% endif %}
+
+        {% if (page.higher and page.higher.date) or (page.lower and page.lower.date) %}
+        <nav class="post-nav" aria-label="More builds">
+          {% if page.higher and page.higher.date %}<a class="post-nav-prev" href="{{ base_url }}{{ page.higher.url }}"><span class="post-nav-dir">← Newer</span><span class="post-nav-name">{{ page.higher.title }}</span></a>{% endif %}
+          {% if page.lower and page.lower.date %}<a class="post-nav-next" href="{{ base_url }}{{ page.lower.url }}"><span class="post-nav-dir">Older →</span><span class="post-nav-name">{{ page.lower.title }}</span></a>{% endif %}
+        </nav>
+        {% endif %}
+      </div>
+    </article>
+  </main>
+{% include "footer.html" %}

@@ -1,0 +1,33 @@
+{% include "header.html" %}
+<main id="main" class="site-main">
+  <section class="wrap section-intro">
+    <p class="kicker">Tag</p>
+    <h1 class="page-title">{{ taxonomy_term }}</h1>
+    <p class="lede">Plates filed under <em>{{ taxonomy_term }}</em> &middot; <a href="{{ base_url }}/tags/">all tags</a></p>
+  </section>
+  <section class="wrap catalog-section">
+    {% set tax = get_taxonomy(kind="tags") %}
+    <ul class="case-grid" role="list">
+      {% for t in tax.items %}
+      {% if t.name == taxonomy_term %}
+      {% for p in t.pages | sort_by("date", reverse=true) %}
+      <li class="case-card">
+        <a class="case-card-link" href="{{ base_url }}{{ p.url }}">
+          <span class="case-plate">
+            <svg class="plate-icon" viewBox="0 0 100 100" role="img" aria-label="{{ p.title | e }} pictogram" preserveAspectRatio="xMidYMid meet">
+              {{ p.extra.svg | safe }}
+            </svg>
+          </span>
+          <span class="case-strip">
+            <span class="strip-no">No. {{ p.extra.plate_no }}</span>
+            <span class="strip-title">{{ p.title | e }}</span>
+          </span>
+        </a>
+      </li>
+      {% endfor %}
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </section>
+</main>
+{% include "footer.html" %}

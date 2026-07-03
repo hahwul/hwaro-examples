@@ -1,0 +1,31 @@
+{% include "header.html" %}
+    <main id="main" class="doc">
+      <header class="section-head">
+        <p class="article-kicker"><span class="kicker-mins">Filed under</span></p>
+        <h1><span class="term-hash" aria-hidden="true">#</span>{{ taxonomy_term }}</h1>
+      </header>
+      <ol class="ledger ledger-section">
+        {% set tax = get_taxonomy(kind="tags") %}
+        {% for term in tax.items %}
+          {% if term.name == taxonomy_term %}
+            {% for p in term.pages | sort_by("weight") %}
+            <li class="ledger-row">
+              <a class="ledger-link" href="{{ base_url }}{{ p.url }}">
+                <span class="ledger-num" aria-hidden="true">{% if loop.index < 10 %}0{% endif %}{{ loop.index }}</span>
+                <span class="ledger-main">
+                  <span class="ledger-head">
+                    <span class="ledger-name">{{ p.title }}</span>
+                    <span class="ledger-dots" aria-hidden="true"></span>
+                    {% if p.extra.section_id %}<span class="ledger-id">{{ p.extra.section_id }}</span>{% endif %}
+                  </span>
+                  {% if p.description %}<span class="ledger-desc">{{ p.description }}</span>{% endif %}
+                </span>
+              </a>
+            </li>
+            {% endfor %}
+          {% endif %}
+        {% endfor %}
+      </ol>
+      <p class="term-back"><a href="{{ base_url }}/tags/"><span aria-hidden="true">&larr;</span> All topics</a></p>
+    </main>
+{% include "footer.html" %}

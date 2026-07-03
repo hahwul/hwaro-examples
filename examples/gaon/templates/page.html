@@ -1,0 +1,55 @@
+{% include "header.html" %}
+      <main id="main" class="docs-main">
+        <div class="doc-columns">
+          <article class="doc-article">
+            {% if page.extra.family %}<p class="topic-path">Grammar / {{ page.extra.family }}</p>{% elif page.section %}<p class="topic-path">{{ page.section }}</p>{% endif %}
+            <h1>{{ page.title }}</h1>
+            {% if page.description %}<p class="doc-dek">{{ page.description }}</p>{% endif %}
+
+            {% if page.extra.forms %}
+            <div class="spec-strip">
+              <dl class="spec-strip-rows">
+                <div class="spec-row"><dt>Forms</dt><dd lang="ko">{{ page.extra.forms }}</dd></div>
+                {% if page.extra.level %}<div class="spec-row"><dt>Level</dt><dd>{{ page.extra.level }}</dd></div>{% endif %}
+              </dl>
+            </div>
+            {% endif %}
+
+            {% if page.date or page.tags %}
+            <div class="doc-meta">
+              {% if page.date %}<time datetime="{{ page.date | date('%Y-%m-%d') }}">reviewed {{ page.date | date('%B %d, %Y') }}</time>{% endif %}
+              {% if page.reading_time %}<span>{{ page.reading_time }} min read</span>{% endif %}
+              {% if page.tags %}
+              <span class="doc-tags">
+                {% for t in page.tags %}<a class="tag-chip" href="{{ get_taxonomy_url(kind='tags', term=t) }}">#{{ t }}</a>{% endfor %}
+              </span>
+              {% endif %}
+            </div>
+            {% endif %}
+
+            <div class="prose">
+              {{ content | safe }}
+            </div>
+
+            {% if page.extra.family %}
+            {% set points = get_section(path="grammar").pages | sort_by("weight") %}
+            <nav class="doc-pager" aria-label="Grammar point navigation">
+              {% for p in points %}
+                {% if p.url == page.url %}
+                  {% if not loop.first %}{% set prev = points[loop.index0 - 1] %}<a class="doc-pager-link doc-pager-prev" href="{{ base_url }}{{ prev.url }}"><span>&larr; previous</span>{{ prev.title }}</a>{% endif %}
+                  {% if not loop.last %}{% set next = points[loop.index0 + 1] %}<a class="doc-pager-link doc-pager-next" href="{{ base_url }}{{ next.url }}"><span>next &rarr;</span>{{ next.title }}</a>{% endif %}
+                {% endif %}
+              {% endfor %}
+            </nav>
+            {% endif %}
+          </article>
+
+          {% if page.toc %}
+          <aside class="doc-toc" aria-label="On this page">
+            <p class="doc-toc-title">On this page</p>
+            {{ toc | safe }}
+          </aside>
+          {% endif %}
+        </div>
+      </main>
+{% include "footer.html" %}

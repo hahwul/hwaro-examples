@@ -1,0 +1,27 @@
+{% include "header.html" %}
+  <main id="main">
+    <header class="page-head">
+      <p class="page-kicker">Tagged</p>
+      <h1 class="page-title">{{ taxonomy_term }}</h1>
+    </header>
+    <ol class="ascent-list ascent-list-full">
+      {% set tax = get_taxonomy(kind="tags") %}
+      {% for term in tax.items %}
+        {% if term.name == taxonomy_term %}
+          {% for p in term.pages | sort_by("date", reverse=true) %}
+          <li class="ascent-row">
+            <span class="row-elev" aria-hidden="true">{{ p.extra.elevation | default("—") }}<i>m</i></span>
+            <span class="row-main">
+              <a class="row-title" href="{{ base_url }}{{ p.url }}">{{ p.title | e }}</a>
+              <span class="row-meta">{% if p.extra.massif %}{{ p.extra.massif }}{% endif %}{% if p.extra.aspect %} · {{ p.extra.aspect }}{% endif %}</span>
+            </span>
+            {% if p.extra.grade %}<span class="row-grade">{{ p.extra.grade }}</span>{% endif %}
+            {% if p.date %}<time class="row-date" datetime="{{ p.date | date("%Y-%m-%d") }}">{{ p.date | date("%d.%m.%y") }}</time>{% endif %}
+          </li>
+          {% endfor %}
+        {% endif %}
+      {% endfor %}
+    </ol>
+    <p class="term-back"><a href="{{ base_url }}/tags/"><span aria-hidden="true">←</span> All tags</a></p>
+  </main>
+{% include "footer.html" %}

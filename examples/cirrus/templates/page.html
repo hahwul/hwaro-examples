@@ -1,0 +1,39 @@
+{% include "header.html" %}
+  <main id="main" class="wrap">
+    <article class="article">
+      <header class="article-head">
+        {% if page.section == "builds" %}<a class="backlink" href="{{ base_url }}/builds/">
+          <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true" focusable="false"><path d="M13 4l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          All build logs</a>{% endif %}
+        <h1>{{ page.title | e }}</h1>
+        {% if page.date %}
+        <div class="specs">
+          {% if page.extra.build_no %}<span class="spec"><b>Log</b><span>No. {{ page.extra.build_no }}</span></span>{% endif %}
+          <span class="spec"><b>Flown</b><span>{{ page.date | date('%B %d, %Y') }}</span></span>
+          {% if page.extra.span %}<span class="spec"><b>Span</b><span>{{ page.extra.span | e }}</span></span>{% endif %}
+          {% if page.extra.wind %}<span class="spec"><b>Wind</b><span>{{ page.extra.wind | e }}</span></span>{% endif %}
+          <span class="spec"><b>Read</b><span>{{ page.reading_time }} min</span></span>
+        </div>
+        {% endif %}
+      </header>
+
+      <div class="prose">
+        {{ content }}
+      </div>
+
+      {% if page.date and page.tags %}
+      <div class="tag-row">
+        <span class="lbl">Tags</span>
+        {% for t in page.tags %}<a class="tag-link" href="{{ base_url }}/tags/{{ t | slugify }}/">{{ t | e }}</a>{% endfor %}
+      </div>
+      {% endif %}
+
+      {% if page.section == "builds" and ((page.lower and page.lower.date) or (page.higher and page.higher.date)) %}
+      <nav class="post-nav" aria-label="More build logs">
+        {% if page.lower and page.lower.date %}<a class="prev" href="{{ base_url }}{{ page.lower.url }}"><span class="lbl">Newer build</span><span class="ttl">{{ page.lower.title | e }}</span></a>{% endif %}
+        {% if page.higher and page.higher.date %}<a class="next" href="{{ base_url }}{{ page.higher.url }}"><span class="lbl">Older build</span><span class="ttl">{{ page.higher.title | e }}</span></a>{% endif %}
+      </nav>
+      {% endif %}
+    </article>
+  </main>
+{% include "footer.html" %}

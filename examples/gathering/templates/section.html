@@ -1,0 +1,37 @@
+{% include "header.html" %}
+    <main id="main">
+      <header class="page-open">
+        <p class="chapter-kicker">Contents</p>
+        <h1 class="page-title">{{ page.title | e }}</h1>
+        {% if content %}<div class="prose section-intro">{{ content | safe }}</div>{% endif %}
+      </header>
+
+      <div class="log-table-wrap">
+        <table class="log-table">
+          <caption class="sr-only">{{ page.title | e }}, in voyage order</caption>
+          <thead>
+            <tr>
+              <th scope="col">Day</th>
+              <th scope="col">Date</th>
+              <th scope="col">Noon position</th>
+              <th scope="col">Wind</th>
+              <th scope="col">Run</th>
+              <th scope="col">Chapter</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for p in section.pages | sort_by("weight") %}
+            <tr>
+              <td class="log-day">{{ p.extra.day | default("") }}</td>
+              <td class="log-date">{% if p.date %}<time datetime="{{ p.date | date("%Y-%m-%d") }}">{{ p.date | date("%b %d") }}</time>{% endif %}</td>
+              <td class="log-pos">{{ p.extra.position | default("") }}</td>
+              <td class="log-wind">{{ p.extra.wind | default("") }}</td>
+              <td class="log-run">{{ p.extra.run | default("") }}</td>
+              <td class="log-chapter"><a href="{{ base_url }}{{ p.url }}">{{ p.title | e }}</a></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </main>
+{% include "footer.html" %}

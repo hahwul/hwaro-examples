@@ -1,0 +1,38 @@
+{% include "header.html" %}
+    <main id="main">
+      <article class="note{% if page.extra.binomial %} note-has-binomial{% endif %}">
+        <header class="note-head">
+          {% if page.extra.binomial %}<p class="note-binomial"><span>{{ page.extra.binomial }}</span></p>{% endif %}
+          <p class="kicker">
+            {% if page.date %}Field note · <time datetime="{{ page.date | date("%Y-%m-%d") }}">{{ page.date | date("%d %B %Y") }}</time>{% else %}Standing page{% endif %}
+            {% if page.reading_time %}<span aria-hidden="true"> · </span>{{ page.reading_time }} min read{% endif %}
+          </p>
+          <h1 class="note-title">{{ page.title | e }}</h1>
+          {% if page.description %}<p class="note-desc">{{ page.description | e }}</p>{% endif %}
+        </header>
+
+        {% if page.extra.wind %}
+        <dl class="conditions" aria-label="Watch conditions">
+          <div class="cond"><dt>Wind</dt><dd>{{ page.extra.wind }}</dd></div>
+          {% if page.extra.sea %}<div class="cond"><dt>Sea state</dt><dd>{{ page.extra.sea }}</dd></div>{% endif %}
+          {% if page.extra.watch %}<div class="cond"><dt>Watch</dt><dd>{{ page.extra.watch }}</dd></div>{% endif %}
+          {% if page.extra.count %}<div class="cond"><dt>Count</dt><dd>{{ page.extra.count }}</dd></div>{% endif %}
+        </dl>
+        {% endif %}
+
+        <div class="prose">{{ content | safe }}</div>
+
+        <footer class="note-foot">
+          {% if page.tags %}
+          <p class="foot-row"><span class="foot-label">Tags</span>{% for t in page.tags %}<a class="foot-term" href="{{ base_url }}/tags/{{ t | slugify }}/">{{ t }}</a>{% endfor %}</p>
+          {% endif %}
+          {% if page.taxonomies.categories %}
+          <p class="foot-row"><span class="foot-label">Filed as</span>{% for c in page.taxonomies.categories %}<a class="foot-term" href="{{ base_url }}/categories/{{ c | slugify }}/">{{ c }}</a>{% endfor %}</p>
+          {% endif %}
+          {% if page.section == "field-notes" %}
+          <p class="foot-back"><a class="all-link" href="{{ base_url }}/field-notes/"><span aria-hidden="true">← </span>All field notes</a></p>
+          {% endif %}
+        </footer>
+      </article>
+    </main>
+{% include "footer.html" %}

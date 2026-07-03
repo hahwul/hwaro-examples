@@ -1,0 +1,77 @@
+{% include "header.html" %}
+      <main id="main" class="codex-main">
+        <article class="entry">
+          {% if page.extra.kind == "region" %}
+          <p class="topic-path">The Codex / Regions</p>
+          {% elif page.extra.kind == "house" %}
+          <p class="topic-path">The Codex / Houses</p>
+          {% elif page.section %}
+          <p class="topic-path">{{ page.section }}</p>
+          {% else %}
+          <p class="topic-path">Apparatus &amp; Method</p>
+          {% endif %}
+
+          <h1 class="entry-title">{{ page.title | e }}</h1>
+          <div class="rule-double" aria-hidden="true"></div>
+
+          {% if page.description %}<p class="entry-dek">{{ page.description }}</p>{% endif %}
+
+          {% if page.date or page.tags %}
+          <div class="entry-meta">
+            {% if page.date %}<time datetime="{{ page.date | date('%Y-%m-%d') }}">last revised {{ page.date | date('%B %d, %Y') }}</time>{% endif %}
+            {% if page.reading_time %}<span>{{ page.reading_time }} min read</span>{% endif %}
+            {% if page.tags %}
+            <span class="entry-tags">
+              {% for t in page.tags %}<a class="tag-chip" href="{{ get_taxonomy_url(kind='tags', term=t) }}">{{ t }}</a>{% endfor %}
+            </span>
+            {% endif %}
+          </div>
+          {% endif %}
+
+          <div class="prose">
+            {% if page.extra.ruler %}
+            <aside class="infobox" aria-label="Ledger entry for {{ page.title | e }}">
+              <svg class="infobox-crest" viewBox="0 0 32 32" aria-hidden="true">
+                <circle cx="16" cy="16" r="13" fill="none" stroke="currentColor" stroke-width="1.2"/>
+                <path d="M16 6 L18.2 13.8 L26 16 L18.2 18.2 L16 26 L13.8 18.2 L6 16 L13.8 13.8 Z" fill="currentColor"/>
+              </svg>
+              <p class="infobox-title">{{ page.title | e }}</p>
+              <dl class="infobox-rows">
+                <div class="infobox-row">
+                  <dt>Type</dt>
+                  <dd>{% if page.extra.kind == "region" %}Region{% elif page.extra.kind == "house" %}Trading House{% else %}{{ page.extra.kind }}{% endif %}</dd>
+                </div>
+                <div class="infobox-row">
+                  <dt>Ruler</dt>
+                  <dd>{{ page.extra.ruler }}</dd>
+                </div>
+                <div class="infobox-row">
+                  <dt>Banner</dt>
+                  <dd>{{ page.extra.banner }}</dd>
+                </div>
+                <div class="infobox-row">
+                  <dt>Founding Year</dt>
+                  <dd>{{ page.extra.founding_year }}</dd>
+                </div>
+                {% if page.extra.seat %}
+                <div class="infobox-row">
+                  <dt>Seat</dt>
+                  <dd>{{ page.extra.seat }}</dd>
+                </div>
+                {% endif %}
+              </dl>
+            </aside>
+            {% endif %}
+
+            {% if page.toc %}
+            <aside class="toc-box" aria-label="On this page">
+              <p class="rubric toc-box-title">On This Page</p>
+              {{ toc | safe }}
+            </aside>
+            {% endif %}
+
+            {{ content | safe }}
+          </div>
+        </article>
+      </main>
+{% include "footer.html" %}

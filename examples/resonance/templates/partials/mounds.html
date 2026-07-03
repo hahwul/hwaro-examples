@@ -1,0 +1,14 @@
+{# Garden-bed mound waveform. Set wf (list of 0..1 loudness values), wf_title,
+   and the size variables wf_w/wf_h/wf_base/wf_min/wf_max before including.
+   Each data point becomes one rounded mound (a single elliptical arc from
+   baseline to baseline, radius equal to the point spacing); mounds overlap
+   their neighbour so the row reads as one continuous bed of soil humps,
+   not isolated spikes.
+   (Crinja's `default()` filter returns a value arithmetic operators reject,
+   so every call site sets these explicitly rather than relying on defaults.) #}
+{% set mn = wf | length %}
+{% set mspace = wf_w / mn %}
+<svg class="mounds" viewBox="0 0 {{ wf_w }} {{ wf_h }}" preserveAspectRatio="none" role="img" aria-label="Loudness curve for {{ wf_title | e }}, drawn as a row of garden-bed mounds">
+  <line class="mounds-soil" x1="0" y1="{{ wf_base }}" x2="{{ wf_w }}" y2="{{ wf_base }}"></line>
+  <path class="mounds-fill" d="{% for v in wf %}{% set mcx = mspace * loop.index0 + mspace / 2 %}M{{ mcx - mspace }},{{ wf_base }} A{{ mspace }},{{ wf_min + v * wf_max }} 0 0 1 {{ mcx + mspace }},{{ wf_base }} Z {% endfor %}"></path>
+</svg>

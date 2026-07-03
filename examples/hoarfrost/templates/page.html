@@ -1,0 +1,49 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    {% if page.section is present and page.section == "observations" %}
+    <article class="entry">
+      <header class="entry-hero">
+        {% set chart = page.extra %}
+        {% include "partials/starchart.html" %}
+        <div class="entry-hero-inner">
+          <p class="entry-kicker">Observation Log{% if page.extra.constellation %} · {{ page.extra.constellation }}{% endif %}</p>
+          <h1>{{ page.title | e }}</h1>
+          <p class="entry-meta">
+            {% if page.extra.bortle %}<span class="meta-item meta-bortle">Bortle {{ page.extra.bortle }}</span>{% endif %}
+            {% if page.date %}<span class="meta-item"><time datetime="{{ page.date | date('%Y-%m-%d') }}">{{ page.date | date('%B %d, %Y') }}</time></span>{% endif %}
+            {% if page.extra.instrument %}<span class="meta-item">{{ page.extra.instrument }}</span>{% endif %}
+            {% if page.extra.site %}<span class="meta-item">{{ page.extra.site }}</span>{% endif %}
+            {% if page.reading_time %}<span class="meta-item">{{ page.reading_time }} min read</span>{% endif %}
+          </p>
+        </div>
+      </header>
+
+      <div class="prose">
+        {{ content | safe }}
+      </div>
+
+      {% if page.tags %}
+      <ul class="entry-tags" aria-label="Tags for this entry">
+        {% for t in page.tags %}<li><a href="{{ base_url }}/tags/{{ t | slugify }}/">{{ t }}</a></li>{% endfor %}
+      </ul>
+      {% endif %}
+
+      {% set has_newer = page.lower and page.lower.section == "observations" and page.lower.date %}
+      {% set has_older = page.higher and page.higher.section == "observations" and page.higher.date %}
+      {% if has_newer or has_older %}
+      <nav class="entry-pager" aria-label="More observations">
+        {% if has_newer %}<a class="entry-pager-link prev" href="{{ base_url }}{{ page.lower.url }}"><span class="pager-label">Newer<span aria-hidden="true"> ↑</span></span><span class="pager-title">{{ page.lower.title }}</span></a>{% else %}<span class="entry-pager-link is-empty" aria-hidden="true"></span>{% endif %}
+        {% if has_older %}<a class="entry-pager-link next" href="{{ base_url }}{{ page.higher.url }}"><span class="pager-label">Older<span aria-hidden="true"> ↓</span></span><span class="pager-title">{{ page.higher.title }}</span></a>{% endif %}
+      </nav>
+      {% endif %}
+    </article>
+    {% else %}
+    <article class="page">
+      {% if page.title is present %}<h1>{{ page.title | e }}</h1>{% endif %}
+      <div class="prose">
+        {{ content | safe }}
+      </div>
+    </article>
+    {% endif %}
+  </main>
+{% include "footer.html" %}

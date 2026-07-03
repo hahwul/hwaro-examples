@@ -1,0 +1,41 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <div class="page-head">
+      <p class="page-kicker">Archive</p>
+      <h1>{{ page.title | e }}</h1>
+      {% if page.description %}<p class="page-lead">{{ page.description | e }}</p>{% endif %}
+    </div>
+
+    <div class="flightpath flightpath--archive">
+      <div class="flightpath-line" aria-hidden="true">
+        <svg width="100%" height="100%" preserveAspectRatio="none" viewBox="0 0 4 100">
+          <line x1="2" y1="0" x2="2" y2="100" vector-effect="non-scaling-stroke" stroke="var(--accent)" stroke-width="2" stroke-dasharray="1 6" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <ol class="flightpath-list">
+      {% for p in section.pages | sort_by("date") %}
+        <li class="dispatch">
+          <div class="dispatch-rail" aria-hidden="true">
+            <span class="waypoint{% if loop.last %} waypoint-latest{% endif %}"></span>
+          </div>
+          <a class="dispatch-body" href="{{ base_url }}{{ p.url }}">
+            <p class="dispatch-meta">
+              <span class="dispatch-no">No. {{ p.extra.issue_no | default(loop.index) }}</span>
+              {% if p.date %}<span class="dispatch-date">{{ p.date | date("%B %-d, %Y") }}</span>{% endif %}
+              {% if p.extra.route %}<span class="dispatch-route">{{ p.extra.route | e }}</span>{% endif %}
+            </p>
+            <h3 class="dispatch-title">{{ p.title | e }}</h3>
+            {% if p.extra.species %}<p class="dispatch-species">{{ p.extra.species | e }}{% if p.extra.binomial %} <span aria-hidden="true">&middot;</span> {{ p.extra.binomial | e }}{% endif %}</p>{% endif %}
+            {% if p.summary %}<p class="dispatch-summary">{{ p.summary | strip_html | truncate_words(28) }}</p>{% endif %}
+            <p class="dispatch-coords">
+              {% if p.extra.distance %}<span class="dispatch-distance">{{ p.extra.distance | e }}</span>{% endif %}
+              {% if p.extra.from %}<span>{{ p.extra.from | e }}</span>{% endif %}
+              {% if p.extra.to %}<span>&rarr; {{ p.extra.to | e }}</span>{% endif %}
+            </p>
+          </a>
+        </li>
+      {% endfor %}
+      </ol>
+    </div>
+  </main>
+{% include "footer.html" %}

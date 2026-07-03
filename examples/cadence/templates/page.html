@@ -1,0 +1,43 @@
+{% include "header.html" %}
+<main id="main" class="site-main">
+  {% if page.section == "episodes" %}
+  <article class="ep-entry ep-full">
+    <span class="ep-node" aria-hidden="true"></span>
+    <div class="ep-card">
+      <p class="ep-eyebrow"><a href="{{ base_url }}/episodes/">Episodes</a></p>
+      <h1 class="ep-title ep-title-full">{{ page.title | e }}</h1>
+      {% if page.extra.ipa %}<p class="ep-ipa ep-ipa-full ipa">{{ page.extra.ipa }}</p>{% endif %}
+      <p class="ep-meta">
+        {% if page.extra.code %}<span class="ep-code">{{ page.extra.code }}</span>{% endif %}
+        {% if page.date %}<time datetime="{{ page.date | date('%Y-%m-%d') }}">{{ page.date | date("%B %d, %Y") }}</time>{% endif %}
+        {% if page.extra.duration %}<span class="ep-duration">{{ page.extra.duration }}</span>{% endif %}
+      </p>
+      {% if page.tags %}<p class="ep-tags">{% for t in page.tags %}<a href="{{ base_url }}/tags/{{ t | slugify }}/">{{ t }}</a>{% endfor %}</p>{% endif %}
+      <div class="prose">{{ content | safe }}</div>
+    </div>
+  </article>
+  {% if page.lower.date or page.higher.date %}
+  <nav class="ep-pager" aria-label="Adjacent episodes">
+    {% if page.higher.date %}
+    <a class="ep-pager-link" href="{{ base_url }}{{ page.higher.url }}">
+      <span class="ep-pager-label">Newer episode</span>
+      <span class="ep-pager-title">{{ page.higher.title }}</span>
+    </a>
+    {% else %}<span></span>{% endif %}
+    {% if page.lower.date %}
+    <a class="ep-pager-link ep-pager-next" href="{{ base_url }}{{ page.lower.url }}">
+      <span class="ep-pager-label">Older episode</span>
+      <span class="ep-pager-title">{{ page.lower.title }}</span>
+    </a>
+    {% endif %}
+  </nav>
+  {% endif %}
+  {% else %}
+  <header class="page-head">
+    {% if page.title is present %}<h1 class="page-title">{{ page.title | e }}</h1>{% endif %}
+    {% if page.description %}<p class="page-intro">{{ page.description | e }}</p>{% endif %}
+  </header>
+  <div class="prose">{{ content | safe }}</div>
+  {% endif %}
+</main>
+{% include "footer.html" %}

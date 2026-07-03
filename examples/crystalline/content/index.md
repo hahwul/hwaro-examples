@@ -1,4 +1,0 @@
-+++
-title = "Crystalline"
-template = "home"
-+++

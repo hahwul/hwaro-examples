@@ -1,4 +1,0 @@
-+++
-title = "Gallery"
-template = "index"
-+++

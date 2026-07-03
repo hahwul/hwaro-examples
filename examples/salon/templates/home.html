@@ -1,0 +1,50 @@
+{% include "header.html" %}
+  <main id="main" class="home">
+    {% set criticism = get_section(path="criticism") %}
+    {% set essays = criticism.pages | sort_by("date", reverse=true) %}
+    {% set lead = essays | first %}
+
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-text">
+        {% if lead %}
+          <p class="hero-kicker">{{ lead.extra.medium | default("Criticism") | upper }}</p>
+          <h1 class="hero-title" id="hero-title"><a href="{{ base_url }}{{ lead.url }}">{{ lead.title | e }}</a></h1>
+          {% if lead.description %}<p class="hero-dek">{{ lead.description | e }}</p>{% endif %}
+          <p class="hero-byline">
+            {% if lead.extra.critic %}<span class="hero-critic">{{ lead.extra.critic | e }}</span>{% endif %}
+            {% if lead.date %}<span aria-hidden="true"> · </span><time datetime="{{ lead.date | date('%Y-%m-%d') }}">{{ lead.date | date('%B %-d, %Y') }}</time>{% endif %}
+          </p>
+          <a class="hero-cta" href="{{ base_url }}{{ lead.url }}">Read the essay <span aria-hidden="true">→</span></a>
+        {% else %}
+          <h1 class="hero-title" id="hero-title">{{ page.title | e }}</h1>
+        {% endif %}
+      </div>
+      <div class="hero-frame" role="img" aria-label="An empty frame, outlined only, where the essay's photograph would be reproduced">
+        <span class="hero-frame-caption">The print is not reproduced here.</span>
+      </div>
+    </section>
+
+    <section class="home-intro">
+      {{ content | safe }}
+    </section>
+
+    <section class="home-list" aria-labelledby="home-list-title">
+      <div class="home-list-head">
+        <h2 id="home-list-title">Recent Criticism</h2>
+        <a href="{{ base_url }}/criticism/">All essays <span aria-hidden="true">→</span></a>
+      </div>
+      <ol class="essay-index">
+        {% for p in essays %}
+        <li class="essay-index-item">
+          <span class="eii-folio" aria-hidden="true">{{ loop.index }}</span>
+          <a href="{{ base_url }}{{ p.url }}">
+            <span class="eii-kicker">{{ p.extra.medium | default("Criticism") | upper }}</span>
+            <span class="eii-title">{{ p.title | e }}</span>
+            {% if p.description %}<span class="eii-dek">{{ p.description | e }}</span>{% endif %}
+          </a>
+        </li>
+        {% endfor %}
+      </ol>
+    </section>
+  </main>
+{% include "footer.html" %}

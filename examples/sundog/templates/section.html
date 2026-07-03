@@ -1,0 +1,40 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <header class="section-head">
+      <p class="section-kicker">Sundog &middot; every essay, newest first</p>
+      <h1 class="section-title">{{ page.title | e }}</h1>
+      {% if content %}<div class="section-intro">{{ content | safe }}</div>{% endif %}
+    </header>
+
+    <ol class="essay-list essay-list-full">
+      {% if paginator %}
+        {% for p in paginator.pages %}
+        <li class="essay-row">
+          <a class="essay-row-link" href="{{ base_url }}{{ p.url }}">
+            <span class="essay-row-head">
+              <span class="essay-row-title">{{ p.title }}</span>
+              {% if p.date %}<time class="essay-row-date" datetime="{{ p.date | date("%Y-%m-%d") }}">{{ p.date | date("%b %d, %Y") }}</time>{% endif %}
+            </span>
+            {% if p.extra.exposure %}<span class="essay-row-exposure">{{ p.extra.exposure }}</span>{% endif %}
+            {% if p.summary %}<span class="essay-row-snip">{{ p.summary | strip_html | truncate_words(30) }}</span>{% endif %}
+          </a>
+        </li>
+        {% endfor %}
+      {% else %}
+        {% for p in section.pages | sort_by("date", reverse=true) %}
+        <li class="essay-row">
+          <a class="essay-row-link" href="{{ base_url }}{{ p.url }}">
+            <span class="essay-row-head">
+              <span class="essay-row-title">{{ p.title }}</span>
+              {% if p.date %}<time class="essay-row-date" datetime="{{ p.date | date("%Y-%m-%d") }}">{{ p.date | date("%b %d, %Y") }}</time>{% endif %}
+            </span>
+            {% if p.extra.exposure %}<span class="essay-row-exposure">{{ p.extra.exposure }}</span>{% endif %}
+            {% if p.summary %}<span class="essay-row-snip">{{ p.summary | strip_html | truncate_words(30) }}</span>{% endif %}
+          </a>
+        </li>
+        {% endfor %}
+      {% endif %}
+    </ol>
+    {{ pagination }}
+  </main>
+{% include "footer.html" %}

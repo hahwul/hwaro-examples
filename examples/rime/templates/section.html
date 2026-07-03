@@ -1,0 +1,27 @@
+{% include "header.html" %}
+  <main id="main">
+    <header class="page-head">
+      <p class="page-kicker">The log</p>
+      <h1 class="page-title">{{ page.title | e }}</h1>
+      {% if page.description %}<p class="page-intro">{{ page.description | e }}</p>{% endif %}
+    </header>
+
+    <ol class="ascent-list ascent-list-full">
+      {% if paginator %}{% set rows = paginator.pages %}{% else %}{% set rows = section.pages %}{% endif %}
+      {% for p in rows %}
+      <li class="ascent-row">
+        <span class="row-elev" aria-hidden="true">{{ p.extra.elevation | default("—") }}<i>m</i></span>
+        <span class="row-main">
+          <a class="row-title" href="{{ base_url }}{{ p.url }}">{{ p.title | e }}</a>
+          <span class="row-meta">{% if p.extra.massif %}{{ p.extra.massif }}{% endif %}{% if p.extra.aspect %} · {{ p.extra.aspect }}{% endif %}</span>
+          {% if p.summary %}<span class="row-summary">{{ p.summary | strip_html | truncate_words(26) }}</span>{% endif %}
+        </span>
+        {% if p.extra.grade %}<span class="row-grade">{{ p.extra.grade }}</span>{% endif %}
+        {% if p.date %}<time class="row-date" datetime="{{ p.date | date("%Y-%m-%d") }}">{{ p.date | date("%d.%m.%y") }}</time>{% endif %}
+      </li>
+      {% endfor %}
+    </ol>
+
+    {{ pagination }}
+  </main>
+{% include "footer.html" %}

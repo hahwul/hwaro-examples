@@ -1,0 +1,25 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <header class="section-head wrap">
+      <p class="label-heading">Archive</p>
+      <h1 class="section-title">{{ page.title | e }}</h1>
+      {% if page.description %}<p class="section-dek">{{ page.description }}</p>{% endif %}
+    </header>
+    <div class="issue-rule wrap" aria-hidden="true"></div>
+    <ol class="well wrap">
+      {% for issue in section.pages | sort_by("date", reverse=true) %}
+      <li class="well-row">
+        {% if issue.extra.issue_number %}<span class="well-num">No. {{ issue.extra.issue_number }}</span>{% endif %}
+        <div class="well-body">
+          <h2 class="well-title"><a href="{{ base_url }}{{ issue.url }}">{{ issue.title | e }}</a></h2>
+          {% if issue.description %}<p class="well-dek">{{ issue.description | truncate_words(28) }}</p>{% endif %}
+          <p class="well-meta">
+            {% if issue.date %}<time datetime="{{ issue.date | date('%Y-%m-%d') }}">{{ issue.date | date("%B %d, %Y") }}</time>{% endif %}
+            {% if issue.tags %}<span class="well-sep" aria-hidden="true">&middot;</span>{% for t in issue.tags %}<a class="well-tag" href="{{ get_taxonomy_url(kind="tags", term=t) }}">{{ t }}</a>{% if not loop.last %}<span aria-hidden="true"> </span>{% endif %}{% endfor %}{% endif %}
+          </p>
+        </div>
+      </li>
+      {% endfor %}
+    </ol>
+  </main>
+{% include "footer.html" %}

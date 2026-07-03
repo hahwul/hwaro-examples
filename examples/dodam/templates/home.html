@@ -1,0 +1,64 @@
+{% include "header.html" %}
+    <main id="main" class="home">
+      {% set entries = get_section(path="issues").pages | sort_by("date", reverse=true) %}
+      {% set latest = entries | first %}
+      <section class="masthead">
+        <h1 class="masthead-title">Dodam</h1>
+        <div class="standfirst">{{ content | safe }}</div>
+      </section>
+
+      <section class="latest" aria-labelledby="latest-heading">
+        <p class="latest-kicker" id="latest-heading">{% if latest.extra.issue %}Issue {{ latest.extra.issue }}{% else %}Latest letter{% endif %}{% if latest.date %} <span class="latest-sep" aria-hidden="true">·</span> <time datetime="{{ latest.date | date("%Y-%m-%d") }}">{{ latest.date | date("%B %d, %Y") }}</time>{% endif %}</p>
+        <h2 class="latest-title"><a href="{{ base_url }}{{ latest.url }}">{{ latest.title }}</a></h2>
+        {% if latest.summary %}<div class="latest-opening">{{ latest.summary | safe }}</div>{% endif %}
+        <p class="latest-more">
+          <a class="read-link" href="{{ base_url }}{{ latest.url }}">Read the whole letter</a>
+          {% if latest.extra.issue %}{% set leaves = latest.extra.issue %}{% set seedling_size = "sm" %}{% include "partials/seedling.html" %}{% endif %}
+        </p>
+      </section>
+
+      <section class="subscribe" aria-labelledby="subscribe-heading">
+        <div class="plant-tag" aria-hidden="true">
+          <svg viewBox="0 0 64 100" focusable="false">
+            <path class="tag-stake" d="M32 58 L23 100 L41 100 Z"/>
+            <rect class="tag-card" x="5" y="4" width="54" height="56" rx="9"/>
+            <path class="tag-leaf" d="M46 12c4-3 8-3 11 0-2 4-6 5-11 3-1-1-1-2 0-3Z"/>
+            <text class="tag-text" x="32" y="30" text-anchor="middle">sign</text>
+            <text class="tag-text" x="32" y="47" text-anchor="middle">up</text>
+          </svg>
+        </div>
+        <div class="subscribe-body">
+          <h2 class="subscribe-heading" id="subscribe-heading">Get the next letter</h2>
+          <p class="subscribe-note">A short issue every other Sunday. No more often than the plants themselves change.</p>
+          <form class="subscribe-form" onsubmit="return false;">
+            <label class="subscribe-label" for="subscribe-email">Email address</label>
+            <div class="subscribe-row">
+              <input class="subscribe-input" id="subscribe-email" type="email" name="email" placeholder="you@yourdomain.com" autocomplete="email" autocapitalize="off" spellcheck="false" required>
+              <button class="subscribe-button" type="submit">Subscribe</button>
+            </div>
+            <p class="subscribe-fineprint">Static demo — no mailing list is wired up yet.</p>
+          </form>
+        </div>
+      </section>
+
+      {% include "partials/rule.html" %}
+
+      <section class="archive" aria-labelledby="archive-heading">
+        <h2 class="section-heading" id="archive-heading">Earlier issues</h2>
+        <ol class="issue-rows">
+          {% for p in entries %}
+          {% if loop.index > 1 %}
+          <li class="issue-row">
+            <a class="issue-row-link" href="{{ base_url }}{{ p.url }}">
+              {% if p.date %}<time class="issue-row-date" datetime="{{ p.date | date("%Y-%m-%d") }}">{{ p.date | date("%b %d, %Y") }}</time>{% endif %}
+              <span class="issue-row-title">{{ p.title }}</span>
+            </a>
+            {% if p.extra.issue %}<span class="issue-row-num">No. {{ p.extra.issue }}</span>{% endif %}
+          </li>
+          {% endif %}
+          {% endfor %}
+        </ol>
+        <p class="all-link"><a class="read-link" href="{{ base_url }}/issues/">Every issue</a></p>
+      </section>
+    </main>
+{% include "footer.html" %}

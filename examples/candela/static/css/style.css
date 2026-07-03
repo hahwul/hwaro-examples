@@ -1,0 +1,405 @@
+/* ==========================================================================
+   Candela — recovered ASCII/Unicode BBS art archive
+   Zine-collage, terminal/brutalist. Phosphor green on soot black.
+
+   Font note: Space Mono (the assigned "mono" typeface) is used for display
+   type — headings, nav, labels, UI chrome — where only Latin/ASCII glyphs
+   are needed. The actual artwork frames use `--font-term`, a system
+   monospace stack, because Space Mono's Google Fonts subsets do not cover
+   the box-drawing / block-element Unicode ranges (U+2500-259F) the pieces
+   rely on; mixing a font that lacks those glyphs into a hand-aligned ASCII
+   grid would silently break the character-cell alignment the art depends
+   on. System monospace stacks carry that range reliably everywhere.
+   ========================================================================== */
+
+:root {
+  /* palette */
+  --bg: #0c120c;
+  --surface: #152015;
+  --surface-raised: #1b291b;
+  --fg: #dfe8df;
+  --muted: #8fa38f;
+  --accent: #4ade6a;
+  --accent-fg: #06180a;
+  --border: color-mix(in srgb, var(--fg) 16%, transparent);
+  --border-accent: color-mix(in srgb, var(--accent) 45%, transparent);
+
+  /* fonts */
+  --font-display: "Space Mono", ui-monospace, Menlo, Consolas, monospace;
+  --font-text: "Work Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-term: ui-monospace, "Cascadia Mono", "SF Mono", Consolas,
+    "DejaVu Sans Mono", "Liberation Mono", "Noto Sans Mono", monospace;
+
+  /* fluid type scale */
+  --text-sm: clamp(0.8rem, 0.77rem + 0.15vw, 0.88rem);
+  --text-base: clamp(0.95rem, 0.91rem + 0.2vw, 1.05rem);
+  --text-lg: clamp(1.1rem, 1.02rem + 0.4vw, 1.3rem);
+  --text-xl: clamp(1.4rem, 1.2rem + 1vw, 2rem);
+  --text-2xl: clamp(1.8rem, 1.4rem + 2vw, 2.75rem);
+
+  /* spacing (4/8px scale) */
+  --space-1: .25rem;
+  --space-2: .5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2.5rem;
+  --space-6: 4rem;
+  --space-7: 6rem;
+
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-text);
+  font-size: var(--text-base);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* faint scanline texture — the site's one gradient used for atmosphere */
+  background-image: repeating-linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--accent) 3%, transparent) 0px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+
+::selection { background: color-mix(in srgb, var(--accent) 35%, transparent); color: var(--fg); }
+
+img, svg { max-width: 100%; height: auto; }
+
+/* ---- layout shell ---------------------------------------------------- */
+
+.site-wrapper {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+}
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: var(--space-3);
+  background: var(--accent);
+  color: var(--accent-fg);
+  padding: 0.6rem 1rem;
+  z-index: 1000;
+  font-family: var(--font-display);
+  text-decoration: none;
+  border-radius: 0 0 4px 4px;
+}
+.skip-link:focus { top: 0; }
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---- header ------------------------------------------------------------ */
+
+.site-header {
+  padding: var(--space-4) 0 var(--space-3);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: var(--space-5);
+}
+
+.site-header__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-lg);
+  letter-spacing: 0.02em;
+  color: var(--fg);
+  text-decoration: none;
+}
+.wordmark:hover { color: var(--accent); }
+.wordmark__glyph { color: var(--accent); }
+.cursor {
+  display: inline-block;
+  color: var(--accent);
+  margin-left: 2px;
+  animation: blink 1.1s steps(1) infinite;
+}
+@keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+
+.site-nav { display: flex; gap: var(--space-4); flex-wrap: wrap; }
+.site-nav a {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  text-decoration: none;
+  padding: var(--space-1) 0;
+  border-bottom: 1px solid transparent;
+  transition: color .15s ease-out, border-color .15s ease-out;
+}
+.site-nav a:hover { color: var(--accent); border-color: var(--border-accent); }
+
+.site-subhead {
+  margin: var(--space-2) 0 0;
+  font-family: var(--font-term);
+  font-size: var(--text-sm);
+  color: var(--muted);
+  letter-spacing: 0.02em;
+}
+
+/* ---- footer -------------------------------------------------------------- */
+
+.site-footer {
+  margin-top: var(--space-7);
+  padding: var(--space-4) 0 var(--space-6);
+  border-top: 1px solid var(--border);
+  font-family: var(--font-term);
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+.footer-line { margin: 0.3em 0; }
+.footer-line--muted { opacity: 0.75; }
+.site-footer a { color: var(--muted); }
+.site-footer a:hover { color: var(--accent); }
+
+/* ---- masthead ------------------------------------------------------------ */
+
+.masthead-wrap { margin-bottom: var(--space-6); }
+
+.masthead {
+  font-family: var(--font-term);
+  color: var(--accent);
+  font-size: clamp(0.6rem, 0.4rem + 1vw, 1rem);
+  line-height: 1.35;
+  margin: 0 0 var(--space-4);
+  overflow-x: auto;
+  text-shadow: 0 0 14px color-mix(in srgb, var(--accent) 45%, transparent);
+  white-space: pre;
+}
+
+.transmission-note {
+  max-width: 66ch;
+  color: var(--muted);
+  font-size: var(--text-base);
+}
+.transmission-note p { margin: 0.9em 0; }
+
+/* ---- the wall of exhibits (zine collage) ---------------------------------- */
+
+.wall {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-5) var(--space-4);
+  margin: var(--space-5) 0;
+}
+
+.wall--index { margin-top: var(--space-4); }
+
+.exhibit-card { max-width: 100%; }
+.exhibit-card--1 { --rot: -1.6deg; margin-top: 0; }
+.exhibit-card--2 { --rot: 1deg; margin-top: var(--space-4); }
+.exhibit-card--3 { --rot: -0.6deg; margin-top: 0; }
+.exhibit-card--4 { --rot: 1.4deg; margin-top: var(--space-3); }
+.exhibit-card--5 { --rot: -1.1deg; margin-top: var(--space-2); }
+.exhibit-card--6 { --rot: 0.7deg; margin-top: var(--space-4); }
+
+.exhibit-card__link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  transform: rotate(var(--rot, 0deg));
+  transition: transform .18s ease-out, box-shadow .18s ease-out;
+}
+.exhibit-card__link:hover,
+.exhibit-card__link:focus-visible {
+  transform: rotate(0deg) translateY(-2px);
+}
+.exhibit-card__link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.exhibit-card__art {
+  background: var(--surface);
+  padding: var(--space-3);
+  box-shadow: 6px 6px 0 0 color-mix(in srgb, var(--accent) 12%, transparent);
+}
+.exhibit-card__art pre {
+  margin: 0;
+  font-family: var(--font-term);
+  font-size: clamp(0.62rem, 0.55rem + 0.35vw, 0.82rem);
+  line-height: 1.3;
+  color: var(--fg);
+  background: transparent;
+  overflow-x: auto;
+  white-space: pre;
+}
+/* override the highlight.js theme so the art stays flat phosphor-green —
+   these plaintext fences carry no real tokens, and the theme's own
+   background/foreground on .hljs would otherwise fight the archive palette */
+.exhibit-card__art pre code.hljs,
+.exhibit-body pre code.hljs,
+.masthead code.hljs {
+  background: transparent;
+  color: inherit;
+  padding: 0;
+}
+
+.exhibit-card__open {
+  display: inline-block;
+  margin-top: var(--space-2);
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  color: var(--accent);
+  letter-spacing: 0.04em;
+}
+
+.wall-footnote {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+}
+.wall-footnote a { color: var(--accent); }
+
+/* ---- prose (about / generic pages) ---------------------------------------- */
+
+.prose { max-width: 68ch; }
+.prose h1 { margin-top: 0; }
+.prose h2 { margin-top: var(--space-6); }
+.page-meta {
+  font-family: var(--font-term);
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+
+/* ---- exhibit detail page --------------------------------------------------- */
+
+.exhibit { max-width: 68ch; }
+.exhibit-eyebrow { margin: 0 0 var(--space-3); }
+.exhibit-eyebrow a {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  color: var(--muted);
+  text-decoration: none;
+}
+.exhibit-eyebrow a:hover { color: var(--accent); }
+
+.exhibit-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--space-3) var(--space-4);
+  margin: var(--space-4) 0 var(--space-5);
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface);
+  border-left: 3px solid var(--accent);
+}
+.exhibit-meta div { margin: 0; }
+.exhibit-meta dt {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+.exhibit-meta dd {
+  margin: 0.2em 0 0;
+  font-family: var(--font-term);
+  color: var(--fg);
+}
+
+.exhibit-body pre {
+  background: var(--surface);
+  padding: var(--space-3);
+  margin: var(--space-4) 0;
+  font-family: var(--font-term);
+  font-size: clamp(0.72rem, 0.62rem + 0.4vw, 0.95rem);
+  line-height: 1.35;
+  overflow-x: auto;
+  box-shadow: 6px 6px 0 0 color-mix(in srgb, var(--accent) 12%, transparent);
+}
+.exhibit-body p { margin: 1.1em 0; }
+
+/* ---- general links, headings, code ----------------------------------------- */
+
+a { color: var(--accent); text-underline-offset: 3px; text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent); }
+a:hover { text-decoration-color: currentColor; }
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+h1 { font-size: var(--text-2xl); }
+h2 { font-size: var(--text-xl); }
+h3 { font-size: var(--text-lg); }
+
+code { font-family: var(--font-term); background: var(--surface); padding: 0.1rem 0.35rem; font-size: 0.88em; }
+blockquote {
+  margin: 1.4em 0;
+  padding-left: var(--space-3);
+  border-left: 2px solid var(--border-accent);
+  color: var(--muted);
+}
+
+ul.section-list { list-style: none; padding: 0; }
+
+/* ---- 404 ------------------------------------------------------------------- */
+
+.not-found { max-width: 60ch; }
+.not-found__frame {
+  font-family: var(--font-term);
+  color: var(--accent);
+  background: var(--surface);
+  padding: var(--space-3);
+  font-size: var(--text-sm);
+  overflow-x: auto;
+  margin-bottom: var(--space-4);
+}
+
+/* ---- section listing lede --------------------------------------------------- */
+
+.section-lede { max-width: 66ch; color: var(--muted); }
+
+/* ---- responsive ------------------------------------------------------------- */
+
+@media (max-width: 640px) {
+  .site-wrapper { padding: 0 var(--space-3); }
+  .site-header__row { flex-direction: column; align-items: flex-start; gap: var(--space-2); }
+  .exhibit-card--1, .exhibit-card--2, .exhibit-card--3,
+  .exhibit-card--4, .exhibit-card--5, .exhibit-card--6 {
+    --rot: 0deg;
+    margin-top: 0;
+  }
+  .wall { gap: var(--space-4) 0; }
+}
+
+/* ---- accessibility & motion -------------------------------------------------- */
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

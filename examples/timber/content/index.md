@@ -1,4 +1,0 @@
-+++
-title = "Timber"
-template = "home"
-+++
