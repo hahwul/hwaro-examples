@@ -64,7 +64,7 @@ expressed in the manifest's `content.theme`, **not** as tags.
 
 ## Creating a new example site
 
-Follow `DESIGN.md` §15 exactly. Summary:
+Follow `DESIGN.md` §15 exactly — it is the authoritative step order. Summary:
 
 1. **Manifest entry first.** Pick a fresh single-word lowercase name (not in
    `manifest.json`, not in `scripts/retired-names.txt`, not a hwaro CLI term),
@@ -73,12 +73,27 @@ Follow `DESIGN.md` §15 exactly. Summary:
    `scripts/validate-manifest.py`.
 2. **Scaffold:** `cd examples && hwaro init <name>` — always. Delete the
    bundled `static/fonts/` (Google Fonts CDN replaces them).
-3. **Build the site** to the DESIGN.md bar.
-4. **Gate:** `scripts/check-site.sh <name>` must print `PASS`. This wraps
+3. **Build the site** in DESIGN.md §15 order: design tokens first, then
+   templates **copied from the pattern library below**, then the signature
+   element into the homepage's first screen, then content.
+4. **Verify the rendered output** — a green build is not success; several
+   idioms render empty (see the broken-idioms table below):
+
+   ```sh
+   cd examples/<name> && hwaro build && hwaro doctor
+   grep -rn '&lt;div\|&lt;section' public/ --include='*.html'  # escaped-HTML leak: expect none outside code samples
+   grep -rn '{{\|{%' public/ --include='*.html'                # unrendered template syntax: expect none outside code samples
+   grep -rn 'href=""' public/ --include='*.html'               # permalink trap: expect none
+   ```
+
+   Then open `public/index.html` and confirm listings show real titles,
+   dates, and links. Check one section page and one taxonomy term page too.
+5. **Design QA pass:** every checkbox in DESIGN.md §16.
+6. **Gate:** `scripts/check-site.sh <name>` must print `PASS`. This wraps
    `hwaro build`, output checks, lint (errors *and* warnings fatal),
    anti-pattern greps, asset policy, and internal link checks.
-5. **Sync tags:** `scripts/sync-tags.sh` regenerates `tags.json`.
-6. PR. CI trial-builds new examples, lints them, and requires tags.json
+7. **Sync tags:** `scripts/sync-tags.sh` regenerates `tags.json`.
+8. PR. CI trial-builds new examples, lints them, and requires tags.json
    entries.
 
 ### The standard skeleton
@@ -115,6 +130,305 @@ Follow `DESIGN.md` §15 exactly. Summary:
   when there is no search UI).
 - `[feeds] sections` must name real `content/` directories.
 - Every `[[taxonomies]]` entry requires `taxonomy.html` + `taxonomy_term.html`.
+
+## Template pattern library (verified on hwaro 0.16.0)
+
+Copy these skeletons and restyle them freely — classes, structure, and
+wording are yours; the **template logic is not**. Hwaro/Crinja accepts many
+plausible idioms that build green but render empty (see the broken-idioms
+table). An idiom not on this page must be proven before use: build the site,
+then grep `public/` for the values you expect.
+
+### header.html — `<head>` + site header
+
+```jinja
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description | default(site.description, true) | e }}">
+  <title>{% if page.title is present and page.title != site.title %}{{ page.title | e }} &middot; {% endif %}{{ site.title | e }}</title>
+  <link rel="icon" type="image/svg+xml" href="{{ base_url }}/favicon.svg">
+  {{ og_all_tags }}
+  {{ canonical_tag }}
+  {{ jsonld }}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=<your-pairing>&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ base_url }}/css/style.css">
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-head">
+    <a class="brand" href="{{ base_url }}/">{{ site.title | e }}</a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="{{ base_url }}/notes/">Notes</a>
+      <a href="{{ base_url }}/about/">About</a>
+    </nav>
+  </header>
+```
+
+`auto`-scheme sites add this pre-paint guard inside `<head>` (before the
+stylesheet) so there is no wrong-theme flash:
+
+```jinja
+<script>
+  {% raw %}(function () {
+    try {
+      var t = localStorage.getItem('<name>-theme');
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  })();{% endraw %}
+</script>
+```
+
+### footer.html — closes what header.html opened
+
+```jinja
+  <footer class="site-foot">
+    <p>Fictional colophon line, {{ current_year }}.</p>
+    <nav aria-label="Footer">
+      <a href="{{ base_url }}/notes/rss.xml">RSS</a>
+      <a href="{{ base_url }}/tags/">Tags</a>
+    </nav>
+  </footer>
+  {{ highlight_js }}
+  {{ auto_includes_js }}
+  <script src="{{ base_url }}/js/theme.js"></script><!-- auto-scheme sites only -->
+</body>
+</html>
+```
+
+And `static/js/theme.js` for `auto` sites (pairs with the pre-paint guard —
+same localStorage key):
+
+```js
+(function () {
+  var KEY = '<name>-theme';
+  var root = document.documentElement;
+  var btn = document.getElementById('theme-toggle');
+  if (!btn) return;
+  function effective() {
+    var attr = root.getAttribute('data-theme');
+    if (attr === 'light' || attr === 'dark') return attr;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  btn.addEventListener('click', function () {
+    var next = effective() === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem(KEY, next); } catch (e) {}
+  });
+})();
+```
+
+### home.html — listing a section on the homepage
+
+```jinja
+{% include "header.html" %}
+<main id="main">
+  <!-- hero / signature element here -->
+  {{ content | safe }}
+
+  {% set entries = get_section(path="notes").pages | sort_by("date", reverse=true) %}
+  <ul class="entry-list">
+    {% for p in entries %}{% if loop.index0 < 6 %}
+    <li>
+      <a href="{{ base_url }}{{ p.url }}">{{ p.title }}</a>
+      {% if p.date %}<time datetime="{{ p.date }}">{{ p.date | date("%B %d, %Y") }}</time>{% endif %}
+      {% if p.description %}<p>{{ p.description }}</p>{% endif %}
+    </li>
+    {% endif %}{% endfor %}
+  </ul>
+</main>
+{% include "footer.html" %}
+```
+
+- `get_section(path="notes")` names the `content/notes/` directory.
+- Listing across all sections: `{% set posts = site.pages | selectattr("date")
+  | sort(attribute="date", reverse=true) %}`.
+- **Never chain a third filter** (`| slice(6)`, `| rejectattr(...)`) after
+  either form — items render as empty stubs. Limit with `loop.index0` as
+  shown.
+
+### section.html — respects `_index.md`'s `sort_by`/`reverse`
+
+```jinja
+{% include "header.html" %}
+<main id="main">
+  <h1>{{ section.title | e }}</h1>
+  {{ content | safe }}
+  {% for p in section.pages %}
+  <article>
+    <a href="{{ base_url }}{{ p.url }}">{{ p.title }}</a>
+    {% if p.date %}<time datetime="{{ p.date }}">{{ p.date | date("%Y-%m-%d") }}</time>{% endif %}
+    {% if p.summary %}<p>{{ p.summary | strip_html | truncate_words(30) }}</p>{% endif %}
+  </article>
+  {% endfor %}
+</main>
+{% include "footer.html" %}
+```
+
+### page.html — the default single page
+
+```jinja
+{% include "header.html" %}
+<main id="main">
+  <article class="prose">
+    <h1>{{ page.title | e }}</h1>
+    {% if page.date %}<time datetime="{{ page.date }}">{{ page.date | date("%B %d, %Y") }}</time>{% endif %}
+    {{ content | safe }}
+    {% if page.tags %}
+    <ul class="tag-list">
+      {% for t in page.tags %}<li><a href="{{ get_taxonomy_url(kind="tags", term=t) }}">{{ t }}</a></li>{% endfor %}
+    </ul>
+    {% endif %}
+  </article>
+</main>
+{% include "footer.html" %}
+```
+
+`get_taxonomy_url` returns a full URL (base_url included) — do not prefix it.
+
+### taxonomy.html + taxonomy_term.html — required iff `[[taxonomies]]` configured
+
+```jinja
+{# taxonomy.html — the /tags/ index #}
+{% include "header.html" %}
+<main id="main">
+  <h1>{{ page.title | e }}</h1>
+  {% set tax = get_taxonomy(kind="tags") %}
+  <ul class="term-list">
+    {% for term in tax.items | sort_by("name") %}
+    <li>
+      <a href="{{ get_taxonomy_url(kind="tags", term=term.name) }}">
+        {{ term.name }} <span class="term-count">{{ term.pages | length }}</span>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</main>
+{% include "footer.html" %}
+```
+
+```jinja
+{# taxonomy_term.html — one /tags/<term>/ page #}
+{% include "header.html" %}
+<main id="main">
+  <h1>{{ taxonomy_term }}</h1>
+  {% set tax = get_taxonomy(kind="tags") %}
+  {% for term in tax.items %}{% if term.name == taxonomy_term %}
+    {% for p in term.pages | sort_by("date", reverse=true) %}
+    <a href="{{ base_url }}{{ p.url }}">{{ p.title }}</a>
+    {% endfor %}
+  {% endif %}{% endfor %}
+  <p><a href="{{ base_url }}/tags/">All tags</a></p>
+</main>
+{% include "footer.html" %}
+```
+
+### 404.html
+
+```jinja
+{% include "header.html" %}
+<main id="main">
+  <h1>404</h1>
+  <p>In-theme not-found copy, not "Page not found".</p>
+  <p><a href="{{ base_url }}/">Back home</a></p>
+</main>
+{% include "footer.html" %}
+```
+
+### Search (the `page` variant; others in DESIGN.md §11)
+
+`content/search.md` sets `template = "search"` and `in_search_index = false`.
+
+```jinja
+{# templates/search.html #}
+{% include "header.html" %}
+<main id="main">
+  <h1>{{ page.title | e }}</h1>
+  <form role="search" data-index="{{ base_url }}/search.json" onsubmit="return false;">
+    <label for="search-input">Search</label>
+    <input id="search-input" type="search" autocomplete="off" autofocus>
+  </form>
+  <p id="search-status" role="status" aria-live="polite"></p>
+  <ul id="search-results"></ul>
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
+  <script src="{{ base_url }}/js/search.js"></script>
+</main>
+{% include "footer.html" %}
+```
+
+`static/js/search.js` reads the index URL from the `data-index` attribute
+(the template stamps `{{ base_url }}` into it — a hardcoded `/search.json`
+404s in production) and builds result DOM nodes instead of injecting HTML:
+
+```js
+(function () {
+  var form = document.querySelector('form[data-index]');
+  var input = document.getElementById('search-input');
+  var list = document.getElementById('search-results');
+  var status = document.getElementById('search-status');
+  if (!form || !input) return;
+  var fuse = null;
+  fetch(form.getAttribute('data-index'))
+    .then(function (r) { return r.json(); })
+    .then(function (data) { fuse = new Fuse(data, { keys: ['title', 'content'], threshold: 0.3 }); });
+  input.addEventListener('input', function () {
+    if (!fuse) return;
+    list.textContent = '';
+    var hits = fuse.search(input.value).slice(0, 10);
+    status.textContent = input.value ? hits.length + ' result(s)' : '';
+    hits.forEach(function (h) {
+      var li = document.createElement('li');
+      var a = document.createElement('a');
+      a.href = h.item.url;           // build DOM nodes — never innerHTML with index data
+      a.textContent = h.item.title;
+      li.appendChild(a);
+      list.appendChild(li);
+    });
+  });
+})();
+```
+
+### Shortcodes
+
+Template `templates/shortcodes/callout.html` receives its arguments plus
+`{{ body }}` (raw text — pipe through `markdownify` to render markdown):
+
+```jinja
+<aside class="callout callout-{{ type | default("note") }}">{{ body | markdownify }}</aside>
+```
+
+Call from markdown — inline form, or block form closed with `{% end %}`
+(**not** `{% endcallout %}`):
+
+```markdown
+{{ callout(type="tip", body="Inline form.") }}
+
+{% callout(type="note") %}Block body with **markdown**.{% end %}
+```
+
+## Idioms that build green but render broken
+
+Verified on hwaro 0.16.0. CI checks build success, lint, and tags.json —
+**not rendered correctness** — so these ship silently unless you run the
+rendered-output greps (step 4 of "Creating a new example site").
+
+| Broken | Symptom | Working replacement |
+|---|---|---|
+| `{{ p.permalink }}` | empty `href=""` | `{{ base_url }}{{ p.url }}` |
+| `selectattr \| sort \| slice(6)` (any 3rd filter) | every item renders blank | limit with `{% if loop.index0 < 6 %}` inside the loop |
+| `{{ page.content }}` | empty body | `{{ content \| safe }}` |
+| `page.params.field` | renders empty | `page.extra.field` |
+| `{% if x in [1, 2] %}` | parse failure | `{% if x == 1 or x == 2 %}` |
+| blank line + ≥4-space-indented `<div` in markdown | chunk escaped inside `<pre><code>` | keep raw-HTML blocks contiguous; indent <4 spaces |
+| `{% endcallout %}` shortcode close | build error | `{% end %}` |
+| `page.date \| date(...)` unguarded | build error on dateless pages | wrap in `{% if page.date %}` |
+| bare `href="/notes/"` | 404 under `/<name>/` subpath in production | `href="{{ base_url }}/notes/"` |
 
 ## Hwaro reference
 
@@ -160,7 +474,7 @@ transparent = false
 | Object | Key properties |
 |--------|---------------|
 | `site` | `title`, `description`, `base_url`, `pages`, `sections`, `taxonomies`, `data` |
-| `page` | `title`, `date`, `url`, `permalink`, `section`, `summary`, `word_count`, `reading_time`, `extra`, `toc`, `lower`, `higher`, `ancestors`, `description`, `image` |
+| `page` | `title`, `date`, `url`, `section`, `summary`, `word_count`, `reading_time`, `extra`, `toc`, `lower`, `higher`, `ancestors`, `description`, `image` — link with `{{ base_url }}{{ page.url }}`; **`permalink` renders empty on list items, never use it** |
 | `section` | `title`, `description`, `pages`, `pages_count`, `subsections` |
 | Global | `current_year`, `current_date`, `base_url`, `toc`, `content` (rendered HTML) |
 | SEO | `og_all_tags`, `canonical_tag`, `jsonld`, `highlight_css`, `highlight_js`, `auto_includes_css`, `auto_includes_js` |
@@ -211,11 +525,9 @@ Flat aliases: `site_title`, `site_description`, `page_title`, `page_url`,
 
 ### Shortcodes
 
-Shortcode templates live in `templates/shortcodes/`; call them from markdown:
-
-```markdown
-{{ alert(type="warning", message="Be careful") }}
-```
+Shortcode templates live in `templates/shortcodes/`; call them from markdown
+in inline form (`{{ name(arg="…", body="…") }}`) or block form closed with
+`{% end %}`. See the pattern library above for the verified template shape.
 
 ### CLI
 
@@ -230,7 +542,10 @@ Shortcode templates live in `templates/shortcodes/`; call them from markdown:
 | `hwaro tool agents-md` | Generate per-site AGENTS.md (`--remote`, `--local`, `--write`) |
 | `hwaro tool convert toTOML\|toYAML` | Convert front matter format |
 
-## Crinja pitfalls (build-breakers)
+## Crinja pitfalls
+
+The full list with explanations is DESIGN.md §14; the silent failures are in
+the broken-idioms table above. The one-line summary:
 
 1. `{% if x in [1, 2, 3] %}` **fails to parse** — Crinja's `in` does not
    accept array literals. Use `==` or-chains.
@@ -239,6 +554,10 @@ Shortcode templates live in `templates/shortcodes/`; call them from markdown:
 4. Guard optional fields (`{% if page.date %}`) — standalone pages lack dates.
 5. Brace-heavy inline JS/CSS belongs in `static/` or inside `{% raw %}`.
 6. Every asset/link uses `{{ base_url }}` — sites deploy under a subpath.
+7. Links use `p.url`, never `p.permalink` (renders empty).
+8. Never chain a third filter after `selectattr | sort` (renders empty stubs).
+9. In markdown with raw HTML: no blank line before a ≥4-space-indented `<tag`
+   (it becomes an escaped code block).
 
 ## CI/CD pipeline
 
@@ -274,3 +593,14 @@ Shortcode templates live in `templates/shortcodes/`; call them from markdown:
    screenshot caches and git history make recycled names confusing.
 10. **`public/` is build output** — gitignored; never commit or edit it.
 11. **Keep `base_url = "http://localhost:3000"`** — CI overrides it.
+12. **Copy template logic from the pattern library** in this file — never
+    invent idioms. If you need something the library doesn't cover, prove it
+    first: build, then grep `public/` for the values you expect.
+13. **A green build is not success.** CI does not check rendered correctness,
+    and several idioms render empty (broken-idioms table). After every build,
+    run the rendered-output greps (step 4 above) and open `public/index.html`
+    to confirm listings show real titles and links.
+14. **The design QA pass (DESIGN.md §16) is mandatory.** The gallery
+    screenshot is the product: the signature element must be visible in the
+    homepage's first 1280×720, and zero "generated-design tells"
+    (DESIGN.md §13) may survive.

@@ -12,13 +12,26 @@ example that belongs in a curated collection of 200, not a pile of 1,500.
 - `DESIGN.md` (this file) is the *quality bar*: the rules every example must
   meet regardless of its brief.
 - `AGENTS.md` is the *tool reference*: hwaro CLI, template variables, filters,
-  front matter.
+  front matter — and the **verified template pattern library** every example's
+  templates are copied from.
 - `tags.json` is a *derived artifact*: generated from `manifest.json` by
   `scripts/sync-tags.sh`. Never edit it by hand.
 
 If you are building an example, read your `manifest.json` entry first, then
 this file top to bottom. Do not deviate from your manifest entry — diversity
 across the collection is engineered there, not improvised per-site.
+
+**Two meta-rules for anyone (especially AI agents) building an example:**
+
+1. **Rules beat instinct.** Where this document gives a number, a default, or
+   a named pattern, use it — even when another way seems fine. Every rule here
+   exists because a generated site got it wrong. When a rule and your
+   judgment conflict, the rule wins.
+2. **Copy, don't invent.** Template code comes from the verified pattern
+   library in `AGENTS.md`. Hwaro/Crinja accepts many idioms that *build
+   green but render empty* — an idiom not in that library must be proven
+   before use: build the site, then grep `public/` for the values you expect
+   (§15 step 9).
 
 ---
 
@@ -220,6 +233,18 @@ the weights you use:
   labels (`0.08em`).
 - One `h1` per page. Heading levels never skip.
 
+### Measurable minimums (checked in the design QA pass, §16)
+
+- The homepage uses **at least 4 distinct steps** of the type scale; the
+  largest text on the first screen is `--text-2xl` or bigger.
+- The display font is visible in the first viewport (hero/masthead). Body
+  prose is never set in the display font; same-font pairings (Manrope/Manrope,
+  Archivo/Archivo) differentiate with weight instead — display ≥600, body 400.
+- All-caps only for short labels (kickers, nav, tags) at ≤0.9rem with
+  letter-spacing ≥0.06em — never headings or body text.
+- When a page feels flat, fix it with scale contrast — make the biggest
+  element bigger and the meta text smaller. Do **not** reach for decoration.
+
 ## 6. Color
 
 ### Palette anatomy
@@ -250,6 +275,12 @@ Every site defines its palette as CSS custom properties — values come from
   Elevation = slightly lighter surfaces, not black drop shadows.
 - **One accent.** A second accent is allowed only when the brief demands it
   (e.g. duotone designs). Neutral ramps do the rest.
+- **Accent budget.** The accent colors links, one primary CTA, and the
+  signature moment. If the accent also paints headings, borders, icons, and
+  backgrounds everywhere, it stops reading as an accent — move those to
+  `--fg`/`--muted`/`--border`.
+- **Palette values are verbatim from the manifest.** Derive any extra tints
+  with `color-mix()` from existing tokens; never introduce new hex values.
 - **`auto` scheme sites** define both palettes and honor the system:
 
   ```css
@@ -312,6 +343,11 @@ skeleton, not a cage — the brief and signature element shape the rest.
 - Container widths: prose ~65ch; wide layouts 1100–1280px; full-bleed bands
   use an inner container.
 - Whitespace is a design material. When in doubt, double the section spacing.
+- **The homepage is composed of distinct bands**: masthead/hero, then at
+  least one content band (listing, grid, spread), then footer. Adjacent bands
+  are separated by `--space-6`+ or an explicit rule/background change. A hero
+  that is just a heading and a paragraph floating in whitespace — with no
+  real matter beneath it on the first screen — fails the QA pass.
 
 ## 9. Micro-interactions and motion
 
@@ -439,50 +475,186 @@ Curated bans:
 - **No `<style>` dumps in templates.** All CSS in `static/css/style.css`.
 - **No dead nav links.** Every `href` must resolve within the site.
 
-## 14. Crinja / hwaro pitfalls (build-breakers)
+### Generated-design tells
+
+These are the patterns that make a site read as "AI output". Each is legal
+CSS — the ban is on the cliché. The §16 QA pass checks every row; if your
+draft contains one, apply the listed fix before continuing.
+
+| Tell | Fix |
+|---|---|
+| Centered hero: one `h1`, one paragraph, two pill buttons | Put real matter in the hero — the latest entries, a specimen, an SVG diagram, a manifesto — per your layout and signature |
+| Three-column icon feature grid ("Fast · Simple · Secure") | Cut it. Show actual content from your content plan, not claims about it |
+| Every surface has `border-radius` 8–16px plus a soft box-shadow | One surface treatment per site: rules/borders (editorial, swiss), flat blocks (brutalist), or radius+shadow (playful) — never all at once |
+| Accent color on headings, buttons, borders, icons, and backgrounds | Accent budget (§6): links, one CTA, the signature moment |
+| Header = logo left, four links, CTA button pinned right | Right for a SaaS-landing brief; wrong default for everything else — design the header to the brief (masthead, sidebar, terminal bar…) |
+| Uniform card grid where every card is identical | Differentiate the anatomy: a lead card, mixed sizes, or rich meta rows (§7 №9) |
+| Multi-column footer link dump on a 7-page site | Footer proportionate to the site — one row of links plus a colophon line is usually right |
+| Free-floating decoration: blobs, glows, dot grids, floating shapes | Delete. Decoration must be the signature element or directly support it |
+| `transition: all .3s` sprinkled everywhere | §9: ≤200ms, named properties only |
+| Uniform 16px/1.5 text with no measure limit | §5: fluid scale, 65ch measure, real hierarchy |
+
+## 14. Crinja / hwaro pitfalls
+
+Verified against hwaro 0.16.0 (2026-07). Two classes: **build-breakers**
+(the build fails, so you notice) and — far more dangerous — **silent
+failures** (the build exits 0 and the page renders wrong or empty; CI does
+not catch these). §15 step 9 exists to catch the second class.
+
+### Build-breakers
 
 1. `in` does not accept array literals: `{% if x in [1, 2, 3] %}` **fails to
    parse**. Use `{% if x == 1 or x == 2 or x == 3 %}`.
-2. Rendered body is `{{ content | safe }}` — `{{ page.content }}` does not exist.
-3. Custom front matter reads as `page.extra.field` — never `page.params.field`.
-4. `[feeds] sections` must name real `content/` section directories; a stale
-   `["posts"]` on a site whose section is `notes/` breaks the feed.
-5. Declaring `[[taxonomies]]` without `taxonomy.html` + `taxonomy_term.html`
+2. JS/CSS braces inside templates collide with Jinja delimiters — put JS/CSS
+   in external files or inside `{% raw %} … {% endraw %}` blocks (§11).
+3. Declaring `[[taxonomies]]` without `taxonomy.html` + `taxonomy_term.html`
    breaks taxonomy pages.
-6. Guard optional fields: `{% if page.date %}…{% endif %}` — standalone pages
-   have no date; unguarded filters on missing values fail.
-7. JS/CSS braces inside templates can collide with Jinja delimiters — external
-   files or `{% raw %}` blocks (§11).
-8. Use only filters documented in `AGENTS.md`. `date(fmt)`, `truncate_words`,
-   `slugify`, `strip_html`, `where`, `sort_by`, `group_by`, `join`, `default`,
-   `safe`, `upper`, `lower`, `length`, `first`, `last`, `replace`, `jsonify`,
-   `markdownify`, `absolute_url`, `relative_url` are safe.
-9. Every asset/link href goes through `{{ base_url }}`:
-   `href="{{ base_url }}/css/style.css"`, `href="{{ base_url }}{{ p.url }}"`.
-   Sites deploy under `/{name}/` — bare absolute paths 404.
-10. Homepage template selection: `content/index.md` sets `template = "home"`
+4. Unguarded filters on missing values fail: standalone pages have no date,
+   so always `{% if page.date %}…{% endif %}` before formatting it.
+
+### Silent failures (build exits 0, page is wrong)
+
+5. **`p.permalink` renders empty.** Always link with
+   `href="{{ base_url }}{{ p.url }}"`.
+6. **A third filter chained after `selectattr | sort` returns empty stubs.**
+   `site.pages | selectattr("date") | sort(...) | slice(6)` builds green and
+   renders every item blank — same for a trailing `rejectattr`. Limit inside
+   the loop instead: `{% if loop.index0 < 6 %}`.
+7. **The markdown indent trap.** In markdown content containing hand-written
+   HTML, a blank line followed by a line indented ≥4 spaces that starts with
+   `<` opens an indented *code block* — that chunk renders as escaped source
+   inside `<pre><code>`. Keep raw-HTML blocks contiguous (no blank lines
+   inside them) or keep continuation indents under 4 spaces.
+   Detect after build: `grep -rn '&lt;div' public/` (see §15 step 9).
+8. `{{ page.content }}` does not exist and renders empty — the rendered body
+   is the global `{{ content }}`, always written as `{{ content | safe }}`.
+9. Custom front matter reads as `page.extra.field` — `page.params.field`
+   renders empty.
+10. `[feeds] sections` must name real `content/` section directories; a stale
+    `["posts"]` on a site whose section is `notes/` breaks the feed.
+11. Every asset/link href goes through `{{ base_url }}`:
+    `href="{{ base_url }}/css/style.css"`, `href="{{ base_url }}{{ p.url }}"`.
+    Sites deploy under `/{name}/` — bare absolute paths 404 in production
+    while looking fine locally.
+12. Homepage template selection: `content/index.md` sets `template = "home"`
     in front matter to use `templates/home.html`.
+
+Use only the filters, functions, and idioms documented in `AGENTS.md`
+(`date(fmt)`, `truncate_words`, `slugify`, `strip_html`, `where`, `sort_by`,
+`group_by`, `join`, `default`, `safe`, `upper`, `lower`, `length`, `first`,
+`last`, `replace`, `jsonify`, `markdownify`, `absolute_url`, `relative_url`
+are safe). Anything else — however plausible it looks — is unverified: prove
+it renders (build, then grep the output) before shipping it.
 
 ## 15. Adding example #201 (the full process)
 
-1. **Pick a name**: lowercase single word, not in `manifest.json`, not a
-   hwaro CLI/scaffold term (`simple`, `bare`, `blog`, `docs`, `book`, `init`,
-   `build`, `serve`, `new`, `doctor`, `tool`, `deploy`), not an infrastructure
-   word (`index`, `search`, `static`, `templates`, `content`, `public`,
-   `screenshots`, `examples`), and not the name of any previously deleted
-   example (check `git log`-era names via `scripts/sync-tags.sh --check` output
-   or the manifest history).
+Work in this exact order — tokens before markup, markup before content,
+verification before PR. Each step has a checkpoint; do not skip ahead.
+
+1. **Pick a name**: lowercase single word, not in `manifest.json`, not in
+   `scripts/retired-names.txt`, not a hwaro CLI/scaffold term (`simple`,
+   `bare`, `blog`, `docs`, `book`, `init`, `build`, `serve`, `new`, `doctor`,
+   `tool`, `deploy`), and not an infrastructure word (`index`, `search`,
+   `static`, `templates`, `content`, `public`, `screenshots`, `examples`).
 2. **Write the manifest entry first** — every field, including brief,
    typography, palette, layout, and signature. Check it against the collection:
    is the pairing under its 5-use cap? Is the accent hue distinct within its
-   category+scheme bucket? Is the signature unique?
-3. `cd examples && hwaro init <name>` — always start from the scaffold.
-4. Build the site to this document's bar. Delete unused scaffold assets.
-5. `hwaro build` in the site directory — must exit 0; verify `public/search.json`,
-   `public/sitemap.xml`, and feeds exist. Run `hwaro doctor`.
-6. `scripts/lint-examples.sh <name>` — zero errors **and zero warnings**.
-7. `scripts/sync-tags.sh` — regenerates `tags.json` from the manifest.
-8. Generate the per-site doc: `hwaro tool agents-md --remote --write` inside
-   the example directory.
-9. Sanity-check `scripts/preview-index.sh` locally; open a PR. CI will
-   trial-build the new example, lint it, and require the tags.json entry.
+   category+scheme bucket? Is the signature unique? Then run
+   `scripts/validate-manifest.py` — it must pass.
+3. **Scaffold**: `cd examples && hwaro init <name>` — always start from the
+   scaffold. Delete `static/fonts/` and its `@font-face` rules; trim the
+   commented "optional features" tail from config.toml; set the config to the
+   §4 baseline with `title`/`description` verbatim from the manifest.
+4. **Tokens before markup.** Write the top of `static/css/style.css` first:
+   the palette custom properties (verbatim from the manifest — both palettes
+   for `auto` sites), the fluid type scale (§5), and the spacing scale (§8).
+   Every rule you write afterwards uses these tokens.
+5. **Templates from the pattern library.** Copy the skeletons from
+   `AGENTS.md` § "Template pattern library" — header/footer, home, page,
+   section, the taxonomy pair, 404, and your search variant — then restyle
+   them to the design. Never write template logic from scratch.
+6. **Build the signature element next**, into the homepage's first screen,
+   before any other styling. The gallery screenshot is 1280×720 of the
+   homepage: if the signature isn't visible there, the site reads as generic.
+7. **Write the content** (§12): 6–10 pages of real fictional prose with real
+   dates, tags, descriptions, and `<!-- more -->` markers on listable pages.
+8. **Interior pages and states**: section listing, page template, taxonomy
+   pages, 404, search; hover and `:focus-visible` treatments on every
+   interactive element; the reduced-motion guard (§9).
+9. **Build and verify the rendered output.** This is what catches the §14
+   silent failures — CI does not:
+
+   ```sh
+   cd examples/<name>
+   hwaro build && hwaro doctor        # build must exit 0 with no warnings
+
+   # Escaped-HTML leak (§14.7-8) — expect NO matches outside intentional
+   # code samples (a docs site showing HTML snippets is fine):
+   grep -rn '&lt;div\|&lt;section\|&lt;article' public/ --include='*.html'
+
+   # Unrendered template syntax — expect NO matches outside code samples:
+   grep -rn '{{\|{%' public/ --include='*.html'
+
+   # Empty links from the permalink trap (§14.5) — expect NO matches:
+   grep -rn 'href=""' public/ --include='*.html'
+   ```
+
+   Then open `public/index.html` and confirm the home listing actually shows
+   entry titles, dates, and working `/<name>/…`-style links — an empty
+   listing builds green (§14.6). Do the same for one section page and one
+   taxonomy term page.
+10. **Design QA pass** (§16) — every line, honestly.
+11. **Gate**: `scripts/check-site.sh <name>` must print `PASS: <name>`
+    (zero lint errors **and** zero warnings).
+12. **Finish**: `scripts/sync-tags.sh` regenerates `tags.json`; generate the
+    per-site doc with `hwaro tool agents-md --remote --write` inside the
+    example directory; sanity-check `scripts/preview-index.sh`; open a PR.
+    CI trial-builds the new example, lints it, and requires the tags.json
+    entry.
+
+## 16. The design QA pass
+
+Run this after the site builds clean (§15 step 9), before the final gate.
+Every item is a yes/no check against the source or the rendered `public/`
+output. Fix and re-check until every box is a genuine yes — do not
+rationalize a "no".
+
+**First screen** (the gallery shot is 1280×720 of the homepage)
+
+- [ ] The manifest's signature element is visible without scrolling.
+- [ ] The display font is visible without scrolling.
+- [ ] The largest text on the first screen is `--text-2xl` or larger.
+- [ ] The first screen contains real matter beyond a heading and a paragraph:
+      a listing, grid, specimen, SVG mark, or the signature itself (§8).
+- [ ] At thumbnail size, this screenshot would be distinguishable from every
+      other example in its category. If it reads as "generic \<category\>",
+      push the signature harder — bigger, stranger, more committed.
+
+**Typography and color**
+
+- [ ] ≥4 distinct type-scale steps used on the homepage; prose measure ≤75ch.
+- [ ] Palette values match the manifest verbatim; extra tints only via
+      `color-mix()` (§6).
+- [ ] Accent budget holds: accent = links + one CTA + the signature moment,
+      nothing more (§6).
+- [ ] Dark palette (if any): background is not `#000`, text is not `#fff`,
+      the accent is desaturated relative to the light variant (§6).
+
+**Structure and states**
+
+- [ ] Zero survivors from the §13 generated-design tells table.
+- [ ] One surface treatment (borders/rules, flat blocks, or radius+shadow),
+      used consistently across cards, insets, and code blocks.
+- [ ] Every link and card has a designed hover state; every interactive
+      element has a `:focus-visible` ring; the reduced-motion guard exists.
+- [ ] At 360px: no horizontal scroll (no fixed widths >360px outside media
+      queries), nav usable, touch targets ≥40px.
+- [ ] Interior pages (section, page, taxonomy, 404, search) carry the same
+      design system — not unstyled defaults with the home's header bolted on.
+
+**Content and output**
+
+- [ ] Every §12 content rule holds — no placeholders, real dates and tags,
+      ≥150 words of genuine prose per page.
+- [ ] All §15 step 9 rendered-output greps pass.
+- [ ] Every §10 accessibility box is checked.
