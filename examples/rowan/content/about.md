@@ -3,6 +3,7 @@ title = "Concerning This Codex"
 description = "A note on method: who compiled this gazetteer, what it leaves out, and why disputed claims are printed side by side rather than resolved."
 date = "2026-01-10"
 tags = ["about"]
+toc = true
 +++
 
 This codex is compiled and kept, in principle, by no house at all. In practice it lives in a reading room off the Sail Hall in [Thornreach](/codex/thornreach/), maintained by a rotating clerkship the Assembly funds jointly and no single house is permitted to staff for more than two consecutive terms — a rule written after an early edition was found to describe one house's fleet in verbs and a rival's in adjectives, which is a smaller crime than it sounds and a larger one than the guilty clerk expected.

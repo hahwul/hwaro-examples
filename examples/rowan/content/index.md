@@ -1,5 +1,5 @@
 +++
-title = "Rowan"
+title = "Gazetteer of Veyra"
 description = "A world-building codex for the fractured archipelago empire of Veyra"
 template = "home"
 [extra]
