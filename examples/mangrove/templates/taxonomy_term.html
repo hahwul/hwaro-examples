@@ -1,0 +1,29 @@
+{% include "header.html" %}
+  <div class="shell">
+    {% include "sidebar.html" %}
+    <main id="main" class="main">
+      <div class="chart-ruler-top" aria-hidden="true">
+        <span>004&deg;42&prime;W</span><span>004&deg;36&prime;W</span><span>004&deg;30&prime;W</span><span>004&deg;24&prime;W</span><span>004&deg;18&prime;W</span>
+      </div>
+      <header class="section-head">
+        <p class="eyebrow"><a class="kicker-link" href="{{ base_url }}/tags/">Index of Terms</a></p>
+        <h1>{{ taxonomy_term }}</h1>
+        <p class="taxonomy-desc">Chapters and pages filed under &ldquo;{{ taxonomy_term }}.&rdquo;</p>
+      </header>
+      <ol class="chapter-grid chapter-grid-wide">
+        {% set tax = get_taxonomy(kind="tags") %}
+        {% for term in tax.items %}
+          {% if term.name == taxonomy_term %}
+            {% for p in term.pages | sort_by("title") %}
+            <li class="chapter-card">
+              {% if p.extra.skill %}<p class="chapter-card-kicker">{{ p.extra.skill }}</p>{% endif %}
+              <h2><a href="{{ base_url }}{{ p.url }}">{{ p.title }}</a></h2>
+              {% if p.description %}<p>{{ p.description }}</p>{% endif %}
+            </li>
+            {% endfor %}
+          {% endif %}
+        {% endfor %}
+      </ol>
+    </main>
+  </div>
+{% include "footer.html" %}

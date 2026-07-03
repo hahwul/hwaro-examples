@@ -1,0 +1,80 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <section class="hero">
+      <p class="kicker">{{ page.extra.kicker | default("", true) }}</p>
+      <h1>{{ page.extra.name | default(site.title, true) | e }}</h1>
+      <div class="hero-summary">{{ content | safe }}</div>
+
+      <div class="hero-row">
+        {% if page.extra.email or page.extra.location or page.extra.since %}
+        <dl class="hero-meta">
+          {% if page.extra.email %}
+          <div><dt>Email</dt><dd><a href="mailto:{{ page.extra.email }}">{{ page.extra.email }}</a></dd></div>
+          {% endif %}
+          {% if page.extra.location %}
+          <div><dt>Based</dt><dd>{{ page.extra.location }}</dd></div>
+          {% endif %}
+          {% if page.extra.since %}
+          <div><dt>Writing docs since</dt><dd>{{ page.extra.since }}</dd></div>
+          {% endif %}
+        </dl>
+        {% endif %}
+
+        <a class="print-cta" href="{{ base_url }}/cv/" aria-describedby="print-cta-hint">
+          <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true" focusable="false">
+            <path d="M5 3.5h10a1 1 0 0 1 1 1V8H4V4.5a1 1 0 0 1 1-1Z" fill="none" stroke="currentColor" stroke-width="1.3"/>
+            <rect x="2.5" y="8" width="15" height="6.5" rx="1" fill="none" stroke="currentColor" stroke-width="1.3"/>
+            <rect x="5" y="12" width="10" height="5" fill="none" stroke="currentColor" stroke-width="1.3"/>
+          </svg>
+          Print this CV
+        </a>
+      </div>
+      <p id="print-cta-hint" class="print-cta-hint">Opens the single-page CV — reflows to one A4 sheet when printed.</p>
+
+      {% if page.extra.stack %}
+      <ul class="stack-list" aria-label="Core tools">
+        {% for tech in page.extra.stack %}<li>{{ tech }}</li>{% endfor %}
+      </ul>
+      {% endif %}
+    </section>
+
+    <section class="home-section" aria-labelledby="experience-heading">
+      <div class="section-head">
+        <h2 id="experience-heading">Experience</h2>
+        <a class="text-link" href="{{ base_url }}/cv/">Full CV<span aria-hidden="true"> &rarr;</span></a>
+      </div>
+      <div class="role-list">
+        {% for role in page.extra.roles %}
+        <article class="role-row">
+          <div class="role-head">
+            <p class="role-title">{{ role.title }} <span class="role-org">— {{ role.org }}</span></p>
+            <p class="role-dates">{{ role.dates }}</p>
+          </div>
+          <p class="role-note">{{ role.note }}</p>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="home-section" aria-labelledby="guides-heading">
+      <div class="section-head">
+        <h2 id="guides-heading">Guides</h2>
+        <a class="text-link" href="{{ base_url }}/guides/">All guides<span aria-hidden="true"> &rarr;</span></a>
+      </div>
+      <ul class="guide-teaser-list">
+        {% set guides = get_section(path="guides").pages | sort_by("date", reverse=true) %}
+        {% for g in guides %}
+        {% if loop.index <= 2 %}
+        <li>
+          <a href="{{ base_url }}{{ g.url }}">
+            <span class="guide-teaser-title">{{ g.title }}</span>
+            {% if g.date %}<span class="guide-teaser-date">{{ g.date | date("%b %Y") }}</span>{% endif %}
+          </a>
+          <p>{{ g.description }}</p>
+        </li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+    </section>
+  </main>
+{% include "footer.html" %}

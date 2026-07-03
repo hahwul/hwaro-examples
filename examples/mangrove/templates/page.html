@@ -1,0 +1,55 @@
+{% include "header.html" %}
+  <div class="shell">
+    {% include "sidebar.html" %}
+    <main id="main" class="main">
+      <div class="chart-ruler-top" aria-hidden="true">
+        <span>004&deg;42&prime;W</span><span>004&deg;36&prime;W</span><span>004&deg;30&prime;W</span><span>004&deg;24&prime;W</span><span>004&deg;18&prime;W</span>
+      </div>
+      <div class="page-grid{% if page.toc %} has-toc{% endif %}">
+        <article class="article">
+          <header class="article-head">
+            {% if page.extra.skill %}
+            <p class="article-kicker">
+              <a class="kicker-link" href="{{ base_url }}/pilotage/">Pilotage</a>
+              <span class="chip">{{ page.extra.skill }}</span>
+            </p>
+            {% endif %}
+            <h1>{{ page.title }}</h1>
+            {% if page.description %}<p class="lede">{{ page.description }}</p>{% endif %}
+            {% if page.date %}<p class="article-meta">Corrected {{ page.date | date("%B %Y") }}{% if page.reading_time %} &middot; {{ page.reading_time }} min read{% endif %}</p>{% endif %}
+          </header>
+          <div class="prose">
+            {{ content | safe }}
+          </div>
+          {% if page.tags %}
+          <ul class="tag-row" aria-label="Tags">
+            {% for t in page.tags %}<li><a class="tag-chip" href="{{ get_taxonomy_url(kind='tags', term=t) }}">{{ t }}</a></li>{% endfor %}
+          </ul>
+          {% endif %}
+          {% if page.lower or page.higher %}
+          <nav class="pager" aria-label="More pilotage chapters">
+            {% if page.lower %}
+            <a class="pager-link pager-prev" href="{{ base_url }}{{ page.lower.url }}">
+              <span class="pager-label">Previous</span>
+              <span class="pager-title">{{ page.lower.title }}</span>
+            </a>
+            {% endif %}
+            {% if page.higher %}
+            <a class="pager-link pager-next" href="{{ base_url }}{{ page.higher.url }}">
+              <span class="pager-label">Next</span>
+              <span class="pager-title">{{ page.higher.title }}</span>
+            </a>
+            {% endif %}
+          </nav>
+          {% endif %}
+        </article>
+        {% if page.toc %}
+        <aside class="toc" aria-label="On this page">
+          <p class="toc-title">On This Page</p>
+          {{ toc | safe }}
+        </aside>
+        {% endif %}
+      </div>
+    </main>
+  </div>
+{% include "footer.html" %}

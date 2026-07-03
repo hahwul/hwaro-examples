@@ -1,0 +1,67 @@
+{% include "header.html" %}
+  <main id="main" class="site-main">
+    <article class="wrap species-sheet">
+      <p class="species-family">{{ page.extra.family }}</p>
+      {% if page.title is present %}<h1>{{ page.title | e }}</h1>{% endif %}
+      <p class="species-binomial">{{ page.extra.binomial }}</p>
+
+      <p class="id-badges">
+        <span class="id-badge"><span class="dot spore" style="--spore-color: {{ page.extra.spore_color }};" aria-hidden="true"></span> Spore print: <strong>{{ page.extra.spore_print }}</strong></span>
+        <span class="id-badge"><span class="dot edible-dot {% if page.extra.edible %}is-edible{% else %}is-inedible{% endif %}" aria-hidden="true"></span> <strong>{{ page.extra.edibility_label }}</strong></span>
+      </p>
+
+      {% if page.date or page.reading_time %}
+      <div class="doc-meta">
+        {% if page.date %}<time datetime="{{ page.date | date('%Y-%m-%d') }}">Last field-verified {{ page.date | date('%B %d, %Y') }}</time>{% endif %}
+        {% if page.reading_time %}<span>{{ page.reading_time }} min read</span>{% endif %}
+      </div>
+      {% endif %}
+
+      <div class="doc-columns">
+        <div>
+          <dl class="spec-sheet">
+            <div class="spec-row"><dt>Cap size</dt><dd>{{ page.extra.cap_size }}</dd></div>
+            <div class="spec-row"><dt>Habitat</dt><dd>{{ page.extra.habitat }}</dd></div>
+            <div class="spec-row"><dt>Season</dt><dd>{{ page.extra.season }}</dd></div>
+            <div class="spec-row"><dt>Spore print</dt><dd>{{ page.extra.spore_print }}</dd></div>
+            <div class="spec-row"><dt>Chief look-alike</dt><dd>{{ page.extra.lookalike_name }}</dd></div>
+          </dl>
+
+          <div class="prose">
+            {{ content | safe }}
+          </div>
+
+          {% if page.tags %}
+          <p class="tag-list" aria-label="Tags">
+            {% for tg in page.tags %}<a class="tag-chip" href="{{ base_url }}/tags/{{ tg | slugify }}/">{{ tg }}</a>{% endfor %}
+          </p>
+          {% endif %}
+
+          <nav class="doc-pager" aria-label="Adjacent species">
+            {% if page.lower and page.lower.section == page.section %}
+            <a class="pager-link pager-prev" href="{{ base_url }}{{ page.lower.url }}">
+              <span class="pager-dir"><span aria-hidden="true">&larr;</span> Previous species</span>
+              <span class="pager-title">{{ page.lower.title | e }}</span>
+            </a>
+            {% else %}<span class="pager-spacer" aria-hidden="true"></span>{% endif %}
+            {% if page.higher and page.higher.section == page.section %}
+            <a class="pager-link pager-next" href="{{ base_url }}{{ page.higher.url }}">
+              <span class="pager-dir">Next species <span aria-hidden="true">&rarr;</span></span>
+              <span class="pager-title">{{ page.higher.title | e }}</span>
+            </a>
+            {% endif %}
+          </nav>
+
+          <p class="back-link"><a href="{{ base_url }}/species/">&larr; Back to the field guide</a></p>
+        </div>
+
+        {% if page.toc %}
+        <aside class="doc-toc" aria-label="On this page">
+          <p class="doc-toc-title">On this page</p>
+          {{ toc | safe }}
+        </aside>
+        {% endif %}
+      </div>
+    </article>
+  </main>
+{% include "footer.html" %}
