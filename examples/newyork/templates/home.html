@@ -1,0 +1,53 @@
+{% include "header.html" %}
+<main id="main">
+  {{ content | safe }}
+
+  <div class="main-grid">
+    <section class="lead-story">
+      {% set entries = get_section(path="issues").pages | sort_by("date", reverse=true) %}
+      {% set lead = entries | first %}
+      {% if lead %}
+        <span class="section-label">FEATURED DISPATCH</span>
+        <h2 class="lead-headline"><a href="{{ base_url }}{{ lead.url }}">{{ lead.title }}</a></h2>
+        <div class="lead-meta">
+          <time datetime="{{ lead.date }}">{{ lead.date | date("%B %d, %Y") }}</time>
+          {% if lead.tags %}
+            <span class="lead-tags">
+              {% for t in lead.tags %}
+                <a href="{{ get_taxonomy_url(kind="tags", term=t) }}" class="tag-link">{{ t }}</a>
+              {% endfor %}
+            </span>
+          {% endif %}
+        </div>
+        <div class="prose">
+          {{ lead.summary | safe }}
+          <p class="read-more-link"><a href="{{ base_url }}{{ lead.url }}">Read the full dispatch &raquo;</a></p>
+        </div>
+      {% else %}
+        <p>No dispatches published yet.</p>
+      {% endif %}
+    </section>
+
+    <aside class="sidebar">
+      <div class="search-box">
+        <label for="search-input" class="search-label">ARCHIVE SEARCH</label>
+        <input id="search-input" type="search" placeholder="Search dispatches..." aria-label="Search dispatches" data-index="{{ base_url }}/search.json">
+      </div>
+
+      <div class="archive-section">
+        <h3 class="archive-header">PREVIOUS DISPATCHES</h3>
+        <ul class="entry-list" id="issues-list">
+          {% for p in entries %}
+          <li>
+            <time datetime="{{ p.date }}">{{ p.date | date("%b %d, %Y") }}</time>
+            <a href="{{ base_url }}{{ p.url }}">{{ p.title }}</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </aside>
+  </div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
+<script src="{{ base_url }}/js/search.js"></script>
+{% include "footer.html" %}
