@@ -13,9 +13,16 @@ set -uo pipefail
 cd "$(dirname "$0")/../.."
 
 name="${2:?usage: guarded-run.sh <template.prompt> <name> [findings-file]}"
+# fold to the lowercase slug the manifest + example dir actually use, so a
+# capitalized arg ("Newyork") can't make the guard hunt for examples/Newyork
+name=$(printf '%s' "$name" | LC_ALL=C tr 'A-Z' 'a-z')
 
 names_before=$(python3 -c "import json; print('\n'.join(sorted(e['name'] for e in json.load(open('manifest.json'))['examples'])))")
 dirs_before=$(find examples -mindepth 1 -maxdepth 1 -type d | sort)
+# snapshot the working-tree state of examples/ so the collateral-damage check
+# below compares BEFORE vs AFTER — a pre-existing untracked sibling (an
+# unrelated example built earlier and not yet committed) is not this run's doing
+status_before=$(git status --porcelain examples/ | sort)
 
 scripts/agent/run-agy.sh "$@"
 rc=$?
@@ -34,9 +41,14 @@ if [ -n "$lost_dirs" ]; then
   echo "!!! GUARD: example directories DISAPPEARED during the run: $lost_dirs" >&2
   FAIL=1
 fi
-touched=$(git status --porcelain examples/ | grep -vE "examples/$name/" || true)
+# only paths whose git state CHANGED during this run count as collateral: diff
+# the after-snapshot against the before-snapshot, then drop the target's own
+# dir (case-insensitively, in case the arg wasn't the canonical lowercase slug)
+status_after=$(git status --porcelain examples/ | sort)
+touched=$(comm -13 <(printf '%s\n' "$status_before") <(printf '%s\n' "$status_after") \
+  | grep -viE "examples/$name/" || true)
 if [ -n "$touched" ]; then
-  echo "!!! GUARD: files outside examples/$name were touched:" >&2
+  echo "!!! GUARD: files outside examples/$name changed during the run:" >&2
   printf '%s\n' "$touched" >&2
   FAIL=1
 fi

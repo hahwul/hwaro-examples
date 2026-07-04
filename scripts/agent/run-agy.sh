@@ -19,6 +19,12 @@ template="${1:?usage: run-agy.sh <template.prompt> <name> [findings-file]}"
 name="${2:?usage: run-agy.sh <template.prompt> <name> [findings-file]}"
 findings_file="${3:-}"
 
+# fold to the lowercase slug the manifest + example dir use; a capitalized arg
+# ("Newyork") would otherwise put logs in _agent/Newyork and feed __NAME__ a
+# name that mismatches examples/newyork. tr under LC_ALL=C so only ASCII A-Z
+# fold — and so the check below can't let uppercase through via locale collation
+name=$(printf '%s' "$name" | LC_ALL=C tr 'A-Z' 'a-z')
+
 [ -f "$template" ] || { echo "no such template: $template" >&2; exit 1; }
 case "$name" in (*[!a-z0-9]*|'') echo "invalid name: $name" >&2; exit 1;; esac
 

@@ -39,7 +39,7 @@ shots name:
 review name round="1":
     AGY_MODEL="{{review_model}}" ROUND={{round}} scripts/agent/run-agy.sh scripts/agent/review.prompt {{name}}
 
-# autonomous quality loop: verify -> shots -> review -> fix until approved (max 3 rounds)
+# autonomous quality loop (verify->shots->review->fix, up to 3 rounds, never blocks)
 loop name:
     scripts/agent/loop.sh {{name}}
 
@@ -48,9 +48,8 @@ new name: (design name) (build name) (verify name) (shots name)
     @echo "── {{name}} pipeline done. Review _agent/{{name}}/*.png against DESIGN.md §16,"
     @echo "── write findings to _agent/{{name}}/findings.md, then: just fix {{name}} _agent/{{name}}/findings.md"
 
-# fully autonomous pipeline: design -> build -> quality loop
+# fully autonomous pipeline: design -> build -> quality loop (never blocks; you inspect, then `just pr`)
 full name: (design name) (build name) (loop name)
-    @echo "── {{name}}: approved by the loop. Inspect _agent/{{name}}/ then: just pr {{name}}"
 
 # branch + commit the finished example and open a PR (run after inspecting)
 pr name:
