@@ -25,4 +25,4 @@ This is the part people find hardest to trust: Momentum has no inbox-zero ritual
 
 We're not saying structure is bad — links between notes, the margin rail of connections, even an occasional pinned note are all structure, and Momentum keeps all of them. What we're against is *pre-structure*: the requirement to decide a note's permanent address before you've written the sentence that would tell you what it's about. Structure that emerges from use beats structure you had to guess at in advance, and a stack of note cards on a real desk has always known this — it's why the important ones end up on top.
 
-If this argument is more convincing on a screen than in principle, the fastest way to test it is to [try the features](@/features.md) yourself for a week and see whether you miss the folder picker at all.
+If this argument is more convincing on a screen than in principle, the fastest way to test it is to [try the features](../features/) yourself for a week and see whether you miss the folder picker at all.
