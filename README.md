@@ -73,3 +73,15 @@ To preview the gallery index without Docker:
 ```bash
 scripts/preview-index.sh
 ```
+
+---
+
+## Memo
+
+```bash
+just full "exmaple name"
+
+# check hwaro serve -i examples/<name>
+
+just pr <name>
+```
