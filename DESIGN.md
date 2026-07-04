@@ -83,7 +83,7 @@ Every example is born from `hwaro init` and lives at `examples/<name>/`:
 ```
 examples/<name>/
 ├── config.toml               # baseline in §4
-├── AGENTS.md                 # generated: hwaro tool agents-md --remote --write
+├── AGENTS.md                 # generated: hwaro tool agents-md --remote --write --force
 ├── content/
 │   ├── index.md              # homepage; front matter: template = "home"
 │   ├── about.md              # or category-appropriate standalone page(s)
@@ -621,7 +621,7 @@ verification before PR. Each step has a checkpoint; do not skip ahead.
 11. **Gate**: `scripts/check-site.sh <name>` must print `PASS: <name>`
     (zero lint errors **and** zero warnings).
 12. **Finish**: `scripts/sync-tags.sh` regenerates `tags.json`; generate the
-    per-site doc with `hwaro tool agents-md --remote --write` inside the
+    per-site doc with `hwaro tool agents-md --remote --write --force` inside the
     example directory; sanity-check `scripts/preview-index.sh`; open a PR.
     CI trial-builds the new example, lints it, and requires the tags.json
     entry.

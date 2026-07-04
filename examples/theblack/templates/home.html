@@ -1,0 +1,133 @@
+{% include "header.html" %}
+<main id="main">
+  <!-- Band 1: Masthead -->
+  <section class="masthead-band">
+    <div class="masthead-container">
+      <div class="masthead-left">
+        <h1 class="masthead-title">THEBLACK</h1>
+      </div>
+      <div class="masthead-right">
+        <div class="sig-frame manifesto-card">
+          <span class="corner tl"></span><span class="corner tr"></span>
+          <span class="corner bl"></span><span class="corner br"></span>
+          <p class="manifesto-text">A minimalist publication exploring the aesthetic, culture, and philosophy of black in art, fashion, architecture, and sound. We seek the quiet intensity of absolute dark.</p>
+          <a href="#subscribe" class="subscribe-link">Subscribe to Edition &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Search UI (Inline) -->
+  <section class="search-band">
+    <div class="search-container-inner">
+      <input type="search" id="search-input" placeholder="Search essays..." autocomplete="off" data-index="{{ base_url }}/search.json">
+    </div>
+  </section>
+
+  <!-- Band 2: Editorial Content / Search Results Swap -->
+  {% set entries = get_section(path="essays").pages | sort_by("date", reverse=true) %}
+
+  <!-- Search Results Container (hidden by default) -->
+  <section class="editorial-band search-results-band" id="search-results-container" style="display: none;">
+    <div class="sig-frame search-results-frame">
+      <span class="corner tl"></span><span class="corner tr"></span>
+      <span class="corner bl"></span><span class="corner br"></span>
+      <div class="column-title-label">Search Results <span id="search-count-badge"></span></div>
+      <ul class="search-results-list" id="search-results"></ul>
+    </div>
+  </section>
+
+  <!-- Default Editorial Grid -->
+  <section class="editorial-band" id="default-content">
+    <div class="editorial-grid">
+      <!-- Left Column: Lead Story (Wide) -->
+      <div class="col-lead">
+        {% for p in entries %}{% if loop.index0 == 0 %}
+        <article class="sig-frame lead-card">
+          <span class="corner tl"></span><span class="corner tr"></span>
+          <span class="corner bl"></span><span class="corner br"></span>
+          
+          <div class="lead-media">
+            <svg width="100%" height="240" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" class="abstract-pattern">
+              <defs>
+                <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+                  <path d="M 10 0 L 0 0 0 10" fill="none" stroke="var(--accent)" stroke-width="0.5" opacity="0.3"/>
+                </pattern>
+              </defs>
+              <rect width="100" height="100" fill="var(--surface)"/>
+              <rect width="100" height="100" fill="url(#grid)"/>
+              <circle cx="50" cy="50" r="22" fill="none" stroke="var(--accent)" stroke-width="1.5" opacity="0.8"/>
+              <line x1="10" y1="10" x2="90" y2="90" stroke="var(--muted)" stroke-width="0.5" opacity="0.5"/>
+            </svg>
+          </div>
+          
+          <div class="lead-content">
+            <div class="entry-meta">
+              {% if p.date %}<time datetime="{{ p.date }}">{{ p.date | date("%B %d, %Y") }}</time>{% endif %}
+              {% if p.tags %}
+                <span class="meta-sep">&middot;</span>
+                <span class="meta-tags">
+                  {% for t in p.tags %}<a href="{{ get_taxonomy_url(kind="tags", term=t) }}">{{ t }}</a>{% if not loop.last %}, {% endif %}{% endfor %}
+                </span>
+              {% endif %}
+            </div>
+            <h2 class="lead-title"><a href="{{ base_url }}{{ p.url }}">{{ p.title }}</a></h2>
+            {% if p.description %}<p class="lead-excerpt">{{ p.description }}</p>{% endif %}
+            <a href="{{ base_url }}{{ p.url }}" class="read-more">Read Essay &rarr;</a>
+          </div>
+        </article>
+        {% endif %}{% endfor %}
+      </div>
+
+      <!-- Column 2 (Secondary Articles) -->
+      <div class="col-secondary">
+        <div class="sig-frame text-well-column">
+          <span class="corner tl"></span><span class="corner tr"></span>
+          <span class="corner bl"></span><span class="corner br"></span>
+          <div class="column-title-label">Essays &middot; Philosophy</div>
+          
+          <div class="wells-container">
+            {% for p in entries %}{% if loop.index0 == 1 or loop.index0 == 2 %}
+              <article class="text-well">
+                <div class="entry-meta">
+                  {% if p.date %}<time datetime="{{ p.date }}">{{ p.date | date("%Y-%m-%d") }}</time>{% endif %}
+                </div>
+                <h3 class="well-title"><a href="{{ base_url }}{{ p.url }}">{{ p.title }}</a></h3>
+                {% if p.description %}<p class="well-summary">{{ p.description | strip_html | truncate_words(20) }}</p>{% endif %}
+              </article>
+              {% if not loop.last and loop.index0 == 1 %}<hr class="well-divider">{% endif %}
+            {% endif %}{% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <!-- Column 3 (Secondary Articles) -->
+      <div class="col-tertiary">
+        <div class="sig-frame text-well-column">
+          <span class="corner tl"></span><span class="corner tr"></span>
+          <span class="corner bl"></span><span class="corner br"></span>
+          <div class="column-title-label">Essays &middot; Expression</div>
+          
+          <div class="wells-container">
+            {% for p in entries %}{% if loop.index0 == 3 or loop.index0 == 4 %}
+              <article class="text-well">
+                <div class="entry-meta">
+                  {% if p.date %}<time datetime="{{ p.date }}">{{ p.date | date("%Y-%m-%d") }}</time>{% endif %}
+                </div>
+                <h3 class="well-title"><a href="{{ base_url }}{{ p.url }}">{{ p.title }}</a></h3>
+                {% if p.description %}<p class="well-summary">{{ p.description | strip_html | truncate_words(20) }}</p>{% endif %}
+              </article>
+              {% if not loop.last and loop.index0 == 3 %}<hr class="well-divider">{% endif %}
+            {% endif %}{% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {{ content | safe }}
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
+<script src="{{ base_url }}/js/search.js"></script>
+{% include "footer.html" %}
