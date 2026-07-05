@@ -80,7 +80,7 @@ grep -q '^\[search\]' "$dir/config.toml" || err "[search] section missing from c
 
 # --- 6. internal links ---------------------------------------------------------
 LINKS_OUT=$(cd "$dir" && hwaro tool check-links --internal-only 2>&1)
-if ! printf '%s' "$LINKS_OUT" | grep -qE 'All [0-9]+ links are healthy|no links'; then
+if ! printf '%s' "$LINKS_OUT" | grep -qE 'All [0-9]+ links are healthy|no links|checked: [0-9]+ links?, all healthy'; then
   err "internal dead links"; printf '%s\n' "$LINKS_OUT" | tail -10
 fi
 
