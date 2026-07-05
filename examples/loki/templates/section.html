@@ -1,0 +1,66 @@
+{% include "header.html" %}
+<main id="main">
+  <section class="section-container">
+    <div class="section-prompt">
+      <span class="prompt-user">guest@loki:~$</span>
+      <span class="prompt-cmd">ls -la ./{{ section.name }}/ {% if paginator and paginator.current_index > 1 %}--page={{ paginator.current_index }}{% endif %}</span>
+    </div>
+    
+    <header class="section-head-title">
+      <h1>{{ section.title | e }}</h1>
+      {% if content %}
+        <div class="section-description prose">
+          {{ content | safe }}
+        </div>
+      {% endif %}
+    </header>
+
+    <div class="directory-list">
+      <div class="directory-thead">
+        <span class="col-perms">PERMISSIONS</span>
+        <span class="col-size">SIZE</span>
+        <span class="col-date">DATE</span>
+        <span class="col-name">NAME (DISPATCH)</span>
+      </div>
+      
+      <ul class="entry-list">
+        {% if paginator %}
+          {% set entries = paginator.pages %}
+        {% else %}
+          {% set entries = section.pages | sort_by("date", reverse=true) %}
+        {% endif %}
+        
+        {% for p in entries %}
+        <li class="entry-item">
+          <span class="col-perms">-rw-r--r--</span>
+          <span class="col-size">{{ p.extra.file_size | default("4.2K") }}</span>
+          <span class="col-date">{% if p.date %}{{ p.date | date("%Y-%m-%d") }}{% endif %}</span>
+          <span class="col-name">
+            <a href="{{ base_url }}{{ p.url }}" class="dispatch-link">{{ p.title }}</a>
+            {% if p.description %}<span class="dispatch-desc">&bull; {{ p.description }}</span>{% endif %}
+          </span>
+        </li>
+        {% endfor %}
+      </ul>
+
+      {% if paginator and paginator.number_pagers > 1 %}
+      <nav class="pagination-console" aria-label="Pagination">
+        {% if paginator.previous %}
+          <a href="{{ base_url }}{{ paginator.previous }}" class="pag-btn">&lt;&lt; PREV_PAGE</a>
+        {% else %}
+          <span class="pag-btn disabled">&lt;&lt; PREV_PAGE</span>
+        {% endif %}
+        
+        <span class="pag-info">PAGE {{ paginator.current_index }} OF {{ paginator.number_pagers }}</span>
+        
+        {% if paginator.next %}
+          <a href="{{ base_url }}{{ paginator.next }}" class="pag-btn">NEXT_PAGE &gt;&gt;</a>
+        {% else %}
+          <span class="pag-btn disabled">NEXT_PAGE &gt;&gt;</span>
+        {% endif %}
+      </nav>
+      {% endif %}
+    </div>
+  </section>
+</main>
+{% include "footer.html" %}

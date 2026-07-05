@@ -1,0 +1,42 @@
+{% include "header.html" %}
+<main id="main">
+  <section class="taxonomy-term-console">
+    <div class="console-prompt">
+      <span class="prompt-user">guest@loki:~$</span>
+      <span class="prompt-cmd">loki --find-by-tag="{{ taxonomy_term }}"</span>
+    </div>
+    
+    <header class="section-head-title">
+      <h1>TAG: #{{ taxonomy_term }}</h1>
+    </header>
+
+    {% set tax = get_taxonomy(kind="tags") %}
+    <div class="directory-list">
+      <div class="directory-thead">
+        <span class="col-perms">PERMISSIONS</span>
+        <span class="col-size">SIZE</span>
+        <span class="col-date">DATE</span>
+        <span class="col-name">NAME (DISPATCH)</span>
+      </div>
+      <ul class="entry-list">
+        {% for term in tax.items %}{% if term.name == taxonomy_term %}
+          {% for p in term.pages | sort_by("date", reverse=true) %}
+          <li class="entry-item">
+            <span class="col-perms">-rw-r--r--</span>
+            <span class="col-size">{{ p.extra.file_size | default("4.2K") }}</span>
+            <span class="col-date">{% if p.date %}{{ p.date | date("%Y-%m-%d") }}{% endif %}</span>
+            <span class="col-name">
+              <a href="{{ base_url }}{{ p.url }}" class="dispatch-link">{{ p.title }}</a>
+              {% if p.description %}<span class="dispatch-desc">&bull; {{ p.description }}</span>{% endif %}
+            </span>
+          </li>
+          {% endfor %}
+        {% endif %}{% endfor %}
+      </ul>
+      <div class="directory-tfoot">
+        <a href="{{ base_url }}/tags/" class="more-dispatches-link">[&lt;&lt; BACK TO ALL TAGS]</a>
+      </div>
+    </div>
+  </section>
+</main>
+{% include "footer.html" %}

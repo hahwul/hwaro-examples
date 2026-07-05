@@ -1,0 +1,72 @@
+  <footer class="site-foot">
+    <div class="footer-meta">
+      <p>LOKI SEC NEWSLETTER &middot; SYSTEM VER: 2026.7 &middot; COPYRIGHT &copy; {{ current_year }}</p>
+      <nav aria-label="Footer">
+        <a href="{{ base_url }}/issues/rss.xml">RSS_FEED</a>
+        <a href="{{ base_url }}/tags/">TAG_INDEX</a>
+      </nav>
+    </div>
+  </footer>
+  </div> <!-- closes .terminal-frame -->
+
+  <!-- Sticky tmux status bar (Signature Element) -->
+  <div class="tmux-status-bar" id="signature-bar">
+    <div class="tmux-section tmux-left">
+      <span class="tmux-session">[loki]</span>
+      <span class="tmux-window">0: {% if page.url %}{{ page.url }}{% else %}/{% endif %}</span>
+    </div>
+    <div class="tmux-section tmux-middle">
+      <span class="tmux-tags-label">TAGS:</span>
+      <span class="tmux-tags">
+        {% if page.tags %}
+          {% for t in page.tags %}{{ t }}{% if not loop.last %}, {% endif %}{% endfor %}
+        {% else %}
+          none
+        {% endif %}
+      </span>
+    </div>
+    <div class="tmux-section tmux-right">
+      <span class="tmux-status-indicator">NODE_STATUS:</span>
+      <span class="status-node" id="sub-indicator"></span>
+      <span class="status-text" id="sub-status">UNSUBSCRIBED</span>
+    </div>
+  </div>
+
+  <!-- Search Command Palette Modal -->
+  <div class="palette" id="search-palette" hidden data-base="{{ base_url }}">
+    <div class="palette-scrim" data-search-close></div>
+    <div class="palette-box" role="dialog" aria-modal="true" aria-label="Search dispatches">
+      <form class="palette-form" role="search" onsubmit="return false;">
+        <span class="palette-prompt-symbol">$</span>
+        <input id="search-input" type="search" placeholder="grep -rnI &quot;query&quot; ./dispatches/" autocomplete="off" autocapitalize="off" spellcheck="false" role="combobox" aria-expanded="true" aria-controls="search-results" aria-label="Search query">
+        <kbd class="kbd palette-esc" aria-hidden="true">ESC</kbd>
+      </form>
+      <ul class="palette-results" id="search-results" role="listbox" aria-label="Search results"></ul>
+      <p class="palette-status" id="search-status" role="status" aria-live="polite">Ready. Enter search keywords. Use Arrow keys to navigate, Enter to open.</p>
+    </div>
+  </div>
+
+  {{ highlight_js }}
+  {{ auto_includes_js }}
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0" defer></script>
+  <script src="{{ base_url }}/js/search.js" defer></script>
+  <script src="{{ base_url }}/js/theme.js"></script>
+  <script>
+    (function() {
+      // If the email form is submitted, update status in tmux bar
+      var form = document.getElementById('subscribe-form');
+      var indicator = document.getElementById('sub-indicator');
+      var statusText = document.getElementById('sub-status');
+      if (form && indicator && statusText) {
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          indicator.classList.add('status-subscribed');
+          statusText.textContent = 'SUBSCRIBED';
+          var input = form.querySelector('input[type="email"]');
+          if (input) input.value = 'STAY_SAFE@LOKI';
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
