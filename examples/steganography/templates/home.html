@@ -1,0 +1,85 @@
+{% include "header.html" %}
+<main id="main">
+  <!-- Band 1: Header/Hero -->
+  <section class="term-band hero-band" aria-label="Steganography Wiki Terminal">
+    <div class="logo-container">
+      <pre class="ascii-logo" aria-hidden="true">
+ ___ _____ ___ ___   _   _  _  ___   ___ ___   _   ___  _  _ _  _ 
+/ __|_   _| __/ __| /_\ | \| |/ _ \ / __| _ \ /_\ | _ \| || | \/ |
+\__ \ | | | _| (_ |/ _ \| .` | (_) | (_ |   // _ \|  _/| __ |\_  / 
+|___/ |_| |___\___/_/ \_\_|\_|\___/ \___|_|_\_/ \_\_|  |_||_|  /_/ 
+      </pre>
+      <h1 class="logo-title">STEGANOGRAPHY WIKI</h1>
+    </div>
+    <p class="summary-para">
+      {{ site.description | e }}
+    </p>
+    <div class="command-prompt-line">
+      <span class="prompt-user">guest@stego</span><span class="prompt-colon">:</span><span class="prompt-path">~/stego</span><span class="prompt-symbol">$</span>
+      <span class="prompt-cmd">search --query=</span><input id="search-input" class="prompt-input" type="search" placeholder="..." autocomplete="off" data-index="{{ base_url }}/search.json" data-base="{{ base_url }}" aria-label="Search articles" autofocus>
+      <p id="search-status" class="search-status" role="status" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <!-- Band 2: Directory Grid (The main content area on home) -->
+  <section id="dir-listing" class="term-band dir-band" aria-label="Wiki Directory">
+    <div class="dir-grid">
+      <!-- Column 1: Methods -->
+      <div class="dir-column">
+        <h2 class="dir-header">drwxr-xr-x <span class="dir-meta">steg master</span> <a class="dir-link" href="{{ base_url }}/methods/">./methods/</a></h2>
+        <ul class="file-list">
+          {% set methods = get_section(path="methods").pages | sort_by("title") %}
+          {% for p in methods %}
+          <li class="file-item">
+            <span class="file-perms">-rw-r--r--</span>
+            <span class="file-meta">1 steg master {{ p.word_count }}B</span>
+            {% if p.date %}<time class="file-date" datetime="{{ p.date }}">{{ p.date | date("%b %d %Y") }}</time>{% endif %}
+            <a class="file-link" href="{{ base_url }}{{ p.url }}">{{ p.title }}</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      
+      <!-- Column 2: Steganalysis -->
+      <div class="dir-column">
+        <h2 class="dir-header">drwxr-xr-x <span class="dir-meta">steg master</span> <a class="dir-link" href="{{ base_url }}/steganalysis/">./steganalysis/</a></h2>
+        <ul class="file-list">
+          {% set steganalysis = get_section(path="steganalysis").pages | sort_by("title") %}
+          {% for p in steganalysis %}
+          <li class="file-item">
+            <span class="file-perms">-rw-r--r--</span>
+            <span class="file-meta">1 steg master {{ p.word_count }}B</span>
+            {% if p.date %}<time class="file-date" datetime="{{ p.date }}">{{ p.date | date("%b %d %Y") }}</time>{% endif %}
+            <a class="file-link" href="{{ base_url }}{{ p.url }}">{{ p.title }}</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    
+    <div class="dir-root-files">
+      <div class="file-item">
+        <span class="file-perms">-rw-r--r--</span>
+        <span class="file-meta">1 steg master 1.2K</span>
+        <time class="file-date" datetime="2025-06-15">Jun 15 2025</time>
+        <a class="file-link" href="{{ base_url }}/about/">about.md</a>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Search Results (hidden by default) -->
+  <section id="search-section" class="term-band search-band" hidden aria-label="Search Results">
+    <h2 class="dir-header">total <span id="search-count">0</span> matches</h2>
+    <ul id="search-results" class="file-list">
+      <!-- Search hits will be injected here as file-items -->
+    </ul>
+  </section>
+
+  <div class="prose home-prose">
+    {{ content | safe }}
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
+<script src="{{ base_url }}/js/search.js" data-base-url="{{ base_url }}"></script>
+{% include "footer.html" %}
