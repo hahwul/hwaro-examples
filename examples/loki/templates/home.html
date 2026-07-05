@@ -1,0 +1,78 @@
+{% include "header.html" %}
+<main id="main">
+  <!-- Masthead styled as SSH Login Banner -->
+  <section class="masthead-console">
+    <div class="banner-border">====================================================================</div>
+    <div class="banner-logo-wrapper">
+      <svg viewBox="0 0 100 100" class="trickster-logo" aria-hidden="true" width="96" height="96">
+        <polygon points="50,15 80,35 75,75 50,90 25,75 20,35" class="logo-mask-base" />
+        <polygon points="50,22 74,38 70,70 50,83 30,70 26,38" class="logo-mask-inner" />
+        <!-- Sharp angled eyes -->
+        <polygon points="32,45 42,47 38,53 28,51" class="logo-eye" />
+        <polygon points="68,45 58,47 62,53 72,51" class="logo-eye" />
+        <!-- Vertical split and mouth -->
+        <line x1="50" y1="50" x2="50" y2="72" class="logo-line" />
+        <polygon points="40,73 50,68 60,73 50,77" class="logo-mouth" />
+      </svg>
+      <div class="banner-text">
+        <h1 class="console-title">LOKI</h1>
+        <p class="console-subtitle">CHAOS ENGINE &bull; EVASION TACTICS &bull; SECURITY DISPATCHES</p>
+      </div>
+    </div>
+    <div class="banner-info">
+      <p>SYS_STATUS: ACTIVE &bull; PORT: 22/SSH &bull; HOST: LOKI.LOCAL</p>
+      <p>LAST_DISPATCH: {% set latest = get_section(path="issues").pages | sort_by("date", reverse=true) | first %}{% if latest and latest.date %}{{ latest.date | date("%Y-%m-%d") }}{% else %}2026-07-05{% endif %}</p>
+    </div>
+    <div class="banner-border">====================================================================</div>
+  </section>
+
+
+  <!-- CLI Subscription Prompt -->
+  <section class="subscribe-console">
+    <div class="console-prompt">
+      <span class="prompt-user">guest@loki:~$</span>
+      <span class="prompt-cmd">loki --subscribe</span>
+    </div>
+    <form id="subscribe-form" class="subscribe-form" action="" method="POST">
+      <label for="subscribe-email" class="sr-only">Subscription Email</label>
+      <input type="email" id="subscribe-email" name="email" placeholder="operator@domain.xyz" required autocomplete="off" class="console-input">
+      <button type="submit" class="console-btn">EXECUTE</button>
+    </form>
+  </section>
+
+  <!-- Dispatch Directory Listing -->
+  <section class="dispatches-console">
+    <div class="section-header">
+      <span class="prompt-user">guest@loki:~$</span>
+      <span class="prompt-cmd">ls -la --sort=time ./issues/</span>
+    </div>
+    <div class="directory-list">
+      <div class="directory-thead">
+        <span class="col-perms">PERMISSIONS</span>
+        <span class="col-size">SIZE</span>
+        <span class="col-date">DATE</span>
+        <span class="col-name">NAME (DISPATCH)</span>
+      </div>
+      <ul class="entry-list">
+        {% set entries = get_section(path="issues").pages | sort_by("date", reverse=true) %}
+        {% for p in entries %}{% if loop.index0 < 6 %}
+        <li class="entry-item">
+          <span class="col-perms">-rw-r--r--</span>
+          <span class="col-size">{{ p.extra.file_size | default("4.2K") }}</span>
+          <span class="col-date">{% if p.date %}{{ p.date | date("%Y-%m-%d") }}{% endif %}</span>
+          <span class="col-name">
+            <a href="{{ base_url }}{{ p.url }}" class="dispatch-link">{{ p.title }}</a>
+            {% if p.description %}<span class="dispatch-desc">&bull; {{ p.description }}</span>{% endif %}
+          </span>
+        </li>
+        {% endif %}{% endfor %}
+      </ul>
+      {% if entries | length > 6 %}
+      <div class="directory-tfoot">
+        <a href="{{ base_url }}/issues/" class="more-dispatches-link">[+ VIEW ALL {{ entries | length }} DISPATCHES]</a>
+      </div>
+      {% endif %}
+    </div>
+  </section>
+</main>
+{% include "footer.html" %}

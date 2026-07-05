@@ -1,0 +1,34 @@
+{% include "header.html" %}
+<main id="main">
+  <section class="taxonomy-console">
+    <div class="console-prompt">
+      <span class="prompt-user">guest@loki:~$</span>
+      <span class="prompt-cmd">loki --list-tags</span>
+    </div>
+    
+    <header class="section-head-title">
+      <h1>{{ page.title | e }}</h1>
+    </header>
+
+    {% set tax = get_taxonomy(kind="tags") %}
+    <div class="directory-list">
+      <div class="directory-thead">
+        <span class="col-perms">INDEX</span>
+        <span class="col-size">COUNT</span>
+        <span class="col-name">TAG_NAME</span>
+      </div>
+      <ul class="entry-list">
+        {% for term in tax.items | sort_by("name") %}
+        <li class="entry-item">
+          <span class="col-perms">tag-[{{ loop.index }}]</span>
+          <span class="col-size">{{ term.pages | length }} items</span>
+          <span class="col-name">
+            <a href="{{ get_taxonomy_url(kind="tags", term=term.name) }}" class="dispatch-link">#{{ term.name }}</a>
+          </span>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
+</main>
+{% include "footer.html" %}
