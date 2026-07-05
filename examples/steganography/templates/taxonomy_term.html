@@ -1,0 +1,29 @@
+{% include "header.html" %}
+<main id="main">
+  <header class="section-head">
+    <div class="article-meta-row">
+      <span class="file-perms">drwxr-xr-x</span>
+      <span class="file-meta">tag results</span>
+    </div>
+    <h1 class="section-title">/tags/{{ taxonomy_term }}/</h1>
+  </header>
+
+  <section class="section-listing">
+    <h2 class="dir-header">files matching tag</h2>
+    <ul class="file-list">
+      {% set tax = get_taxonomy(kind="tags") %}
+      {% for term in tax.items %}{% if term.name == taxonomy_term %}
+        {% for p in term.pages | sort_by("date", reverse=true) %}
+        <li class="file-item">
+          <span class="file-perms">-rw-r--r--</span>
+          <span class="file-meta">1 steg master {{ p.word_count | default(150) }}B</span>
+          {% if p.date %}<time class="file-date" datetime="{{ p.date }}">{{ p.date | date("%b %d %Y") }}</time>{% endif %}
+          <a class="file-link" href="{{ base_url }}{{ p.url }}">{{ p.title }}</a>
+        </li>
+        {% endfor %}
+      {% endif %}{% endfor %}
+    </ul>
+    <p class="tag-nav"><a class="file-link" href="{{ base_url }}/tags/">[View All Tags]</a></p>
+  </section>
+</main>
+{% include "footer.html" %}
