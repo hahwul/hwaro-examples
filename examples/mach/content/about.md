@@ -13,7 +13,7 @@ Self-hosting CI has a reputation for being a chore: patch the runner, babysit th
 
 {{ sh(text="Where the project is going", time="0.05s") }}
 
-The `riscv64` target is still in beta, cold starts on Windows runners are the next thing we want to shave down, and we owe the community a proper plugin API for custom cache backends beyond the built-in local and S3-compatible options. All three are tracked openly in the [devlog](/devlog/), where we write about what shipped, what broke, and what we changed our minds about — including the two times we rewrote the scheduler from scratch before settling on the lease-based design that ships today.
+The `riscv64` target is still in beta, cold starts on Windows runners are the next thing we want to shave down, and we owe the community a proper plugin API for custom cache backends beyond the built-in local and S3-compatible options. All three are tracked openly in the [devlog](../devlog/), where we write about what shipped, what broke, and what we changed our minds about — including the two times we rewrote the scheduler from scratch before settling on the lease-based design that ships today.
 
 {{ sh(text="Getting in touch", time="0.04s") }}
 
