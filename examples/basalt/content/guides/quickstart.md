@@ -42,4 +42,4 @@ partition=2 offset=0 key=ord_9182 value={"total":4200}
 
 The consumer's `--group` flag matters more than it looks: every consumer sharing a group name divides the topic's partitions between them and tracks one shared set of committed offsets. Run the same command again from a second terminal with the same group and Basalt will not redeliver — the offset is already committed. Change the group name and it delivers again from `earliest`, because a new group has no committed offsets yet.
 
-From here, [Producing Messages](/guides/producing/) covers partition keys and acknowledgment levels, and [Consuming with Groups](/guides/consuming-groups/) covers what happens when a consumer in the group crashes mid-batch.
+From here, [Producing Messages](../producing/) covers partition keys and acknowledgment levels, and [Consuming with Groups](../consuming-groups/) covers what happens when a consumer in the group crashes mid-batch.
