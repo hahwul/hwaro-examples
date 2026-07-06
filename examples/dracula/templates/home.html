@@ -1,0 +1,64 @@
+{% include "header.html" %}
+<main id="main">
+  <section class="masthead-band">
+    <div class="masthead-bat-wrap">
+      <svg viewBox="0 0 100 100" width="80" height="80" class="masthead-bat" aria-hidden="true" focusable="false">
+        <path d="M50 20c-4 7-12 11-20 11-5 0-10-1.5-14-4 4 10 10 22 20 22 7 0 12-4 16-9 4 5 9 9 16 9 10 0 16-12 20-22-4 2.5-9 4-14 4-8 0-16-4-20-11zM50 20l-4 9h8l-4-9z" fill="var(--accent)"/>
+      </svg>
+    </div>
+    <h1 class="display-title">{{ site.title | e }}</h1>
+    <p class="masthead-desc">{{ site.description | e }}</p>
+  </section>
+
+  <!-- Featured Lead Band -->
+  {% set entries = get_section(path="chronicle").pages | sort_by("date") %}
+  {% if entries | length > 0 %}
+    {% set lead = entries | first %}
+    <section class="lead-band">
+      <div class="lead-card">
+        <div class="lead-meta">
+          <span class="lead-kicker">{% if lead.extra.medium %}{{ lead.extra.medium | upper }}{% else %}DIARY{% endif %}</span>
+          <span class="lead-divider">&middot;</span>
+          <time datetime="{{ lead.date }}">{{ lead.date | date("%B %d, %Y") }}</time>
+        </div>
+        <div class="lead-title-wrap">
+          <div class="wax-seal" aria-hidden="true">
+            <svg viewBox="0 0 100 100" width="68" height="68">
+              <path d="M 50 4 C 65 3, 78 8, 88 18 C 96 28, 97 45, 94 60 C 91 75, 85 88, 70 94 C 55 99, 35 97, 20 90 C 7 82, 3 65, 5 50 C 7 30, 15 15, 32 8 C 38 5, 45 4, 50 4 Z" fill="none" stroke="var(--accent)" stroke-width="4" stroke-dasharray="90 10" />
+              <path d="M 50 6 C 72 3, 90 20, 93 45 C 95 65, 82 85, 65 91 C 45 97, 20 85, 11 65 C 5 45, 15 20, 35 9 C 40 7, 45 6, 50 6 Z" fill="var(--accent)" opacity="0.15" />
+              <circle cx="50" cy="50" r="34" fill="none" stroke="var(--accent)" stroke-width="2" stroke-dasharray="5 2 10 3" />
+              <circle cx="50" cy="50" r="31" fill="none" stroke="var(--accent)" stroke-width="1" />
+              <text x="50" y="62" font-family="Young Serif, serif" font-size="34" font-weight="400" fill="var(--accent)" text-anchor="middle">D</text>
+            </svg>
+          </div>
+          <h2 class="lead-title"><a href="{{ base_url }}{{ lead.url }}">{{ lead.title }}</a></h2>
+        </div>
+        {% if lead.description %}<p class="lead-desc">{{ lead.description }}</p>{% endif %}
+        <div class="lead-prose">
+          {{ lead.summary | safe }}
+        </div>
+        <p class="lead-more-link"><a href="{{ base_url }}{{ lead.url }}">Read the full document &rarr;</a></p>
+      </div>
+    </section>
+  {% endif %}
+
+  {{ content | safe }}
+
+  <!-- Document List -->
+  <section class="index-band">
+    <h2 class="section-title">The Chronological Archive</h2>
+    <ul class="entry-list">
+      {% for p in entries %}{% if loop.index0 < 6 %}
+      <li class="entry-item">
+        <div class="entry-meta">
+          <span class="entry-kicker">{% if p.extra.medium %}{{ p.extra.medium | upper }}{% else %}DIARY{% endif %}</span>
+          <span class="entry-date">{% if p.date %}{{ p.date | date("%Y-%m-%d") }}{% endif %}</span>
+        </div>
+        <h3 class="entry-title"><a href="{{ base_url }}{{ p.url }}">{{ p.title }}</a></h3>
+        {% if p.description %}<p class="entry-desc">{{ p.description }}</p>{% endif %}
+      </li>
+      {% endif %}{% endfor %}
+    </ul>
+  </section>
+</main>
+{% include "footer.html" %}

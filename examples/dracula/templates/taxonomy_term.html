@@ -1,0 +1,23 @@
+{% include "header.html" %}
+<main id="main">
+  <div class="taxonomy-header">
+    <span class="taxonomy-kicker">TAGGED WITH</span>
+    <h1 class="display-title">#{{ taxonomy_term }}</h1>
+  </div>
+  
+  <ul class="term-pages-list">
+    {% set tax = get_taxonomy(kind="tags") %}
+    {% for term in tax.items %}{% if term.name == taxonomy_term %}
+      {% for p in term.pages | sort_by("date") %}
+      <li>
+        <div class="entry-meta">
+          {% if p.date %}<time datetime="{{ p.date }}">{{ p.date | date("%Y-%m-%d") }}</time>{% endif %}
+        </div>
+        <a href="{{ base_url }}{{ p.url }}">{{ p.title }}</a>
+      </li>
+      {% endfor %}
+    {% endif %}{% endfor %}
+  </ul>
+  <p class="back-link-wrap"><a href="{{ base_url }}/tags/">&larr; All tags</a></p>
+</main>
+{% include "footer.html" %}
