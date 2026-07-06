@@ -1,0 +1,91 @@
+{% include "header.html" %}
+
+<main id="main" class="central-panel">
+  <div class="panel-inner">
+    <div class="dashboard-header-block">
+      <div class="kicker">LOGGED SECTOR // REGION: YUKON HEADWATERS</div>
+      <h1 class="display-title">{{ page.title | e }}</h1>
+      <p class="lede-text">{{ page.description | e }}</p>
+    </div>
+
+    <div class="featured-grid">
+      <!-- Active/Featured Wolf Profile Card (The Signature Element) -->
+      <div class="wolf-card featured-wolf-card">
+        <div class="card-header">
+          <span class="collar-id">COLLAR: #WW-091a (ACTIVE)</span>
+          <span class="active-pulse">BEACON OK</span>
+        </div>
+        <div class="card-body">
+          <h2 class="wolf-card-title">W-01: ODIN (ALPHA MALE)</h2>
+          <p class="wolf-desc">Odin is the dominant alpha male of the Whitewolf pack. Fitted with collar WW-091a in early 2025, his movements define the pack's primary hunting territory across the Yukon headwaters.</p>
+          
+          <!-- Telemetry Metadata Grid -->
+          <div class="telemetry-grid">
+            <div class="telemetry-item">
+              <span class="label">LAST COORD</span>
+              <span class="value">64.2008 N, 139.4022 W</span>
+            </div>
+            <div class="telemetry-item">
+              <span class="label">ALTITUDE</span>
+              <span class="value">1120 M</span>
+            </div>
+            <div class="telemetry-item">
+              <span class="label">COLLAR TEMP</span>
+              <span class="value">-14 C</span>
+            </div>
+            <div class="telemetry-item">
+              <span class="label">BATTERY</span>
+              <span class="value">84%</span>
+            </div>
+            <div class="telemetry-item">
+              <span class="label">HEART RATE</span>
+              <span class="value">72 BPM</span>
+            </div>
+            <div class="telemetry-item">
+              <span class="label">ROLE</span>
+              <span class="value font-accent">ALPHA PACK LEADER</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <a href="{{ base_url }}/pack/odin/" class="view-profile-btn">VIEW DETAILED ANALYSIS →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content section from index.md -->
+    <div class="home-prose prose">
+      {{ content | safe }}
+    </div>
+    
+    <!-- System Updates -->
+    <div class="system-updates">
+      <h3 class="section-subtitle">RECENT FIELD REPORTS</h3>
+      {% set pack_section = get_section(path="pack") %}
+      {% if pack_section %}
+        {% set entries = pack_section.pages | sort_by("date", reverse=true) %}
+        <div class="updates-list">
+          {% for p in entries %}{% if loop.index0 < 4 %}
+          <article class="update-item">
+            <span class="update-meta">
+              {% if p.date %}<time datetime="{{ p.date }}">{{ p.date | date("%Y-%m-%d") }}</time>{% endif %}
+              {% if p.tags %}
+                &middot; 
+                {% for t in p.tags %}
+                  <a href="{{ get_taxonomy_url(kind="tags", term=t) }}" class="meta-tag">#{{ t }}</a>
+                {% endfor %}
+              {% endif %}
+            </span>
+            <h4 class="update-title"><a href="{{ base_url }}{{ p.url }}">{{ p.title }}</a></h4>
+            {% if p.summary %}
+            <p class="update-summary">{{ p.summary | strip_html | truncate_words(25) }}</p>
+            {% endif %}
+          </article>
+          {% endif %}{% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</main>
+
+{% include "footer.html" %}
