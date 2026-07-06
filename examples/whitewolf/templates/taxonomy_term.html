@@ -1,0 +1,31 @@
+{% include "header.html" %}
+
+<main id="main" class="central-panel">
+  <div class="panel-inner">
+    <div class="page-header-block">
+      <div class="kicker">DATABASE CLASSIFICATION TAG // SYSTEM FILTER</div>
+      <h1 class="display-title">#{{ taxonomy_term | upper }}</h1>
+    </div>
+    
+    <div class="taxonomy-term-container font-mono">
+      <p class="taxonomy-desc">DISPLAYING ALL ACTIVE COLLARS MATCHING CLASSIFICATION SIGNALS:</p>
+      <div class="term-pages-list">
+        {% set tax = get_taxonomy(kind="tags") %}
+        {% for term in tax.items %}{% if term.name == taxonomy_term %}
+          {% for p in term.pages | sort_by("date", reverse=true) %}
+          <div class="term-page-item">
+            <span class="term-page-date">{% if p.date %}[ {{ p.date | date("%Y-%m-%d") }} ]{% endif %}</span>
+            <a href="{{ base_url }}{{ p.url }}" class="term-page-link">{{ p.title | upper }}</a>
+            {% if p.extra.status %}
+              <span class="term-page-status">({{ p.extra.status | upper }})</span>
+            {% endif %}
+          </div>
+          {% endfor %}
+        {% endif %}{% endfor %}
+      </div>
+      <p class="all-tags-nav"><a href="{{ base_url }}/tags/">[ BROWSE ALL SYSTEM CLASSIFICATIONS ]</a></p>
+    </div>
+  </div>
+</main>
+
+{% include "footer.html" %}

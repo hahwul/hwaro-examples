@@ -1,0 +1,70 @@
+{% include "header.html" %}
+
+<main id="main" class="central-panel prose">
+  <div class="panel-inner">
+    <div class="page-header-block">
+      <h1 class="display-title">{{ page.title | e }}</h1>
+      <div class="page-meta font-mono">
+        {% if page.date %}<time datetime="{{ page.date }}">{{ page.date | date("%B %d, %Y") }}</time>{% endif %}
+        {% if page.extra.status %}
+          &middot; <span class="status-badge">STATUS: {{ page.extra.status | upper }}</span>
+        {% endif %}
+      </div>
+    </div>
+    
+    <!-- Telemetry Card if the page belongs to a wolf (has extra parameters) -->
+    {% if page.extra.collar_id %}
+    <div class="wolf-card inner-wolf-card">
+      <div class="card-header">
+        <span class="collar-id">COLLAR: #{{ page.extra.collar_id }}</span>
+        <span class="active-pulse">BEACON LOGGED</span>
+      </div>
+      <div class="card-body">
+        <div class="telemetry-grid">
+          <div class="telemetry-item">
+            <span class="label">LAST COORD</span>
+            <span class="value">{{ page.extra.last_location | default("64.0000 N, 139.0000 W", true) }}</span>
+          </div>
+          <div class="telemetry-item">
+            <span class="label">ALTITUDE</span>
+            <span class="value">{{ page.extra.altitude | default("900 M", true) }}</span>
+          </div>
+          <div class="telemetry-item">
+            <span class="label">COLLAR TEMP</span>
+            <span class="value">{{ page.extra.collar_temp | default("-15 C", true) }}</span>
+          </div>
+          <div class="telemetry-item">
+            <span class="label">BATTERY</span>
+            <span class="value">{{ page.extra.battery | default("92%", true) }}</span>
+          </div>
+          <div class="telemetry-item">
+            <span class="label">HEART RATE</span>
+            <span class="value">{{ page.extra.heart_rate | default("68 BPM", true) }}</span>
+          </div>
+          <div class="telemetry-item">
+            <span class="label">ROLE</span>
+            <span class="value font-accent">{{ page.extra.role | default("PACK MEMBER", true) | upper }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="page-content">
+      {{ content | safe }}
+    </div>
+
+    {% if page.tags %}
+    <div class="page-tags font-mono">
+      <span class="tags-label">TELEMETRY TAGS:</span>
+      <ul class="tag-list">
+        {% for t in page.tags %}
+        <li><a href="{{ get_taxonomy_url(kind="tags", term=t) }}">#{{ t }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+  </div>
+</main>
+
+{% include "footer.html" %}

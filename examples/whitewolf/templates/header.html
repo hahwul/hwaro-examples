@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description | default(site.description, true) | e }}">
+  <title>{% if page.title is present and page.title != site.title %}{{ page.title | e }} &middot; {% endif %}{{ site.title | e }}</title>
+  <link rel="icon" type="image/svg+xml" href="{{ base_url }}/favicon.svg">
+  {{ og_all_tags }}
+  {{ canonical_tag }}
+  {{ jsonld }}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ base_url }}/css/style.css">
+  {{ highlight_css }}
+  {{ auto_includes_css }}
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="topbar-left">
+        <a class="brand" href="{{ base_url }}/">WHITEWOLF</a>
+        <span class="sub-brand">YUKON TRACKING WIKI</span>
+      </div>
+      <div class="topbar-right">
+        <div class="search-box">
+          <input type="search" id="inline-search" placeholder="FILTER PACK..." autocomplete="off" aria-label="Filter pack members">
+        </div>
+      </div>
+    </header>
+    
+    <div class="dashboard-body">
+      <aside class="left-panel">
+        <div class="panel-header">ACTIVE COLLAR INVENTORY</div>
+        <ul class="wolf-list" id="wolf-list">
+          {% set pack_section = get_section(path="pack") %}
+          {% if pack_section %}
+            {% set wolves = pack_section.pages | sort_by("title") %}
+            {% for p in wolves %}
+            <li class="wolf-item" data-url="{{ base_url }}{{ p.url }}">
+              <a href="{{ base_url }}{{ p.url }}" {% if page.url == p.url %}class="active" aria-current="page"{% endif %}>
+                <span class="wolf-name">{{ p.title }}</span>
+                {% if p.extra.status %}
+                <span class="wolf-status status-{{ p.extra.status | slugify }}">{{ p.extra.status | upper }}</span>
+                {% endif %}
+              </a>
+            </li>
+            {% endfor %}
+          {% endif %}
+        </ul>
+        <div class="left-panel-footer">
+          <nav aria-label="System navigation">
+            <a href="{{ base_url }}/about/" {% if page.url == "/about/" %}class="active" aria-current="page"{% endif %}>[ ABOUT SYSTEM ]</a>
+            <a href="{{ base_url }}/tags/" {% if page.url == "/tags/" %}class="active" aria-current="page"{% endif %}>[ TAG INDEX ]</a>
+          </nav>
+        </div>
+      </aside>
