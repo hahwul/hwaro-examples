@@ -23,4 +23,4 @@ None of that is the beer's fault. Poured blind, this pilsner would win most head
 
 If you can tune out the reclaimed-wood theater, it's a genuinely good crusher of a beer. If you can't, order it to go and drink it somewhere the walls aren't billing you by the hour.
 
-**Verdict:** great lager, exhausting room. Nine dollars is a room tax, not a beer tax — budget accordingly. If atmosphere tax isn't your thing, go get lost in [The Tin Whistle's flight board](tin-whistle-flight/) instead — same neighborhood, a fraction of the pretense.
+**Verdict:** great lager, exhausting room. Nine dollars is a room tax, not a beer tax — budget accordingly. If atmosphere tax isn't your thing, go get lost in [The Tin Whistle's flight board](@/pours/tin-whistle-flight.md) instead — same neighborhood, a fraction of the pretense.
