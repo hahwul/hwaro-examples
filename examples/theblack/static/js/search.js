@@ -52,7 +52,7 @@
       li.className = 'search-result-item';
       
       var a = document.createElement('a');
-      a.href = h.item.url;
+      var baseUrl = searchIndexUrl.replace(/\/search\.json$/, ""); a.href = baseUrl + h.item.url;
       a.textContent = h.item.title;
       a.className = 'search-result-title';
       li.appendChild(a);
