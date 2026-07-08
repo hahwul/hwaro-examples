@@ -36,7 +36,7 @@ figures, above a hairline red rule. That rule is the only decoration this
 site allows itself — it marks where one folio ends and the next opens,
 the same way a ledger book rules off one day's entries from the next.
 Tags along the bottom of each folio group releases by what they touched:
-`sync`, `graph`, `security`, and so on. The [tag index](/tags/) collects
+`sync`, `graph`, `security`, and so on. The [tag index](../tags/) collects
 every folio by theme if you're chasing one thread — say, everything that
 touched sync — across the whole run.
 
