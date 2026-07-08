@@ -38,4 +38,4 @@ Basalt never commits on your behalf unless you enable auto-commit explicitly. Th
 
 Because commits happen after processing, not before, a crash between "processed" and "committed" causes Basalt to redeliver that message to whichever consumer picks up the partition next. Your handler must tolerate seeing the same message twice — usually by keying side effects on the message's idempotency key rather than assuming poll order implies exactly-once delivery. This is the one requirement Basalt cannot lift for you; partitioned, replicated, at-least-once delivery is the broker's job, and idempotent handling is the consumer's.
 
-See [Operating in Production](/guides/operating/) for how to watch consumer lag before it becomes an incident, and [Consumer Group Rebalancing](/protocol/rebalancing/) for the wire-level mechanics behind the handoff described above.
+See [Operating in Production](../operating/) for how to watch consumer lag before it becomes an incident, and [Consumer Group Rebalancing](../../protocol/rebalancing/) for the wire-level mechanics behind the handoff described above.

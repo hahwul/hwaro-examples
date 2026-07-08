@@ -43,4 +43,4 @@ This is what prevents a "zombie" consumer — one that missed the rebalance beca
 - **Round-robin** — partitions across all subscribed topics are dealt one at a time across members. Better balance, but a rebalance can reassign nearly every partition even for a single member joining.
 - **Cooperative-sticky** — the default. Computes the minimal set of partition moves needed to reach a balanced assignment, leaving unaffected members' partitions untouched, and lets members keep processing their retained partitions during the rebalance instead of stopping the world.
 
-Cooperative-sticky is why adding one consumer to a busy group does not pause the other nine — see [Consuming with Groups](/guides/consuming-groups/) for how this looks from the client side.
+Cooperative-sticky is why adding one consumer to a busy group does not pause the other nine — see [Consuming with Groups](../../guides/consuming-groups/) for how this looks from the client side.
