@@ -3,7 +3,7 @@ title = "About"
 description = "Tabloid is a small-batch beer zine that reviews the pour and the room with equal suspicion."
 +++
 
-Tabloid started as a photocopied handout left on the bar at a taproom that has since closed, which we consider a coincidence and not a warning. We rate beer. We rate the rooms that pour it. We have never once softened a review because a brewery bought us a round, and several breweries have stopped speaking to us as a direct result. The whole run so far lives in the [pours archive](pours/); if you just want to jump straight to the loudest verdict we've filed, start with [Molasses Bomb](pours/molasses-bomb/).
+Tabloid started as a photocopied handout left on the bar at a taproom that has since closed, which we consider a coincidence and not a warning. We rate beer. We rate the rooms that pour it. We have never once softened a review because a brewery bought us a round, and several breweries have stopped speaking to us as a direct result. The whole run so far lives in the [pours archive](@/pours/_index.md); if you just want to jump straight to the loudest verdict we've filed, start with [Molasses Bomb](@/pours/molasses-bomb.md).
 
 ## What we actually do
 
@@ -17,4 +17,4 @@ We run corrections when we're wrong about a fact — an ABV, a release date, a b
 
 ## Get in touch
 
-Send tips, samples, and polite disagreements to the desk. We read everything. We publish what's true and interesting, in whichever order gets the sentence to land harder. Looking for something specific? [Search the archive](search/) by beer, style, or room.
+Send tips, samples, and polite disagreements to the desk. We read everything. We publish what's true and interesting, in whichever order gets the sentence to land harder. Looking for something specific? [Search the archive](@/search.md) by beer, style, or room.
