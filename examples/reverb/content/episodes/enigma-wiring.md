@@ -41,4 +41,4 @@ That single "never itself" constraint, mechanically forced by the reflector, is 
 - Gordon Welchman, *The Hut Six Story* (1982)
 - The captured weather-ship cipher material that shortened the 1941 naval break
 
-[Block 0x05](/episodes/rsa-factoring-wall/) leaves mechanical ciphers behind entirely for the first genuinely modern idea on the show: a key you can hand to a stranger in public.
+[Block 0x05](../../episodes/rsa-factoring-wall/) leaves mechanical ciphers behind entirely for the first genuinely modern idea on the show: a key you can hand to a stranger in public.

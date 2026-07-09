@@ -46,4 +46,4 @@ We spend the second half on the arms race between key size and factoring records
 - The RSA-768 factorization writeup (Kleinjung et al., 2010)
 - NIST SP 800-57, key length recommendations by decade
 
-Which sets up the one question every guest this season keeps circling back to: what happens to that factoring wall once a quantum computer shows up. That's [block 0x06](/episodes/lattices-after-shor/).
+Which sets up the one question every guest this season keeps circling back to: what happens to that factoring wall once a quantum computer shows up. That's [block 0x06](../../episodes/lattices-after-shor/).

@@ -33,4 +33,4 @@ We spend the back half of the episode on counterexamples: proprietary GSM encryp
 - Claude Shannon, *Communication Theory of Secrecy Systems* (1949)
 - The CSS (Content Scramble System) reverse-engineering timeline, 1999
 
-[Block 0x04](/episodes/enigma-wiring/) is the loudest counterexample of them all: a machine whose designers believed obscurity was the whole point.
+[Block 0x04](../../episodes/enigma-wiring/) is the loudest counterexample of them all: a machine whose designers believed obscurity was the whole point.
