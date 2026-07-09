@@ -44,4 +44,4 @@ Run that against any reasonably long shifted passage and the most frequent ciphe
 - Al-Kindi, *A Manuscript on Deciphering Cryptographic Messages* (c. 850 CE)
 - The ROT13 convention still used to spoiler-mask forum posts today
 
-Next block: [what happens when you use twenty-six different shifts instead of one](/episodes/vigenere-shadow/).
+Next block: [what happens when you use twenty-six different shifts instead of one](../../episodes/vigenere-shadow/).

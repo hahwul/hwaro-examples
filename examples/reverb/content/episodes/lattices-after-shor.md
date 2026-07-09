@@ -41,4 +41,4 @@ Without the error term, recovering `s` from enough samples is ordinary linear al
 - Oded Regev, *On Lattices, Learning with Errors, Random Linear Codes, and Cryptography* (2005)
 - NIST's post-quantum cryptography standardization process, module-lattice finalists
 
-That's the season so far — six blocks, six ways of hiding a message, each one built on the last one's ruins. New episodes land as we record them; catch up on the [full run of episodes](/episodes/) or read more [about the show](/about/).
+That's the season so far — six blocks, six ways of hiding a message, each one built on the last one's ruins. New episodes land as we record them; catch up on the [full run of episodes](../../episodes/) or read more [about the show](../../about/).

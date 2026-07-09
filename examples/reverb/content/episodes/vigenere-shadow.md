@@ -42,4 +42,4 @@ Once you know the key length, the polyalphabetic cipher decomposes into that man
 - David Kahn, *The Codebreakers*, chapter on the "indecipherable cipher"
 - Charles Babbage's earlier, unpublished break of Vigenère in the 1850s
 
-We come back to Kasiski's counting trick in [block 0x04](/episodes/enigma-wiring/), applied to a machine instead of a keyword.
+We come back to Kasiski's counting trick in [block 0x04](../../episodes/enigma-wiring/), applied to a machine instead of a keyword.

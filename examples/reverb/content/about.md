@@ -3,7 +3,7 @@ title = "About Reverb"
 description = "What Reverb is, who makes it, and how each episode gets built from a working cipher implementation before anyone opens a microphone."
 +++
 
-Reverb is a cryptography podcast about the machinery of secrecy — how it was built, how it held, and eventually how it fell. Every [episode](/episodes/) picks one cipher or one cryptographic idea and works through it from the ground up: what problem it was solving, how the design decisions were made, and the specific insight that eventually broke it, if one exists yet. We start with a Caesar wheel and end wherever the current season takes us; season one runs from shift ciphers to lattice-based schemes built to survive a quantum adversary.
+Reverb is a cryptography podcast about the machinery of secrecy — how it was built, how it held, and eventually how it fell. Every [episode](../episodes/) picks one cipher or one cryptographic idea and works through it from the ground up: what problem it was solving, how the design decisions were made, and the specific insight that eventually broke it, if one exists yet. We start with a Caesar wheel and end wherever the current season takes us; season one runs from shift ciphers to lattice-based schemes built to survive a quantum adversary.
 
 ## Format
 
