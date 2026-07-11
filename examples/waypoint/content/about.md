@@ -38,7 +38,7 @@ waypoint run --net=userlink registry.example.com/api:1.4
 
 ## How to read these notes
 
-The [full release history](/releases/) is listed newest first. Minor versions (1.3, 1.4) may change defaults
+The [full release history](../releases/) is listed newest first. Minor versions (1.3, 1.4) may change defaults
 but never break a pinned digest; patch versions (1.2.1) carry only fixes. The
 status line at the bottom of every page reports the current stable version, its
 release date, and the first bytes of the digest it resolves to — the same digest
