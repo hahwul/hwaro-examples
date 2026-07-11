@@ -1,0 +1,28 @@
+{% include "header.html" %}
+<main id="main" class="layout-spread taxonomy-term-spread">
+  <article class="prose standalone-page-content">
+    <header class="page-header-running">
+      <span class="running-title">Tag: {{ taxonomy_term }} &middot; The Great Gatsby</span>
+      <span class="page-number">Folio T-Term</span>
+    </header>
+
+    <h1 class="page-title">Entries tagged with &ldquo;{{ taxonomy_term }}&rdquo;</h1>
+    
+    <div class="term-entries">
+      {% set tax = get_taxonomy(kind="tags") %}
+      {% for term in tax.items %}{% if term.name == taxonomy_term %}
+        {% for p in term.pages | sort_by("date", reverse=true) %}
+        <article class="term-entry">
+          <h2><a href="{{ base_url }}{{ p.url }}">{{ p.title }}</a></h2>
+          {% if p.date %}
+          <time datetime="{{ p.date }}">{{ p.date | date("%B %d, %Y") }}</time>
+          {% endif %}
+        </article>
+        {% endfor %}
+      {% endif %}{% endfor %}
+    </div>
+
+    <p class="back-link"><a href="{{ base_url }}/tags/">All tags</a></p>
+  </article>
+</main>
+{% include "footer.html" %}
