@@ -1,0 +1,102 @@
+{% include "header.html" %}
+
+<main id="main" class="site-wrapper">
+  <!-- Hero Band -->
+  <section class="hero-band" aria-label="Introduction">
+    <div class="hero-left">
+      <h1 class="podcast-desc">{{ site.description | e }}</h1>
+      
+      <!-- Inline Search UI -->
+      <div class="search-container">
+        <div class="search-input-wrapper">
+          <svg class="search-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input id="search-input" type="search" placeholder="Search dispatches..." autocomplete="off" data-index="{{ base_url }}/search.json" aria-label="Search dispatches">
+        </div>
+      </div>
+    </div>
+    
+    <div class="hero-right">
+      <!-- Stylized Subarctic Mountain Range SVG -->
+      <svg class="mountain-svg" viewBox="0 0 300 150" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg" aria-label="Stylized subarctic mountains silhouette">
+        <path d="M10 130 L70 70 L130 120 L190 50 L250 110 L290 80" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="3,3" />
+        <path d="M0 140 L50 80 L100 120 L160 60 L220 110 L270 70 L300 100 L300 150 L0 150 Z" fill="var(--surface)" stroke="var(--fg)" stroke-width="2" stroke-linejoin="bevel" />
+        <circle cx="210" cy="40" r="8" fill="none" stroke="var(--accent)" stroke-width="2" />
+      </svg>
+    </div>
+  </section>
+
+
+  <!-- Timeline Band -->
+  <section class="timeline-band" aria-label="Episodes Archive">
+    <h2 class="section-title">Dispatches</h2>
+    
+    <div class="timeline-container">
+      {% set entries = get_section(path="episodes").pages | sort_by("date", reverse=true) %}
+      <ul class="timeline-list">
+        {% for p in entries %}{% if loop.index0 < 10 %}
+        <li class="episode-item">
+          <!-- Latitude spine node -->
+          <div class="timeline-node">
+            <span class="latitude-label">{% if p.extra.latitude %}{{ p.extra.latitude | e }}{% else %}66°33′N{% endif %}</span>
+            <span class="latitude-dot"></span>
+          </div>
+          
+          <!-- Episode card -->
+          <div class="episode-card">
+            <div class="card-meta">
+              <span class="season-number">{% if p.extra.season %}{{ p.extra.season | e }}{% else %}Season 1{% endif %}</span>
+              <span class="meta-dot">&middot;</span>
+              {% if p.date %}
+              <time class="release-date" datetime="{{ p.date }}">{{ p.date | date("%B %d, %Y") }}</time>
+              {% endif %}
+            </div>
+            
+            <h3 class="card-title">
+              <a href="{{ base_url }}{{ p.url }}">{{ p.title | e }}</a>
+            </h3>
+            
+            {% if p.description %}
+            <p class="card-desc">{{ p.description | e }}</p>
+            {% endif %}
+            
+            <div class="card-footer">
+              <button class="play-btn" aria-label="Play dispatch: {{ p.title | e }}">
+                <svg class="play-icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+                  <polygon points="5 3 19 12 5 21 5 3"/>
+                </svg>
+                <span>Listen</span>
+              </button>
+              
+              <!-- Mini-map SVG -->
+              <div class="mini-map-container" aria-label="Recording location map">
+                {% if p.extra.minimap_svg %}
+                  {{ p.extra.minimap_svg | safe }}
+                {% endif %}
+              </div>
+              
+              <!-- Temperature Badge -->
+              <span class="temp-badge">{% if p.extra.temperature %}{{ p.extra.temperature | e }}{% else %}-4°C{% endif %}</span>
+            </div>
+          </div>
+        </li>
+        {% endif %}{% endfor %}
+      </ul>
+      
+      <!-- Container for search results (mirroring timeline layout) -->
+      <ul class="search-results-list" style="display: none;"></ul>
+    </div>
+  </section>
+
+  <!-- Homepage text content if any -->
+  <div class="prose-content prose">
+    {{ content | safe }}
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
+<script src="{{ base_url }}/js/search.js"></script>
+
+{% include "footer.html" %}
