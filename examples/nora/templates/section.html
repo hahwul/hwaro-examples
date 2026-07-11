@@ -1,0 +1,53 @@
+{% include "header.html" %}
+<main id="main" class="site-wrapper">
+  <div class="prose">
+    <h1>{{ section.title | e }}</h1>
+  </div>
+  
+  <div class="timeline-container" style="margin-top: var(--space-4);">
+    <ul class="timeline-list">
+      {% for p in section.pages %}
+      <li class="episode-item">
+        <div class="timeline-node">
+          <span class="latitude-label">{% if p.extra.latitude %}{{ p.extra.latitude | e }}{% else %}66°33′N{% endif %}</span>
+          <span class="latitude-dot"></span>
+        </div>
+        <div class="episode-card">
+          <div class="card-meta">
+            <span class="season-number">{% if p.extra.season %}{{ p.extra.season | e }}{% else %}Season 1{% endif %}</span>
+            <span class="meta-dot">&middot;</span>
+            {% if p.date %}
+            <time class="release-date" datetime="{{ p.date }}">{{ p.date | date("%B %d, %Y") }}</time>
+            {% endif %}
+          </div>
+          <h3 class="card-title">
+            <a href="{{ base_url }}{{ p.url }}">{{ p.title | e }}</a>
+          </h3>
+          {% if p.description %}
+          <p class="card-desc">{{ p.description | e }}</p>
+          {% endif %}
+          <div class="card-footer">
+            <button class="play-btn" aria-label="Play dispatch: {{ p.title | e }}">
+              <svg class="play-icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+                <polygon points="5 3 19 12 5 21 5 3"/>
+              </svg>
+              <span>Listen</span>
+            </button>
+            <div class="mini-map-container" aria-label="Recording location map">
+              {% if p.extra.minimap_svg %}
+                {{ p.extra.minimap_svg | safe }}
+              {% endif %}
+            </div>
+            <span class="temp-badge">{% if p.extra.temperature %}{{ p.extra.temperature | e }}{% else %}-4°C{% endif %}</span>
+          </div>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  
+  <div class="prose" style="margin-top: var(--space-5);">
+    {{ content | safe }}
+  </div>
+</main>
+{% include "footer.html" %}
