@@ -1,0 +1,38 @@
+{% include "header.html" %}
+<main id="main">
+  <div class="container" style="padding-top: var(--space-4);">
+    <header class="interior-header">
+      <h1 class="interior-title">Tagged: "{{ taxonomy_term }}"</h1>
+      <p style="color: var(--muted); margin: 0;"><a href="{{ base_url }}/tags/">&larr; Back to all tags</a></p>
+    </header>
+    
+    <div class="cards-grid" style="margin-top: var(--space-4); margin-bottom: var(--space-5);">
+      {% set tax = get_taxonomy(kind="tags") %}
+      {% for term in tax.items %}{% if term.name == taxonomy_term %}
+        {% for p in term.pages | sort_by("date", reverse=true) %}
+        <article class="card">
+          <div class="card-top">
+            <svg class="signature-bowl" viewBox="0 0 100 100" aria-hidden="true">
+              <path d="M 50 50 L 50 10 A 40 40 0 0 1 88.04 37.64 Z" fill="#d32f2f"></path>
+              <path d="M 50 50 L 88.04 37.64 A 40 40 0 0 1 73.51 82.36 Z" fill="#388e3c"></path>
+              <path d="M 50 50 L 73.51 82.36 A 40 40 0 0 1 26.49 82.36 Z" fill="#fbc02d"></path>
+              <path d="M 50 50 L 26.49 82.36 A 40 40 0 0 1 11.96 37.64 Z" fill="#ffffff"></path>
+              <path d="M 50 50 L 11.96 37.64 A 40 40 0 0 1 50 10 Z" fill="#212121"></path>
+              <circle cx="50" cy="50" r="40" fill="none" stroke="var(--fg)" stroke-width="2.5"></circle>
+            </svg>
+            <span class="kicker">{% if p.extra.cook_time %}Recipe{% else %}Article{% endif %}</span>
+            <h3 class="card-title"><a href="{{ base_url }}{{ p.url }}">{{ p.title }}</a></h3>
+            <p class="card-excerpt">{{ p.description }}</p>
+          </div>
+          <div class="card-meta">
+            {% if p.date %}<time datetime="{{ p.date }}">{{ p.date | date("%b %d, %Y") }}</time>{% endif %}
+            {% if p.extra.cook_time %}<span class="badge">{{ p.extra.cook_time }}</span>{% endif %}
+            {% if p.extra.spice_level %}<span class="badge badge-spice">{{ p.extra.spice_level }}</span>{% endif %}
+          </div>
+        </article>
+        {% endfor %}
+      {% endif %}{% endfor %}
+    </div>
+  </div>
+</main>
+{% include "footer.html" %}

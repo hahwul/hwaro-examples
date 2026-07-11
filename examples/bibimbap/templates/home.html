@@ -1,0 +1,112 @@
+{% include "header.html" %}
+<main id="main">
+  <!-- Second Band: Lead Recipe Editorial Grid -->
+  {% set recipes = get_section(path="recipes").pages | sort_by("date", reverse=true) %}
+  {% set lead_recipe = recipes | first %}
+  
+  {% if lead_recipe %}
+  <section class="container editorial-grid band-gap">
+    <div class="lead-content" style="position: relative;">
+      <svg class="signature-bowl" viewBox="0 0 100 100" aria-hidden="true">
+        <path d="M 50 50 L 50 10 A 40 40 0 0 1 88.04 37.64 Z" fill="#d32f2f"></path>
+        <path d="M 50 50 L 88.04 37.64 A 40 40 0 0 1 73.51 82.36 Z" fill="#388e3c"></path>
+        <path d="M 50 50 L 73.51 82.36 A 40 40 0 0 1 26.49 82.36 Z" fill="#fbc02d"></path>
+        <path d="M 50 50 L 26.49 82.36 A 40 40 0 0 1 11.96 37.64 Z" fill="#ffffff"></path>
+        <path d="M 50 50 L 11.96 37.64 A 40 40 0 0 1 50 10 Z" fill="#212121"></path>
+        <circle cx="50" cy="50" r="40" fill="none" stroke="var(--fg)" stroke-width="2.5"></circle>
+      </svg>
+      <span class="kicker">Featured Recipe</span>
+      <h1 class="lead-title"><a href="{{ base_url }}{{ lead_recipe.url }}">{{ lead_recipe.title }}</a></h1>
+      <p class="lead-excerpt">{{ lead_recipe.description }}</p>
+      <div class="meta-row">
+        {% if lead_recipe.date %}<time datetime="{{ lead_recipe.date }}">{{ lead_recipe.date | date("%B %d, %Y") }}</time>{% endif %}
+        {% if lead_recipe.extra.cook_time %}<span class="badge">{{ lead_recipe.extra.cook_time }}</span>{% endif %}
+        {% if lead_recipe.extra.spice_level %}<span class="badge badge-spice">{{ lead_recipe.extra.spice_level }}</span>{% endif %}
+      </div>
+      <a href="{{ base_url }}{{ lead_recipe.url }}" class="cta-button">Read Recipe</a>
+    </div>
+    <div class="lead-illustration">
+      <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <!-- Bowl Base -->
+        <path d="M 20 110 C 20 170, 180 170, 180 110 Z" fill="var(--surface)" stroke="var(--fg)" stroke-width="4"/>
+        <path d="M 20 110 L 180 110" stroke="var(--fg)" stroke-width="3"/>
+        <path d="M 70 156 L 130 156 C 120 170, 80 170, 70 156 Z" fill="color-mix(in srgb, var(--fg) 20%, transparent)" stroke="var(--fg)" stroke-width="3"/>
+        <!-- Spinach (Green) -->
+        <path d="M 35 110 C 35 90, 70 90, 65 110 Z" fill="#388e3c" stroke="var(--fg)" stroke-width="2"/>
+        <!-- Carrots (Orange/Red) -->
+        <path d="M 65 110 C 65 85, 95 85, 95 110 Z" fill="#d32f2f" stroke="var(--fg)" stroke-width="2"/>
+        <!-- Mushrooms (Black/Brown) -->
+        <path d="M 95 110 C 95 90, 125 90, 125 110 Z" fill="#212121" stroke="var(--fg)" stroke-width="2"/>
+        <!-- Bean Sprouts (White) -->
+        <path d="M 125 110 C 125 85, 155 85, 150 110 Z" fill="#ffffff" stroke="var(--fg)" stroke-width="2"/>
+        <!-- Egg (Yellow/White) in center -->
+        <circle cx="100" cy="100" r="22" fill="#ffffff" stroke="var(--fg)" stroke-width="2"/>
+        <circle cx="100" cy="100" r="10" fill="#fbc02d" stroke="var(--fg)" stroke-width="2"/>
+        <!-- Sesame seeds decoration -->
+        <circle cx="95" cy="98" r="1" fill="var(--fg)"/>
+        <circle cx="105" cy="102" r="1" fill="var(--fg)"/>
+        <circle cx="102" cy="95" r="1" fill="var(--fg)"/>
+      </svg>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- Optional homepage markdown content if written in content/index.md -->
+  <div class="container prose" style="margin-top: var(--space-4);">
+    {{ content | safe }}
+  </div>
+
+  <!-- Third Band: Three-Column Listing of Recent Variations & Essays -->
+  {% set ingredients = get_section(path="ingredients").pages | sort_by("title") %}
+  
+  <section class="container three-col-band band-gap">
+    <h2 class="band-title">Seasonal Selections &amp; Insights</h2>
+    <div class="cards-grid">
+      {% for p in recipes %}{% if loop.index0 > 0 and loop.index0 < 3 %}
+        <article class="card">
+          <div class="card-top">
+            <svg class="signature-bowl" viewBox="0 0 100 100" aria-hidden="true">
+              <path d="M 50 50 L 50 10 A 40 40 0 0 1 88.04 37.64 Z" fill="#d32f2f"></path>
+              <path d="M 50 50 L 88.04 37.64 A 40 40 0 0 1 73.51 82.36 Z" fill="#388e3c"></path>
+              <path d="M 50 50 L 73.51 82.36 A 40 40 0 0 1 26.49 82.36 Z" fill="#fbc02d"></path>
+              <path d="M 50 50 L 26.49 82.36 A 40 40 0 0 1 11.96 37.64 Z" fill="#ffffff"></path>
+              <path d="M 50 50 L 11.96 37.64 A 40 40 0 0 1 50 10 Z" fill="#212121"></path>
+              <circle cx="50" cy="50" r="40" fill="none" stroke="var(--fg)" stroke-width="2.5"></circle>
+            </svg>
+            <span class="kicker">Recipe</span>
+            <h3 class="card-title"><a href="{{ base_url }}{{ p.url }}">{{ p.title }}</a></h3>
+            <p class="card-excerpt">{{ p.description }}</p>
+          </div>
+          <div class="card-meta">
+            {% if p.date %}<time datetime="{{ p.date }}">{{ p.date | date("%b %d, %Y") }}</time>{% endif %}
+            {% if p.extra.cook_time %}<span class="badge">{{ p.extra.cook_time }}</span>{% endif %}
+            {% if p.extra.spice_level %}<span class="badge badge-spice">{{ p.extra.spice_level }}</span>{% endif %}
+          </div>
+        </article>
+      {% endif %}{% endfor %}
+      
+      {% for p in ingredients %}{% if loop.index0 < 1 %}
+        <article class="card">
+          <div class="card-top">
+            <svg class="signature-bowl" viewBox="0 0 100 100" aria-hidden="true">
+              <path d="M 50 50 L 50 10 A 40 40 0 0 1 88.04 37.64 Z" fill="#d32f2f"></path>
+              <path d="M 50 50 L 88.04 37.64 A 40 40 0 0 1 73.51 82.36 Z" fill="#388e3c"></path>
+              <path d="M 50 50 L 73.51 82.36 A 40 40 0 0 1 26.49 82.36 Z" fill="#fbc02d"></path>
+              <path d="M 50 50 L 26.49 82.36 A 40 40 0 0 1 11.96 37.64 Z" fill="#ffffff"></path>
+              <path d="M 50 50 L 11.96 37.64 A 40 40 0 0 1 50 10 Z" fill="#212121"></path>
+              <circle cx="50" cy="50" r="40" fill="none" stroke="var(--fg)" stroke-width="2.5"></circle>
+            </svg>
+            <span class="kicker">Ingredient Spotlight</span>
+            <h3 class="card-title"><a href="{{ base_url }}{{ p.url }}">{{ p.title }}</a></h3>
+            <p class="card-excerpt">{{ p.description }}</p>
+          </div>
+          <div class="card-meta">
+            {% if p.date %}<time datetime="{{ p.date }}">{{ p.date | date("%b %d, %Y") }}</time>{% endif %}
+            <span class="badge">Essay</span>
+          </div>
+        </article>
+      {% endif %}{% endfor %}
+    </div>
+  </section>
+</main>
+{% include "footer.html" %}
