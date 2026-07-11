@@ -1,0 +1,69 @@
+{% include "header.html" %}
+
+<main id="main">
+  <!-- Inline Search Results Panel (swaps with main-content when active) -->
+  <div id="search-results-container" class="search-results-container" hidden>
+    <div class="search-results-inner">
+      <h2 class="search-results-title">Search Results</h2>
+      <p class="find-status" id="find-status" role="status" aria-live="polite" hidden></p>
+      <ul class="find-results" id="find-results" aria-label="Search results" hidden></ul>
+    </div>
+  </div>
+
+  <div id="main-content" class="spread-container">
+    <!-- Left page: Calligraphy Studies and Ink Guides -->
+    <div class="spread-page page-left" id="left-page">
+      <div class="page-header-running">
+        <span class="running-title">Kaku: Calligraphy Garden</span>
+        <span class="page-number">i</span>
+      </div>
+      
+      <section class="studies-list-section">
+        <h2 class="section-title">Calligraphy &amp; Ink Studies</h2>
+        <p class="section-intro">A digital notebook documenting the practice of Japanese brushwork, paper selection, and ink formulation.</p>
+        
+        {% set studies_list = get_section(path="studies").pages | sort_by("title") %}
+        <ul class="studies-list" id="studies-list">
+          {% for p in studies_list %}
+          <li class="study-item">
+            <article class="study-article">
+              <span class="category-kicker">Study No. 0{{ loop.index }}</span>
+              <h3 class="study-title">
+                <a href="{{ base_url }}{{ p.url }}" class="study-link">{{ p.title | e }}</a>
+              </h3>
+              {% if p.summary %}
+              <div class="study-summary">
+                {{ p.summary | safe }}
+              </div>
+              {% endif %}
+              <div class="study-meta">
+                <time datetime="{{ p.date }}">{{ p.date | date("%B %d, %Y") }}</time>
+              </div>
+            </article>
+          </li>
+          {% endfor %}
+        </ul>
+      </section>
+    </div>
+
+    <!-- Center gutter divider (sumi-ink brush stroke signature element) -->
+    <div class="gutter-divider" aria-hidden="true"></div>
+
+    <!-- Right page: Featured Essay -->
+    <div class="spread-page page-right" id="right-page">
+      <div class="page-header-running">
+        <span class="running-title">Featured Essay</span>
+        <span class="page-number">ii</span>
+      </div>
+      
+      <section class="featured-essay-section">
+        <h1 class="featured-essay-title">The Way of the Brush</h1>
+        <div class="essay-content">
+          {{ content | safe }}
+        </div>
+      </section>
+    </div>
+  </div>
+</main>
+
+{% include "footer.html" %}

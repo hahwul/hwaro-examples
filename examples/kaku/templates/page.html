@@ -1,0 +1,81 @@
+{% include "header.html" %}
+
+<main id="main">
+  <!-- Inline Search Results Panel -->
+  <div id="search-results-container" class="search-results-container" hidden>
+    <div class="search-results-inner">
+      <h2 class="search-results-title">Search Results</h2>
+      <p class="find-status" id="find-status" role="status" aria-live="polite" hidden></p>
+      <ul class="find-results" id="find-results" aria-label="Search results" hidden></ul>
+    </div>
+  </div>
+
+  <div id="main-content" class="spread-container">
+    <div class="spread-page page-left">
+      <header class="page-header-running">
+        <span class="running-title">
+          {% if page.section == "studies" %}
+            Calligraphy Study &middot; Kaku
+          {% else %}
+            Kaku: Calligraphy Garden
+          {% endif %}
+        </span>
+        <span class="page-number">
+          {% if page.section == "studies" %}
+            {{ page.weight | default("iii", true) }}
+          {% else %}
+            iv
+          {% endif %}
+        </span>
+      </header>
+      <div class="page-metadata">
+        <h2>About this entry</h2>
+        <p>This is a page in the Kaku digital garden, documenting techniques and studies in Japanese calligraphy.</p>
+        {% if page.date %}
+        <p><strong>Date:</strong> <time datetime="{{ page.date }}">{{ page.date | date("%B %d, %Y") }}</time></p>
+        {% endif %}
+        <p class="back-home"><a href="{{ base_url }}/">&larr; Back to garden home</a></p>
+      </div>
+    </div>
+    
+    <div class="gutter-divider" aria-hidden="true"></div>
+
+    <div class="spread-page page-right">
+      <article class="prose single-page-content">
+        <div class="article-header">
+          {% if page.section == "studies" %}
+          <span class="category-kicker">Calligraphy Study</span>
+          {% endif %}
+          <h1 class="article-title">{{ page.title | e }}</h1>
+        </div>
+
+        <div class="article-body">
+          {{ content | safe }}
+        </div>
+
+        {% if page.section == "studies" and (page.lower or page.higher) %}
+        <nav class="article-navigation" aria-label="Study navigation">
+          <div class="nav-prev">
+            {% if page.lower %}
+            <a href="{{ base_url }}{{ page.lower.url }}" class="nav-link-prev">
+              <span class="nav-dir-label">&larr; Previous</span>
+              <span class="nav-title-label">{{ page.lower.title | e }}</span>
+            </a>
+            {% endif %}
+          </div>
+          <div class="nav-next">
+            {% if page.higher %}
+            <a href="{{ base_url }}{{ page.higher.url }}" class="nav-link-next">
+              <span class="nav-dir-label">Next &rarr;</span>
+              <span class="nav-title-label">{{ page.higher.title | e }}</span>
+            </a>
+            {% endif %}
+          </div>
+        </nav>
+        {% endif %}
+      </article>
+    </div>
+  </div>
+</main>
+
+{% include "footer.html" %}
