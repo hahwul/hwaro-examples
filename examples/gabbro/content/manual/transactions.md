@@ -65,5 +65,5 @@ gb_txn_get(rt, gb_str("acct:b"), &b);
 gb_txn_abort(rt);   /* read-only txns are released with abort */
 ```
 
-Continue to the [storage engine](/manual/storage-engine/) to see what a commit writes to
+Continue to the [storage engine](../../manual/storage-engine/) to see what a commit writes to
 disk and how recovery replays it.
