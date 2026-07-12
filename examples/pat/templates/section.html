@@ -1,0 +1,68 @@
+{% include "header.html" %}
+<main id="main">
+  <div class="container" style="padding: var(--space-5) 0;">
+    <article class="prose">
+      <h1>{{ section.title | e }}</h1>
+      {{ content | safe }}
+      
+      <div style="margin-top: var(--space-4);">
+        <ul class="timeline-list">
+          {% for p in section.pages %}
+          <li class="timeline-item">
+            <time class="timeline-date" datetime="{{ p.date }}">{{ p.date | date("%B %d, %Y") }}</time>
+            <a class="timeline-link" href="{{ base_url }}{{ p.url }}">{{ p.title }}</a>
+            <div class="timeline-meta">
+              {% if p.extra.assignee %}<strong>Assignee:</strong> {{ p.extra.assignee }}{% endif %}
+              {% if p.extra.patent_id %} | <strong>Doc:</strong> {{ p.extra.patent_id }}{% endif %}
+            </div>
+            {% if p.summary %}<p style="margin-top: var(--space-2);">{{ p.summary | strip_html | truncate_words(30) }}</p>{% endif %}
+            
+            <!-- SVG Schematic Drawing (Signature) -->
+            <div class="schematic-container">
+              <svg viewBox="0 0 400 200" class="schematic-svg" aria-label="Cryptographic Security Schematic">
+                <defs>
+                  <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--fg)" />
+                  </marker>
+                </defs>
+                
+                <!-- Connection path 1 -->
+                <g class="schema-group" id="flow-20">
+                  <path d="M 100 100 L 150 100" marker-end="url(#arrow)" />
+                  <text x="125" y="90" text-anchor="middle">KEY (20)</text>
+                </g>
+                
+                <!-- Connection path 2 -->
+                <g class="schema-group" id="flow-22">
+                  <path d="M 250 100 L 300 100" marker-end="url(#arrow)" />
+                  <text x="275" y="90" text-anchor="middle">AUTH (22)</text>
+                </g>
+                
+                <!-- Client Block -->
+                <g class="schema-group" id="node-10">
+                  <rect x="20" y="70" width="80" height="60" rx="4" />
+                  <text x="60" y="105" text-anchor="middle">CLIENT (10)</text>
+                </g>
+                
+                <!-- Gateway Block -->
+                <g class="schema-group" id="node-12">
+                  <rect x="150" y="70" width="100" height="60" rx="4" />
+                  <text x="200" y="105" text-anchor="middle">GATEWAY (12)</text>
+                </g>
+                
+                <!-- Enclave Block -->
+                <g class="schema-group" id="node-14">
+                  <rect x="300" y="70" width="80" height="60" rx="4" />
+                  <text x="340" y="105" text-anchor="middle">ENCLAVE (14)</text>
+                </g>
+              </svg>
+              <div class="schematic-caption">FIG. 1: Cryptographic Key Exchange Gateway Topology</div>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </article>
+  </div>
+</main>
+{% include "footer.html" %}

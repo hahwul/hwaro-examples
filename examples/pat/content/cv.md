@@ -1,0 +1,6 @@
++++
+title = "Curriculum Vitae"
+description = "Qualifications, registrations, and technical expertise of Patent Agent Pat."
++++
+
+This document details the professional registration and qualification matrix of Pat, Registered Patent Agent (USPTO Registration No. 78,521). The agent maintains active practice focusing on cryptographic algorithms, hardware-level systems, and security protocols. Academic qualifications include a Master of Science in Electrical Engineering from the California Institute of Technology, where research focused on low-power cryptographic coprocessors, and a Bachelor of Science in Computer Science from the University of California, Berkeley. Professional experience includes three years as an ASIC design engineer at a prominent semiconductor manufacturer, followed by several years of specialized patent prosecution. Technical proficiencies cover cryptographic accelerator architectures, side-channel attack countermeasures (including differential power analysis shielding), secure enclave memory protection units, and zero-knowledge proof protocols. The agent is a member of the National Association of Patent Practitioners and participates regularly in hardware security standards committees. This background ensures a highly technical, rigorous translation of engineering designs into defensible claim matrices.
