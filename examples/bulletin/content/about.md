@@ -17,4 +17,4 @@ Every dispatch closes with an archive citation line: collection, box, and folder
 
 Found a folder we should see? Researchers, foundry heirs, and print-shop estate sales are our best leads. Write to the desk with what you have, however partial. We answer everything, even the boxes that turn out to be nothing.
 
-Browse the [full run of dispatches](bulletins/) or search the archive by [tag](tags/) and [category](categories/) to see what we've already filed.
+Browse the [full run of dispatches](../bulletins/) or search the archive by [tag](../tags/) and [category](../categories/) to see what we've already filed.
