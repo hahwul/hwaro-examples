@@ -1,0 +1,86 @@
+{% include "header.html" %}
+<main id="main" class="main-content">
+  <div class="main-body">
+    <aside class="left-column">
+      <div class="index-section">
+        <h2 class="index-title">Registry Index</h2>
+        <nav aria-label="Registry Navigation">
+          <ul class="index-list">
+            <li class="index-item">
+              <a href="{{ base_url }}/" class="index-link">✦ INDEX HOME</a>
+            </li>
+            <li class="index-item">
+              <a href="{{ base_url }}/cases/" class="index-link">✦ ACTIVE CASE FILES</a>
+            </li>
+            <li class="index-item">
+              <a href="{{ base_url }}/about/" class="index-link">✦ ARCHIVE OVERVIEW</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="index-section">
+        <h2 class="index-title">Search Tags</h2>
+        {% set tax = get_taxonomy(kind="tags") %}
+        <nav aria-label="Tag Navigation">
+          <ul class="index-list">
+            {% for term in tax.items | sort_by("name") %}
+            <li class="index-item">
+              <a href="{{ get_taxonomy_url(kind="tags", term=term.name) }}" class="index-link"># {{ term.name }}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </nav>
+      </div>
+
+      <div class="index-section">
+        <h2 class="index-title">Database Status</h2>
+        <ul class="index-list" style="font-family: var(--font-mono); font-size: var(--text-sm); color: var(--muted); line-height: 1.4; list-style: none; padding: 0; letter-spacing: 0.06em;">
+          <li>SYSTEM: ONLINE</li>
+          <li>CLEARANCE: LEVEL-4</li>
+          <li>ARCHIVE-COUNT: {{ get_section(path="cases").pages | length }}</li>
+          <li>INDEX-KEY: FILE-SEC</li>
+        </ul>
+      </div>
+    </aside>
+
+    <section class="right-column">
+      <div class="registry-credo">
+        <h1>UAP Declassified Registry</h1>
+        {{ content | safe }}
+      </div>
+
+      <h2 class="index-title" style="margin-bottom: var(--space-3); border-bottom: 1px solid var(--border);">Chronological Case Logs</h2>
+      <div class="cases-grid">
+        {% set cases = get_section(path="cases").pages | sort_by("date", reverse=true) %}
+        {% for p in cases %}{% if loop.index0 < 6 %}
+        <article class="case-card">
+          <header class="case-card-header">
+            <h3 class="case-title" style="margin: 0;">
+              <a href="{{ base_url }}{{ p.url }}" class="case-title-link">
+                {% if p.extra.file_code %}[{{ p.extra.file_code }}]{% endif %} {{ p.title }}
+              </a>
+            </h3>
+            {% if p.date %}
+            <time class="case-date" datetime="{{ p.date }}">{{ p.date | date("%Y-%m-%d") }}</time>
+            {% endif %}
+          </header>
+          {% if p.description %}
+          <p class="case-summary">{{ p.description }}</p>
+          {% endif %}
+          {% if p.tags %}
+          <ul class="case-tags">
+            {% for t in p.tags %}
+            <li>
+              <a href="{{ get_taxonomy_url(kind='tags', term=t) }}" class="case-tag-link">{{ t }}</a>
+            </li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </article>
+        {% endif %}{% endfor %}
+      </div>
+    </section>
+  </div>
+</main>
+{% include "footer.html" %}

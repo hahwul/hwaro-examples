@@ -1,0 +1,35 @@
+{% include "header.html" %}
+<main id="main" class="main-content">
+  <article class="prose">
+    <div style="font-family: var(--font-mono); font-size: var(--text-sm); color: var(--accent); margin-bottom: var(--space-1); font-weight: 700; letter-spacing: 0.06em;">
+      TAG FILTERED ARCHIVE
+    </div>
+    <h1>Tag: #{{ taxonomy_term }}</h1>
+    
+    <div class="cases-grid" style="margin-top: var(--space-4); margin-bottom: var(--space-4);">
+      {% set tax = get_taxonomy(kind="tags") %}
+      {% for term in tax.items %}{% if term.name == taxonomy_term %}
+        {% for p in term.pages | sort_by("date", reverse=true) %}
+        <article class="case-card">
+          <header class="case-card-header">
+            <h3 class="case-title" style="margin: 0;">
+              <a href="{{ base_url }}{{ p.url }}" class="case-title-link">
+                {% if p.extra.file_code %}[{{ p.extra.file_code }}]{% endif %} {{ p.title }}
+              </a>
+            </h3>
+            {% if p.date %}
+            <time class="case-date" datetime="{{ p.date }}">{{ p.date | date("%Y-%m-%d") }}</time>
+            {% endif %}
+          </header>
+          {% if p.description %}
+          <p class="case-summary">{{ p.description }}</p>
+          {% endif %}
+        </article>
+        {% endfor %}
+      {% endif %}{% endfor %}
+    </div>
+
+    <p style="margin-top: var(--space-4);"><a href="{{ base_url }}/tags/" style="font-family: var(--font-mono); font-size: var(--text-sm);">← View all registry classification tags</a></p>
+  </article>
+</main>
+{% include "footer.html" %}
