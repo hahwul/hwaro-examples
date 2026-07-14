@@ -1,0 +1,47 @@
+{% include "header.html" %}
+<main id="main" class="dashboard-main">
+  {% include "left-panel.html" %}
+
+  <!-- Central panel: detailed field logs and research notes -->
+  <section class="panel center-panel">
+    <div class="panel-header">Field Logs &amp; Research Notes</div>
+    <div class="panel-body scrollable-content">
+      <div class="panel-intro">
+        {{ content | safe }}
+      </div>
+      
+      {% set entries = get_section(path="logs").pages | sort_by("date", reverse=true) %}
+      <div class="card-list">
+        {% for p in entries %}{% if loop.index0 < 6 %}
+        <article class="card">
+          <!-- Soil horizon & sprout signature -->
+          <div class="soil-horizon">
+            <div class="sprout-container">
+              <svg class="sprout-svg" viewBox="0 0 40 40">
+                <path class="sprout-stem" d="M 20 40 Q 20 22 20 22" />
+                <path class="sprout-leaf sprout-leaf-left" d="M 20 22 Q 12 18 15 13 Q 19 18 20 22" />
+                <path class="sprout-leaf sprout-leaf-right" d="M 20 22 Q 28 18 25 13 Q 21 18 20 22" />
+              </svg>
+            </div>
+          </div>
+          
+          <div class="card-content">
+            <div class="card-meta">
+              {% if p.date %}<time datetime="{{ p.date }}">{{ p.date | date("%B %d, %Y") }}</time>{% endif %}
+            </div>
+            <h3 class="card-title">
+              <a href="{{ base_url }}{{ p.url }}">{{ p.title }}</a>
+            </h3>
+            {% if p.description %}
+              <p class="card-summary">{{ p.description }}</p>
+            {% endif %}
+          </div>
+        </article>
+        {% endif %}{% endfor %}
+      </div>
+    </div>
+  </section>
+
+  {% include "right-panel.html" %}
+</main>
+{% include "footer.html" %}
