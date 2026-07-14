@@ -1,0 +1,105 @@
+{% include "header.html" %}
+
+<main id="main">
+  <div class="dashboard-panels-container">
+    <!-- Left panel: navigation category trees -->
+    <aside class="panel-left" aria-label="Console Index">
+      <h3 class="panel-title font-display">SYSTEMS INDEX</h3>
+      <ul class="directory-list font-mono">
+        <li>
+          <span class="dir-toggle">[+]</span> <a href="{{ base_url }}/systems/">SYSTEMS_DIR</a>
+          <ul class="dir-sublist">
+            {% set sys_pages = get_section(path="systems").pages | sort_by("title") %}
+            {% for p in sys_pages %}
+              <li><span class="file-icon">&sect;</span> <a href="{{ base_url }}{{ p.url }}">{{ p.title | upper }}</a></li>
+            {% endfor %}
+          </ul>
+        </li>
+        <li><span class="dir-toggle">[ ]</span> <a href="{{ base_url }}/telemetry/">TELEMETRY_LOG</a></li>
+        <li><span class="dir-toggle">[ ]</span> <a href="{{ base_url }}/about/">VESSEL_INFO</a></li>
+        <li><span class="dir-toggle">[ ]</span> <a href="{{ base_url }}/search/">SYS_SEARCH</a></li>
+        <li><span class="dir-toggle">[ ]</span> <a href="{{ base_url }}/tags/">TAG_INDEX</a></li>
+      </ul>
+    </aside>
+
+    <!-- Center panel: tag term listings -->
+    <section class="panel-center">
+      <div class="panel-header-block">
+        <h1 class="display-title">TAG: [{{ taxonomy_term }}]</h1>
+        <p class="panel-subtitle">Displaying all documents tagged with "{{ taxonomy_term }}".</p>
+      </div>
+
+      {% set tax = get_taxonomy(kind="tags") %}
+      <div class="technical-manual-grid">
+        {% for term in tax.items %}{% if term.name == taxonomy_term %}
+          {% for p in term.pages | sort_by("date", reverse=true) %}
+            <article class="technical-card card">
+              <svg class="corner-brackets" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg x="0" y="0" overflow="visible"><path d="M 0 15 V 0 H 15" stroke="var(--accent)" stroke-width="3"/></svg>
+                <svg x="100%" y="0" overflow="visible"><path d="M -15 0 H 0 V 15" stroke="var(--accent)" stroke-width="3"/></svg>
+                <svg x="0" y="100%" overflow="visible"><path d="M 0 -15 V 0 H 15" stroke="var(--accent)" stroke-width="3"/></svg>
+                <svg x="100%" y="100%" overflow="visible"><path d="M -15 0 H 0 V -15" stroke="var(--accent)" stroke-width="3"/></svg>
+              </svg>
+              <div class="scanline"></div>
+              
+              <div class="card-meta font-mono">
+                {% if p.date %}<time datetime="{{ p.date }}">{{ p.date | date("%Y-%m-%d") }}</time>{% endif %}
+                {% if p.tags %}
+                  <span class="card-tag">[{{ p.tags | first }}]</span>
+                {% endif %}
+              </div>
+              
+              <h4 class="card-title font-display"><a href="{{ base_url }}{{ p.url }}">{{ p.title }}</a></h4>
+              
+              {% if p.description %}
+                <p class="card-desc">{{ p.description }}</p>
+              {% endif %}
+            </article>
+          {% endfor %}
+        {% endif %}{% endfor %}
+      </div>
+      <p class="back-link font-mono"><a href="{{ base_url }}/tags/">[ ALL TAGS ]</a></p>
+    </section>
+
+    <!-- Right panel: spec rail displaying active propulsion diagrams -->
+    <aside class="panel-right" aria-label="Active Diagrams">
+      <h3 class="panel-title font-display">ACTIVE PROPULSION</h3>
+      <div class="diagram-container">
+        <!-- SVG propulsion diagram -->
+        <svg class="propulsion-svg" viewBox="0 0 200 400" xmlns="http://www.w3.org/2000/svg">
+          <!-- Central reactor core -->
+          <circle cx="100" cy="120" r="30" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 2"/>
+          <circle cx="100" cy="120" r="15" fill="none" stroke="var(--fg)" stroke-width="2"/>
+          <line x1="100" y1="50" x2="100" y2="90" stroke="var(--muted)" stroke-width="1" stroke-dasharray="2 2"/>
+          <line x1="100" y1="150" x2="100" y2="220" stroke="var(--fg)" stroke-width="2"/>
+          
+          <!-- Magnetic nozzle coils -->
+          <rect x="50" y="220" width="100" height="15" rx="3" fill="none" stroke="var(--fg)" stroke-width="1.5"/>
+          <rect x="60" y="245" width="80" height="15" rx="3" fill="none" stroke="var(--fg)" stroke-width="1.5"/>
+          <rect x="70" y="270" width="60" height="15" rx="3" fill="none" stroke="var(--fg)" stroke-width="1.5"/>
+          
+          <!-- Thrust plume -->
+          <path d="M 80 285 L 60 360 L 140 360 L 120 285 Z" fill="none" stroke="var(--muted)" stroke-width="1" stroke-dasharray="3 3"/>
+          <path d="M 90 285 L 80 340 L 120 340 L 110 285 Z" fill="none" stroke="var(--fg)" stroke-width="1.5"/>
+          
+          <!-- Annotations -->
+          <text x="10" y="40" fill="var(--fg)" font-family="var(--font-mono)" font-size="10" font-weight="bold">REF: ANTIMATTER_FUSION_V3</text>
+          <text x="10" y="90" fill="var(--fg)" font-family="var(--font-mono)" font-size="8">TEMP: 4.2e6 K</text>
+          <text x="10" y="105" fill="var(--muted)" font-family="var(--font-mono)" font-size="8">STATUS: STABLE</text>
+          
+          <text x="10" y="210" fill="var(--fg)" font-family="var(--font-mono)" font-size="10" font-weight="bold">NOZZLE_COILS</text>
+          <text x="10" y="380" fill="var(--fg)" font-family="var(--font-mono)" font-size="10" font-weight="bold">THRUST_PLUME</text>
+          
+          <!-- Engineering lines -->
+          <line x1="50" y1="227" x2="30" y2="227" stroke="var(--muted)" stroke-width="0.75"/>
+          <line x1="30" y1="227" x2="30" y2="200" stroke="var(--muted)" stroke-width="0.75"/>
+          
+          <line x1="80" y1="320" x2="30" y2="320" stroke="var(--muted)" stroke-width="0.75"/>
+          <line x1="30" y1="320" x2="30" y2="370" stroke="var(--muted)" stroke-width="0.75"/>
+        </svg>
+      </div>
+    </aside>
+  </div>
+</main>
+
+{% include "footer.html" %}
