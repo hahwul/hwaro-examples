@@ -1,0 +1,7 @@
++++
+title = "Pat"
+description = "CV of a patent agent specializing in cryptography and hardware security patents"
+template = "home"
++++
+
+The present curriculum vitae establishes the credentials and professional record of Pat, a registered patent agent specializing in the fields of cryptographic algorithms, security architectures, and hardware-level root of trust systems. With a technical background in electrical engineering and computer science, the agent has drafted and prosecuted utility patent applications covering secure enclave isolation mechanisms, zero-knowledge proof protocols, and side-channel attack countermeasures. Over the course of several years, the agent has worked closely with hardware engineers, software developers, and research scientists to translate complex technical breakthroughs into robust, enforceable patent claims. This document indexes four representative utility patents compiled as a timeline of major filings and engineering milestones, demonstrating a deep integration of legal expertise and advanced hardware security principles. Each entry presents the corresponding technical schematic detailing structural block diagrams and message exchange protocols, serving as a comprehensive record of technical patent prosecution history. Furthermore, the agent continues to advise clients on international filing strategies, portfolio development, and defense against infringement claims in emerging cryptographic hardware domains.
