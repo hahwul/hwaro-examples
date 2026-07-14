@@ -33,6 +33,10 @@ if [[ "$prompt" == *__FINDINGS__* ]]; then
   [ -f "$findings_file" ] || { echo "template needs a findings file argument" >&2; exit 1; }
   prompt="${prompt/__FINDINGS__/$(cat "$findings_file")}"
 fi
+if [[ "$prompt" == *__HWARO_DESIGN_SKILL__* ]]; then
+  skill=$(scripts/agent/load-skill.sh hwaro-design) || exit 1
+  prompt="${prompt/__HWARO_DESIGN_SKILL__/$skill}"
+fi
 
 logdir="_agent/$name"
 mkdir -p "$logdir"

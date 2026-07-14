@@ -8,6 +8,12 @@
 #
 # Requires: agy on PATH with this repo as a trusted workspace, hwaro, python3,
 # Google Chrome (for screenshots), just.
+#
+# design.prompt and build.prompt pull the upstream hwaro-design skill fresh
+# on every run (scripts/agent/load-skill.sh) instead of a hand-copied excerpt:
+# local checkout at ../hwaro if present, else GitHub raw. Override with
+# HWARO_REPO / HWARO_REF if your hwaro checkout lives elsewhere or you want a
+# specific ref.
 
 design_model := env_var_or_default("AGY_DESIGN_MODEL", "Gemini 3.5 Flash (High)")
 review_model := env_var_or_default("AGY_REVIEW_MODEL", "Gemini 3.1 Pro (High)")
