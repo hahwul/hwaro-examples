@@ -61,5 +61,5 @@ gb_compact(db, GB_COMPACT_TRUNCATE);
 
 The one thing that stalls reclamation is a long-lived reader: a page cannot be
 freed while any open snapshot might still read it. See
-[snapshots](/manual/snapshots/) for how to keep reader lifetimes short. The full call
-list lives in the [API reference](/manual/api-reference/).
+[snapshots](../../manual/snapshots/) for how to keep reader lifetimes short. The full call
+list lives in the [API reference](../../manual/api-reference/).

@@ -74,5 +74,5 @@ memory returned by `gb_get()` points into the current snapshot and stays valid
 until you write again on the same handle or close the database; copy it out if you
 need it longer.
 
-From here, read [snapshots](/manual/snapshots/) to understand how reads stay consistent
+From here, read [snapshots](../../manual/snapshots/) to understand how reads stay consistent
 under concurrent writes.

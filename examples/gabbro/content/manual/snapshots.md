@@ -64,5 +64,5 @@ A snapshot pins every version at or after the one it references, which means the
 store cannot reclaim those older pages until you close it. Long-lived snapshots are
 the usual cause of a file that grows faster than expected. Open them late, close
 them promptly, and prefer many short snapshots over one that lives for the whole
-process. The [storage engine](/manual/storage-engine/) chapter explains how compaction
+process. The [storage engine](../../manual/storage-engine/) chapter explains how compaction
 frees pages once the last snapshot that needs them is gone.
