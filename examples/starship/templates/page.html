@@ -1,0 +1,71 @@
+{% include "header.html" %}
+
+<main id="main">
+  <div class="dashboard-panels-container">
+    <!-- Left panel: navigation category trees -->
+    <aside class="panel-left" aria-label="Console Index">
+      <h3 class="panel-title font-display">SYSTEMS INDEX</h3>
+      <ul class="directory-list font-mono">
+        <li>
+          <span class="dir-toggle">[+]</span> <a href="{{ base_url }}/systems/">SYSTEMS_DIR</a>
+          <ul class="dir-sublist">
+            {% set sys_pages = get_section(path="systems").pages | sort_by("title") %}
+            {% for p in sys_pages %}
+              <li><span class="file-icon">&sect;</span> <a href="{{ base_url }}{{ p.url }}">{{ p.title | upper }}</a></li>
+            {% endfor %}
+          </ul>
+        </li>
+        <li><span class="dir-toggle">[ ]</span> <a href="{{ base_url }}/telemetry/">TELEMETRY_LOG</a></li>
+        <li><span class="dir-toggle">[ ]</span> <a href="{{ base_url }}/about/">VESSEL_INFO</a></li>
+        <li><span class="dir-toggle">[ ]</span> <a href="{{ base_url }}/search/">SYS_SEARCH</a></li>
+        <li><span class="dir-toggle">[ ]</span> <a href="{{ base_url }}/tags/">TAG_INDEX</a></li>
+      </ul>
+    </aside>
+
+    <!-- Center panel: content -->
+    <article class="panel-center prose">
+      <div class="panel-header-block">
+        <h1 class="display-title">{{ page.title | e }}</h1>
+        <div class="card-meta font-mono">
+          {% if page.date %}
+            <time datetime="{{ page.date }}">{{ page.date | date("%Y-%m-%d") }}</time>
+          {% endif %}
+          {% if page.tags %}
+            {% for t in page.tags %}
+              <span class="tag-badge"><a href="{{ get_taxonomy_url(kind="tags", term=t) }}">[{{ t }}]</a></span>
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="prose-content">
+        {{ content | safe }}
+      </div>
+    </article>
+
+    <!-- Right panel: Table of contents -->
+    <aside class="panel-right" aria-label="Table of Contents">
+      <h3 class="panel-title font-display">TOC / INDEX</h3>
+      {% if page.toc %}
+        <ul class="directory-list font-mono">
+          {% for h1 in page.toc %}
+            <li>
+              <span class="dir-toggle">[-]</span> <a href="{{ h1.permalink | safe }}">{{ h1.title }}</a>
+              {% if h1.children %}
+                <ul class="dir-sublist">
+                  {% for h2 in h1.children %}
+                    <li><span class="file-icon">&sect;</span> <a href="{{ h2.permalink | safe }}">{{ h2.title }}</a></li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="font-mono text-muted text-sm">NO_INDEX_AVAILABLE</p>
+      {% endif %}
+    </aside>
+  </div>
+</main>
+
+{% include "footer.html" %}
