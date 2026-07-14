@@ -1,0 +1,70 @@
+{% include "header.html" %}
+<main id="main">
+  <div class="site-container">
+    <div class="prose-container" style="margin-bottom: var(--space-4);">
+      <h1>{{ section.title | e }}</h1>
+      {{ content | safe }}
+    </div>
+    
+    <div class="timeline-band">
+      <div class="timeline">
+        {% for p in section.pages %}
+        <div class="timeline-item" data-url="{{ p.url }}">
+          
+          <div class="timeline-node-container">
+            {% set rings = p.extra.rings | default(0) %}
+            <svg class="tree-rings" viewBox="0 0 100 100" width="60" height="60" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="50" cy="50" r="4" fill="var(--accent)" />
+              {% if rings >= 1 %}
+                <circle cx="50" cy="50" r="12" fill="none" stroke="var(--accent)" stroke-width="1.5" />
+              {% endif %}
+              {% if rings >= 2 %}
+                <circle cx="50" cy="50" r="20" fill="none" stroke="var(--accent)" stroke-width="1.5" />
+              {% endif %}
+              {% if rings >= 3 %}
+                <circle cx="50" cy="50" r="28" fill="none" stroke="var(--accent)" stroke-width="1.5" />
+              {% endif %}
+              {% if rings >= 4 %}
+                <circle cx="50" cy="50" r="36" fill="none" stroke="var(--accent)" stroke-width="1.5" />
+              {% endif %}
+              {% if rings >= 5 %}
+                <circle cx="50" cy="50" r="44" fill="none" stroke="var(--accent)" stroke-width="1.5" />
+              {% endif %}
+              {% if rings >= 6 %}
+                <circle cx="50" cy="50" r="48" fill="none" stroke="var(--accent)" stroke-width="1.5" />
+              {% endif %}
+            </svg>
+          </div>
+          
+          <div class="timeline-card">
+            <div class="timeline-meta">
+              {% if p.date %}
+                <time class="timeline-date" datetime="{{ p.date }}">{{ p.date | date("%B %d, %Y") }}</time>
+              {% endif %}
+              {% if p.tags %}
+                <div class="timeline-tags">
+                  {% for t in p.tags %}
+                    <span class="timeline-tag">#{{ t }}</span>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+            
+            <h2 class="timeline-title">
+              <a href="{{ base_url }}{{ p.url }}">{{ p.title | e }}</a>
+            </h2>
+            
+            {% if p.summary %}
+              <p class="timeline-desc">{{ p.summary | strip_html | truncate_words(30) }}</p>
+            {% elif p.description %}
+              <p class="timeline-desc">{{ p.description | e }}</p>
+            {% endif %}
+          </div>
+          
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</main>
+{% include "footer.html" %}

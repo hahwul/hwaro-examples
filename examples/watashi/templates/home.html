@@ -1,0 +1,70 @@
+{% include "header.html" %}
+<main id="main">
+  <div class="site-container home-layout">
+    <div class="home-intro" style="margin-top: var(--space-6);">
+      <h2 class="site-title" style="font-size: var(--text-2xl);">{{ site.title | e }}</h2>
+      <p class="site-subtitle">Forest Researcher &amp; Studio Woodworker</p>
+      <p class="personal-manifesto">
+        Observing the quiet growth of the canopy, documenting the strength of fiber, and shaping green timber into objects of utility and permanence.
+      </p>
+      <div class="search-container" style="margin-left: 0; margin-bottom: var(--space-5);">
+        <form role="search" data-index="{{ base_url }}/search.json" onsubmit="return false;">
+          <input id="search-input" class="search-input" type="search" placeholder="Filter milestones or tag..." aria-label="Filter milestones" autocomplete="off">
+        </form>
+      </div>
+      <div class="prose" style="font-size: var(--text-base); color: var(--fg);">
+        {{ content | safe }}
+      </div>
+    </div>
+    
+    <div class="timeline-band" style="padding-top: var(--space-5);">
+      <div class="timeline">
+        {% set entries = get_section(path="milestones").pages | sort_by("date", reverse=true) %}
+        {% for p in entries %}{% if loop.index0 < 6 %}
+        <div class="timeline-item" data-url="{{ p.url }}">
+          
+          <!-- Node Container with SVG concentric rings -->
+          <div class="timeline-node-container">
+            {% set rings = entries | length - loop.index0 %}
+            <svg class="tree-rings" viewBox="0 0 100 100" width="60" height="60" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="50" cy="50" r="4" fill="var(--accent)" />
+              {% for i in range(start=1, end=rings + 1) %}
+                {% set r_val = 4 + (i * 8) %}
+                {% if r_val < 50 %}
+                <circle cx="50" cy="50" r="{{ r_val }}" fill="none" stroke="var(--accent)" stroke-width="1.5" />
+                {% endif %}
+              {% endfor %}
+            </svg>
+          </div>
+          
+          <!-- Timeline Card -->
+          <div class="timeline-card">
+            <div class="timeline-meta">
+              {% if p.date %}
+                <time class="timeline-date" datetime="{{ p.date }}">{{ p.date | date("%B %d, %Y") }}</time>
+              {% endif %}
+              {% if p.tags %}
+                <div class="timeline-tags">
+                  {% for t in p.tags %}
+                    <span class="timeline-tag">#{{ t }}</span>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+            
+            <h3 class="timeline-title">
+              <a href="{{ base_url }}{{ p.url }}">{{ p.title | e }}</a>
+            </h3>
+            
+            {% if p.description %}
+              <p class="timeline-desc">{{ p.description | e }}</p>
+            {% endif %}
+          </div>
+          
+        </div>
+        {% endif %}{% endfor %}
+      </div>
+    </div>
+  </div>
+</main>
+{% include "footer.html" %}
