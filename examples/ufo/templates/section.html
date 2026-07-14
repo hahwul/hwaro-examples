@@ -1,0 +1,72 @@
+{% include "header.html" %}
+<main id="main" class="main-content">
+  <div class="main-body">
+    <aside class="left-column">
+      <div class="index-section">
+        <h2 class="index-title">Registry Index</h2>
+        <nav aria-label="Registry Navigation">
+          <ul class="index-list">
+            <li class="index-item">
+              <a href="{{ base_url }}/" class="index-link">✦ INDEX HOME</a>
+            </li>
+            <li class="index-item">
+              <a href="{{ base_url }}/cases/" class="index-link" style="color: var(--accent); font-weight: bold;">✦ ACTIVE CASE FILES</a>
+            </li>
+            <li class="index-item">
+              <a href="{{ base_url }}/about/" class="index-link">✦ ARCHIVE OVERVIEW</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="index-section">
+        <h2 class="index-title">Search Tags</h2>
+        {% set tax = get_taxonomy(kind="tags") %}
+        <nav aria-label="Tag Navigation">
+          <ul class="index-list">
+            {% for term in tax.items | sort_by("name") %}
+            <li class="index-item">
+              <a href="{{ get_taxonomy_url(kind="tags", term=term.name) }}" class="index-link"># {{ term.name }}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </nav>
+      </div>
+    </aside>
+
+    <section class="right-column">
+      <h1 style="margin-top: 0;">{{ section.title | e }}</h1>
+      {{ content | safe }}
+
+      <div class="cases-grid" style="margin-top: var(--space-4);">
+        {% for p in section.pages %}
+        <article class="case-card">
+          <header class="case-card-header">
+            <h3 class="case-title" style="margin: 0;">
+              <a href="{{ base_url }}{{ p.url }}" class="case-title-link">
+                {% if p.extra.file_code %}[{{ p.extra.file_code }}]{% endif %} {{ p.title }}
+              </a>
+            </h3>
+            {% if p.date %}
+            <time class="case-date" datetime="{{ p.date }}">{{ p.date | date("%Y-%m-%d") }}</time>
+            {% endif %}
+          </header>
+          {% if p.summary %}
+          <p class="case-summary">{{ p.summary | strip_html | truncate_words(30) }}</p>
+          {% endif %}
+          {% if p.tags %}
+          <ul class="case-tags">
+            {% for t in p.tags %}
+            <li>
+              <a href="{{ get_taxonomy_url(kind='tags', term=t) }}" class="case-tag-link">{{ t }}</a>
+            </li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+  </div>
+</main>
+{% include "footer.html" %}
