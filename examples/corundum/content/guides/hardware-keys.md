@@ -83,5 +83,5 @@ corundum client update ledger-web --require-hardware-key
 ```
 
 With this set, a user whose account has only a passphrase is prompted to enrol
-a key before the flow completes. Treat the [Security Model](/security/) as
+a key before the flow completes. Treat the [Security Model](../../security/) as
 required reading before you turn this on across a fleet.

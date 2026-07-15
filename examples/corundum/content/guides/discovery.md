@@ -87,4 +87,4 @@ Authorization: Bearer eyJhbGciOiJFUzI1NiIsImtpZCI6IjJm...
 The `sub` returned here must equal the `sub` in the ID token from the same
 session. A mismatch means the tokens came from different subjects and the
 response must be discarded. With discovery in place, the last guide turns on
-[hardware-key authentication](/guides/hardware-keys/).
+[hardware-key authentication](../hardware-keys/).

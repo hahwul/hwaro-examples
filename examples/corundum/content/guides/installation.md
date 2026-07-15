@@ -91,7 +91,7 @@ corundum admin bootstrap --email ada@example.com
 
 The command prints a one-time enrolment link valid for fifteen minutes. Open
 it, set a passphrase, and — if you have a security key to hand — enrol it now;
-the [hardware-key guide](/guides/hardware-keys/) covers that ceremony in
+the [hardware-key guide](../hardware-keys/) covers that ceremony in
 detail. You now have a running identity server with exactly one account and no
-registered clients. The [authorization code flow](/guides/authorization-code-flow/)
+registered clients. The [authorization code flow](../authorization-code-flow/)
 is where the next guide begins.

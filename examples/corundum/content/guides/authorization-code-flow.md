@@ -80,6 +80,6 @@ grant_type=authorization_code
 ```
 
 A successful exchange returns the token set described in the
-[tokens guide](/guides/tokens/). Codes are single-use and expire in sixty
+[tokens guide](../tokens/). Codes are single-use and expire in sixty
 seconds; presenting a code twice revokes every token issued from it, on the
 assumption that a replay means the code was stolen.
