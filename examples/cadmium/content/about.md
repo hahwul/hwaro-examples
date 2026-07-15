@@ -9,7 +9,7 @@ Cadmium is the studio of Petra Solberg, an independent industrial designer who r
 
 ## How a redesign starts
 
-Every project at Cadmium begins the same way: not with the blade, not with the finish, but with the grip. A tool is held before it is used, and most hand-tool ergonomics were set by stamping-die economics in the 1950s and never revisited. Petra's process is to cast the hand first, model the grip second, and let the mechanism — pivot, sole, jaw, wheel — follow from wherever the hand ends up. That is why every [case study in the tools archive](/tools/) opens with an exploded drawing: the grip is drawn first, and everything else is shown coming apart from it.
+Every project at Cadmium begins the same way: not with the blade, not with the finish, but with the grip. A tool is held before it is used, and most hand-tool ergonomics were set by stamping-die economics in the 1950s and never revisited. Petra's process is to cast the hand first, model the grip second, and let the mechanism — pivot, sole, jaw, wheel — follow from wherever the hand ends up. That is why every [case study in the tools archive](../tools/) opens with an exploded drawing: the grip is drawn first, and everything else is shown coming apart from it.
 
 ## Materials and manufacture
 
