@@ -1,0 +1,28 @@
+{% include "header.html" %}
+<main id="main" class="prose-container">
+  <h1>{{ section.title | e }}</h1>
+  {{ content | safe }}
+  <div class="section-listing">
+    {% for p in section.pages %}
+    <a href="{{ base_url }}{{ p.url }}" class="card">
+      <div class="card-meta">
+        {% if p.date %}<time datetime="{{ p.date }}">{{ p.date | date("%B %d, %Y") }}</time>{% endif %}
+        {% if p.tags %}
+          <span>&middot;</span>
+          <span>{{ p.tags | join(", ") }}</span>
+        {% endif %}
+      </div>
+      <h2 class="card-title">{{ p.title }}</h2>
+      {% if p.extra.dek %}
+        <p class="card-dek">{{ p.extra.dek }}</p>
+      {% endif %}
+      {% if p.summary %}
+        <p class="card-excerpt">{{ p.summary | strip_html | truncate_words(30) }}</p>
+      {% endif %}
+      <span class="card-link" aria-hidden="true">Read Essay</span>
+    </a>
+    {% endfor %}
+  </div>
+  {{ pagination }}
+</main>
+{% include "footer.html" %}
