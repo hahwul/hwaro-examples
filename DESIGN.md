@@ -8,7 +8,10 @@ example that belongs in a curated collection of 200, not a pile of 1,500.
 
 - `manifest.json` is the *assignment sheet*: every example's name, category,
   color scheme, style tags, design brief, typography, palette, layout, and
-  feature set is decided there **before** any code is written.
+  feature set is decided there **before** any code is written. Its top-level
+  `flagships` array is an ordered, maintainer-curated list of showcase
+  examples pinned (with decoration) at the front of the gallery — agents must
+  never add to or reorder it.
 - `DESIGN.md` (this file) is the *quality bar*: the rules every example must
   meet regardless of its brief.
 - `AGENTS.md` is the *tool reference*: hwaro CLI, template variables, filters,

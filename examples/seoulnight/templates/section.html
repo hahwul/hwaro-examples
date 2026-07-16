@@ -1,0 +1,28 @@
+{% include "header.html" %}
+<main id="main">
+  <div class="shell">
+    <div class="page-head">
+      <h1>{{ section.title | e }}</h1>
+      {% if section.description %}<p class="page-lede">{{ section.description | e }}</p>{% endif %}
+    </div>
+    {{ content | safe }}
+    <ul class="entry-list">
+      {% for p in section.pages %}
+      <li class="entry">
+        {% if p.date %}<time datetime="{{ p.date }}">{{ p.date | date("%Y-%m-%d") }}</time>{% endif %}
+        <div class="entry-body">
+          <h2><a href="{{ base_url }}{{ p.url }}">{{ p.title | e }}</a></h2>
+          {% if p.summary %}<p class="entry-summary">{{ p.summary | strip_html | truncate_words(28) }}</p>{% endif %}
+          {% if p.tags %}
+          <ul class="entry-tags">
+            {% for t in p.tags %}<li><a href="{{ get_taxonomy_url(kind="tags", term=t) }}">{{ t }}</a></li>{% endfor %}
+          </ul>
+          {% endif %}
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+    {{ pagination }}
+  </div>
+</main>
+{% include "footer.html" %}
