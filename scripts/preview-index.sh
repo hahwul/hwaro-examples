@@ -28,10 +28,32 @@ fi
 SITE_LINKS=""
 ALL_TAGS=""
 EXAMPLE_COUNT=0
+
+# Flagships (manifest order) render first, then everything else alphabetically.
+FLAGSHIPS=$(jq -r '.flagships // [] | join(" ")' manifest.json)
+ORDERED_NAMES="${FLAGSHIPS}"
 for dir in examples/*/; do
-  src_path="${dir%/}"
-  name="${src_path#examples/}"
+  name="${dir%/}"
+  name="${name#examples/}"
+  case " ${FLAGSHIPS} " in *" ${name} "*) continue ;; esac
+  ORDERED_NAMES="${ORDERED_NAMES} ${name}"
+done
+
+FLAG_INDEX=0
+for name in ${ORDERED_NAMES}; do
+  src_path="examples/${name}"
   [ -f "${src_path}/config.toml" ] || continue
+  FLAG_CLASS=""
+  FLAG_ATTR=""
+  FLAG_BADGE=""
+  case " ${FLAGSHIPS} " in
+    *" ${name} "*)
+      FLAG_INDEX=$((FLAG_INDEX + 1))
+      FLAG_CLASS=" flagship"
+      FLAG_ATTR=" data-flagship=\"${FLAG_INDEX}\""
+      FLAG_BADGE="<span class=\"flagship-badge\">flagship</span>"
+      ;;
+  esac
   TITLE=$(grep '^title' "${src_path}/config.toml" | head -1 | sed 's/title *= *"//;s/"//')
   DESCRIPTION=$(grep '^description' "${src_path}/config.toml" | head -1 | sed 's/description *= *"//;s/"//')
   THEME_REPO_URL="${REPO_URL}/tree/main/${src_path}"
@@ -45,7 +67,7 @@ for dir in examples/*/; do
     fi
   done
   EXAMPLE_COUNT=$((EXAMPLE_COUNT + 1))
-  SITE_LINKS="${SITE_LINKS}<div class=\"card\" data-name=\"${name}\" data-title=\"${TITLE}\" data-desc=\"${DESCRIPTION}\" data-tags=\"${TAGS}\"><a href=\"${BASE_URL}/${name}/\" class=\"main-link\"><img src=\"screenshots/${name}.png\" alt=\"${name}\" class=\"preview\" loading=\"lazy\" onerror=\"var d=document.createElement('div');d.className='preview-fallback';d.textContent='no_preview';this.replaceWith(d);\"><div class=\"card-info\"><strong>${name}</strong><span class=\"title\">${TITLE}</span><span class=\"desc\">${DESCRIPTION}</span><div class=\"card-tags\">${TAGS_DISPLAY}</div></div></a><div class=\"card-footer\"><a href=\"${THEME_REPO_URL}\" class=\"card-footer-row\"><svg viewBox=\"0 0 16 16\"><path d=\"M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z\"></path></svg>Source Code</a><div class=\"card-footer-row scaffold-row\" onclick=\"copyScaffold(this)\" data-cmd=\"${SCAFFOLD_CMD}\"><svg viewBox=\"0 0 16 16\"><path d=\"M4.72 3.22a.75.75 0 011.06 1.06L2.06 8l3.72 3.72a.75.75 0 11-1.06 1.06L.47 8.53a.75.75 0 010-1.06l4.25-4.25zm6.56 0a.75.75 0 10-1.06 1.06L13.94 8l-3.72 3.72a.75.75 0 101.06 1.06l4.25-4.25a.75.75 0 000-1.06l-4.25-4.25z\"></path></svg><span class=\"scaffold-cmd\">${SCAFFOLD_CMD}</span></div></div></div>"
+  SITE_LINKS="${SITE_LINKS}<div class=\"card${FLAG_CLASS}\"${FLAG_ATTR} data-name=\"${name}\" data-title=\"${TITLE}\" data-desc=\"${DESCRIPTION}\" data-tags=\"${TAGS}\">${FLAG_BADGE}<a href=\"${BASE_URL}/${name}/\" class=\"main-link\"><img src=\"screenshots/${name}.png\" alt=\"${name}\" class=\"preview\" loading=\"lazy\" onerror=\"var d=document.createElement('div');d.className='preview-fallback';d.textContent='no_preview';this.replaceWith(d);\"><div class=\"card-info\"><strong>${name}</strong><span class=\"title\">${TITLE}</span><span class=\"desc\">${DESCRIPTION}</span><div class=\"card-tags\">${TAGS_DISPLAY}</div></div></a><div class=\"card-footer\"><a href=\"${THEME_REPO_URL}\" class=\"card-footer-row\"><svg viewBox=\"0 0 16 16\"><path d=\"M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z\"></path></svg>Source Code</a><div class=\"card-footer-row scaffold-row\" onclick=\"copyScaffold(this)\" data-cmd=\"${SCAFFOLD_CMD}\"><svg viewBox=\"0 0 16 16\"><path d=\"M4.72 3.22a.75.75 0 011.06 1.06L2.06 8l3.72 3.72a.75.75 0 11-1.06 1.06L.47 8.53a.75.75 0 010-1.06l4.25-4.25zm6.56 0a.75.75 0 10-1.06 1.06L13.94 8l-3.72 3.72a.75.75 0 101.06 1.06l4.25-4.25a.75.75 0 000-1.06l-4.25-4.25z\"></path></svg><span class=\"scaffold-cmd\">${SCAFFOLD_CMD}</span></div></div></div>"
 done
 
 TOP_TAGS_DATA=$(jq -r 'values[] | .[]' tags.json | sort | uniq -c | sort -rn | head -8 | awk '{print $2}')

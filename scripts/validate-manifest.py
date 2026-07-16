@@ -13,6 +13,8 @@ Checks (errors exit 1):
   - feeds: only real section names
   - palette: 6-digit hex values; accent hue spacing within each
     category+scheme bucket reported as a warning
+  - flagships: optional ordered list; every name must exist in examples,
+    no duplicates; missing examples/<name>/ site is a warning
 
 Usage: scripts/validate-manifest.py [--quiet]
 """
@@ -81,6 +83,20 @@ def main() -> int:
     for name, count in Counter(names).items():
         if count > 1:
             err(f"duplicate name: {name} ({count}x)")
+
+    flagships = manifest.get("flagships", [])
+    if not isinstance(flagships, list) or not all(isinstance(f, str) for f in flagships):
+        err("flagships must be an array of example name strings")
+        flagships = []
+    for f, count in Counter(flagships).items():
+        if count > 1:
+            err(f"duplicate flagship: {f} ({count}x)")
+    name_set = set(names)
+    for f in flagships:
+        if f not in name_set:
+            err(f"flagship '{f}' does not match any example name")
+        elif not (ROOT / "examples" / f / "config.toml").exists():
+            warn(f"flagship '{f}' has no examples/{f}/ site yet (gallery card will be skipped)")
 
     pairings: Counter = Counter()
     signatures: Counter = Counter()
@@ -209,6 +225,7 @@ def main() -> int:
     quiet = "--quiet" in sys.argv
     if not quiet:
         print(f"examples: {len(examples)}")
+        print(f"flagships: {flagships or 'none'}")
         print(f"categories: {dict(sorted(cat_counts.items()))}")
         print(f"schemes: {dict(sorted(scheme_counts.items()))}")
         print(f"styles: {dict(sorted(style_counts.items(), key=lambda kv: -kv[1]))}")
