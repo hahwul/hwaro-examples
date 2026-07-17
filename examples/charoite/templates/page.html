@@ -1,0 +1,30 @@
+{% include "header.html" %}
+<main id="main">
+  <div class="shell band">
+    <article class="prose">
+      <h1>{{ page.title | e }}</h1>
+      <div class="prose-meta">
+        {% if page.date %}<time datetime="{{ page.date }}">{{ page.date | date("%B %d, %Y") }}</time>{% endif %}
+        {% if page.extra.meta %}<span>{{ page.extra.meta | e }}</span>{% endif %}
+      </div>
+      {% if page.extra.plate %}
+      <figure class="plate-figure">
+        {% set plate = page.extra.plate %}{% include "plate.html" %}
+        {% if page.extra.caption %}<figcaption>{{ page.extra.caption | e }}</figcaption>{% endif %}
+      </figure>
+      {% endif %}
+      {{ content | safe }}
+      {% if page.tags %}
+      <ul class="tag-list">
+        {% for t in page.tags %}<li><a href="{{ get_taxonomy_url(kind="tags", term=t) }}">{{ t }}</a></li>{% endfor %}
+      </ul>
+      {% endif %}
+      {% if page.section == "specimens" %}
+      <a class="back-link" href="{{ base_url }}/specimens/">Back to the catalog</a>
+      {% elif page.section == "journal" %}
+      <a class="back-link" href="{{ base_url }}/journal/">Back to the journal</a>
+      {% endif %}
+    </article>
+  </div>
+</main>
+{% include "footer.html" %}
