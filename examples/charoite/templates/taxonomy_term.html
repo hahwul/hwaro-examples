@@ -1,0 +1,25 @@
+{% include "header.html" %}
+<main id="main">
+  <div class="shell band">
+    <div class="page-head">
+      <h1>{{ taxonomy_term }}</h1>
+      <p class="lede">Specimens and journal entries filed under this tag.</p>
+    </div>
+    {% set tax = get_taxonomy(kind="tags") %}
+    <ul class="entry-list">
+      {% for term in tax.items %}{% if term.name == taxonomy_term %}
+      {% for p in term.pages | sort_by("date", reverse=true) %}
+      <li>
+        {% if p.date %}<time datetime="{{ p.date }}">{{ p.date | date("%Y-%m-%d") }}</time>{% endif %}
+        <div>
+          <h2><a href="{{ base_url }}{{ p.url }}">{{ p.title | e }}</a></h2>
+          {% if p.description %}<p>{{ p.description | e }}</p>{% endif %}
+        </div>
+      </li>
+      {% endfor %}
+      {% endif %}{% endfor %}
+    </ul>
+    <p class="band-foot"><a class="text-link" href="{{ base_url }}/tags/">All tags</a></p>
+  </div>
+</main>
+{% include "footer.html" %}

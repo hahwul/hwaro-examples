@@ -1,0 +1,90 @@
+{#
+  home.html - landing for the Charoite specimen archive. The signature is
+  the hand-drawn slab in the hero (see slab.html): flat fiber bands in the
+  six stone inks, a staggered chatoyant shine, and a pointer loupe.
+#}
+{% include "header.html" %}
+<main id="main">
+
+  <section class="band hero" aria-labelledby="hero-title">
+    <div class="shell">
+      <div class="hero-copy">
+        <h1 id="hero-title">Charoite</h1>
+        <p class="hero-tagline">The violet stone known from one river valley on Earth, cut, polished, and catalogued.</p>
+        <div class="hero-cta">
+          <a class="btn btn-solid" href="{{ base_url }}/specimens/">Browse specimens</a>
+          <a class="btn btn-line" href="{{ base_url }}/journal/">Read the journal</a>
+        </div>
+      </div>
+      <figure class="hero-slab" id="hero-slab">
+        {% include "slab.html" %}
+        <figcaption>CH-014 &middot; polished slab, 18 cm. Sirenevyi Kamen, Murun massif.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="band band-surface band-reveal" aria-labelledby="vault-title">
+    <div class="shell">
+      <div class="band-head">
+        <h2 id="vault-title">Slabs from the vault</h2>
+        <p class="band-lede">Three of the six catalogued specimens. Every plate is drawn by hand from the cut face.</p>
+      </div>
+      {% set specs = get_section(path="specimens").pages | sort_by("weight") %}
+      <ul class="specimen-trio">
+        {% for p in specs %}{% if loop.index0 < 3 %}
+        <li class="specimen-card{% if loop.index0 == 0 %} specimen-lead{% endif %}">
+          {% set plate = p.extra.plate %}{% include "plate.html" %}
+          <h3><a href="{{ base_url }}{{ p.url }}">{{ p.title | e }}</a></h3>
+          {% if p.extra.meta %}<p class="specimen-meta">{{ p.extra.meta | e }}</p>{% endif %}
+        </li>
+        {% endif %}{% endfor %}
+      </ul>
+      <div class="band-foot"><a class="text-link" href="{{ base_url }}/specimens/">Full catalog &#8594;</a></div>
+    </div>
+  </section>
+
+  <section class="band statement band-reveal" aria-label="About the stone">
+    <div class="shell">
+      <div class="statement-prose">
+        {{ content | safe }}
+      </div>
+      <figure class="locality">
+        <svg viewBox="0 0 360 300" role="img" aria-label="A sketched map of the Murun massif with the Chara river along its northwest rim and the Sirenevyi Kamen deposit marked">
+          <path fill="none" stroke="var(--stone-3)" stroke-width="2" d="M120 92 C170 66 250 74 292 110 C330 142 326 200 288 232 C246 268 168 264 128 230 C92 200 84 128 120 92 Z"/>
+          <path fill="none" stroke="var(--stone-2)" stroke-width="2" d="M146 116 C184 96 244 102 274 128 C302 152 298 196 270 218 C238 244 180 240 152 216 C126 192 120 142 146 116 Z"/>
+          <path fill="none" stroke="var(--stone-2)" stroke-width="1.5" d="M172 140 C198 126 238 130 258 148 C276 164 272 192 254 206 C232 222 196 220 178 204 C160 188 156 154 172 140 Z"/>
+          <path fill="none" stroke="var(--stone-4)" stroke-width="5" stroke-linecap="round" d="M318 18 C260 40 176 34 128 62 C84 88 66 148 58 210 C52 254 60 276 76 290"/>
+          <path fill="var(--accent)" d="M118 84 l9 9 -9 9 -9 -9 Z"/>
+          <text x="248" y="64" font-family="Space Mono, monospace" font-size="12" fill="var(--muted)" stroke="var(--surface)" stroke-width="4" paint-order="stroke">Chara</text>
+          <text x="176" y="182" font-family="Space Mono, monospace" font-size="12" fill="var(--muted)" stroke="var(--surface)" stroke-width="4" paint-order="stroke">Murun massif</text>
+          <text x="134" y="74" font-family="Space Mono, monospace" font-size="12" fill="var(--fg)" stroke="var(--surface)" stroke-width="4" paint-order="stroke">Sirenevyi Kamen</text>
+        </svg>
+        <figcaption>The only documented locality, where the Chara skirts the massif.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="band band-surface band-reveal" aria-labelledby="journal-title">
+    <div class="shell">
+      <div class="band-head">
+        <h2 id="journal-title">Journal</h2>
+        <p class="band-lede">Field trips, saw-room notes, and how the catalog is kept.</p>
+      </div>
+      {% set entries = get_section(path="journal").pages | sort_by("date", reverse=true) %}
+      <ul class="journal-list">
+        {% for p in entries %}{% if loop.index0 < 3 %}
+        <li>
+          {% if p.date %}<time datetime="{{ p.date }}">{{ p.date | date("%Y-%m-%d") }}</time>{% endif %}
+          <div>
+            <h3><a href="{{ base_url }}{{ p.url }}">{{ p.title | e }}</a></h3>
+            {% if p.description %}<p>{{ p.description | e }}</p>{% endif %}
+          </div>
+        </li>
+        {% endif %}{% endfor %}
+      </ul>
+      <div class="band-foot"><a class="text-link" href="{{ base_url }}/journal/">All entries &#8594;</a></div>
+    </div>
+  </section>
+
+</main>
+{% include "footer.html" %}
