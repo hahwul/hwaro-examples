@@ -15,7 +15,7 @@ Grading is worked out in cut-and-fill wherever the contamination profile allows 
 
 ## The practice today
 
-Sienna is five people: two landscape architects, a soil scientist, a planting specialist, and a part-time archivist who keeps the site histories that inform each design. The practice works across the Kell Valley with local authorities, rail operators, port trusts, and the occasional private landowner willing to accept a park instead of a fence. Current and completed commissions are listed under [Commissions](/commissions/).
+Sienna is five people: two landscape architects, a soil scientist, a planting specialist, and a part-time archivist who keeps the site histories that inform each design. The practice works across the Kell Valley with local authorities, rail operators, port trusts, and the occasional private landowner willing to accept a park instead of a fence. Current and completed commissions are listed under [Commissions](../commissions/).
 
 ## Contact
 
