@@ -34,7 +34,7 @@ end)
 
 Cairn is developed in the open. Releases follow semantic versioning, ship with a
 reproducible build hash, and are cut roughly every quarter. Every entry in the
-[release cairn](/releases/) lists what was added, changed, fixed, and — when it
+[release cairn](../releases/) lists what was added, changed, fixed, and — when it
 matters — what will break if you upgrade without reading first.
 
 Hardware support, the scripting reference, and the flashing guide live in the
