@@ -1,0 +1,4 @@
++++
+template = "taxonomy"
+title = "Categories"
++++
