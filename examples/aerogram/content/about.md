@@ -26,7 +26,7 @@ and wrong in the transcription.
 Each dispatch is filed with a dispatch number and a coordinate pair in the
 byline, in the surveyor's habit of noting exactly where a reading was taken.
 The coordinates are sometimes literal, sometimes a wink at the subject
-&mdash; [Issue No. 07](@/issues/interrupted-goode-homolosine.md) is filed
+&mdash; [Issue No. 07](../issues/interrupted-goode-homolosine/) is filed
 from Null Island, cartography's favorite placeholder for "we don't actually
 know."
 
@@ -34,7 +34,7 @@ know."
 
 We take corrections seriously, particularly on datums and elevation figures,
 which are the fastest way to lose a surveyor's trust &mdash; see
-[Issue No. 03](@/issues/datum-shift.md) for how expensive that kind of error
-gets. Route any correspondence through [the archive](@/issues/_index.md) or
+[Issue No. 03](../issues/datum-shift/) for how expensive that kind of error
+gets. Route any correspondence through [the archive](../issues/) or
 the tags index below and you will eventually find the right dispatch to
 reply against; there is no other inbox to speak of in this example.
