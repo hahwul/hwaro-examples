@@ -17,7 +17,7 @@ its distortion problem by admitting defeat gracefully instead of hiding it.
 <!-- more -->
 
 Every other projection in this letter, [starting with the one everyone
-already has an opinion about](@/issues/mercator-problem.md), has tried to
+already has an opinion about](../mercator-problem/), has tried to
 preserve some property &mdash; angle, area, distance &mdash; by accepting
 distortion elsewhere on the map, usually pushed toward the edges where a
 reader is least likely to look closely. The interrupted homolosine takes a different position: rather

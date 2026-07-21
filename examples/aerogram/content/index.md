@@ -17,5 +17,5 @@ argue with. We favor primary evidence: field notebooks, survey marks,
 soundings, the marginal notes cartographers leave when they think no one is
 reading closely. No trend pieces, no "future of mapping" think-pieces &mdash;
 just the ground, and the paper that tried to describe it. New here? Start
-with [the argument that started all this](@/issues/mercator-problem.md), or
-read [the masthead](@/about.md) for how a dispatch gets filed.
+with [the argument that started all this](issues/mercator-problem/), or
+read [the masthead](about/) for how a dispatch gets filed.
