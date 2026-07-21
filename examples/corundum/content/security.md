@@ -40,7 +40,7 @@ radius of a stolen one.
 - Access tokens are short-lived — ten minutes by default — so a captured bearer
   token expires before it is useful for long.
 - Refresh tokens rotate on every use; replaying a spent one revokes the whole
-  family. See the [tokens guide](/guides/tokens/) for the mechanics.
+  family. See the [tokens guide](../guides/tokens/) for the mechanics.
 - Sender-constrained tokens bind an access token to a client-held key through
   the `cnf` claim, so a token lifted from one machine cannot be used from
   another.
