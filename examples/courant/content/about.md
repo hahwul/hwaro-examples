@@ -3,7 +3,7 @@ title = "About"
 description = "The masthead, the scoring system, and how to get a record onto the desk."
 +++
 
-The Courant started in 2019 as a group chat between three critics who agreed on nothing except that most weekly round-ups were cowardly — three stars for everything, no verbs, no risk. We split off into our own sheet a year later. The name is an old print term for a newsletter of record; we kept it because we still believe a review should read like it was filed on deadline, not workshopped into mush. The full run of what we have filed since sits in the [notices archive](notices/); the genres we return to most are indexed on the [genre page](categories/).
+The Courant started in 2019 as a group chat between three critics who agreed on nothing except that most weekly round-ups were cowardly — three stars for everything, no verbs, no risk. We split off into our own sheet a year later. The name is an old print term for a newsletter of record; we kept it because we still believe a review should read like it was filed on deadline, not workshopped into mush. The full run of what we have filed since sits in the [notices archive](/notices/); the genres we return to most are indexed on the [genre page](/categories/).
 
 ## What we cover
 
@@ -15,7 +15,7 @@ Every notice closes with a score out of ten, set by the critic who wrote it and 
 
 ## Submissions
 
-Labels and artists can send WAV or FLAC plus one paragraph of real context — no one-sheets, no mood boards — to the desk address on file. We do not guarantee coverage, we do not promise a good score for coverage, and we read everything in the order it arrives. If a record is going to get filed, expect it within three weeks of release, not before. For a sense of tone, start with this week's lead notice on the [front page](../).
+Labels and artists can send WAV or FLAC plus one paragraph of real context — no one-sheets, no mood boards — to the desk address on file. We do not guarantee coverage, we do not promise a good score for coverage, and we read everything in the order it arrives. If a record is going to get filed, expect it within three weeks of release, not before. For a sense of tone, start with this week's lead notice on the [front page](/).
 
 ## The desk
 

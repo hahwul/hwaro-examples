@@ -3,7 +3,7 @@ title = "About"
 description = "What Masthead covers, how a review gets assigned, and the six critics who file them."
 +++
 
-Masthead started as a shared grievance: postwar civic architecture gets discussed twice in most towns, once when it is built and once when someone proposes tearing it down, and almost never in between. We exist for the in-between. Every review here looks at a courthouse, pool, library, garage, or trade school built roughly between 1955 and 1980, and asks what it is actually like to use now — whether it has been converted to something else entirely, quietly restored, or simply left to keep doing its original job for a public that has largely stopped noticing it. The full run sits in the [review archive](reviews/); the rubrics we return to most, brutalism, adaptive reuse, and preservation among them, are indexed on the [category page](categories/).
+Masthead started as a shared grievance: postwar civic architecture gets discussed twice in most towns, once when it is built and once when someone proposes tearing it down, and almost never in between. We exist for the in-between. Every review here looks at a courthouse, pool, library, garage, or trade school built roughly between 1955 and 1980, and asks what it is actually like to use now — whether it has been converted to something else entirely, quietly restored, or simply left to keep doing its original job for a public that has largely stopped noticing it. The full run sits in the [review archive](/reviews/); the rubrics we return to most, brutalism, adaptive reuse, and preservation among them, are indexed on the [category page](/categories/).
 
 ## What we cover
 

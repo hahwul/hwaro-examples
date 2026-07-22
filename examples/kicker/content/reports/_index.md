@@ -1,4 +1,5 @@
 +++
+generate_feeds = true
 title = "Reports"
 template = "section"
 +++

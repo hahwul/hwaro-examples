@@ -1,4 +1,5 @@
 +++
+generate_feeds = true
 title = "Ride reports"
 description = "Every ride in the journal, newest first — distance, climbing, and what the wind was doing."
 sort_by = "date"

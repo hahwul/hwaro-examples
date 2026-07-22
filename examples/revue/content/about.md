@@ -17,4 +17,4 @@ Six essayists rotate the monthly issue: Odile Farrant on restoration chemistry a
 
 ## Get in touch
 
-Restoration labs, repertory programmers, and projectionists with a print worth an essay can write to the desk with a paragraph of real context — no press kits, no screener links without a physical print behind them. We read everything in the order it arrives and we do not guarantee coverage. For a sense of tone before you pitch, start with [this issue's lead essay](../) on the front page.
+Restoration labs, repertory programmers, and projectionists with a print worth an essay can write to the desk with a paragraph of real context — no press kits, no screener links without a physical print behind them. We read everything in the order it arrives and we do not guarantee coverage. For a sense of tone before you pitch, start with [this issue's lead essay](/) on the front page.
