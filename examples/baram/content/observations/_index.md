@@ -1,4 +1,5 @@
 +++
+generate_feeds = true
 title = "Observations"
 description = "The full station log from Saebyeok Ridge, newest reading first."
 sort_by = "date"

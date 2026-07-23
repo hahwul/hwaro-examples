@@ -1,4 +1,5 @@
 +++
+generate_feeds = true
 title = "Talks"
 description = "The full three-day program for Syzygy 2026 — keynotes and talks on schedulers, allocators, and bare metal, sorted by start time."
 sort_by = "date"

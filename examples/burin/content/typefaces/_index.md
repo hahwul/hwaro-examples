@@ -1,4 +1,5 @@
 +++
+generate_feeds = true
 title = "Typefaces"
 description = "Five revival typefaces cut from engraved bookplates, banknote counters, and map lettering, released one at a time as each plate is fully redrawn."
 sort_by = "date"
