@@ -38,4 +38,4 @@ def log(event, at=None):
 
 ## The turn
 
-The mistake in [the jar that remembers](/chapters/jar/) and the mistake here are the same mistake. A default argument is not a promise to compute; it is a value, already computed. `now` felt like a live wire, something that would be true whenever you touched it. But the moment you wrote it into a signature, you froze it into a noun. Time only flows for expressions that are allowed to run more than once.
+The mistake in [the jar that remembers](../../chapters/jar/) and the mistake here are the same mistake. A default argument is not a promise to compute; it is a value, already computed. `now` felt like a live wire, something that would be true whenever you touched it. But the moment you wrote it into a signature, you froze it into a noun. Time only flows for expressions that are allowed to run more than once.

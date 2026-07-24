@@ -22,4 +22,4 @@ Read one koan. Predict the output before you run it. Run it. Measure the gap bet
 
 ## On the number
 
-Forty-nine is seven turnings of seven: state, time, naming, and the ways they fold into one another. This edition gathers seven, one opened from each turning, enough to learn the posture. When you are ready, [begin with the jar](/chapters/jar/); the rest you will meet on your own, in your own code, at your own midnight.
+Forty-nine is seven turnings of seven: state, time, naming, and the ways they fold into one another. This edition gathers seven, one opened from each turning, enough to learn the posture. When you are ready, [begin with the jar](../chapters/jar/); the rest you will meet on your own, in your own code, at your own midnight.
