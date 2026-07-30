@@ -8,6 +8,7 @@ Checks (errors exit 1):
   - tags: exactly 1 category + 1 scheme + 1-2 styles
   - typography: each display/text pairing used <= 5 times
   - layout: one of the 14 named patterns
+  - dials: optional; when present, variance/motion/density are ints 1-10
   - signature/content-theme: unique per example
   - search_ui: valid enum; content-heavy categories must not be "none"
   - feeds: only real section names
@@ -133,6 +134,21 @@ def main() -> int:
 
         if e.get("layout") not in LAYOUTS:
             err(f"{ctx} invalid layout: {e.get('layout')}")
+
+        # dials (DESIGN.md §15 step 2) are optional — the 200 entries written
+        # before they existed stay valid — but wrong when present is an error
+        if "dials" in e:
+            dials = e["dials"]
+            if not isinstance(dials, dict):
+                err(f"{ctx} dials must be an object")
+            else:
+                for k in ("variance", "motion", "density"):
+                    v = dials.get(k)
+                    if not isinstance(v, int) or isinstance(v, bool) or not 1 <= v <= 10:
+                        err(f"{ctx} dials.{k} must be an integer 1-10, got {v!r}")
+                extra = set(dials) - {"variance", "motion", "density"}
+                if extra:
+                    err(f"{ctx} unknown dials keys: {sorted(extra)}")
 
         title = e.get("title", "")
         desc = e.get("description", "")

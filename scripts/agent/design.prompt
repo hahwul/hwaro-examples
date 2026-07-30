@@ -1,16 +1,21 @@
 Author the manifest.json entry for a new example site named "__NAME__" in this
 repository (hwaro-examples). This is the art-direction step — no site code is
-written here. The entry you produce is the complete assignment a cheaper
-builder model will execute, so every field must be decided and precise.
+written here. The entry you produce is the complete assignment the builder
+model will execute, so every field must be decided and precise.
 
-Read first: DESIGN.md §1-2 and §15 steps 1-2, then AGENTS.md "Tag vocabulary",
-then the hwaro-design skill appended at the end of this prompt. DESIGN.md
-governs this collection's own constraints (the diversity matrix, manifest
-shape, process); the skill is the upstream, actively-maintained source for
-taste calls DESIGN.md doesn't spell out — dial calibration (variance/motion/
-density), palette and typography discipline, anti-slop tells. Where the two
-conflict on a collection-specific rule (e.g. font-pairing cap, hue-distance
-floor), DESIGN.md wins.
+Everything that makes a site memorable is decided HERE. The builder executes;
+it does not rescue a safe assignment. A brief that could describe any site in
+its category produces a site that looks like any site in its category.
+
+Read first: DESIGN.md §1-2, §13 (both the tells table and "Where the upstream
+skill and this collection differ") and §15 steps 1-2, then AGENTS.md "Tag
+vocabulary", then the hwaro-design skill appended at the end of this prompt.
+DESIGN.md governs this collection's own constraints (the diversity matrix,
+manifest shape, process); the skill is the upstream, actively-maintained source
+for taste calls DESIGN.md doesn't spell out — the Design Read (§0), the three
+dials (§1), palette and typography discipline (§4), the pattern vocabulary
+(§6), the AI tells (§9). Where the two conflict on a collection-specific rule
+(font-pairing cap, hue-distance floor, em-dash usage in prose), DESIGN.md wins.
 
 Process:
 1. Confirm the name "__NAME__" is legal: not in manifest.json, not in
@@ -25,25 +30,82 @@ Process:
      >= 10 degrees of hue distance)
    - layouts and signatures in the chosen category (your signature must be
      unique collection-wide; prefer under-used layouts)
-3. Write the complete entry, matching the exact JSON shape of existing
+3. STUDY THE FIELD. Read the full manifest entries — brief, layout, signature,
+   palette — of the three examples nearest to yours (same category, same
+   scheme first). Write one line per peer describing what its first screen
+   looks like. This is the set your site will be mistaken for if you play it
+   safe, and the reviewer will judge "__NAME__" against these same peers.
+4. DECLARE THE DESIGN READ (skill §0.B), one line:
+   "Reading this as: <site kind> for <audience>, with a <vibe> language,
+   leaning toward <aesthetic family>. Dials: <variance>/<motion>/<density>."
+   Reason the dial values from the category and styles using skill §1.A —
+   never assume a baseline. Docs and books sit low on variance and motion;
+   landings, portfolios and galleries sit high. These three numbers go into
+   the entry as `dials` and become a contract: the builder must ship them and
+   the reviewer checks them against the rendered page.
+5. PITCH THREE CONCEPTS, KILL TWO. Write three genuinely different directions
+   for this site — different signature, different first-screen composition,
+   different emotional register. Not three palettes of one idea. For each,
+   state in two lines: the signature move, and what the 1280x720 first screen
+   looks like. Then judge them:
+   - Which is closest to what a generic <category> site looks like? Kill it.
+   - Which one, at thumbnail size, could NOT be confused with any peer from
+     step 3? That is usually the winner.
+   - Which one can a builder actually execute in plain CSS on a static site
+     with no binary assets? A concept that needs photography is dead here.
+   Commit to one and say in one line why it beat the other two. Carry the
+   losers' best single detail into the winner if it fits.
+6. THE SIGNATURE MUST BE SCENE-LEVEL. A scene-level signature changes how the
+   whole first screen reads — a skyline the content sits inside, a broadsheet
+   rule system the entire page obeys, a terminal frame that owns the viewport,
+   an oversized specimen the layout bends around. A detail-level signature
+   decorates a corner — a monogram, a badge, one styled date, an accent
+   underline. Detail-level signatures are why sites get demoted from the
+   gallery front. State the signature concretely enough to implement in CSS,
+   and state which band of the first screen carries it.
+7. Write the complete entry, matching the exact JSON shape of existing
    entries: name, title, description (20-140 chars, gallery-ready), category,
-   scheme, styles (1-2), brief (a vivid, concrete paragraph the builder can
-   execute without judgment — name the bands of the homepage in order),
-   typography {display, text, mono}, palette (+palette_dark for auto/dark
-   sites), layout, signature (one distinctive, CSS-implementable move stated
-   concretely), content {theme, sections, standalone}, features.
-   The content plan must yield 6-10 markdown files.
-4. Palette discipline: compute WCAG contrast for fg/bg, muted/bg, accent/bg,
+   scheme, styles (1-2), dials {variance, motion, density}, brief, typography
+   {display, text, mono}, palette (+palette_dark for auto/dark sites), layout,
+   signature, content {theme, sections, standalone}, features.
+   - `brief` is a vivid, concrete paragraph the builder can execute without
+     judgment. Name the bands of the homepage IN ORDER, and for each band say
+     what real matter it carries (a listing, a specimen, an SVG diagram, a
+     data rail — not "a hero section"). Give the first-screen bands an
+     approximate pixel height and make them sum to under 720 so the signature
+     lands above the fold. Name the voice the content is written in (a field
+     researcher's log, a printer's colophon, a release engineer's changelog) —
+     the builder writes the prose and needs the register.
+   - The content plan must yield 6-10 markdown files.
+8. Palette discipline: compute WCAG contrast for fg/bg, muted/bg, accent/bg,
    accent_fg/accent — all must be >= 4.5. State the computed ratios in your
    report. No pure #000/#fff in dark palettes; desaturate the dark accent.
-5. INSERT the entry into manifest.json in alphabetical order by name. This is
-   strictly additive: never modify, rename, or delete any existing entry, and
-   never reuse another entry's brief/palette/signature with the name swapped —
-   a near-duplicate of an existing entry is a hard failure (§13 "no recolored
-   clones"), even if the validator passes.
-6. Run scripts/validate-manifest.py — it must exit 0 with no new warnings.
+   No AI-purple violet-to-blue gradient direction (DESIGN.md §13).
+9. ANTI-DEFAULT CHECK before you insert. Answer these in the report:
+   - Write one sentence describing the generic <category> site: the layout
+     everyone reaches for. Then one sentence on how this entry diverges. If
+     you cannot name a real divergence, go back to step 5.
+   - Does the first screen carry real matter beyond a heading and a
+     paragraph? A headline + subtitle + two pill buttons + one illustration
+     is the single most common failure in this pipeline. If that describes
+     your first screen, redesign it.
+   - Run the skill §9 tells against the brief itself: is the signature a
+     free-floating decoration? Is the accent budget blown across headings,
+     borders and backgrounds? Is the header the default logo-left-links-right?
+10. INSERT the entry into manifest.json in alphabetical order by name. This is
+    strictly additive: never modify, rename, or delete any existing entry, and
+    never reuse another entry's brief/palette/signature with the name swapped —
+    a near-duplicate of an existing entry is a hard failure (§13 "no recolored
+    clones"), even if the validator passes.
+11. Run scripts/validate-manifest.py — it must exit 0 with no new warnings.
+    Then run `scripts/agent/peers.sh __NAME__`: it prints the peers the design
+    reviewer will judge this site against. If they are not the three you
+    studied in step 3, study the ones it names and confirm your entry still
+    diverges from them.
 
-Report: the inserted entry verbatim, the contrast ratios, the pairing use
+Report, in this order: the three peers from step 3, the Design Read with dial
+reasoning, the three concepts and why the winner won, the anti-default check
+from step 9, the inserted entry verbatim, the contrast ratios, the pairing use
 count, the hue distances in the bucket, and the validator output.
 Do NOT create examples/__NAME__/ and do NOT git commit — manifest entry only.
 

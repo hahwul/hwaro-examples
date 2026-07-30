@@ -45,6 +45,13 @@ across the collection is engineered there, not improvised per-site.
    vertical date label, a terminal frame, a broadsheet rule system). Build the
    whole site around it. A site with one committed idea beats a site with five
    half-ideas.
+
+   The signature must be **scene-level**: it changes how the whole first
+   screen reads. A frame that owns the viewport, a rule system the page obeys,
+   a specimen the layout bends around — those are scenes. A monogram, a badge,
+   an accent underline, one styled date decorate a corner, and a site whose
+   signature is only a decoration reads as generic no matter how clean it is.
+   That is the difference between a gallery front-runner and filler.
 2. **Typography does the heavy lifting.** Most of what reads as "beautiful"
    in a content site is type: scale contrast, measure, rhythm, and restraint.
    Get the type system right before touching decoration.
@@ -496,7 +503,9 @@ draft contains one, apply the listed fix before continuing.
 
 | Tell | Fix |
 |---|---|
-| Centered hero: one `h1`, one paragraph, two pill buttons | Put real matter in the hero — the latest entries, a specimen, an SVG diagram, a manifesto — per your layout and signature |
+| Hero = one `h1`, one paragraph, two pill buttons — centered, or split with an illustration on the right | Put real matter in the hero — the latest entries, a specimen, an SVG diagram, a manifesto — per your layout and signature. Splitting the same four elements across two columns does not fix it |
+| The signature only decorates a corner: a monogram, a badge, one styled date, an accent underline | Make it scene-level. The signature must change how the whole first screen reads — a frame that owns the viewport, a rule system the page obeys, a specimen the layout bends around (§1.1) |
+| Homepage opens by explaining itself: "Welcome to…", "This site serves as…", a mission paragraph restating what the reader can already see | Cut the paragraph. Open with the work: the first entry, the specimen, the colophon line. Site copy is written in the voice the brief names, not in site-description voice |
 | Three-column icon feature grid ("Fast · Simple · Secure") | Cut it. Show actual content from your content plan, not claims about it |
 | Every surface has `border-radius` 8–16px plus a soft box-shadow | One surface treatment per site: rules/borders (editorial, swiss), flat blocks (brutalist), or radius+shadow (playful) — never all at once |
 | Accent color on headings, buttons, borders, icons, and backgrounds | Accent budget (§6): links, one CTA, the signature moment |
@@ -507,6 +516,35 @@ draft contains one, apply the listed fix before continuing.
 | A 65ch prose column pinned left inside a wide container, right half permanently empty | Center the measure (`margin-inline: auto`) or fill the space with real matter (TOC, meta rail, figures) |
 | `transition: all .3s` sprinkled everywhere | §9: ≤200ms, named properties only |
 | Uniform 16px/1.5 text with no measure limit | §5: fluid scale, 65ch measure, real hierarchy |
+
+### Where the upstream skill and this collection differ
+
+The `hwaro-design` skill (upstream, in the hwaro repo) is the actively
+maintained source for general web-design taste, and the agent pipeline loads
+it fresh into every design, build, fix, and review prompt. It is written
+primarily for marketing pages and portfolios. On these points this collection
+overrides it — apply DESIGN.md, and do not raise the skill's rule as a defect:
+
+- **Em-dashes.** The skill bans the em-dash outright as an AI tell. That is a
+  rule about landing-page copy. These examples ship editorial fiction, where
+  em-dashes are ordinary good writing; nearly every curated example uses them.
+  Not a defect here.
+- **Photography and image assets.** The skill requires real images and bans
+  pure-text minimalism. This collection bans binary raster assets entirely
+  (above): SVG and CSS art only. "Needs a real photo" is never a valid
+  finding.
+- **Eyebrow labels and small-caps micro-labels.** The skill caps them at one
+  per three sections. Mastheads, colophons, and issue lines are load-bearing
+  in editorial and terminal examples here. Judge them on whether they carry
+  real information, not on count.
+- **Framework directives.** Sections about React, Motion, Tailwind, `next/font`
+  and component libraries do not apply — these are static Hwaro sites with one
+  hand-written stylesheet. Read those sections for the design intent behind
+  them, not the implementation.
+
+Everything else in the skill — the Design Read, the three dials, palette and
+typography discipline, the layout and content-density rules, the rest of the
+AI-tells catalog — applies in full.
 
 ## 14. Crinja / hwaro pitfalls
 
@@ -571,10 +609,23 @@ verification before PR. Each step has a checkpoint; do not skip ahead.
    `tool`, `deploy`), and not an infrastructure word (`index`, `search`,
    `static`, `templates`, `content`, `public`, `screenshots`, `examples`).
 2. **Write the manifest entry first** — every field, including brief,
-   typography, palette, layout, and signature. Check it against the collection:
-   is the pairing under its 5-use cap? Is the accent hue distinct within its
-   category+scheme bucket? Is the signature unique? Then run
+   typography, palette, layout, signature, and `dials`. Check it against the
+   collection: is the pairing under its 5-use cap? Is the accent hue distinct
+   within its category+scheme bucket? Is the signature unique? Then run
    `scripts/validate-manifest.py` — it must pass.
+
+   Before committing to a direction, read the entries of the three nearest
+   examples (same category, same scheme) and sketch **three** different
+   directions for this one — different signature, different first screen, not
+   three palettes of one idea. Kill the one closest to the generic
+   \<category\> site; keep the one that could not be mistaken for those three
+   peers at thumbnail size. This is the step that decides whether the finished
+   site is memorable; no amount of building rescues a safe assignment.
+
+   `dials` records the three values from the skill's Section 1 —
+   `{"variance": n, "motion": n, "density": n}`, each 1–10, reasoned from the
+   category and styles. They are a contract: the builder ships them and §16
+   checks them against the rendered page.
 3. **Scaffold**: `cd examples && hwaro init <name>` — always start from the
    scaffold. Delete `static/fonts/` and its `@font-face` rules; trim the
    commented "optional features" tail from config.toml; set the config to the
@@ -654,6 +705,29 @@ show the arithmetic that puts the signature above 720px.
 - [ ] At thumbnail size, this screenshot would be distinguishable from every
       other example in its category. If it reads as "generic \<category\>",
       push the signature harder — bigger, stranger, more committed.
+
+**The taste pass**
+
+Everything above can pass on a site that is competent and forgettable. These
+four are the ones that decide whether it belongs in the collection, and they
+are checked against the *field* — open the gallery shots of the three nearest
+examples (same category, same scheme first) and judge side by side.
+`scripts/agent/peers.sh <name>` names them; `just field <name>` renders their
+thumbnails into `_agent/` so you can put them next to yours.
+
+- [ ] **The field test.** Shrunk to thumbnails and placed beside those peers,
+      this site is immediately tellable apart. Name what the peers share and
+      what this one adds. "Different palette" is not an answer.
+- [ ] **The scene test.** The signature changes how the whole first screen
+      reads, rather than decorating a corner of it (§1.1, §13).
+- [ ] **The dials are shipped, not claimed.** The rendered page delivers the
+      entry's `dials`: the grid shows the variance, the section rhythm shows
+      the density, and any motion above 3 is visible as real transitions or
+      reveals behind the reduced-motion guard (§9).
+- [ ] **Copy register.** Every visible string — headings, taglines, nav
+      labels, listing summaries, footer, 404 — is written in the voice the
+      brief names. No "Welcome to…", no site-describing mission paragraph, no
+      cute phrasing that does not track (§13).
 
 **Typography and color**
 

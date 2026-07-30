@@ -11,6 +11,8 @@
 # Env overrides:
 #   AGY_MODEL    model name as shown by `agy models` (default: agy's own default)
 #   AGY_TIMEOUT  print-mode timeout (default 30m)
+#   PEERS        newline-separated peer example names, substituted for
+#                __PEERS__ (see peers.sh) — the field a review judges against
 
 set -euo pipefail
 cd "$(dirname "$0")/../.."
@@ -32,6 +34,11 @@ prompt=$(sed -e "s/__NAME__/$name/g" -e "s/__ROUND__/${ROUND:-1}/g" "$template")
 if [[ "$prompt" == *__FINDINGS__* ]]; then
   [ -f "$findings_file" ] || { echo "template needs a findings file argument" >&2; exit 1; }
   prompt="${prompt/__FINDINGS__/$(cat "$findings_file")}"
+fi
+if [[ "$prompt" == *__PEERS__* ]]; then
+  peers="${PEERS:-}"
+  [ -n "$peers" ] || peers="(no built peers in this category yet — judge against the quality anchor alone)"
+  prompt="${prompt/__PEERS__/$peers}"
 fi
 if [[ "$prompt" == *__HWARO_DESIGN_SKILL__* ]]; then
   skill=$(scripts/agent/load-skill.sh hwaro-design) || exit 1

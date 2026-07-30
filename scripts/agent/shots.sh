@@ -4,12 +4,15 @@
 # homepage, 360px mobile, and the first section page. Output: _agent/<name>/.
 #
 # Usage: scripts/agent/shots.sh <name> [port]
+# Env:   SHOTS_ONLY=home  — only the 1280x720 light homepage (the gallery
+#        shot). Used for peer thumbnails, where the whole set would be waste.
 
 set -euo pipefail
 cd "$(dirname "$0")/../.."
 
 name="${1:?usage: shots.sh <name> [port]}"
 port="${2:-3999}"
+only="${SHOTS_ONLY:-all}"
 dir="examples/$name"
 out="_agent/$name"
 CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
@@ -38,24 +41,27 @@ shot() { "$CHROME" --headless=new --screenshot="$out/$1" --window-size="$2" \
 # force each theme explicitly so results don't depend on the host's dark mode
 curl -s "http://localhost:$port/" \
   | sed 's/<html lang="en"/<html lang="en" data-theme="light"/' > "$out/_light.html"
-curl -s "http://localhost:$port/" \
-  | sed 's/<html lang="en"/<html lang="en" data-theme="dark"/' > "$out/_dark.html"
-# headless Chrome clamps window width to ~500px, so a --window-size=360 shot
-# silently crops a 500px render; constrain the body instead for a true 360
-{ cat "$out/_light.html"; printf '<style>body{width:360px !important;margin:0 auto !important;outline:1px solid red}</style>'; } > "$out/_mobile.html"
+shot home-light-720.png 1280,720 "file://$PWD/$out/_light.html"
 
-shot home-light-720.png 1280,720  "file://$PWD/$out/_light.html"
-shot home-dark-720.png  1280,720  "file://$PWD/$out/_dark.html"
-shot home-full.png      1280,2600 "file://$PWD/$out/_light.html"
-shot home-360.png       500,900   "file://$PWD/$out/_mobile.html"
+if [ "$only" != "home" ]; then
+  curl -s "http://localhost:$port/" \
+    | sed 's/<html lang="en"/<html lang="en" data-theme="dark"/' > "$out/_dark.html"
+  # headless Chrome clamps window width to ~500px, so a --window-size=360 shot
+  # silently crops a 500px render; constrain the body instead for a true 360
+  { cat "$out/_light.html"; printf '<style>body{width:360px !important;margin:0 auto !important;outline:1px solid red}</style>'; } > "$out/_mobile.html"
 
-section=$(find "$dir/content" -mindepth 2 -name '_index.md' | head -1 \
-  | sed -E 's|.*/content/([^/]+)/_index.md|\1|')
-if [ -n "$section" ]; then
-  shot section.png 1280,900 "http://localhost:$port/$section/"
-  page=$(curl -s "http://localhost:$port/$section/" \
-    | grep -oE "href=\"[^\"]*/$section/[a-zA-Z0-9._-]+/\"" | head -1 | cut -d'"' -f2 || true)
-  if [ -n "$page" ]; then shot page.png 1280,900 "$page"; fi
+  shot home-dark-720.png  1280,720  "file://$PWD/$out/_dark.html"
+  shot home-full.png      1280,2600 "file://$PWD/$out/_light.html"
+  shot home-360.png       500,900   "file://$PWD/$out/_mobile.html"
+
+  section=$(find "$dir/content" -mindepth 2 -name '_index.md' | head -1 \
+    | sed -E 's|.*/content/([^/]+)/_index.md|\1|')
+  if [ -n "$section" ]; then
+    shot section.png 1280,900 "http://localhost:$port/$section/"
+    page=$(curl -s "http://localhost:$port/$section/" \
+      | grep -oE "href=\"[^\"]*/$section/[a-zA-Z0-9._-]+/\"" | head -1 | cut -d'"' -f2 || true)
+    if [ -n "$page" ]; then shot page.png 1280,900 "$page"; fi
+  fi
 fi
 
 rm -f "$out/_light.html" "$out/_dark.html" "$out/_mobile.html"

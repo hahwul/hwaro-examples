@@ -15,7 +15,27 @@ MANDATORY reading order, before creating any file:
    lives in a Hwaro site (tokens, CSS delivery, motion, the Section 9 anti-
    slop tells, the Section 12 pre-flight check). DESIGN.md/AGENTS.md still
    govern this collection's own process and template idioms; on a
-   collection-specific rule the two disagree on, DESIGN.md wins.
+   collection-specific rule the two disagree on, DESIGN.md wins — see
+   DESIGN.md §13 "Where the upstream skill and this collection differ" before
+   applying any skill rule about em-dashes, images, or eyebrow labels.
+
+The entry's `dials` are a contract, not a mood (skill §1):
+- DESIGN_VARIANCE drives the grid. 1-3: symmetric, equal columns. 4-7: offset
+  headers, unequal fr units, deliberate overlaps. 8-10: fractional grids,
+  masonry, large intentional empty zones. Every asymmetric layout above 4
+  declares its single-column collapse below 768px in the same rule block.
+- MOTION_INTENSITY must be visible in the rendered page, not claimed. 1-3:
+  hover/focus transitions only. 4-7: those plus load-in delay cascades and
+  transform/opacity entrances. 8-10: scroll-driven reveals via
+  `animation-timeline: view()` behind `@supports`, or IntersectionObserver —
+  `window.addEventListener("scroll", ...)` is banned. DESIGN.md §9 still caps
+  every band: ≤200ms, ease-out, named properties only, and everything that
+  animates sits inside the reduced-motion guard. A high motion dial buys more
+  moments of motion, never longer or looser ones.
+- VISUAL_DENSITY sets the spacing scale. 1-3: 8-12rem section gaps. 4-7: the
+  standard 4-6rem rhythm. 8-10: tight padding, hairlines instead of cards,
+  mono figures.
+State each dial's rendered evidence in your report.
 
 Build rules (non-negotiable):
 - Create examples/__NAME__ ONLY via `cd examples && hwaro init __NAME__`. Never
@@ -33,11 +53,23 @@ Build rules (non-negotiable):
 - The signature element must be visible on the homepage's first screen
   (1280x720). Budget your band heights: everything above the signature's
   bottom edge must sum to under 720px. Show this arithmetic in your report.
+- BUILD THE FIRST SCREEN AS A SCENE, not a template. The brief names the bands
+  in order with their heights — build exactly those. The first screen carries
+  real matter: a listing with real titles and dates, a specimen, an SVG
+  diagram, a data rail, the signature itself. A headline plus a subtitle plus
+  two pill buttons plus one illustration is the failure this pipeline makes
+  most often; if that is what you have built, you have not built the brief.
 - Prose is centered or paired with real matter — never a 65ch column pinned
   left inside a wide container with a permanently empty right half.
 - Content per DESIGN.md §12: real fictional prose, 150+ PROSE words per page
   (front matter, code fences, and shortcode calls do not count), dates spread
   across 2025-01..2026-06, real tags, <!-- more --> markers on listable pages.
+- Write the content in the voice the brief names. Then re-read every visible
+  string on the site — headings, taglines, nav labels, listing summaries,
+  footer, 404 copy — and cut the AI register (skill §4.7): no "Welcome to
+  ...", no "This site serves as a ...", no mission-statement paragraph
+  restating what the reader can see, no cute-but-meaningless wordplay. A
+  plain functional sentence beats a poetic one that does not track.
 - No emoji, no lorem ipsum, no binary assets, no external origins beyond
   Google Fonts and cdn.jsdelivr.net, all CSS in static/css/style.css, every
   href through {{ base_url }}.
@@ -48,10 +80,15 @@ Verification (do not report success without all of these):
 1. DESIGN.md §15 step 9: build + all four rendered-output greps (including
    `grep -c '<h1' public/index.html` == 1) + manually confirm the home listing
    shows real titles, dates, and links.
-2. DESIGN.md §16 design QA pass: every checkbox. For first-screen items,
-   show the band-height arithmetic — do not certify from source reasoning.
-3. `scripts/check-site.sh __NAME__` must print "PASS: __NAME__".
-4. Run `scripts/sync-tags.sh`, then inside examples/__NAME__ run
+2. DESIGN.md §16 design QA pass: every checkbox, including the taste pass.
+   For first-screen items, show the band-height arithmetic — do not certify
+   from source reasoning.
+3. The skill's §12 pre-flight check, on top of §16: walk it and name every
+   item that does not apply to a static content site rather than silently
+   skipping it. Where it contradicts DESIGN.md §13's differences note,
+   DESIGN.md wins and you say so.
+4. `scripts/check-site.sh __NAME__` must print "PASS: __NAME__".
+5. Run `scripts/sync-tags.sh`, then inside examples/__NAME__ run
    `hwaro tool agents-md --remote --write --force` (the --force matters:
    hwaro init already created AGENTS.md, and without it hwaro blocks on an
    interactive overwrite prompt).
@@ -60,8 +97,11 @@ Final report format:
 - check-site.sh output, verbatim
 - the four grep commands and their outputs
 - the first-screen height budget arithmetic
+- the three dials with their rendered evidence (file:line for the grid rule,
+  the transition/scroll-reveal rule, the section-gap value)
 - the §16 checklist with every item marked [x] and one line of concrete
   evidence each (a command output or file:line — not just "yes")
+- the skill §12 pre-flight, same evidence standard
 
 Do NOT git commit anything. Leave all changes in the working tree for review.
 

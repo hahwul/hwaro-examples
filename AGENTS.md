@@ -70,9 +70,11 @@ Follow `DESIGN.md` §15 exactly — it is the authoritative step order. Summary:
 
 1. **Manifest entry first.** Pick a fresh single-word lowercase name (not in
    `manifest.json`, not in `scripts/retired-names.txt`, not a hwaro CLI term),
-   then write the complete entry: category, scheme, styles, brief, typography,
-   palette, layout, signature, content plan, features. Run
-   `scripts/validate-manifest.py`.
+   then write the complete entry: category, scheme, styles, dials, brief,
+   typography, palette, layout, signature, content plan, features. Sketch
+   three directions and keep the one that could not be mistaken for its
+   nearest peers (`scripts/agent/peers.sh <name>` names them) — the entry is
+   where a site's quality is decided. Run `scripts/validate-manifest.py`.
 2. **Scaffold:** `cd examples && hwaro init <name>` — always. Delete the
    bundled `static/fonts/` (Google Fonts CDN replaces them).
 3. **Build the site** in DESIGN.md §15 order: design tokens first, then
