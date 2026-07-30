@@ -1,0 +1,38 @@
+{% include "header.html" %}
+<main id="main" class="container main-content" style="padding-block: var(--space-5);">
+  <header class="page-header">
+    <div style="font-family: var(--font-mono); font-size: var(--text-sm); color: var(--accent); text-transform: uppercase; margin-bottom: 0.25rem;">
+      {{ taxonomy_name | default("Tag") }} Index
+    </div>
+    <h1 class="page-title">{{ taxonomy_term }}</h1>
+  </header>
+
+  {% set tax = get_taxonomy(kind=taxonomy_name | default("tags")) %}
+  <div class="issues-grid">
+    {% for term in tax.items %}{% if term.name == taxonomy_term %}
+      {% for p in term.pages | sort_by("date", reverse=true) %}
+      <article class="issue-card">
+        <div>
+          <div class="issue-card-meta" style="margin-bottom: var(--space-1);">
+            {% if p.date %}<time datetime="{{ p.date }}">{{ p.date | date("%B %d, %Y") }}</time>{% endif %}
+          </div>
+          <h2 class="issue-card-title">
+            <a href="{{ base_url }}{{ p.url }}">{{ p.title }}</a>
+          </h2>
+          {% if p.description %}
+          <p class="issue-card-desc">{{ p.description }}</p>
+          {% endif %}
+        </div>
+        <div class="issue-card-meta">
+          <a href="{{ base_url }}{{ p.url }}" style="font-weight: 600;">Read Monograph &rarr;</a>
+        </div>
+      </article>
+      {% endfor %}
+    {% endif %}{% endfor %}
+  </div>
+
+  <p style="margin-top: var(--space-5); font-family: var(--font-mono); font-size: var(--text-sm);">
+    <a href="{{ base_url }}/tags/">&larr; Return to Tag Index</a>
+  </p>
+</main>
+{% include "footer.html" %}

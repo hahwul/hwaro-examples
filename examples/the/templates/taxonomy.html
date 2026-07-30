@@ -1,0 +1,20 @@
+{% include "header.html" %}
+<main id="main" class="container main-content" style="padding-block: var(--space-5);">
+  <header class="page-header">
+    <h1 class="page-title">{{ taxonomy_name | default("Taxonomy") | upper }} INDEX</h1>
+    <p class="page-meta">Categorized entries and topics across all monograph issues.</p>
+  </header>
+
+  {% set tax = get_taxonomy(kind=taxonomy_name | default("tags")) %}
+  <ul class="term-list">
+    {% for term in tax.items | sort_by("name") %}
+    <li class="term-item">
+      <a href="{{ get_taxonomy_url(kind=taxonomy_name | default("tags"), term=term.name) }}">
+        <span>{{ term.name }}</span>
+        <span class="term-count">{{ term.pages | length }}</span>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</main>
+{% include "footer.html" %}
