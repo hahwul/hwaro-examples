@@ -57,6 +57,6 @@ page rather than just discussed in the audio.
 Cadence is fully listener-supported and does not run advertising. Episode
 corrections, fieldwork tips, and family recordings like the ones featured
 in *What Grandma's Vowels Tell Us* are welcome — get in touch through the
-show's usual channels, and see the [tag index](/tags/) if you're chasing a
+show's usual channels, and see the [tag index](../tags/) if you're chasing a
 single thread — say, everything the show has covered on vowel mergers —
 across every season.
