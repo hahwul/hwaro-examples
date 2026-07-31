@@ -5,7 +5,7 @@ description = "Who keeps this log, where the water is, and what the temperature 
 
 I swim in Marn Sound, a shallow grey inlet on a northern coast where the sea never quite warms and never quite freezes. The swimming happens off a concrete slip below the old herring station — locals call it the ladder, after the three rusted rungs bolted to its seaward edge. I have been getting in year-round since the winter of 2023, and writing it down since the first January I stayed in past the gasp.
 
-This site is the written part. Each entry is one swim: the date, the water temperature at entry, how long I stayed, and whatever the cold shook loose on the walk home. The essays are short because the swims are short. Nothing here is advice; it is a record — [the log starts here](@/swims/_index.md), newest swim first.
+This site is the written part. Each entry is one swim: the date, the water temperature at entry, how long I stayed, and whatever the cold shook loose on the walk home. The essays are short because the swims are short. Nothing here is advice; it is a record — [the log starts here](../swims/), newest swim first.
 
 ## The badges
 
