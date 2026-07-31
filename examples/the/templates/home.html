@@ -1,0 +1,151 @@
+{% include "header.html" %}
+<main id="main" class="broadsheet-layout">
+  {% set entries = get_section(path="issues").pages | sort_by("date", reverse=true) %}
+  {% set lead = entries | first %}
+
+  <div class="broadsheet-grid">
+    <!-- Vertical Specimen Rail (Signature Element - 120px wide) -->
+    <aside class="specimen-rail" aria-label="Issue Specimen Rail">
+      <div class="specimen-rail-inner">
+        <div class="specimen-rail-sub">Monograph Edition</div>
+        <div class="specimen-rail-text">N° 042 / THE MONOGRAPH</div>
+        <div class="specimen-rail-sub">Vol. IV &middot; 2026</div>
+      </div>
+    </aside>
+
+    <!-- Main Broadsheet Track -->
+    <div class="broadsheet-main-track">
+      <!-- Hero Band: Lead Monograph & Recent Dispatches -->
+      <section class="broadsheet-hero-band" aria-label="Featured Monograph and Dispatches">
+        <!-- Lead Column (2fr) -->
+        <article class="lead-column">
+          <div>
+            <div class="lead-kicker">Lead Monographic Essay</div>
+            <h2 class="lead-title">
+              {% if lead %}
+                <a href="{{ base_url }}{{ lead.url }}">{{ lead.title }}</a>
+              {% else %}
+                <a href="{{ base_url }}/issues/architecture-of-silence/">The Architecture of Silence</a>
+              {% endif %}
+            </h2>
+            <p class="lead-dek">
+              {% if lead and lead.description %}
+                {{ lead.description }}
+              {% else %}
+                An inquiry into acoustic mass, monolithic stone, and the spatial dignity of unadorned structural masonry.
+              {% endif %}
+            </p>
+            <div class="lead-meta">
+              {% if lead and lead.date %}
+                <time datetime="{{ lead.date }}">{{ lead.date | date("%B %d, %Y") }}</time>
+              {% else %}
+                <time datetime="2026-05-18">May 18, 2026</time>
+              {% endif %}
+              <span>&middot;</span>
+              <span>By Dr. Julian Vance</span>
+            </div>
+          </div>
+
+          <div class="lead-diagram-container">
+            <svg class="blueprint-svg" viewBox="0 0 600 180" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Geometric Blueprint Diagram of Acoustic Mass Structure">
+              <!-- Blueprint grid lines -->
+              <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="var(--border)" stroke-width="0.5" stroke-dasharray="2 2" />
+              </pattern>
+              <rect width="600" height="180" fill="url(#grid)" opacity="0.6" />
+              
+              <!-- Geometric structural drawing -->
+              <rect x="40" y="30" width="160" height="120" stroke="var(--fg)" stroke-width="1.5" fill="none" />
+              <rect x="60" y="50" width="120" height="80" stroke="var(--accent)" stroke-width="1" stroke-dasharray="4 2" fill="none" />
+              <line x1="40" y1="30" x2="200" y2="150" stroke="var(--muted)" stroke-width="0.75" />
+              <line x1="200" y1="30" x2="40" y2="150" stroke="var(--muted)" stroke-width="0.75" />
+              
+              <!-- Acoustic Vault Arc -->
+              <path d="M 260 150 Q 370 20 480 150" stroke="var(--accent)" stroke-width="2" fill="none" />
+              <line x1="260" y1="150" x2="480" y2="150" stroke="var(--fg)" stroke-width="1.5" />
+              <circle cx="370" cy="85" r="45" stroke="var(--muted)" stroke-width="0.75" stroke-dasharray="3 3" />
+              
+              <!-- Dimension Vectors and Technical Annotations -->
+              <line x1="260" y1="165" x2="480" y2="165" stroke="var(--muted)" stroke-width="1" />
+              <path d="M 260 160 L 260 170 M 480 160 L 480 170" stroke="var(--muted)" stroke-width="1" />
+              <text x="370" y="176" text-anchor="middle" fill="var(--muted)" font-family="var(--font-mono)" font-size="10">SPAN: 22.4m | R: 11.2m</text>
+              <text x="120" y="165" text-anchor="middle" fill="var(--accent)" font-family="var(--font-mono)" font-size="10">MASS MODULE A-1</text>
+              
+              <!-- Corner Technical Markings -->
+              <circle cx="40" cy="30" r="3" fill="var(--accent)" />
+              <circle cx="200" cy="150" r="3" fill="var(--accent)" />
+              <text x="520" y="45" fill="var(--fg)" font-family="var(--font-mono)" font-size="11" font-weight="600">FIG. 042-B</text>
+              <text x="520" y="62" fill="var(--muted)" font-family="var(--font-mono)" font-size="9">Acoustic Reflectivity</text>
+              <text x="520" y="75" fill="var(--muted)" font-family="var(--font-mono)" font-size="9">&alpha; = 0.04 (Monolith)</text>
+            </svg>
+          </div>
+        </article>
+
+        <!-- Secondary Column (1fr) -->
+        <aside class="secondary-column" aria-label="Recent Monograph Dispatches">
+          <h2 class="secondary-header">Recent Dispatches</h2>
+          {% for p in entries %}{% if loop.index0 >= 1 and loop.index0 <= 3 %}
+          <article class="dispatch-card">
+            <div class="dispatch-meta">
+              {% if p.date %}<time datetime="{{ p.date }}">{{ p.date | date("%b %d, %Y") }}</time>{% endif %}
+            </div>
+            <h3 class="dispatch-title">
+              <a href="{{ base_url }}{{ p.url }}">{{ p.title }}</a>
+            </h3>
+            {% if p.description %}
+            <p class="dispatch-summary">{{ p.description }}</p>
+            {% endif %}
+          </article>
+          {% endif %}{% endfor %}
+        </aside>
+      </section>
+
+      <!-- Colophon Bar -->
+      <section class="colophon-band" aria-label="Issue Colophon and Taxonomy Index">
+        <div class="colophon-tags">
+          <span>Curated Topics:</span>
+          {% set tax = get_taxonomy(kind="tags") %}
+          {% for term in tax.items %}{% if loop.index0 < 4 %}
+            <a class="tag-pill" href="{{ get_taxonomy_url(kind="tags", term=term.name) }}">{{ term.name }}</a>
+          {% endif %}{% endfor %}
+        </div>
+        <div class="colophon-links">
+          <span>Index: Vol. IV &middot; N° 042</span>
+          <a href="{{ base_url }}/issues/rss.xml">RSS Dispatch</a>
+          <a href="{{ base_url }}/about/">Monograph Manifesto</a>
+        </div>
+      </section>
+
+
+      <!-- Full Issue Archive Section -->
+      <section class="broadsheet-archive-section">
+        <div class="page-header" style="margin-bottom: var(--space-4); border-bottom: none; padding-block: 0;">
+          <h2 style="font-family: var(--font-display); font-size: var(--text-xl); font-weight: 800;">Complete Issue Archive</h2>
+          <p style="font-family: var(--font-mono); font-size: var(--text-sm); color: var(--muted);">Published monographs and technical studies in material design history.</p>
+        </div>
+
+        <div class="issues-grid">
+          {% for p in entries %}
+          <article class="issue-card{% if loop.first %} featured-issue{% endif %}">
+            <div>
+              <div class="issue-card-meta" style="margin-bottom: var(--space-1);">
+                {% if p.date %}<time datetime="{{ p.date }}">{{ p.date | date("%B %d, %Y") }}</time>{% endif %}
+              </div>
+              <h3 class="issue-card-title">
+                <a href="{{ base_url }}{{ p.url }}">{{ p.title }}</a>
+              </h3>
+              {% if p.description %}
+              <p class="issue-card-desc">{{ p.description }}</p>
+              {% endif %}
+            </div>
+            <div class="issue-card-meta">
+              <a href="{{ base_url }}{{ p.url }}" style="font-weight: 600;">Read Monograph &rarr;</a>
+            </div>
+          </article>
+          {% endfor %}
+        </div>
+      </section>
+    </div>
+  </div>
+</main>
+{% include "footer.html" %}
