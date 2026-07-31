@@ -39,4 +39,4 @@ def price(sku, *, max_age=60):
 
 ## The turn
 
-Look at what the cache actually is. It is **state**, like [the jar](/chapters/jar/): a value held between calls. It is a moment of **time**, like [the frozen now](/chapters/now/): the instant `fetch_price` returned, preserved past its truth. And it is a **name**, like [the river](/chapters/river/): `sku`, standing in for a thing whose price it can no longer see. The three threads of this book are not three problems. They are one problem, and its name is *invalidation* — knowing when a remembered thing has stopped being true.
+Look at what the cache actually is. It is **state**, like [the jar](../../chapters/jar/): a value held between calls. It is a moment of **time**, like [the frozen now](../../chapters/now/): the instant `fetch_price` returned, preserved past its truth. And it is a **name**, like [the river](../../chapters/river/): `sku`, standing in for a thing whose price it can no longer see. The three threads of this book are not three problems. They are one problem, and its name is *invalidation* — knowing when a remembered thing has stopped being true.
