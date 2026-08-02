@@ -1,0 +1,27 @@
+{% include "header.html" %}
+<main id="main">
+  <div class="main-body">
+    <header class="section-header">
+      <h1 class="section-title">Tag: {{ taxonomy_term }}</h1>
+    </header>
+    {% set tax = get_taxonomy(kind="tags") %}
+    <div class="essay-grid">
+      {% for term in tax.items %}{% if term.name == taxonomy_term %}
+        {% for p in term.pages | sort_by("date", reverse=true) %}
+        <article class="essay-card">
+          <div>
+            {% if p.date %}<time class="essay-card-date" datetime="{{ p.date }}">{{ p.date | date("%B %d, %Y") }}</time>{% endif %}
+            <h2 class="essay-card-title"><a href="{{ base_url }}{{ p.url }}">{{ p.title }}</a></h2>
+            {% if p.description %}<p class="essay-card-summary">{{ p.description }}</p>{% endif %}
+          </div>
+          <a href="{{ base_url }}{{ p.url }}" style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent); font-weight: 600;">Read Essay &rarr;</a>
+        </article>
+        {% endfor %}
+      {% endif %}{% endfor %}
+    </div>
+    <div style="margin-top: var(--space-5);">
+      <a href="{{ base_url }}/tags/" style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--muted);">&larr; Return to all tags</a>
+    </div>
+  </div>
+</main>
+{% include "footer.html" %}

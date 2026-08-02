@@ -1,0 +1,126 @@
+{% include "header.html" %}
+<main id="main">
+  <!-- First Screen Scene (Height: 650px = Band 1: 56px + Band 2: 530px + Band 3: 64px) -->
+  <section class="home-scene">
+    <!-- Band 1: Minimalist Masthead (56px) -->
+    <header class="band-masthead">
+      <a class="journal-title" href="{{ base_url }}/">NOVEMBER</a>
+      <span class="issue-meta">ISSUE 11 &middot; WINTER SOLSTICE ANTHOLOGY</span>
+      <nav class="nav-controls" aria-label="Journal Controls">
+        <a class="nav-link" href="{{ base_url }}/essays/">Essays</a>
+        <a class="nav-link" href="{{ base_url }}/about/">About</a>
+        <a class="nav-link" href="{{ base_url }}/colophon/">Colophon</a>
+        <button id="search-open-btn" class="icon-btn" aria-label="Search">SEARCH [/]</button>
+        <button id="theme-toggle" class="icon-btn" aria-label="Toggle Theme">THEME</button>
+      </nav>
+    </header>
+
+    <!-- Band 2: Asymmetric 2-Column Editorial Layout (530px) -->
+    <div class="band-editorial">
+      <!-- Left Column: Lead Essay & Architectural Diagram (2fr) -->
+      <article class="lead-col">
+        <div>
+          <div class="lead-kicker">Featured Study &middot; Solstice Monograph</div>
+          <h1 class="lead-title"><a href="{{ base_url }}/essays/geometries-of-low-sun/">The Geometries of Low Sun</a></h1>
+          <p class="lead-dek">Examining how low-angle winter illumination cuts through stone colonnades, transforming heavy urban masonry into optical instruments of threshold light and long shadow.</p>
+          <div class="lead-byline">By Dr. Julian Thorne &middot; Published November 12, 2025 &middot; 8 min read</div>
+        </div>
+
+        <!-- Inline SVG Architectural Section Diagram -->
+        <figure class="diagram-wrapper">
+          <svg class="diagram-svg" viewBox="0 0 700 180" xmlns="http://www.w3.org/2000/svg" aria-labelledby="diag-title diag-desc" role="img">
+            <title id="diag-title">Architectural Section: Low Sun Colonnade Trajectory</title>
+            <desc id="diag-desc">Section diagram depicting 14.8 degree sunlight trajectories through heavy stone colonnades onto granite paving.</desc>
+            <!-- Background grid lines -->
+            <line x1="0" y1="30" x2="700" y2="30" stroke="var(--border-subtle)" stroke-dasharray="4 4" />
+            <line x1="0" y1="70" x2="700" y2="70" stroke="var(--border-subtle)" stroke-dasharray="4 4" />
+            <line x1="0" y1="110" x2="700" y2="110" stroke="var(--border-subtle)" stroke-dasharray="4 4" />
+            
+            <!-- Ground Line -->
+            <line x1="20" y1="150" x2="680" y2="150" stroke="var(--fg)" stroke-width="2" />
+            
+            <!-- Stone Colonnade Piers -->
+            <rect x="80" y="40" width="36" height="110" fill="var(--surface)" stroke="var(--fg)" stroke-width="1.5" />
+            <rect x="220" y="40" width="36" height="110" fill="var(--surface)" stroke="var(--fg)" stroke-width="1.5" />
+            <rect x="360" y="40" width="36" height="110" fill="var(--surface)" stroke="var(--fg)" stroke-width="1.5" />
+            <rect x="500" y="40" width="36" height="110" fill="var(--surface)" stroke="var(--fg)" stroke-width="1.5" />
+            
+            <!-- Architrave Beam Header -->
+            <rect x="60" y="20" width="500" height="20" fill="var(--surface)" stroke="var(--fg)" stroke-width="1.5" />
+            
+            <!-- Low Solar Trajectories (14.8 degrees) -->
+            <line x1="0" y1="5" x2="550" y2="150" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="6 3" />
+            <line x1="140" y1="5" x2="690" y2="150" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="6 3" />
+            
+            <!-- Sun Glyph & Ray Angle Indicator -->
+            <circle cx="30" cy="13" r="8" fill="none" stroke="var(--accent)" stroke-width="1.5" />
+            <path d="M 30 1 L 30 25 M 18 13 L 42 13" stroke="var(--accent)" stroke-width="1" />
+            <text x="50" y="16" fill="var(--accent)" font-family="var(--font-mono)" font-size="10" font-weight="600">&alpha; = 14.8&deg; SOLAR ALTITUDE</text>
+            
+            <!-- Shadow Polygon Areas -->
+            <polygon points="116,150 220,150 116,122" fill="var(--accent-tint)" opacity="0.6" />
+            <polygon points="256,150 360,150 256,122" fill="var(--accent-tint)" opacity="0.6" />
+            
+            <!-- Architectural Dimension Label -->
+            <text x="290" y="168" fill="var(--muted)" font-family="var(--font-mono)" font-size="10" text-anchor="middle">SECTION A-A: COLONNADE AXIS 312&deg; (INTER-COLUMNIATION 3.8m)</text>
+          </svg>
+          <figcaption class="diagram-caption">FIG. 01 &mdash; Low-altitude ray trace analysis through northern masonry portico at winter solstice.</figcaption>
+        </figure>
+      </article>
+
+      <!-- Right Column: Stacked Dispatch Cards (1fr) -->
+      <aside class="dispatches-col" aria-label="Recent Journal Dispatches">
+        <div class="dispatches-header">Recent Dispatches</div>
+        {% set essays = get_section(path="essays").pages | sort_by("date", reverse=true) %}
+        {% for p in essays %}{% if loop.index0 < 3 %}
+        <article class="dispatch-card">
+          <time class="dispatch-date" datetime="{{ p.date }}">{{ p.date | date("%B %d, %Y") }}</time>
+          <h2 class="dispatch-title"><a href="{{ base_url }}{{ p.url }}">{{ p.title }}</a></h2>
+          {% if p.description %}<p class="dispatch-summary">{{ p.description }}</p>{% endif %}
+        </article>
+        {% endif %}{% endfor %}
+      </aside>
+    </div>
+
+    <!-- Band 3: Compact Colophon Bar (64px) -->
+    <div class="band-colophon">
+      <div class="colophon-tags">
+        <span style="color: var(--muted);">Index Tags:</span>
+        <a class="tag-pill" href="{{ base_url }}/tags/light-geometry/">Light Geometry</a>
+        <a class="tag-pill" href="{{ base_url }}/tags/cold-materials/">Cold Materials</a>
+        <a class="tag-pill" href="{{ base_url }}/tags/urbanism/">Urbanism</a>
+        <a class="tag-pill" href="{{ base_url }}/tags/solstice/">Solstice</a>
+      </div>
+      <div class="colophon-links">
+        <span>ARCHITECTURAL SCHOLARSHIP ANTHOLOGY</span>
+        &middot;
+        <a href="{{ base_url }}/essays/rss.xml" style="color: var(--accent); font-weight: 600;">RSS FEED</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Below the fold: Additional content and full essay inventory -->
+  <div class="main-body">
+    {{ content | safe }}
+
+    <section style="margin-top: var(--space-6);">
+      <div class="section-header">
+        <h2 class="section-title">Solstice Monograph Inventory</h2>
+      </div>
+      <div class="essay-grid">
+        {% set all_essays = get_section(path="essays").pages | sort_by("date", reverse=true) %}
+        {% for p in all_essays %}
+        <article class="essay-card">
+          <div>
+            {% if p.date %}<time class="essay-card-date" datetime="{{ p.date }}">{{ p.date | date("%B %d, %Y") }}</time>{% endif %}
+            <h3 class="essay-card-title"><a href="{{ base_url }}{{ p.url }}">{{ p.title }}</a></h3>
+            {% if p.description %}<p class="essay-card-summary">{{ p.description }}</p>{% endif %}
+          </div>
+          <a href="{{ base_url }}{{ p.url }}" style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent); font-weight: 600;">Read Essay &rarr;</a>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+  </div>
+</main>
+{% include "footer.html" %}
