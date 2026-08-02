@@ -76,9 +76,13 @@ full name: (design name) (build name) (loop name)
 pr name:
     #!/usr/bin/env bash
     set -euo pipefail
+    scripts/sync-tags.sh
+    scripts/agent/verify.sh {{name}}
     CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
     trap 'git checkout "$CURRENT_BRANCH"' EXIT
-    git checkout -b "example/{{name}}"
+    if [ "$CURRENT_BRANCH" != "example/{{name}}" ]; then
+        git checkout -b "example/{{name}}"
+    fi
     git add manifest.json tags.json "examples/{{name}}"
     git commit -m "Add example: {{name}}"
     git push -u origin "example/{{name}}"

@@ -15,7 +15,18 @@ err() { printf 'FAIL: %s\n' "$*"; FAIL=1; }
 
 [ -d "$dir" ] || { echo "no such example: $dir" >&2; exit 1; }
 
-# 1. the full standard gate (build + lint + anti-pattern greps + links)
+# 1. manifest and tags.json entries check
+if ! python3 -c "import json, sys; sys.exit(0 if any(e.get('name') == '$name' for e in json.load(open('manifest.json')).get('examples', [])) else 1)"; then
+  err "missing manifest entry for '$name' in manifest.json"
+fi
+
+scripts/sync-tags.sh >/dev/null 2>&1 || true
+
+if ! python3 -c "import json, sys; sys.exit(0 if '$name' in json.load(open('tags.json')) else 1)"; then
+  err "missing tags.json entry for '$name' (run scripts/sync-tags.sh)"
+fi
+
+# 2. the full standard gate (build + lint + anti-pattern greps + links)
 scripts/check-site.sh "$name" || FAIL=1
 
 # 2. rendered-output greps (silent failures; DESIGN.md §15 step 9)
