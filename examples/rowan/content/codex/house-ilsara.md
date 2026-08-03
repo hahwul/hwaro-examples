@@ -18,7 +18,7 @@ House Ilsara is the newest house to hold a permanent seat in the Assembly of Sai
 
 ## A seat still being paid for
 
-Ilsara has chaired the Assembly of Sails twice since its founding, against eleven turns for [House Vance](/codex/house-vance/) and nine for [House Corvane](/codex/house-corvane/) — a gap the house attributes to the founding-eleven houses quietly protecting their rotation order, and the older houses attribute to Ilsara simply not having existed for the first sixty-seven years the rotation was running. Both explanations are true simultaneously, which is the usual condition of Assembly politics.
+Ilsara has chaired the Assembly of Sails twice since its founding, against eleven turns for [House Vance](@/codex/house-vance.md) and nine for [House Corvane](@/codex/house-corvane.md) — a gap the house attributes to the founding-eleven houses quietly protecting their rotation order, and the older houses attribute to Ilsara simply not having existed for the first sixty-seven years the rotation was running. Both explanations are true simultaneously, which is the usual condition of Assembly politics.
 
 ## Eastern routes, eastern risk
 
@@ -26,4 +26,4 @@ Ilsara's trade concentrates in the eastern isles, well outside the waters Corvan
 
 ## The Drowned Marches interest
 
-In the past decade Ilsara has taken more salvage blocks in the [Drowned Marches](/codex/drowned-marches/) than any other house, chasing dye vats and cellared stock that the old grain coast's clay soil preserved better than anyone predicted. Whether this counts as shrewd diversification or simple opportunism depends on which house's chronicler is asked, a caveat that applies to a great deal of what follows this entry as well.
+In the past decade Ilsara has taken more salvage blocks in the [Drowned Marches](@/codex/drowned-marches.md) than any other house, chasing dye vats and cellared stock that the old grain coast's clay soil preserved better than anyone predicted. Whether this counts as shrewd diversification or simple opportunism depends on which house's chronicler is asked, a caveat that applies to a great deal of what follows this entry as well.

@@ -18,11 +18,11 @@ The Drowned Marches were, before the Sundering, the empire's second-largest grai
 
 ## Why no one rebuilt
 
-Early attempts to reclaim the Marches with dikes and pumps failed twice, expensively, and a third attempt was never funded once [House Vance](/codex/house-vance/)'s underwriters priced the insurance on a third failure at a rate no house would pay. The Assembly's geologists eventually concluded that the shelf is still settling and will likely subside further before it stabilizes, which converted the Marches from a reclamation project into a salvage ground: better to work the drowned towns for what they still hold than to bet a fortune on land that keeps sinking.
+Early attempts to reclaim the Marches with dikes and pumps failed twice, expensively, and a third attempt was never funded once [House Vance](@/codex/house-vance.md)'s underwriters priced the insurance on a third failure at a rate no house would pay. The Assembly's geologists eventually concluded that the shelf is still settling and will likely subside further before it stabilizes, which converted the Marches from a reclamation project into a salvage ground: better to work the drowned towns for what they still hold than to bet a fortune on land that keeps sinking.
 
 ## Working a wreck
 
-Salvage rights are leased in numbered blocks, auctioned twice a year in [Thornreach](/codex/thornreach/), and a crew that stakes a block flies its own house colors over the site for the license's duration — the closest thing the Marches have to a banner, and never the same flag twice running. [House Ilsara](/codex/house-ilsara/) has taken more blocks than any other house in the last decade, chasing silk-dye vats that survived the flooding better than anyone expected clay to.
+Salvage rights are leased in numbered blocks, auctioned twice a year in [Thornreach](@/codex/thornreach.md), and a crew that stakes a block flies its own house colors over the site for the license's duration — the closest thing the Marches have to a banner, and never the same flag twice running. [House Ilsara](@/codex/house-ilsara.md) has taken more blocks than any other house in the last decade, chasing silk-dye vats that survived the flooding better than anyone expected clay to.
 
 ## What the water kept
 

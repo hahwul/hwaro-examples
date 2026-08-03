@@ -20,7 +20,7 @@ Thornreach is the closest thing Veyra has to a capital, though no house will cal
 
 The Ring Wall that encloses Thornreach's harbor was funded jointly by eleven founding houses, each of whom insisted on laying a visible course of stone so that no later historian could claim sole credit. The resulting wall is a geologist's curiosity — eleven distinct masonry styles in one continuous ring — and a fair symbol of the city itself: functional, defensible, and stitched together from parties who agree on almost nothing except that the alternative to Thornreach is worse.
 
-The Assembly of Sails meets in the Sail Hall at the harbor's head, and its chair rotates yearly among the seated houses in an order fixed by the original Compact and never once successfully amended. [House Vance](/codex/house-vance/) has chaired eleven times since founding; [House Corvane](/codex/house-corvane/) nine; the newer [House Ilsara](/codex/house-ilsara/) has chaired twice and is, by its own ledgers, owed a third turn that keeps getting deferred on procedural grounds.
+The Assembly of Sails meets in the Sail Hall at the harbor's head, and its chair rotates yearly among the seated houses in an order fixed by the original Compact and never once successfully amended. [House Vance](@/codex/house-vance.md) has chaired eleven times since founding; [House Corvane](@/codex/house-corvane.md) nine; the newer [House Ilsara](@/codex/house-ilsara.md) has chaired twice and is, by its own ledgers, owed a third turn that keeps getting deferred on procedural grounds.
 
 ## The neutral harbor, mostly
 

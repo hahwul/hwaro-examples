@@ -18,12 +18,12 @@ House Vance owns no fleet worth the name and has never needed one. It was founde
 
 ## Underwriting as government
 
-Vance sets insurance premiums by route, cargo, and season, and those premiums shape trade more reliably than any Assembly ruling — a captain who runs an uninsurable route simply cannot find a buyer willing to take the risk on the other end. This gives Vance a form of power the house is careful never to describe as authority, since authority would put it under Assembly oversight in a way that mere underwriting does not. Rivals, chiefly [House Corvane](/codex/house-corvane/), describe the arrangement less charitably.
+Vance sets insurance premiums by route, cargo, and season, and those premiums shape trade more reliably than any Assembly ruling — a captain who runs an uninsurable route simply cannot find a buyer willing to take the risk on the other end. This gives Vance a form of power the house is careful never to describe as authority, since authority would put it under Assembly oversight in a way that mere underwriting does not. Rivals, chiefly [House Corvane](@/codex/house-corvane.md), describe the arrangement less charitably.
 
 ## The Vaultworks
 
-The house seat sits in [Thornreach](/codex/thornreach/) proper rather than on any private isle, a deliberate choice: Vance's business depends on being where the trade routes converge, not where a defensible harbor happens to be. The Vaultworks building is unremarkable from outside by design — three stories of grey stone with no house banner flown above the door, on the theory that a bank should look boring enough that no one thinks to rob it.
+The house seat sits in [Thornreach](@/codex/thornreach.md) proper rather than on any private isle, a deliberate choice: Vance's business depends on being where the trade routes converge, not where a defensible harbor happens to be. The Vaultworks building is unremarkable from outside by design — three stories of grey stone with no house banner flown above the door, on the theory that a bank should look boring enough that no one thinks to rob it.
 
 ## The Ashgale premium
 
-Vance's most consequential single line of business is the insurance it writes on the [Ashgale Strait](/codex/ashgale-strait/) crossing, priced independently of Corvane's flag-toll and, Vance maintains, on entirely separate grounds. The overlap is obvious to everyone including the underwriters who set it, and the house's official position — that insurance is not a toll because insurance is optional — has never once persuaded a Corvane captain paying both.
+Vance's most consequential single line of business is the insurance it writes on the [Ashgale Strait](@/codex/ashgale-strait.md) crossing, priced independently of Corvane's flag-toll and, Vance maintains, on entirely separate grounds. The overlap is obvious to everyone including the underwriters who set it, and the house's official position — that insurance is not a toll because insurance is optional — has never once persuaded a Corvane captain paying both.

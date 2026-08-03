@@ -59,15 +59,16 @@
           <a class="sidebar-index-link" href="{{ base_url }}/codex/">The Codex — full index</a>
           <a class="sidebar-index-link" href="{{ base_url }}/about/">Concerning This Codex</a>
 
-          {% set codex_pages = get_section(path="codex").pages | sort_by("title") %}
+          {% set sect = get_section(path="codex") %}
+          {% set codex_pages = sect.pages | sort_by("title") %}
 
           <details class="tree-group" open>
             <summary class="rubric">Regions</summary>
             <ul class="tree-list">
               {% for p in codex_pages %}
-                {% if p.extra.kind == "region" %}
+                {% if p.extra is defined %}{% if p.extra.kind == "region" %}
                 <li><a href="{{ base_url }}{{ p.url }}"{% if page.url == p.url %} aria-current="page"{% endif %}>{{ p.title }}</a></li>
-                {% endif %}
+                {% endif %}{% endif %}
               {% endfor %}
             </ul>
           </details>
@@ -76,9 +77,9 @@
             <summary class="rubric">Houses</summary>
             <ul class="tree-list">
               {% for p in codex_pages %}
-                {% if p.extra.kind == "house" %}
+                {% if p.extra is defined %}{% if p.extra.kind == "house" %}
                 <li><a href="{{ base_url }}{{ p.url }}"{% if page.url == p.url %} aria-current="page"{% endif %}>{{ p.title }}</a></li>
-                {% endif %}
+                {% endif %}{% endif %}
               {% endfor %}
             </ul>
           </details>
