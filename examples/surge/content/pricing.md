@@ -35,5 +35,5 @@ There is no contract and no cancellation fee. Pause for a month while you
 travel; the roster will still be here. If a bag ever arrives outside its rest
 window or ground for the wrong machine, tell us and the next one is on the house.
 
-Ready to set it up? [Register your brewer](/gear/) first so your very first bag
+Ready to set it up? [Register your brewer](../gear/) first so your very first bag
 arrives matched, then pick a cadence at checkout.
