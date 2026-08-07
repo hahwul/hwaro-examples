@@ -51,6 +51,6 @@ days. Group bookings from a single municipality are welcome — tell us how many
 seats and we will sort the details.
 
 We read every message. If you are unsure whether Equinox is for you, ask — the
-honest answer is usually yes. First, skim the [full program](/program/) to see
-what two days will cover, and read the [venue and travel notes](/venue/) so you
+honest answer is usually yes. First, skim the [full program](../program/) to see
+what two days will cover, and read the [venue and travel notes](../venue/) so you
 can plan the trip.

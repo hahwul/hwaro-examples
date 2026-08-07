@@ -54,4 +54,4 @@ default, with clearly labelled options. Breaks are deliberately generous: forty
 minutes, not fifteen. The best ideas at Equinox tend to happen over the second cup
 of coffee, so we have built the schedule to give them room.
 
-Ready to come? Browse the [full program](/program/) or [reserve your seat](/register/).
+Ready to come? Browse the [full program](../program/) or [reserve your seat](../register/).
