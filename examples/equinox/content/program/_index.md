@@ -15,4 +15,4 @@ having heard the same argument.
 
 Use the finder below to jump straight to a session by topic — try a place, a
 mechanism, or a name. When you have found your tracks, check the [venue and
-travel notes](/venue/) and [reserve a seat](/register/) before the hall fills.
+travel notes](../venue/) and [reserve a seat](../register/) before the hall fills.
