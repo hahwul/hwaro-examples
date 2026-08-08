@@ -42,5 +42,5 @@ portal. If the network drops mid-talk, it is almost always the crane
 rail's old steel interfering with the mesh nodes near the foyer, not
 your laptop — give it thirty seconds before you reboot anything.
 
-Not registered yet? See [ticket tiers and what's included](/register/).
-For the full three-day run of show, check the [talks programme](/talks/).
+Not registered yet? See [ticket tiers and what's included](../register/).
+For the full three-day run of show, check the [talks programme](../talks/).
