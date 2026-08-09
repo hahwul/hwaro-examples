@@ -22,7 +22,7 @@ makes index comparisons constant-time. Upgrading is recommended for everyone.
   lookups now compare full-length digests in constant time regardless of where
   the first difference falls, removing the timing distinction between "no such
   entry" and "entry exists but wrong". Reported responsibly by an external
-  researcher; see the [Security](../../security/) page for the disclosure timeline.
+  researcher; see the [Security](@/security.md) page for the disclosure timeline.
 - Search queries are salted per session so repeated identical queries do not
   produce a stable, correlatable access pattern in memory.
 
