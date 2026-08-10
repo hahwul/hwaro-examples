@@ -8,4 +8,4 @@ Welcome to Nil, a digital archive dedicated to the exploration of minimalism, ne
 
 Each issue is a single reflection, designed to be read in silence. We hold that the space around a letter defines its legibility, just as the silence around a sound defines its resonance. By stripping away the superfluous, we reveal the skeletal grace of the essential. Whether looking at the absolute zero of thermodynamics, the deliberate pauses in classical composition, or the stark canvas of minimalist print, we find that the most profound statements are often those left unmade. We invite you to join us in this practice of subtraction, observing the world through its negative spaces.
 
-Explore our [latest issues](/issues/) or [read about our editorial model](/about/).
+Explore our [latest issues](issues/) or [read about our editorial model](about/).

@@ -8,4 +8,4 @@ Nil was established in the winter of 2025 as an independent, non-periodic newsle
 
 We do not track open rates, sell advertising, or employ user analytics of any kind. The mailing list is maintained as a one-way channel: we broadcast our essays, and the communication ends there. We believe that a publication should respect the attention of its audience, offering substantial meditations without demanding engagement. Our editorial focus spans the history of the mathematical zero, the use of negative space in architectural layout, the absolute zero of thermal energy, and the philosophical concept of emptiness. In all things, we hope to demonstrate that the void is not a lack of existence, but a field of pure potential.
 
-To browse our historical dispatches, visit our [issues index](/issues/) or use our [archive search](/search/).
+To browse our historical dispatches, visit our [issues index](../issues/) or use our [archive search](../search/).
