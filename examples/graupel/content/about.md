@@ -36,4 +36,4 @@ DD MMM YYYY  HH:MM-HH:MM  T <air>  S<seeing>/T<transparency>  targets @power
 
 Anything that survives the morning read-through becomes a session entry here. Anything that does not — the misidentified field, the hour lost to a dew-fogged secondary — usually becomes a footnote, because the failures are half the point of keeping a log at all.
 
-Every new entry lands in [the session ledger](/sessions/) and its RSS feed, linked in the footer. Clear skies, and dress warmer than you think you need to.
+Every new entry lands in [the session ledger](../sessions/) and its RSS feed, linked in the footer. Clear skies, and dress warmer than you think you need to.
