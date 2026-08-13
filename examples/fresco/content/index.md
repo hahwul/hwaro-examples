@@ -8,4 +8,4 @@ Fresco is a mural practice working almost entirely on public buildings — libra
 
 <!-- more -->
 
-What follows on this site is not a highlight reel. Each commission in [the walls](/walls/) is logged from the first sketch session through permitting, primer, the paint days themselves, and the afternoon the scaffold finally comes down — the part everyone forgets to photograph but the part that actually feels like finishing. For the studio's own account of how a wall gets from folding table to finished facade, see [the full process](/about/).
+What follows on this site is not a highlight reel. Each commission in [the walls](@/walls/_index.md) is logged from the first sketch session through permitting, primer, the paint days themselves, and the afternoon the scaffold finally comes down — the part everyone forgets to photograph but the part that actually feels like finishing. For the studio's own account of how a wall gets from folding table to finished facade, see [the full process](@/about.md).
