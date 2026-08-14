@@ -3,7 +3,7 @@ title = "About"
 description = "Fresco is the working name of muralist Dahlia Reyes-Okafor, painting civic walls since 2016."
 +++
 
-Fresco is the working name of muralist Dahlia Reyes-Okafor. The studio has operated out of a converted storefront in the Dovewell rowhouses since 2016, and has painted on civic property — libraries, transit piers, harbor infrastructure, parks buildings — almost exclusively since 2018, when [a library gable in Ridgewood](/walls/ridgewood-reader/) became the first wall too big to reach without a rented lift.
+Fresco is the working name of muralist Dahlia Reyes-Okafor. The studio has operated out of a converted storefront in the Dovewell rowhouses since 2016, and has painted on civic property — libraries, transit piers, harbor infrastructure, parks buildings — almost exclusively since 2018, when [a library gable in Ridgewood](@/walls/ridgewood-reader.md) became the first wall too big to reach without a rented lift.
 
 ## The studio
 
