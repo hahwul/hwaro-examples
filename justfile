@@ -22,8 +22,8 @@
 # or you want a specific ref. DESIGN.md §13 records where this collection
 # deliberately overrides that skill.
 
-design_model := env_var_or_default("AGY_DESIGN_MODEL", "Gemini 3.6 Flash (High)")
-build_model  := env_var_or_default("AGY_BUILD_MODEL",  "Gemini 3.6 Flash (High)")
+design_model := env_var_or_default("AGY_DESIGN_MODEL", "Gemini 3.7 Flash (High)")
+build_model  := env_var_or_default("AGY_BUILD_MODEL",  "Gemini 3.7 Flash (High)")
 review_model := env_var_or_default("AGY_REVIEW_MODEL", "Gemini 3.1 Pro (High)")
 
 default:
