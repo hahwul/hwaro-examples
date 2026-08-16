@@ -49,5 +49,5 @@ $ syzygy register --tier=standard --workshop=slab-allocator
 Questions about accessibility, dietary requirements, or visa invitation
 letters go to the same registration address — invitation letters are
 turned around within three business days. For hall layout and transit
-directions, see [the venue page](../venue/); for the full run of show,
-see [the three-day programme](../talks/).
+directions, see [the venue page](@/venue.md); for the full run of show,
+see [the three-day programme](@/talks/_index.md).
