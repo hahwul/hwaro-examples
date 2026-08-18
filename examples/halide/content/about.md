@@ -3,7 +3,7 @@ title = "About"
 description = "How Halide Press started, what a duotone darkroom poster actually costs to print, and where to see the series in person."
 +++
 
-Halide Press started in the back half of a rented storefront darkroom that a co-op of five printers shares by the hour. The lease came with an enlarger nobody used anymore, a stack of trays gone brittle at the corners, and a safelight bulb that had clearly been burning red over the same square yard of counter for longer than anyone currently paying rent had been a member. The first poster in [the series](/posters/) — Developer Bath — was drawn directly from that counter, on a night when the darkroom was booked but the desk wasn't.
+Halide Press started in the back half of a rented storefront darkroom that a co-op of five printers shares by the hour. The lease came with an enlarger nobody used anymore, a stack of trays gone brittle at the corners, and a safelight bulb that had clearly been burning red over the same square yard of counter for longer than anyone currently paying rent had been a member. The first poster in [the series](@/posters/_index.md) — Developer Bath — was drawn directly from that counter, on a night when the darkroom was booked but the desk wasn't.
 
 ## Two Inks, No Exceptions
 
