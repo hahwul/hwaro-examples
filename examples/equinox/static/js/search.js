@@ -51,7 +51,7 @@
     }
     results.innerHTML = matches.map(function (m) {
       var it = m.item;
-      return '<li class="results__item"><a href="' + escapeHtml(it.url) + '">' +
+      return '<li class="results__item"><a href="' + escapeHtml(SEARCH_URL.replace(/\/search\.json$/, '') + it.url) + '">' +
         '<span class="results__title">' + escapeHtml(it.title) + '</span>' +
         '<span class="results__snippet">' + escapeHtml(snippet(it.content)) + '</span>' +
         '</a></li>';
