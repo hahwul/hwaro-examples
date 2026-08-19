@@ -1,0 +1,75 @@
+{% include "header.html" %}
+<main id="main">
+  <div class="page-container">
+    <div class="article-layout">
+      <div class="article-main">
+        <header class="article-header">
+          <div class="article-kicker">Archival Audio Analysis</div>
+          <h1 class="article-title">{{ page.title | e }}</h1>
+          <div class="article-meta-row">
+            {% if page.date %}<time datetime="{{ page.date }}">{{ page.date | date("%B %d, %Y") }}</time>
+            <span>·</span>{% endif %}
+            <span>{{ page.word_count }} words</span>
+            {% if page.extra.matrix %}<span class="meta-datum">Matrix: {{ page.extra.matrix }}</span>{% endif %}
+            {% if page.extra.tape_speed %}<span class="meta-datum">Speed: {{ page.extra.tape_speed }}</span>{% endif %}
+          </div>
+        </header>
+
+        <article class="prose">
+          {{ content | safe }}
+        </article>
+
+        {% if page.tags %}
+        <footer style="margin-top: var(--space-7); padding-top: var(--space-4); border-top: 1px solid var(--border);">
+          <div style="font-family: var(--font-mono); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: var(--space-2);">Archival Descriptors & Index Terms:</div>
+          <ul class="card-tags">
+            {% for t in page.tags %}
+            <li><a href="{{ get_taxonomy_url(kind="tags", term=t) }}">{{ t }}</a></li>
+            {% endfor %}
+          </ul>
+        </footer>
+        {% endif %}
+      </div>
+
+      <aside class="article-sidebar" aria-label="Session Archival Data">
+        <div class="sidebar-datum-card">
+          <div class="sidebar-card-header">
+            <span class="sidebar-card-title">Archival Master Specs</span>
+            <span class="sidebar-card-badge">RVG LAB</span>
+          </div>
+          <div class="sidebar-datum-list">
+            <div class="sidebar-datum-row">
+              <span class="sidebar-datum-key">Master Matrix</span>
+              <span class="sidebar-datum-val">{% if page.extra.matrix %}{{ page.extra.matrix }}{% else %}RVG-DOC-REF{% endif %}</span>
+            </div>
+            <div class="sidebar-datum-row">
+              <span class="sidebar-datum-key">Tape Standard</span>
+              <span class="sidebar-datum-val">{% if page.extra.tape_speed %}{{ page.extra.tape_speed }} NAB{% else %}15 IPS NAB{% endif %}</span>
+            </div>
+            <div class="sidebar-datum-row">
+              <span class="sidebar-datum-key">Transducer Chain</span>
+              <span class="sidebar-datum-val">Neumann U47 / KM54</span>
+            </div>
+            <div class="sidebar-datum-row">
+              <span class="sidebar-datum-key">Lathe Cut</span>
+              <span class="sidebar-datum-val">Scully 33⅓ RPM Stereo</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-nav-card">
+          <div class="sidebar-card-header">
+            <span class="sidebar-card-title">Archive Navigation</span>
+          </div>
+          <ul class="sidebar-nav-links">
+            <li><a href="{{ base_url }}/episodes/">← All Archival Sessions</a></li>
+            <li><a href="{{ base_url }}/about/">Studio Acoustics Guide</a></li>
+            <li><a href="{{ base_url }}/tags/">Taxonomy & Tags Index</a></li>
+            <li><a href="{{ base_url }}/episodes/rss.xml">Documentary RSS Feed</a></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</main>
+{% include "footer.html" %}

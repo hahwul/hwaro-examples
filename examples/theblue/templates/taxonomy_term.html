@@ -1,0 +1,49 @@
+{% include "header.html" %}
+<main id="main">
+  <div class="page-container">
+    <div class="prose-wrapper">
+      <header class="article-header">
+        <div class="article-kicker">Taxonomy Index Entry</div>
+        <h1 class="article-title">Sessions Tagged: {{ taxonomy_term }}</h1>
+        <p style="color: var(--muted); font-size: var(--text-base);">Archival audio documentary sessions categorized under the term "{{ taxonomy_term }}".</p>
+      </header>
+    </div>
+
+    <div class="session-grid" style="margin-top: var(--space-5);">
+      {% set tax = get_taxonomy(kind="tags") %}
+      {% for term in tax.items %}{% if term.name == taxonomy_term %}
+        {% for p in term.pages | sort_by("date", reverse=true) %}
+        <article class="session-card">
+          <div>
+            <div class="card-session-meta">
+              <span class="session-code">{% if p.extra.matrix %}{{ p.extra.matrix }}{% else %}SESSION-{{ loop.index }}{% endif %}</span>
+              {% if p.date %}<time class="session-date" datetime="{{ p.date }}">{{ p.date | date("%B %d, %Y") }}</time>{% endif %}
+            </div>
+            <h2 class="session-card-title">
+              <a href="{{ base_url }}{{ p.url }}">{{ p.title }}</a>
+            </h2>
+            {% if p.description %}
+            <p class="session-card-desc">{{ p.description }}</p>
+            {% endif %}
+          </div>
+          <div>
+            {% if p.tags %}
+            <ul class="card-tags">
+              {% for t in p.tags %}
+              <li><a href="{{ get_taxonomy_url(kind="tags", term=t) }}">{{ t }}</a></li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+            <a class="session-card-link" href="{{ base_url }}{{ p.url }}">Read Session Notes →</a>
+          </div>
+        </article>
+        {% endfor %}
+      {% endif %}{% endfor %}
+    </div>
+
+    <div class="prose-wrapper" style="margin-top: var(--space-6);">
+      <p><a href="{{ base_url }}/tags/">← View All Archival Index Tags</a></p>
+    </div>
+  </div>
+</main>
+{% include "footer.html" %}
