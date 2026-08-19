@@ -10,4 +10,4 @@ Halide Press runs a single screen-printed edition twice a year, and every plate 
 
 The constraint is the point. Black plate first, laid down heavy and flat. Safelight red second, reserved for whatever in the original scene would actually glow, drip, or burn — the fixer bath, the bulb filament, the sprocket strip that every print in this series carries down its left edge like a hole-punched leader. No third color is permitted, no matter how much a given piece might ask for one.
 
-The six prints below are numbered by release, not by darkroom sequence — read them in whichever order a wall deserves. For the print shop itself, including run sizes and paper stock, see [About Halide Press](/about/).
+The six prints below are numbered by release, not by darkroom sequence — read them in whichever order a wall deserves. For the print shop itself, including run sizes and paper stock, see [About Halide Press](@/about.md).
