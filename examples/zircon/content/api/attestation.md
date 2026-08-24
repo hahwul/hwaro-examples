@@ -59,7 +59,7 @@ was published without provenance — either before your org enabled
 itself, evidence the package is unsafe, only that it can't be verified
 this way.
 
-Together, [publish](/api/publish/), [resolve](/api/resolve/), and this
+Together, [publish](../publish/), [resolve](../resolve/), and this
 endpoint cover everything the `zircon` CLI does over HTTP — there is no
 private API the command-line tool uses that this reference doesn't
 document.

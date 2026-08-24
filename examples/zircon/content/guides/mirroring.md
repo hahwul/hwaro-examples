@@ -63,5 +63,5 @@ window, rather than discovering the gap during one.
 {% endalert %}
 
 Mirroring solves availability. The next guide, [signing and
-provenance](/guides/provenance/), solves the harder problem: proving that
+provenance](../provenance/), solves the harder problem: proving that
 what you cached — or published yourself — is what it claims to be.

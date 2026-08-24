@@ -55,5 +55,5 @@ shipping hundreds of historical version entries per request.
 A `404 not_found` on a mirrored namespace means the upstream registry
 also doesn't have it — Zircon does not invent packages that were never
 published upstream, it only caches what it fetches. See [the
-attestation API](/api/attestation/) for reading provenance on a
+attestation API](../attestation/) for reading provenance on a
 specific resolved version.
