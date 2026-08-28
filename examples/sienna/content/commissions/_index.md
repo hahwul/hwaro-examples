@@ -3,7 +3,7 @@ title = "Commissions"
 description = "Five post-industrial sites returned to public use, from a rail marshalling yard to a tidal dock."
 sort_by = "date"
 reverse = true
-paginate = 0
+paginate = 5
 template = "section"
 generate_feeds = false
 +++
