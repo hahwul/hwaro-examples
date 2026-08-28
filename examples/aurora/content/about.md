@@ -7,7 +7,7 @@ Aurora is the bench journal of Maren Voss, a fountain pen restorer working out o
 
 ## Why plates
 
-Old auction catalogs and museum registers numbered their photographic illustrations as *plates*, each with a small caption recording maker, date, and condition. This journal borrows the convention. Every restoration that crosses [the bench](/restorations/) receives a plate number in order of arrival, and the write-up is filed under it — what came in, what was wrong, what was done, and what compromises were accepted. The numbering never restarts and never skips. A pen that cannot be saved still gets its plate; failure is part of the record.
+Old auction catalogs and museum registers numbered their photographic illustrations as *plates*, each with a small caption recording maker, date, and condition. This journal borrows the convention. Every restoration that crosses [the bench](@/restorations/_index.md) receives a plate number in order of arrival, and the write-up is filed under it — what came in, what was wrong, what was done, and what compromises were accepted. The numbering never restarts and never skips. A pen that cannot be saved still gets its plate; failure is part of the record.
 
 ## The bench rules
 

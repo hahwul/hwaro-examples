@@ -34,6 +34,6 @@ The fold was made cold around a mandrel — heating spring steel to bend it is h
 
 ## Assembly and verdict
 
-A size 18 sac went on with shellac and talc, exactly per the procedure recorded under [Plate No. 01](/restorations/corvid-cadet-sac/), and the new bar slid in alongside it, hook first. The button now travels four millimeters and the bar folds flat against the sac with a firm, even collapse — no twist, which would wring the sac like a dishcloth and kill it inside a year.
+A size 18 sac went on with shellac and talc, exactly per the procedure recorded under [Plate No. 01](@/restorations/corvid-cadet-sac.md), and the new bar slid in alongside it, hook first. The button now travels four millimeters and the bar folds flat against the sac with a firm, even collapse — no twist, which would wring the sac like a dishcloth and kill it inside a year.
 
 The plate records one caution for future benches: the fabricated bar is 0.02 mm thicker than the factory part, so the fill is slightly stiffer under the thumb. The owner calls it reassuring. The record calls it a tolerance.
