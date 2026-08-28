@@ -65,5 +65,5 @@ unmodified once the registry URL and token are set.
 {% endalert %}
 
 From here, the next step is usually [mirroring your existing
-upstreams](/guides/mirroring/) so a Zircon instance can serve packages
+upstreams](@/guides/mirroring.md) so a Zircon instance can serve packages
 your teams already depend on, not just the ones you publish yourself.

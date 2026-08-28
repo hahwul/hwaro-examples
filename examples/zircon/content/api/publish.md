@@ -55,5 +55,5 @@ systems that assemble the attestation themselves from build metadata
 already available in the pipeline.
 {% endalert %}
 
-Once a version lands, [the resolution API](/api/resolve/) is what
+Once a version lands, [the resolution API](@/api/resolve.md) is what
 package managers call to find it again.

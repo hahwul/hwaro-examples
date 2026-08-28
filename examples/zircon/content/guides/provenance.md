@@ -70,5 +70,5 @@ re-sign or republish the packages themselves.
 {% endalert %}
 
 Provenance answers "is this what it claims to be." The next guide,
-[access control and tokens](/guides/access-control/), answers "who was
+[access control and tokens](@/guides/access-control.md), answers "who was
 allowed to publish it in the first place."
