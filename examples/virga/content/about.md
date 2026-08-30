@@ -31,7 +31,7 @@ the way the pictures are watched, which is slowly, and twice.
 
 ## Getting in
 
-There is a [search page](@/search.md) for the archive and an [essays desk](@/essays/_index.md)
+There is a [search page](../search/) for the archive and an [essays desk](../essays/)
 for the full run, newest first. Each piece is filed to a desk &mdash; reviews,
 essays, dossiers &mdash; and threaded with the motifs it keeps returning to.
 Follow a motif and you can read the paper sideways, by preoccupation rather than
