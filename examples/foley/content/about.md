@@ -18,9 +18,9 @@ Each conversation follows the same four beats, in the same order, every time:
 
 ## Episode numbering
 
-Every episode card on this site carries a three-digit arcade score counter — 001, 002, and up — because that's genuinely how we track the season internally: a running tally taped above the mixing desk, incremented by hand after every recording. The number never resets and never skips, even on [the finale](/episodes/undertow-keep/), which shipped as a five-person roundtable instead of a solo interview.
+Every episode card on this site carries a three-digit arcade score counter — 001, 002, and up — because that's genuinely how we track the season internally: a running tally taped above the mixing desk, incremented by hand after every recording. The number never resets and never skips, even on [the finale](../episodes/undertow-keep/), which shipped as a five-person roundtable instead of a solo interview.
 
-The whole run so far lives in the [episode archive](/episodes/), oldest first, same order as the tally.
+The whole run so far lives in the [episode archive](../episodes/), oldest first, same order as the tally.
 
 ## Pitching a postmortem
 
