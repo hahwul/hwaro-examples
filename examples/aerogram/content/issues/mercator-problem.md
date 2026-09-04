@@ -42,6 +42,6 @@ job &mdash; they just kept the one that already existed.
 No flat projection preserves both shape and area at once; the trade-off is
 provable, not a failure of nerve. Equal-area alternatives exist and have for
 over a century, and we will get to a few of them, including
-[one that solves the problem by admitting defeat](@/issues/interrupted-goode-homolosine.md)
+[one that solves the problem by admitting defeat](../interrupted-goode-homolosine/)
 &mdash; the sphere cannot be cut open without a seam showing somewhere. The
 seam is the honest part.

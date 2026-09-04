@@ -38,7 +38,7 @@ there was only one datum anyone used and nobody thought to write it down.
 Reconstruct enough of those undated coordinate sets against the wrong datum
 and you get boundary disputes that are entirely artifacts of bookkeeping,
 not of anyone lying or measuring badly &mdash; the same discipline that kept
-[the crew at Cold Fork Pass](@/issues/survey-camp-cold-fork-pass.md)
+[the crew at Cold Fork Pass](../survey-camp-cold-fork-pass/)
 reoccupying a station rather than accepting an angle that wouldn't close. The ground did not move. The
 reference it was measured against moved, on paper, by a committee decision
 made in a room none of the original surveyors were ever in. Every datum
