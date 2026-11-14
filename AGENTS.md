@@ -1,6 +1,7 @@
 # AGENTS.md - AI Agent Instructions for hwaro-examples
 
-This repository is a **curated collection of 200 example sites** built with
+This repository is a **small, curated collection of example sites** (a few
+dozen at most, see `manifest.json`) built with
 [Hwaro](https://hwaro.hahwul.com), a fast static site generator written in
 Crystal. Each subdirectory under `examples/` is an independent Hwaro site;
 all of them deploy together to
@@ -40,8 +41,8 @@ hwaro-examples/
 │   ├── preview-index.sh        # local gallery preview without Docker
 │   └── agent/                  # agy orchestration: prompts + verify.sh + shots.sh
 └── examples/                   # all example sites (flat; one dir = one site)
-    ├── sirocco/                # light editorial blog
-    ├── basalt/                 # docs for a fictional build tool
+    ├── lemma/                  # light visual-mathematics blog (flagship)
+    ├── olivine/                # docs for a fictional streaming-ETL library
     └── ...
 ```
 

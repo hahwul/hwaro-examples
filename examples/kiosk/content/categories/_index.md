@@ -1,4 +1,0 @@
-+++
-template = "taxonomy"
-title = "Categories"
-+++

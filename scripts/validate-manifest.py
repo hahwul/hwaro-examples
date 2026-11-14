@@ -135,7 +135,7 @@ def main() -> int:
         if e.get("layout") not in LAYOUTS:
             err(f"{ctx} invalid layout: {e.get('layout')}")
 
-        # dials (DESIGN.md §15 step 2) are optional — the 200 entries written
+        # dials (DESIGN.md §15 step 2) are optional — the entries written
         # before they existed stay valid — but wrong when present is an error
         if "dials" in e:
             dials = e["dials"]
