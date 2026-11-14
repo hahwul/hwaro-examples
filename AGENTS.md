@@ -18,7 +18,7 @@ and every example meets the quality bar in `DESIGN.md`.
 |---|---|---|
 | `manifest.json` | The design matrix: one entry per example with its full art-direction assignment | Yes — this is where new examples start |
 | `DESIGN.md` | The quality bar: typography, color, layout, a11y, content, anti-patterns | Yes (carefully) |
-| `tags.json` | Gallery filter tags, `{name: [category, scheme, ...styles]}` | **No — generated** by `scripts/sync-tags.sh` |
+| `tags.json` | Tag index, `{name: [category, scheme, ...styles]}` | **No — generated** by `scripts/sync-tags.sh` |
 | `AGENTS.md` | This file: hwaro reference + repo conventions | Yes |
 
 ## Repository structure
@@ -38,10 +38,11 @@ hwaro-examples/
 │   ├── sync-tags.sh            # manifest.json -> tags.json (+ --check drift mode)
 │   ├── validate-manifest.py    # manifest schema/uniqueness/vocabulary checks
 │   ├── retired-names.txt       # names of removed legacy examples — never reuse
+│   ├── build-index.py          # generates the gallery index page (used by deploy.yml)
 │   ├── preview-index.sh        # local gallery preview without Docker
 │   └── agent/                  # agy orchestration: prompts + verify.sh + shots.sh
 └── examples/                   # all example sites (flat; one dir = one site)
-    ├── lemma/                  # light visual-mathematics blog (flagship)
+    ├── lemma/                  # light visual-mathematics blog
     ├── olivine/                # docs for a fictional streaming-ETL library
     └── ...
 ```
@@ -572,9 +573,11 @@ the broken-idioms table above. The one-line summary:
   on them, and fails if any new example lacks a `tags.json` entry.
 - **deploy.yml** (push to main): lints changed sites, builds every example
   with Docker, captures Playwright screenshots (content-hash cached),
-  generates the gallery `index.html` (search, tag filters, cards with
-  screenshot/title/description/tags/scaffold command), and deploys to GitHub
-  Pages. Title/description come from each `config.toml`; tags from `tags.json`.
+  generates the gallery `index.html` with `scripts/build-index.py` (a
+  contents list by category, then one large screenshot plate per example with
+  its description and scaffold command), and deploys to GitHub Pages.
+  Title/description come from each `config.toml`; category and scheme from
+  `manifest.json`.
 
 ## Rules for AI agents
 
