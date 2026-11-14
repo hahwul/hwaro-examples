@@ -1,0 +1,26 @@
+{% include "header.html" %}
+<main id="main" class="desktop">
+  <section class="win win-main" aria-labelledby="win-title">
+    <p class="win-bar"><span aria-hidden="true">[&#9632;]</span><span id="win-title">C:\BENCH\TAGS\{{ taxonomy_term | upper }}</span><span aria-hidden="true">1</span></p>
+    <h1 class="page-title">{{ taxonomy_term }}</h1>
+    <p class="dos"><span class="dos-prompt">C:\BENCH\TAGS\{{ taxonomy_term | upper }}&gt;</span>dir /o-d</p>
+    {% set tax = get_taxonomy(kind="tags") %}
+    <ol class="dir dir-long">
+      {% for term in tax.items %}{% if term.name == taxonomy_term %}
+      {% for p in term.pages | sort_by("date", reverse=true) %}
+      <li>
+        <a href="{{ base_url }}{{ p.url }}">
+          <span class="dir-name">{{ p.extra.file }}</span>
+          <span class="dir-size">{{ p.extra.bytes }}</span>
+          {% if p.date %}<time class="dir-date" datetime="{{ p.date }}">{{ p.date | date("%m-%d-%y") }}</time>{% endif %}
+          <span class="dir-title">{{ p.title }}</span>
+          {% if p.description %}<span class="dir-desc">{{ p.description }}</span>{% endif %}
+        </a>
+      </li>
+      {% endfor %}
+      {% endif %}{% endfor %}
+    </ol>
+    <p class="dos"><span class="dos-prompt">C:\BENCH\TAGS\{{ taxonomy_term | upper }}&gt;</span><a href="{{ base_url }}/tags/">cd ..</a></p>
+  </section>
+</main>
+{% include "footer.html" %}

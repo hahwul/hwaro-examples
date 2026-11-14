@@ -1,0 +1,40 @@
+{% include "header.html" %}
+<main id="main">
+  {% set jars = get_section(path="jars").pages | sort_by("weight") %}
+
+  <section class="hero" aria-labelledby="hero-title">
+    <h1 id="hero-title" class="hero-title">{{ site.title | e }}</h1>
+    <div class="hero-words">{{ content | safe }}</div>
+    {% for p in jars %}{% if p.extra.frontispiece %}
+    <figure class="hero-jar">
+      {% set jar = p %}{% set jar_id = "frontispiece" %}{% set jar_view = p.extra.view %}{% set jar_shadow = true %}
+      {% include "partials/jar.html" %}
+      <figcaption><a href="{{ base_url }}{{ p.url }}">{{ p.title }}</a>, {{ p.extra.height_cm }} &times; {{ p.extra.girth_cm }} cm</figcaption>
+    </figure>
+    <p class="hero-side">
+      <span class="hero-hangul" lang="ko">{{ page.extra.hangul }}</span>
+      <span class="hero-no">No. {{ p.extra.no }}</span>
+    </p>
+    {% endif %}{% endfor %}
+  </section>
+
+  <section class="catalogue" aria-labelledby="catalogue-title">
+    <header class="band-head">
+      <h2 id="catalogue-title">{{ page.extra.catalogue_title }}</h2>
+      <p>{{ page.extra.catalogue_note }}</p>
+    </header>
+    {% include "partials/lineup.html" %}
+  </section>
+
+  <section class="method" aria-labelledby="method-title">
+    <figure class="method-fig">
+      {% include "partials/halves.html" %}
+    </figure>
+    <div class="method-text">
+      <h2 id="method-title">{{ page.extra.method_title }}</h2>
+      <p>{{ page.extra.method_note }}</p>
+      <p><a class="more" href="{{ base_url }}/about/">The kiln and the method</a></p>
+    </div>
+  </section>
+</main>
+{% include "footer.html" %}

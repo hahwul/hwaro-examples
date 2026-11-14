@@ -1,0 +1,32 @@
+{% include "header.html" %}
+<main id="main" class="wrap">
+  <header class="row catalogue-head">
+    <p class="row-meta page-mark" aria-hidden="true"><span lang="ja">継ぎ目</span></p>
+    <div class="row-body">
+      <h1>{{ section.title | e }}</h1>
+      <div class="lede">{{ content | safe }}</div>
+    </div>
+  </header>
+
+  {# The catalogue: each release beside the one seam it left. #}
+  <ol class="catalogue" reversed>
+    {% for p in section.pages | sort_by("date", reverse=true) %}
+    <li>
+      <a class="cat-row" href="{{ base_url }}{{ p.url }}">
+        <svg class="bowl bowl--ghost" viewBox="40 0 560 327" aria-hidden="true" focusable="false">
+          <use href="#bowl"/>
+          <path class="seam-line" clip-path="url(#bowl-clip)" d="{{ p.extra.seam }}"/>
+          {% if p.extra.fork %}<path class="seam-fork" clip-path="url(#bowl-clip)" d="{{ p.extra.fork }}"/>{% endif %}
+        </svg>
+        <span class="version">{{ p.extra.version }}</span>
+        <span class="cat-text">
+          <span class="cat-name">{{ p.extra.name }}</span>
+          {% if p.description %}<span class="cat-sum">{{ p.description }}</span>{% endif %}
+        </span>
+        {% if p.date %}<time datetime="{{ p.date }}">{{ p.date | date("%-d %B %Y") }}</time>{% endif %}
+      </a>
+    </li>
+    {% endfor %}
+  </ol>
+</main>
+{% include "footer.html" %}

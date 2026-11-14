@@ -1,0 +1,459 @@
+/* Jogakbo — a field wiki pieced like the patchwork it documents.
+   Flat colour only: every tint is a color-mix() of a palette token into the
+   unbleached-ramie background. No gradients, no shadows with blur. */
+
+/* ---------- Tokens ---------- */
+:root {
+  --bg: #f6f2e8;
+  --surface: #ece5d6;
+  --fg: #2b2a28;
+  --muted: #68635a;
+  --accent: #a63c2b;
+  --accent-fg: #fdf9f0;
+
+  /* the dye shelf */
+  --indigo: #34506e;
+  --gardenia: #d9b44a;
+  --mugwort: #7d8f69;
+  --safflower: #dba9a4;
+  --ink: #5c5a56;
+
+  --border: color-mix(in srgb, var(--fg) 14%, transparent);
+  --seam: color-mix(in oklab, var(--ink) 58%, var(--bg));
+
+  --font-display: "Hahmlet", "Noto Serif KR", Georgia, serif;
+  --font-text: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --text-xs: 0.72rem;
+  --text-sm: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
+  --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.0625rem);
+  --text-lg: clamp(1.2rem, 1.1rem + 0.5vw, 1.45rem);
+  --text-xl: clamp(1.5rem, 1.3rem + 1vw, 2.1rem);
+  --text-2xl: clamp(2rem, 1.6rem + 2vw, 3.25rem);
+  --text-hero: clamp(3rem, 1.6rem + 5.2vw, 6rem);
+
+  --space-1: .25rem; --space-2: .5rem; --space-3: 1rem; --space-4: 1.5rem;
+  --space-5: 2.5rem; --space-6: 4rem; --space-7: 6rem;
+
+  --gutter: clamp(1rem, 3.2vw, 2.5rem);
+  --wide: 75rem;
+  --fold-w: 4px;
+}
+
+/* A dye is a class; a patch mixes it into the ground at its own strength. */
+.dye-indigo { --dye: var(--indigo); }
+.dye-gardenia { --dye: var(--gardenia); }
+.dye-mugwort { --dye: var(--mugwort); }
+.dye-safflower { --dye: var(--safflower); }
+.dye-ink { --dye: var(--ink); }
+.dye-accent { --dye: var(--accent); }
+.dye-ramie { --dye: color-mix(in oklab, var(--muted) 24%, var(--surface)); }
+.dye-silk { --dye: color-mix(in oklab, var(--gardenia) 26%, var(--surface)); }
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-text);
+  font-size: var(--text-base);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3 { font-family: var(--font-display); font-weight: 500; line-height: 1.15; margin: 0; }
+p { margin: 0; }
+ul, ol, dl, dd { margin: 0; padding: 0; }
+a { color: var(--accent); text-underline-offset: .18em; text-decoration-thickness: 1px; transition: color 160ms ease-out; }
+a:hover { color: var(--fg); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+kbd { font-family: var(--font-text); font-size: var(--text-xs); letter-spacing: .04em; color: var(--muted); border: 1px solid var(--border); padding: .1rem .4rem; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.skip-link { position: absolute; left: var(--gutter); top: -4rem; z-index: 30; background: var(--fg); color: var(--bg); padding: .6rem 1rem; }
+.skip-link:focus { top: .5rem; }
+
+/* ---------- The piece: shared cloth machinery ----------
+   A seam is a flat-felled ssamsol: the 1px grid gap is the outer row of
+   stitches, then a narrow band where the cloth lies doubled (the patch's own
+   colour, a little darker), then the inner row of stitches. */
+.patch,
+.strip > span,
+.entry > *,
+.scraps a,
+.cal-track > span,
+.lost-cloth > span {
+  --s: 26%;
+  --tone: color-mix(in oklab, var(--dye, var(--ink)) var(--s), var(--bg));
+  --fold: color-mix(in oklab, var(--tone) 91%, var(--fg));
+  --stitch: color-mix(in oklab, var(--tone) 74%, var(--fg));
+  background-color: var(--tone);
+  background-image: url("../img/weave.svg");
+  box-shadow: inset var(--fold-w) var(--fold-w) 0 var(--fold),
+              inset calc(var(--fold-w) + 1px) calc(var(--fold-w) + 1px) 0 var(--stitch);
+}
+.cloth,
+.strip,
+.entries,
+.scraps,
+.cal-track,
+.lost-cloth {
+  display: grid;
+  gap: 1px;
+  background-color: var(--seam);
+  border: 1px solid var(--seam);
+  position: relative;
+  list-style: none;
+}
+/* the hem: the same fold along the right and bottom edge of each cloth */
+.cloth::after,
+.strip::after,
+.entries::after,
+.scraps::after,
+.lost-cloth::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border: solid color-mix(in srgb, var(--fg) 9%, transparent);
+  border-width: 0 var(--fold-w) var(--fold-w) 0;
+  box-shadow: inset -1px -1px 0 color-mix(in srgb, var(--fg) 24%, transparent);
+}
+
+/* ---------- Header ---------- */
+.site-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  width: min(100% - 2 * var(--gutter), var(--wide));
+  margin-inline: auto;
+  padding-block: .65rem;
+}
+.brand { display: inline-flex; align-items: center; gap: .6rem; min-height: 40px; color: var(--fg); text-decoration: none; font-family: var(--font-display); font-weight: 500; font-size: 1.05rem; letter-spacing: -.01em; }
+.brand-mark .m-seam { fill: var(--ink); }
+.brand-mark .m-a { fill: var(--bg); }
+.brand-mark .m-b { fill: var(--indigo); }
+.brand-mark .m-c { fill: var(--gardenia); }
+.brand-mark .m-d { fill: var(--safflower); }
+.brand-mark .m-e { fill: var(--mugwort); }
+.site-nav { display: flex; align-items: center; gap: clamp(.25rem, 1.6vw, 1.5rem); font-size: var(--text-sm); }
+.site-nav a, .search-trigger { display: inline-flex; align-items: center; gap: .5rem; min-height: 40px; padding-inline: .35rem; color: var(--fg); text-decoration: none; }
+.site-nav a:hover, .search-trigger:hover { color: var(--accent); }
+.search-trigger { font: inherit; background: none; border: 0; cursor: pointer; color: var(--muted); transition: color 160ms ease-out; }
+
+/* ---------- Home: the cloth ---------- */
+.cloth {
+  width: min(100% - 2 * var(--gutter), var(--wide));
+  margin: .25rem auto 0;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  grid-auto-rows: minmax(2.9rem, auto);
+}
+.patch { display: block; min-width: 0; color: var(--fg); text-decoration: none; }
+.patch.is-entry, .at-title {
+  display: flex;
+  flex-direction: column;
+  padding: calc(var(--fold-w) + .75rem) .95rem .85rem calc(var(--fold-w) + .95rem);
+}
+a.patch { transition: background-color 180ms ease-out; }
+a.patch:hover { background-color: color-mix(in oklab, var(--tone) 55%, var(--accent-fg)); color: var(--fg); }
+a.patch:focus-visible { outline-offset: -5px; z-index: 1; }
+
+/* strengths: entries sit pale; indigo alone sits at full weight */
+.is-entry.dye-gardenia { --s: 42%; }
+.is-entry.dye-safflower { --s: 52%; }
+.is-entry.dye-mugwort { --s: 36%; }
+.is-entry.dye-ramie { --s: 46%; }
+.is-entry.dye-silk { --s: 78%; }
+.is-entry.dye-ink { --dye: var(--accent-fg); --s: 100%; } /* undyed, bleached: the brightest cloth */
+.is-entry.dye-indigo {
+  --s: 100%;
+  --stitch: color-mix(in oklab, var(--tone) 72%, var(--bg));
+  color: var(--bg);
+}
+a.is-entry.dye-indigo:hover { background-color: color-mix(in oklab, var(--tone) 84%, var(--accent-fg)); color: var(--bg); }
+a.is-entry.dye-indigo:focus-visible { outline-color: var(--accent-fg); }
+
+/* the Hangul name is the patch's label; no eyebrow */
+.patch-hangul { font-family: var(--font-display); font-weight: 300; font-size: 1.5rem; line-height: 1; white-space: nowrap; }
+.patch-title { margin-top: auto; padding-top: .75rem; font-family: var(--font-display); font-weight: 400; font-size: var(--text-lg); line-height: 1.15; letter-spacing: -.015em; }
+.patch-line { margin-top: .4rem; font-size: var(--text-sm); line-height: 1.42; max-width: 34ch; }
+
+.at-title { --dye: var(--accent-fg); --s: 100%; position: relative; }
+.title-hangul { position: absolute; top: calc(var(--fold-w) + .9rem); right: 1rem; writing-mode: vertical-rl; font-family: var(--font-display); font-weight: 300; font-size: 1.25rem; letter-spacing: .3em; line-height: 1; color: var(--muted); }
+.at-title h1 { margin-top: auto; padding-top: var(--space-4); font-weight: 300; font-size: var(--text-hero); line-height: .95; letter-spacing: -.035em; }
+.at-title .patch-line { margin-top: 1.8rem; color: var(--muted); max-width: 30ch; }
+
+/* plain cloth */
+.at-p1 { --s: 24%; }
+.at-p2 { --s: 15%; }
+.at-p3 { --s: 8%; }
+.at-p4 { --s: 34%; }
+.at-p5 { --s: 100%; }
+.at-p6 { --s: 86%; }
+.at-p7 { --s: 19%; }
+.at-p8 { --s: 34%; }
+.at-p9 { --s: 100%; }
+.at-p10 { --s: 46%; }
+
+/* narrow piecing: 8 columns, still unequal */
+.at-p1    { grid-area: 1 / 1 / 6 / 2; }
+.at-p2    { grid-area: 1 / 2 / 2 / 9; }
+.at-title { grid-area: 2 / 2 / 6 / 9; }
+.at-d3    { grid-area: 6 / 1 / 10 / 6; }
+.at-p3    { grid-area: 6 / 6 / 8 / 9; }
+.at-p4    { grid-area: 8 / 6 / 9 / 8; }
+.at-p5    { grid-area: 8 / 8 / 9 / 9; }
+.at-p8    { grid-area: 9 / 6 / 10 / 9; }
+.at-d1    { grid-area: 10 / 1 / 12 / 9; }
+.at-p6    { grid-area: 12 / 1 / 15 / 2; }
+.at-d2    { grid-area: 12 / 2 / 15 / 7; }
+.at-p7    { grid-area: 12 / 7 / 15 / 9; }
+.at-d4    { grid-area: 15 / 1 / 18 / 7; }
+.at-p10   { grid-area: 15 / 7 / 18 / 9; }
+.at-c1    { grid-area: 18 / 1 / 20 / 9; }
+.at-p9    { grid-area: 20 / 1 / 23 / 2; }
+.at-c2    { grid-area: 20 / 2 / 23 / 9; }
+.at-c3    { grid-area: 23 / 1 / 25 / 9; }
+
+/* full piecing: 24 x 12, laid out so seams meet in T's, almost never in crosses */
+@media (min-width: 62rem) {
+  .cloth {
+    grid-template-columns: repeat(24, minmax(0, 1fr));
+    grid-template-rows: repeat(12, minmax(clamp(2.4rem, 4vw, 3.2rem), auto));
+    grid-auto-rows: auto;
+  }
+  .at-p1    { grid-area: 1 / 1 / 8 / 3; }
+  .at-p2    { grid-area: 1 / 3 / 2 / 17; }
+  .at-title { grid-area: 2 / 3 / 8 / 13; }
+  .at-d3    { grid-area: 2 / 13 / 9 / 17; }
+  .at-d1    { grid-area: 1 / 17 / 4 / 25; }
+  .at-d2    { grid-area: 4 / 17 / 8 / 22; }
+  .at-p3    { grid-area: 4 / 22 / 7 / 25; }
+  .at-p4    { grid-area: 7 / 22 / 8 / 24; }
+  .at-p5    { grid-area: 7 / 24 / 8 / 25; }
+  .at-c1    { grid-area: 8 / 1 / 12 / 7; }
+  .at-p9    { grid-area: 12 / 1 / 13 / 2; }
+  .at-p10   { grid-area: 12 / 2 / 13 / 7; }
+  .at-c2    { grid-area: 8 / 7 / 13 / 12; }
+  .at-p6    { grid-area: 8 / 12 / 11 / 13; }
+  .at-p7    { grid-area: 9 / 13 / 11 / 19; }
+  .at-p8    { grid-area: 8 / 17 / 9 / 19; }
+  .at-d4    { grid-area: 8 / 19 / 11 / 25; }
+  .at-c3    { grid-area: 11 / 12 / 13 / 25; }
+
+  .cloth .at-title { padding: calc(var(--fold-w) + 1.1rem) 1.5rem 1.5rem calc(var(--fold-w) + 1.6rem); }
+  .cloth .title-hangul { top: calc(var(--fold-w) + 1.4rem); right: 1.5rem; font-size: 1.5rem; }
+  .cloth .at-d3 .patch-hangul { font-size: 5.25rem; margin-left: -.06em; }
+  .cloth .at-c2 .patch-hangul { font-size: 2.4rem; }
+  .cloth .at-c3 { flex-direction: row; align-items: center; gap: var(--space-4); }
+  .cloth .at-c3 .patch-title { margin-top: 0; padding-top: 0; white-space: nowrap; }
+  .cloth .at-c3 .patch-line { margin: 0 0 0 auto; max-width: 30ch; }
+}
+
+/* ---------- Home: the dye year ---------- */
+.season {
+  --cal-name: 0rem;
+  width: min(100% - 2 * var(--gutter), var(--wide));
+  margin: var(--space-6) auto 0;
+}
+.season-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--space-2) var(--space-4); margin-bottom: var(--space-4); }
+.season h2 { font-size: var(--text-xl); font-weight: 400; letter-spacing: -.02em; }
+.season-head p { font-size: var(--text-sm); color: var(--muted); }
+.calendar-months, .calendar-rows { list-style: none; }
+.calendar-months { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); margin-left: var(--cal-name); font-size: var(--text-xs); letter-spacing: .09em; text-transform: uppercase; color: var(--muted); padding-bottom: .4rem; }
+.calendar-months li { padding-left: .15rem; }
+.calendar-months span { display: none; }
+.calendar-row { display: grid; }
+.cal-name { display: flex; align-items: center; min-height: 40px; font-family: var(--font-display); font-weight: 400; font-size: 1.1rem; color: var(--fg); text-decoration: none; }
+.cal-name:hover { color: var(--accent); }
+.cal-track { grid-template-columns: repeat(12, minmax(0, 1fr)); min-height: 3rem; }
+.cal-track > span { --s: 9%; }
+.cal-track > .cal-harvest { --s: 78%; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 400; font-size: 1.05rem; line-height: 1; padding-top: var(--fold-w); padding-left: var(--fold-w); }
+.dye-indigo .cal-harvest { --s: 100%; color: var(--bg); }
+.season-note { margin-top: var(--space-5); margin-left: var(--cal-name); color: var(--muted); }
+.season-note p { max-width: 62ch; }
+.season-note p + p { margin-top: var(--space-3); }
+@media (min-width: 40rem) {
+  .season { --cal-name: 11.5rem; }
+  .calendar-months span { display: inline; }
+  .calendar-row { grid-template-columns: var(--cal-name) minmax(0, 1fr); }
+  .calendar-row + .calendar-row .cal-track { margin-top: -1px; }
+}
+@media (min-width: 62rem) {
+  .season-note { columns: 2; column-gap: var(--space-5); }
+  .season-note p { break-inside: avoid; }
+  .season-note p + p { margin-top: 0; }
+}
+
+/* ---------- Interior: the strip ---------- */
+.strip {
+  width: min(100% - 2 * var(--gutter), 62rem);
+  margin: .25rem auto 0;
+  grid-template-columns: 5fr 2fr 9fr 1fr 4fr 3fr;
+  height: clamp(3.25rem, 7vw, 5rem);
+}
+.strip > span:nth-child(1) { --s: 22%; }
+.strip > span:nth-child(2) { --s: 62%; }
+.strip > span:nth-child(3) { --s: 11%; }
+.strip > span:nth-child(4) { --s: 100%; }
+.strip > span:nth-child(5) { --s: 36%; }
+.strip > span:nth-child(6) { --s: 80%; }
+
+/* ---------- Interior: entry page ---------- */
+.leaf {
+  width: min(100% - 2 * var(--gutter), 62rem);
+  margin: var(--space-5) auto 0;
+  display: grid;
+  gap: var(--space-4);
+}
+.leaf-head { max-width: 65ch; }
+.leaf-head h1 { font-size: var(--text-2xl); font-weight: 400; letter-spacing: -.025em; }
+.lede { margin-top: var(--space-3); font-family: var(--font-display); font-weight: 300; font-size: var(--text-lg); line-height: 1.45; color: var(--muted); }
+.rail { font-size: var(--text-sm); }
+.rail-hangul { font-family: var(--font-display); font-weight: 300; font-size: var(--text-2xl); line-height: 1; margin-bottom: var(--space-4); }
+.facts { display: grid; grid-template-columns: auto 1fr; column-gap: var(--space-3); border-top: 1px solid var(--border); }
+.facts dt, .facts dd { padding-block: .5rem; border-bottom: 1px solid var(--border); }
+.facts dt { font-size: var(--text-xs); letter-spacing: .09em; text-transform: uppercase; color: var(--muted); padding-top: .68rem; }
+.tag-list { list-style: none; display: flex; flex-wrap: wrap; gap: 0 1rem; margin-top: var(--space-3); }
+.tag-list a { display: inline-flex; align-items: center; min-height: 40px; color: var(--muted); }
+.tag-list a:hover { color: var(--accent); }
+
+.prose { max-width: 65ch; min-width: 0; }
+.prose > * + * { margin-top: var(--space-3); }
+.prose h2 { font-size: var(--text-lg); margin-top: var(--space-5); padding-top: var(--space-3); border-top: 1px solid var(--border); }
+.prose ul, .prose ol { padding-left: 1.25rem; }
+.prose li + li { margin-top: .45rem; }
+.prose li::marker { color: var(--muted); }
+.prose strong { font-weight: 600; }
+.prose pre { background: var(--surface); border: 1px solid var(--border); padding: var(--space-3); overflow-x: auto; }
+.back { margin-top: var(--space-5); font-size: var(--text-sm); }
+@media (min-width: 52rem) {
+  .leaf { grid-template-columns: 15rem minmax(0, 1fr); column-gap: var(--space-6); }
+  .leaf-head, .prose { grid-column: 2; }
+  .rail { grid-column: 1; grid-row: 1 / span 2; position: sticky; top: var(--space-4); align-self: start; }
+}
+
+/* ---------- Interior: listings (sections, tag terms) ---------- */
+.listing { width: min(100% - 2 * var(--gutter), 62rem); margin: var(--space-5) auto 0; }
+.listing-head { display: grid; gap: var(--space-3); margin-bottom: var(--space-5); }
+.listing-head h1 { font-size: var(--text-2xl); font-weight: 400; letter-spacing: -.025em; }
+.h1-kicker { display: block; font-family: var(--font-text); font-size: var(--text-xs); font-weight: 400; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); margin-bottom: .6rem; }
+.listing-intro { color: var(--muted); max-width: 58ch; }
+@media (min-width: 52rem) {
+  .listing-head { grid-template-columns: 15rem minmax(0, 1fr); gap: var(--space-6); align-items: baseline; }
+}
+
+.entry { display: grid; grid-template-columns: 2fr 8fr 3fr; gap: 1px; }
+.entry:nth-child(3n + 2) { grid-template-columns: 4fr 8fr 1fr; }
+.entry:nth-child(3n + 2) .entry-swatch { order: 3; }
+.entry:nth-child(3n + 2) .entry-tail { order: 1; }
+.entry:nth-child(3n + 2) .entry-body { order: 2; }
+.entry:nth-child(3n) { grid-template-columns: 1fr 9fr 3fr; }
+.entry > * { min-width: 0; padding: calc(var(--fold-w) + .9rem) 1rem 1rem calc(var(--fold-w) + 1rem); }
+.entry-swatch { --s: 72%; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 300; font-size: var(--text-xl); line-height: 1; padding-inline: .25rem; }
+.dye-indigo > .entry-swatch, .dye-ink > .entry-swatch { --s: 100%; color: var(--bg); }
+.entry-body { --s: 9%; display: flex; flex-direction: column; justify-content: center; gap: .3rem; min-height: 6.5rem; color: var(--fg); text-decoration: none; transition: background-color 180ms ease-out; }
+.entry-body:hover { background-color: var(--accent-fg); color: var(--fg); }
+.entry-body:focus-visible { outline-offset: -5px; z-index: 1; }
+.entry-title { font-family: var(--font-display); font-weight: 400; font-size: var(--text-lg); line-height: 1.15; letter-spacing: -.01em; }
+.entry-line { font-size: var(--text-sm); line-height: 1.45; color: var(--muted); max-width: 52ch; }
+.entry-tail { --s: 26%; display: flex; align-items: flex-end; font-size: var(--text-xs); letter-spacing: .09em; text-transform: uppercase; line-height: 1.3; }
+.entry:nth-child(3n) .entry-swatch { writing-mode: vertical-rl; font-size: var(--text-lg); }
+@media (max-width: 40rem) {
+  .entry, .entry:nth-child(3n + 2), .entry:nth-child(3n) { grid-template-columns: 3.25rem minmax(0, 1fr); }
+  .entry:nth-child(2n) { grid-template-columns: minmax(0, 1fr) 3.25rem; }
+  .entry:nth-child(2n) .entry-swatch { order: 3; }
+  .entry:nth-child(2n) .entry-body { order: 2; }
+  .entry-tail { display: none; }
+  .entry-swatch { writing-mode: vertical-rl; font-size: var(--text-lg); }
+}
+
+/* tag index: a cloth of scraps, widths by turn */
+.scraps { display: flex; flex-wrap: wrap; }
+.scraps li { flex: 3 1 10rem; display: flex; min-width: 0; }
+.scraps li:nth-child(7n + 1) { flex: 6 1 15rem; }
+.scraps li:nth-child(7n + 3) { flex: 1 1 9.5rem; }
+.scraps li:nth-child(7n + 4) { flex: 4 1 12rem; }
+.scraps li:nth-child(7n + 6) { flex: 5 1 14rem; }
+.scraps a { flex: 1; display: flex; flex-direction: column; justify-content: space-between; gap: var(--space-3); min-height: 6.5rem; padding: calc(var(--fold-w) + .8rem) .9rem .8rem calc(var(--fold-w) + .9rem); color: var(--fg); text-decoration: none; --dye: var(--ink); --s: 10%; transition: background-color 180ms ease-out; }
+.scraps li:nth-child(4n + 1) a { --dye: var(--indigo); --s: 22%; }
+.scraps li:nth-child(4n + 2) a { --dye: var(--gardenia); --s: 40%; }
+.scraps li:nth-child(4n + 3) a { --dye: var(--safflower); --s: 46%; }
+.scraps li:nth-child(7n + 4) a { --dye: var(--mugwort); --s: 36%; }
+.scraps li:nth-child(6n + 5) a { min-height: 8.5rem; }
+.scraps a:hover { background-color: color-mix(in oklab, var(--tone) 55%, var(--accent-fg)); color: var(--fg); }
+.scraps a:focus-visible { outline-offset: -5px; z-index: 1; }
+.scrap-count { font-size: var(--text-xs); letter-spacing: .09em; }
+.scrap-name { font-family: var(--font-display); font-weight: 400; font-size: var(--text-lg); line-height: 1.15; overflow-wrap: break-word; }
+
+/* ---------- 404: a cloth with one patch missing ---------- */
+.lost { width: min(100% - 2 * var(--gutter), 62rem); margin: var(--space-5) auto 0; display: grid; gap: var(--space-5); align-items: center; }
+.lost-cloth { grid-template-columns: repeat(6, minmax(0, 1fr)); grid-template-rows: repeat(5, 3.25rem); }
+.lost-cloth > span:nth-child(1) { grid-area: 1 / 1 / 4 / 3; --dye: var(--mugwort); --s: 30%; }
+.lost-cloth > span:nth-child(2) { grid-area: 1 / 3 / 2 / 7; --dye: var(--ink); --s: 14%; }
+.lost-cloth > span:nth-child(3) { grid-area: 2 / 6 / 5 / 7; --dye: var(--gardenia); --s: 80%; }
+.lost-cloth > .lost-hole { grid-area: 2 / 3 / 5 / 6; background-color: var(--bg); box-shadow: none; outline: 1px dashed var(--accent); outline-offset: -7px; z-index: 1; }
+.lost-cloth > span:nth-child(5) { grid-area: 4 / 1 / 6 / 2; --dye: var(--indigo); --s: 100%; }
+.lost-cloth > span:nth-child(6) { grid-area: 4 / 2 / 6 / 3; --dye: var(--safflower); --s: 50%; }
+.lost-cloth > span:nth-child(7) { grid-area: 5 / 3 / 6 / 7; --dye: var(--indigo); --s: 20%; }
+.lost-text h1 { font-size: var(--text-hero); font-weight: 300; letter-spacing: -.035em; line-height: .95; }
+.lost-text h1 span { display: block; margin-top: var(--space-3); font-size: var(--text-xl); font-weight: 400; letter-spacing: -.02em; line-height: 1.15; }
+.lost-text p { margin-top: var(--space-3); color: var(--muted); max-width: 44ch; }
+@media (min-width: 52rem) { .lost { grid-template-columns: 5fr 6fr; gap: var(--space-6); } }
+
+/* ---------- Command palette ---------- */
+.palette[hidden] { display: none; }
+.palette { position: fixed; inset: 0; z-index: 40; display: grid; justify-items: center; align-content: start; padding: 14vh var(--gutter) 0; }
+.palette-scrim { position: absolute; inset: 0; background: color-mix(in srgb, var(--fg) 38%, transparent); }
+.palette-panel {
+  position: relative;
+  width: min(100%, 34rem);
+  background: var(--accent-fg);
+  border: 1px solid var(--seam);
+  box-shadow: inset var(--fold-w) var(--fold-w) 0 var(--surface),
+              inset calc(var(--fold-w) + 1px) calc(var(--fold-w) + 1px) 0 var(--border);
+  padding: calc(var(--fold-w) + 1px) 0 0 calc(var(--fold-w) + 1px);
+}
+.palette-field { display: flex; align-items: center; gap: var(--space-3); padding: .35rem 1rem; border-bottom: 1px solid var(--border); }
+.palette-input { flex: 1; min-width: 0; min-height: 44px; border: 0; background: none; color: var(--fg); font-family: var(--font-display); font-size: var(--text-lg); }
+.palette-input::placeholder { color: var(--muted); font-weight: 300; }
+.palette-input:focus-visible { outline: none; }
+.palette-field:focus-within { border-bottom-color: var(--accent); }
+.palette-results { list-style: none; max-height: 46vh; overflow-y: auto; }
+.palette-results a { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-3); padding: .7rem 1rem; color: var(--fg); text-decoration: none; border-bottom: 1px solid var(--border); }
+.palette-results [aria-selected="true"] a, .palette-results a:hover { background: color-mix(in oklab, var(--indigo) 16%, var(--accent-fg)); }
+.res-title { font-family: var(--font-display); font-weight: 500; }
+.res-kind { font-size: var(--text-xs); letter-spacing: .09em; text-transform: uppercase; color: var(--muted); }
+.palette-note { padding: .75rem 1rem; font-size: var(--text-sm); color: var(--muted); }
+
+/* ---------- Footer ---------- */
+.site-foot {
+  width: min(100% - 2 * var(--gutter), var(--wide));
+  margin: var(--space-7) auto 0;
+  padding-block: var(--space-4) var(--space-5);
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-3) var(--space-5);
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+.site-foot p { max-width: 56ch; }
+.site-foot nav { display: flex; flex-wrap: wrap; gap: 0 var(--space-4); }
+.site-foot a { display: inline-flex; align-items: center; min-height: 40px; color: var(--fg); }
+.site-foot a:hover { color: var(--accent); }
+
+@media (max-width: 30rem) {
+  .search-trigger kbd { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

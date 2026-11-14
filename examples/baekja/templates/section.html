@@ -1,0 +1,42 @@
+{% include "header.html" %}
+<main id="main">
+  <header class="page-head">
+    <p class="folio">Sodam Kiln, {{ section.pages | length }} jars <span lang="ko">목록</span></p>
+    <h1>{{ section.title | e }}</h1>
+    <div class="page-lede">{{ content | safe }}</div>
+  </header>
+
+  <section class="catalogue" aria-label="Line-up">
+    {% set jars = section.pages %}
+    {% include "partials/lineup.html" %}
+  </section>
+
+  <section class="register" aria-labelledby="register-title">
+    <h2 id="register-title">The register</h2>
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">No.</th>
+          <th scope="col">Jar</th>
+          <th scope="col" class="num">Height</th>
+          <th scope="col" class="num wide">Belly</th>
+          <th scope="col" class="wide">Fired</th>
+          <th scope="col" class="wide">Kept flaw</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in section.pages %}
+        <tr>
+          <td class="reg-no">{{ p.extra.no }}</td>
+          <th scope="row"><a href="{{ base_url }}{{ p.url }}">{{ p.title }}</a> <span lang="ko">{{ p.extra.hangul }}</span></th>
+          <td class="num">{{ p.extra.height_cm }} cm</td>
+          <td class="num wide">{{ p.extra.girth_cm }} cm</td>
+          <td class="wide">{% if p.date %}<time datetime="{{ p.date }}">{{ p.date | date("%-d %B %Y") }}</time>{% endif %}</td>
+          <td class="wide">{{ p.extra.flaw }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+</main>
+{% include "footer.html" %}

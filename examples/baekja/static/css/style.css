@@ -1,0 +1,749 @@
+/* Baekja — a potter's catalogue of moon jars.
+   Hanji white, sumi grey, one cobalt. Hairline rules and flat tone only;
+   nothing blended, nothing rounded, nothing lifted off the page. */
+
+/* ---------- 1. Tokens ---------- */
+
+:root {
+  --bg: #f4f1ea;
+  --surface: #e9e4d8;
+  --fg: #2a2925;
+  --muted: #6a665c;
+  --accent: #2f4a66;
+  --accent-fg: #f4f1ea;
+
+  --border: color-mix(in srgb, var(--fg) 14%, transparent);
+  --hair: color-mix(in srgb, var(--fg) 34%, transparent);
+  --milk: color-mix(in srgb, var(--bg) 35%, white);   /* the porcelain body */
+
+  --font-display: "Cormorant Garamond", "Iowan Old Style", "Times New Roman", serif;
+  --font-text: "Gowun Batang", "Iowan Old Style", Georgia, serif;
+
+  --text-sm: clamp(0.8rem, 0.78rem + 0.1vw, 0.875rem);
+  --text-base: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
+  --text-lg: clamp(1.2rem, 1.12rem + 0.4vw, 1.45rem);
+  --text-xl: clamp(1.55rem, 1.35rem + 1vw, 2.1rem);
+  --text-2xl: clamp(2.5rem, 1.7rem + 3.4vw, 4.5rem);
+  --text-hero: clamp(4.75rem, 2rem + 11.2vw, 10.75rem);
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2.5rem;
+  --space-6: 4rem;
+  --space-7: 6rem;
+  --space-8: 9rem;
+
+  --gutter: clamp(1.25rem, 5vw, 4rem);
+  --wrap: 72rem;
+  /* side padding that keeps a band's content inside --wrap */
+  --pad: max(var(--gutter), calc((100% - var(--wrap)) / 2));
+}
+
+/* ---------- 2. Base ---------- */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-text);
+  font-size: var(--text-base);
+  line-height: 1.8;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, p, figure, dl, dd, ol, ul, table { margin: 0; }
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  text-decoration-color: color-mix(in srgb, var(--accent) 38%, transparent);
+  transition: color 160ms ease-out, text-decoration-color 160ms ease-out;
+}
+a:hover { text-decoration-color: var(--accent); }
+
+:focus-visible {
+  outline: 1.5px solid var(--accent);
+  outline-offset: 5px;
+}
+
+::selection { background: color-mix(in srgb, var(--accent) 18%, transparent); }
+
+[lang="ko"] { font-family: var(--font-text); word-break: keep-all; }
+
+.skip-link {
+  position: absolute;
+  left: var(--gutter);
+  top: 0;
+  padding: var(--space-2) var(--space-3);
+  background: var(--accent);
+  color: var(--accent-fg);
+  text-decoration: none;
+  transform: translateY(-120%);
+  transition: transform 160ms ease-out;
+  z-index: 10;
+}
+.skip-link:focus { transform: translateY(0); outline-offset: 2px; }
+
+/* the small italic line that numbers a page or a jar */
+.folio {
+  font-variant-numeric: lining-nums;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--text-lg);
+  line-height: 1.3;
+  color: var(--muted);
+}
+.folio [lang="ko"] {
+  font-style: normal;
+  font-size: 0.72em;
+  letter-spacing: 0.24em;
+  margin-left: 0.6em;
+}
+
+.more {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--text-lg);
+  display: inline-block;
+  padding-block: var(--space-2);
+}
+.more::after {
+  content: "\2192";
+  display: inline-block;
+  margin-left: 0.5em;
+  font-style: normal;
+  transition: transform 160ms ease-out;
+}
+.more:hover::after { transform: translateX(0.25em); }
+
+/* ---------- 3. Header and footer ---------- */
+
+.site-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--pad) var(--space-3);
+}
+/* on the home page the header hangs on the same wall as the jar */
+body:has(.hero) .site-head { background: var(--surface); }
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-height: 2.75rem;
+  color: var(--fg);
+  text-decoration: none;
+}
+.brand-mark {
+  flex: none;
+  overflow: visible;
+  fill: var(--milk);
+  stroke: var(--fg);
+  stroke-width: 30;
+  transition: fill 160ms ease-out;
+}
+.brand:hover .brand-mark { fill: color-mix(in srgb, var(--accent) 22%, var(--milk)); }
+.brand-word {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  line-height: 1;
+  letter-spacing: 0.01em;
+}
+.brand-ko {
+  font-size: 0.8rem;
+  letter-spacing: 0.3em;
+  color: var(--muted);
+}
+
+.site-nav {
+  display: flex;
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+}
+.site-nav a,
+.foot-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: var(--fg);
+  text-decoration-color: transparent;
+}
+.site-nav a:hover,
+.foot-nav a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+
+.site-foot {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: var(--space-3) var(--space-5);
+  margin-top: var(--space-7);
+  padding: var(--space-4) var(--pad) var(--space-5);
+  border-top: 1px solid var(--border);
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+main:has(> .method:last-child) + .site-foot { margin-top: 0; border-top: 0; }
+.foot-mark { color: var(--fg); }
+.foot-mark [lang="ko"] { letter-spacing: 0.3em; margin-right: 0.4em; }
+.foot-nav { display: flex; gap: var(--space-4); }
+
+/* ---------- 4. The jar ---------- */
+
+.jar {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.jar-body {
+  fill: var(--milk);
+  stroke: var(--hair);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  transition: fill 200ms ease-out;
+}
+/* flat patches where the glaze ran thin: a few percent darker, no blur */
+.jar-bloom { fill: color-mix(in srgb, var(--fg) 3.5%, transparent); }
+.jar-join {
+  fill: none;
+  stroke: color-mix(in srgb, var(--fg) 24%, transparent);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+.jar-shadow { fill: var(--surface); }
+
+/* ---------- 5. Home: the first screen ---------- */
+
+/* A wall (surface) above a ground (bg). The jar stands across the line
+   between them. Row 1 is the wall, row 2 the ground. */
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr) auto;
+  grid-template-rows: 1fr minmax(8.5rem, auto);
+  column-gap: clamp(1rem, 2.6vw, 2.75rem);
+  padding-inline: var(--pad);
+  overflow-x: hidden;   /* for browsers without clip */
+  overflow-x: clip;
+}
+/* the wall: row 1, bled out to both edges of the window */
+.hero::before {
+  content: "";
+  grid-column: 1 / -1;
+  grid-row: 1;
+  margin-inline: -100vmax;
+  background: var(--surface);
+}
+
+.hero-title {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: end;
+  /* the bottom margin lifts the tail of the j clear of the ground line */
+  margin: 0 0 0.3em -0.04em;
+  font-size: var(--text-hero);
+  line-height: 0.8;
+  letter-spacing: -0.035em;
+}
+
+.hero-words {
+  grid-column: 1;
+  grid-row: 2;
+  max-width: 27rem;
+  padding-block: var(--space-4) var(--space-5);
+}
+
+.hero-jar {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  align-self: end;
+  justify-self: end;
+  width: min(100%, 34rem);
+  margin-bottom: var(--space-4);
+}
+.hero-jar figcaption {
+  margin-top: var(--space-2);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  text-align: center;
+  color: var(--muted);
+}
+
+.hero-side {
+  grid-column: 3;
+  grid-row: 1;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+}
+.hero-hangul,
+.hero-no { writing-mode: vertical-rl; white-space: nowrap; }
+.hero-hangul {
+  font-size: clamp(1.3rem, 1rem + 1.1vw, 1.9rem);
+  line-height: 1;
+  letter-spacing: 0.42em;
+}
+.hero-no {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-style: italic;
+  font-size: 1.2rem;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  font-variant-numeric: lining-nums;
+  color: var(--accent);
+}
+.hero-no::before {
+  content: "";
+  inline-size: 2.75rem;
+  block-size: 1px;
+  background: var(--hair);
+}
+
+/* ---------- 6. The line-up ---------- */
+
+.catalogue { padding: var(--space-7) var(--pad) var(--space-6); }
+
+.band-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 24rem);
+  align-items: end;
+  gap: var(--space-4) var(--space-6);
+  margin-bottom: var(--space-6);
+}
+.band-head h2 { font-size: var(--text-2xl); max-width: 12ch; }
+.band-head p { color: var(--muted); }
+
+.lineup {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.lineup a {
+  display: grid;
+  justify-items: center;
+  padding-bottom: var(--space-3);
+  color: var(--fg);
+  text-align: center;
+  text-decoration: none;
+}
+/* each figure ends exactly on y = 0, so the six borders make one ground line */
+.lineup-fig {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin-bottom: var(--space-3);
+  border-bottom: 1px solid var(--hair);
+}
+.lineup-no {
+  font-variant-numeric: lining-nums;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.05rem;
+  line-height: 1.4;
+  color: var(--muted);
+}
+.lineup-name {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  line-height: 1.2;
+  text-decoration: underline 1px transparent;
+  text-underline-offset: 0.22em;
+  transition: color 160ms ease-out, text-decoration-color 160ms ease-out;
+}
+.lineup-height { font-size: var(--text-sm); color: var(--muted); }
+.lineup a:hover .jar-body,
+.lineup a:focus-visible .jar-body { fill: white; stroke: var(--accent); }
+.lineup a:hover .lineup-name { color: var(--accent); text-decoration-color: var(--accent); }
+.lineup a:focus-visible { outline-offset: 2px; }
+
+/* height ticks in the left margin: the viewBox is 50 cm tall */
+.lineup-scale {
+  position: absolute;
+  inset: 0 100% 0 auto;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.9rem;
+  line-height: 1;
+  color: var(--muted);
+}
+.lineup-scale i {
+  position: absolute;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  white-space: nowrap;
+  transform: translateY(50%);
+}
+.lineup-scale i::after { content: ""; width: 0.5rem; height: 1px; background: var(--hair); }
+.lineup-scale i:nth-child(1) { bottom: 80%; }
+.lineup-scale i:nth-child(2) { bottom: 60%; }
+.lineup-scale i:nth-child(3) { bottom: 40%; }
+.lineup-scale i:nth-child(4) { bottom: 20%; }
+
+/* ---------- 7. The method band ---------- */
+
+.method {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  align-items: center;
+  gap: var(--space-5) clamp(2rem, 8vw, 7rem);
+  margin-top: var(--space-6);
+  padding: var(--space-7) var(--pad);
+  background: var(--surface);
+}
+.method-fig { justify-self: end; width: min(100%, 19rem); }
+.method-text { max-width: 30rem; }
+.method-text h2 { font-size: var(--text-2xl); margin-bottom: var(--space-4); }
+.method-text p + p { margin-top: var(--space-3); }
+
+.halves { display: block; width: 100%; height: auto; overflow: visible; }
+.halves-bowl {
+  fill: var(--milk);
+  stroke: var(--hair);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+.halves-gap {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1;
+  stroke-dasharray: 2 4;
+  vector-effect: non-scaling-stroke;
+}
+
+/* ---------- 8. Section page: head and register ---------- */
+
+.page-head { padding: var(--space-6) var(--pad) 0; }
+.page-head h1 {
+  font-size: clamp(3.25rem, 2rem + 6vw, 7rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  margin-top: var(--space-2);
+}
+.page-lede {
+  max-width: 34rem;
+  margin-top: var(--space-4);
+  margin-left: auto;
+  color: var(--muted);
+}
+
+.register { padding: var(--space-5) var(--pad) 0; }
+.register h2 { font-size: var(--text-xl); font-style: italic; margin-bottom: var(--space-4); }
+.register table {
+  width: 100%;
+  border-collapse: collapse;
+  border-top: 1px solid var(--hair);
+}
+.register th,
+.register td {
+  padding: var(--space-3) var(--space-3) var(--space-3) 0;
+  border-bottom: 1px solid var(--border);
+  font-weight: 400;
+  text-align: left;
+  vertical-align: baseline;
+}
+.register thead th {
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-block: var(--space-2);
+}
+.register tbody th {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  white-space: nowrap;
+}
+.register tbody th a { color: var(--fg); text-decoration-color: transparent; }
+.register tbody th a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+.register tbody th [lang="ko"] {
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+  margin-left: 0.5em;
+}
+.register .reg-no {
+  font-variant-numeric: lining-nums;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--text-lg);
+  color: var(--muted);
+  width: 4rem;
+}
+.register .num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.register .num + .wide:not(.num) { padding-left: var(--space-5); }
+.register td:last-child { padding-right: 0; color: var(--muted); font-size: var(--text-sm); max-width: 22rem; }
+.register td time { white-space: nowrap; }
+.register tbody tr { transition: background-color 160ms ease-out; }
+.register tbody tr:hover { background: color-mix(in srgb, var(--surface) 55%, transparent); }
+
+/* ---------- 9. The spread: a plate facing a page of text ---------- */
+
+.spread {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  align-items: start;
+  padding: var(--space-5) var(--pad) 0;
+}
+
+/* the same wall and ground as the first screen, at the size of a book plate */
+.plate {
+  position: sticky;
+  top: var(--space-4);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: 1fr 4.25rem auto;
+  margin-right: clamp(1.5rem, 5vw, 5rem);
+}
+.plate::before {
+  content: "";
+  grid-column: 1;
+  grid-row: 1;
+  background: var(--surface);
+}
+.plate > svg {
+  grid-column: 1;
+  grid-row: 1 / 3;
+  align-self: end;
+  justify-self: center;
+  width: 78%;
+  margin-top: var(--space-6);
+}
+.plate figcaption {
+  font-variant-numeric: lining-nums;
+  grid-row: 3;
+  margin-top: var(--space-2);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+/* a page with no plate: one centred leaf */
+.spread-solo { grid-template-columns: minmax(0, 38rem); justify-content: center; }
+.spread-solo .leaf { padding-left: 0; border-left: 0; }
+
+.leaf {
+  min-width: 0;
+  padding-left: clamp(1.5rem, 5vw, 5rem);
+  border-left: 1px solid var(--border);
+}
+.leaf h1 {
+  font-size: clamp(3rem, 2rem + 4.6vw, 6rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  margin-top: var(--space-2);
+}
+.leaf-lede {
+  max-width: 30rem;
+  margin-top: var(--space-4);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--text-lg);
+  line-height: 1.45;
+}
+
+.measure {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: var(--space-5);
+  border-top: 1px solid var(--hair);
+}
+.measure > div { padding: var(--space-3) var(--space-3) var(--space-3) 0; border-bottom: 1px solid var(--border); }
+.measure dt {
+  font-size: 0.75rem;
+  line-height: 1.6;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.measure dd {
+  font-variant-numeric: lining-nums;
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.measure abbr { font-size: 0.5em; font-style: italic; text-decoration: none; color: var(--muted); }
+.measure .measure-long {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 6.5rem minmax(0, 1fr);
+  align-items: baseline;
+  padding-right: 0;
+}
+.measure-long dd {
+  font-family: var(--font-text);
+  font-size: var(--text-base);
+  line-height: 1.7;
+  white-space: normal;
+}
+
+.turn {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: baseline;
+  gap: var(--space-4);
+  margin: var(--space-7) var(--pad) 0;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--hair);
+}
+.turn a {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 2.75rem;
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  line-height: 1.15;
+  color: var(--fg);
+  text-decoration-color: transparent;
+}
+.turn a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+.turn a span {
+  font-family: var(--font-text);
+  font-size: 0.75rem;
+  line-height: 1.8;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.turn-prev { grid-column: 1; justify-self: start; }
+.turn .turn-all { grid-column: 2; font-size: var(--text-lg); font-style: italic; color: var(--muted); }
+.turn-next { grid-column: 3; justify-self: end; text-align: right; align-items: flex-end; }
+
+/* ---------- 10. Prose ---------- */
+
+.prose { max-width: 34rem; margin-top: var(--space-5); }
+.prose > * + * { margin-top: 1.15em; }
+.prose h2 {
+  font-size: var(--text-xl);
+  font-style: italic;
+  margin-top: var(--space-5);
+}
+.prose h2 + p { margin-top: var(--space-3); }
+.prose em { font-style: italic; }
+/* chapter opener: a light Cormorant capital, three lines deep */
+.prose > p:first-of-type::first-letter {
+  float: left;
+  margin: 0.04em 0.08em 0 -0.03em;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 6.6em;
+  line-height: 0.72;
+}
+
+
+/* ---------- 11. Not found ---------- */
+
+.lost {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  align-items: end;
+  gap: clamp(2rem, 8vw, 7rem);
+  padding: var(--space-6) var(--pad) 0;
+}
+.lost-jar {
+  justify-self: end;
+  display: block;
+  width: min(100%, 22rem);
+  height: auto;
+  overflow: visible;
+  border-bottom: 1px solid var(--hair);
+  fill: none;
+  stroke: var(--hair);
+  stroke-width: 1;
+  stroke-dasharray: 3 5;
+  vector-effect: non-scaling-stroke;
+}
+.lost-jar path { vector-effect: non-scaling-stroke; }
+.lost-text { max-width: 30rem; padding-bottom: var(--space-4); }
+.lost-text h1 { font-size: var(--text-2xl); margin-block: var(--space-2) var(--space-4); }
+.lost-text p + p { margin-top: var(--space-3); }
+
+/* ---------- 12. Narrow screens ---------- */
+
+@media (max-width: 56rem) {
+  /* wall: title + most of the jar; ground: the jar's foot + the words */
+  .hero {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: auto auto 4.75rem auto;
+    column-gap: var(--space-3);
+  }
+  .hero::before { grid-row: 1 / 3; }
+  .hero-title { grid-column: 1 / -1; grid-row: 1; margin-top: var(--space-4); }
+  .hero-jar { grid-column: 1; grid-row: 2 / 4; justify-self: start; margin-bottom: 0; }
+  .hero-side { grid-column: 2; grid-row: 2; margin-top: var(--space-2); gap: var(--space-3); }
+  .hero-no { gap: var(--space-3); }
+  .hero-no::before { inline-size: 2rem; }
+  .hero-words { grid-column: 1 / -1; grid-row: 4; padding-block: var(--space-3) var(--space-5); }
+
+  .catalogue { padding-block: var(--space-6) var(--space-5); }
+  .band-head { grid-template-columns: minmax(0, 1fr); margin-bottom: var(--space-5); }
+  .lineup { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: var(--space-5); }
+  .lineup-scale { display: none; }
+
+  .method,
+  .spread,
+  .lost { grid-template-columns: minmax(0, 1fr); }
+  .method { padding-block: var(--space-6); }
+  .method-fig { justify-self: start; width: min(70%, 15rem); }
+
+  .page-lede { margin-left: 0; }
+  .register .wide { display: none; }
+
+  .plate { position: static; margin-right: 0; }
+  .leaf { margin-top: var(--space-5); padding-left: 0; border-left: 0; }
+  .measure { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .measure .measure-long { grid-template-columns: minmax(0, 1fr); }
+
+  .turn { grid-template-columns: 1fr 1fr; margin-top: var(--space-6); }
+  .turn .turn-all { grid-column: 1 / -1; grid-row: 2; justify-self: center; }
+  .turn-next { grid-column: 2; }
+
+  .lost-jar { justify-self: start; width: min(60%, 14rem); }
+
+  .site-foot { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ---------- 13. Motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

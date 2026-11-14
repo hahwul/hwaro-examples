@@ -1,0 +1,62 @@
+{% include "header.html" %}
+<main id="main" class="desktop desktop-split">
+  <section class="win win-main" aria-labelledby="win-title">
+    <p class="win-bar"><span aria-hidden="true">[&#9632;]</span><span id="win-title">C:\BENCH\LOG</span><span aria-hidden="true">1</span></p>
+    <div class="banner">
+      <h1 class="wordmark">Turbo<span class="cursor" aria-hidden="true"></span></h1>
+      <div class="banner-copy">{{ content | safe }}</div>
+    </div>
+    <p class="dos"><span class="dos-prompt">C:\BENCH\LOG&gt;</span>dir /o-d</p>
+    <p class="dos dos-dim">Volume in drive C is BENCHLOG</p>
+    {% set entries = get_section(path="log").pages | sort_by("date", reverse=true) %}
+    <ol class="dir">
+      {% for p in entries %}{% if loop.index0 < 6 %}
+      <li{% if loop.index0 == 0 %} class="is-cur"{% endif %}>
+        <a href="{{ base_url }}{{ p.url }}">
+          <span class="dir-name">{{ p.extra.file }}</span>
+          <span class="dir-size">{{ p.extra.bytes }}</span>
+          {% if p.date %}<time class="dir-date" datetime="{{ p.date }}">{{ p.date | date("%m-%d-%y") }}</time>{% endif %}
+          <span class="dir-title">{{ p.title }}</span>
+        </a>
+      </li>
+      {% endif %}{% endfor %}
+    </ol>
+    <p class="dos dos-dim">{{ entries | length }} file(s) &nbsp; 24,117,248 bytes free &nbsp; <a href="{{ base_url }}/log/">dir /p for the long listing</a></p>
+  </section>
+
+  <div class="stack">
+    <aside class="dialog" aria-labelledby="cfg-title">
+      <h2 class="dialog-title" id="cfg-title">System Configuration</h2>
+      <dl class="cfg">
+        <div><dt>CPU Type</dt><dd>80386DX</dd></div>
+        <div><dt>Co-Processor</dt><dd>80387</dd></div>
+        <div><dt>Clock</dt><dd>33 MHz</dd></div>
+        <div><dt>Base Memory</dt><dd>640K</dd></div>
+        <div><dt>Ext. Memory</dt><dd>3456K</dd></div>
+        <div><dt>Diskette A</dt><dd>1.2M, 5&frac14;"</dd></div>
+        <div><dt>Hard Disk C</dt><dd>Type 47</dd></div>
+        <div><dt>Display</dt><dd>VGA</dd></div>
+        <div><dt>Serial</dt><dd>3F8, 2F8</dd></div>
+      </dl>
+      <p class="cfg-test">Memory test : <span class="count">4096K</span> OK</p>
+      <p class="dialog-actions"><a class="btn" href="{{ base_url }}/about/">About this machine</a></p>
+    </aside>
+
+    <section class="win win-idle" aria-labelledby="tags-title">
+      <h2 class="win-bar"><span id="tags-title">C:\BENCH\TAGS</span><span aria-hidden="true">2</span></h2>
+      {% set tax = get_taxonomy(kind="tags") %}
+      <ul class="dir dir-tags">
+        {% for term in tax.items | sort_by("name") %}
+        <li>
+          <a href="{{ get_taxonomy_url(kind="tags", term=term.name) }}">
+            <span class="dir-name">{{ term.name | upper }}</span>
+            <span class="dir-kind">&lt;DIR&gt;</span>
+            <span class="dir-size">{{ term.pages | length }}</span>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+  </div>
+</main>
+{% include "footer.html" %}
