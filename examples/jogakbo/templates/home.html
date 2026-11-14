@@ -1,0 +1,69 @@
+{% include "header.html" %}
+<main id="main">
+  {% set dyes = get_section(path="dyes").pages | sort_by("title") %}
+  {% set cloths = get_section(path="cloth").pages | sort_by("title") %}
+
+  {# The cloth. Every patch is placed by class, and the piecing map lives in
+     style.css: at-title, at-d1..d4 (dyes, by title), at-c1..c3 (cloth, by title),
+     at-p1..p10 (plain cloth, nothing in them). The dye-* class sets the colour. #}
+  <div class="cloth">
+    <div class="patch at-title">
+      <p class="title-hangul" lang="ko">조각보</p>
+      <h1>{{ site.title | e }}</h1>
+      <p class="patch-line">Plant dyes, ramie and silk gauze, and the seam that joins them into a wrapping cloth.</p>
+    </div>
+
+    {% for p in dyes %}
+    <a class="patch is-entry at-d{{ loop.index }} dye-{{ p.extra.dye | default("ink") }}" href="{{ base_url }}{{ p.url }}">
+      <span class="patch-hangul" lang="ko">{{ p.extra.hangul }}</span>
+      <span class="patch-title">{{ p.title }}</span>
+      <span class="patch-line">{{ p.description }}</span>
+    </a>
+    {% endfor %}
+
+    {% for p in cloths %}
+    <a class="patch is-entry at-c{{ loop.index }} dye-{{ p.extra.dye | default("ink") }}" href="{{ base_url }}{{ p.url }}">
+      <span class="patch-hangul" lang="ko">{{ p.extra.hangul }}</span>
+      <span class="patch-title">{{ p.title }}</span>
+      <span class="patch-line">{{ p.description }}</span>
+    </a>
+    {% endfor %}
+
+    <span class="patch at-p1 dye-mugwort" aria-hidden="true"></span>
+    <span class="patch at-p2 dye-indigo" aria-hidden="true"></span>
+    <span class="patch at-p3 dye-ink" aria-hidden="true"></span>
+    <span class="patch at-p4 dye-indigo" aria-hidden="true"></span>
+    <span class="patch at-p5 dye-accent" aria-hidden="true"></span>
+    <span class="patch at-p6 dye-gardenia" aria-hidden="true"></span>
+    <span class="patch at-p7 dye-indigo" aria-hidden="true"></span>
+    <span class="patch at-p8 dye-safflower" aria-hidden="true"></span>
+    <span class="patch at-p9 dye-indigo" aria-hidden="true"></span>
+    <span class="patch at-p10 dye-mugwort" aria-hidden="true"></span>
+  </div>
+
+  <section class="season" aria-labelledby="season-title">
+    <header class="season-head">
+      <h2 id="season-title">The dye year</h2>
+      <p>Harvest windows in the Dalmoe yard. Piecing is winter work, December to March.</p>
+    </header>
+    <div class="calendar">
+      <ol class="calendar-months" aria-hidden="true">
+        <li>J<span>an</span></li><li>F<span>eb</span></li><li>M<span>ar</span></li><li>A<span>pr</span></li><li>M<span>ay</span></li><li>J<span>un</span></li><li>J<span>ul</span></li><li>A<span>ug</span></li><li>S<span>ep</span></li><li>O<span>ct</span></li><li>N<span>ov</span></li><li>D<span>ec</span></li>
+      </ol>
+      <ul class="calendar-rows">
+        {% for p in dyes %}
+        <li class="calendar-row dye-{{ p.extra.dye | default("ink") }}">
+          <a class="cal-name" href="{{ base_url }}{{ p.url }}">{{ p.title }}<span class="visually-hidden">, harvested {{ p.extra.season }}</span></a>
+          <span class="cal-track" aria-hidden="true">
+            <span style="grid-column: 1 / {{ p.extra.harvest_from }}"></span>
+            <span class="cal-harvest" lang="ko" style="grid-column: {{ p.extra.harvest_from }} / {{ p.extra.harvest_until }}">{{ p.extra.hangul }}</span>
+            <span style="grid-column: {{ p.extra.harvest_until }} / 13"></span>
+          </span>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="season-note">{{ content | safe }}</div>
+  </section>
+</main>
+{% include "footer.html" %}

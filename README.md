@@ -1,6 +1,6 @@
 # hwaro-examples
 
-A **curated collection of 200 example sites** built with
+A **small, curated collection of example sites** built with
 [Hwaro](https://hwaro.hahwul.com), a fast static site generator written in
 Crystal. Browse them live at
 [examples.hwaro.hahwul.com](https://examples.hwaro.hahwul.com).

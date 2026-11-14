@@ -2,7 +2,7 @@
 
 This document defines how example sites in this repository are designed and
 built. It exists so that any contributor — human or AI agent — can produce an
-example that belongs in a curated collection of 200, not a pile of 1,500.
+example that belongs in a small curated collection, not a pile of 1,500.
 
 **How the pieces fit together:**
 
@@ -68,7 +68,7 @@ across the collection is engineered there, not improvised per-site.
 
 ## 2. The diversity matrix
 
-Distinctness across 200 examples comes from orthogonal, pre-assigned axes in
+Distinctness across the collection comes from orthogonal, pre-assigned axes in
 `manifest.json`:
 
 | Axis | Source | Guardrail |
@@ -598,7 +598,7 @@ Use only the filters, functions, and idioms documented in `AGENTS.md`
 are safe). Anything else — however plausible it looks — is unverified: prove
 it renders (build, then grep the output) before shipping it.
 
-## 15. Adding example #201 (the full process)
+## 15. Adding a new example (the full process)
 
 Work in this exact order — tokens before markup, markup before content,
 verification before PR. Each step has a checkpoint; do not skip ahead.

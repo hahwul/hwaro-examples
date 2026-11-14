@@ -1,0 +1,14 @@
+{#- One jar, drawn from its own front matter. The caller sets:
+    jar       the page that carries [extra] path / join / bloom
+    jar_id    a string unique on the page (it names the clip path)
+    jar_view  the viewBox: jar.extra.view for a tight plate, or one shared
+              box for a line-up so every jar keeps the same scale
+    jar_shadow  true to lay the ground shadow under the foot
+    jar_quiet   true where the jar is already named in text beside it -#}
+<svg class="jar" viewBox="{{ jar_view }}" {% if jar_quiet %}aria-hidden="true" focusable="false"{% else %}role="img" aria-label="Outline of {{ jar.title | e }}, a moon jar {{ jar.extra.height_cm }} centimetres tall"{% endif %}>
+  <clipPath id="glaze-{{ jar_id }}"><path d="{{ jar.extra.path }}"/></clipPath>
+  {% if jar_shadow %}<ellipse class="jar-shadow" cx="2%" cy="7" rx="29%" ry="12"/>{% endif %}
+  <path class="jar-body" d="{{ jar.extra.path }}"/>
+  <path class="jar-bloom" clip-path="url(#glaze-{{ jar_id }})" d="{{ jar.extra.bloom }}"/>
+  <path class="jar-join" d="{{ jar.extra.join }}"/>
+</svg>

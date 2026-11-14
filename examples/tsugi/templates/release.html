@@ -1,0 +1,53 @@
+{% include "header.html" %}
+{% set p = page %}
+<main id="main" class="wrap">
+  <article class="release-page">
+    <div class="row lead-row">
+      {% set seg = 3 %}{% include "partials/crack.html" %}
+      <p class="row-body crumb"><a href="{{ base_url }}/releases/">Releases</a></p>
+    </div>
+
+    <div class="row release-sheet">
+      <div class="cracks" aria-hidden="true">
+        {% set seg = 0 %}{% include "partials/crack.html" %}
+        {% set seg = 1 %}{% include "partials/crack.html" %}
+        {% set seg = 2 %}{% include "partials/crack.html" %}
+      </div>
+      <svg class="join" aria-hidden="true" focusable="false"><use href="#join"/></svg>
+
+      <header class="row-meta sheet-meta">
+        <p class="version">{{ page.extra.version }}</p>
+        {% if page.date %}<time datetime="{{ page.date }}">{{ page.date | date("%-d %B %Y") }}</time>{% endif %}
+        {# This release's own seam, alone on the bowl. #}
+        <figure class="seam-figure">
+          <svg class="bowl bowl--ghost" viewBox="40 0 560 327" role="img" aria-label="The seam release {{ page.extra.version }} left on the bowl">
+            <use href="#bowl"/>
+            <path class="seam-line" clip-path="url(#bowl-clip)" d="{{ page.extra.seam }}"/>
+            {% if page.extra.fork %}<path class="seam-fork" clip-path="url(#bowl-clip)" d="{{ page.extra.fork }}"/>{% endif %}
+          </svg>
+          {% if page.extra.seam_note %}<figcaption>{{ page.extra.seam_note }}</figcaption>{% endif %}
+        </figure>
+      </header>
+
+      <div class="row-body sheet-body">
+        <h1>{{ page.extra.name }}</h1>
+        {% if page.description %}<p class="lede">{{ page.description }}</p>{% endif %}
+        <div class="prose">
+          {{ content | safe }}
+        </div>
+        <section class="sheet-changes" aria-labelledby="changes-h">
+          <h2 id="changes-h">In this release</h2>
+          {% include "partials/changes.html" %}
+        </section>
+        <nav class="sheet-nav" aria-label="Neighbouring releases">
+          {# page.higher is the older neighbour, page.lower the newer one; the
+             date guard keeps the walk inside the release log. #}
+          {% if page.higher and page.higher.date %}<a class="sheet-prev" href="{{ base_url }}{{ page.higher.url }}"><span class="label">Earlier</span> {{ page.higher.title }}</a>{% endif %}
+          {% if page.lower and page.lower.date %}<a class="sheet-next" href="{{ base_url }}{{ page.lower.url }}"><span class="label">Later</span> {{ page.lower.title }}</a>{% endif %}
+        </nav>
+      </div>
+    </div>
+    {% include "partials/crack-tail.html" %}
+  </article>
+</main>
+{% include "footer.html" %}

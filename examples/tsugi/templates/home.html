@@ -1,0 +1,76 @@
+{% include "header.html" %}
+{% set section = get_section(path="releases") %}
+{% set log = section.pages | sort_by("date", reverse=true) %}
+{% set oldest_first = section.pages | sort_by("date") %}
+<main id="main">
+
+  <section class="hero wrap" aria-labelledby="hero-h">
+    <div class="hero-title">
+      <h1 id="hero-h">{{ site.title | e }}</h1>
+      <p class="gloss"><span lang="ja">継ぎ</span> <span class="gloss-def">noun &middot; a join, a mend</span></p>
+    </div>
+
+    <div class="hero-note">
+      {{ content | safe }}
+    </div>
+
+    {# The bowl. One seam per release, read straight from each release's
+       front matter (extra.seam / extra.fork), oldest first so the newest
+       is painted last. Only the newest draws itself. #}
+    <figure class="hero-bowl">
+      <svg class="bowl" viewBox="40 0 560 327" role="group" aria-label="A tea bowl mended with {{ log | length }} gold seams, one for each release">
+        <use href="#bowl"/>
+        {% for p in oldest_first %}
+        <a class="seam{% if loop.last %} seam--new{% endif %}" href="{{ base_url }}{{ p.url }}" aria-label="{{ p.extra.version }}, {{ p.extra.name }}">
+          <path class="seam-hit" clip-path="url(#bowl-clip)" d="{{ p.extra.seam }} {{ p.extra.fork }}"/>
+          <path class="seam-line" clip-path="url(#bowl-clip)" pathLength="1" d="{{ p.extra.seam }}"/>
+          {% if p.extra.fork %}<path class="seam-fork" clip-path="url(#bowl-clip)" pathLength="1" d="{{ p.extra.fork }}"/>{% endif %}
+          <line class="seam-lead" x1="{{ p.extra.rim_x }}" y1="{{ p.extra.rim_y }}" x2="{{ p.extra.rim_x }}" y2="38"/>
+          <text class="seam-tag" x="{{ p.extra.rim_x }}" y="28" text-anchor="middle">{{ p.extra.version }}</text>
+        </a>
+        {% endfor %}
+      </svg>
+    </figure>
+  </section>
+
+  <section class="log wrap" aria-labelledby="log-h">
+    <div class="row log-head">
+      {% set seg = 3 %}{% include "partials/crack.html" %}
+      <div class="row-meta">
+        <h2 id="log-h">Release log</h2>
+      </div>
+      <form class="row-body filter" role="search" data-index="{{ base_url }}/search.json" onsubmit="return false;">
+        <label for="log-filter">Filter</label>
+        <input id="log-filter" type="search" autocomplete="off" spellcheck="false" placeholder="tar, zip, checksum, dry run">
+        <p id="log-status" class="filter-status" role="status" aria-live="polite">{{ log | length }} releases</p>
+      </form>
+    </div>
+
+    <ol class="releases" id="log" reversed>
+      {% for p in log %}
+      <li class="row release{% if loop.first %} is-latest{% endif %}" data-url="{{ p.url }}">
+        <div class="cracks" aria-hidden="true">
+          {% set seg = loop.index0 % 3 %}{% include "partials/crack.html" %}
+          {% set seg = (loop.index0 + 1) % 3 %}{% include "partials/crack.html" %}
+        </div>
+        <svg class="join" aria-hidden="true" focusable="false"><use href="#join"/></svg>
+        <div class="row-meta">
+          <p class="version">{{ p.extra.version }}</p>
+          {% if p.date %}<time datetime="{{ p.date }}">{{ p.date | date("%-d %B %Y") }}</time>{% endif %}
+        </div>
+        <article class="row-body">
+          <h3><a href="{{ base_url }}{{ p.url }}">{{ p.extra.name }}</a></h3>
+          {% if p.description %}<p class="summary">{{ p.description }}</p>{% endif %}
+          {% include "partials/changes.html" %}
+          <p class="more"><a href="{{ base_url }}{{ p.url }}">Notes for {{ p.extra.version }}<span aria-hidden="true"> &rarr;</span></a></p>
+        </article>
+      </li>
+      {% endfor %}
+    </ol>
+    {% include "partials/crack-tail.html" %}
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
+  <script src="{{ base_url }}/js/search.js"></script>
+</main>
+{% include "footer.html" %}
