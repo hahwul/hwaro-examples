@@ -9,7 +9,6 @@
   var list = document.getElementById('search-results');
   if (!form || !input || !status || !list) return;
 
-  var base = form.getAttribute('data-base') || '';
   var fuse = null;
   var pending = null;
 
@@ -27,12 +26,6 @@
     .catch(function () {
       status.textContent = 'The search index could not be loaded — browse the catalogue instead.';
     });
-
-  function hrefFor(item) {
-    var url = item.url || item.permalink || '';
-    if (/^https?:\/\//.test(url)) return url;
-    return base + url;
-  }
 
   function snippet(text) {
     var words = (text || '').replace(/\s+/g, ' ').trim().split(' ');
@@ -56,7 +49,7 @@
 
       var h = document.createElement('h2');
       var a = document.createElement('a');
-      a.href = hrefFor(r.item);
+      a.href = r.item.url;
       a.textContent = r.item.title || 'Untitled specimen';
       h.appendChild(a);
 

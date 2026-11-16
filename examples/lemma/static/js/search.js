@@ -14,19 +14,13 @@
   var base = document.documentElement.getAttribute("data-base-url") || "";
   var fuse = null, items = [], selected = -1, lastFocus = null;
 
-  function href(u) {
-    u = u || "/";
-    if (/^https?:/.test(u)) return u;
-    if (base && u.lastIndexOf(base, 0) === 0) return u;
-    return base + u;
-  }
-
   function load() {
     if (fuse || !window.Fuse) return;
     fetch(base + "/search.json")
       .then(function (r) { return r.json(); })
       .then(function (d) {
         fuse = new Fuse(d, { keys: ["title", "content"], threshold: 0.34, ignoreLocation: true });
+        search();
       })
       .catch(function () {});
   }
@@ -68,7 +62,7 @@
       li.setAttribute("role", "option");
       li.id = "search-opt-" + i;
       var a = document.createElement("a");
-      a.href = href(it.url);
+      a.href = it.url;
       var t = document.createElement("span");
       t.className = "res-title";
       t.textContent = it.title || it.url || "Untitled";

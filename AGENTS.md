@@ -373,6 +373,9 @@ same localStorage key):
 (the template stamps `{{ base_url }}` into it — a hardcoded `/search.json`
 404s in production) and builds result DOM nodes instead of injecting HTML:
 
+Search result URLs already include the deployment subpath. Use `h.item.url`
+directly; prepending `base_url` again duplicates the site path and breaks links.
+
 ```js
 (function () {
   var form = document.querySelector('form[data-index]');

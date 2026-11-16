@@ -7,7 +7,6 @@
   var list = document.getElementById('search-results');
   if (!form || !input || !status || !list) return;
 
-  var base = form.getAttribute('data-base') || '';
   var fuse = null;
 
   fetch(form.getAttribute('data-index'))
@@ -24,12 +23,6 @@
     .catch(function () {
       status.textContent = 'The archive index could not be loaded. Try the essays desk instead.';
     });
-
-  function hrefFor(item) {
-    var url = item.url || item.permalink || '';
-    if (/^https?:\/\//.test(url)) return url;
-    return base + url;
-  }
 
   function snippet(text) {
     var words = (text || '').replace(/\s+/g, ' ').trim().split(' ');
@@ -61,7 +54,7 @@
       var h = document.createElement('h2');
       h.className = 'entry-title';
       var a = document.createElement('a');
-      a.href = hrefFor(item);
+      a.href = item.url;
       a.textContent = item.title || 'Untitled';
       h.appendChild(a);
 
@@ -71,7 +64,7 @@
 
       var more = document.createElement('a');
       more.className = 'read-on';
-      more.href = hrefFor(item);
+      more.href = item.url;
       more.textContent = 'Read the essay →';
 
       li.appendChild(kicker);

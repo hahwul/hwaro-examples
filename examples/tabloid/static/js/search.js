@@ -8,7 +8,6 @@
   var list = document.getElementById('search-results');
   if (!form || !input || !status || !list) return;
 
-  var base = form.getAttribute('data-base') || '';
   var fuse = null;
 
   fetch(form.getAttribute('data-index'))
@@ -25,12 +24,6 @@
     .catch(function () {
       status.textContent = 'The index would not pour. Browse the archive instead.';
     });
-
-  function hrefFor(item) {
-    var url = item.url || item.permalink || '';
-    if (/^https?:\/\//.test(url)) return url;
-    return base + url;
-  }
 
   function snippet(text) {
     var words = (text || '').replace(/\s+/g, ' ').trim().split(' ');
@@ -64,7 +57,7 @@
       var h3 = document.createElement('h3');
       h3.className = 'pour-card__title';
       var a = document.createElement('a');
-      a.href = hrefFor(item);
+      a.href = item.url;
       a.textContent = item.title || 'Untitled';
       h3.appendChild(a);
 

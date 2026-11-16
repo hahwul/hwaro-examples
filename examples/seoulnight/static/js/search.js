@@ -1,6 +1,7 @@
 (function () {
   "use strict";
   var baseUrl = document.documentElement.getAttribute("data-base-url") || "";
+  var basePath = new URL(baseUrl || "/", window.location.href).pathname.replace(/\/$/, "");
   var modal = document.getElementById("search-modal");
   var trigger = document.getElementById("search-trigger");
   var input = document.getElementById("search-input");
@@ -19,6 +20,7 @@
       .then(function (r) { return r.json(); })
       .then(function (data) {
         fuse = new Fuse(data, { keys: ["title", "content"], threshold: 0.32 });
+        search();
       })
       .catch(function () { /* index unavailable; the palette stays empty */ });
   }
@@ -36,9 +38,9 @@
       li.setAttribute("role", "option");
       li.id = "search-result-" + i;
       li.setAttribute("aria-selected", i === selected ? "true" : "false");
-      var segment = page.url.replace(/^\/|\/$/g, "").split("/")[0] || "page";
+      var segment = page.url.slice(basePath.length).replace(/^\/|\/$/g, "").split("/")[0] || "page";
       var a = document.createElement("a");
-      a.href = baseUrl + page.url;
+      a.href = page.url;
       var chip = document.createElement("span");
       chip.className = "search-result-section";
       chip.textContent = segment;
@@ -83,10 +85,11 @@
     if (event.target.hasAttribute("data-search-close")) close();
   });
 
-  input.addEventListener("input", function () {
+  function search() {
     if (!fuse || input.value.trim() === "") { render([]); return; }
     render(fuse.search(input.value).slice(0, 8));
-  });
+  }
+  input.addEventListener("input", search);
 
   input.addEventListener("keydown", function (event) {
     if (event.key === "ArrowDown") {
@@ -96,7 +99,7 @@
       event.preventDefault();
       if (items.length) { selected = (selected - 1 + items.length) % items.length; updateSelection(); }
     } else if (event.key === "Enter") {
-      if (selected >= 0 && items[selected]) window.location.href = baseUrl + items[selected].item.url;
+      if (selected >= 0 && items[selected]) window.location.href = items[selected].item.url;
     } else if (event.key === "Escape") {
       close();
     }

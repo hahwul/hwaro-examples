@@ -19,13 +19,6 @@
     if (key) key.textContent = "Ctrl K";
   }
 
-  function href(u) {
-    u = u || "/";
-    if (/^https?:/.test(u)) return u;
-    if (base && u.lastIndexOf(base, 0) === 0) return u;
-    return base + u;
-  }
-
   function load() {
     if (fuse || !window.Fuse) return;
     fetch(base + "/search.json")
@@ -69,7 +62,7 @@
       li.setAttribute("aria-selected", "false");
       li.id = "search-opt-" + i;
       var a = document.createElement("a");
-      a.href = href(it.url);
+      a.href = it.url;
       a.tabIndex = -1;
       var t = document.createElement("span");
       t.className = "res-title";
