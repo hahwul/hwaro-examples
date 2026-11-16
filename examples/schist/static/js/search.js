@@ -11,7 +11,6 @@
   var list = document.getElementById("rule-index-list");
   var results = document.getElementById("rule-search-results");
   var status = document.getElementById("rule-search-status");
-  var base = input.getAttribute("data-base") || "";
   var fuse = null;
   var loading = false;
 
@@ -56,7 +55,7 @@
       li.className = "search-hit";
 
       var a = document.createElement("a");
-      a.href = base + item.url;
+      a.href = item.url;
       a.className = "search-hit-link";
 
       var title = document.createElement("span");

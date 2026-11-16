@@ -8,8 +8,11 @@
   var fuse = null;
   fetch(form.getAttribute('data-index'))
     .then(function (r) { return r.json(); })
-    .then(function (data) { fuse = new Fuse(data, { keys: ['title', 'content'], threshold: 0.3 }); });
-  input.addEventListener('input', function () {
+    .then(function (data) {
+      fuse = new Fuse(data, { keys: ['title', 'content'], threshold: 0.3 });
+      search();
+    });
+  function search() {
     if (!fuse) return;
     list.textContent = '';
     var hits = fuse.search(input.value).slice(0, 10);
@@ -22,5 +25,6 @@
       li.appendChild(a);
       list.appendChild(li);
     });
-  });
+  }
+  input.addEventListener('input', search);
 })();

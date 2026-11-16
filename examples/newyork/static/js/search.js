@@ -14,9 +14,10 @@
         keys: ['title', 'content'],
         threshold: 0.3
       });
+      search();
     });
 
-  input.addEventListener('input', function () {
+  function search() {
     if (!fuse) return;
     var val = input.value.trim();
     if (!val) {
@@ -51,5 +52,6 @@
 
       list.appendChild(li);
     });
-  });
+  }
+  input.addEventListener('input', search);
 })();

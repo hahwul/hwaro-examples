@@ -76,7 +76,7 @@
       li.className = "palette-item";
       li.setAttribute("role", "option");
       var a = document.createElement("a");
-      a.href = base + r.item.url;
+      a.href = r.item.url;
       a.tabIndex = -1;
       var title = document.createElement("span");
       title.className = "palette-item-title";
@@ -118,7 +118,7 @@
       if (items.length) { active = (active - 1 + items.length) % items.length; mark(); }
     } else if (e.key === "Enter") {
       e.preventDefault();
-      if (active >= 0 && items[active]) window.location.href = base + items[active].item.url;
+      if (active >= 0 && items[active]) window.location.href = items[active].item.url;
     }
   });
 

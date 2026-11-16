@@ -75,7 +75,7 @@
       li.setAttribute("role", "option");
       li.setAttribute("aria-selected", "false");
       var a = document.createElement("a");
-      a.href = base + r.item.url;
+      a.href = r.item.url;
       a.tabIndex = -1;
       var title = document.createElement("span");
       title.className = "result-title";

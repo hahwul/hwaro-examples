@@ -29,7 +29,6 @@
     var results = document.querySelector(root.getAttribute('data-finder-results'));
     var status = root.querySelector('[data-finder-status]');
     var url = input.getAttribute('data-index');
-    var base = input.getAttribute('data-base') || '';
     var fuse = null;
 
     function ensure() {
@@ -55,6 +54,7 @@
 
     function render(q) {
       ensure().then(function (f) {
+        if (q !== input.value.trim()) return;
         var hits = f.search(q).slice(0, 12);
         results.innerHTML = '';
         if (!hits.length) {
@@ -74,7 +74,7 @@
           var li = document.createElement('li');
           li.className = 'find-row';
           li.innerHTML =
-            '<a class="find-link" href="' + base + esc(it.url) + '">' +
+            '<a class="find-link" href="' + esc(it.url) + '">' +
             '<span class="find-num">' + hex(i) + '</span>' +
             '<span class="find-title">' + esc(it.title) + '</span>' +
             '<span class="find-snip">' + esc(snip) + '</span></a>';

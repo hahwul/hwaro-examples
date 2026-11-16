@@ -74,6 +74,16 @@ To preview the gallery index without Docker:
 scripts/preview-index.sh
 ```
 
+Browser regression checks build all examples under their deployment subpaths
+and test search, delayed index loading, keyboard navigation, theme persistence,
+mobile overflow on every rendered page, and JavaScript errors.
+With Hwaro and Google Chrome installed:
+
+```bash
+npm install --prefix /tmp/hwaro-browser-tests --no-save playwright
+NODE_PATH=/tmp/hwaro-browser-tests/node_modules node scripts/test-browser.cjs
+```
+
 ---
 
 ## Memo
